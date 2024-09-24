@@ -158,32 +158,16 @@ export class RunService {
   ): Promise<Run> {
     const createRunStartTime = Date.now()
     const queryRunner = this.repository.manager.connection.createQueryRunner()
+
     try {
       await queryRunner.connect()
       await queryRunner.startTransaction('READ UNCOMMITTED')
-      const config = await this.configService.getConfig(namespaceId, configId)
 
-      const storagePath = randomUUID()
-      const runData: DeepPartial<Run> = {
-        config,
-        namespace: { id: namespaceId },
-        storagePath,
-        status: RunStatus.Pending,
-        creationTime: new Date(),
-        id: await this.idService.nextId(Run.name, namespaceId),
-      }
-
-      const createdRun = await queryRunner.manager.create(Run, runData)
-      const run = await queryRunner.manager.save(Run, createdRun)
-
-      await this.auditService.append(
+      const run = await this.createWithTransaction(
+        queryRunner,
         namespaceId,
-        run.id,
-        {},
-        run,
-        AuditActor.convertFrom(actor),
-        Action.CREATE,
-        queryRunner.manager,
+        configId,
+        actor
       )
       await queryRunner.commitTransaction()
       await queryRunner.release()
@@ -203,6 +187,40 @@ export class RunService {
         }ms`,
       )
     }
+  }
+
+  async createWithTransaction(
+    queryRunner: QueryRunner,
+    namespaceId: number,
+    configId: number,
+    actor: RequestUser
+  ): Promise<Run> {
+    const config = await this.configService.getConfig(namespaceId, configId)
+
+    const storagePath = randomUUID()
+    const runData: DeepPartial<Run> = {
+      config,
+      namespace: { id: namespaceId },
+      storagePath,
+      status: RunStatus.Pending,
+      creationTime: new Date(),
+      id: await this.idService.nextId(Run.name, namespaceId),
+    }
+
+    const createdRun = queryRunner.manager.create(Run, runData)
+    const run = await queryRunner.manager.save(Run, createdRun)
+
+    await this.auditService.append(
+      namespaceId,
+      run.id,
+      {},
+      run,
+      AuditActor.convertFrom(actor),
+      Action.CREATE,
+      queryRunner.manager
+    )
+
+    return run
   }
 
   async getResult(namespaceId: number, runId: number): Promise<Readable> {
