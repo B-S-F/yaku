@@ -16,6 +16,23 @@ import { createInfoCommand } from './commands/info.js'
 import { createEnvsSubcommands } from './commands/environment.js'
 import { createNewTokensSubcommands } from './commands/newtokens.js'
 
+/*
+ * Prevent the warning that EnvHttpProxyAgent is experimental.
+ * And ONLY that warning.
+ */
+const { emitWarning } = process
+
+process.emitWarning = (warning, ...args: any[]) => {
+  if (
+    typeof warning === 'string' &&
+    warning.includes('EnvHttpProxyAgent is experimental')
+  ) {
+    return
+  }
+
+  return emitWarning(warning, ...args)
+}
+
 colors.enable()
 
 const program = new Command()

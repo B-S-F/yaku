@@ -6,7 +6,7 @@ import {
 } from './commands/environment.js'
 import { refreshOAuth } from './oauth.js'
 import { consoleWarnYellow, failWithError } from './common.js'
-import { ProxyAgent, Agent, Dispatcher } from 'undici'
+import { EnvHttpProxyAgent } from 'undici'
 
 export async function connect(): Promise<{
   client: ApiClient
@@ -48,41 +48,9 @@ export async function refreshEnvironment(
 }
 
 export function createApiClient(env: Environment): ApiClient {
-  let agent: Dispatcher = new Dispatcher()
-
-  const proxyAgentOptions = {
-    token: `Basic ${Buffer.from(
-      `${process.env.USERNAME}:${process.env.PASSWORD}`
-    ).toString('base64')}`,
-  }
-
-  const proxyEnvVars = [
-    'https_proxy',
-    'HTTPS_PROXY',
-    'http_proxy',
-    'HTTP_PROXY',
-  ]
-
-  let usingProxy = false
-
-  for (const proxyEnvvar of proxyEnvVars) {
-    const proxyUri = process.env[proxyEnvvar]
-    if (proxyUri) {
-      agent = new ProxyAgent({
-        ...proxyAgentOptions,
-        uri: proxyUri,
-      })
-      usingProxy = true
-      break
-    }
-  }
-
-  if (!usingProxy) {
-    agent = new Agent()
-  }
   return new ApiClient({
     baseUrl: env.url!,
     token: env.accessToken!,
-    agent: agent,
+    agent: new EnvHttpProxyAgent(),
   })
 }
