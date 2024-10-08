@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: yaku-postgres
+  name: yaku-postgres
+  namespace: aqua
+spec:
+  selector:
+    matchLabels:
+      app: yaku-postgres
+  template:
+    metadata:
+      labels:
+        app: yaku-postgres
+      name: yaku-postgres
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgrespassword
+                  name: service-creds
+            - name: PGDATA
+              value: /var/lib/postgresql/data/db-files/
+          image: postgres:13-alpine
+          name: main
+          ports:
+            - containerPort: 5432
+          readinessProbe:
+            exec:
+              command:
+                - psql
+                - -U
+                - postgres
+                - -c
+                - SELECT 1
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: 200m
+              memory: 400Mi
+            requests:
+              cpu: 200m
+              memory: 200Mi
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pvc-data
+            - name: init-script
+              mountPath: "/docker-entrypoint-initdb.d"
+              readOnly: true
+      nodeSelector:
+        kubernetes.io/os: linux
+      volumes:
+        - name: pvc-data
+          persistentVolumeClaim:
+            claimName: yaku-postgres-pvc
+        - name: init-script
+          configMap:
+            name: init-db-config
+            items:
+              - key: "init-aqua-db.sql"
+                path: "init-aqua-db.sql"

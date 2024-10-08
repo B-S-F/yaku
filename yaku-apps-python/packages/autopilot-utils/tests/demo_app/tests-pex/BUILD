@@ -1,0 +1,10 @@
+python_tests(
+    dependencies=[
+        f"packages/autopilot-utils/tests/demo_app/src/yaku/demo:app",
+    ],
+    runtime_package_dependencies=[
+        f"packages/autopilot-utils/tests/demo_app:demo",
+    ],
+    skip_bandit=True,
+    skip_mypy=True,
+)

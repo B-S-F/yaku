@@ -1,0 +1,16 @@
+checks:
+  - name: merged_check
+    ref: $.values[*]
+    condition: all(ref, "'OPEN' === $.state")
+    return_if_empty: GREEN
+    return_if_not_found: YELLOW
+    log: $.links.self[*].href
+  - name: has_specific_reviewer
+    ref: $.values[*].reviewers
+    condition: all(ref, "($[*].user.name).includes('XXX2XXX')")
+  - name: has_reviewer
+    ref: $.values[*]
+    condition: all(ref, "($.reviewers).length !== 0")
+    log: $.links.self[*].href
+concatenation:
+  condition: 'merged_check && has_reviewer && has_specific_reviewer'

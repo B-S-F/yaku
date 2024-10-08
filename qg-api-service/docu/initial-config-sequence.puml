@@ -1,0 +1,26 @@
+@startuml Initial Config Sequence
+
+actor Client
+participant "Configs Controller" as cc
+participant "Configs Service" as cs
+participant "Generator Service" as gs
+participant "Excel Transformer Service" as et
+database "Config Entities" as db
+
+Client -> cc : initial-config(configId, questionnaire)
+cc -> cs : initial-config(configId, questionnaire)
+cs -> gs : generate(questionnaire)
+gs --> cs : initial config
+cs -> db : Store(configId, initial config)
+cs --> cc : initial config
+cc -> Client : initial config
+
+Client -> cc : config-from-excel(configId, xlsx file, column config)
+cc -> cs : config-from-excel(configId, xlsx file, column config)
+cs -> et : transform(xlsx file, column config)
+et --> cs : questionnaire
+cs -> gs : generate(questionnaire)
+gs --> cs : initial config
+cs -> db : Store(configId, initial config)
+cs --> cc : initial config
+cc -> Client : initial config

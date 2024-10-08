@@ -1,0 +1,245 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: aqua
+resources:
+  - pvc.yaml
+  - argo-workflows-upstream.yaml
+
+patchesStrategicMerge:
+  - remove_argo_cluster_roles.yaml
+  - remove_argo_secrets.yaml
+  - remove_httpbin.yaml
+
+patches:
+  - target:
+      kind: Service
+      name: argo-server
+    patch: |-
+      - op: add
+        path: "/spec/type"
+        value: "NodePort"
+      - op: add
+        path: "/spec/ports/0/nodePort"
+        value: 30111
+  - target:
+      kind: Deployment
+      name: argo-server
+    patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/image"
+        value: "quay.io/argoproj/argocli:v3.4.13"
+      - op: add
+        path: "/spec/template/spec/containers/0/resources"
+        value:
+          requests:
+            memory: "200Mi"
+            cpu: "250m"
+          limits:
+            memory: "400Mi"
+            cpu: "250m"
+  - target:
+      kind: Service
+      name: minio
+    patch: |-
+      - op: add
+        path: "/spec/type"
+        value: "NodePort"
+      - op: add
+        path: "/spec/ports/0/nodePort"
+        value: 30112
+      - op: add
+        path: "/spec/ports/1/nodePort"
+        value: 30113
+  - target:
+      kind: Deployment
+      name: minio
+    patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/image"
+        value: "minio/minio"
+      - op: add
+        path: "/spec/template/spec/containers/0/resources"
+        value:
+          requests:
+            memory: "400Mi"
+            cpu: "250m"
+          limits:
+            memory: "800Mi"
+            cpu: "250m"
+      - op: add
+        path: "/spec/template/spec/containers/0/volumeMounts"
+        value:
+          - mountPath: /data
+            name: minio-data
+      - op: add
+        path: "/spec/template/spec/volumes"
+        value:
+          - name: minio-data
+            persistentVolumeClaim:
+              claimName: minio-pvc
+      - op: replace
+        path: "/spec/template/spec/containers/0/env"
+        value:
+          - name: MINIO_ROOT_USER
+            valueFrom:
+              secretKeyRef:
+                name: service-creds
+                key: minioaccesskey
+          - name: MINIO_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: service-creds
+                key: miniosecretkey
+  - target:
+      kind: Deployment
+      name: postgres
+    patch: |-
+      - op: add
+        path: "/spec/template/spec/containers/0/resources"
+        value:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+          limits:
+            memory: "400Mi"
+            cpu: "200m"
+      - op: add
+        path: "/spec/template/spec/containers/0/volumeMounts"
+        value:
+          - name: pvc-data
+            mountPath: /var/lib/postgresql/data
+      - op: add
+        path: "/spec/template/spec/volumes"
+        value:
+          - name: pvc-data
+            persistentVolumeClaim:
+              claimName: postgres-pvc
+      - op: replace
+        path: "/spec/template/spec/containers/0/env"
+        value:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: service-creds
+                key: postgrespassword
+          - name: PGDATA
+            value: /var/lib/postgresql/data/db-files/
+  - target:
+      kind: Deployment
+      name: workflow-controller
+    patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/image"
+        value: "quay.io/argoproj/workflow-controller:v3.4.13"
+      - op: add
+        path: "/spec/template/spec/containers/0/env/1"
+        value:
+          name: DEFAULT_REQUEUE_TIME
+          value: 5s  # Default: 10s
+      - op: add
+        path: "/spec/template/spec/containers/0/resources"
+        value:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+          limits:
+            memory: "400Mi"
+            cpu: "200m"
+  - target:
+      kind: ClusterRoleBinding
+      name: argo-clusterworkflowtemplate-role-binding
+    patch: |-
+      - op: replace
+        path: "/subjects/0/namespace"
+        value: "aqua"
+  - target:
+      kind: RoleBinding
+      name: github.com
+    patch: |-
+      - op: replace
+        path: "/subjects/0/namespace"
+        value: "aqua"
+  - target:
+      kind: ClusterRoleBinding
+      name: argo-server-clusterworkflowtemplate-role-binding
+    patch: |-
+      - op: replace
+        path: "/subjects/0/namespace"
+        value: "aqua"
+  - target:
+      kind: ConfigMap
+      name: workflow-controller-configmap
+    patch: |-
+      - op: replace
+        path: "/data/persistence"
+        value: |
+          connectionPool:
+            maxIdleConns: 5
+            maxOpenConns: 10
+            connMaxLifetime: 900s
+          nodeStatusOffLoad: true
+          archive: true
+          archiveTTL: 7d
+          postgresql:
+            host: postgres
+            port: 5432
+            database: postgres
+            tableName: argo_workflows
+            userNameSecret:
+              name: service-creds
+              key: postgresuser
+            passwordSecret:
+              name: service-creds
+              key: postgrespassword
+      - op: replace
+        path: "/data/artifactRepository"
+        value: |
+          s3:
+            bucket: my-bucket
+            endpoint: minio:9000
+            insecure: true
+            accessKeySecret:
+              name: service-creds
+              key: minioaccesskey
+            secretKeySecret:
+              name: service-creds
+              key: miniosecretkey
+  - target:
+      kind: ConfigMap
+      name: workflow-controller-configmap
+    patch: |-
+      - op: replace
+        path: "/data/namespaceParallelism"
+        value: "20"
+  - target:
+      kind: ConfigMap
+      name: artifact-repositories
+    patch: |-
+      - op: replace
+        path: "/data/default-v1"
+        value: |
+          archiveLogs: true
+          s3:
+            bucket: my-bucket
+            endpoint: minio:9000
+            insecure: true
+            accessKeySecret:
+              name: service-creds
+              key: minioaccesskey
+            secretKeySecret:
+              name: service-creds
+              key: miniosecretkey
+      - op: replace
+        path: "/data/my-key"
+        value: |
+          archiveLogs: true
+          s3:
+            bucket: my-bucket
+            endpoint: minio:9000
+            insecure: true
+            accessKeySecret:
+              name: service-creds
+              key: minioaccesskey
+            secretKeySecret:
+              name: service-creds
+              key: miniosecretkey

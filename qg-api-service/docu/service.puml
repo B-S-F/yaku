@@ -1,0 +1,30 @@
+@startuml Yaku Service
+
+interface "REST API" as restapi
+
+frame "Nest JS based service" {
+  component "AuthN/Z" as auth
+  component "Yaku Controller" as controller
+  component "Service Layer" as services
+  component "Workflow Management" as workflows
+  component "Repository" <<TypeORM>> as repo
+}
+
+component "Argo" as argo
+
+database "MinIO" as minio
+database "SQL" as database
+
+restapi -right- controller
+
+controller -right-> services
+services -right-> repo
+services -down-> workflows
+repo -right-> database
+workflows --> argo : workflow
+workflows <--> minio : data
+minio <--> argo : data
+auth -up-> restapi : intercepts
+auth -[hidden]up- controller
+
+@enduml

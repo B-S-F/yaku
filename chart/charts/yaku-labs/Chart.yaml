@@ -1,0 +1,5 @@
+apiVersion: v2
+name: yaku-labs
+description: Yaku Labs
+type: application
+version: 0.1.0

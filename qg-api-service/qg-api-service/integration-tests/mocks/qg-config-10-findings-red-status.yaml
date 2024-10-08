@@ -1,0 +1,37 @@
+metadata:
+  version: v1
+header:
+  name: Integration Test
+  version: 0.0.1
+autopilots:
+  findings-interface-1:
+    run: |
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 1"}}'
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 2", "metadata":{"key1":"value1", "key2":"value2"}}}'
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 3"}}'
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 4", "metadata":{"key1":"value1", "key2":"value2"}}}'
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 5"}}'
+      echo '{"status": "RED", "reason": "Found 5 findings"}'
+  findings-interface-2:
+    run: |
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 1"}}'
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 2", "metadata":{"key1":"value1", "key2":"value2"}}}'
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 3"}}'
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 4", "metadata":{"key1":"value1", "key2":"value2"}}}'
+      echo '{"result": {"criterion": "No findings", "fulfilled": false, "justification": "I am the reason 5"}}'
+      echo '{"status": "RED", "reason": "Found 5 findings"}'
+chapters:
+  '1':
+    title: Test config should work
+    requirements:
+      '1':
+        title: Run free of findings
+        checks:
+          '1':
+            title: Check for findings
+            automation:
+              autopilot: findings-interface-1
+          '2':
+            title: Check for findings
+            automation:
+              autopilot: findings-interface-2

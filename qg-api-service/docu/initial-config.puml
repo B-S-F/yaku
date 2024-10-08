@@ -1,0 +1,34 @@
+@startuml Initial Config
+
+() "config-from-excel" as ec
+() "initial-config" as ic
+
+note top of ic
+  transform generic
+  chapter information
+  to an initial config
+end note
+
+note bottom of ec
+  transform excel sheet
+  via generic
+  chapter information
+  to an initial config
+end note
+
+component "Configs Controller" as cc
+component "Configs Service" as cs
+component "Generator Service" as gs
+component "Excel Transformer Service" as et
+
+database "SQL" as db
+
+ic -right- cc
+ec -right- cc
+cc --> cs : delegates
+cs --> et : "extract chapter\ninformation"
+cs --> gs : "transform chapter\ninformation\nto initial config"
+cs --> db : "stores initial config in\nConfigs entity"
+et -[hidden]right-> gs
+ec -[hidden]up-> ic
+

@@ -1,0 +1,9 @@
+sheet: SW Component QG
+startRow: 5
+endRow: 78
+columns:
+  chapter: C
+  id: D
+  title: E
+  filter: L
+  comment: F

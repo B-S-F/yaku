@@ -1,0 +1,31 @@
+{
+  "apps": {
+    "ado-work-items-evaluator": "0.7.0",
+    "ado-work-items-fetcher": "0.7.2",
+    "artifactory-fetcher": "0.8.0",
+    "defender-for-cloud": "0.3.1",
+    "docupedia-fetcher": "0.8.1",
+    "excel-tools": "0.8.1",
+    "filecheck": "0.2.3",
+    "gh-app": "0.3.1",
+    "git-fetcher": "0.7.0",
+    "html-finalizer": "0.30.0",
+    "jira-evaluator": "0.7.0",
+    "jira-fetcher": "0.9.0",
+    "json-evaluator": "0.11.0",
+    "manual-answer-evaluator": "0.8.0",
+    "mend-fetcher": "0.7.0",
+    "papsr": "0.5.2",
+    "pdf-signature-evaluator": "0.9.0",
+    "security-scanner": "0.5.4",
+    "sharepoint-evaluator": "0.7.2",
+    "sharepoint-fetcher": "0.10.0",
+    "sonarqube": "0.2.0",
+    "sonarqube-evaluator": "0.4.0",
+    "splunk-fetcher": "0.11.0"
+  },
+  "core": "2024-07-30_12-19-44-c170aca",
+  "core-api": "0.52.0",
+  "onyx": "0.11.0",
+  "ui": "1.9.0"
+}

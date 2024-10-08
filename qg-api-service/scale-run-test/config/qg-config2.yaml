@@ -1,0 +1,59 @@
+header:
+  name: PerformanceTest_Factorial
+  version: '1.1'
+metadata:
+  version: 'v1'
+
+autopilots:
+  validateCompute:
+    run: |
+      N=20
+      I=$N
+      F=1
+      while [ $I -gt 0 ]
+      do
+        sleep 1
+        F=$(( $F * $I ))
+        I=$(( $I - 1 ))
+      done
+      echo $F > factorial_evidence.txt
+      if cat factorial_evidence.txt | grep '2432902008176640000'; then
+        echo '{ "status": "GREEN" }'
+        echo '{ "reason": "Factorial evidence is correct" }'
+        echo '{ "result": { "criterion": "Factorial Calculation", "fulfilled": true, "justification": "Factorial number is  correct" } }'
+      else
+        echo '{ "status": "RED" }'
+        echo '{ "reason": "Factorial evidence is not correct" }'
+        echo '{ "result": { "criterion": "Factorial Calculation", "fulfilled": false, "justification": "Factorial number is not correct" } }'
+      fi
+
+  validateManual:
+    run: |
+      curl -o md5.txt https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0-sources.jar.md5
+      export manual_answer_file=md5.txt
+      manual-answer-evaluator
+    env:
+      expiration_time: 14d
+      expiry_reminder_period: 3d
+
+chapters:
+  '1':
+    title: Test config should work
+    requirements:
+      '1':
+        title: Compute based evaluation should succeed
+        text: Compute something and check result
+        checks:
+          '1':
+            title: Test compute
+            automation:
+              autopilot: validateCompute
+
+      '2':
+        title: Manual evaluator should succeed
+        text: Manual evaluator should succeed
+        checks:
+          '1':
+            title: Test manual
+            automation:
+              autopilot: validateManual

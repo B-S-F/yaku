@@ -1,0 +1,656 @@
+# Default values for Yaku components
+
+# Global values used by all sub-charts
+global:
+  # The name that will prefix deployment pods' names. Default value is: yaku
+  fullName: "yaku"
+  # Service account to run the pods as.
+  serviceAccount:
+    # Specifies whether a service account should be created
+    # Default value is: false
+    create: false
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullName
+    name: ""
+  # The namespace where Yaku will be deployed.
+  namespace: yaku
+  # List of images that are used in this chart.
+  # If you're not able to pull the images directly, have the images added to you enterprise registry and update this section
+  images:
+    postgres: postgres:13-alpine
+    yakuCoreApi: growpatcr.azurecr.io/yaku-core-api:0.52.0
+    yakuCore: growpatcr.azurecr.io/yaku-core
+    yakuUi: growpatcr.azurecr.io/yaku-ui:1.9.0
+    yakuLabs: ollama/ollama
+  database:
+    # Postgres server hostname
+    # Default value is: yaku-api-postgres which is the service name of the postgres container shipped with this helm chart.
+    db_host: "yaku-postgres-db"
+    # Postgres server port
+    db_port: "5432"
+  ## Authentication configuration
+  authentication:
+    ## KeyCloak configuration
+
+    # Specifies wether to use Keycloak for api authentication and authorization
+    # Default value: off. Supported values: 'on', 'off'
+    keycloak_enabled: "off"
+    # KeyCloak server base url e.g. https://keycloak.authz.company.com
+    keycloak_server: ""
+    # KeyCloak realm name
+    keycloak_realm: ""
+    # KeyCloak client name for api
+    keycloak_client_id: ""
+    # KeyCloak client secret name for api
+    keycloak_client_secret_name: ""
+    # KeyCloak client secret key in secret for api
+    keycloak_client_secret_key: ""
+    # Configures usage of the proxy for requests against the configured Keycloak instance
+    keycloak_enable_proxy_tunnel: false
+    # KeyCloak client name for swagger client
+    swagger_oauth2_client_id: ""
+  notifications:
+    ## Email Notifications configuration
+
+    # Wether to enable sending email notification
+    enable_mail_notifications: false
+    # SMTP server address
+    smtp_host: ""
+    # SMTP server port
+    smtp_port: ""
+    # Name of kubernetes secret that contains credentials to connect to SMTP host
+    smtp_creds_secret_name: ""
+    # Key name inside kubernetes secret that contains username to connect to SMTP host
+    smtp_username_key_name: ""
+    # Key name inside kubernetes secret that contains password to connect to SMTP host
+    smtp_password_key_name: ""
+    # Enable secure connection to smtp host
+    smtp_secure: true
+    # Sender email address of sent notifications
+    smtp_sender: ""
+    # Wether to use mailjet api instead of smtp. Needed if you need proxy to connect to SMTP host
+    use_mailjet_api: false
+    # Mailjet api URL
+    mailjet_api_url: ""
+    # Wether proxy server is needed to reach mailjet api
+    mailjet_use_proxy: false
+    # Name of kubernetes secret that contains credentials to connect to Mailjet api
+    mailjet_creds_secret_name: ""
+    # Key name inside kubernetes secret that contains API key to connect to Mailjet api
+    mailjet_api_key_name: ""
+    # Key name inside kubernetes secret that contains API secret to connect to Mailjet api
+    mailjet_api_secret_name: ""
+  explanations:
+    ## Explainable autopilots configuration
+    ## This feature requires a configured Azure OpenAI instance
+
+    # Enable explainable autopilots
+    enable_explanations_feature: false
+    # Azure OpenAI instance url
+    openai_base_url: ""
+    # Kubernetes secret name that contains OpenAI instance api key
+    openai_api_key_secret_name: ""
+    # Key name inside kubernetes secret that contains OpenAI instance api key
+    openai_api_key_secret_key_name: ""
+    # Azure OpenAI instance api version
+    openai_api_version: ""
+    # Azure OpenAI instance model name
+    openai_model: ""
+  minio:
+    # Wether to create the default values minio root user secret or not.
+    # Default value is: true
+    # This will create a secret with default access/secret keys : minioadmin/minioadmin
+    # *** NOTE ***
+    # Change it to false in production environments and reference your own secret in minio subchart values
+    createCredentialsSecret: true
+    credentialsSecretName: minio-creds
+# Core API deployment values
+yaku-core-api:
+  # Pod configuration
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  restartPolicy: "Always"
+  podAnnotations: {}
+  # Custom deployment labels
+  additionalLabels: {}
+  # Custom deployment selector labels
+  additionalSelectorLabels:
+    yaku-service: api
+  podSecurityContext: {}
+  # Example:
+  # runAsUser: 1000
+  # fsGroup: 1000
+
+  # If needed, the Kubernetes secret name to pull docker images from private registry
+  imagePullSecrets: []
+  # Example:
+  # - name: myPullSecret
+
+  # If you do want to specify resources
+  resources: {}
+  # Example:
+  # requests:
+  #   cpu: 500m
+  #   memory: 1Gi
+  # limits:
+  #   cpu: 800m
+  #   memory: 2Gi
+
+  # Container Configuration
+  imagePullPolicy: "IfNotPresent"
+  securityContext: {}
+  readinessProbe:
+    enabled: true
+    httpGet:
+      path: /api/v1/service/info
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+  livenessProbe:
+    enabled: false
+    httpGet:
+      path: /api/v1/service/info
+    initialDelaySeconds: 10
+    periodSeconds: 60
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+  # Port number and protocol the pod will be listening  to
+  ports:
+    containerPort: 8080
+    protocol: TCP
+  # Container required configuration environment variables
+  env:
+    # Internal service configuration
+
+    # Specifies whether to disable nodejs certificate verification.
+    # Should be set to 0 when using custom root certificate
+    # Default value is: 0
+    node_tls_reject_unauthorized: "0"
+    # Yaku api swagger page title.
+    swagger_title: "Yaku Core API"
+    # Name of Kubernetes secret used to pull images from Yaku docker registry.
+    pull_secret_name: ""
+    # Prefix of the service endpoints. Default value is: "".
+    path_prefix: ""
+    # Version of yaku-core image
+    core_version: "2024-07-30_12-19-44-c170aca"
+    # Log level of the qg run container (the triggered Argo workflow container).
+    # Default value is: info.
+    qg_log_level: "info"
+    # If set to 'true', the test data cleanup task is executed once after service startup. It deletes all runs in defined namespaces which are older than the retention period.
+    testdata_cleanup: false
+    # List of comma separated namespace ids, in which the testdata cleanup task deletes old runs.
+    testdata_namespaces: "0"
+    # Period in days to keep a run before the testdata cleanup task deletes it.
+    testdata_retention_period_in_days: "7"
+    # Deprecate old tokens (internally created by api)
+    disable_old_tokens: true
+    # Run database migration before the service starts
+    run_db_migrations: true
+    # Enable overriding check results of releases
+    enable_override_controller: true
+    # Max file size for file uploads in MB. Set to 0 to turn off file size check
+    max_file_size_mb: "2"
+    ## Private cloud configuration
+
+    # Should be set to 'true' if the deployment runs behind a proxy.
+    in_private_cloud: false
+    # Proxy settings
+    http_proxy: ""
+    https_proxy: ""
+    no_proxy: ""
+    # workflow_no_proxy sets no_proxy variable value in the workflow container where autopilots run
+    workflow_no_proxy: ""
+    ## Secrets encryption configuration
+
+    # Name of k8s secret that contains the encryption and jwt keys.
+    # encryption_secret_name: "service-encryption-keys"
+
+    # Name of encryption key inside the kubernetes secret.
+    # Value of this key is used in the temporary implementation of secret storage in the database to encrypt secret values.
+    # IMPORTANT: Always store this value as a k8s secret and don't use the default value in production environments.
+    # encryption_secret_key: "encryption_secret_key"
+
+    ## Workflow configuration (qg run container configuration)
+
+    # Argo namespace where workflows run. Default value is: yaku
+    argo_namespace: yaku
+    # Argo Workflows server address. Default value is: "http://argo-server:2746"
+    argo_server: "http://argo-server:2746"
+    # Yaku core image pull policy
+    core_pull_policy: "Always"
+    ## Minio configuration
+
+    # Minio server address.
+    # Default value is: "https://minio:9000"
+    minio_server: "https://minio:9000"
+    # If set to 'true', the minio cleanup task is executed once after service startup. It cleans up the Minio storage by identifying folders that are not referenced by runs anymore.
+    # Default value is: false
+    minio_cleanup: false
+    # Name of minio bucket to store data in.
+    # Default value is: "my-bucket"
+    # NOTE: If using the Argoworkflows anf minio deployment included in this helm chart, make
+    # sure that this value equals the value in yaku-argo-workflows.minio.bucket_name
+    minio_bucket: "my-bucket"
+    # Name of Kubernetes secret that contains the minio server access credentials
+    # Default value is: "minio-creds"
+    minio_secret_name: "minio-creds"
+    # Key in the previous Kubernetes secret that contains Minio S3 client key
+    # Default value is: "rootUser"
+    minio_username_key: "rootUser"
+    # Key in the previous Kubernetes secret that contains Minio S3 secret key
+    # Default value is: "rootPassword"
+    minio_password_key: "rootPassword"
+    # Enable connecting to S3 storage over ssl.
+    # Default value is: false in order for the api to work with minio container.
+    # Set to true when you use your own object storage instead of minio container
+    minio_use_ssl: false
+    # NOTE: if minio_use_ssl=true and you are running inside your enterprise intranet and you use custom ssl
+    # root certificates. You need to specify the kubernetes secret name that contains the SSL cert required to connect to object storage.
+    # This can be done be configuring helm values: 
+    #  - cacert_secret_name 
+    #  - cacert_key_name
+    # Which are also used to connect to postgres server in you enterprise
+
+    ## DB configuration
+
+    # Type of the database server that the api uses. Supported values: 'sqlite', 'postgres'
+    # If sqlite db is used, a PVC should be created to store the sqlite file.
+    # Default value is: postgres and a postgresDb container is started by default when you first start the service.
+    # You need to change it then to use you production-ready PostgresDB.
+    db_type: "postgres"
+    # Name of database in postgres server to store Yaku api data in
+    # Default value is: yaku
+    db_name: "yaku"
+    # Name of kubernetes secret that contains the postgres db access credentials
+    # Default value is: yaku-default-postgres-creds which contains default credentials: postgres/postgres
+    ##--IMPORTANT-- As long as you're using the get started yaku-postgres container, you CAN NOT change the username to
+    # connect to postgres container. The username should be postgres.
+    db_secret_name: "yaku-default-postgres-creds"
+    # Key in the previous Kubernetes secret that contains a username that have
+    # access to database set in <db_name>
+    db_username_key: "postgresuser"
+    # Key in the previous Kubernetes secret that contains a password of the user that have
+    # access to database set in <db_name>
+    db_password_key: "postgrespassword"
+    # Connect to Postgres server securely over SSL.
+    # Default value is: false in order for the api to work with the quick start postgresDB container.
+    # Set to true when you use a proper postgres DB
+    db_use_ssl: false
+    # Secret name that contains the SSL cert required to connect to postgres db.
+    # Only required if you are running inside your enterprise intranet and you use custom ssl
+    # certificates
+    cacert_secret_name: "db-cacert-secret-name"
+    # Key name that contains the signing root certificate inside the secret
+    cacert_key_name: DB_CERT
+    # Directory to store sqlite file whn using "sqlite" db type
+    data_dir: "/data"
+    ## Connection to yaku UI configuration
+  # Service instance name to be shown in yaku UI.
+  # instance_name: "production"
+  # Fallback URL for the UI, if the request does not come from the UI we still have to template the email and provide a link to the UI
+  # ui_fallback_url: ""
+  # Path to the settings page in the UI (must start with '/')
+  # ui_settings_path: "/settings"
+  # Path to email templates
+  # template_path: ""
+
+  extraEnv: []
+  # - name: FOO
+  #   value: "bar"
+
+  # Persistence storage configuration when using sqlite db
+  persistence:
+    # Specifies wether to create a PVC
+    # Default value is: false
+    create: false
+    # Name of the PVC. Default values is: yaku-pvc
+    name: yaku-pvc
+    # Size of the PVC. Default value is: 10Gi
+    size: 10Gi
+    # Access mode of the PVC. Default value is: ReadWriteOnce
+    accessModes:
+      - ReadWriteOnce
+    # Default value is: default
+    storageClass: default
+  # Wether to create a postgres container to be used as a DB for core-api.
+  postgres:
+    # Set to true if you you want to deploy postgresDB container
+    # Default value is: true
+    enabled: true
+    # Wether to create the default values secret or not.
+    # Default value is: true
+    # Change it to false if you want to use your own secret.
+    # You can only change the password if you create a new secret.
+    # Username value can only be: postgres.
+    createCredentialsSecret: true
+    # Kubernetes secret name that contains the postgres db access credentials
+    credentialsSecretName: yaku-default-postgres-creds
+    # Postgres container persistence storage configuration
+    persistence:
+      name: yaku-api-postgres
+      size: 50Mi
+      accessModes:
+        - ReadWriteOnce
+      storageClass: default
+    # If you do want to specify resources
+    resources: {}
+    # Example:
+    # requests:
+    #   cpu: 500m
+    #   memory: 1Gi
+    # limits:
+    #   cpu: 800m
+    #   memory: 2Gi
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+    labels: {}
+    annotations: {}
+  # Ingress configuration
+  ingress:
+    enabled: true
+    className: ""
+    annotations: {}
+    hosts:
+      - host: yaku-api.domain.tech
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
+    # Example:
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  # # If deploying on Openshift cluster and a route resource is needed.
+  route:
+    enabled: false
+    apiVersion: route.openshift.io/v1
+    annotations: {}
+    host: ""
+    tls: []
+    # Example:
+    # termination: "edge"
+    # caCertificate: ""
+    # insecureEdgeTerminationPolicy: "Redirect"
+    wildcardPolicy: None
+# UI deployment values
+yaku-ui:
+  # Specify wether to deploy Yaku UI
+  # Default value is: true
+  enabled: true
+  # Pod configuration
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  restartPolicy: "Always"
+  podAnnotations: {}
+  additionalSelectorLabels:
+    yaku-service: ui
+  podSecurityContext: {}
+  # Example:
+  # runAsUser: 1000
+  # fsGroup: 1000
+
+  # If needed, the Kubernetes secret name to pull docker images from private registry
+  imagePullSecrets: []
+  # Example:
+  # - name: myPullSecret
+
+  resources: {}
+  # If you do want to specify resources, adjust the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # requests:
+  #   cpu: 500m
+  #   memory: 1Gi
+  # limits:
+  #   cpu: 800m
+  #   memory: 2Gi
+
+  # Container Configuration
+  imagePullPolicy: "IfNotPresent"
+  securityContext: {}
+  # Port number and protocol the pod will be listening  to
+  ports:
+    containerPort: 8080
+    protocol: TCP
+  # Configure the backend URLs to be used  by the UI
+  # You can provide multiple environments with different list of backends as a json config
+  # Default value is yaku SAAS URLs. But of course this will not work so you need to change it.
+  config:
+    enabled: true
+    backendEnvironments: |
+      {
+        "environments": [
+          {
+            "label": "Production",
+            "slug": "production",
+            "url": "https://yaku.bswf.tech",
+            "appCatalogApi": "https://yaku.bswf.tech",
+            "keycloakConfig": {
+              "url": "https://bswf.keycloak.bosch.com/auth",
+              "realm": "yaku",
+              "clientId": "yaku-portal"
+            }
+          }
+        ]
+      }
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+    labels: {}
+    annotations: {}
+  # Ingress configuration
+  ingress:
+    enabled: true
+    className: ""
+    annotations: {}
+    hosts:
+      - host: yaku-ui.domain.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
+    # Example:
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  # If deploying on Openshift cluster and a route resource is needed.
+  route:
+    enabled: false
+    apiVersion: route.openshift.io/v1
+    annotations: {}
+    host: ""
+    tls: []
+    # Example:
+    # termination: "edge"
+    # caCertificate: ""
+    # insecureEdgeTerminationPolicy: "Redirect"
+    wildcardPolicy: None
+# Argo Workflows deployment values
+# For more details, check the values file in Argo helm chart repo:
+# https://github.com/argoproj/argo-helm/blob/main/charts/argo-workflows/values.yaml
+argo-workflows:
+  fullnameOverride: argo
+  namespaceOverride: yaku
+  createAggregateRoles: false
+  singleNamespace: true
+  crds:
+    install: true
+  workflow:
+    serviceAccount:
+      create: true
+      name: "argo-workflow"
+  controller:
+    image:
+      registry: quay.io
+      repository: argoproj/workflow-controller
+    parallelism: 20
+    namespaceParallelism: 20
+    archive: false
+    configMap:
+      create: true
+      name: "workflow-controller-configmap"
+    clusterWorkflowTemplates:
+      enabled: false
+    workflowDefaults:
+      spec:
+        serviceAccountName: argo-workflow
+        ttlStrategy:
+          secondsAfterCompletion: 7200 # 2 hours
+        artifactRepositoryRef:
+          configMap: artifact-repositories
+          key: default-v1-s3-artifact-repository
+    workflowNamespaces:
+      - yaku
+    columns:
+      - name: Workflow Completed
+        type: label
+        key: workflows.argoproj.io/completed
+  executor:
+    image:
+      registry: quay.io
+      repository: argoproj/argoexec
+  server:
+    image:
+      registry: quay.io
+      repository: argoproj/argocli
+    authModes: ["server", "client"]
+    clusterWorkflowTemplates:
+      enabled: false
+  useStaticCredentials: true
+  artifactRepositoryRef:
+    artifact-repositories:
+      annotations:
+        workflows.argoproj.io/default-artifact-repository: default-v1-s3-artifact-repository
+      default-v1-s3-artifact-repository:
+        archiveLogs: true
+        s3:
+          bucket: my-bucket
+          endpoint: minio:9000
+          insecure: true
+          accessKeySecret:
+            name: minio-creds
+            key: rootUser
+          secretKeySecret:
+            name: minio-creds
+            key: rootPassword
+# Minio deployment values
+# For more details, check the values file in Minio helm chart repo:
+# https://github.com/minio/minio/blob/master/helm/minio/values.yaml
+minio:
+  image:
+    repository: quay.io/minio/minio
+    tag: RELEASE.2024-04-18T19-09-19Z
+    pullPolicy: IfNotPresent
+  fullnameOverride: minio
+  existingSecret: minio-creds
+  replicas: 2
+  persistence:
+    size: 10Gi
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+    limits:
+      memory: "4Gi"
+      cpu: "800m"
+  buckets:
+    - name: my-bucket
+      policy: none
+      purge: false
+      versioning: false
+      objectlocking: false
+# Labs deployment values
+yaku-labs:
+  # Specify wether to deploy Yaku Labs
+  # Default value is: false
+  enabled: false
+  # Pod configuration
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  restartPolicy: "Always"
+  podAnnotations: {}
+  additionalSelectorLabels:
+    yaku-service: labs
+  podSecurityContext: {}
+  # Example:
+  # runAsUser: 1000
+  # fsGroup: 1000
+
+  # If needed, the Kubernetes secret name to pull docker images from private registry
+  imagePullSecrets: []
+  # Example:
+  # - name: myPullSecret
+
+  resources: {}
+  # If you do want to specify resources, adjust the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # requests:
+  #   cpu: 500m
+  #   memory: 1Gi
+  # limits:
+  #   cpu: 800m
+  #   memory: 2Gi
+
+  # Persistence storage configuration to store models
+  persistence:
+    # Name of the PVC. Default values is: yaku-pvc
+    name: labs-pvc
+    # Size of the PVC. Default value is: 10Gi
+    size: 50Gi
+    # Access mode of the PVC. Default value is: ReadWriteOnce
+    accessModes:
+      - ReadWriteOnce
+    # Default value is: default
+    storageClass: default
+  # Container Configuration
+  imagePullPolicy: "IfNotPresent"
+  securityContext: {}
+  # Port number and protocol the pod will be listening  to
+  ports:
+    containerPort: 11434
+    protocol: TCP
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 240
+    timeoutSeconds: 90
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 11434
+    targetPort: 11434
+    protocol: TCP
+    labels: {}
+    annotations: {}
+  # Ingress configuration
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    # Longer timeout annotation might be needed. Example for nginx:
+    # nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    # nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    hosts:
+      - host: yaku-labs.domain.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
+    # Example:
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local

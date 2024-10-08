@@ -1,0 +1,94 @@
+{
+  "name": "@B-S-F/yaku-cli",
+  "version": "0.58.0",
+  "description": "A CLI for the yaku API using the yaku client lib",
+  "license": "UNLICENSED",
+  "engines": {
+    "npm": ">=9.3.0",
+    "node": ">=18.14.0"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "yaku": "dist/index.js"
+  },
+  "type": "module",
+  "author": "GROW/PAT",
+  "scripts": {
+    "build": "tsc",
+    "postbuild": "npx cpy --flat sbom/*.json dist",
+    "dev": "nodemon --watch \"src/**\" --exec npm run start",
+    "lint": "eslint \"src/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"integration-test/**/*.ts\"",
+    "setup": "npm run build && npm install",
+    "start": "node dist/index.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --config jest-unit.config.js",
+    "test:cov": "NODE_OPTIONS=--experimental-vm-modules npx jest --config jest-unit.config.js --coverage",
+    "test:integration:local": "cd ../yaku-client-lib && npm run build && cd ../yaku-cli && npm run test:integration",
+    "test:integration": "vitest run --config vitest-integration.config.ts",
+    "test:roundtrip": "vitest run integration-test/roundtrip/roundtrip.test.ts"
+  },
+  "dependencies": {
+    "@B-S-F/yaku-client-lib": "^0.58.0",
+    "call-bind": "^1.0.2",
+    "chalk": "^5.3.0",
+    "colors": "1.4.0",
+    "commander": "^10.0.0",
+    "inquirer": "^9.1.4",
+    "inquirer-search-list": "^1.2.6",
+    "inquirer-table-input": "^0.0.3",
+    "open": "^10.0.3",
+    "openid-client": "^5.6.4",
+    "proxy-agent": "^6.4.0",
+    "zod-validation-error": "^3.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/B-S-F/qg-api-service.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^18.14.2",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "cpy-cli": "^5.0.0",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.4",
+    "tsup": "^6.6.3",
+    "typescript": "^4.9.5",
+    "vitest": "^0.29.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "moduleNameMapper": {
+      "^(\\.\\.?\\/.+)\\.jsx?$": "$1"
+    },
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "coverageReporters": [
+      "cobertura",
+      "json-summary",
+      "text-summary"
+    ],
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}

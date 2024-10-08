@@ -1,0 +1,123 @@
+metadata:
+  version: v1
+header:
+  name: Integration Test
+  version: 0.0.1
+  date: 2024-05-06 06:57
+  toolVersion: 0.11.0
+overallStatus: ERROR
+statistics:
+  counted-checks: 3
+  counted-automated-checks: 3
+  counted-manual-check: 0
+  counted-unanswered-checks: 0
+  counted-skipped-checks: 0
+  degree-of-automation: 100
+  degree-of-completion: 100
+chapters:
+  '1':
+    title: Test config should work
+    status: ERROR
+    requirements:
+      '1':
+        title: Run free of findings
+        status: ERROR
+        checks:
+          '1':
+            title: Check for findings
+            status: GREEN
+            type: Automation
+            evaluation:
+              autopilot: findings-interface-1
+              status: GREEN
+              reason: No Findings found
+              results:
+                - criterion: No findings
+                  fulfilled: true
+                  justification: No Findings found
+              execution:
+                logs:
+                  - '{"result": {"criterion": "No findings", "fulfilled": true, "justification":
+                    "No Findings found"}}'
+                  - '{"status": "GREEN", "reason": "No Findings found"}'
+                evidencePath: '1_1_1'
+                exitCode: 0
+          '2':
+            title: Check for findings
+            status: RED
+            type: Automation
+            evaluation:
+              autopilot: findings-interface-2
+              status: RED
+              reason: Found 5 findings
+              results:
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 1
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 2
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 3
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 4
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 5
+              execution:
+                logs:
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 1"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 2"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 3"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 4"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 5"}}'
+                  - '{"status": "RED", "reason": "Found 5 findings"}'
+                evidencePath: '1_1_2'
+                exitCode: 0
+          '3':
+            title: Check for findings
+            status: ERROR
+            type: Automation
+            evaluation:
+              autopilot: findings-interface-3
+              status: ERROR
+              reason:
+                "autopilot 'findings-interface-3' provided an invalid 'status':
+                ''"
+              results:
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 1
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 2
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 3
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 4
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 5
+              execution:
+                logs:
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 1"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 2"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 3"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 4"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 5"}}'
+                evidencePath: '1_1_3'
+                exitCode: 0

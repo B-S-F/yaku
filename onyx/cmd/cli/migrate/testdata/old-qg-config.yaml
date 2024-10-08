@@ -1,0 +1,47 @@
+header:
+  name: External dependencies
+  version: 1.16.0
+components:
+  webApp:
+    version: 1.16.5
+dependencies:
+  "@grow/jira-fetcher": "^0.1.0"
+  typescript-app: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/typescript-app-template
+  typescript-app-master: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/typescript-app-template#master
+autopilots:
+  dummy-autopilot:
+    run: |
+      echo "{\"status\":\"GREEN\"}"
+reports:
+  dummy-report: dummy-autopilot
+finalize:
+  run: |
+    html-finalizer
+    zip-finalizer
+allocations:
+  "1":
+    title: Title
+    requirements:
+      "1.1":
+        title: Title
+        text: Text
+        checks:
+          "1.1":
+            title: Title
+            components:
+              - webApp
+            reports:
+              - dummy-report
+      "1.2":
+        title: Title
+        text: Text
+        manualStatus: GREEN
+        reason: Apes
+      "1.3":
+        title: Title
+        text: Text
+        manualStatus: PENDING
+        reason: Apes
+      "1.4":
+        title: Title
+        text: Text

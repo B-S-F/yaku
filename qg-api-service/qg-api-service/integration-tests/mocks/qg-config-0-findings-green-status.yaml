@@ -1,0 +1,25 @@
+metadata:
+  version: v1
+header:
+  name: Integration Test
+  version: 0.0.1
+autopilots:
+  findings-interface:
+    run: |
+      echo '{"result": {"criterion": "No findings", "fulfilled": true, "justification": "No Findings"}}'
+      echo '{"status": "GREEN", "reason": "No Findings"}'
+chapters:
+  '1':
+    title: Test config should work
+    requirements:
+      '1':
+        title: Run free of findings
+        checks:
+          '1':
+            title: Check for findings
+            automation:
+              autopilot: findings-interface
+          '2':
+            title: Check for findings
+            automation:
+              autopilot: findings-interface

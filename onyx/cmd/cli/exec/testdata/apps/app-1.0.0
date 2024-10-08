@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo '{"status": "GREEN"}'
+echo '{"reason": "Repository apps was fetched"}'
+echo '{"result": {"criterion": "Repository apps can be fetched", "fulfilled": true, "justification": "This app is a repository app"}}'

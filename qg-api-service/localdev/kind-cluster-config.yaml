@@ -1,0 +1,28 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: yaku
+nodes:
+  - role: control-plane
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    extraPortMappings:
+      - containerPort: 30111
+        hostPort: 30111
+      - containerPort: 30112
+        hostPort: 30112
+      - containerPort: 30113
+        hostPort: 30113
+      - containerPort: 30114
+        hostPort: 30114
+      - containerPort: 30115
+        hostPort: 30115
+      - containerPort: 30116
+        hostPort: 30116
+      - containerPort: 30117
+        hostPort: 30117
+      - containerPort: 30118
+        hostPort: 30118

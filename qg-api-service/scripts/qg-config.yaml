@@ -1,0 +1,35 @@
+header:
+  name: TEST
+  version: 1.0.0
+components:
+  webApp:
+    version: 1.0.0
+autopilots:
+  autopilot-1:
+    run: |
+      echo "Add your apps here"
+      echo "{\"status\":\"GREEN\"}"
+    env:
+      FOO: "foo"
+      BAR: "bar"
+reports:
+  report-1: autopilot-1
+finalize:
+  run: |
+    html-finalizer
+    zip-finalizer
+allocations:
+  "1":
+    title: Test Allocation
+    requirements:
+      "1.1":
+        title: Test Requirement
+        text: |
+          Test Requirement Text
+        checks:
+          "1.1":
+            title: Test Check
+            components:
+              - webApp
+            reports:
+              - report-1

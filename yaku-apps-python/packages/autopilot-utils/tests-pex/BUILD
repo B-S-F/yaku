@@ -1,0 +1,10 @@
+python_tests(
+    dependencies=[
+        f"apps/filecheck/src/yaku/filecheck:app",
+    ],
+    runtime_package_dependencies=[
+        f"apps/filecheck:filecheck",
+    ],
+    skip_bandit=True,
+    skip_mypy=True,
+)

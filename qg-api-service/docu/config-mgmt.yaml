@@ -1,0 +1,299 @@
+openapi: "3.0.3"
+info:
+  title: Yaku Config API
+  version: "1.0"
+paths:
+  /namespaces/{namespaceId}/configs:
+    get:
+      summary: Retrieve all config resources of the current namespace
+      tags:
+        - Config
+      responses:
+        "200":
+          description: List of all config resources of the namespace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Configs"
+    post:
+      summary: Create a new Config resource with no files associated
+      tags:
+        - Config
+      requestBody:
+        description: Data for the new config resource
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfigDto"
+      responses:
+        "201":
+          description: New config resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Config"
+
+  /namespaces/{namespaceId}/configs/{configId}:
+    get:
+      summary: Get metadata for the referenced config
+      tags:
+        - Config
+      responses:
+        "200":
+          description: The requested config resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Config"
+    patch:
+      summary: Update the metadata of the referenced config resource, i.e., name and description
+      tags:
+        - Config
+      requestBody:
+        description: Data for the changed config resource
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfigDto"
+      responses:
+        "200":
+          description: Changed config resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Config"
+    delete:
+      summary: Delete the references config resource.
+      tags:
+        - Config
+      responses:
+        "200":
+          description: Config resource deleted successfully
+
+  /namespaces/{namespaceId}/configs/{configId}/validate:
+    put:
+      summary: Validate the configuration, i.e., validate qg config against the qg answers.schema and that the existing QgAdditionalConfig files are all referenced and non is missing
+      tags:
+        - Config
+      responses:
+        "200":
+          description: Validation result with state and findings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationReport"
+
+  /namespaces/{namespaceId}/configs/{configId}/init:
+    put:
+      summary: Create an initial qg config file out of the existing answers schema file. If there is no qg config referenced, the object will be stored as new qg config. If an qg config exists, the endpoint only returns the generated file.
+      tags:
+        - Config
+      responses:
+        "200":
+          description: Returns the content of the generated qg config file
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+
+  /namespaces/{namespaceId}/configs/{configId}/make-schema:
+    put:
+      summary: Create an answer schema out of an excel description and store it in the config
+      tags:
+        - Config
+      requestBody:
+        description: Excel data and configuration
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ExcelDto"
+            encoding:
+              xslx:
+                contentType: application/octet-stream
+              config:
+                contentType: application/octet-stream
+      responses:
+        "200":
+          description: Returns the generated answers-schema
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+
+  /namespaces/{namespaceId}/configs/{configId}/files:
+    get:
+      summary: Get all files aggregated in the referened config resource
+      tags:
+        - Config
+      responses:
+        "200":
+          description: List of all files aggregated in the config resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FilesMetadata"
+    post:
+      summary: Add a new file to the referenced config resource. This could lead to an error, if the multiplicities of the corresponding file type is exceeded, use patch if you want to replace an existing file. The filename field is ignored for QgConfig and QgAnswersSchema files because the name is hardcoded for these files
+      tags:
+        - Config
+      requestBody:
+        description: New file content + metadata
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/FileDto"
+      responses:
+        "201":
+          description: New file resource
+          content:
+            application/json:
+              schema:
+                type: string
+                format: url
+
+  /namespaces/{namespaceId}/config/{configId}/files/{fileName}:
+    get:
+      summary: Get file resource including content
+      tags:
+        - Config
+      responses:
+        "200":
+          description: The complete file resource including the content of the file
+          content:
+            multipart/form-data:
+              schema:
+                $ref: "#/components/schemas/File"
+              encoding:
+                content:
+                  contentType: application/octet-stream
+    patch:
+      summary: Update a file of the referenced config resource, i.e., the content of the file
+      tags:
+        - Config
+      requestBody:
+        description: Content of the file
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              $ref: "#/components/schemas/FileContentDto"
+      responses:
+        "200":
+          description: Changed file resource without data
+          content:
+            application/json:
+              schema:
+                type: string
+                format: url
+    delete:
+      summary: Delete a file from the config.
+      tags:
+        - Config
+      responses:
+        "200":
+          description: File resource deleted successfully
+
+components:
+  schemas:
+    Config:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        files:
+          type: array
+          items:
+            type: string
+            format: url
+
+    ConfigDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+
+    Configs:
+      type: array
+      items:
+        $ref: "#/components/schemas/Config"
+
+    FilesMetadata:
+      type: object
+      properties:
+        qg-config:
+          type: string
+          format: url
+        qg-answers-schema:
+          type: string
+          format: url
+        additional-configs:
+          type: array
+          items:
+            type: string
+            format: url
+
+    FileDto:
+      type: object
+      properties:
+        name:
+          type: string
+        content:
+          type: string
+          format: binary
+
+    FileContentDto:
+      type: string
+      format: binary
+
+    File:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          enum: [QgAnswersSchema, QgConfig, QgAdditionalConfig]
+        content:
+          type: string
+          format: binary
+
+    ExcelDto:
+      type: object
+      properties:
+        xslx:
+          type: string
+          format: binary
+        config:
+          type: string
+          format: binary
+
+    ValidationReport:
+      type: object
+      properties:
+        validated:
+          type: string
+          format: url
+        status:
+          type: string
+          enum: [Ok, WithWarnings, WithErrors]
+        findings:
+          type: array
+          items:
+            type: object
+            properties:
+              finding:
+                type: string

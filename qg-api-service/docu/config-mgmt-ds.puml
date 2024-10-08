@@ -1,0 +1,25 @@
+@startuml Yaku Config Mgmt Data Structures
+
+class Config
+Config : number id
+Config : string name
+Config : string description
+
+abstract class File
+
+File : number id
+File : string filename
+File : byte[] content
+
+File <|-- QgConfig
+File <|-- QgAnswersSchema
+File <|-- QgAdditionalConfig
+
+Config "1" o-right- "0..1" QgConfig
+Config "1" o-right- "0..1" QgAnswersSchema
+Config "1" o-right- "many" QgAdditionalConfig
+
+QgAnswersSchema -down-> "generates\nand/or\nvalidates" QgConfig
+QgConfig -down-> "references" QgAdditionalConfig
+
+@enduml

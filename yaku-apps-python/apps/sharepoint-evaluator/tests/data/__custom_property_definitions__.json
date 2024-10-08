@@ -1,0 +1,10 @@
+{
+  "RevisionStatus": {
+    "1": "Valid",
+    "2": "Draft"
+  },
+  "Workflow Status": {
+    "1": "History",
+    "2": "No workflow"
+  }
+}

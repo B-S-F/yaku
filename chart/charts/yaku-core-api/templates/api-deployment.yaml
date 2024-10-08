@@ -1,0 +1,333 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "yaku.fullname" . }}
+  labels:
+  {{- include "yaku.labels" . | nindent 4 }}
+  {{- with .Values.additionalLabels}}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "yaku.selectorLabels" . | nindent 6 }}
+      {{- with .Values.additionalSelectorLabels}}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "yaku.selectorLabels" . | nindent 8 }}
+        {{- with .Values.additionalSelectorLabels}}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.additionalLabels}}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "yaku.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: {{ .Values.restartPolicy | default "Always" }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}       
+          image: {{ .Values.global.images.yakuCoreApi }}
+          imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
+          ports:
+            - containerPort: {{ .Values.ports.containerPort }}
+              protocol: {{ .Values.ports.protocol }}
+          {{- if and (not (eq (toString .Values.readinessProbe.enabled) "false")) .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.httpGet.path }}
+              port: {{ .Values.ports.containerPort }}
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          {{- end }}
+          {{- if and (not (eq (toString .Values.livenessProbe.enabled) "false")) .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.httpGet.path }}
+              port: {{ .Values.ports.containerPort }}
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          {{- end }}  
+          env: 
+            - name: NODE_TLS_REJECT_UNAUTHORIZED
+              value: {{ .Values.env.node_tls_reject_unauthorized | default "0" | quote }}
+            - name: PATH_PREFIX
+              value: {{ .Values.env.path_prefix | default "" | quote }}
+            - name: SWAGGER_TITLE
+              value: {{ .Values.env.swagger_title | default "Yaku Core API" | quote }}
+            - name: RESULT_DELAY
+              value: {{ .Values.env.result_delay | default "5000" | quote }}
+            - name: MAX_FILE_SIZE_MB
+              value: {{ .Values.env.max_file_size_mb | default "2" | quote }}
+            - name: QG_LOG_LEVEL
+              value: {{ .Values.env.qg_log_level | default "debug" | quote }}
+            - name: TESTDATA_CLEANUP
+              value: {{ .Values.env.TESTDATA_CLEANUP | default "false" | quote }}
+            {{- if .Values.env.testdata_namespaces }}
+            - name: TESTDATA_NAMESPACES
+              value: {{ .Values.env.testdata_namespaces | quote }}
+            - name: TESTDATA_RETENTION_PERIOD_IN_DAYS
+              value: {{ .Values.env.testdata_retention_period_in_days | default "7" | quote }}
+            {{- end }}
+            {{- if .Values.env.in_private_cloud  }}
+            - name: IN_PRIVATE_CLOUD
+              value: {{ .Values.env.in_private_cloud | default "false" | quote }}
+            - name: http_proxy
+              value: {{ .Values.env.http_proxy | default "" | quote }}
+            - name: https_proxy
+              value: {{ .Values.env.https_proxy | default "" | quote }}
+            - name: HTTP_PROXY
+              value: {{ .Values.env.http_proxy | default "" | quote }}
+            - name: HTTPS_PROXY
+              value: {{ .Values.env.https_proxy | default "" | quote }}
+            - name: no_proxy
+              value: {{ .Values.env.no_proxy | default "" | quote }}
+            - name: NO_PROXY
+              value: {{ .Values.env.no_proxy | default "" | quote }}
+            - name: WORKFLOW_NO_PROXY
+              value: {{ .Values.env.workflow_no_proxy | default "" | quote }}
+            {{- end }}
+            - name: ENCRYPTION_KEY
+              {{- if or (not .Values.env.encryption_secret_name) (not .Values.env.encryption_secret_key) }}
+              valueFrom:
+                secretKeyRef:
+                  name: yaku-default-key
+                  key: default_key
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.encryption_secret_name }}
+                  key: {{ .Values.env.encryption_secret_key }}
+              {{- end }}
+            - name: ARGO_NAMESPACE
+              value: {{ .Values.env.argo_namespace | default "yaku" | quote }}
+            - name: ARGO_SERVER
+              value: {{ .Values.env.argo_server | default "https://argo-server:2746" | quote }}
+            - name: SKIP_CHECK_ARGO_ARCHIVE
+              value: "true"
+            - name: QGCLI_IMAGE
+              value: {{ .Values.global.images.yakuCore | quote }}
+            - name: QGCLI_VERSION
+              value: {{ .Values.env.core_version | quote }}
+            - name: PULL_SECRET_NAME
+              value: {{ .Values.env.pull_secret_name | default "" | quote }}
+            - name: QGCLI_DEBUG
+              value: {{ .Values.env.core_debug | default "false" | quote }}
+            - name: QGCLI_PULL_POLICY
+              value: {{ .Values.env.core_pull_policy | default "Always" | quote }}
+            - name: MINIO_SERVER
+              value: {{ .Values.env.minio_server | default "https://minio:9000" | quote }}
+            - name: MINIO_BUCKET
+              value: {{ .Values.env.minio_bucket | default "my-bucket" | quote }}
+            - name: MINIO_USE_SSL
+              value: {{ .Values.env.minio_use_ssl | default "false" | quote }}
+            {{- if .Values.env.minio_secret_name }}
+            - name: MINIO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.minio_secret_name }}
+                  key: {{ .Values.env.minio_username_key }}
+            - name: MINIO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.minio_secret_name }}
+                  key: {{ .Values.env.minio_password_key }}
+            {{- end }}
+            - name: MINIO_CLEANUP
+              value: {{ .Values.env.minio_cleanup | default "false" | quote }}
+            {{- if and (eq (toString .Values.env.minio_use_ssl) "true") (eq (toString .Values.env.in_private_cloud) "true") }}
+            - name: NODE_EXTRA_CA_CERTS
+              value: "/cert/cacert.crt"
+            {{- end }}
+            - name: DB_TYPE
+              value: {{ .Values.env.db_type | default "sqlite" | quote }}
+            {{- if ne .Values.env.db_type "postgres" }}
+            - name: DATA_DIR
+              value: {{ .Values.env.data_dir | quote }}
+            {{- end }}
+            {{- if eq .Values.env.db_type "postgres" }}
+            - name: DB_HOST
+              value: {{ .Values.global.database.db_host | quote }}
+            - name: DB_PORT
+              value: {{ .Values.global.database.db_port | default "5432" | quote }}
+            - name: DB_NAME
+              value: {{ .Values.env.db_name | default "yaku" | quote }}
+            - name: DB_USE_SSL
+              value: {{ .Values.env.db_use_ssl | quote }}
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.db_secret_name }}
+                  key: {{ .Values.env.db_username_key }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.db_secret_name }}
+                  key: {{ .Values.env.db_password_key }}
+            {{- end }}
+            {{- if and (eq .Values.env.db_type "postgres") (eq (toString .Values.env.db_use_ssl) "true") (eq (toString .Values.env.in_private_cloud) "true") }}
+            - name: PGSSLROOTCERT
+              value: "/cert/cacert.crt"
+            - name: PGSSLMODE
+              value: verify-full
+            {{- end }}
+            - name: KEYCLOAK_AUTH
+              value: {{ .Values.global.authentication.keycloak_enabled | default "off" | quote }}
+            {{- if eq .Values.global.authentication.keycloak_enabled "on" }}
+            - name: KEYCLOAK_SERVER
+              value: {{ .Values.global.authentication.keycloak_server | default "https://bswf.authz.bosch.com" | quote }}
+            - name: KEYCLOAK_CLIENT_ID
+              value: {{ .Values.global.authentication.keycloak_client_id | quote }}
+            - name: KEYCLOAK_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.authentication.keycloak_client_secret_name | quote }}
+                  key: {{ .Values.global.authentication.keycloak_client_secret_key | quote }}
+            - name: KEYCLOAK_REALM
+              value: {{ .Values.global.authentication.keycloak_realm | default "bswf" | quote }}
+            - name: KEYCLOAK_ENABLE_PROXY_TUNNEL
+              value: {{ .Values.global.authentication.keycloak_enable_proxy_tunnel | default "false" | quote }}
+            - name: SWAGGER_OAUTH2_CLIENT_ID
+              value: {{ .Values.global.authentication.swagger_oauth2_client_id | quote }}
+            {{- end }}
+            - name: DISABLE_OLD_TOKENS
+              value: {{ .Values.env.disable_old_tokens | default "true" | quote }}
+            - name: DB_MIGRATIONS_RUN
+              value: {{ .Values.env.run_db_migrations | default "true" | quote }}
+            - name: ENABLE_OVERRIDE_CONTROLLER
+              value: {{ .Values.env.enable_override_controller | default "true" | quote }}
+            - name: INSTANCE_NAME
+              value: {{ .Values.env.instance_name | default "production" | quote }}
+            - name: UI_FALLBACK_URL
+              value: {{ .Values.env.ui_fallback_url | default "https://portal.bswf.tech" | quote }}
+            - name: UI_SETTINGS_PATH
+              value: {{ .Values.env.ui_settings_path | default "/settings" | quote }}
+            - name: ENABLE_MAIL_NOTIFICATIONS_FEATURE
+              value: {{ .Values.global.notifications.enable_mail_notifications | default "false" | quote }}
+            {{- if eq (toString .Values.global.notifications.enable_mail_notifications) "true" }}
+            - name: SMTP_HOST
+              value: {{ .Values.global.notifications.smtp_host | default "in-v3.mailjet.com" | quote }}
+            - name: SMTP_PORT
+              value: {{ .Values.global.notifications.smtp_port | default "465" | quote }}
+            - name: SMTP_SENDER
+              value: {{ .Values.global.notifications.smtp_sender | default "yaku@mailing.bosch.com" | quote }}
+            - name: SMTP_SECURE
+              value: {{ .Values.global.notifications.smtp_secure | default "true" | quote }}
+            - name: MAILJET_USE_PROXY
+              value: {{ .Values.global.notifications.mailjet_use_proxy | default "false" | quote }}
+            - name: USE_MAILJET_API
+              value: {{ .Values.global.notifications.use_mailjet_api | default "false" | quote }}
+            {{- if eq (toString .Values.global.notifications.use_mailjet_api)  "true" }}
+            - name: MAILJET_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.notifications.mailjet_creds_secret_name | quote }}
+                  key: {{ .Values.global.notifications.mailjet_api_key_name | quote }}
+            - name: MAILJET_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.notifications.mailjet_creds_secret_name | quote }}
+                  key: {{ .Values.global.notifications.mailjet_api_secret_name | quote }}
+            {{- end }}
+            {{- if eq (toString .Values.global.notifications.use_mailjet_api)  "false" }}
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.notifications.smtp_creds_secret_name | quote }}
+                  key: {{ .Values.global.notifications.smtp_username_key_name | quote }}
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.notifications.smtp_creds_secret_name | quote }}
+                  key: {{ .Values.global.notifications.smtp_password_key_name| quote }}
+            {{- end }}
+            {{- end }}
+            - name: ENABLE_EXPLANATIONS_FEATURE
+              value: {{ .Values.global.explanations.enable_explanations_feature | default "false" | quote }}
+            {{- if eq (toString .Values.global.explanations.enable_explanations_feature) "true" }}
+            - name: OPENAI_BASE_URL
+              value: {{ .Values.global.explanations.openai_base_url | quote }}
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.explanations.openai_api_key_secret_name | quote }}
+                  key: {{ .Values.global.explanations.openai_api_key_secret_key_name | quote }}
+            - name: OPENAI_API_VERSION
+              value: {{ .Values.global.explanations.openai_api_version | quote }}
+            - name: OPENAI_MODEL
+              value: {{ .Values.global.explanations.openai_model | quote }}
+            {{- end }}
+            {{- with .Values.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if ne .Values.env.db_type "postgres" }}
+          volumeMounts:
+          - mountPath: {{ .Values.env.data_dir | quote }}
+            name: data-storage
+          {{- end }}
+          {{- if or  (and (eq (toString .Values.env.db_use_ssl) "true") (eq (toString .Values.env.in_private_cloud) "true")) (and (eq (toString .Values.env.minio_use_ssl) "true") (eq (toString .Values.env.in_private_cloud) "true")) }}
+          volumeMounts:
+            {{- if and (eq .Values.env.db_type "postgres") (eq (toString .Values.env.in_private_cloud) "true") }}
+            - mountPath: /cert
+              name: cacert
+            {{- end }}
+          {{- end }}
+      {{- if and (ne .Values.env.db_type "postgres") (.Values.persistence.create ) }}
+      volumes:
+        - name: data-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.name | quote }}
+      {{- end }}
+      {{- if or  (eq (toString .Values.env.db_use_ssl) "true") (eq (toString .Values.env.minio_use_ssl) "true") }}
+      volumes:
+        {{- if or (and (eq .Values.env.db_type "postgres") (eq (toString .Values.env.db_use_ssl) "true") (eq (toString .Values.env.in_private_cloud) "true"))  (and (eq (toString .Values.env.minio_use_ssl) "true") (eq (toString .Values.env.in_private_cloud) "true")) }}
+        - name: cacert
+          secret:
+            secretName: {{ .Values.env.cacert_secret_name | quote }}
+            items:
+            - key: {{ .Values.env.cacert_key_name | default "DB_CERT" | quote }}
+              path: cacert.crt
+        {{- end }}
+      {{- end }}
+      

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-db-config
+  namespace: aqua
+data:
+  init-aqua-db.sql: |
+    CREATE DATABASE aqua;
+    CREATE ROLE aqua_db_user WITH LOGIN NOSUPERUSER INHERIT CREATEDB NOCREATEROLE NOREPLICATION PASSWORD 'aqua_db_password';
+    GRANT CONNECT ON DATABASE aqua TO aqua_db_user;
+    GRANT CREATE ON DATABASE aqua TO aqua_db_user;
+    CREATE DATABASE keycloak;
+    CREATE ROLE keycloak_db_user WITH LOGIN NOSUPERUSER INHERIT CREATEDB NOCREATEROLE NOREPLICATION PASSWORD 'keycloak_db_password';
+    GRANT CONNECT ON DATABASE keycloak TO keycloak_db_user;

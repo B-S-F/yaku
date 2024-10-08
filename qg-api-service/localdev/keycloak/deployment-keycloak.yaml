@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yaku-keycloak
+  labels:
+    app: yaku-keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yaku-keycloak
+  template:
+    metadata:
+      labels:
+        app: yaku-keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:20.0.5
+          args: ["start", "--cache-stack=kubernetes", "--import-realm"]
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: "admin"
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: "admin"
+            - name: KC_PROXY
+              value: "edge"
+            - name: jgroups.dns.query
+              value: "keycloak"
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+            - name: KC_HEALTH_ENABLED
+              value: "true"
+            - name: KC_METRICS_ENABLED
+              value: "true"
+            - name: KC_HTTP_ENABLED
+              value: "true"
+            - name: KC_HTTP_RELATIVE_PATH
+              value: "/auth"
+            - name: KC_HOSTNAME_URL
+              value: "http://localhost:30115/auth/"
+            - name: KC_HOSTNAME_ADMIN_URL
+              value: "http://localhost:30115/auth/"
+            - name: KC_DB
+              value: "postgres"
+            - name: KC_DB_URL
+              value: "jdbc:postgresql://yaku-postgres/keycloak"
+            - name: KC_DB_URL_HOST
+              value: "yaku-postgres"
+            - name: KC_DB_URL_PORT
+              value: "5432"
+            - name: KC_DB_URL_DATABASE
+              value: "keycloak"
+            - name: KC_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: keycloakpostgresuser
+                  name: service-creds
+            - name: KC_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: keycloakpostgrespassword
+                  name: service-creds
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: jgroups
+              containerPort: 7600
+          volumeMounts:
+            - name: realm
+              mountPath: /opt/keycloak/data/import/
+      volumes:
+        - name: realm
+          configMap:
+            name: realm-config

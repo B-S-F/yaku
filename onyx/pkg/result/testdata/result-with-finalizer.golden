@@ -1,0 +1,25 @@
+metadata:
+    version: v1
+header:
+    name: My Project
+    version: 0.1.0
+    date: 2023-11-17 10:29
+    toolVersion: ""
+overallStatus: ""
+statistics:
+    counted-checks: 0
+    counted-automated-checks: 0
+    counted-manual-check: 0
+    counted-unanswered-checks: 0
+    counted-skipped-checks: 0
+    degree-of-automation: .nan
+    degree-of-completion: .nan
+chapters: {}
+finalize:
+    execution:
+        logs:
+            - log
+        errorLogs:
+            - err
+        evidencePath: .
+        exitCode: 0

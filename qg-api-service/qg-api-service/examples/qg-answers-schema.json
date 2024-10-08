@@ -1,0 +1,1077 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QG Config",
+  "description": "Configuration of a QG with fixed requirements structure. Auto-generated, do not change!",
+  "$id": "qg-config",
+  "allOf": [
+    {
+      "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json"
+    },
+    {
+      "type": "object",
+      "required": ["allocations"],
+      "properties": {
+        "allocations": {
+          "type": "object",
+          "required": ["1", "2", "3", "4", "5", "10", "12", "13", "15", "17"],
+          "properties": {
+            "1": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Project management"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "1.2",
+                    "1.3",
+                    "1.4",
+                    "1.6",
+                    "1.7",
+                    "1.15",
+                    "1.20",
+                    "1.21",
+                    "1.22"
+                  ],
+                  "properties": {
+                    "1.2": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Measures from the preceding maturity levels and/or QGs are incorporated, are monitored and are effectively introduced."
+                        },
+                        "text": {
+                          "const": "All QGs: Measures from the previous IGs, SEs und QGs are incorporated and effectively introduced."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "1.3": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Project dates / schedule (agile: Product and Sprint Backlog) is updated and\nis met."
+                        },
+                        "text": {
+                          "const": "The project schedule is agreed with all participants.\nThe target dates are up-to-date and achievable.\nThe impact of the target dates on the subprojects and components has been analyzed.\nThe next sprints are planned / defined.\nThe agreed customer features of a contract are prioritized and deviation are agreed by the customer.\nCustomer milestones are taken into account."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "1.4": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The project budget is met."
+                        },
+                        "text": {
+                          "const": "The proportionate project budget was met in each project phase."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "1.6": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Lessons Learned are observed / generated."
+                        },
+                        "text": {
+                          "const": "QG0: Existing lessons learned have been evaluated and taken into consideration.\nLessons learned from actual, comparable or processor projects has been taken into account. For critical issues a action is defined and followed up. \n\nQG5: Lessons learned completed and implemented."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "1.7": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Interfaces to the other projects / products are considered."
+                        },
+                        "text": {
+                          "const": "Dependencies / impact from other projects / other products are considered (e.g. capacity consideration in parallel projects; synergistic effects, carry over-parts)"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "1.15": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "It is known, whether and which Open Source Software is included in the product. \nThe license conditions are complied with."
+                        },
+                        "text": {
+                          "const": "At SW-QG0 the systematic assessment of all Open Source components as well as the SW-scan have to be scheduled if no scan exception applies.\nThe SW-Scan must have been performed at SW-QG4, unless there is a scan exception.\n\nIt is demonstrably known whether and which Open Source Software is included in the product including delivered software. \nThe license conditions of all Open Source- and proprietary software components are complied with."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "1.20": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Was the project specific quality assurance  plan (PSQAP) updated?\nThe Q targets (also for partial projects and components) can be realized / are reached"
+                        },
+                        "text": {
+                          "const": "QG-Level 1-3:\nThe quality targets can be achieved according to updated quality preview.\nQG4/QG5: The quality targets have been achieved."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "1.21": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Has the Definition of Ready and Definition of Done been defined / updated in the team? \nDid the stories have adequate acceptance criteria?"
+                        },
+                        "text": {
+                          "const": "Sprint Planning"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "1.22": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Have all required data protection contracts been determined and established (e.g. with suppliers and subcontractors)?"
+                        },
+                        "text": {
+                          "const": "All target markets considered?\n\nInfo: PROMAP-Template: Processing Description (Chapter: Data Recipients)"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            },
+            "2": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Security"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["2.4", "2.5", "2.6"],
+                  "properties": {
+                    "2.4": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "If privacy relevant:\nHas the Customer / User Information Leaflet been filled?"
+                        },
+                        "text": {
+                          "const": "Deliverable:\nCustomer / User Information Leaflet"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "2.5": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "If privacy relevant:\nHas the Processing Description been completely documented?"
+                        },
+                        "text": {
+                          "const": "Deliverable:\nProcessing Description incl. Primary and Supporting assets"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "2.6": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Has the Data Protection Checklist been completed?"
+                        },
+                        "text": {
+                          "const": "Deliverable :\nData Protection Checklist (also known as Data Privacy and IoTP Relevance Assessment)"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            },
+            "3": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Requirements management"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["3.4", "3.5", "3.7", "3.8", "3.9", "3.11"],
+                  "properties": {
+                    "3.4": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Legal / official requirements / restrictions and regulations are known and were considered."
+                        },
+                        "text": {
+                          "const": "technical legal requirements, such as legal requirements of the target market, goods subject to approval (export control), Design for Environment, recycling concept, VDE approvals,...\n\nCompetitive analysis considered;\n\nIt is recommended to the GEs to generate a positive list."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "3.5": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Requirements in relation to product development codex are known and considered (added to the requirements list)."
+                        },
+                        "text": {
+                          "const": "Legality and Bosch values;\nThe development of functions for the cycle / test detection is not permissible;\nAn optimization, purely on the cycle, is not permissible;\nwarranted characteristics are met, human life is protected to the greatest possible extent;"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "3.7": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The requirements for the product safety are known and were considered."
+                        },
+                        "text": {
+                          "const": "SW-QG0, QG1: Analysis of Hazards and Evaluation of Safety Risks\nQG1: Specification of Safety Concepts and Measures,\nQG2: Check plan; \nQG3: Confirmation must be available; \nfrom QG3 onwards: implementation proven\nup to  SW-QGR, QG4:\nAnalysis for the effectiveness of the measures, \nAnalysis to give evidence that the safety requirements are fulfilled (verification) and validation of product safety carried out to an appropriate extent.\n\nBranch-specific norms should be considered;\nAt each QG: Check, whether the hazard analysis and risk evaluation is still up to date."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "3.8": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "If security relevant:\nThe requirements for information security and data protection are considered."
+                        },
+                        "text": {
+                          "const": "QG0: \n• Requirements for information security are known (prescreening).\nQG3/4, QGC3/4: \n• Requirements for information security are considered\n• Data protection compliance is ensured / met\n• Local restrictions/laws and requirements of target markets are considered\n\nData protection: \nIf personal data is processed in the Bosch product, then the data protection compliance (incl. all checks and documentations) have to be guaranteed in the project course (even if QGs Level 1-3 are omitted)."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "3.9": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "UX-relevance has been evaluated and UX activities are planned and implemented according to BCI definitions."
+                        },
+                        "text": {
+                          "const": "QG0: UX relevance evaluated; \nUX activities are considered in the initial requirements, planned and will be implemented starting from QG0\n\nQG3/QG4: UX activities are implemented\n\nIn case of UX Relevance a patent strategy with UX focus determined"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "3.11": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "All known functional and non-functional requirements (internal and/or from customer) that are relevant for the product approval / the release or for the QG  as well as their acceptance criteria are defined / fulfilled."
+                        },
+                        "text": {
+                          "const": "QG0: QGR-relevant requirements are available;\nQG4: requirements are implemented\n\nDefine the extent to which the acceptance criteria are to be checked in a review.\nSafety-related requirements must be designated as such.\nPerformance requirements to be considered.\nSW: Bidirectional traceability of the requirements for the code and test cases must be ensured."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            },
+            "4": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Product development"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["4.4", "4.6", "4.7"],
+                  "properties": {
+                    "4.4": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The interaction of the components is analyzed and assured. \nHas a SW architecture  been documented/updated and reviewed by the relevant parties / stakeholder?"
+                        },
+                        "text": {
+                          "const": "Functional and safe Interaction:\nThe cause-effect relationships of the components (mechanics, HW, SW) were analyzed and observed in the development. Changes were observed. Functionality of the system was verified."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "4.6": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The applicable rules for\n• SW architecture and detailed design\n• Coding\n• Re-use\n• Critical computer resources\nare identified and met."
+                        },
+                        "text": {
+                          "const": "Applicable rules are defined in the GE or by customer"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "4.7": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The quality of re-used software was inspected and adjusted where needed."
+                        },
+                        "text": {
+                          "const": "QG0: determine which software shall be re-used and which open issues might be known.\nQGR, QG4: Removal of open issues is determined and changes to re-used software will be re-based if required."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            },
+            "5": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Verification / validation"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "5.1",
+                    "5.2",
+                    "5.3",
+                    "5.4",
+                    "5.5",
+                    "5.6",
+                    "5.7",
+                    "5.8",
+                    "5.9"
+                  ],
+                  "properties": {
+                    "5.1": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The test strategy was defined/adhered to."
+                        },
+                        "text": {
+                          "const": "QG0: Test strategy was defined\nQGR/QG4: test strategy was adhered to"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "5.2": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The agreed product and process tests for the time of the QG were performed and their results are good."
+                        },
+                        "text": {
+                          "const": "Remark: At SW-QG0 the process test may e.g. be a supplier self-declaration."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "5.3": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "All safety-related requirements are tested and errors removed."
+                        },
+                        "text": {
+                          "const": "Industry-specific standards are to be observed"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "5.4": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "All security-related requirements are tested and errors removed"
+                        },
+                        "text": {
+                          "const": "Have the assurance/testing methods according to the project’s security level been performed and updated as well as the findings re-evaluated?"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "5.5": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "If security relevant:\nHas a penetration test been performed and findings been re-evaluated in accordance with the penetration test requirements?"
+                        },
+                        "text": {
+                          "const": "Deliverable:\nPenetration Test report"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "5.6": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Errors / open items / \"known issues\" have been evaluated and dealt with."
+                        },
+                        "text": {
+                          "const": "\"dealt with\" means e.g.\n - errors are analyzed, severity judged,  prioritized and mapped to releases\n - known errors and existing workarounds are transferred to Operation and Support\n - SW-QG4: Notification to customer if functions are not met to the specified scope\n - …"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "5.7": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Has a virus scan been performed on all product software artifacts?"
+                        },
+                        "text": {
+                          "const": "Virus Scan Report"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "5.8": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The installation procedure incl. documentation is verified."
+                        },
+                        "text": {
+                          "const": "It should be tested if the SW can be installed on a fresh system by following the documented installation procedure, or in case of an update on systems with older versions of the SW."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "5.9": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The data protection documentation was reviewed by the DSPiE"
+                        },
+                        "text": {
+                          "const": "Review result is documented, evaluated and required measures are implemented"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            },
+            "10": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Procurement/ external procurement"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["10.2", "10.3", "10.4"],
+                  "properties": {
+                    "10.2": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The required purchased parts and services have the necessary maturity."
+                        },
+                        "text": {
+                          "const": "If required, technical and delivery risks are identified for new parts and carry-over parts.  \nQG1: Approval by project purchase department for the BOM (Bill of material) is available.\n\ninterim order specification up to QG2, order specification up to QG3 and/or at the latest QG4\n\nNew parts: Assessment based on the available Purchasing Reviews (Purchasing Evaluation); \nCarry-over parts, -components and materials: see deadlines in order specifications;\nRisk management to ensure capability to deliver (new parts and carry-over parts; R: Purchase)\nMaterial release: as per RB/GF 131 concluded on time (Automotive: QGC2, Non-Automotive: QG4)\n\nChange management agreed / regulated"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "10.3": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "SW commissioned by means of a specification document was accepted on the basis of the specification document."
+                        },
+                        "text": {
+                          "const": ""
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "10.4": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Have the used third party components been checked regarding open source licensing and security vulnerabilities?"
+                        },
+                        "text": {
+                          "const": ""
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            },
+            "12": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Change management in the project"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["12.2"],
+                  "properties": {
+                    "12.2": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "The requirements were reviewed for changes, impact considered and communicated within the supply chain."
+                        },
+                        "text": {
+                          "const": ""
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            },
+            "13": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Risk management"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "13.1",
+                    "13.2",
+                    "13.4",
+                    "13.5",
+                    "13.6",
+                    "13.8",
+                    "13.9"
+                  ],
+                  "properties": {
+                    "13.1": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Project-specific risk management performed and approved."
+                        },
+                        "text": {
+                          "const": "Relevant risks assessed; measures defined; effectivity of the measures assessed.\nThe updated project risk analysis is available and is confirmed if required."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "13.2": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Technical risk analysis (product) is available, up to date and confirmed."
+                        },
+                        "text": {
+                          "const": "By QG1 / SW-QGR: current edition of the Design-FMEA* created;\nBy QG4/ SW-QG4: current Design-FMEA* edition/ risk analysis available, which represents the state of SOP.\n\n*FMEA is the method to be used in the automobile industry (IATF16949, ISO26262). Additional technical risk analysis can be requested.\nIn other branches, alternative methods are permissible for the technical risk analysis.\n\nCurrent approach at BCI: \nHW: FMEA\nSW: Focus Area Matrix (FAM)"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "13.4": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "If security relevant:\nHas the security risk assessment been performed and is up-to-date?"
+                        },
+                        "text": {
+                          "const": "Quality Indicators for all QGs:\n• Has the scope and the architecture been defined?\n• Has the predefined list of sources for security requirements and standards relevant to the project taken into account?\n• (QG0: As far as known: ) Have all primary and supporting assets been identified?\n• (QG0: As far as known: ) Have all primary assets been classified according to the protection classes from a data protection perspective?\n• (QG0: As far as known: ) Have the  primary assets been classified according to the protection classes (SC- described in CD2900) from a security perspective?\n• (QG0: As far as known: ) Have the supporting assets been classified according to the required protection classes? \n\nAdditional indicators for QG4\n• Has the baseline security approach been followed for each supporting asset to identify requirements?\n• Have requirements been identified for business logic, the specific domain and the communication? (Approach can be additional threat modelling chapter in the template)\n• Has the documentation been sent to the ProSO\n\nDeliverable:\nSecurity Risk Assessment incl. Primary and Supporting Assets"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "13.5": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "If security relevant:\nHave security risks been documented in the Security Risk list?"
+                        },
+                        "text": {
+                          "const": "Quality Indicators:\nQG4:\n• Do all risks have one of the following statuses (Mitigated, Accepted, Resolved)?\n• If risks have been accepted, is the person authorized to accept a specific risk?\n• Due date should not be in the past\n• Has the resulting risk of not implementing a requirement been made transparent to the project lead? \n• ProSO has been informed about the security risks?\n\nDeliverable:\nSecurity Risk List"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "13.6": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "If security relevant:\nHas the security concept been performed and is up-to-date?"
+                        },
+                        "text": {
+                          "const": "Quality Indicators:\n• Does the security concept contain a list of requirements derived from the catalogues and has, including information about the implementation details and status for each supporting asset?\n• Have the required applicable security requirements been identified for external components/assets and the status been documented?\n• Does the security concept include additional information regarding secure operations and administration, development environment security, secure decommissioning?\n\nDeliverable:\nSecurity Concept"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "13.8": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Provided SW / COTS were dealt with in the risk management."
+                        },
+                        "text": {
+                          "const": "COTS: commercial off the shelf / standard products"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "13.9": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Has the Data Protection Risk Assessment been performed and signed?"
+                        },
+                        "text": {
+                          "const": "Deliverable:\nTab Data Protection Risk Assessment in Excel file of C/ISP"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            },
+            "15": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Configuration management"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["15.0", "15.1", "15.2"],
+                  "properties": {
+                    "15.0": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Configuration management is specified and adhered to."
+                        },
+                        "text": {
+                          "const": "Standard archiving and labeling of project documents according to CD02900 / BCI DI 0100 including Traceability is assured.\nSpecial requirements (e.g. customer requirement) are met in relation to the archiving and labeling of the documents."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "15.1": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "A baseline was drawn and it was reviewed whether the baseline is complete with reference to the specified Configuration Items"
+                        },
+                        "text": {
+                          "const": "It is defined, which Configuration Items are relevant for the delivery / release, a baseline is created from this and checked for completeness. The allocation of the baseline to the QG has to be unambiguous."
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "15.2": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Has a Release Note been created including migration notes / guide  (SW Version, functionality, implemented issues, Test coverage, release level General Availability /Limited Availability….)?"
+                        },
+                        "text": {
+                          "const": "Release Note"
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            },
+            "17": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "requirements"],
+              "properties": {
+                "title": {
+                  "const": "Training and Enabling"
+                },
+                "requirements": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["17.2"],
+                  "properties": {
+                    "17.2": {
+                      "type": "object",
+                      "required": ["title", "text"],
+                      "properties": {
+                        "title": {
+                          "const": "Enabling concept and material available, trainers / consultants assigned.\nTechnical enabling of consultants & application engineers has been executed."
+                        },
+                        "text": {
+                          "const": ""
+                        },
+                        "report": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                        },
+                        "checks": {
+                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

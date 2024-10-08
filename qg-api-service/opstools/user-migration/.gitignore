@@ -1,0 +1,5 @@
+users*.json
+.venv
+.envrc
+kubeconfig
+secret.yaml

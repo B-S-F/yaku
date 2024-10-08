@@ -1,0 +1,39 @@
+{
+  "name": "@B-S-F/scale-run-test",
+  "version": "0.58.0",
+  "description": "A small acceptance test that checks the scalability of the service concerning runs",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "npm": ">=9.3.0",
+    "node": ">=18.14.0"
+  },
+  "main": "./dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "dev": "nodemon --watch \"src/**\" --exec npm run start",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "start": "node ./dist/index.js",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "author": "GROW/PAT",
+  "dependencies": {
+    "@B-S-F/yaku-client-lib": "^0.58.0",
+    "commander": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.2",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.4",
+    "tsup": "^6.6.3",
+    "typescript": "^4.9.5"
+  },
+  "bin": {
+    "scalability-test": "./dist/index.js"
+  }
+}

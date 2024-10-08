@@ -1,0 +1,77 @@
+{{- if and (not (eq (toString .Values.enabled) "false")) .Values.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "yaku.name" . }}-ui
+  labels:
+    {{- include "yaku.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount | default 1 }} 
+  selector:
+    matchLabels:
+      {{- include "yaku.selectorLabels" . | nindent 6 }}
+      {{- with .Values.additionalSelectorLabels}}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "yaku.selectorLabels" . | nindent 8 }}
+        {{- with .Values.additionalSelectorLabels}}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "yaku.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: {{ .Values.restartPolicy | default "Always" }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
+          image: {{ .Values.global.images.yakuUi }}
+          imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
+          ports:
+            - containerPort: {{ .Values.ports.containerPort }}
+              protocol: {{ .Values.ports.protocol }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.env }}
+          env:
+          {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- end }}
+          {{- if and (not (eq (toString .Values.enabled) "false")) .Values.enabled (not (eq (toString .Values.config.enabled) "false")) .Values.config.enabled }}
+          volumeMounts:
+            - name: backend-environments-config
+              mountPath: /usr/share/nginx/static/ui-config.json
+              subPath: ui-config.json
+          {{- end }}
+      {{- if and (not (eq (toString .Values.enabled) "false")) .Values.enabled (not (eq (toString .Values.config.enabled) "false")) .Values.config.enabled }}
+      volumes:
+        - name: backend-environments-config
+          configMap:
+            name: {{ .Chart.Name }}
+      {{- end }}
+{{- end }}

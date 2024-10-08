@@ -1,0 +1,117 @@
+<mjml>
+  <mj-head>
+    <mj-style>
+      .subject-text a {
+        color: #007BC0;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .body-text {
+        background-color: white;
+      }
+
+      .body-text div {
+        padding: 0px;
+      }
+
+      .body-text p {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.8;
+      }
+
+      .body-text ul {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.8;
+      }
+
+      .body-text a {
+        color: #007BC0;
+        text-decoration: none;
+      }
+
+      .body-text a {
+        color: #007BC0;
+        text-decoration: none;
+      }
+
+      .footer-text a {
+        color: #007BC0;
+        text-decoration: none;
+        font-weight: bold;
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#FFFFFF" width="910px">
+    <mj-section border-bottom="1px solid #979EA4" padding="0px">
+      <mj-column vertical-align="middle">
+        <mj-text color="#000" font-size="20px" font-weight="bold" padding-left="32px">Yaku Update</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="0px" padding-left="24px">
+      <mj-column padding="0px">
+        <mj-text padding="0px" align="left" padding-bottom="32px" padding-top="24px">
+          <p style="font-size: 14px;">There is <span style="font-weight: bold;">1 update</span>.</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-wrapper padding="24px" padding-top="0px">
+      <mj-section background-color="#EFF1F2" padding="24px">
+        <mj-column padding="0px">
+          <mj-text css-class="subject-text" padding="0px" padding-bottom="32px" font-size="16px">
+            <p style="font-weight: bold;"> New <a href="<%=ui_url%>/<%=encodeURIComponent(instance_name)%>/<%=encodeURIComponent(namespace_name)%>/releases/<%=encodeURIComponent(release_id)%>/details/checks?content=chapter--<%=encodeURIComponent(chapter_id)%>--requirement--<%=encodeURIComponent(requirement_id)%>--check--<%=encodeURIComponent(check_id)%>&commentId=<%=encodeURIComponent(comment_id)%>&parentCommentId=<%=encodeURIComponent(parent_comment_id)%>">comment</a> in Your Participated Thread.</p>
+          </mj-text>
+          <mj-text css-class="body-text">
+            <p>
+              Dear
+              <%=user_name%>,
+            </p>
+            <p>
+              A new comment has been posted in a thread you participated in.
+            </p>
+            <p>
+              Details:
+              <ul>
+                <li><strong>Release Name: </strong><a href="<%=ui_url%>/<%=encodeURIComponent(instance_name)%>/<%=encodeURIComponent(namespace_name)%>/releases/<%=encodeURIComponent(release_id)%>/details">
+                    <%=release_name%></a>
+                <li><strong>Commented by: </strong>
+                  <%=created_by%>
+                </li>
+                <li><strong>Comment: </strong>
+                  <%=content%>
+                </li>
+              </ul>
+            </p>
+            <p>
+              Please <a href="<%=ui_url%>">log in to the system</a> to view the full comment and respond if necessary.
+            </p>
+            <p>
+              Thank you,
+              <br />
+              <%=yaku_team%>
+            </p>
+          </mj-text>
+          <mj-text css-class="footer-text" padding="0px" padding-top="32px" font-size="12px">
+            <p style="font-weight: bold;">
+              <span>Release </span>
+              <a href="<%=ui_url%>/<%=encodeURIComponent(instance_name)%>/<%=encodeURIComponent(namespace_name)%>/releases/<%=encodeURIComponent(release_id)%>/details">
+                <%=release_name%></a>
+            </p>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text padding="0px" padding-top="32px" font-size="12px">
+            <p>
+              This message is sent by Yaku because you are an approver to Release
+              <%=release_name%>.
+            </p>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+  </mj-body>
+</mjml>

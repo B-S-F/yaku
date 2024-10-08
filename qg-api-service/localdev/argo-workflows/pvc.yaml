@@ -1,0 +1,26 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: minio-pvc
+  namespace: aqua
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+  storageClassName: standard
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-pvc
+  namespace: aqua
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+  storageClassName: standard

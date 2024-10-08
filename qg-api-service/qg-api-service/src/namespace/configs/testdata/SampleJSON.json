@@ -1,0 +1,7 @@
+{
+  "prop1": "value1",
+  "prop2": {
+    "prop21": "value21",
+    "prop22": "value22"
+  }
+}

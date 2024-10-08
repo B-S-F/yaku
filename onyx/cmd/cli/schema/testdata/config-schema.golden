@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/B-S-F/onyx/pkg/configuration/versions/v1/config",
+  "$ref": "#/$defs/Config",
+  "$defs": {
+    "AppRepository": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the repository\nExample \"curl\""
+        },
+        "configuration": {
+          "type": "object",
+          "description": "Configuration of the repository\nExample\n\turl: \"https://my-file-server.com/my-file.yaml\"\n\tauth:\n\t\ttype: \"basic\"\n\t\tusername: \"my-username\"\n\t\tpassword: \"my-password\""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "type",
+        "configuration"
+      ]
+    },
+    "Automation": {
+      "properties": {
+        "autopilot": {
+          "type": "string",
+          "description": "Reference to the autopilot defined in the autopilots section\nExample \"my-autopilot\""
+        },
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object",
+          "description": "Environment variables to be set before executing the script\nExample\n\tFOO: bar\n\tBAZ: qux"
+        },
+        "config": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Configuration files needed by the autopilot\nExample\n\t- my-config.yaml\n\t- my-other-config.yaml"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "autopilot"
+      ],
+      "description": "Defined the automation of executing a check"
+    },
+    "Autopilot": {
+      "properties": {
+        "apps": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "A list of apps that the autopilot is able to use\nExample\n\t- my-app@1.0.0\n\t- my-other-app@2.0.0"
+        },
+        "run": {
+          "type": "string",
+          "description": "A bash script to execute\nIn order to provide a multiline script, use the \"|\" symbol\nExample \"echo 'Hello World'\"\nExample Run: |\n\techo 'Hello World'"
+        },
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object",
+          "description": "Environment variables to be set before executing the script\nExample\n\tFOO: bar\n\tBAZ: qux"
+        },
+        "config": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Configuration files needed by the autopilot\nExample\n\t- my-config.yaml\n\t- my-other-config.yaml"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "run"
+      ],
+      "description": "Contains a autopilot configurations"
+    },
+    "Chapter": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "required",
+          "description": "Title of the chapter\nExample \"My Chapter\""
+        },
+        "text": {
+          "type": "string",
+          "description": "Text of the chapter\nIn order to provide a multiline text, use the \"\u003e\" symbol\nExample \"This is my chapter\"\nExample Text: \u003e\n\tThis is my chapter"
+        },
+        "requirements": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Requirement"
+          },
+          "type": "object",
+          "description": "Requirements to answer the chapter\nExample^\n\tmy-requirement:\n\t  title: My Requirement\n\t  text: This is my requirement\n\t  checks: ..."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "requirements"
+      ],
+      "description": "Contains a configuration to answer a chapter"
+    },
+    "Check": {
+      "anyOf": [
+        {
+          "required": [
+            "manual"
+          ],
+          "title": "manual"
+        },
+        {
+          "required": [
+            "automation"
+          ],
+          "title": "automation"
+        }
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the check\nExample \"My Check\""
+        },
+        "manual": {
+          "$ref": "#/$defs/Manual",
+          "description": "Manual answer to provide a non-automated result for a check\nExample\n\tmanual:\n\t  status: YELLOW\n\t  reason: This is my reason"
+        },
+        "automation": {
+          "$ref": "#/$defs/Automation",
+          "description": "Automation  of the check executed by an autopilot which provides a result\nExample\nautomation:\n  autopilot: \"my-autopilot\"\n  env:\n    FOO: bar\n  config\n    - my-config.yaml"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "title"
+      ],
+      "description": "Contains configuration to execute a check either manually or automated"
+    },
+    "Config": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata",
+          "description": "Metadata of the configuration"
+        },
+        "header": {
+          "$ref": "#/$defs/Header",
+          "description": "Header of the configuration"
+        },
+        "default": {
+          "$ref": "#/$defs/Default",
+          "description": "Default parameters"
+        },
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object",
+          "description": "Global environment variables to be available in all autopilots"
+        },
+        "repositories": {
+          "items": {
+            "$ref": "#/$defs/AppRepository"
+          },
+          "type": "array",
+          "description": "Extra dependencies to be installed"
+        },
+        "autopilots": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Autopilot"
+          },
+          "type": "object",
+          "description": "Autopilot configurations"
+        },
+        "finalize": {
+          "$ref": "#/$defs/Autopilot",
+          "description": "Finalize configuration"
+        },
+        "chapters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Chapter"
+          },
+          "type": "object",
+          "description": "Chapters of the project"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "metadata",
+        "header",
+        "chapters"
+      ],
+      "description": "Contains the configuration of the project"
+    },
+    "Default": {
+      "properties": {
+        "vars": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object",
+          "description": "Default vars\nExample\n\tFOO: bar\n\tBAZ: qux"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "Header": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the project\nExample \"My Project\""
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the project\nExample \"0.1.0\""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "version"
+      ],
+      "description": "Contains the header to identify the project"
+    },
+    "Manual": {
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "GREEN",
+            "YELLOW",
+            "RED",
+            "NA",
+            "UNANSWERED",
+            "SKIPPED"
+          ],
+          "description": "Manual status\nExample \"YELLOW\""
+        },
+        "reason": {
+          "type": "string",
+          "description": "Manual reason\nExample \"This is my reason\""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "status",
+        "reason"
+      ],
+      "description": "Contains a hard coded answer for a check that cannot be or is still not automated"
+    },
+    "Metadata": {
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Version of the configuration\nExample \"v1\""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "version"
+      ],
+      "description": "Contains the metadata of the configuration"
+    },
+    "Requirement": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the requirement\nExample \"My Requirement\""
+        },
+        "text": {
+          "type": "string",
+          "description": "Text of the requirement\nIn order to provide a multiline text, use the \"\u003e\" symbol\nExample \"This is my requirement\"\nExample Text: \u003e\n\tThis is my requirement"
+        },
+        "checks": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Check"
+          },
+          "type": "object",
+          "description": "Checks to answer the requirement\nExample\n\tmy-check:\n\t  - name: my-reused-autopilot\n\t    autopilot: my-autopilot\n\t    env:\n\t      FOO: bar\n\t      BAZ: qux"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "title",
+        "checks"
+      ],
+      "description": "Contains a configuration to answer a requirement"
+    }
+  }
+}

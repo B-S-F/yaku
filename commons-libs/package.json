@@ -1,0 +1,26 @@
+{
+  "engines": {
+    "npm": ">=9.3.0",
+    "node": ">=18.14.0"
+  },
+  "scripts": {
+    "build": "npx turbo run build --continue --cache-dir=.turbo",
+    "dev": "turbo run dev",
+    "lint": "npx turbo run lint --cache-dir=.turbo",
+    "lint-staged": "npx lint-staged",
+    "prepare": "npx husky install",
+    "format": "npx turbo run format --cache-dir=.turbo",
+    "test:cov": "npx turbo run test:cov --cache-dir=.turbo"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "prettier": "^3.0.3",
+    "tsconfig": "*",
+    "turbo": "latest"
+  },
+  "name": "commons-lib",
+  "packageManager": "npm@10.1.0",
+  "workspaces": [
+    "libs/*"
+  ]
+}

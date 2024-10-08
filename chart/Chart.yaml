@@ -1,0 +1,14 @@
+apiVersion: v2
+name: yaku
+description: Yaku Helm chart
+type: application
+version: 1.4.1
+dependencies:
+  - name: argo-workflows
+    version: "0.41.4"
+    repository: "https://argoproj.github.io/argo-helm"
+    condition: argo-workflows.enabled
+  - name: minio
+    version: "5.2.0"
+    repository: "https://charts.min.io"
+    condition: minio.enabled

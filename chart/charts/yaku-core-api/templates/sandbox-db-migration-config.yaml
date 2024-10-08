@@ -1,0 +1,21 @@
+{{- if and .Values.sandbox .Values.sandbox.enabled (eq (toString .Values.sandbox.enabled) "true")  }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-db-config
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+data:
+  copy_dev_db.sh: |-
+    #!/bin/bash
+
+    PGPASSWORD=$DEV_DB_PASS pg_dump -d {{ .Values.sandbox.dev_db_name }} -h {{ .Values.sandbox.dev_db_host }} -U $DEV_DB_USER -Fc -O -x > /tmp/database-dev.db
+
+    PGPASSWORD=$SANDBOX_DB_PASS dropdb -h {{ .Values.global.database.db_host }} -U $SANDBOX_DB_USER --if-exists --force {{ .Values.env.db_name }}
+    PGPASSWORD=$SANDBOX_DB_PASS createdb -h {{ .Values.global.database.db_host }} -U $SANDBOX_DB_USER -T template0 {{ .Values.env.db_name }}
+
+    PGPASSWORD=$SANDBOX_DB_PASS pg_restore -d {{ .Values.env.db_name }} -h {{ .Values.global.database.db_host }} -U $SANDBOX_DB_USER -O -x /tmp/database-dev.db
+
+    PGPASSWORD=$SANDBOX_DB_PASS pg_dump -d {{ .Values.env.db_name }} -h {{ .Values.global.database.db_host }} -U $SANDBOX_DB_USER --schema-only -O -x > /tmp/database-sandbox.db
+    cat /tmp/database-sandbox.db
+{{- end }}

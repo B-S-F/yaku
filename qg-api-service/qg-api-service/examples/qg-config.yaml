@@ -1,0 +1,27 @@
+header:
+  name: <Your project name>
+  version: 1.2.3
+globals:
+  varName: https://some.url
+components:
+  componentOne:
+    version: 4.5.6 #optional
+autopilots:
+  autopilot-one:
+    run: curl $url | another-command
+    env:
+      url: ${varName}/${component.id}/${component.version}
+reports:
+  oss: autopilot-one
+allocations:
+  '1':
+    title: Project management
+    requirements:
+      '1.2':
+        title: >-
+          Measures from the preceding maturity levels and/or QGs are
+          incorporated, are monitored and are effectively introduced.
+        text: >-
+          All QGs: Measures from the previous IGs, SEs und QGs are incorporated
+          and effectively introduced.
+...

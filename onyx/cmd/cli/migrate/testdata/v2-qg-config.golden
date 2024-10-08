@@ -1,0 +1,62 @@
+metadata:
+    version: v2
+header:
+    name: External dependencies
+    version: 1.16.0
+repositories: []
+autopilots:
+    dummy-autopilot:
+        evaluate:
+            env:
+                TEST: test
+            config:
+                - sharepoint-fetcher-config_1.yaml
+                - sharepoint-fetcher-config_2.yaml
+            run: |
+                echo "{\"status\":\"GREEN\"}"
+finalize:
+    run: |
+        html-finalizer
+        zip-finalizer
+chapters:
+    "1":
+        title: Title
+        text: ""
+        requirements:
+            "1.1":
+                title: Title
+                text: Text
+                checks:
+                    "1.1":
+                        title: Title
+                        automation:
+                            autopilot: dummy-autopilot
+                            env:
+                                SHAREPOINT_URL: https://sharepoint.com/project1
+            "1.2":
+                title: Title
+                text: Text
+                checks:
+                    "1":
+                        title: Title_check
+                        manual:
+                            status: GREEN
+                            reason: Apes
+            "1.3":
+                title: Title
+                text: Text
+                checks:
+                    "1":
+                        title: Title_check
+                        manual:
+                            status: UNANSWERED
+                            reason: Apes
+            "1.4":
+                title: Title
+                text: Text
+                checks:
+                    "1":
+                        title: Title_check
+                        manual:
+                            status: UNANSWERED
+                            reason: Not answered

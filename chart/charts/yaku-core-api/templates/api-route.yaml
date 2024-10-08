@@ -1,0 +1,26 @@
+{{- if and (not (eq (toString .Values.route.enabled) "false")) .Values.route.enabled }}
+{{- $svcPort := .Values.service.targetPort -}}
+{{- $componentName :=  include "yaku.fullname" . -}}
+kind: Route
+apiVersion: {{ .Values.route.apiVersion }}
+metadata:
+  name:  {{ $componentName }}
+  labels:
+  {{- include "yaku.labels" . | nindent 4 }}
+  {{- with .Values.route.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  host: {{ .Values.route.host | quote }}
+  to:
+    kind: Service
+    name:  {{ $componentName }}
+    weight: 100
+  port:
+    targetPort: {{ $svcPort }}
+  {{- with .Values.route.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

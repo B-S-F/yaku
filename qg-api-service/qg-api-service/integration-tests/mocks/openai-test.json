@@ -1,0 +1,342 @@
+{
+  "size": 2,
+  "limit": 25,
+  "isLastPage": true,
+  "values": [
+    {
+      "id": 3,
+      "version": 0,
+      "title": "Test branch 31 01",
+      "state": "OPEN",
+      "open": true,
+      "closed": false,
+      "createdDate": 1675175790510,
+      "updatedDate": 1675175790510,
+      "fromRef": {
+        "id": "refs/heads/test-branch-31-01",
+        "displayId": "test-branch-31-01",
+        "latestCommit": "68521d211c5e38c27381718149014c5ec20b1f8e",
+        "type": "BRANCH",
+        "repository": {
+          "slug": "bitbucket-fetcher-test-repo",
+          "id": 124440,
+          "name": "bitbucket-fetcher-test-repo",
+          "hierarchyId": "917e248272a9043ad4a1",
+          "scmId": "git",
+          "state": "AVAILABLE",
+          "statusMessage": "Available",
+          "forkable": true,
+          "project": {
+            "key": "AQUATEST",
+            "id": 59573,
+            "name": "aquatest",
+            "description": "This project was automatically created by CI/OSE4",
+            "public": false,
+            "type": "NORMAL",
+            "links": {
+              "self": [
+                {
+                  "href": "https://example.com/projects/AQUATEST"
+                }
+              ]
+            }
+          },
+          "public": false,
+          "links": {
+            "clone": [
+              {
+                "href": "https://example.com/scm/aquatest/bitbucket-fetcher-test-repo.git",
+                "name": "http"
+              },
+              {
+                "href": "ssh://git@example.com:7999/aquatest/bitbucket-fetcher-test-repo.git",
+                "name": "ssh"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://example.com/projects/AQUATEST/repos/bitbucket-fetcher-test-repo/browse"
+              }
+            ]
+          }
+        }
+      },
+      "toRef": {
+        "id": "refs/heads/master",
+        "displayId": "master",
+        "latestCommit": "df1e328fad0efc2fb9cee0373ca736c0149eb3f2",
+        "type": "BRANCH",
+        "repository": {
+          "slug": "bitbucket-fetcher-test-repo",
+          "id": 124440,
+          "name": "bitbucket-fetcher-test-repo",
+          "hierarchyId": "917e248272a9043ad4a1",
+          "scmId": "git",
+          "state": "AVAILABLE",
+          "statusMessage": "Available",
+          "forkable": true,
+          "project": {
+            "key": "AQUATEST",
+            "id": 59573,
+            "name": "aquatest",
+            "description": "This project was automatically created by XX/XXXX",
+            "public": false,
+            "type": "NORMAL",
+            "links": {
+              "self": [
+                {
+                  "href": "https://example.com/projects/AQUATEST"
+                }
+              ]
+            }
+          },
+          "public": false,
+          "links": {
+            "clone": [
+              {
+                "href": "https://example.com/scm/aquatest/bitbucket-fetcher-test-repo.git",
+                "name": "http"
+              },
+              {
+                "href": "ssh://git@example.com:7999/aquatest/bitbucket-fetcher-test-repo.git",
+                "name": "ssh"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://example.com/projects/AQUATEST/repos/bitbucket-fetcher-test-repo/browse"
+              }
+            ]
+          }
+        }
+      },
+      "locked": false,
+      "author": {
+        "user": {
+          "name": "XXX7XXX",
+          "emailAddress": "XXX.XXX@example.com",
+          "id": 29602,
+          "displayName": "Rabcdefl Lghijka (X/XX-XXXXX)",
+          "active": true,
+          "slug": "XXX7XXX",
+          "type": "NORMAL",
+          "links": {
+            "self": [
+              {
+                "href": "https://example.com/users/XXX7XXX"
+              }
+            ]
+          }
+        },
+        "role": "AUTHOR",
+        "approved": false,
+        "status": "UNAPPROVED"
+      },
+      "reviewers": [
+        {
+          "user": {
+            "name": "XXX2XXX",
+            "emailAddress": "XXXX.XXXXX2@example.com",
+            "id": 16993,
+            "displayName": "Kabcdfgr Mhijklms (ITKG/EPM-EMP3.3)",
+            "active": true,
+            "slug": "XXX2XXX",
+            "type": "NORMAL",
+            "links": {
+              "self": [
+                {
+                  "href": "https://example.com/users/XXX2XXX"
+                }
+              ]
+            }
+          },
+          "role": "REVIEWER",
+          "approved": false,
+          "status": "UNAPPROVED"
+        },
+        {
+          "user": {
+            "name": "XXX1XXX",
+            "emailAddress": "XXX1XXX.XXX1XXX@example.com",
+            "id": 16993,
+            "displayName": "XXX1XXX",
+            "active": true,
+            "slug": "XXX1XXX",
+            "type": "NORMAL",
+            "links": {
+              "self": [
+                {
+                  "href": "https://example.com/users/XXX1XXX"
+                }
+              ]
+            }
+          },
+          "role": "REVIEWER",
+          "approved": false,
+          "status": "UNAPPROVED"
+        }
+      ],
+      "participants": [],
+      "properties": {
+        "mergeResult": { "outcome": "CLEAN", "current": true },
+        "qgStatus": "DISABLED",
+        "resolvedTaskCount": 0,
+        "openTaskCount": 0
+      },
+      "links": {
+        "self": [
+          {
+            "href": "https://example.com/projects/AQUATEST/repos/bitbucket-fetcher-test-repo/pull-requests/3"
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "version": 2,
+      "title": "test branch 1",
+      "description": "added a new comment",
+      "state": "MERGED",
+      "open": false,
+      "closed": true,
+      "createdDate": 1674550305350,
+      "updatedDate": 1675175017166,
+      "closedDate": 1675175017166,
+      "fromRef": {
+        "id": "refs/heads/test-branch-1",
+        "displayId": "test-branch-1",
+        "latestCommit": "539328a0427477d38c06a336a3b1f908238c1b6a",
+        "type": "BRANCH",
+        "repository": {
+          "slug": "bitbucket-fetcher-test-repo",
+          "id": 124440,
+          "name": "bitbucket-fetcher-test-repo",
+          "hierarchyId": "917e248272a9043ad4a1",
+          "scmId": "git",
+          "state": "AVAILABLE",
+          "statusMessage": "Available",
+          "forkable": true,
+          "project": {
+            "key": "AQUATEST",
+            "id": 59573,
+            "name": "aquatest",
+            "description": "This project was automatically created by CI/OSE4",
+            "public": false,
+            "type": "NORMAL",
+            "links": {
+              "self": [
+                {
+                  "href": "https://example.com/projects/AQUATEST"
+                }
+              ]
+            }
+          },
+          "public": false,
+          "links": {
+            "clone": [
+              {
+                "href": "https://example.com/scm/aquatest/bitbucket-fetcher-test-repo.git",
+                "name": "http"
+              },
+              {
+                "href": "ssh://git@example.com:7999/aquatest/bitbucket-fetcher-test-repo.git",
+                "name": "ssh"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://example.com/projects/AQUATEST/repos/bitbucket-fetcher-test-repo/browse"
+              }
+            ]
+          }
+        }
+      },
+      "toRef": {
+        "id": "refs/heads/master",
+        "displayId": "master",
+        "latestCommit": "9da28cfda7344149d18e36b69279565373a8dfb9",
+        "type": "BRANCH",
+        "repository": {
+          "slug": "bitbucket-fetcher-test-repo",
+          "id": 124440,
+          "name": "bitbucket-fetcher-test-repo",
+          "hierarchyId": "917e248272a9043ad4a1",
+          "scmId": "git",
+          "state": "AVAILABLE",
+          "statusMessage": "Available",
+          "forkable": true,
+          "project": {
+            "key": "AQUATEST",
+            "id": 59573,
+            "name": "aquatest",
+            "description": "This project was automatically created by CI/OSE4",
+            "public": false,
+            "type": "NORMAL",
+            "links": {
+              "self": [
+                {
+                  "href": "https://example.com/projects/AQUATEST"
+                }
+              ]
+            }
+          },
+          "public": false,
+          "links": {
+            "clone": [
+              {
+                "href": "https://example.com/scm/aquatest/bitbucket-fetcher-test-repo.git",
+                "name": "http"
+              },
+              {
+                "href": "ssh://git@example.com:7999/aquatest/bitbucket-fetcher-test-repo.git",
+                "name": "ssh"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://example.com/projects/AQUATEST/repos/bitbucket-fetcher-test-repo/browse"
+              }
+            ]
+          }
+        }
+      },
+      "locked": false,
+      "author": {
+        "user": {
+          "name": "XXX7XXX",
+          "emailAddress": "XXX.XXX@example.com",
+          "id": 29602,
+          "displayName": "Rabcdefl Lghijka (X/XX-XXXXX)",
+          "active": true,
+          "slug": "XXX7XXX",
+          "type": "NORMAL",
+          "links": {
+            "self": [
+              {
+                "href": "https://example.com/users/XXX7XXX"
+              }
+            ]
+          }
+        },
+        "role": "AUTHOR",
+        "approved": false,
+        "status": "UNAPPROVED"
+      },
+      "reviewers": [],
+      "participants": [],
+      "properties": {
+        "qgStatus": "DISABLED",
+        "resolvedTaskCount": 0,
+        "openTaskCount": 0
+      },
+      "links": {
+        "self": [
+          {
+            "href": "https://github.com/B-S-F/project-management/issues/90"
+          }
+        ]
+      }
+    }
+  ],
+  "start": 0
+}

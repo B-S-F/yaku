@@ -1,0 +1,7 @@
+[tool.isort]
+profile = "black"
+
+[tool.poetry.dependencies]
+
+[tool.coverage.run]
+omit = ["tests"]

@@ -1,0 +1,520 @@
+metadata:
+  version: v2
+header:
+  name: ${{ vars.TITLE }}
+  version: ${{ vars.VERSION }}
+default:
+  vars:
+    VAR_3: some value that will be overridden
+    VAR_4: some value
+env:
+  ADDITIONAL_CONFIG_ENV: finalizer-ref-additional-config-env
+  APP_REF: "{name}-{version}"
+  ENV_1: global-env-1
+  ENV_2: global-env-2
+  ENV_3: global-env-3
+repositories:
+  - name: localhost
+    type: curl
+    configuration:
+      url: http://localhost:8081/${{ env.APP_REF}}
+autopilots:
+  fully-fledged-v2:
+    apps:
+      - localhost::app@1.0.0
+    steps:
+      - title: fetch1
+        id: fetch1
+        env:
+          ENV_1: step-env-1
+        run: |
+          echo "${APPS}"
+          echo "${AUTOPILOT_OUTPUT_DIR}"
+          echo "${AUTOPILOT_RESULT_FILE}"
+          echo "${AUTOPILOT_INPUT_DIRS}"
+          echo "fetch1" > ${AUTOPILOT_OUTPUT_DIR}/fetch1.txt
+      - title: transform1
+        depends:
+          - fetch2
+        run: |
+          echo "${APPS}"
+          echo "${AUTOPILOT_OUTPUT_DIR}"
+          echo "${AUTOPILOT_RESULT_FILE}"
+          ls "${AUTOPILOT_INPUT_DIRS}"
+          echo "result2" > ${AUTOPILOT_RESULT_FILE}
+      - title: fetch2
+        id: fetch2
+        depends:
+          - fetch1
+        env:
+          ENV_1: step-env-1
+        run: |
+          echo "${APPS}"
+          echo "${AUTOPILOT_OUTPUT_DIR}"
+          echo "${AUTOPILOT_RESULT_FILE}"
+          echo "${AUTOPILOT_INPUT_DIRS}"
+          echo "fetch2" > ${AUTOPILOT_OUTPUT_DIR}/fetch2.txt
+          sleep 1
+      - title: transform2
+        depends:
+          - fetch1
+          - fetch2
+        run: |
+          echo "${APPS}"
+          echo "${AUTOPILOT_OUTPUT_DIR}"
+          echo "${AUTOPILOT_RESULT_FILE}"
+          IFS=':' read -ra DIR <<< "${AUTOPILOT_INPUT_DIRS}"
+          for i in "${DIR[@]}"; do
+            echo "Removing ' from ${i} to sanitize for ls"
+            i=$(echo $i | tr -d "'")
+            echo "Reading from ${i}"
+            ls "${i}"
+          done
+          echo "result2" > ${AUTOPILOT_RESULT_FILE}
+          sleep 1
+    evaluate:
+      config:
+        - additional-config.yaml
+      run: |
+        echo "${APPS}"
+        echo "${EVALUATOR_INPUT_FILES}"
+        echo "${EVALUATOR_RESULT_FILE}"
+        IFS=':' read -ra FILE <<< "${EVALUATOR_INPUT_FILES}"
+        for i in "${FILE[@]}"; do
+          echo "Removing ' from ${i} to sanitize for cat"
+          i=$(echo $i | tr -d "'")
+          echo "Reading from ${i}"
+          cat "${i}"
+        done
+        echo "evaluation1" > ${EVALUATOR_RESULT_FILE}
+        echo "{\"status\": \"GREEN\"}"
+        echo "{\"reason\": \"This is a reason\"}"
+        echo "{\"result\": {\"criterion\": \"I am a criterion\", \"fulfilled\": false, \"justification\": \"I am the justification\"}}"
+  # Migrated interface parts from v1
+  additional-config-provider:
+    evaluate:
+      config:
+        - additional-config.yaml
+      run: |
+        echo '{"status": "RED", "reason": "This is a reason"}'
+        echo "This autopilot has an additional config"
+        cat $evidence_path/additional-config.yaml
+  app-provider:
+    apps:
+      - app@1.0.0
+    evaluate:
+      run: app
+  base-interface:
+    evaluate:
+      run: |
+        echo '{"reason": "This is a reason"}'
+        echo '{"status": "RED", "reason": "This is a reason"}'
+        echo '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+  env-provider:
+    evaluate:
+      env:
+        ENV_3: autopilot-env-3
+      run: |
+        echo "$ENV_1"
+        echo "${{ env.ENV_1 }}"
+        echo "$ENV_2"
+        echo "${{ env.ENV_2 }}"
+        echo "$ENV_3"
+        echo "${{ env.ENV_3 }}"
+        echo '{"status": "RED", "reason": "This is a reason"}'
+  escape-characters-autopilot:
+    evaluate:
+      run: |
+        echo '{"result": {"criterion": "criterion is \b \f \n \r \t \u000A \\ \" \\n", "fulfilled": true, "justification": "reason is \b \f \n \r \t \u000A \\ \" \\n"}}'
+        echo '{"status": "RED"}'
+  findings-interface:
+    evaluate:
+      run: |
+        echo '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the reason"}}'
+        echo '{"result": {"criterion": "I am a criterion 2", "fulfilled": false, "justification": "I am another reason"}}'
+        echo '{"result": {"criterion": "I am a criterion 3", "fulfilled": false, "justification": "I am yet another reason", "metadata": {"customer": "I am customer in metadata", "package": "I am a package", "severity": "I am a severity"}}}'
+        echo '{"status": "GREEN", "reason": "This is a reason"}'
+  new-line-autopilot:
+    evaluate:
+      run: |
+        echo '{"status": "GREEN"}'
+        echo '{"reason": "reas\non"}'
+        echo '{"result": {"criterion": "crit\nerion", "fulfilled": true, "justification": "reas\non", "metadata": {"cust\tomer": "cust\nomer metadata"}}}'
+  problematic-yaml-multilines-autopilot:
+    evaluate:
+      run: |
+        echo '{"status": "GREEN"}'
+        echo '{"reason": "reason"}'
+        echo '{"result": {"criterion": "criterion", "fulfilled": true, "justification": "  line1\n line2\nline3" }}'
+  reason-provider:
+    evaluate:
+      run: |
+        echo '{"reason": "${{ env.REASON }}"}'
+        echo '{"status": "RED"}'
+  repository-app-provider:
+    apps:
+      - localhost::app@1.0.0
+    evaluate:
+      run: app@1.0.0
+  secrets-provider:
+    evaluate:
+      env:
+        SECRET_2: ${{ secrets.SECRET_2}}
+      run: |
+        echo "$SECRET_1"
+        echo "$SECRET_2"
+        echo "${{ secrets.SECRET_3 }}"
+        echo '{"status": "RED", "reason": "This is a reason"}'
+  sleep-autopilot:
+    evaluate:
+      run: |
+        sleep 2
+  special-output-provider:
+    evaluate:
+      run: |
+        echo '{"result": {"criterion": "FFixed RTC ticket with ID 1588653 must be risk assessed", "fulfilled": false, "justification": "Please type the appropriate risk assessment for RTC Ticket with ID 1588653.", "metadata": {"Summary": "[main] after EDLminidump SoC bootup stuck"}}}'
+        echo '{"status": "RED", "reason": "test"}'
+  status-provider:
+    evaluate:
+      run: |
+        echo '{"status": "${{ env.STATUS }}"}'
+        echo '{"reason": "Some reason"}'
+        echo '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+  timeout-autopilot:
+    evaluate:
+      run: |
+        echo "Hello 1!"
+        sleep 1
+        echo "Hello 2!"
+        sleep 1
+        echo "Hello 3!"
+        sleep 1
+        echo "Hello 4!"
+        sleep 1
+        echo "Hello 5!"
+        sleep 1
+  vars-provider:
+    evaluate:
+      env:
+        VAR_2: ${{ vars.VAR_2}}
+      config:
+        - ${{ env.MY_CONFIG }}
+      run: |
+        echo "$VAR_1"
+        echo "$VAR_2"
+        echo "${{ vars.VAR_3}}"
+        echo "${{ vars.VAR_4 }}"
+        echo '{"status": "RED", "reason": "This is a reason"}'
+  write-data-to-file:
+    evaluate:
+      env:
+        OVERWRITE_DATA: ${{ env.OVERWRITE_DATA }}
+        OVERWRITE_FILE: ${{ env.OVERWRITE_FILE }}
+      run: |
+        echo ${OVERWRITE_FILE}
+        echo ${OVERWRITE_DATA} >> ${OVERWRITE_FILE}
+finalize:
+  env:
+    FINALIZER_ENV_1: ${{ env.ENV_1 }}
+    FINALIZER_ENV_2: ${{ secrets.SECRET_1 }}
+    FINALIZER_ENV_3: ${{ vars.VAR_1 }}
+  config:
+    - additional-config.yaml
+  run: |
+    echo $FINALIZER_ENV_1
+    echo ${{ env.FINALIZER_ENV_1 }}
+    echo $FINALIZER_ENV_2
+    echo ${{ env.FINALIZER_ENV_2 }}
+    echo $FINALIZER_ENV_3
+    echo ${{ env.FINALIZER_ENV_3 }}
+    if [ -f ${result_path}/qg-result.yaml ]; then
+      echo "qg-result.yaml exists"
+    else
+      echo "qg-result.yaml does not exist"
+      exit 1
+    fi
+    echo "This finalizer has an additional config"
+    cat $result_path/additional-config.yaml
+chapters:
+  "1":
+    requirements:
+      "1":
+        title: "v2 should support the new autopilot interface"
+        text: "The new autopilot interface should be supported"
+        checks:
+          "1":
+            title: "Check if the new autopilot interface is supported"
+            automation:
+              autopilot: fully-fledged-v2
+  "2":
+    requirements:
+      "1":
+        title: GREEN answer
+        checks:
+          "1":
+            title: GREEN answer check
+            manual:
+              status: GREEN
+              reason: It should be GREEN
+      "2":
+        title: YELLOW answer
+        checks:
+          "1":
+            title: YELLOW answer check
+            manual:
+              status: YELLOW
+              reason: It should be YELLOW
+      "3":
+        title: RED answer
+        checks:
+          "1":
+            title: RED answer check
+            manual:
+              status: RED
+              reason: It should be RED
+      "4":
+        title: NA answer
+        checks:
+          "1":
+            title: NA answer check
+            manual:
+              status: NA
+              reason: It should be NA
+      "5":
+        title: UNANSWERED answer
+        checks:
+          "1":
+            title: UNANSWERED answer check
+            manual:
+              status: UNANSWERED
+              reason: It should be UNANSWERED
+    title: Manual Answers
+    text: ""
+  "3":
+    requirements:
+      "1":
+        title: Base Interface has to be supported
+        text: |
+          The base interface should be supported to retrieve the status from an autopilot
+          The base interface consists of the following properties:
+          - status
+          - reason
+        checks:
+          1a:
+            title: Status GREEN should be supported
+            automation:
+              env:
+                STATUS: GREEN
+              autopilot: status-provider
+          1b:
+            title: Status YELLOW should be supported
+            automation:
+              env:
+                STATUS: YELLOW
+              autopilot: status-provider
+          1c:
+            title: Status RED should be supported
+            automation:
+              env:
+                STATUS: RED
+              autopilot: status-provider
+          1d:
+            title: If a status is not supported, it should be set to ERROR
+            automation:
+              env:
+                STATUS: UNKNOWN
+              autopilot: status-provider
+          1e:
+            title: If a status is empty, it should be set to ERROR
+            automation:
+              env:
+                STATUS: ""
+              autopilot: status-provider
+          "3":
+            title: Reason should be supported
+            automation:
+              env:
+                REASON: This is a reason
+              autopilot: reason-provider
+          "6":
+            title: Findings should be supported
+            automation:
+              autopilot: findings-interface
+          "7":
+            title: Can provide handle escape characters in a string
+            automation:
+              autopilot: escape-characters-autopilot
+          "8":
+            title: Can provide handle new line characters in a string
+            automation:
+              autopilot: new-line-autopilot
+          "9":
+            title: Can provide handle problematic yaml multilines
+            automation:
+              autopilot: problematic-yaml-multilines-autopilot
+    title: Base Interface
+    text: ""
+  "4":
+    requirements:
+      "1":
+        title: Should replace parameters in autopilots
+        checks:
+          "1":
+            title: Replace environments
+            automation:
+              env:
+                ENV_2: autopilot-ref-env-2
+              autopilot: env-provider
+          "2":
+            title: Replace secrets
+            automation:
+              env:
+                SECRET_1: autopilot-ref-secret-1
+              autopilot: secrets-provider
+          "3":
+            title: Replace variables
+            automation:
+              env:
+                VAR_1: autopilot-ref-var-1
+              autopilot: vars-provider
+      "2":
+        title: Should replace parameters in manual answers like ${{ vars.REQUIREMENT_TITLE }}
+        text: ${{ vars.REQUIREMENT_TEXT }}
+        checks:
+          "1":
+            title: check for var replacement in manual answer
+            manual:
+              status: GREEN
+              reason: ${{ vars.REQUIREMENT_REASON }}
+      "3":
+        title: Should replace parameters in additional config
+        checks:
+          "1":
+            title: Replace parameters in additional config
+            automation:
+              env:
+                ADDITIONAL_CONFIG_ENV: autopilot-ref-additional-config-env
+              autopilot: additional-config-provider
+      "4":
+        title: Shoould use check environment variables in check title and config keys
+        checks:
+          "1":
+            title: Check pdf ${{ env.PDF_TO_CHECK }}
+            automation:
+              env:
+                MY_CONFIG: config1.yaml
+                PDF_TO_CHECK: test.pdf
+              autopilot: vars-provider
+    title: Parameter Replacement
+    text: ""
+  "5":
+    requirements:
+      "1":
+        title: Should run checks in parallel
+        text: |
+          Checks should be run in parallel and finish in less than the aggregated time of all checks
+        checks:
+          1a:
+            title: Check 1
+            automation:
+              autopilot: sleep-autopilot
+          1b:
+            title: Check 2
+            automation:
+              autopilot: sleep-autopilot
+          1c:
+            title: Check 3
+            automation:
+              autopilot: sleep-autopilot
+          1d:
+            title: Check 4
+            automation:
+              autopilot: sleep-autopilot
+          1e:
+            title: Check 5
+            automation:
+              autopilot: sleep-autopilot
+          1f:
+            title: Check 6
+            automation:
+              autopilot: sleep-autopilot
+          1g:
+            title: Check 7
+            automation:
+              autopilot: sleep-autopilot
+          1h:
+            title: Check 8
+            automation:
+              autopilot: sleep-autopilot
+          1i:
+            title: Check 9
+            automation:
+              autopilot: sleep-autopilot
+          1j:
+            title: Check 10
+            automation:
+              autopilot: sleep-autopilot
+    title: Should run checks in parallel
+    text: ""
+  "6":
+    requirements:
+      "1":
+        title: Hide secrets in logs
+        checks:
+          1a:
+            title: Check 1
+            automation:
+              autopilot: secrets-provider
+    title: Should hide secrets
+    text: ""
+  "7":
+    requirements:
+      "1":
+        title: Timeout after 3 seconds
+        checks:
+          "1":
+            title: Check 1
+            automation:
+              autopilot: timeout-autopilot
+    title: Should use timeout
+    text: ""
+  "8":
+    requirements:
+      "1":
+        title: Should not allow to overwrite linked files
+        checks:
+          "1":
+            title: Try to overwrite linked file
+            automation:
+              env:
+                OVERWRITE_DATA: Hello World to symlink
+                OVERWRITE_FILE: symlink.txt
+              autopilot: write-data-to-file
+    title: File consistency
+    text: ""
+  "9":
+    requirements:
+      "1":
+        title: Should be able to run apps from a repository
+        checks:
+          "1":
+            title: App can be specified with repository and version
+            automation:
+              autopilot: repository-app-provider
+          "2":
+            title: App can be specified without repository
+            automation:
+              autopilot: app-provider
+    title: Repositories and Apps
+    text: ""
+  "10":
+    requirements:
+      "1":
+        title: Should be able to handle special outputs
+        checks:
+          "1":
+            title: Special output with metadata
+            automation:
+              autopilot: special-output-provider
+    title: Special Outputs
+    text: ""

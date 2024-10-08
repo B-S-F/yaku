@@ -1,0 +1,115 @@
+metadata:
+  version: v1
+header:
+  name: Integration Test
+  version: 0.0.1
+  date: 2024-05-06 06:56
+  toolVersion: 0.11.0
+overallStatus: RED
+statistics:
+  counted-checks: 2
+  counted-automated-checks: 2
+  counted-manual-check: 0
+  counted-unanswered-checks: 0
+  counted-skipped-checks: 0
+  degree-of-automation: 100
+  degree-of-completion: 100
+chapters:
+  '1':
+    title: Test config should work
+    status: RED
+    requirements:
+      '1':
+        title: Run free of findings
+        status: RED
+        checks:
+          '1':
+            title: Check for findings
+            status: RED
+            type: Automation
+            evaluation:
+              autopilot: findings-interface-1
+              status: RED
+              reason: Found 5 findings
+              results:
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 1
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 2
+                  metadata:
+                    key1: value1
+                    key2: value2
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 3
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 4
+                  metadata:
+                    key1: value1
+                    key2: value2
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 5
+              execution:
+                logs:
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 1"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 2", "metadata":{"key1":"value1", "key2":"value2"}}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 3"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 4", "metadata":{"key1":"value1", "key2":"value2"}}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 5"}}'
+                  - '{"status": "RED", "reason": "Found 5 findings"}'
+                evidencePath: '1_1_1'
+                exitCode: 0
+          '2':
+            title: Check for findings
+            status: RED
+            type: Automation
+            evaluation:
+              autopilot: findings-interface-2
+              status: RED
+              reason: Found 5 findings
+              results:
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 1
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 2
+                  metadata:
+                    key1: value1
+                    key2: value2
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 3
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 4
+                  metadata:
+                    key1: value1
+                    key2: value2
+                - criterion: No findings
+                  fulfilled: false
+                  justification: I am the reason 5
+              execution:
+                logs:
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 1"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 2", "metadata":{"key1":"value1", "key2":"value2"}}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 3"}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 4", "metadata":{"key1":"value1", "key2":"value2"}}}'
+                  - '{"result": {"criterion": "No findings", "fulfilled": false, "justification":
+                    "I am the reason 5"}}'
+                  - '{"status": "RED", "reason": "Found 5 findings"}'
+                evidencePath: '1_1_2'
+                exitCode: 0

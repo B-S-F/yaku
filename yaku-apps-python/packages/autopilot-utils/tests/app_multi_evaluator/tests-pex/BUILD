@@ -1,0 +1,10 @@
+python_tests(
+    dependencies=[
+        f"packages/autopilot-utils/tests/app_multi_evaluator/src/yaku/app_multi_evaluator:app",
+    ],
+    runtime_package_dependencies=[
+        f"packages/autopilot-utils/tests/app_multi_evaluator:app_multi_evaluator",
+    ],
+    skip_bandit=True,
+    skip_mypy=True,
+)

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: service-creds
+  namespace: aqua
+data:
+  minioaccesskey: dXNlcm5hbWU=
+  miniosecretkey: cGFzc3dvcmQ=
+  postgrespassword: cGdwYXNzd29yZA==
+  postgresuser: cG9zdGdyZXM=
+  pgadminemail: YWRtaW5AYWRtaW4uY29t
+  pgadminpassword: cm9vdA==
+  encryption_secret_key: MkF1UUhJUlkxWVlEMWRCdTUzSFJsSDhXbE9hV3RSTFA=
+  keycloakpostgrespassword: a2V5Y2xvYWtfZGJfcGFzc3dvcmQ=
+  keycloakpostgresuser: a2V5Y2xvYWtfZGJfdXNlcg==

@@ -1,0 +1,14 @@
+name: Doing PR check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-run-tests:
+    permissions:
+      pull-requests: write
+      contents: read
+    uses: ./.github/workflows/build-and-run-test-base.yml
+    secrets: inherit

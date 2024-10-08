@@ -1,0 +1,17 @@
+$patch: delete
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-httpbin-cred
+---
+$patch: delete
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin
+---
+$patch: delete
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpbin

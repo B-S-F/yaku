@@ -1,0 +1,392 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/B-S-F/onyx/pkg/result/v1/result",
+  "$ref": "#/$defs/Result",
+  "$defs": {
+    "AutopilotResult": {
+      "properties": {
+        "criterion": {
+          "type": "string",
+          "description": "Criterion that was evaluated by the autopilot\nExample \"My Criterion\""
+        },
+        "fulfilled": {
+          "type": "boolean",
+          "description": "Flag whether the criterion was fulfilled or not, indicating if an issue will be reported to the user or not\nExample true"
+        },
+        "justification": {
+          "type": "string",
+          "description": "Human readable justification of why the criterion was evaluated to be fulfilled or not\nExample \"This is my justification\""
+        },
+        "metadata": {
+          "$ref": "#/$defs/StringMap",
+          "description": "Metadata of the criterion that was evaluated\nExample\n\t- \"foo\": \"bar\"\n\t- \"baz\": \"qux\""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "criterion",
+        "fulfilled",
+        "justification"
+      ],
+      "description": "Contains one of potentially many results reported by an autopilot"
+    },
+    "Chapter": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the chapter\nExample \"My Chapter\""
+        },
+        "text": {
+          "type": "string",
+          "description": "Text of the chapter\nExample \"This is my chapter\""
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "YELLOW",
+            "RED",
+            "NA",
+            "UNANSWERED",
+            "FAILED",
+            "ERROR"
+          ],
+          "description": "Status of the chapter (is composed of the status of the requirements)\nExample \"GREEN\""
+        },
+        "requirements": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Requirement"
+          },
+          "type": "object",
+          "description": "Requirements to answer the chapter"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "title",
+        "status",
+        "requirements"
+      ],
+      "description": "Contains information about a chapter"
+    },
+    "Check": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the check\nExample \"My Check\""
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "YELLOW",
+            "RED",
+            "NA",
+            "UNANSWERED",
+            "FAILED",
+            "ERROR"
+          ],
+          "description": "Status of the check (is derived from the autopilot status)\nExample \"GREEN\""
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "autopilot",
+            "manual"
+          ],
+          "description": "Type of the check\nExample \"autopilot\""
+        },
+        "evaluation": {
+          "$ref": "#/$defs/CheckResult",
+          "description": "Evaluation of the check containing the result"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "title",
+        "status",
+        "type",
+        "evaluation"
+      ],
+      "description": "Contains information about a check"
+    },
+    "CheckResult": {
+      "properties": {
+        "autopilot": {
+          "type": "string",
+          "description": "Name of the autopilot\nExample \"my-autopilot\""
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "YELLOW",
+            "RED",
+            "NA",
+            "UNANSWERED",
+            "FAILED",
+            "ERROR"
+          ],
+          "description": "Status of the autopilot\nExample \"GREEN\""
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason associated with the status\nExample \"This is my reason\""
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/AutopilotResult"
+          },
+          "type": "array",
+          "description": "Results of the autopilot"
+        },
+        "outputs": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object",
+          "description": "Outputs of the autopilot"
+        },
+        "execution": {
+          "$ref": "#/$defs/ExecutionInformation",
+          "description": "Execution information of the autopilot"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "status",
+        "reason"
+      ],
+      "description": "Contains the results of a check"
+    },
+    "ExecutionInformation": {
+      "properties": {
+        "logs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Logs from the execution of the autopilot\nExample\n\t- \"Hello World\"\n\t- \"This is my log\""
+        },
+        "errorLogs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Error logs from the execution of the autopilot\nExample\n\t- \"Hello Error\"\n\t- \"This is my error log\""
+        },
+        "evidencePath": {
+          "type": "string",
+          "description": "Path where the evidence of the autopilot is stored"
+        },
+        "exitCode": {
+          "type": "integer",
+          "description": "Exit code of the autopilot"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "evidencePath",
+        "exitCode"
+      ],
+      "description": "Contains information about the execution of an autopilot"
+    },
+    "Finalize": {
+      "properties": {
+        "execution": {
+          "$ref": "#/$defs/ExecutionInformation",
+          "description": "Execution information of the finalize step"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "execution"
+      ],
+      "description": "Contains information about the finalization"
+    },
+    "Header": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the project\nExample \"My Project\""
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the project\nExample \"0.1.0\""
+        },
+        "date": {
+          "type": "string",
+          "description": "Current date\nExample \"2023-08-03 16:16\""
+        },
+        "toolVersion": {
+          "type": "string",
+          "description": "Version of the onyx cli tool\nExample \"0.1.0\""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "date",
+        "toolVersion"
+      ],
+      "description": "Contains the header to identify the project"
+    },
+    "Metadata": {
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Version of the result\nExample \"v1\""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "version"
+      ],
+      "description": "Contains the metadata of the result"
+    },
+    "Requirement": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the requirement\nExample \"My Requirement\""
+        },
+        "text": {
+          "type": "string",
+          "description": "Text of the requirement\nExample \"This is my requirement\""
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "YELLOW",
+            "RED",
+            "NA",
+            "UNANSWERED",
+            "FAILED",
+            "ERROR"
+          ],
+          "description": "Status of the requirement (is composed of the status of the checks)\nExample \"GREEN\""
+        },
+        "checks": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Check"
+          },
+          "type": "object",
+          "description": "Checks to answer the requirement"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "title",
+        "status",
+        "checks"
+      ],
+      "description": "Contains information about a requirement"
+    },
+    "Result": {
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/Metadata",
+          "description": "Metadata of the result"
+        },
+        "header": {
+          "$ref": "#/$defs/Header",
+          "description": "Header of the result"
+        },
+        "overallStatus": {
+          "type": "string",
+          "enum": [
+            "YELLOW",
+            "RED",
+            "NA",
+            "UNANSWERED",
+            "FAILED",
+            "ERROR"
+          ],
+          "description": "Overall status of the result (is composed of the status of the chapters)"
+        },
+        "statistics": {
+          "$ref": "#/$defs/Statistics",
+          "description": "Statistics of the result"
+        },
+        "chapters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Chapter"
+          },
+          "type": "object",
+          "description": "Chapters containing requirements and checks"
+        },
+        "finalize": {
+          "$ref": "#/$defs/Finalize",
+          "description": "Finalize step"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "metadata",
+        "header",
+        "overallStatus",
+        "statistics",
+        "chapters"
+      ],
+      "description": "Contains the result of a run"
+    },
+    "Statistics": {
+      "properties": {
+        "counted-checks": {
+          "type": "integer",
+          "description": "Number of checks"
+        },
+        "counted-automated-checks": {
+          "type": "integer",
+          "description": "Number of automated checks"
+        },
+        "counted-manual-check": {
+          "type": "integer",
+          "description": "Number of manual checks (excluding unanswered and skipped)"
+        },
+        "counted-unanswered-checks": {
+          "type": "integer",
+          "description": "Number of unanswered checks"
+        },
+        "counted-skipped-checks": {
+          "type": "integer",
+          "description": "Number of skipped checks"
+        },
+        "degree-of-automation": {
+          "type": "number",
+          "description": "Percentage of automated checks"
+        },
+        "degree-of-completion": {
+          "type": "number",
+          "description": "Percentage of answered checks"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "counted-checks",
+        "counted-automated-checks",
+        "counted-manual-check",
+        "counted-unanswered-checks",
+        "counted-skipped-checks",
+        "degree-of-automation",
+        "degree-of-completion"
+      ],
+      "description": "Contains statistics about the result"
+    },
+    "StringMap": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    }
+  }
+}

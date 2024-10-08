@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mailhog
+  name: mailhog
+  namespace: aqua
+spec:
+  selector:
+    matchLabels:
+      app: mailhog
+  template:
+    metadata:
+      labels:
+        app: mailhog
+      name: mailhog
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mailhog
+          image: mailhog/mailhog
+          ports:
+            - name: http
+              containerPort: 8025
+            - name: smtp
+              containerPort: 1025
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "400m"
+      nodeSelector:
+        kubernetes.io/os: linux

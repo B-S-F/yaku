@@ -1,0 +1,33 @@
+metadata:
+  version: v1
+header:
+  name: JSON
+  version: 1.2.3
+autopilots:
+  json-evaluator-autopilot:
+    run: |
+      json-evaluator
+    env:
+      JSON_CONFIG_FILE: test.yaml
+      JSON_INPUT_FILE: test.json
+      ONE: 1k.yaml
+      FOUR: 4k.yaml
+      ONE_2: 1k_2.yaml
+      FOUR_2: 4k_2.yaml
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  '5':
+    title: Verification / validation
+    requirements:
+      '5.1':
+        title: The json evaluator works well
+        text: |-
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        checks:
+          '1':
+            title: Check json file
+            automation:
+              autopilot: json-evaluator-autopilot

@@ -1,0 +1,81 @@
+{{- if and (eq (toString .Values.postgres.enabled) "true") .Values.postgres.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.postgres.persistence.name }}
+  labels:
+    {{- include "yaku.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.postgres.persistence.accessModes}}
+  accessModes:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.postgres.persistence.size }}
+  storageClassName: {{ .Values.postgres.persistence.storageClass }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "yaku.name" . }}-postgres-db
+  labels:
+    {{- include "yaku.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "yaku.name" . }}-postgres-db
+  template:
+    metadata:
+      labels:
+        app: {{ include "yaku.name" . }}-postgres-db
+    spec:
+      containers:
+      - name: {{ include "yaku.name" . }}-postgres-db
+        image: {{ .Values.global.images.postgres }}
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgres.credentialsSecretName }}
+              key: postgrespassword
+        - name: POSTGRES_DB
+          value: "yaku"
+        - name: PGDATA
+          value: /var/lib/postgresql/data/db-files/
+        volumeMounts:
+        - name: pvc-data
+          mountPath: /var/lib/postgresql/data
+        resources:
+            {{- toYaml .Values.postgres.resources | nindent 12 }}
+        ports:
+        - containerPort: 5432
+        readinessProbe:
+          exec:
+            command:
+            - psql
+            - -U
+            - postgres
+            - -c
+            - SELECT 1
+          initialDelaySeconds: 15
+          timeoutSeconds: 2
+      volumes: 
+      - name: pvc-data
+        persistentVolumeClaim:
+          claimName: {{ .Values.postgres.persistence.name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "yaku.name" . }}-postgres-db
+  labels:
+    app: {{ include "yaku.name" . }}-postgres-db
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: {{ include "yaku.name" . }}-postgres-db
+{{- end }}

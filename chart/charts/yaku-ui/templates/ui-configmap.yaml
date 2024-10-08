@@ -1,0 +1,11 @@
+{{- if and (not (eq (toString .Values.enabled) "false")) .Values.enabled (not (eq (toString .Values.config.enabled) "false")) .Values.config.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name:  {{ .Chart.Name }}
+  labels:
+  {{- include "yaku.labels" . | nindent 4 }}
+data:
+  ui-config.json: |
+{{ .Values.config.backendEnvironments | indent 4 -}}
+{{- end }}

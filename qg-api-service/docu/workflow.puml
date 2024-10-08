@@ -1,0 +1,54 @@
+@startuml Yaku Workflow Container
+
+node "Workflow Pod" as pod {
+  component "Onyx" as cli
+  component "autopilot" as autopilot
+  note right of autopilot : Multiple instances of autopilots
+  component "apps" as app
+  note right of app : Multiple instances of apps
+  component "finalizer" as finalizer
+  note right of finalizer : Multiple instances of finalizers
+}
+
+cloud external {
+  component "External Sources" as extsrc
+  note right of extsrc
+    app download source artifacts
+    from external systems as evidence
+  end note
+  component "External Results" as extres
+  note right of extres
+    Finalizer can upload results to
+    external systems that are used to
+    manage qg results
+  end note
+}
+
+database "MinIO" as minio {
+  folder "Working Directory" {
+    component "Config Files" as config
+    component "Result Files" as results
+    folder "Evidences" {
+      component "Autopilot Output" as outputs
+      note bottom of outputs
+        One folder with outputs
+        per autopilot
+      end note
+    }
+  }
+}
+
+cli -down-> autopilot : runs (1)
+autopilot -down-> app : contains
+cli -down-> finalizer : runs
+autopilot --> outputs : produces (3)
+cli --> results : provides (4)
+finalizer -left-> results : accesses (5)
+config --> cli
+app -left--> extsrc : fetches & evaluates (2)
+finalizer -left--> extres : uploads (6)
+extsrc -[hidden]down-> extres
+app -[hidden]down-> finalizer
+pod -[hidden]right-> minio
+pod -[hidden]left-> external
+@enduml

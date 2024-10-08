@@ -1,0 +1,9 @@
+dependencies:
+- name: argo-workflows
+  repository: https://argoproj.github.io/argo-helm
+  version: 0.41.4
+- name: minio
+  repository: https://charts.min.io
+  version: 5.2.0
+digest: sha256:a4585bc3df79219ed7ffc52784459f5d90d3e03bb0fd3b6784cfce5c43317171
+generated: "2024-05-07T15:24:18.937522+02:00"

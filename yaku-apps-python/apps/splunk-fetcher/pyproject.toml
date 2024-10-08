@@ -1,0 +1,9 @@
+[tool.isort]
+profile = "black"
+
+[tool.poetry.dependencies]
+splunk-sdk = "1.7.3"
+halo = "0.0.31"
+
+[tool.coverage.run]
+omit = ["tests"]

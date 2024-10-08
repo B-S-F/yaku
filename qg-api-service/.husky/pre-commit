@@ -1,0 +1,2 @@
+npx lint-staged -v
+npx madge --circular --extensions ts qg-api-service/src

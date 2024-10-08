@@ -1,0 +1,6 @@
+Dockerfile
+.dockerignore
+.venv
+*.json
+.envrc
+envrc-sample

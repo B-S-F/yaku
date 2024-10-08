@@ -1,0 +1,90 @@
+{{- if and (not (eq (toString .Values.enabled) "false")) .Values.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "yaku.name" . }}-labs
+  labels:
+    {{- include "yaku.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount | default 1 }} 
+  selector:
+    matchLabels:
+      {{- include "yaku.selectorLabels" . | nindent 6 }}
+      {{- with .Values.additionalSelectorLabels}}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "yaku.selectorLabels" . | nindent 8 }}
+        {{- with .Values.additionalSelectorLabels}}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "yaku.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: {{ .Values.restartPolicy | default "Always" }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
+          image: {{ .Values.global.images.yakuLabs }}
+          imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
+          ports:
+            - containerPort: {{ .Values.ports.containerPort }}
+              protocol: {{ .Values.ports.protocol }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.env }}
+          env:
+          {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- end }}
+          volumeMounts:
+          - name: pvc-data
+            mountPath: /root/.ollama/
+        - name: ollama-probe
+          image: curlimages/curl
+          command: ['sleep', 'infinity']
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - /tmp/probe.sh
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          volumeMounts:
+          - name: probe-script
+            mountPath: /tmp/probe.sh
+            subPath: probe.sh     
+      volumes:
+      - name: pvc-data
+        persistentVolumeClaim:
+          claimName: labs-pvc
+      - name: probe-script
+        configMap:
+          name: yaku-probe-config
+{{- end }}

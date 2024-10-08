@@ -1,0 +1,65 @@
+metadata:
+    version: v1
+header:
+    name: My Project
+    version: 0.1.0
+    date: 2023-11-17 10:09
+    toolVersion: ""
+overallStatus: GREEN
+statistics:
+    counted-checks: 2
+    counted-automated-checks: 1
+    counted-manual-check: 0
+    counted-unanswered-checks: 1
+    counted-skipped-checks: 0
+    degree-of-automation: 50
+    degree-of-completion: 50
+chapters:
+    "1":
+        title: chapter title
+        text: chapter text
+        status: GREEN
+        requirements:
+            "1":
+                title: requirement title
+                text: requirement text
+                status: GREEN
+                checks:
+                    "1":
+                        title: check title
+                        status: GREEN
+                        type: Automation
+                        evaluation:
+                            autopilot: autopilot name
+                            status: GREEN
+                            reason: reason
+                            results:
+                                - criterion: finding criteria
+                                  fulfilled: false
+                                  justification: finding reason
+                            outputs:
+                                output: output
+                            execution:
+                                logs:
+                                    - log
+                                errorLogs:
+                                    - err
+                                evidencePath: .
+                                exitCode: 0
+    "2":
+        title: chapter title
+        text: chapter text
+        status: UNANSWERED
+        requirements:
+            "1":
+                title: requirement title
+                text: requirement text
+                status: UNANSWERED
+                checks:
+                    "2":
+                        title: check title
+                        status: UNANSWERED
+                        type: Manual
+                        evaluation:
+                            status: UNANSWERED
+                            reason: Not answered

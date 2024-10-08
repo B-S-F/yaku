@@ -1,0 +1,69 @@
+project_name: onyx
+builds:
+  - id: build-linux
+    main: cmd/cli/main.go
+    binary: onyx
+    ldflags:
+      - -s -w
+      - "-extldflags '-static'"
+      - -X main.version={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - arm
+      - amd64
+      - arm64
+    goarm:
+      - 7
+  - id: build-macos
+    main: cmd/cli/main.go
+    binary: onyx
+    ldflags:
+      - -s -w
+      - "-extldflags '-static'"
+      - -X main.version={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    goarm:
+      - 7
+  - id: build-windows
+    main: cmd/cli/main.go
+    binary: onyx
+    ldflags:
+      - -s -w
+      - "-extldflags '-static'"
+      - -X main.version={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    goarm:
+      - 7
+
+archives:
+  - id: archive
+    format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_
+      {{- if eq .Os "darwin" }}macOS
+      {{- else if eq .Os "linux" }}Linux
+      {{- else}}{{- .Os }}{{ end }}-
+      {{- if eq .Arch "amd64" }}64bit
+      {{- else if eq .Arch "arm" }}ARM
+      {{- else if eq .Arch "arm64" }}ARM64
+      {{- else }}{{ .Arch }}{{ end }}
+    files:
+      - README.md
+    format_overrides:
+      - goos: windows
+        format: zip

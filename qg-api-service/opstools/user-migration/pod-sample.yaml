@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yaku-user-migration
+  namespace: aqua
+spec:
+  containers:
+    - name: opstools
+      # Wait forever as we want to connect to the container later for interactive use
+      command: ["/bin/bash", "-c", "--"]
+      args: ["while true; do sleep 30; done;"]
+      env:
+        - name: DB_HOST
+          value: yaku-postgres
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: "prod"
+        - name: DB_USE_SSL
+          value: "false"
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: aquadbuser
+              name: dbaccess
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: aquadbpassword
+              name: dbaccess
+      image: opstools
+      imagePullPolicy: IfNotPresent

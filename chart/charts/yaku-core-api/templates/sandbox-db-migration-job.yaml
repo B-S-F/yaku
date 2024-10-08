@@ -1,0 +1,73 @@
+{{- if and .Values.sandbox .Values.sandbox.enabled (eq (toString .Values.sandbox.enabled) "true")  }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-db-config
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+spec:
+  ttlSecondsAfterFinished: 20
+  backoffLimit: 4
+  template:
+    spec:
+      securityContext:
+        runAsUser: 70
+        fsGroup: 70
+      containers:
+        - name: config
+          image: postgres:13-alpine
+          command:
+          - /bin/bash
+          - '-c'
+          args:
+            - >-
+             sh /tmp/copy_dev_db.sh
+          env:
+          - name: SANDBOX_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name:  {{ .Values.env.db_secret_name }}
+                key: {{ .Values.env.db_username_key}}
+          - name: SANDBOX_DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.env.db_secret_name }}
+                key: {{ .Values.env.db_password_key }}
+          - name: DEV_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name:  {{ .Values.sandbox.dev_db_secret_name }}
+                key: {{ .Values.sandbox.dev_db_username_key }}
+          - name: DEV_DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name:  {{ .Values.sandbox.dev_db_secret_name }}
+                key: {{ .Values.sandbox.dev_db_password_key }}
+        {{- if and (eq .Values.env.db_type "postgres") (eq (toString .Values.env.db_use_ssl) "true") (eq (toString .Values.env.in_private_cloud) "true") }}
+          - name: PGSSLROOTCERT
+            value: "/cert/postgres.crt"
+          - name: PGSSLMODE
+            value: verify-full
+        {{- end }}
+          volumeMounts:
+            - name: db-config
+              mountPath: /tmp/copy_dev_db.sh
+              subPath: copy_dev_db.sh
+          {{- if and (eq .Values.env.db_type "postgres") (eq (toString .Values.env.db_use_ssl) "true") (eq (toString .Values.env.in_private_cloud) "true") }}
+            - mountPath: /cert
+              name: qg-cert
+          {{- end }}
+      restartPolicy: Never
+      volumes:
+        - name: db-config
+          configMap:
+            name: {{ .Release.Name }}-db-config
+        {{- if and (eq .Values.env.db_type "postgres") (eq (toString .Values.env.db_use_ssl) "true") (eq (toString .Values.env.in_private_cloud) "true") }}
+        - name: qg-cert
+          secret:
+            secretName: {{ .Values.env.cacert_secret_name | quote }}
+            items:
+            - key: {{ .Values.env.cacert_key_name | quote }}
+              path: postgres.crt
+        {{- end }}
+{{- end }}

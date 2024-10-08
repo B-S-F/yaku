@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/B-S-F/onyx/pkg/schema/config-mock-int",
+  "$ref": "#/$defs/configMockInt",
+  "$defs": {
+    "configMockInt": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  }
+}

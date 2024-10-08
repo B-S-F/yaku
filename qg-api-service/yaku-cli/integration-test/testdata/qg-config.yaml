@@ -1,0 +1,43 @@
+header:
+  name: MACMA
+  version: 1.16.0
+components:
+  test-app:
+    version: 1.0.0
+
+autopilots:
+  validate:
+    run: |
+      if [ "${TEST_SECRET}" == "SET" ]; then
+        if [ "${TEST_ENV_VAR}" == "TEST" ]; then
+          echo '{ "status": "GREEN" }'
+        else
+          echo '{ "status": "YELLOW" }'
+        fi
+      else
+        echo '{ "status": "RED" }'
+      fi
+
+reports:
+  doit: validate
+
+finalize:
+  run: |
+    html-finalizer     
+    zip-finalizer
+
+allocations:
+  '1':
+    title: Test config should work
+    requirements:
+      '1.1':
+        title: Do something
+        text: Do something
+        checks:
+          '1':
+            title: Test something
+            checks:
+              '1.1':
+                title: doit
+                reports:
+                  - doit

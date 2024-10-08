@@ -1,0 +1,60 @@
+header:
+  name: PerformanceTest_Fibonacci
+  version: '1.1'
+metadata:
+  version: 'v1'
+
+autopilots:
+  validateCompute:
+    run: |
+      N=20
+      A=0
+      B=1
+
+      for (( i=0; i<N; i++ ))
+      do
+        sleep 1
+        echo  "$A " >> fibonacci_evidence.txt
+        nextB=$((A + B))
+        A=$B
+        B=$nextB
+      done
+      if cat fibonacci_evidence.txt | grep '4181'; then
+        echo '{ "status": "GREEN" }'
+        echo '{ "reason": "Fibonacci evidence is correct" }'
+        echo '{ "result": { "criterion": "Fibonacci Calculation", "fulfilled": true, "justification": "Fibonacci number is correct" } }'
+      else
+        echo '{ "status": "RED" }'
+        echo '{ "reason": "Fibonacci evidence is not correct" }'
+        echo '{ "result": { "criterion": "Fibonacci Calculation", "fulfilled": false, "justification": "Fibonacci number is not correct" } }'
+      fi
+
+  validateManual:
+    run: |
+      curl -o md5.txt https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar.md5
+      export manual_answer_file=md5.txt
+      manual-answer-evaluator
+    env:
+      expiration_time: 14d
+      expiry_reminder_period: 3d
+
+chapters:
+  '1':
+    title: Test config should work
+    requirements:
+      '1':
+        title: Compute based evaluation should succeed
+        text: Compute something and check result
+        checks:
+          '1':
+            title: Test compute
+            automation:
+              autopilot: validateCompute
+      '2':
+        title: Manual evaluator should succeed
+        text: Manual evaluator should succeed
+        checks:
+          '1':
+            title: Test manual
+            automation:
+              autopilot: validateManual
