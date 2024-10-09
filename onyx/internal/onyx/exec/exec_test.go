@@ -5,23 +5,24 @@ package exec
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 	"time"
 
-	"github.com/B-S-F/onyx/internal/onyx/common"
-	"github.com/B-S-F/onyx/pkg/configuration"
-	v1 "github.com/B-S-F/onyx/pkg/configuration/versions/v1"
-	"github.com/B-S-F/onyx/pkg/finalize"
-	"github.com/B-S-F/onyx/pkg/item"
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/parameter"
-	"github.com/B-S-F/onyx/pkg/result"
-	resultv1 "github.com/B-S-F/onyx/pkg/result/v1"
-	"github.com/B-S-F/onyx/pkg/transformer"
-	"github.com/B-S-F/onyx/pkg/v2/config"
+	"github.com/B-S-F/yaku/onyx/internal/onyx/common"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	v1 "github.com/B-S-F/yaku/onyx/pkg/configuration/versions/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/finalize"
+	"github.com/B-S-F/yaku/onyx/pkg/item"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/parameter"
+	"github.com/B-S-F/yaku/onyx/pkg/result"
+	resultv1 "github.com/B-S-F/yaku/onyx/pkg/result/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/transformer"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/config"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -394,7 +395,7 @@ func TestExecErrors(t *testing.T) {
 				VarsName:    ".vars",
 				SecretsName: ".secrets",
 			},
-			want: errors.New("custom config validation failed: invalid step id invalÜdID: ID contains invalid characters. Only alphanumeric characters, dashes, and underscores are allowed."),
+			want: errors.New("config validation failed: invalid step id 'invalÜdID': ID contains invalid characters. Only alphanumeric characters, dashes, and underscores are allowed."),
 			prep: func(t *testing.T, inputDir string) {
 				qgFile := filepath.Join(inputDir, "qg-config.yaml")
 
@@ -424,7 +425,7 @@ func TestExecErrors(t *testing.T) {
 				VarsName:    ".vars",
 				SecretsName: ".secrets",
 			},
-			want: errors.New("error validating schema: config data does not match schema"),
+			want: errors.New("config data does not match schema"),
 			prep: func(t *testing.T, inputDir string) {
 				qgFile := filepath.Join(inputDir, "qg-config.yaml")
 
@@ -452,7 +453,7 @@ header:
 				VarsName:    ".vars",
 				SecretsName: ".secrets",
 			},
-			want: errors.New("error creating config: version v1337 not supported"),
+			want: errors.New("invalid config file version: version v1337 not supported"),
 			prep: func(t *testing.T, inputDir string) {
 				qgFile := filepath.Join(inputDir, "qg-config.yaml")
 
@@ -567,6 +568,136 @@ header:
 	}
 }
 
+func TestExecUserErrors(t *testing.T) {
+	writeTestFiles := func(t *testing.T, inputDir string, cfg *config.Config) {
+		qgFile := filepath.Join(inputDir, "qg-config.yaml")
+		cfgContent, err := yaml.Marshal(cfg)
+		require.NoError(t, err)
+
+		err = os.WriteFile(qgFile, cfgContent, 0644)
+		require.NoError(t, err)
+
+		varsFile := filepath.Join(inputDir, ".vars")
+		err = os.WriteFile(varsFile, nil, 0644)
+		require.NoError(t, err)
+
+		secretsFile := filepath.Join(inputDir, ".secrets")
+		err = os.WriteFile(secretsFile, nil, 0644)
+		require.NoError(t, err)
+	}
+
+	tests := map[string]struct {
+		execParams parameter.ExecutionParameter
+		want       error
+		prep       func(t *testing.T, inputDir string)
+	}{
+		"should_write_user_error_when_custom_validation_fails": {
+			execParams: parameter.ExecutionParameter{
+				ConfigName:  "qg-config.yaml",
+				VarsName:    ".vars",
+				SecretsName: ".secrets",
+			},
+			want: errors.New("config validation failed: invalid step id 'invalÜdID': ID contains invalid characters. Only alphanumeric characters, dashes, and underscores are allowed."),
+			prep: func(t *testing.T, inputDir string) {
+				cfg := simpleConfigV2()
+				a := cfg.Autopilots["checker"]
+				a.Steps = []config.Step{{ID: "invalÜdID"}}
+				cfg.Autopilots["checker"] = a
+
+				writeTestFiles(t, inputDir, cfg)
+			},
+		},
+		"should_write_user_error_when_invalid_config_version_provided": {
+			execParams: parameter.ExecutionParameter{
+				ConfigName:  "qg-config.yaml",
+				VarsName:    ".vars",
+				SecretsName: ".secrets",
+			},
+			want: errors.New("invalid config file version: version v1337 not supported"),
+			prep: func(t *testing.T, inputDir string) {
+				cfg := simpleConfigV2()
+				cfg.Metadata.Version = "v1337"
+
+				writeTestFiles(t, inputDir, cfg)
+			},
+		},
+		"should_write_user_error_when_invalid_repository": {
+			execParams: parameter.ExecutionParameter{
+				ConfigName:  "qg-config.yaml",
+				VarsName:    ".vars",
+				SecretsName: ".secrets",
+			},
+			want: errors.New("invalid repositories: error initializing repositories: [error creating repository test: failed to create config: missing 'url' in config]"),
+			prep: func(t *testing.T, inputDir string) {
+				cfg := simpleConfigV2()
+				cfg.Repositories = []config.Repository{
+					{Name: "test", Type: "curl", Config: nil},
+				}
+
+				writeTestFiles(t, inputDir, cfg)
+			},
+		},
+		"should_write_user_error_when_fails_to_download_app": {
+			execParams: parameter.ExecutionParameter{
+				ConfigName:  "qg-config.yaml",
+				VarsName:    ".vars",
+				SecretsName: ".secrets",
+			},
+			want: errors.New("failed to download app: app mytestapp@1.0.0 could not be downloaded from any repository"),
+			prep: func(t *testing.T, inputDir string) {
+				cfg := simpleConfigV2()
+				a := cfg.Autopilots["checker"]
+				a.Apps = []string{"mytestapp@1.0.0"}
+				cfg.Autopilots["checker"] = a
+
+				writeTestFiles(t, inputDir, cfg)
+			},
+		},
+		"should_write_user_error_when_schema_validation_fails": {
+			execParams: parameter.ExecutionParameter{
+				ConfigName:  "qg-config.yaml",
+				VarsName:    ".vars",
+				SecretsName: ".secrets",
+			},
+			want: errors.New("config data does not match schema:"),
+			prep: func(t *testing.T, inputDir string) {
+				cfg := simpleConfigV2()
+				a := cfg.Autopilots["checker"]
+				a.Evaluate.Run = ""
+				cfg.Autopilots["checker"] = a
+
+				writeTestFiles(t, inputDir, cfg)
+			},
+		},
+	}
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			tempDir := t.TempDir()
+			OverrideDirectoriesForTest(tempDir + "/exec")
+
+			// t.TempDir default input dir
+			if tt.execParams.InputFolder == "" {
+				tt.execParams.InputFolder = tempDir
+			}
+			if tt.execParams.OutputFolder == "" {
+				tt.execParams.OutputFolder = tempDir
+			}
+
+			tt.prep(t, tt.execParams.InputFolder)
+
+			err := Exec(tt.execParams)
+			require.Equal(t, err != nil, tt.want != nil)
+			if tt.want != nil {
+				assert.ErrorContains(t, err, tt.want.Error())
+
+				userErrLog, err := os.ReadFile(fmt.Sprintf("%s/exec/evidences/usererr.log", tempDir))
+				require.NoError(t, err)
+				assert.Contains(t, string(userErrLog), tt.want.Error())
+			}
+		})
+	}
+}
+
 func TestExecBackwardsCompatibilityQGConfigV1(t *testing.T) {
 	tmpDir := t.TempDir()
 	cfgFilepath := filepath.Join(tmpDir, "qg-config-v1.yaml")
@@ -648,40 +779,6 @@ func TestExecBackwardsCompatibilityQGConfigV1(t *testing.T) {
 	assert.Len(t, result.Chapters["1"].Requirements["1"].Checks["1"].Evaluation.Outputs, 2)
 	assert.Equal(t, result.Chapters["1"].Requirements["1"].Checks["1"].Evaluation.Outputs["output1"], "out1")
 	assert.Equal(t, result.Chapters["1"].Requirements["1"].Checks["1"].Evaluation.Outputs["output2"], "out2")
-}
-
-func TestExecQGConfigV2(t *testing.T) {
-	// TODO
-	t.Skip("execution of qg-config v2 needs to be implemented")
-
-	tmpDir := t.TempDir()
-	cfgFilepath := filepath.Join(tmpDir, "qg-config-v2.yaml")
-
-	cfg, err := yaml.Marshal(simpleConfigV2())
-	require.NoError(t, err)
-
-	err = os.WriteFile(cfgFilepath, cfg, 0644)
-	require.NoError(t, err)
-
-	varsFilepath := filepath.Join(tmpDir, ".vars")
-	err = os.WriteFile(varsFilepath, nil, 0644)
-	require.NoError(t, err)
-
-	secretsFilepath := filepath.Join(tmpDir, ".secrets")
-	err = os.WriteFile(secretsFilepath, nil, 0644)
-	require.NoError(t, err)
-
-	execParams := parameter.ExecutionParameter{
-		ConfigName:  "qg-config-v2.yaml",
-		InputFolder: tmpDir,
-		VarsName:    ".vars",
-		SecretsName: ".secrets",
-	}
-
-	err = Exec(execParams)
-	assert.NoError(t, err)
-
-	// TODO: assert result
 }
 
 func simpleResultV1() *resultv1.Result {

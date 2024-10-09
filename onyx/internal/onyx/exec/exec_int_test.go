@@ -6,8 +6,8 @@ package exec
 import (
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/parameter"
-	"github.com/B-S-F/onyx/pkg/reader"
+	"github.com/B-S-F/yaku/onyx/pkg/parameter"
+	"github.com/B-S-F/yaku/onyx/pkg/reader"
 	"github.com/stretchr/testify/assert"
 )
 

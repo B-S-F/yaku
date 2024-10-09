@@ -5,11 +5,12 @@ import (
 	"io"
 	"os"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	v0 "github.com/B-S-F/onyx/pkg/configuration/versions/v0"
-	v1 "github.com/B-S-F/onyx/pkg/configuration/versions/v1"
-	"github.com/B-S-F/onyx/pkg/logger"
-	v2 "github.com/B-S-F/onyx/pkg/v2/config"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	v0 "github.com/B-S-F/yaku/onyx/pkg/configuration/versions/v0"
+	v1 "github.com/B-S-F/yaku/onyx/pkg/configuration/versions/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	v2 "github.com/B-S-F/yaku/onyx/pkg/v2/config"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/pkg/errors"
 	yaml "gopkg.in/yaml.v3"
 )
@@ -43,7 +44,7 @@ func (c *ConfigCreatorImpl) New(version string, content []byte) (interface{}, er
 	case "v2":
 		return v2.New(content)
 	default:
-		return nil, fmt.Errorf("version %s not supported", version)
+		return nil, model.NewUserErr(fmt.Errorf("version %s not supported", version), "invalid config file version")
 	}
 }
 

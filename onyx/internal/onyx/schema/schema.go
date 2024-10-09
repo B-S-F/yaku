@@ -1,10 +1,10 @@
 package schema
 
 import (
-	"github.com/B-S-F/onyx/internal/onyx/common"
-	v1 "github.com/B-S-F/onyx/pkg/result/v1"
-	"github.com/B-S-F/onyx/pkg/schema"
-	v2 "github.com/B-S-F/onyx/pkg/v2/result"
+	"github.com/B-S-F/yaku/onyx/internal/onyx/common"
+	v1 "github.com/B-S-F/yaku/onyx/pkg/result/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/schema"
+	v2 "github.com/B-S-F/yaku/onyx/pkg/v2/result"
 	"github.com/pkg/errors"
 )
 
