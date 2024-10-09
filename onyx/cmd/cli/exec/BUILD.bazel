@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "exec",
+    srcs = ["exec.go"],
+    importpath = "github.com/B-S-F/yaku/onyx/cmd/cli/exec",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/onyx/exec",
+        "//pkg/parameter",
+        "@com_github_spf13_cobra//:go_default_library",
+        "@com_github_spf13_viper//:go_default_library",
+    ],
+)

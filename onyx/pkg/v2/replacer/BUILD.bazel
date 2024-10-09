@@ -1,0 +1,28 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "replacer",
+    srcs = ["replacer.go"],
+    importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/replacer",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/helper",
+        "//pkg/logger",
+        "//pkg/replacer",
+        "//pkg/v2/model",
+    ],
+)
+
+go_test(
+    name = "replacer_test",
+    srcs = ["replacer_test.go"],
+    data = glob(["testdata/**"]),
+    embed = [":replacer"],
+    deps = [
+        "//pkg/configuration",
+        "//pkg/logger",
+        "//pkg/v2/model",
+        "@com_github_stretchr_testify//assert:go_default_library",
+        "@org_uber_go_zap//:go_default_library",
+    ],
+)

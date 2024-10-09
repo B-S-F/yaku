@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "versions",
+    srcs = ["config.go"],
+    importpath = "github.com/B-S-F/yaku/onyx/pkg/configuration/versions/v0",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/configuration",
+        "//pkg/configuration/versions/v1:versions",
+        "//pkg/logger",
+        "@in_gopkg_yaml_v3//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "versions_test",
+    srcs = ["config_test.go"],
+    embed = [":versions"],
+    deps = ["@com_github_stretchr_testify//assert:go_default_library"],
+)
