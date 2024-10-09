@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/B-S-F/onyx/internal/onyx/exec"
-	"github.com/B-S-F/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/internal/onyx/exec"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
 	"github.com/stretchr/testify/assert"
 )
 

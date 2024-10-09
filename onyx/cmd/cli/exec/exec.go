@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	onyx "github.com/B-S-F/onyx/internal/onyx/exec"
-	"github.com/B-S-F/onyx/pkg/parameter"
+	onyx "github.com/B-S-F/yaku/onyx/internal/onyx/exec"
+	"github.com/B-S-F/yaku/onyx/pkg/parameter"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

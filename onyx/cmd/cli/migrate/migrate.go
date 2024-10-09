@@ -3,8 +3,8 @@ package migrate
 import (
 	"path/filepath"
 
-	onyx "github.com/B-S-F/onyx/internal/onyx/migrate"
-	"github.com/B-S-F/onyx/pkg/logger"
+	onyx "github.com/B-S-F/yaku/onyx/internal/onyx/migrate"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

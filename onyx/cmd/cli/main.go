@@ -1,14 +1,16 @@
 package main
 
 import (
+	"errors"
 	"os"
 	"strings"
 
-	"github.com/B-S-F/onyx/cmd/cli/exec"
-	"github.com/B-S-F/onyx/cmd/cli/migrate"
-	"github.com/B-S-F/onyx/cmd/cli/schema"
-	"github.com/B-S-F/onyx/pkg/helper"
-	"github.com/B-S-F/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/cmd/cli/exec"
+	"github.com/B-S-F/yaku/onyx/cmd/cli/migrate"
+	"github.com/B-S-F/yaku/onyx/cmd/cli/schema"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -50,6 +52,7 @@ func initFlags(cmd *cobra.Command) {
 	cmd.AddCommand(exec.ExecCommand())
 	cmd.AddCommand(migrate.MigrateCommand())
 	cmd.AddCommand(schema.SchemaCommand())
+	cmd.SilenceErrors = true
 }
 
 func Execute(cmd *cobra.Command) {
@@ -64,6 +67,12 @@ func Execute(cmd *cobra.Command) {
 		}
 	}
 	if err := cmd.Execute(); err != nil {
+		var userErr model.UserError
+		if errors.As(err, &userErr) {
+			log.Warn(userErr.Reason())
+			os.Exit(1)
+		}
+
 		log.Error(err.Error())
 		os.Exit(1)
 	}

@@ -1,10 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/B-S-F/onyx/pkg/result/v1/result",
+  "$id": "https://github.com/B-S-F/yaku/onyx/pkg/result/v1/result",
   "$ref": "#/$defs/Result",
   "$defs": {
     "AutopilotResult": {
       "properties": {
+        "hash": {
+          "type": "string",
+          "description": "Unique identifier for the Result, created from the Chapter, Requirement, Check, Criterion, and Justification.\nExample \"9319a093d48e7488ef34cd74ccfe5e2f23a00b32eede2ba30d39676f2029a528\""
+        },
         "criterion": {
           "type": "string",
           "description": "Criterion that was evaluated by the autopilot\nExample \"My Criterion\""
@@ -25,6 +29,7 @@
       "additionalProperties": false,
       "type": "object",
       "required": [
+        "hash",
         "criterion",
         "fulfilled",
         "justification"

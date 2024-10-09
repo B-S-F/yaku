@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v3"
 )
