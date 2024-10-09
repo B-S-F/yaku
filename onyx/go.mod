@@ -1,4 +1,4 @@
-module github.com/B-S-F/onyx
+module github.com/B-S-F/yaku/onyx
 
 go 1.21
 
@@ -18,6 +18,7 @@ require (
 	github.com/Azure/azure-sdk-for-go/sdk/storage/azblob v1.3.2
 	github.com/chigopher/pathlib v0.19.1
 	github.com/invopop/yaml v0.3.1
+	github.com/netflix/go-iomux v1.0.0
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/afero v1.11.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
