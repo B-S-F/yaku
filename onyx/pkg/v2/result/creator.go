@@ -8,11 +8,11 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/helper"
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/result/common"
-	"github.com/B-S-F/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/result/common"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"gopkg.in/yaml.v3"
@@ -100,7 +100,7 @@ func (c *Creator) AppendFinalizeResult(res *Result, finalizeResult model.Finaliz
 
 	logs, err := c.marshalLogs(finalizeResult.Logs)
 	if err != nil {
-		return errors.Wrap(err, "failed to json marshal log entries")
+		return err
 	}
 
 	res.Finalize = &Finalize{
@@ -119,7 +119,7 @@ func (c *Creator) marshalLogs(logs []model.LogEntry) ([]string, error) {
 	for _, log := range logs {
 		logLine, err := json.Marshal(log)
 		if err != nil {
-			return nil, err
+			return nil, errors.Wrap(err, "failed to json marshal log entry")
 		}
 
 		result = append(result, string(logLine))
@@ -204,7 +204,15 @@ func (c *Creator) addAutopilotResult(chapters map[string]*Chapter, a model.Autop
 
 		var evaluationResults []EvaluationResult
 		for _, result := range a.Result.EvaluateResult.Results {
+			hashFields := helper.HashFields{
+				Chapter:       a.AutopilotCheck.Chapter.Id,
+				Requirement:   a.AutopilotCheck.Requirement.Id,
+				Check:         a.AutopilotCheck.Check.Id,
+				Criterion:     result.Criterion,
+				Justification: result.Justification,
+			}
 			evaluationResults = append(evaluationResults, EvaluationResult{
+				Hash:          helper.GenerateCheckResultIdHash(hashFields),
 				Criterion:     common.MultilineString(result.Criterion),
 				Fulfilled:     result.Fulfilled,
 				Justification: common.MultilineString(result.Justification),
@@ -214,7 +222,7 @@ func (c *Creator) addAutopilotResult(chapters map[string]*Chapter, a model.Autop
 
 		evaluateLogs, err := c.marshalLogs(a.Result.EvaluateResult.Logs)
 		if err != nil {
-			return errors.Wrap(err, "failed to json marshal log entries")
+			return err
 		}
 
 		requirement.Checks[a.AutopilotCheck.Check.Id] = &Check{
@@ -257,7 +265,7 @@ func (c *Creator) createSteps(stepResults []model.StepResult, stepsByID map[stri
 
 		logs, err := c.marshalLogs(s.Logs)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed to json marshal log entries")
+			return nil, err
 		}
 
 		steps = append(steps, Step{

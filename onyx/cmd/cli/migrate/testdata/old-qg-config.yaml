@@ -6,8 +6,8 @@ components:
     version: 1.16.5
 dependencies:
   "@grow/jira-fetcher": "^0.1.0"
-  typescript-app: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/typescript-app-template
-  typescript-app-master: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/typescript-app-template#master
+  typescript-app: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/yaku/typescript-app-template
+  typescript-app-master: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/yaku/typescript-app-template#master
 autopilots:
   dummy-autopilot:
     run: |

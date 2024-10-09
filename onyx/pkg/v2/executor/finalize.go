@@ -4,12 +4,12 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/helper"
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/model"
-	"github.com/B-S-F/onyx/pkg/v2/output"
-	"github.com/B-S-F/onyx/pkg/v2/runner"
-	"github.com/B-S-F/onyx/pkg/workdir"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/output"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/runner"
+	"github.com/B-S-F/yaku/onyx/pkg/workdir"
 	"github.com/pkg/errors"
 )
 
@@ -34,7 +34,7 @@ func NewFinalizeExecutor(wdUtils workdir.Utilizer, rootWorkDir string, logger *l
 func (f *FinalizeExecutor) Execute(item *model.Finalize, env, secrets map[string]string) (*model.FinalizeResult, error) {
 	err := overWriteConfigFiles(f.wdUtils, item.Configs, f.rootWorkDir)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to create config files")
+		return nil, err
 	}
 	specialEnv := map[string]string{"result_path": f.rootWorkDir}
 	runtimeEnv := helper.MergeMaps(env, item.Env, specialEnv)
@@ -42,6 +42,7 @@ func (f *FinalizeExecutor) Execute(item *model.Finalize, env, secrets map[string
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to run finalize")
 	}
+
 	result := &model.FinalizeResult{
 		Logs:       runnerOutput.Logs,
 		ExitCode:   runnerOutput.ExitCode,

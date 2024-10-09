@@ -3,7 +3,7 @@ package repository
 import (
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/app"
 	"github.com/stretchr/testify/assert"
 )
 

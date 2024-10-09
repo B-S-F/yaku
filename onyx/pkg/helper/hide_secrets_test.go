@@ -312,3 +312,115 @@ func TestHideSecretsInString(t *testing.T) {
 		})
 	}
 }
+
+func TestHideSecretsInArrayOfLines(t *testing.T) {
+	testCases := map[string]struct {
+		secrets map[string]string
+		content []string
+		want    []string
+	}{
+		"should mask simple secrets appearing in multiple lines": {
+			secrets: map[string]string{
+				"password": "qux",
+			},
+			content: []string{
+				"foo qux bar",
+				"bar qux foo",
+			},
+			want: []string{
+				"foo ***password*** bar",
+				"bar ***password*** foo",
+			},
+		},
+		"should mask secrets going over two lines": {
+			secrets: map[string]string{
+				"password": "foo\nbar",
+			},
+			content: []string{
+				"Password: foo",
+				"bar <-Password ends here",
+			},
+			want: []string{
+				"Password: ***password***",
+				" <-Password ends here",
+			},
+		},
+		"should mask simple and multiline secrets": {
+			secrets: map[string]string{
+				"password": "foo\nbar",
+				"dogword":  "woof",
+			},
+			content: []string{
+				"Password: foo",
+				"bar. woof!",
+			},
+			want: []string{
+				"Password: ***password***",
+				". ***dogword***!",
+			},
+		},
+		"should mask secrets going over three lines": {
+			secrets: map[string]string{
+				"password": "foo\nbar\nbaz",
+			},
+			content: []string{
+				"Password: foo",
+				"bar",
+				"baz <-Password ends here",
+			},
+			want: []string{
+				"Password: ***password***",
+				"",
+				" <-Password ends here",
+			},
+		},
+		"should mask secrets going over four lines": {
+			secrets: map[string]string{
+				"password": "foo\nbar\nbaz\nqux",
+			},
+			content: []string{
+				"Password: foo",
+				"bar",
+				"baz",
+				"qux <-Password ends here",
+			},
+			want: []string{
+				"Password: ***password***",
+				"",
+				"",
+				" <-Password ends here",
+			},
+		},
+		"should not fail if secret has more lines than content": {
+			secrets: map[string]string{
+				"password": "foo\nbar\nbaz\nqux",
+			},
+			content: []string{
+				"Just one line",
+			},
+			want: []string{
+				"Just one line",
+			},
+		},
+		"should not fail if secret ends in newline": {
+			secrets: map[string]string{
+				"password": "foo\n",
+			},
+			content: []string{
+				"foo",
+				"",
+			},
+			want: []string{
+				"***password***",
+				"",
+			},
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) {
+			got := HideSecretsInArrayOfLines(tc.content, tc.secrets)
+			assert.Equal(t, tc.want, got)
+		})
+	}
+}

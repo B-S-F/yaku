@@ -3,9 +3,9 @@ package config
 import (
 	"fmt"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/logger"
-	model "github.com/B-S-F/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	model "github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v3"
 )
@@ -138,7 +138,7 @@ type Evaluate struct {
 	// Example
 	// 	# do evaluation of SharePoint metadata here
 	// 	# do evaluation of PDF signature data here
-	Run string `yaml:"run" json:"run" jsonschema:"required"`
+	Run string `yaml:"run" json:"run" jsonschema:"required,minLength=1"`
 }
 
 type Finalize struct {

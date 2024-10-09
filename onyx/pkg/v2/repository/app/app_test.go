@@ -3,9 +3,9 @@ package app
 import (
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/repository/app"
-	"github.com/B-S-F/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/stretchr/testify/assert"
 )
 

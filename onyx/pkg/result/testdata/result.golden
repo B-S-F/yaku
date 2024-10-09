@@ -34,7 +34,8 @@ chapters:
                             status: GREEN
                             reason: reason
                             results:
-                                - criterion: finding criteria
+                                - hash: 7ae1f095d63607b1228ffe92919e7a287ae61ca5b49d8c0fff5272a0ec06062f
+                                  criterion: finding criteria
                                   fulfilled: false
                                   justification: finding reason
                             outputs:

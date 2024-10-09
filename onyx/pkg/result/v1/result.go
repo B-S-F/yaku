@@ -1,6 +1,6 @@
 package v1
 
-import "github.com/B-S-F/onyx/pkg/result/common"
+import "github.com/B-S-F/yaku/onyx/pkg/result/common"
 
 const (
 	FAILED  = "FAILED"
@@ -51,6 +51,9 @@ type ExecutionInformation struct {
 
 // Contains one of potentially many results reported by an autopilot
 type AutopilotResult struct {
+	// Unique identifier for the Result, created from the Chapter, Requirement, Check, Criterion, and Justification.
+	// Example "9319a093d48e7488ef34cd74ccfe5e2f23a00b32eede2ba30d39676f2029a528"
+	Hash string `yaml:"hash" json:"hash" jsonschema:"required"`
 	// Criterion that was evaluated by the autopilot
 	// Example "My Criterion"
 	Criterion common.MultilineString `yaml:"criterion" json:"criterion" jsonschema:"required"`

@@ -3,7 +3,7 @@ package azblob
 import (
 	"fmt"
 
-	"github.com/B-S-F/onyx/pkg/repository"
+	"github.com/B-S-F/yaku/onyx/pkg/repository"
 )
 
 const StorageAccountNameKey = "storage_account_name"

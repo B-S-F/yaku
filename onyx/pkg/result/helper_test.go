@@ -3,7 +3,7 @@ package result
 import (
 	"testing"
 
-	v1 "github.com/B-S-F/onyx/pkg/result/v1"
+	v1 "github.com/B-S-F/yaku/onyx/pkg/result/v1"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -9,8 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/repository"
-	"github.com/B-S-F/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/repository"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 )
 
 const DOWNLOAD_TIMEOUT = 30 * time.Second
@@ -43,7 +44,7 @@ func (r *Repository) InstallApp(appReference *app.Reference) (app.App, error) {
 
 	url, err := r.getAppURL(appReference.Name, appReference.Version)
 	if err != nil {
-		return nil, fmt.Errorf("failed to install app %s: %w", appReference, err)
+		return nil, err
 	}
 
 	outputPath := app.InstallationPath(r.InstallationPath, r.RepoName, appReference.Name, appReference.Version)
@@ -70,10 +71,10 @@ func (r *Repository) InstallApp(appReference *app.Reference) (app.App, error) {
 func (r *Repository) getAppURL(appName, appVersion string) (*url.URL, error) {
 	configUrl := r.Config.URL
 	if configUrl == "" {
-		return nil, fmt.Errorf("repository URL is empty")
+		return nil, model.NewUserErr(fmt.Errorf("repository URL is empty"), "invalid repository URL")
 	}
 	if !strings.Contains(configUrl, "{name}") || !strings.Contains(configUrl, "{version}") {
-		return nil, fmt.Errorf("repository URL does not contain {name} or {version}")
+		return nil, model.NewUserErr(fmt.Errorf("repository URL does not contain {name} or {version}"), "invalid repository URL")
 	}
 	configUrl = strings.ReplaceAll(configUrl, "{name}", appName)
 	configUrl = strings.ReplaceAll(configUrl, "{version}", appVersion)

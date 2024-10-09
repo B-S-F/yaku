@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
 	"github.com/stretchr/testify/assert"
 )
 

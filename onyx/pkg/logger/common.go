@@ -43,6 +43,11 @@ func NewCommon(s ...Settings) *Common {
 	consoleLogging := zapcore.Lock(zapcore.AddSync(os.Stdout))
 	var core zapcore.Core
 
+	var cores []zapcore.Core
+	if !settings.DisableConsoleLogging {
+		cores = append(cores, zapcore.NewCore(consoleEncoder, consoleLogging, level))
+	}
+
 	if settings.File != "" {
 		jsonEncoderConfig := zap.NewProductionEncoderConfig()
 		jsonEncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
@@ -54,12 +59,12 @@ func NewCommon(s ...Settings) *Common {
 			MaxBackups: 3,
 			MaxAge:     28, // days
 		}))
-		core = zapcore.NewTee(
-			zapcore.NewCore(consoleEncoder, consoleLogging, level),
-			zapcore.NewCore(jsonEncoder, fileLogging, level),
-		)
+		cores = append(cores, zapcore.NewCore(jsonEncoder, fileLogging, level))
+	}
+	if len(cores) > 1 {
+		core = zapcore.NewTee(cores...)
 	} else {
-		core = zapcore.NewCore(consoleEncoder, consoleLogging, level)
+		core = cores[0]
 	}
 	return &Common{
 		Log{

@@ -469,3 +469,39 @@ func TestCreateSymlinks(t *testing.T) {
 		}
 	})
 }
+
+func TestGenerateCheckResultIdHash(t *testing.T) {
+	cases := []struct {
+		name   string
+		fields HashFields
+		want   string
+	}{{
+		name: "should return a hash of the fields as the current api implementation",
+		fields: HashFields{
+			Chapter:       "1",
+			Requirement:   "1",
+			Check:         "1",
+			Criterion:     "This is a test criterion",
+			Justification: "The criterion was not met",
+		},
+		want: "562a22e934fbcad59b1de359cbd914ea810e57b7d04f2c0487e39a89ffaa05dd",
+	},
+		{
+			name: "should support whitespaces in all fields",
+			fields: HashFields{
+				Chapter:       "Chapter 1",
+				Requirement:   "Requirement 1",
+				Check:         "Check 1",
+				Criterion:     "This is a test criterion",
+				Justification: "The criterion was not met",
+			},
+			want: "9319a093d48e7488ef34cd74ccfe5e2f23a00b32eede2ba30d39676f2029a528",
+		}}
+
+	for _, tt := range cases {
+		t.Run(tt.name, func(t *testing.T) {
+			got := GenerateCheckResultIdHash(tt.fields)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}

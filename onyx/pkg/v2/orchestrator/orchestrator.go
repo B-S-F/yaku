@@ -8,10 +8,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/executor"
-	"github.com/B-S-F/onyx/pkg/v2/model"
-	"github.com/B-S-F/onyx/pkg/workdir"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/executor"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/workdir"
 	errs "github.com/pkg/errors"
 	"github.com/spf13/afero"
 	"go.uber.org/zap"
@@ -22,10 +22,11 @@ type Orchestrator struct {
 	strict      bool
 	timeout     time.Duration
 	logger      logger.Logger
+	userLogger  logger.Logger
 }
 
-func New(rootWorkDir string, strict bool, timeout time.Duration, logger logger.Logger) *Orchestrator {
-	return &Orchestrator{rootWorkDir: rootWorkDir, timeout: timeout, logger: logger, strict: strict}
+func New(rootWorkDir string, strict bool, timeout time.Duration, logger logger.Logger, userLogger logger.Logger) *Orchestrator {
+	return &Orchestrator{rootWorkDir: rootWorkDir, timeout: timeout, logger: logger, strict: strict, userLogger: userLogger}
 }
 
 type manualExec struct {
@@ -173,7 +174,9 @@ func (o *Orchestrator) runAutopilots(autopilots []model.AutopilotCheck, env, sec
 				o.rootWorkDir,
 				o.strict,
 				logger,
-				o.timeout)
+				o.timeout,
+				o.userLogger,
+			)
 
 			logger.Info(fmt.Sprintf("[[ CHAPTER: %s REQUIREMENT: %s CHECK: %s ]]", strings.ToUpper(autopilot.Chapter.Id), strings.ToUpper(autopilot.Requirement.Id), strings.ToUpper(autopilot.Check.Id)))
 

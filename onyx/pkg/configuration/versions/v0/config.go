@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	v1 "github.com/B-S-F/onyx/pkg/configuration/versions/v1"
-	"github.com/B-S-F/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	v1 "github.com/B-S-F/yaku/onyx/pkg/configuration/versions/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
 	yaml "gopkg.in/yaml.v3"
 )
 

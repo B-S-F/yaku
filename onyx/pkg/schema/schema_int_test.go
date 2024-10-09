@@ -7,7 +7,7 @@ import (
 	"flag"
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
 	"github.com/stretchr/testify/assert"
 )
 

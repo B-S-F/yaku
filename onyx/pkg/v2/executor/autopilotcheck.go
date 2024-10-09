@@ -10,12 +10,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/helper"
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/model"
-	"github.com/B-S-F/onyx/pkg/v2/output"
-	"github.com/B-S-F/onyx/pkg/v2/runner"
-	"github.com/B-S-F/onyx/pkg/workdir"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/output"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/runner"
+	"github.com/B-S-F/yaku/onyx/pkg/workdir"
 	"github.com/chigopher/pathlib"
 	"github.com/pkg/errors"
 )
@@ -27,6 +27,7 @@ type AutopilotExecutor struct {
 	logger      *logger.Autopilot
 	timeout     time.Duration
 	runner      *runner.Subprocess
+	userLogger  logger.Logger
 }
 
 type stepDirs struct {
@@ -41,7 +42,7 @@ type evaluateResult struct {
 	results []model.Result
 }
 
-func NewAutopilotExecutor(wdUtils workdir.Utilizer, rootWorkDir string, strict bool, logger *logger.Autopilot, timeout time.Duration) *AutopilotExecutor {
+func NewAutopilotExecutor(wdUtils workdir.Utilizer, rootWorkDir string, strict bool, logger *logger.Autopilot, timeout time.Duration, userLogger logger.Logger) *AutopilotExecutor {
 	return &AutopilotExecutor{
 		wdUtils:     wdUtils,
 		rootWorkDir: rootWorkDir,
@@ -49,11 +50,12 @@ func NewAutopilotExecutor(wdUtils workdir.Utilizer, rootWorkDir string, strict b
 		logger:      logger,
 		timeout:     timeout,
 		runner:      runner.NewSubprocess(logger),
+		userLogger:  userLogger,
 	}
 }
 
 func (a *AutopilotExecutor) ExecuteAutopilotCheck(item *model.AutopilotCheck, env, secrets map[string]string) (*model.AutopilotResult, error) {
-	if result := checkErrors(item, a.logger); result != nil {
+	if result := checkErrors(item, a.logger, a.userLogger); result != nil {
 		return result, nil
 	}
 
@@ -117,6 +119,7 @@ func (a *AutopilotExecutor) ExecuteAutopilotCheck(item *model.AutopilotCheck, en
 			if err != nil {
 				return nil, errors.Wrap(err, fmt.Sprintf("failed to run autopilot '%s' step '%s'", item.Autopilot.Name, step.ID))
 			}
+
 			// get step result and log output
 			stepResult := parseStepResult(runnerOutput, step.ID, stepDirs, inputDirs)
 			if err := writeLogs(stepDirs.stepDir, a.wdUtils, stepResult.Logs); err != nil {
@@ -191,7 +194,7 @@ func (a *AutopilotExecutor) ExecuteAutopilotCheck(item *model.AutopilotCheck, en
 	return autopilotResult, nil
 }
 
-func checkErrors(item *model.AutopilotCheck, logger *logger.Autopilot) *model.AutopilotResult {
+func checkErrors(item *model.AutopilotCheck, logger *logger.Autopilot, userLogger logger.Logger) *model.AutopilotResult {
 	if len(item.ValidationErrs) > 0 {
 		msg := fmt.Sprintf("autopilot '%s' has the following validation errors and won't be executed: %s", item.Autopilot.Name, errs.Join(item.ValidationErrs...).Error())
 		output := &model.AutopilotResult{
@@ -202,7 +205,9 @@ func checkErrors(item *model.AutopilotCheck, logger *logger.Autopilot) *model.Au
 			},
 			Name: item.Autopilot.Name,
 		}
-		logger.Error(msg)
+		logger.Warn(msg)
+		userLogger.Error(msg)
+
 		return output
 	}
 	return nil

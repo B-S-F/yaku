@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/helper"
-	"github.com/B-S-F/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
 	"go.uber.org/zap"
 )
 

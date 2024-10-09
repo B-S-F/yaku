@@ -3,9 +3,9 @@ package v1
 import (
 	"fmt"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/logger"
-	v2 "github.com/B-S-F/onyx/pkg/v2/config"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	v2 "github.com/B-S-F/yaku/onyx/pkg/v2/config"
 	yaml "gopkg.in/yaml.v3"
 )
 

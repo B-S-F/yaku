@@ -77,15 +77,15 @@ chapters:
                                     - fetch1
                                     - fetch2
                                   logs:
-                                    - "{\"source\":\"stdout\",\"text\":\"1_1_1\"}"
-                                    - "{\"source\":\"stdout\",\"text\":\"evidences/1_1_1/steps/transform2/files\"}"
-                                    - "{\"source\":\"stdout\",\"text\":\"evidences/1_1_1/steps/transform2/data.json\"}"
-                                    - "{\"source\":\"stdout\",\"text\":\"Removing ' from evidences/1_1_1/steps/fetch1/files' to sanitize for ls\"}"
-                                    - "{\"source\":\"stdout\",\"text\":\"Reading from evidences/1_1_1/steps/fetch1/files\"}"
-                                    - "{\"source\":\"stdout\",\"text\":\"fetch1.txt\"}"
-                                    - "{\"source\":\"stdout\",\"text\":\"Removing ' from 'evidences/1_1_1/steps/fetch2/files to sanitize for ls\"}"
-                                    - "{\"source\":\"stdout\",\"text\":\"Reading from evidences/1_1_1/steps/fetch2/files\"}"
-                                    - "{\"source\":\"stdout\",\"text\":\"fetch2.txt\"}"
+                                    - '{"source":"stdout","text":"1_1_1"}'
+                                    - '{"source":"stdout","text":"evidences/1_1_1/steps/transform2/files"}'
+                                    - '{"source":"stdout","text":"evidences/1_1_1/steps/transform2/data.json"}'
+                                    - '{"source":"stdout","text":"Removing '' from evidences/1_1_1/steps/fetch1/files'' to sanitize for ls"}'
+                                    - '{"source":"stdout","text":"Reading from evidences/1_1_1/steps/fetch1/files"}'
+                                    - '{"source":"stdout","text":"fetch1.txt"}'
+                                    - '{"source":"stdout","text":"Removing '' from ''evidences/1_1_1/steps/fetch2/files to sanitize for ls"}'
+                                    - '{"source":"stdout","text":"Reading from evidences/1_1_1/steps/fetch2/files"}'
+                                    - '{"source":"stdout","text":"fetch2.txt"}'
                                   configFiles: []
                                   outputDir: evidences/1_1_1/steps/transform2/files
                                   resultFile: evidences/1_1_1/steps/transform2/data.json
@@ -97,21 +97,22 @@ chapters:
                             status: GREEN
                             reason: This is a reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: f68d82660400fc15fdd64a7e60fee5a9ab40effbe7d177c50039d8442a438c8c
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             logs:
-                                - "{\"source\":\"stdout\",\"text\":\"evidences/1_1_1/steps/transform1/data.json':'evidences/1_1_1/steps/transform2/data.json\"}"
-                                - "{\"source\":\"stdout\",\"text\":\"evidences/1_1_1/evaluation/result.json\"}"
-                                - "{\"source\":\"stdout\",\"text\":\"Removing ' from evidences/1_1_1/steps/transform1/data.json' to sanitize for cat\"}"
-                                - "{\"source\":\"stdout\",\"text\":\"Reading from evidences/1_1_1/steps/transform1/data.json\"}"
-                                - "{\"source\":\"stdout\",\"text\":\"result2\"}"
-                                - "{\"source\":\"stdout\",\"text\":\"Removing ' from 'evidences/1_1_1/steps/transform2/data.json to sanitize for cat\"}"
-                                - "{\"source\":\"stdout\",\"text\":\"Reading from evidences/1_1_1/steps/transform2/data.json\"}"
-                                - "{\"source\":\"stdout\",\"text\":\"result2\"}"
-                                - "{\"source\":\"stdout\",\"json\":{\"status\":\"GREEN\"}}"
-                                - "{\"source\":\"stdout\",\"json\":{\"reason\":\"This is a reason\"}}"
-                                - "{\"source\":\"stdout\",\"json\":{\"result\":{\"criterion\":\"I am a criterion\",\"fulfilled\":false,\"justification\":\"I am the justification\"}}}"
+                                - '{"source":"stdout","text":"evidences/1_1_1/steps/transform1/data.json'':''evidences/1_1_1/steps/transform2/data.json"}'
+                                - '{"source":"stdout","text":"evidences/1_1_1/evaluation/result.json"}'
+                                - '{"source":"stdout","text":"Removing '' from evidences/1_1_1/steps/transform1/data.json'' to sanitize for cat"}'
+                                - '{"source":"stdout","text":"Reading from evidences/1_1_1/steps/transform1/data.json"}'
+                                - '{"source":"stdout","text":"result2"}'
+                                - '{"source":"stdout","text":"Removing '' from ''evidences/1_1_1/steps/transform2/data.json to sanitize for cat"}'
+                                - '{"source":"stdout","text":"Reading from evidences/1_1_1/steps/transform2/data.json"}'
+                                - '{"source":"stdout","text":"result2"}'
+                                - '{"source":"stdout","json":{"status":"GREEN"}}'
+                                - '{"source":"stdout","json":{"reason":"This is a reason"}}'
+                                - '{"source":"stdout","json":{"result":{"criterion":"I am a criterion","fulfilled":false,"justification":"I am the justification"}}}'
                             configFiles:
                                 - additional-config.yaml
     "2":
@@ -191,7 +192,8 @@ chapters:
                             status: GREEN
                             reason: Some reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: 6cd07f489428ea6310abf447520102f4bfaabeff04388ac6d99353b5b2b81c26
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             logs:
@@ -208,7 +210,8 @@ chapters:
                             status: YELLOW
                             reason: Some reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: 54b5b05f4b4f0e0569560c2c3e56489c7a0db808cad858f5a6bf32221171f092
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             logs:
@@ -225,7 +228,8 @@ chapters:
                             status: RED
                             reason: Some reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: f1357057327bf9a408cd9f1de916e87a1071a393f56c21de8037e7f918276cb6
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             logs:
@@ -242,7 +246,8 @@ chapters:
                             status: ERROR
                             reason: 'autopilot ''status-provider'' provided an invalid ''status'': ''UNKNOWN'''
                             results:
-                                - criterion: I am a criterion
+                                - hash: 5d56c0842cdd4700c8e2de80154a3da9a0ecf3cb7c5b36c2433af6a0b71eb17a
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             logs:
@@ -259,7 +264,8 @@ chapters:
                             status: ERROR
                             reason: 'autopilot ''status-provider'' provided an invalid ''status'': '''''
                             results:
-                                - criterion: I am a criterion
+                                - hash: e34c4ba0df60f5c24dd705626a99b65cd78d800f1d058fd39144a0b64c471b06
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             logs:
@@ -288,19 +294,22 @@ chapters:
                             status: GREEN
                             reason: This is a reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: 80c747e328ef8057a6edae59e9623d20477c8f461d417bdeb8cc40b2c7159d57
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the reason
-                                - criterion: I am a criterion 2
+                                - hash: 69da4b57a997033bedc707c613a594e08fca6002c79fe88423750227145da901
+                                  criterion: I am a criterion 2
                                   fulfilled: false
                                   justification: I am another reason
-                                - criterion: I am a criterion 3
+                                - hash: 2f391bf70bd76a26aee380152d91fb0954ea6fe8005c7d7c7d2a8f84a7dac4aa
+                                  criterion: I am a criterion 3
                                   fulfilled: false
                                   justification: I am yet another reason
                                   metadata:
+                                    severity: "I am a severity"
                                     customer: "I am customer in metadata"
                                     package: "I am a package"
-                                    severity: "I am a severity"
                             logs:
                                 - '{"source":"stdout","json":{"result":{"criterion":"I am a criterion","fulfilled":false,"justification":"I am the reason"}}}'
                                 - '{"source":"stdout","json":{"result":{"criterion":"I am a criterion 2","fulfilled":false,"justification":"I am another reason"}}}'
@@ -316,7 +325,8 @@ chapters:
                             status: RED
                             reason: ""
                             results:
-                                - criterion: "criterion is \b \f \n \r \t \n \\ \" \\n"
+                                - hash: 44a98ada74924c6239f0d6696e80e9a1d5e1e618711a4cf1df91b2d65eea205f
+                                  criterion: "criterion is \b \f \n \r \t \n \\ \" \\n"
                                   fulfilled: true
                                   justification: "reason is \b \f \n \r \t \n \\ \" \\n"
                             logs:
@@ -334,7 +344,8 @@ chapters:
                                 reas
                                 on
                             results:
-                                - criterion: |-
+                                - hash: ccbfa89b5f6ff9ef52b44e3921c91b0f83b2129a7cf58d6c988f6c128b8bbe0c
+                                  criterion: |-
                                     crit
                                     erion
                                   fulfilled: true
@@ -357,7 +368,8 @@ chapters:
                             status: GREEN
                             reason: reason
                             results:
-                                - criterion: criterion
+                                - hash: 6d74470ef4ae78a5e786c910b817915594e598003cfade40c7b18a4c765d72a3
+                                  criterion: criterion
                                   fulfilled: true
                                   justification: |-
                                     line1
@@ -657,7 +669,8 @@ chapters:
                             status: GREEN
                             reason: Repository apps was fetched
                             results:
-                                - criterion: Repository apps can be fetched
+                                - hash: 709876674ac30045358a9533393fd333fe6cb0aeb31f72b08c95cdb67ac4633c
+                                  criterion: Repository apps can be fetched
                                   fulfilled: true
                                   justification: This app is a repository app
                             logs:
@@ -674,7 +687,8 @@ chapters:
                             status: GREEN
                             reason: Repository apps was fetched
                             results:
-                                - criterion: Repository apps can be fetched
+                                - hash: 5c4e98d57c22f8217688c53c222e29b65991a1206ec549f7f2b240e453091ab0
+                                  criterion: Repository apps can be fetched
                                   fulfilled: true
                                   justification: This app is a repository app
                             logs:
@@ -699,7 +713,8 @@ chapters:
                             status: RED
                             reason: test
                             results:
-                                - criterion: FFixed RTC ticket with ID 1588653 must be risk assessed
+                                - hash: 95774b4ca2f998885b0847ee7cdf3146aa82293a7ef49e032131dd68fe57463d
+                                  criterion: FFixed RTC ticket with ID 1588653 must be risk assessed
                                   fulfilled: false
                                   justification: Please type the appropriate risk assessment for RTC Ticket with ID 1588653.
                                   metadata:

@@ -97,7 +97,8 @@ chapters:
                             status: GREEN
                             reason: Some reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: c3c3665989b7cbc8702070dc74ec0a1fde4d3ecbe117bd9f5b0316bd0647a1b6
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             execution:
@@ -116,7 +117,8 @@ chapters:
                             status: YELLOW
                             reason: Some reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: 921f14ba4892f7a96d90dd8bb9e48f39cfe68f2c289fa7c0f4bbf373cdfb7b6c
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             execution:
@@ -135,7 +137,8 @@ chapters:
                             status: RED
                             reason: Some reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: bd5874ac53b2a37af048d428f9e67bb6d61ec22f330fdb1dc78de2a49b6c0b67
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             execution:
@@ -154,7 +157,8 @@ chapters:
                             status: ERROR
                             reason: 'autopilot ''status-provider'' provided an invalid ''status'': ''UNKNOWN'''
                             results:
-                                - criterion: I am a criterion
+                                - hash: a33315a95bdc2647644827686ae5ebe2e6aa9ed8b69bacba5b391d0564a2fea1
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             execution:
@@ -173,7 +177,8 @@ chapters:
                             status: ERROR
                             reason: 'autopilot ''status-provider'' provided an invalid ''status'': '''''
                             results:
-                                - criterion: I am a criterion
+                                - hash: 4503209c10693291841e713e9df3abb07264bcd6888fb2b9231238ca4a0eaab6
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             execution:
@@ -206,7 +211,8 @@ chapters:
                             status: GREEN
                             reason: This is a reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: 62b8a9617b91f48aa9b776f1872a067feaa5416fbe9d6600a19147219d4ec93c
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the justification
                             outputs:
@@ -245,13 +251,16 @@ chapters:
                             status: GREEN
                             reason: This is a reason
                             results:
-                                - criterion: I am a criterion
+                                - hash: df86b33dd05c64038169a39102f172264031677651be2969663a89e4d75447d4
+                                  criterion: I am a criterion
                                   fulfilled: false
                                   justification: I am the reason
-                                - criterion: I am a criterion 2
+                                - hash: 428b9015ffa9368b41ffb87a6b26e63e29db79f4b9ec2a959c747f47ac3f9472
+                                  criterion: I am a criterion 2
                                   fulfilled: false
                                   justification: I am another reason
-                                - criterion: I am a criterion 3
+                                - hash: 4117a8eeac0f8f1a7fbe81fd1cc3777365741efa913b77b788dbd2afb72ec23a
+                                  criterion: I am a criterion 3
                                   fulfilled: false
                                   justification: I am yet another reason
                                   metadata:
@@ -275,7 +284,8 @@ chapters:
                             status: RED
                             reason: ""
                             results:
-                                - criterion: "criterion is \b \f \n \r \t \n \\ \" \\n"
+                                - hash: 0f166d8c2b022147fb9ba3986cfa0a759f92e89f573ca0b450772fa7d45f8844
+                                  criterion: "criterion is \b \f \n \r \t \n \\ \" \\n"
                                   fulfilled: true
                                   justification: "reason is \b \f \n \r \t \n \\ \" \\n"
                             execution:
@@ -295,7 +305,8 @@ chapters:
                                 reas
                                 on
                             results:
-                                - criterion: |-
+                                - hash: 6a60816cd3f443e5a97f3ca9e856721b2b2761cb85d7e20986cdce27d7826258
+                                  criterion: |-
                                     crit
                                     erion
                                   fulfilled: true
@@ -325,7 +336,8 @@ chapters:
                             status: GREEN
                             reason: reason
                             results:
-                                - criterion: criterion
+                                - hash: 99e8f388599eec7c92eceeb021c69d838a56745bde533464742bfebb1e0ac3c2
+                                  criterion: criterion
                                   fulfilled: true
                                   justification: |-
                                     line1
@@ -663,7 +675,8 @@ chapters:
                             status: GREEN
                             reason: Repository apps was fetched
                             results:
-                                - criterion: Repository apps can be fetched
+                                - hash: 683e6203a448914c6cdb62c2cb28fbf13cd1d29d3c75edb30e6b84c0aedf3b8b
+                                  criterion: Repository apps can be fetched
                                   fulfilled: true
                                   justification: This app is a repository app
                             execution:
@@ -682,7 +695,8 @@ chapters:
                             status: GREEN
                             reason: Repository apps was fetched
                             results:
-                                - criterion: Repository apps can be fetched
+                                - hash: 21394d26803c1cfe7b2e837d0988f0c72d57f232ebf7df00fcfa12fc17f0ff87
+                                  criterion: Repository apps can be fetched
                                   fulfilled: true
                                   justification: This app is a repository app
                             execution:
@@ -709,10 +723,12 @@ chapters:
                             status: RED
                             reason: test
                             results:
-                                - criterion: FFixed RTC ticket with ID 1588653 must be risk assessed
+                                - hash: 70c10c9354636f7349de490760d7ef587b1e78e26439821e0fafe9481df64831
+                                  criterion: FFixed RTC ticket with ID 1588653 must be risk assessed
                                   fulfilled: false
                                   justification: Please type the appropriate risk assessment for RTC Ticket with ID 1588653.
                                   metadata:
+                                    Defect Occurrence: "Always"
                                     boolean: "true"
                                     test-json: "{\"key\":\"value\"}"
                                     Id: "1588653"
@@ -720,7 +736,6 @@ chapters:
                                     Summary: "[main] after EDLminidump SoC bootup stuck"
                                     Creation Date: "2022-11-08T09:51:00"
                                     Modified Date: "2023-06-09T14:05:00"
-                                    Defect Occurrence: "Always"
                             execution:
                                 logs:
                                     - '{"result": {"criterion": "FFixed RTC ticket with ID 1588653 must be risk assessed", "fulfilled": false, "justification": "Please type the appropriate risk assessment for RTC Ticket with ID 1588653.", "metadata": {"Id": 1588653, "Filed Against": "Platform_General", "Summary": "[main] after EDLminidump SoC bootup stuck", "Creation Date": "2022-11-08T09:51:00", "Modified Date": "2023-06-09T14:05:00", "Defect Occurrence": "Always", "boolean": true, "test-json": {"key": "value"}}}}'

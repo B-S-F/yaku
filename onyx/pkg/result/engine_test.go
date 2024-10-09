@@ -7,13 +7,13 @@ import (
 	"math"
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/executor"
-	"github.com/B-S-F/onyx/pkg/helper"
-	"github.com/B-S-F/onyx/pkg/item"
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/result/common"
-	v1 "github.com/B-S-F/onyx/pkg/result/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/executor"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/item"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/result/common"
+	v1 "github.com/B-S-F/yaku/onyx/pkg/result/v1"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )
@@ -192,6 +192,7 @@ func TestCreateResult(t *testing.T) {
 									Reason:    "reason",
 									Results: []v1.AutopilotResult{
 										{
+											Hash:          "7ae1f095d63607b1228ffe92919e7a287ae61ca5b49d8c0fff5272a0ec06062f",
 											Criterion:     "finding criteria",
 											Fulfilled:     false,
 											Justification: "finding reason",
@@ -404,6 +405,7 @@ func TestAddItemResult(t *testing.T) {
 											Status:    "GREEN",
 											Results: []v1.AutopilotResult{
 												{
+													Hash:          "7ae1f095d63607b1228ffe92919e7a287ae61ca5b49d8c0fff5272a0ec06062f",
 													Criterion:     "finding criteria",
 													Fulfilled:     false,
 													Justification: "finding reason",
@@ -477,6 +479,7 @@ func TestAddItemResult(t *testing.T) {
 											Reason:    "Overall Reason",
 											Results: []v1.AutopilotResult{
 												{
+													Hash:          "7ae1f095d63607b1228ffe92919e7a287ae61ca5b49d8c0fff5272a0ec06062f",
 													Criterion:     "finding criteria",
 													Fulfilled:     false,
 													Justification: "finding reason",
@@ -673,6 +676,7 @@ func TestAddItemResult(t *testing.T) {
 											Status:    "GRE\nEN",
 											Results: []v1.AutopilotResult{
 												{
+													Hash:          "b2127a418aa20cd4072a9fcf1b1ef59459322a9dadcc8ddcf77c12b3b9da4f4f",
 													Criterion:     "finding\ncriteria 1",
 													Fulfilled:     false,
 													Justification: "finding\nreason 1",
@@ -681,6 +685,7 @@ func TestAddItemResult(t *testing.T) {
 													},
 												},
 												{
+													Hash:          "d04e77076b2bcb3307546df1021d0747a0e6d22cf8ed68cbe0a50001a955903a",
 													Criterion:     "finding\tcriteria 2",
 													Fulfilled:     false,
 													Justification: "finding\treason 2",
@@ -754,15 +759,21 @@ func TestCreateCheckResult(t *testing.T) {
 			ExitCode:     0,
 			EvidencePath: "root/tmp/",
 		}
+		mapping := Mapping{
+			Chapter:     "1",
+			Requirement: "1",
+			Check:       "1",
+		}
 
 		// act
-		result := res.createCheckResult(output)
+		result := res.createCheckResult(output, mapping)
 
 		// assert
 		assert.Equal(t, "Test Autopilot", result.Autopilot)
 		assert.Equal(t, "GREEN", result.Status)
 		assert.Equal(t, "Test Reason", result.Reason)
 		assert.Len(t, result.Results, 1)
+		assert.Equal(t, "8875d5897f0ff743f670454dc36b22d21a86b82b1658b15a6c2c7986dec5fa2b", result.Results[0].Hash)
 		assert.Equal(t, common.MultilineString("Test Criterion"), result.Results[0].Criterion)
 		assert.True(t, result.Results[0].Fulfilled)
 		assert.Equal(t, common.MultilineString("Test Justification"), result.Results[0].Justification)

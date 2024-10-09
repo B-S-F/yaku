@@ -1,16 +1,20 @@
 package runner
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/helper"
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
+	"github.com/netflix/go-iomux"
+	errs "github.com/pkg/errors"
 	"go.uber.org/zap"
 )
 
@@ -29,21 +33,108 @@ func (s *Subprocess) Execute(input *Input, timeout time.Duration) (*Output, erro
 	defer cancel()
 	// start command
 	s.logger.Debug("Starting command", zap.String("cmd", input.Cmd), zap.Strings("args", input.Args))
-	var outbuf, errbuf strings.Builder
-	cmd.Stdout = &outbuf
-	cmd.Stderr = &errbuf
-	exitCode := s.runCommand(cmd, ctx)
-	// parse output
-	out, err := s.parseOutput(input, exitCode, outbuf.String(), errbuf.String())
+	mux := iomux.NewMuxUnixGram[string]()
+	defer mux.Close()
+	cmd.Stdout, _ = mux.Tag(stdOutSourceType)
+	cmd.Stderr, _ = mux.Tag(stdErrSourceType)
+
+	out := &Output{WorkDir: input.WorkDir}
+	chunks, err := mux.ReadWhile(func() error {
+		out.ExitCode = s.runCommand(cmd, ctx)
+		return nil
+	})
 	if err != nil {
-		return nil, err
+		return nil, errs.Wrap(err, "Failed to read command response")
 	}
 
-	if exitCode == 124 {
+	s.demuxLogs(input, out, chunks)
+
+	if out.ExitCode == 124 {
 		out.Logs = append(out.Logs, model.LogEntry{Source: stdErrSourceType, Text: fmt.Sprintf("Command timed out after %s", timeout)})
 	}
 
 	return out, nil
+}
+
+type streamParser struct {
+	buf []byte
+}
+
+func (p *streamParser) parse(chunk []byte) []string {
+	lines := bytes.Split(chunk, []byte("\n"))
+	if len(p.buf) > 0 {
+		lines[0] = append(p.buf, lines[0]...)
+	}
+	lines, rest := lines[:len(lines)-1], lines[len(lines)-1]
+	p.buf = rest
+
+	var entries []string
+	for _, line := range lines {
+		entries = append(entries, string(line))
+	}
+	return entries
+}
+
+func (p *streamParser) end() (bool, string) {
+	if len(p.buf) > 0 {
+		line := string(p.buf)
+		p.buf = []byte{}
+		return true, line
+	}
+	return false, ""
+}
+
+func (s *Subprocess) demuxLogs(in *Input, out *Output, chunks []*iomux.TaggedData[string]) {
+	demuxed := map[string][]string{
+		stdOutSourceType: {},
+		stdErrSourceType: {},
+	}
+	parsers := make(map[string]*streamParser)
+	order := []string{}
+
+	for stream := range demuxed {
+		parsers[stream] = &streamParser{}
+	}
+
+	for _, chunk := range chunks {
+		parser := parsers[chunk.Tag]
+		lines := parser.parse(chunk.Data)
+		demuxed[chunk.Tag] = append(demuxed[chunk.Tag], lines...)
+		for range lines {
+			order = append(order, chunk.Tag)
+		}
+	}
+
+	for _, stream := range []string{stdOutSourceType, stdErrSourceType} {
+		if ok, leftover := parsers[stream].end(); ok {
+			demuxed[stream] = append(demuxed[stream], leftover)
+			order = append(order, stream)
+		}
+	}
+
+	for stream, lines := range demuxed {
+		demuxed[stream] = helper.HideSecretsInArrayOfLines(lines, in.Secrets)
+	}
+
+	for _, stream := range order {
+		line := demuxed[stream][0]
+		demuxed[stream] = demuxed[stream][1:]
+		if line == "" {
+			continue
+		}
+		entry := model.LogEntry{Source: stream}
+		if json.Valid([]byte(line)) {
+			decoder := json.NewDecoder(strings.NewReader(line))
+			decoder.UseNumber()
+			_ = decoder.Decode(&entry.Json)
+			if stream == stdOutSourceType {
+				out.JsonData = append(out.JsonData, entry.Json)
+			}
+		} else {
+			entry.Text = line
+		}
+		out.Logs = append(out.Logs, entry)
+	}
 }
 
 func (s *Subprocess) initCommand(input *Input, timeout time.Duration) (*exec.Cmd, context.Context, context.CancelFunc) {
@@ -81,18 +172,4 @@ func (s *Subprocess) runCommand(cmd *exec.Cmd, ctx context.Context) int {
 		}
 	}
 	return 0
-}
-
-func (s *Subprocess) parseOutput(input *Input, exitCode int, stdout, stderr string) (*Output, error) {
-	out := &Output{}
-	out.WorkDir = input.WorkDir
-	out.ExitCode = exitCode
-	outStr := helper.HideSecretsInString(stdout, input.Secrets)
-	errStr := helper.HideSecretsInString(stderr, input.Secrets)
-	err := out.parseLogStrings(outStr, errStr)
-	if err != nil {
-		return nil, err
-	}
-
-	return out, nil
 }

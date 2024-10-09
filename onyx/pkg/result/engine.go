@@ -5,13 +5,13 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/executor"
-	"github.com/B-S-F/onyx/pkg/helper"
-	"github.com/B-S-F/onyx/pkg/item"
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/result/common"
-	v1 "github.com/B-S-F/onyx/pkg/result/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/executor"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/item"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/result/common"
+	v1 "github.com/B-S-F/yaku/onyx/pkg/result/v1"
 	"go.uber.org/zap"
 )
 
@@ -169,13 +169,27 @@ func getCheck(checks map[string]*v1.Check, requestedCheck *configuration.Check) 
 	return check
 }
 
-func (res *DefaultResultEngine) createCheckResult(output *executor.Output) v1.CheckResult {
+type Mapping struct {
+	Chapter     string
+	Requirement string
+	Check       string
+}
+
+func (res *DefaultResultEngine) createCheckResult(output *executor.Output, mapping Mapping) v1.CheckResult {
 	result := v1.CheckResult{}
 	result.Autopilot = output.Name
 	result.Status = output.Status
 	result.Reason = output.Reason
 	for _, r := range output.Results {
+		hashFields := helper.HashFields{
+			Chapter:       mapping.Chapter,
+			Requirement:   mapping.Requirement,
+			Check:         mapping.Check,
+			Criterion:     r.Criterion,
+			Justification: r.Justification,
+		}
 		result.Results = append(result.Results, v1.AutopilotResult{
+			Hash:          helper.GenerateCheckResultIdHash(hashFields),
 			Criterion:     common.MultilineString(r.Criterion),
 			Fulfilled:     r.Fulfilled,
 			Justification: common.MultilineString(r.Justification),
@@ -200,7 +214,12 @@ func (res *DefaultResultEngine) addItemResult(item *item.Result) {
 	res.logger.Debug("Search for ", zap.Any("check", item.Config.Check))
 	check := getCheck(requirement.Checks, &item.Config.Check)
 	res.logger.Debug("Search for ", zap.Any("autopilot", item.Config.Autopilot))
-	check.Evaluation = res.createCheckResult(item.Output)
+	mapping := Mapping{
+		Chapter:     item.Config.Chapter.Id,
+		Requirement: item.Config.Requirement.Id,
+		Check:       item.Config.Check.Id,
+	}
+	check.Evaluation = res.createCheckResult(item.Output, mapping)
 	check.Type = item.Output.ExecutionType
 	res.Result.Statistics.CountChecks++
 	if item.Output.ExecutionType == Automation {

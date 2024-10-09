@@ -5,34 +5,34 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/B-S-F/onyx/internal/onyx/common"
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/finalize"
-	"github.com/B-S-F/onyx/pkg/helper"
-	"github.com/B-S-F/onyx/pkg/item"
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/parameter"
-	"github.com/B-S-F/onyx/pkg/reader"
-	"github.com/B-S-F/onyx/pkg/replacer"
-	"github.com/B-S-F/onyx/pkg/repository"
-	"github.com/B-S-F/onyx/pkg/repository/app"
-	"github.com/B-S-F/onyx/pkg/repository/registry"
-	"github.com/B-S-F/onyx/pkg/result"
-	v1Result "github.com/B-S-F/onyx/pkg/result/v1"
-	"github.com/B-S-F/onyx/pkg/schema"
-	"github.com/B-S-F/onyx/pkg/tempdir"
-	"github.com/B-S-F/onyx/pkg/transformer"
-	v2 "github.com/B-S-F/onyx/pkg/v2/config"
-	model "github.com/B-S-F/onyx/pkg/v2/model"
-	"github.com/B-S-F/onyx/pkg/v2/orchestrator"
-	replacerV2 "github.com/B-S-F/onyx/pkg/v2/replacer"
-	appV2 "github.com/B-S-F/onyx/pkg/v2/repository/app"
-	registryV2 "github.com/B-S-F/onyx/pkg/v2/repository/registry"
-	resultV2 "github.com/B-S-F/onyx/pkg/v2/result"
-	transformerV2 "github.com/B-S-F/onyx/pkg/v2/transformer"
-	"github.com/B-S-F/onyx/pkg/workdir"
+	"github.com/B-S-F/yaku/onyx/internal/onyx/common"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/finalize"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/item"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/parameter"
+	"github.com/B-S-F/yaku/onyx/pkg/reader"
+	"github.com/B-S-F/yaku/onyx/pkg/replacer"
+	"github.com/B-S-F/yaku/onyx/pkg/repository"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/registry"
+	"github.com/B-S-F/yaku/onyx/pkg/result"
+	v1Result "github.com/B-S-F/yaku/onyx/pkg/result/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/schema"
+	"github.com/B-S-F/yaku/onyx/pkg/tempdir"
+	"github.com/B-S-F/yaku/onyx/pkg/transformer"
+	v2 "github.com/B-S-F/yaku/onyx/pkg/v2/config"
+	model "github.com/B-S-F/yaku/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/orchestrator"
+	replacerV2 "github.com/B-S-F/yaku/onyx/pkg/v2/replacer"
+	appV2 "github.com/B-S-F/yaku/onyx/pkg/v2/repository/app"
+	registryV2 "github.com/B-S-F/yaku/onyx/pkg/v2/repository/registry"
+	resultV2 "github.com/B-S-F/yaku/onyx/pkg/v2/result"
+	transformerV2 "github.com/B-S-F/yaku/onyx/pkg/v2/transformer"
+	"github.com/B-S-F/yaku/onyx/pkg/workdir"
 
-	"github.com/B-S-F/onyx/pkg/zip"
+	"github.com/B-S-F/yaku/onyx/pkg/zip"
 	"github.com/pkg/errors"
 	"github.com/spf13/afero"
 	"go.uber.org/zap"
@@ -67,10 +67,11 @@ type exec struct {
 	transformer     []transformer.Transformer
 	transformerV2   []transformerV2.Transformer
 	logger          logger.Logger
+	userLogger      logger.Logger
 	execParams      parameter.ExecutionParameter
 }
 
-func newExec(execParams parameter.ExecutionParameter) *exec {
+func newExec(execParams parameter.ExecutionParameter, userLogger logger.Logger) *exec {
 	itemEngine := item.NewEngine(ROOT_WORK_DIRECTORY, execParams.Strict, execParams.CheckTimeout)
 	finalizeEngine := finalize.NewEngine(ROOT_WORK_DIRECTORY, execParams.CheckTimeout)
 	resultEngine := result.NewDefaultEngine(ROOT_WORK_DIRECTORY)
@@ -87,6 +88,7 @@ func newExec(execParams parameter.ExecutionParameter) *exec {
 		finalizerEngine: finalizeEngine,
 		transformer:     transformer,
 		logger:          logger.Get(),
+		userLogger:      userLogger,
 		execParams:      execParams,
 		transformerV2:   []transformerV2.Transformer{transformerV2.NewAutopilotSkipper(execParams), transformerV2.NewConfigsLoader(ROOT_WORK_DIRECTORY)},
 	}
@@ -103,8 +105,15 @@ func Exec(execParams parameter.ExecutionParameter) error {
 		Secrets: secrets,
 		File:    filepath.Join(ROOT_WORK_DIRECTORY, "onyx.log"),
 	}) // this logger prevents secrets from being logged
+
+	userLogger := logger.NewCommon(logger.Settings{
+		Secrets:               secrets,
+		File:                  filepath.Join(ROOT_WORK_DIRECTORY, "usererr.log"),
+		DisableConsoleLogging: true,
+	}) // this logger prevents secrets from being logged
+
 	logger.Set(defaultLogger)
-	e := newExec(execParams)
+	e := newExec(execParams, userLogger)
 	err = e.prepareRootFolder(ROOT_WORK_DIRECTORY, execParams.InputFolder)
 	if err != nil {
 		return errors.Wrap(err, "error setting up root directory")
@@ -114,13 +123,21 @@ func Exec(execParams parameter.ExecutionParameter) error {
 	e.logger.Info("parsing config file")
 	cfg, version, err := createConfig(configFile, e.configCreator)
 	if err != nil {
-		return errors.Wrap(err, "error creating config")
+		var userErr model.UserError
+		if errors.As(err, &userErr) {
+			e.userLogger.Errorf("error creating config: %s", userErr.Error())
+		}
+		return err
 	}
 
 	e.logger.Info("validating config file")
 	err = validateSchema(e.schema, cfg, configFile)
 	if err != nil {
-		return errors.Wrap(err, "error validating schema")
+		var userErr model.UserError
+		if errors.As(err, &userErr) {
+			e.userLogger.Errorf("schema validation of config file failed: %s", userErr.Error())
+		}
+		return err
 	}
 
 	switch version {
@@ -143,6 +160,10 @@ func Exec(execParams parameter.ExecutionParameter) error {
 
 		ep, err := e.initPlanV2(configV2, vars, secrets)
 		if err != nil {
+			var userErr model.UserError
+			if errors.As(err, &userErr) {
+				e.userLogger.Errorf("initialization of execution plan failed: %s", userErr.Error())
+			}
 			return err
 		}
 
@@ -181,7 +202,7 @@ func (e *exec) execPlanV1(ep *configuration.ExecutionPlan, vars map[string]strin
 
 func (e *exec) execPlanV2(ep *model.ExecutionPlan, secrets map[string]string) error {
 	e.logger.Info("[ RUN EXECUTION PLAN ]")
-	orchestrator := orchestrator.New(ROOT_WORK_DIRECTORY, e.execParams.Strict, e.execParams.CheckTimeout, e.logger)
+	orchestrator := orchestrator.New(ROOT_WORK_DIRECTORY, e.execParams.Strict, e.execParams.CheckTimeout, e.logger, e.userLogger)
 	runResult, err := orchestrator.Run(ep.ManualChecks, ep.AutopilotChecks, ep.Env, secrets)
 	if err != nil {
 		return errors.Wrap(err, "error executing execution plan")
@@ -284,7 +305,7 @@ func (e *exec) initPlanV1(config configuration.Config, vars, secrets map[string]
 func (e *exec) initPlanV2(config *v2.Config, vars, secrets map[string]string) (*model.ExecutionPlan, error) {
 	e.logger.Info("executing custom config validation")
 	if err := v2.Validate(config); err != nil {
-		return nil, errors.Wrap(err, "custom config validation failed")
+		return nil, err
 	}
 
 	ep, err := config.CreateExecutionPlan()
@@ -293,10 +314,7 @@ func (e *exec) initPlanV2(config *v2.Config, vars, secrets map[string]string) (*
 	}
 
 	e.logger.Info("replacing parameters in execution plan")
-	err = replacerV2.Run(ep, vars, secrets, replacerV2.Initial)
-	if err != nil {
-		return nil, errors.Wrap(err, "error replacing parameters in execution plan")
-	}
+	replacerV2.Run(ep, vars, secrets, replacerV2.Initial, e.userLogger)
 
 	e.logger.Info("transform execution plan")
 	for _, transformer := range e.transformerV2 {
@@ -307,21 +325,22 @@ func (e *exec) initPlanV2(config *v2.Config, vars, secrets map[string]string) (*
 	}
 
 	e.logger.Info("replacing config file parameters in execution plan")
-	err = replacerV2.Run(ep, vars, secrets, replacerV2.ConfigValues)
-	if err != nil {
-		return nil, errors.Wrap(err, "error replacing config file parameters second time in execution plan")
-	}
+	replacerV2.Run(ep, vars, secrets, replacerV2.ConfigValues, e.userLogger)
 
 	e.logger.Info("initializing repositories")
 	repositories, err := initializeRepository(ep.Repositories)
 	if err != nil {
-		return nil, errors.Wrap(err, "error parsing repositories")
+		var userErr model.UserError
+		if errors.As(err, &userErr) {
+			e.userLogger.Errorf("error parsing repositories: %s", userErr.Error())
+		}
+		return nil, err
 	}
 
 	e.logger.Info("initializing app registry")
 	registry, err := registryV2.Initialize(ep, repositories)
 	if err != nil {
-		return nil, errors.Wrap(err, "error initializing app registry")
+		return nil, err
 	}
 
 	e.logger.Info(registry.Stats())

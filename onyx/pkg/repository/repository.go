@@ -3,8 +3,8 @@ package repository
 import (
 	"fmt"
 
-	"github.com/B-S-F/onyx/pkg/repository/app"
-	"github.com/B-S-F/onyx/pkg/tempdir"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/tempdir"
 )
 
 var REPOSITORY_DIRECTORY = tempdir.GetPath("repositories")

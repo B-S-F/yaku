@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -181,7 +181,11 @@ func TestCreator_Create(t *testing.T) {
 				OverallStatus: "GREEN",
 				Chapters: map[string]*Chapter{
 					"1": simpleAutomationChapter(),
-					"2": simpleAutomationChapter(),
+					"2": func() *Chapter {
+						c := simpleAutomationChapter()
+						c.Requirements["1"].Checks["1"].Evaluation.Results[0].Hash = "dc34b8e77c1e77c63c75a34e80d2f47a0b9fde6cb314d566cb7e3bff2a2b30a2"
+						return c
+					}(),
 				},
 				Statistics: Statistics{CountChecks: 2, CountAutomatedChecks: 2, PercentageDone: 100, PercentageAutomated: 100},
 			}},
@@ -206,6 +210,7 @@ func TestCreator_Create(t *testing.T) {
 						c.Requirements["1"].Status = "RED"
 						c.Requirements["1"].Checks["1"].Evaluation.Status = "RED"
 						c.Requirements["1"].Checks["1"].Evaluation.Reason = "is red"
+						c.Requirements["1"].Checks["1"].Evaluation.Results[0].Hash = "dc34b8e77c1e77c63c75a34e80d2f47a0b9fde6cb314d566cb7e3bff2a2b30a2"
 						return c
 					}(),
 				},
@@ -232,6 +237,8 @@ func TestCreator_Create(t *testing.T) {
 						c.Requirements["2"].Status = "RED"
 						c.Requirements["2"].Checks["1"].Evaluation.Status = "RED"
 						c.Requirements["2"].Checks["1"].Evaluation.Reason = "is red"
+						c.Requirements["2"].Checks["1"].Evaluation.Results[0].Hash = "67ad823ab37dd00780d8beb36274452e10b7e6579a5d318344321a34c375dd85"
+
 						return c
 					}(),
 				},
@@ -258,6 +265,7 @@ func TestCreator_Create(t *testing.T) {
 						c.Requirements["1"].Status = "RED"
 						c.Requirements["1"].Checks["2"].Evaluation.Status = "RED"
 						c.Requirements["1"].Checks["2"].Evaluation.Reason = "is red"
+						c.Requirements["1"].Checks["2"].Evaluation.Results[0].Hash = "a3a15e7d746953df3d3a562a8be220cbc63727ea2eb059122e6cca00ed5d3923"
 						return c
 					}(),
 				},
@@ -709,6 +717,7 @@ func simpleAutomationChapter() *Chapter {
 							ConfigFiles: []string{"cfg.yaml"},
 							Results: []EvaluationResult{
 								{
+									Hash:          "19d9338067c7b1aa3e17cc779bf90abe65b6e47da9eb7b798a48aff9ab9ea58b",
 									Criterion:     "criterion",
 									Fulfilled:     true,
 									Justification: "justified",

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/B-S-F/onyx/internal/onyx/common"
-	v0 "github.com/B-S-F/onyx/pkg/configuration/versions/v0"
-	v1 "github.com/B-S-F/onyx/pkg/configuration/versions/v1"
-	"github.com/B-S-F/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/internal/onyx/common"
+	v0 "github.com/B-S-F/yaku/onyx/pkg/configuration/versions/v0"
+	v1 "github.com/B-S-F/yaku/onyx/pkg/configuration/versions/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
 	"github.com/pkg/errors"
 )
 

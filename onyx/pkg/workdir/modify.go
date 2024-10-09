@@ -3,7 +3,7 @@ package workdir
 import (
 	"os"
 
-	"github.com/B-S-F/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
 	"github.com/chigopher/pathlib"
 	"github.com/pkg/errors"
 	"github.com/spf13/afero"

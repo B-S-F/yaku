@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/B-S-F/onyx/pkg/schema/config-mock-int",
+  "$id": "https://github.com/B-S-F/yaku/onyx/pkg/schema/config-mock-int",
   "$ref": "#/$defs/configMockInt",
   "$defs": {
     "configMockInt": {

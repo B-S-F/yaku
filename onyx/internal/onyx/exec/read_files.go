@@ -3,8 +3,8 @@ package exec
 import (
 	"path/filepath"
 
-	"github.com/B-S-F/onyx/pkg/parameter"
-	"github.com/B-S-F/onyx/pkg/reader"
+	"github.com/B-S-F/yaku/onyx/pkg/parameter"
+	"github.com/B-S-F/yaku/onyx/pkg/reader"
 )
 
 func ReadFiles(execParams parameter.ExecutionParameter, reader reader.FileReader) ([]byte, map[string]string, map[string]string, error) {

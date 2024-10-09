@@ -1,8 +1,8 @@
 package schema
 
 import (
-	onyx "github.com/B-S-F/onyx/internal/onyx/schema"
-	"github.com/B-S-F/onyx/pkg/logger"
+	onyx "github.com/B-S-F/yaku/onyx/internal/onyx/schema"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

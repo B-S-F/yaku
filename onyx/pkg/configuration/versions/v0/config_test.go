@@ -16,8 +16,8 @@ globals:
     VAR_1: global1_var_1
 dependencies:
     '@grow/jira-fetcher': '^0.1.0'
-    typescript-app: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/typescript-app-template
-    typescript-app-master: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/typescript-app-template#master
+    typescript-app: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/yaku/typescript-app-template
+    typescript-app-master: git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/yaku/typescript-app-template#master
 autopilots:
     dummy-autopilot:
         run: |
@@ -68,8 +68,8 @@ func TestNew(t *testing.T) {
 	assert.Equal(t, "1.16.5", config.(*Config).Components["webApp"].Version)
 	assert.Equal(t, "global1_var_1", config.(*Config).Globals["VAR_1"])
 	assert.Equal(t, "^0.1.0", config.(*Config).Dependencies["@grow/jira-fetcher"])
-	assert.Equal(t, "git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/typescript-app-template", config.(*Config).Dependencies["typescript-app"])
-	assert.Equal(t, "git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/typescript-app-template#master", config.(*Config).Dependencies["typescript-app-master"])
+	assert.Equal(t, "git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/yaku/typescript-app-template", config.(*Config).Dependencies["typescript-app"])
+	assert.Equal(t, "git+https://${GITHUB_PRIVATE_ACCESSTOKEN}@github.com/B-S-F/yaku/typescript-app-template#master", config.(*Config).Dependencies["typescript-app-master"])
 	assert.Contains(t, config.(*Config).Autopilots["dummy-autopilot"].Run, "echo")
 	assert.Equal(t, "autopilot1_var_2", config.(*Config).Autopilots["dummy-autopilot"].Env["VAR_2"])
 	assert.Equal(t, "dummy-autopilot", config.(*Config).Reports["dummy-report"])
