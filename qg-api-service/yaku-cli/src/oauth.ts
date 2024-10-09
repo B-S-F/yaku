@@ -4,6 +4,7 @@ import open from 'open'
 import { ProxyAgent } from 'proxy-agent'
 import { config } from './config.js'
 import { Environment } from './commands/environment.js'
+import { fetch, EnvHttpProxyAgent } from 'undici'
 
 const agent = new ProxyAgent()
 custom.setHttpOptionsDefaults({
@@ -110,9 +111,10 @@ export class OAuthClient {
       const keycloakUrl = `${envUrl}/service/authinfo`
       const response = await fetch(keycloakUrl, {
         method: 'GET',
+        dispatcher: new EnvHttpProxyAgent(),
       })
 
-      const res = await response.json()
+      const res = (await response.json()) as any
       const url = res.wellKnownConfigUrl
 
       if (!url) {

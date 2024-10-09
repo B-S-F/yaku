@@ -9,6 +9,7 @@
 Download the file **yaku-cli.zip** from the [core service release](https://github.com/B-S-F/qg-api-service/releases) and unzip it to the current folder. Call `npm install -g ./yaku-cli/B-S-F-yaku-cli-<version>.tgz ./yaku-cli/B-S-F-yaku-client-lib-<version>.tgz`. The yaku cli will be installed in the path and you can use it by simply calling `yaku` in a shell.
 
 #### Windows
+
 Download the file **yaku-cli.zip** from the [core service release](https://github.com/B-S-F/qg-api-service/releases) and unzip it to the current folder. The extracted files are two `.tgz` archives. Extracting those will result in two `.tar` files. Call `npm i -g ./B-S-F-yaku-cli-<version>.tar ./B-S-F-yaku-client-lib-<version>.tar`. The yaku cli will be installed in the path and you can use it by simply calling `yaku` in a shell.
 
 ### Using the CLI
@@ -18,6 +19,12 @@ The Yaku CLI contains commands to run requests against the Yaku service REST API
 Use `yaku -h` to get a list of all available commands and subcommands.
 
 The help option also explains all commands and subcommands. Detailed help on a certain command can be retrieved, by a `yaku command subcommand -h` call, e.g., for help on listing runs, you can type `yaku runs list -h` or short `yaku r ls -h`. Most commands come with abbreviations to reduce the amount of typing needed to issue a request.
+
+#### Proxy support
+
+The Yaku CLI supports proxy configuration, enabling users to manually set environment variables such as `http_proxy`/`HTTP_PROXY` or `https_proxy`/`HTTPS_PROXY` according to their needs.
+
+Additionally, the `no_proxy`/`NO_PROXY` environment variables are supported. In all cases, the lowercase variables take precedence.
 
 ### Fixing TLS issues
 
