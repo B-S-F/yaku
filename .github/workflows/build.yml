@@ -31,3 +31,7 @@ jobs:
       - name: Build with Bazel
         working-directory: ${{ matrix.folder }}
         run: bazel build //...
+
+      - name: Test with Bazel
+        working-directory: ${{ matrix.folder }}
+        run: bazel test //...
