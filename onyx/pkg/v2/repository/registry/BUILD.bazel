@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "registry",
+    srcs = ["registry.go"],
+    importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/repository/registry",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/repository",
+        "//pkg/repository/registry",
+        "//pkg/v2/model",
+        "//pkg/v2/repository/app",
+    ],
+)

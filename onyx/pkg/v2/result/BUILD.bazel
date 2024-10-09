@@ -1,0 +1,38 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "result",
+    srcs = [
+        "creator.go",
+        "result.go",
+    ],
+    importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/result",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/configuration",
+        "//pkg/helper",
+        "//pkg/logger",
+        "//pkg/result/common",
+        "//pkg/v2/model",
+        "@com_github_pkg_errors//:go_default_library",
+        "@in_gopkg_yaml_v3//:go_default_library",
+        "@org_uber_go_zap//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "result_test",
+    srcs = [
+        "creator_create_test.go",
+        "creator_test.go",
+    ],
+    embed = [":result"],
+    deps = [
+        "//pkg/configuration",
+        "//pkg/logger",
+        "//pkg/v2/model",
+        "@com_github_stretchr_testify//assert:go_default_library",
+        "@com_github_stretchr_testify//require:go_default_library",
+        "@in_gopkg_yaml_v3//:go_default_library",
+    ],
+)

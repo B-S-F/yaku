@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "registry",
+    srcs = ["registry.go"],
+    importpath = "github.com/B-S-F/yaku/onyx/pkg/repository/registry",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/logger",
+        "//pkg/repository",
+        "//pkg/repository/app",
+        "//pkg/v2/model",
+    ],
+)
+
+go_test(
+    name = "registry_test",
+    srcs = ["registry_test.go"],
+    data = glob(["testdata/**"]),
+    embed = [":registry"],
+    deps = [
+        "//pkg/repository",
+        "//pkg/repository/app",
+        "@com_github_stretchr_testify//assert:go_default_library",
+    ],
+)

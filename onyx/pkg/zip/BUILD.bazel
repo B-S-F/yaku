@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "zip",
+    srcs = ["zip.go"],
+    importpath = "github.com/B-S-F/yaku/onyx/pkg/zip",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/logger",
+        "@com_github_spf13_afero//:go_default_library",
+        "@org_uber_go_zap//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "zip_test",
+    srcs = ["helper_test.go"],
+    data = glob(["testdata/**"]),
+    embed = [":zip"],
+)

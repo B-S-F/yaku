@@ -1,0 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "item",
+    srcs = ["engine.go"],
+    importpath = "github.com/B-S-F/yaku/onyx/pkg/item",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/configuration",
+        "//pkg/executor",
+        "//pkg/helper",
+        "//pkg/logger",
+        "@com_github_pkg_errors//:go_default_library",
+        "@org_uber_go_zap//:go_default_library",
+    ],
+)

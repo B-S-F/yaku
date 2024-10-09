@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "schema",
+    srcs = ["schema.go"],
+    importpath = "github.com/B-S-F/yaku/onyx/internal/onyx/schema",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/onyx/common",
+        "//pkg/result/v1:result",
+        "//pkg/schema",
+        "//pkg/v2/result",
+        "@com_github_pkg_errors//:go_default_library",
+    ],
+)

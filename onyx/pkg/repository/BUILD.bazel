@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "repository",
+    srcs = ["repository.go"],
+    importpath = "github.com/B-S-F/yaku/onyx/pkg/repository",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/repository/app",
+        "//pkg/tempdir",
+    ],
+)
+
+go_test(
+    name = "repository_test",
+    srcs = ["repository_test.go"],
+    embed = [":repository"],
+    deps = [
+        "//pkg/repository/app",
+        "@com_github_stretchr_testify//assert:go_default_library",
+    ],
+)
