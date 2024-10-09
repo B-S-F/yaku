@@ -1,10 +1,10 @@
 package result
 
 import (
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/executor"
-	"github.com/B-S-F/onyx/pkg/item"
-	v1 "github.com/B-S-F/onyx/pkg/result/v1"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/executor"
+	"github.com/B-S-F/yaku/onyx/pkg/item"
+	v1 "github.com/B-S-F/yaku/onyx/pkg/result/v1"
 )
 
 const (

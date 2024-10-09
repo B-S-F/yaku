@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/model"
-	"github.com/B-S-F/onyx/pkg/workdir"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/workdir"
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
 )

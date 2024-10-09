@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"

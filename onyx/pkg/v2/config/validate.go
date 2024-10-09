@@ -1,9 +1,11 @@
 package config
 
 import (
+	"fmt"
 	"regexp"
 
-	"github.com/B-S-F/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/pkg/errors"
 )
 
@@ -18,7 +20,7 @@ func Validate(config interface{}) error {
 					continue
 				}
 				if err := validateID(step.ID, idMap); err != nil {
-					return errors.Wrap(err, "invalid step id "+step.ID)
+					return err
 				}
 			}
 		}
@@ -27,7 +29,7 @@ func Validate(config interface{}) error {
 			for _, step := range autopilot.Steps {
 				for _, depends := range step.Depends {
 					if !idMap[depends] {
-						return errors.Errorf("missing dependency %s", depends)
+						return model.NewUserErr(errors.Errorf("missing dependency %s", depends), "config validation failed")
 					}
 				}
 			}
@@ -44,9 +46,9 @@ func Validate(config interface{}) error {
 		// validate checks
 		for _, chap := range cfg.Chapters {
 			for _, req := range chap.Requirements {
-				for _, check := range req.Checks {
+				for checkID, check := range req.Checks {
 					if check.isAutomation() && check.isManual() {
-						return errors.Errorf("checks can't have both manual and automated checks")
+						return model.NewUserErr(errors.Errorf("invalid check '%s': checks can't have both manual and automated checks", checkID), "config validation failed")
 					}
 				}
 			}
@@ -63,11 +65,11 @@ func validateID(id string, existingIDs map[string]bool) error {
 	}
 
 	if !isValidIDPattern.MatchString(id) {
-		return errors.New("ID contains invalid characters. Only alphanumeric characters, dashes, and underscores are allowed.")
+		return model.NewUserErr(fmt.Errorf("invalid step id '%s': ID contains invalid characters. Only alphanumeric characters, dashes, and underscores are allowed.", id), "config validation failed")
 	}
 
 	if _, exists := existingIDs[id]; exists {
-		return errors.New("ID must be unique. This ID already exists.")
+		return model.NewUserErr(fmt.Errorf("invalid step id '%s': ID must be unique. This ID already exists.", id), "config validation failed")
 	}
 
 	existingIDs[id] = true

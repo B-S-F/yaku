@@ -21,7 +21,7 @@ func TestCustomValidationForV2(t *testing.T) {
 					"autopilots": {Steps: []Step{{ID: "invalidid$"}}},
 				},
 			},
-			want: errors.New("invalid step id invalidid$: ID contains invalid characters. Only alphanumeric characters, dashes, and underscores are allowed."),
+			want: errors.New("config validation failed: invalid step id 'invalidid$': ID contains invalid characters. Only alphanumeric characters, dashes, and underscores are allowed."),
 		},
 		"invalid-id-when-contains-umlaut": {
 			input: &Config{
@@ -29,7 +29,7 @@ func TestCustomValidationForV2(t *testing.T) {
 					"autopilots": {Steps: []Step{{ID: "invalididÄ"}}},
 				},
 			},
-			want: errors.New("invalid step id invalididÄ: ID contains invalid characters. Only alphanumeric characters, dashes, and underscores are allowed."),
+			want: errors.New("config validation failed: invalid step id 'invalididÄ': ID contains invalid characters. Only alphanumeric characters, dashes, and underscores are allowed."),
 		},
 		"valid-name": {
 			input: &Config{
@@ -53,7 +53,7 @@ func TestCustomValidationForV2(t *testing.T) {
 					"autopilots": {Steps: []Step{{Depends: []string{"fetch1"}}}},
 				},
 			},
-			want: errors.New("missing dependency fetch1"),
+			want: errors.New("config validation failed: missing dependency fetch1"),
 		},
 		"invalid-check": {
 			input: &Config{
@@ -80,7 +80,7 @@ func TestCustomValidationForV2(t *testing.T) {
 					},
 				},
 			},
-			want: errors.New("checks can't have both manual and automated checks"),
+			want: errors.New("config validation failed: invalid check 'check1': checks can't have both manual and automated checks"),
 		},
 		"valid-check": {
 			input: &Config{

@@ -6,8 +6,8 @@ package replacer
 import (
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
 	"github.com/stretchr/testify/assert"
 )
 

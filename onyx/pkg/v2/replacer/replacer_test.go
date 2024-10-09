@@ -3,9 +3,11 @@ package replacer
 import (
 	"testing"
 
-	config "github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/v2/model"
+	config "github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/stretchr/testify/assert"
+	"go.uber.org/zap"
 )
 
 var varsContent = map[string]string{
@@ -39,30 +41,28 @@ var secretsContent = map[string]string{
 	"GITHUB_PASSWORD": "github_password",
 }
 
+var nopLogger = &logger.Log{
+	Logger: zap.NewNop(),
+}
+
 func TestReplaceRun(t *testing.T) {
 	executionPlan := simpleExecPlan()
 
-	err := Run(
+	Run(
 		executionPlan,
 		varsContent,
 		secretsContent,
 		Initial,
+		nopLogger,
 	)
 
-	if err != nil {
-		t.Errorf("Error running replacer: %v", err)
-	}
-
-	err = Run(
+	Run(
 		executionPlan,
 		varsContent,
 		secretsContent,
 		ConfigValues,
+		nopLogger,
 	)
-
-	if err != nil {
-		t.Errorf("Error running replacer: %v", err)
-	}
 
 	// metadata
 	assert.Equal(t, "2", executionPlan.Metadata.Version, "metadata should be equal")
@@ -241,27 +241,21 @@ func TestReplaceRunWithoutFinalizer(t *testing.T) {
 	executionPlan := simpleExecPlan()
 	executionPlan.Finalize = nil
 
-	err := Run(
+	Run(
 		executionPlan,
 		varsContent,
 		secretsContent,
 		Initial,
+		nopLogger,
 	)
 
-	if err != nil {
-		t.Errorf("Error running replacer: %v", err)
-	}
-
-	err = Run(
+	Run(
 		executionPlan,
 		varsContent,
 		secretsContent,
 		ConfigValues,
+		nopLogger,
 	)
-
-	if err != nil {
-		t.Errorf("Error running replacer: %v", err)
-	}
 
 	// metadata
 	assert.Equal(t, "2", executionPlan.Metadata.Version, "metadata should be equal")

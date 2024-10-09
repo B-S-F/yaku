@@ -1,9 +1,12 @@
 package helper
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -86,4 +89,26 @@ func CreateSymlinks(src string, dst string, names []string) error {
 		}
 	}
 	return nil
+}
+
+type HashFields struct {
+	Chapter       string
+	Requirement   string
+	Check         string
+	Criterion     string
+	Justification string
+}
+
+func GenerateCheckResultIdHash(hashFields HashFields) string {
+	input := hashFields.Chapter + hashFields.Requirement + hashFields.Check + hashFields.Criterion + hashFields.Justification
+
+	re := regexp.MustCompile(`\s+`)
+	input = re.ReplaceAllString(input, "")
+
+	hash := sha256.New()
+	hash.Write([]byte(input))
+	hashBytes := hash.Sum(nil)
+	hashString := hex.EncodeToString(hashBytes)
+
+	return hashString
 }

@@ -1,6 +1,6 @@
 package config
 
-import model "github.com/B-S-F/onyx/pkg/v2/model"
+import model "github.com/B-S-F/yaku/onyx/pkg/v2/model"
 
 type stepGraph struct {
 	adjList   map[string][]string

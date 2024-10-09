@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/repository"
-	"github.com/B-S-F/onyx/pkg/repository/app"
-	"github.com/B-S-F/onyx/pkg/repository/types/curl"
+	"github.com/B-S-F/yaku/onyx/pkg/repository"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/types/curl"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -1,7 +1,7 @@
 package model
 
 import (
-	conf "github.com/B-S-F/onyx/pkg/configuration"
+	conf "github.com/B-S-F/yaku/onyx/pkg/configuration"
 )
 
 type ExecutionPlan struct {

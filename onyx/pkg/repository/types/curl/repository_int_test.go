@@ -11,7 +11,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/app"
 )
 
 func TestInstallApp(t *testing.T) {

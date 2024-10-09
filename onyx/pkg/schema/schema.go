@@ -3,9 +3,11 @@ package schema
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/replacer"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/replacer"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/invopop/jsonschema"
 	"github.com/invopop/yaml"
 	"github.com/pkg/errors"
@@ -53,12 +55,11 @@ func (s *Schema) Validate(yamlData []byte) error {
 		return errors.Wrapf(err, "error validating data: %s", err)
 	}
 	if !result.Valid() {
-		errorMsg := "config data does not match schema"
-		s.logger.Error(fmt.Sprintf("%s:", errorMsg))
+		var validationErrs []string
 		for _, desc := range result.Errors() {
-			s.logger.Error(fmt.Sprintf("  - %s", desc))
+			validationErrs = append(validationErrs, fmt.Sprintf("  - %s", desc))
 		}
-		return errors.New(errorMsg)
+		return model.NewUserErr(errors.New(fmt.Sprintf("\n%s", strings.Join(validationErrs, "\n"))), "config data does not match schema")
 	}
 	// validate replace patterns
 	patterns := replacer.FindAllReplacePatterns(string(yamlData))
@@ -69,8 +70,7 @@ func (s *Schema) Validate(yamlData []byte) error {
 					s.logger.Warnf("deprecated pattern '%s' found. Valid patterns are: ${{ secrets.<secret_name> }}, ${{ vars.<var_name> }}, and ${{ env.<env_name> }}", pattern)
 				} else {
 					errorMsg := fmt.Sprintf("invalid pattern '%s' found. Valid patterns are: ${{ secrets.<secret_name> }}, ${{ vars.<var_name> }} and ${{ env.<env_name> }}", pattern)
-					s.logger.Error(errorMsg)
-					return errors.New(errorMsg)
+					return model.NewUserErr(errors.New(errorMsg), "config contains invalid replace pattern")
 				}
 			}
 		}
@@ -93,7 +93,7 @@ func loadSchema(anySchema interface{}) ([]byte, *gojsonschema.Schema, error) {
 func createJSONSchema(anySchema interface{}) ([]byte, error) {
 	r := new(jsonschema.Reflector)
 	r.RequiredFromJSONSchemaTags = true
-	err := r.AddGoComments("github.com/B-S-F/onyx", "./")
+	err := r.AddGoComments("github.com/B-S-F/yaku/onyx", "./")
 	if err != nil {
 		return nil, errors.Wrapf(err, "error adding go comments in schema: %s", err)
 	}

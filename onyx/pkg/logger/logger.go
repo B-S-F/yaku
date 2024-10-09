@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"github.com/B-S-F/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -15,9 +15,10 @@ func init() {
 }
 
 type Settings struct {
-	Level   string
-	File    string
-	Secrets map[string]string
+	Level                 string
+	File                  string
+	Secrets               map[string]string
+	DisableConsoleLogging bool
 }
 
 type Log struct {

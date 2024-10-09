@@ -3,8 +3,8 @@ package output
 import (
 	"strconv"
 
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 )
 
 type Output struct {

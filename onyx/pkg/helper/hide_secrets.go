@@ -74,3 +74,50 @@ func HideSecretsInString(content string, secrets map[string]string) string {
 	}
 	return content
 }
+
+func HideSecretsInArrayOfLines(lines []string, secrets map[string]string) []string {
+	simpleSecrets, multilineSecrets := make(map[string]string), make(map[string][]string)
+	for secretName, secretValue := range secrets {
+		secretLines := strings.Split(secretValue, "\n")
+		if len(secretLines) > 1 {
+			multilineSecrets[secretName] = secretLines
+		} else {
+			simpleSecrets[secretName] = secretValue
+		}
+	}
+	lines = HideSecretsInArrayOfStrings(lines, simpleSecrets)
+
+	for secretName, secretLines := range multilineSecrets {
+		start, mid, end := secretLines[0], secretLines[1:len(secretLines)-1], secretLines[len(secretLines)-1]
+		for startIndex := 0; startIndex <= len(lines)-len(secretLines); startIndex++ {
+			prefix, startOk := strings.CutSuffix(lines[startIndex], start)
+			if !startOk {
+				continue
+			}
+			endIndex := startIndex + 1
+			midOk := true
+			for _, midLine := range mid {
+				if midLine != lines[endIndex] {
+					midOk = false
+					break
+				}
+				endIndex++
+			}
+			if !midOk {
+				continue
+			}
+			suffix, endOk := strings.CutPrefix(lines[endIndex], end)
+			if !endOk {
+				continue
+			}
+
+			lines[startIndex] = fmt.Sprintf("%s***%s***", prefix, secretName)
+			lines[endIndex] = suffix
+			for i := startIndex + 1; i < endIndex; i++ {
+				lines[i] = ""
+			}
+			startIndex = endIndex
+		}
+	}
+	return lines
+}

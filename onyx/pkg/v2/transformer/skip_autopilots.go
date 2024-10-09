@@ -1,8 +1,8 @@
 package transformer
 
 import (
-	"github.com/B-S-F/onyx/pkg/parameter"
-	"github.com/B-S-F/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/parameter"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/pkg/errors"
 )
 

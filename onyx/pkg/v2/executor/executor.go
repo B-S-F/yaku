@@ -3,8 +3,8 @@ package executor
 import (
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/runner"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/runner"
 	"go.uber.org/zap"
 )
 
@@ -18,6 +18,10 @@ func StartRunner(workDir string, run string, env, secrets map[string]string, log
 		WorkDir: workDir,
 	}
 	out, err := scriptRunner.Execute(&input, timeout)
-	logger.Debug("output", zap.Any("output", out), zap.Error(err))
-	return out, err
+	if err != nil {
+		return nil, err
+	}
+
+	logger.Debug("output", zap.Any("output", out))
+	return out, nil
 }

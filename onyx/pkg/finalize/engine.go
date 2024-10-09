@@ -4,9 +4,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	"github.com/B-S-F/onyx/pkg/executor"
-	"github.com/B-S-F/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/executor"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 )

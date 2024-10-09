@@ -4,13 +4,15 @@
 package runner
 
 import (
-	"bytes"
+	"context"
+	"encoding/json"
 	"os"
 	"testing"
 	"time"
 
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
+	"github.com/netflix/go-iomux"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )
@@ -113,6 +115,52 @@ func TestExecute(t *testing.T) {
 			want: &Output{
 				Logs:     []model.LogEntry{{Source: "stdout", Json: map[string]interface{}{"key1": "***SECRET1***"}}},
 				JsonData: []map[string]interface{}{{"key1": "***SECRET1***"}},
+				WorkDir:  tmpDir,
+			},
+		},
+		"should return standard error and standard output in the correct order": {
+			input: &Input{
+				Cmd:     "/bin/bash",
+				Args:    []string{"-c", "echo hello world1; 1>&2 echo hello world2; echo hello world3; echo hello world4; 1>&2 echo hello world5; 1>&2 echo hello world6"},
+				WorkDir: tmpDir,
+			},
+			timeout: 10 * time.Minute,
+			want: &Output{
+				Logs: []model.LogEntry{
+					{Source: "stdout", Text: "hello world1"},
+					{Source: "stderr", Text: "hello world2"},
+					{Source: "stdout", Text: "hello world3"},
+					{Source: "stdout", Text: "hello world4"},
+					{Source: "stderr", Text: "hello world5"},
+					{Source: "stderr", Text: "hello world6"},
+				},
+				ExitCode: 0,
+				WorkDir:  tmpDir,
+			},
+		},
+		"should handle interleaved standard error and standard output": {
+			input: &Input{
+				Cmd:     "/bin/bash",
+				Args:    []string{"-c", "echo -n hello; 1>&2 echo hello world; echo world;"},
+				WorkDir: tmpDir,
+			},
+			timeout: 10 * time.Minute,
+			want: &Output{
+				Logs:     []model.LogEntry{{Source: "stderr", Text: "hello world"}, {Source: "stdout", Text: "helloworld"}},
+				ExitCode: 0,
+				WorkDir:  tmpDir,
+			},
+		},
+		"should handle missing newline at the end of logs": {
+			input: &Input{
+				Cmd:     "/bin/bash",
+				Args:    []string{"-c", "echo -n hello; 1>&2 echo -n hello world; echo -n world;"},
+				WorkDir: tmpDir,
+			},
+			timeout: 10 * time.Minute,
+			want: &Output{
+				Logs:     []model.LogEntry{{Source: "stdout", Text: "helloworld"}, {Source: "stderr", Text: "hello world"}},
+				ExitCode: 0,
 				WorkDir:  tmpDir,
 			},
 		},
@@ -260,51 +308,164 @@ func TestRunCommand(t *testing.T) {
 	}
 }
 
-func TestParseOutput(t *testing.T) {
+func TestDemuxLogs(t *testing.T) {
 	s := &Subprocess{
 		logger: nopLogger,
 	}
-	workDir := "/tmp"
-	secrets := map[string]string{"secret": "value"}
 
 	testCases := map[string]struct {
-		name     string
-		input    *Input
-		exitCode int
-		stdout   bytes.Buffer
-		stderr   bytes.Buffer
-		want     *Output
+		outStr string
+		errStr string
+		want   *Output
 	}{
-		"should return output without logs": {
-			input:    &Input{WorkDir: workDir, Secrets: secrets},
-			exitCode: 0,
-			stdout:   bytes.Buffer{},
-			stderr:   bytes.Buffer{},
+		"should add to logs, error logs and output data": {
+			outStr: "{\"key1\": \"value1\"}\n{\"key2\": \"value2\"}",
+			errStr: "error message",
 			want: &Output{
-				WorkDir:  workDir,
-				ExitCode: 0,
+				Logs: []model.LogEntry{
+					{Source: "stdout", Json: map[string]interface{}{"key1": "value1"}},
+					{Source: "stdout", Json: map[string]interface{}{"key2": "value2"}},
+					{Source: "stderr", Text: "error message"},
+				},
+				JsonData: []map[string]interface{}{
+					{"key1": "value1"},
+					{"key2": "value2"},
+				},
 			},
 		},
-		"should return output with logs and error logs": {
-			input:    &Input{WorkDir: workDir, Secrets: secrets},
-			exitCode: 2,
-			stdout:   *bytes.NewBufferString("output"),
-			stderr:   *bytes.NewBufferString("error"),
+		"should add json line log to output data": {
+			outStr: "{\"key1\": \"value1\"}\n{\"key2\": \"value2\"}",
+			errStr: "",
 			want: &Output{
-				WorkDir:  workDir,
-				ExitCode: 2,
-				Logs:     []model.LogEntry{{Source: "stdout", Text: "output"}, {Source: "stderr", Text: "error"}},
+				Logs: []model.LogEntry{
+					{Source: "stdout", Json: map[string]interface{}{"key1": "value1"}},
+					{Source: "stdout", Json: map[string]interface{}{"key2": "value2"}},
+				},
+				JsonData: []map[string]interface{}{
+					{"key1": "value1"},
+					{"key2": "value2"},
+				},
+			},
+		},
+		"should decode numbers as json.Number": {
+			outStr: "{\"key1\": 1}\n{\"key2\": 2.0}\n{\"key3\": 201872326}\n{\"key4\": 201872326.0}\n{\"key5\": -201872326}\n{\"key6\": -201872326.1}\n{\"key7\": 0}",
+			errStr: "",
+			want: &Output{
+				Logs: []model.LogEntry{
+					{Source: "stdout", Json: map[string]interface{}{"key1": json.Number("1")}},
+					{Source: "stdout", Json: map[string]interface{}{"key2": json.Number("2.0")}},
+					{Source: "stdout", Json: map[string]interface{}{"key3": json.Number("201872326")}},
+					{Source: "stdout", Json: map[string]interface{}{"key4": json.Number("201872326.0")}},
+					{Source: "stdout", Json: map[string]interface{}{"key5": json.Number("-201872326")}},
+					{Source: "stdout", Json: map[string]interface{}{"key6": json.Number("-201872326.1")}},
+					{Source: "stdout", Json: map[string]interface{}{"key7": json.Number("0")}},
+				},
+				JsonData: []map[string]interface{}{
+					{"key1": json.Number("1")},
+					{"key2": json.Number("2.0")},
+					{"key3": json.Number("201872326")},
+					{"key4": json.Number("201872326.0")},
+					{"key5": json.Number("-201872326")},
+					{"key6": json.Number("-201872326.1")},
+					{"key7": json.Number("0")},
+				},
+			},
+		},
+		"should treat dates as string": {
+			outStr: "{\"key1\": \"2021-01-01T00:00:00Z\"}",
+			errStr: "",
+			want: &Output{
+				Logs: []model.LogEntry{{Source: "stdout", Json: map[string]interface{}{"key1": "2021-01-01T00:00:00Z"}}},
+				JsonData: []map[string]interface{}{
+					{"key1": "2021-01-01T00:00:00Z"},
+				},
+			},
+		},
+		"should add normal log to logs": {
+			outStr: "normal log",
+			errStr: "",
+			want: &Output{
+				Logs:     []model.LogEntry{{Source: "stdout", Text: "normal log"}},
+				JsonData: nil,
+			},
+		},
+		"should add error log to logs with source stderr": {
+			outStr: "",
+			errStr: "error log",
+			want: &Output{
+				Logs:     []model.LogEntry{{Source: "stderr", Text: "error log"}},
+				JsonData: nil,
+			},
+		},
+		"should add json error log to logs with source stderr": {
+			outStr: "",
+			errStr: "{\"context\":\"some-context\", \"errMsg\":\"err-msg\"}",
+			want: &Output{
+				Logs:     []model.LogEntry{{Source: "stderr", Json: map[string]interface{}{"context": "some-context", "errMsg": "err-msg"}}},
+				JsonData: nil,
+			},
+		},
+		"should not add empty trailing log when newline is last character": {
+			outStr: "hello world\n",
+			errStr: "hello error world\n",
+			want: &Output{
+				Logs: []model.LogEntry{
+					{Source: "stdout", Text: "hello world"},
+					{Source: "stderr", Text: "hello error world"},
+				},
+				JsonData: nil,
+			},
+		},
+		"should return empty output when input is empty": {
+			outStr: "",
+			errStr: "",
+			want: &Output{
+				Logs:     nil,
+				JsonData: nil,
+			},
+		},
+		"should skip empty log lines": {
+			outStr: "hello\n\nworld\n",
+			errStr: "hello\n\n\n\nerror\n\nworld\n",
+			want: &Output{
+				Logs: []model.LogEntry{
+					{Source: "stdout", Text: "hello"},
+					{Source: "stdout", Text: "world"},
+					{Source: "stderr", Text: "hello"},
+					{Source: "stderr", Text: "error"},
+					{Source: "stderr", Text: "world"},
+				},
+				JsonData: nil,
 			},
 		},
 	}
-
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
+			// arrange
+			out := &Output{}
+			mux := iomux.NewMuxUnixGram[string]()
+			stdout, _ := mux.Tag(stdOutSourceType)
+			stderr, _ := mux.Tag(stdErrSourceType)
+			ctx, cancel := context.WithCancel(context.Background())
+			go func() {
+				stdout.WriteString(tc.outStr)
+				stdout.Close()
+				stderr.WriteString(tc.errStr)
+				stderr.Close()
+				cancel()
+			}()
+
 			// act
-			result, err := s.parseOutput(tc.input, tc.exitCode, tc.stdout.String(), tc.stderr.String())
+			chunks, err := mux.ReadUntil(ctx)
+			s.demuxLogs(&Input{}, out, chunks)
+
 			// assert
-			assert.NoError(t, err)
-			assert.Equal(t, tc.want, result)
+			if assert.NoError(t, err) {
+				assert.Equal(t, tc.want, out)
+			}
+
+			// cleanup
+			mux.Close()
 		})
 	}
 }

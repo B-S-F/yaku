@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/B-S-F/onyx/pkg/helper"
+	"github.com/B-S-F/yaku/onyx/pkg/helper"
 	"github.com/pkg/errors"
 )
 

@@ -3,7 +3,7 @@ package curl
 import (
 	"fmt"
 
-	"github.com/B-S-F/onyx/pkg/repository"
+	"github.com/B-S-F/yaku/onyx/pkg/repository"
 )
 
 type Config struct {

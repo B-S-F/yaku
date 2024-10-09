@@ -19,7 +19,7 @@ type configMock struct {
 var wantSchema = `
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/B-S-F/onyx/pkg/schema/config-mock",
+  "$id": "https://github.com/B-S-F/yaku/onyx/pkg/schema/config-mock",
   "$ref": "#/$defs/configMock",
   "$defs": {
     "configMock": {

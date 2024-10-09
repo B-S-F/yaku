@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
-	model "github.com/B-S-F/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
+	model "github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

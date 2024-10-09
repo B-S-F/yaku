@@ -1,9 +1,9 @@
 package executor
 
 import (
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/v2/model"
-	"github.com/B-S-F/onyx/pkg/v2/output"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/output"
 )
 
 type ManualExecutor struct {

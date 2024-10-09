@@ -3,9 +3,10 @@ package registry
 import (
 	"fmt"
 
-	"github.com/B-S-F/onyx/pkg/logger"
-	"github.com/B-S-F/onyx/pkg/repository"
-	"github.com/B-S-F/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/repository"
+	"github.com/B-S-F/yaku/onyx/pkg/repository/app"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 )
 
 type Registry struct {
@@ -56,18 +57,18 @@ func (r *Registry) tryInstallFromAllRepositories(appReferences *app.Reference) e
 		foundApps = append(foundApps, app)
 	}
 	if len(foundApps) == 0 {
-		err := fmt.Errorf("app %s could not be downloaded from any repository:", appReferences)
+		err := fmt.Errorf("app %s could not be downloaded from any repository", appReferences)
 		for _, installationError := range installationErrors {
 			err = fmt.Errorf("%w\n\t%v", err, installationError)
 		}
-		return err
+		return model.NewUserErr(err, "failed to download app")
 	}
 	if len(foundApps) > 1 {
 		repositoryNames := make([]string, 0, len(foundApps))
 		for _, app := range foundApps {
 			repositoryNames = append(repositoryNames, app.Reference().Repository)
 		}
-		return fmt.Errorf("app %s found in multiple repositories %v", appReferences, repositoryNames)
+		return model.NewUserErr(fmt.Errorf("app %s found in multiple repositories %v", appReferences, repositoryNames), "ambiguous app")
 	}
 	r.repositoryApps[appReferences.String()] = foundApps[0]
 	return nil
@@ -77,7 +78,7 @@ func (r *Registry) installFromRepository(appReference *app.Reference) error {
 	r.logger.Debugf("Installing app %s from repository %s", appReference, appReference.Repository)
 	repository, ok := r.repositories[appReference.Repository]
 	if !ok {
-		return fmt.Errorf("repository %s not found", appReference.Repository)
+		return model.NewUserErr(fmt.Errorf("repository %s not found", appReference.Repository), "invalid app repository")
 	}
 
 	app, err := repository.InstallApp(appReference)

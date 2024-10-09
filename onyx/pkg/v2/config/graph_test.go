@@ -3,7 +3,7 @@ package config
 import (
 	"testing"
 
-	model "github.com/B-S-F/onyx/pkg/v2/model"
+	model "github.com/B-S-F/yaku/onyx/pkg/v2/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

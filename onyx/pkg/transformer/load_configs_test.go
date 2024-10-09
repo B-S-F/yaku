@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/B-S-F/onyx/pkg/configuration"
+	"github.com/B-S-F/yaku/onyx/pkg/configuration"
 	"github.com/stretchr/testify/assert"
 )
 
