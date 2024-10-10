@@ -4,12 +4,12 @@
 
 ### Overview
 
-| Component  | Build | Test | Artifact Upload |
-|------------|-------|------|-----------------|
-| Onyx       | ✔️    | ✔️   |                 |
-| API        |       |      |                 |
-| Chart      | ✔️    | ✔️   |  ✔️             |
-| Component4 |       |      |                 |
+| Component  | Build | Test | Artifact Upload | Workflow |
+|------------|-------|------|-----------------|---------|
+| Onyx       | ✔️    | ✔️   |                 |         |
+| API        |       |      |                 ||
+| Chart      | ✔️    | ✔️   |  ✔️             |[![Build chart](https://github.com/B-S-F/yaku/actions/workflows/build-chart.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build-chart.yml)|
+| Component4 |       |      |                 |           |
 
 ✔️ works  
 ❌ does not work
