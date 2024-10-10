@@ -10,9 +10,19 @@ on:
     paths:
       - 'onyx/**'
 
+env:
+  REGISTRY: ghcr.io
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
     steps:
       - uses: actions/checkout@v4
       - uses: bazel-contrib/setup-bazel@0.9.0
@@ -27,6 +37,13 @@ jobs:
       - name: Build with Bazel
         working-directory: onyx
         run: bazel build //...
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test with Bazel
         working-directory: onyx
