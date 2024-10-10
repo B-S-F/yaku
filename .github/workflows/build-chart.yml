@@ -1,0 +1,37 @@
+name: Build chart
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'chart/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'chart/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bazel-contrib/setup-bazel@0.9.0
+        with:
+          # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+          # Store build cache per workflow.
+          disk-cache: ${{ github.workflow }}
+          # Share repository cache between workflows.
+          repository-cache: true
+
+      - name: Build with Bazel
+        working-directory: chart
+        run: bazel build //...
+
+      - name: Test with Bazel
+        working-directory: chart
+        run: bazel test //...
+
+      - name: Push the chart to the OCI registry
+        working-directory: chart
+        run: bazel run //:yaku_helm.push_registry
