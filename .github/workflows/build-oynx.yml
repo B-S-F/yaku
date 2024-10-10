@@ -1,6 +1,7 @@
 name: Build Onyx
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
