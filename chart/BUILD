@@ -10,6 +10,7 @@ helm_chart(
         "@helm_dep_argo_workflows",
         "@helm_dep_minio",
     ],
+    registry_url = "oci://ghcr.io/b-s-f/charts/"
 )
 
 helm_lint_test(
