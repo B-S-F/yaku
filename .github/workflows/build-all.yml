@@ -1,20 +1,23 @@
-name: Build Onyx
+name: Build all
 
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-    paths:
-      - 'onyx/**'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'onyx/**'
+
+env:
+  REGISTRY: ghcr.io
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: bazel-contrib/setup-bazel@0.9.0
@@ -27,9 +30,18 @@ jobs:
           repository-cache: true
 
       - name: Build with Bazel
-        working-directory: onyx
         run: bazel build //...
 
       - name: Test with Bazel
-        working-directory: onyx
         run: bazel test //...
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push the chart to the OCI registry
+        working-directory: chart
+        run: bazel run //chart:yaku_helm.push_registry

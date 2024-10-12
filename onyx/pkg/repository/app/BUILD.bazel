@@ -17,5 +17,5 @@ go_test(
         "binary_app_test.go",
     ],
     embed = [":app"],
-    deps = ["@com_github_stretchr_testify//assert"],
+    deps = ["@com_github_stretchr_testify//assert:go_default_library"],
 )

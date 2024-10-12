@@ -6,7 +6,7 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/reader",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/logger",
-        "@com_github_pkg_errors//:errors",
+        "//onyx/pkg/logger",
+        "@com_github_pkg_errors//:go_default_library",
     ],
 )

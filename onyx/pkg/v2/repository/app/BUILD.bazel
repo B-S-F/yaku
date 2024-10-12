@@ -6,13 +6,13 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/repository/app",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/helper",
-        "//pkg/logger",
-        "//pkg/repository/app",
-        "//pkg/repository/registry",
-        "//pkg/tempdir",
-        "//pkg/v2/model",
-        "@com_github_pkg_errors//:errors",
+        "//onyx/pkg/helper",
+        "//onyx/pkg/logger",
+        "//onyx/pkg/repository/app",
+        "//onyx/pkg/repository/registry",
+        "//onyx/pkg/tempdir",
+        "//onyx/pkg/v2/model",
+        "@com_github_pkg_errors//:go_default_library",
     ],
 )
 
@@ -21,9 +21,9 @@ go_test(
     srcs = ["app_test.go"],
     embed = [":app"],
     deps = [
-        "//pkg/configuration",
-        "//pkg/repository/app",
-        "//pkg/v2/model",
-        "@com_github_stretchr_testify//assert",
+        "//onyx/pkg/configuration",
+        "//onyx/pkg/repository/app",
+        "//onyx/pkg/v2/model",
+        "@com_github_stretchr_testify//assert:go_default_library",
     ],
 )

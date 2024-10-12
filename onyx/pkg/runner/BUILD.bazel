@@ -9,8 +9,8 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/runner",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/helper",
-        "//pkg/logger",
-        "@org_uber_go_zap//:zap",
+        "//onyx/pkg/helper",
+        "//onyx/pkg/logger",
+        "@org_uber_go_zap//:go_default_library",
     ],
 )

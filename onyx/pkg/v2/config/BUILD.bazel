@@ -11,11 +11,11 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/config",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/configuration",
-        "//pkg/logger",
-        "//pkg/v2/model",
-        "@com_github_pkg_errors//:errors",
-        "@in_gopkg_yaml_v3//:yaml_v3",
+        "//onyx/pkg/configuration",
+        "//onyx/pkg/logger",
+        "//onyx/pkg/v2/model",
+        "@com_github_pkg_errors//:go_default_library",
+        "@in_gopkg_yaml_v3//:go_default_library",
     ],
 )
 
@@ -28,10 +28,10 @@ go_test(
     ],
     embed = [":config"],
     deps = [
-        "//pkg/configuration",
-        "//pkg/v2/model",
-        "@com_github_pkg_errors//:errors",
-        "@com_github_stretchr_testify//assert",
-        "@com_github_stretchr_testify//require",
+        "//onyx/pkg/configuration",
+        "//onyx/pkg/v2/model",
+        "@com_github_pkg_errors//:go_default_library",
+        "@com_github_stretchr_testify//assert:go_default_library",
+        "@com_github_stretchr_testify//require:go_default_library",
     ],
 )

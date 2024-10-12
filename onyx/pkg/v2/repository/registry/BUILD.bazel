@@ -6,9 +6,9 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/repository/registry",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/repository",
-        "//pkg/repository/registry",
-        "//pkg/v2/model",
-        "//pkg/v2/repository/app",
+        "//onyx/pkg/repository",
+        "//onyx/pkg/repository/registry",
+        "//onyx/pkg/v2/model",
+        "//onyx/pkg/v2/repository/app",
     ],
 )

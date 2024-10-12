@@ -6,10 +6,10 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/configuration/versions/v0",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/configuration",
-        "//pkg/configuration/versions/v1:versions",
-        "//pkg/logger",
-        "@in_gopkg_yaml_v3//:yaml_v3",
+        "//onyx/pkg/configuration",
+        "//onyx/pkg/configuration/versions/v1:versions",
+        "//onyx/pkg/logger",
+        "@in_gopkg_yaml_v3//:go_default_library",
     ],
 )
 
@@ -17,5 +17,5 @@ go_test(
     name = "versions_test",
     srcs = ["config_test.go"],
     embed = [":versions"],
-    deps = ["@com_github_stretchr_testify//assert"],
+    deps = ["@com_github_stretchr_testify//assert:go_default_library"],
 )

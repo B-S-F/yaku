@@ -5,5 +5,5 @@ go_library(
     srcs = ["result.go"],
     importpath = "github.com/B-S-F/yaku/onyx/pkg/result/v1",
     visibility = ["//visibility:public"],
-    deps = ["//pkg/result/common"],
+    deps = ["//onyx/pkg/result/common"],
 )

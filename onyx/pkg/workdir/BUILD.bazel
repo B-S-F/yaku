@@ -12,11 +12,11 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/workdir",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/logger",
-        "@com_github_chigopher_pathlib//:pathlib",
-        "@com_github_pkg_errors//:errors",
-        "@com_github_spf13_afero//:afero",
-        "@org_uber_go_zap//:zap",
+        "//onyx/pkg/logger",
+        "@com_github_chigopher_pathlib//:go_default_library",
+        "@com_github_pkg_errors//:go_default_library",
+        "@com_github_spf13_afero//:go_default_library",
+        "@org_uber_go_zap//:go_default_library",
     ],
 )
 
@@ -26,8 +26,8 @@ go_test(
     data = glob(["testdata/**"]),
     embed = [":workdir"],
     deps = [
-        "@com_github_chigopher_pathlib//:pathlib",
-        "@com_github_spf13_afero//:afero",
-        "@com_github_stretchr_testify//assert",
+        "@com_github_chigopher_pathlib//:go_default_library",
+        "@com_github_spf13_afero//:go_default_library",
+        "@com_github_stretchr_testify//assert:go_default_library",
     ],
 )

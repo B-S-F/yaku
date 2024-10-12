@@ -9,14 +9,14 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/result",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/configuration",
-        "//pkg/executor",
-        "//pkg/helper",
-        "//pkg/item",
-        "//pkg/logger",
-        "//pkg/result/common",
-        "//pkg/result/v1:result",
-        "@org_uber_go_zap//:zap",
+        "//onyx/pkg/configuration",
+        "//onyx/pkg/executor",
+        "//onyx/pkg/helper",
+        "//onyx/pkg/item",
+        "//onyx/pkg/logger",
+        "//onyx/pkg/result/common",
+        "//onyx/pkg/result/v1:result",
+        "@org_uber_go_zap//:go_default_library",
     ],
 )
 
@@ -26,7 +26,7 @@ go_test(
     data = glob(["testdata/**"]),
     embed = [":result"],
     deps = [
-        "//pkg/result/v1:result",
-        "@com_github_stretchr_testify//assert",
+        "//onyx/pkg/result/v1:result",
+        "@com_github_stretchr_testify//assert:go_default_library",
     ],
 )

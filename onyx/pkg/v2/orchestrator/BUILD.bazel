@@ -6,13 +6,13 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/orchestrator",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/logger",
-        "//pkg/v2/executor",
-        "//pkg/v2/model",
-        "//pkg/workdir",
-        "@com_github_pkg_errors//:errors",
-        "@com_github_spf13_afero//:afero",
-        "@org_uber_go_zap//:zap",
+        "//onyx/pkg/logger",
+        "//onyx/pkg/v2/executor",
+        "//onyx/pkg/v2/model",
+        "//onyx/pkg/workdir",
+        "@com_github_pkg_errors//:go_default_library",
+        "@com_github_spf13_afero//:go_default_library",
+        "@org_uber_go_zap//:go_default_library",
     ],
 )
 
@@ -21,10 +21,10 @@ go_test(
     srcs = ["orchestrator_test.go"],
     embed = [":orchestrator"],
     deps = [
-        "//pkg/configuration",
-        "//pkg/logger",
-        "//pkg/v2/model",
-        "@com_github_stretchr_testify//assert",
-        "@com_github_stretchr_testify//require",
+        "//onyx/pkg/configuration",
+        "//onyx/pkg/logger",
+        "//onyx/pkg/v2/model",
+        "@com_github_stretchr_testify//assert:go_default_library",
+        "@com_github_stretchr_testify//require:go_default_library",
     ],
 )

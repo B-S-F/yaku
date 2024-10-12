@@ -6,8 +6,8 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/output",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/logger",
-        "//pkg/v2/model",
+        "//onyx/pkg/logger",
+        "//onyx/pkg/v2/model",
     ],
 )
 
@@ -16,11 +16,11 @@ go_test(
     srcs = ["output_test.go"],
     embed = [":output"],
     deps = [
-        "//pkg/logger",
-        "//pkg/v2/model",
-        "@com_github_stretchr_testify//assert",
-        "@com_github_stretchr_testify//require",
-        "@org_uber_go_zap//:zap",
-        "@org_uber_go_zap//zaptest/observer",
+        "//onyx/pkg/logger",
+        "//onyx/pkg/v2/model",
+        "@com_github_stretchr_testify//assert:go_default_library",
+        "@com_github_stretchr_testify//require:go_default_library",
+        "@org_uber_go_zap//:go_default_library",
+        "@org_uber_go_zap//zaptest/observer:go_default_library",
     ],
 )

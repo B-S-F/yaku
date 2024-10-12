@@ -5,5 +5,5 @@ go_library(
     srcs = ["common.go"],
     importpath = "github.com/B-S-F/yaku/onyx/pkg/result/common",
     visibility = ["//visibility:public"],
-    deps = ["@in_gopkg_yaml_v3//:yaml_v3"],
+    deps = ["@in_gopkg_yaml_v3//:go_default_library"],
 )

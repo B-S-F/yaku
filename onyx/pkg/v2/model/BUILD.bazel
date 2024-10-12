@@ -12,5 +12,5 @@ go_library(
     ],
     importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/model",
     visibility = ["//visibility:public"],
-    deps = ["//pkg/configuration"],
+    deps = ["//onyx/pkg/configuration"],
 )

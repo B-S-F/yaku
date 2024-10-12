@@ -10,9 +10,9 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/transformer",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/logger",
-        "//pkg/parameter",
-        "//pkg/v2/model",
-        "@com_github_pkg_errors//:errors",
+        "//onyx/pkg/logger",
+        "//onyx/pkg/parameter",
+        "//onyx/pkg/v2/model",
+        "@com_github_pkg_errors//:go_default_library",
     ],
 )

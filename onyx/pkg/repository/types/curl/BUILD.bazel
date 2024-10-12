@@ -10,9 +10,9 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/repository/types/curl",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/repository",
-        "//pkg/repository/app",
-        "//pkg/v2/model",
+        "//onyx/pkg/repository",
+        "//onyx/pkg/repository/app",
+        "//onyx/pkg/v2/model",
     ],
 )
 
@@ -24,5 +24,5 @@ go_test(
         "repository_test.go",
     ],
     embed = [":curl"],
-    deps = ["@com_github_stretchr_testify//assert"],
+    deps = ["@com_github_stretchr_testify//assert:go_default_library"],
 )

@@ -11,12 +11,12 @@ go_library(
     ],
     importpath = "github.com/B-S-F/yaku/onyx/pkg/helper",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_pkg_errors//:errors"],
+    deps = ["@com_github_pkg_errors//:go_default_library"],
 )
 
 go_test(
     name = "helper_test",
     srcs = ["hide_secrets_test.go"],
     embed = [":helper"],
-    deps = ["@com_github_stretchr_testify//assert"],
+    deps = ["@com_github_stretchr_testify//assert:go_default_library"],
 )
