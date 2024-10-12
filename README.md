@@ -1,15 +1,16 @@
 # yaku
 
 ## Bazel
+[![Build all](https://github.com/B-S-F/yaku/actions/workflows/build-all.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build-all.yml)
 
 ### Overview
 
-| Component  | Build | Test | Artifact Upload | Workflow |
-|------------|-------|------|-----------------|---------|
-| Onyx       | ✔️    | ✔️   |                 |[![Build Onyx](https://github.com/B-S-F/yaku/actions/workflows/build-oynx.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build-oynx.yml)|
+| Component  | Build | Test | Artifact Upload |
+|------------|-------|------|-----------------|
+| Onyx       | ✔️    | ✔️   |                 |
 | API        |       |      |                 ||
-| Chart      | ✔️    | ✔️   |  ✔️             |[![Build chart](https://github.com/B-S-F/yaku/actions/workflows/build-chart.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build-chart.yml)|
-| Component4 |       |      |                 |           |
+| Chart      | ✔️    | ✔️   |  ✔️             |
+| Component4 |       |      |                 |
 
 ✔️ works  
 ❌ does not work
