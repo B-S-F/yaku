@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "azblob",
@@ -13,9 +13,9 @@ go_library(
         "//pkg/repository",
         "//pkg/repository/app",
         "//pkg/v2/model",
-        "@com_github_azure_azure_sdk_for_go_sdk_azcore//:go_default_library",
-        "@com_github_azure_azure_sdk_for_go_sdk_azidentity//:go_default_library",
-        "@com_github_azure_azure_sdk_for_go_sdk_storage_azblob//:go_default_library",
+        "@com_github_azure_azure_sdk_for_go_sdk_azcore//:azcore",
+        "@com_github_azure_azure_sdk_for_go_sdk_azidentity//:azidentity",
+        "@com_github_azure_azure_sdk_for_go_sdk_storage_azblob//:azblob",
     ],
 )
 
@@ -28,7 +28,7 @@ go_test(
     ],
     embed = [":azblob"],
     deps = [
-        "@com_github_azure_azure_sdk_for_go_sdk_azidentity//:go_default_library",
-        "@com_github_stretchr_testify//assert:go_default_library",
+        "@com_github_azure_azure_sdk_for_go_sdk_azidentity//:azidentity",
+        "@com_github_stretchr_testify//assert",
     ],
 )

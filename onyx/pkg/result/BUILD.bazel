@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "result",
@@ -16,7 +16,7 @@ go_library(
         "//pkg/logger",
         "//pkg/result/common",
         "//pkg/result/v1:result",
-        "@org_uber_go_zap//:go_default_library",
+        "@org_uber_go_zap//:zap",
     ],
 )
 
@@ -27,6 +27,6 @@ go_test(
     embed = [":result"],
     deps = [
         "//pkg/result/v1:result",
-        "@com_github_stretchr_testify//assert:go_default_library",
+        "@com_github_stretchr_testify//assert",
     ],
 )

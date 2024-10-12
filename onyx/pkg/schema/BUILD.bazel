@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "schema",
@@ -9,9 +9,9 @@ go_library(
         "//pkg/logger",
         "//pkg/replacer",
         "//pkg/v2/model",
-        "@com_github_invopop_jsonschema//:go_default_library",
-        "@com_github_invopop_yaml//:go_default_library",
-        "@com_github_pkg_errors//:go_default_library",
-        "@com_github_xeipuuv_gojsonschema//:go_default_library",
+        "@com_github_invopop_jsonschema//:jsonschema",
+        "@com_github_invopop_yaml//:yaml",
+        "@com_github_pkg_errors//:errors",
+        "@com_github_xeipuuv_gojsonschema//:gojsonschema",
     ],
 )

@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "app",
@@ -12,7 +12,7 @@ go_library(
         "//pkg/repository/registry",
         "//pkg/tempdir",
         "//pkg/v2/model",
-        "@com_github_pkg_errors//:go_default_library",
+        "@com_github_pkg_errors//:errors",
     ],
 )
 
@@ -24,6 +24,6 @@ go_test(
         "//pkg/configuration",
         "//pkg/repository/app",
         "//pkg/v2/model",
-        "@com_github_stretchr_testify//assert:go_default_library",
+        "@com_github_stretchr_testify//assert",
     ],
 )

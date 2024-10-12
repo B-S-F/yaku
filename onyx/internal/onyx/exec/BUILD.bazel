@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "exec",
@@ -39,9 +39,9 @@ go_library(
         "//pkg/v2/transformer",
         "//pkg/workdir",
         "//pkg/zip",
-        "@com_github_pkg_errors//:go_default_library",
-        "@com_github_spf13_afero//:go_default_library",
-        "@in_gopkg_yaml_v3//:go_default_library",
-        "@org_uber_go_zap//:go_default_library",
+        "@com_github_pkg_errors//:errors",
+        "@com_github_spf13_afero//:afero",
+        "@in_gopkg_yaml_v3//:yaml_v3",
+        "@org_uber_go_zap//:zap",
     ],
 )
