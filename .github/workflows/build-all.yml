@@ -43,5 +43,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push the chart to the OCI registry
-        working-directory: chart
         run: bazel run //chart:yaku_helm.push_registry
