@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "finalize",
@@ -6,9 +6,9 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/finalize",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/configuration",
-        "//pkg/executor",
-        "//pkg/logger",
+        "//onyx/pkg/configuration",
+        "//onyx/pkg/executor",
+        "//onyx/pkg/logger",
         "@com_github_pkg_errors//:go_default_library",
         "@org_uber_go_zap//:go_default_library",
     ],

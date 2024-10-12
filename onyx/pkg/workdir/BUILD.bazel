@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "workdir",
@@ -12,7 +12,7 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/workdir",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/logger",
+        "//onyx/pkg/logger",
         "@com_github_chigopher_pathlib//:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
         "@com_github_spf13_afero//:go_default_library",

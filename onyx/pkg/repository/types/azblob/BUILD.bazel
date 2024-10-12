@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "azblob",
@@ -10,9 +10,9 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/repository/types/azblob",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/repository",
-        "//pkg/repository/app",
-        "//pkg/v2/model",
+        "//onyx/pkg/repository",
+        "//onyx/pkg/repository/app",
+        "//onyx/pkg/v2/model",
         "@com_github_azure_azure_sdk_for_go_sdk_azcore//:go_default_library",
         "@com_github_azure_azure_sdk_for_go_sdk_azidentity//:go_default_library",
         "@com_github_azure_azure_sdk_for_go_sdk_storage_azblob//:go_default_library",

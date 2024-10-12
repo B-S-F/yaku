@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "common",
@@ -6,12 +6,12 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/internal/onyx/common",
     visibility = ["//:__subpackages__"],
     deps = [
-        "//pkg/configuration",
-        "//pkg/configuration/versions/v0:versions",
-        "//pkg/configuration/versions/v1:versions",
-        "//pkg/logger",
-        "//pkg/v2/config",
-        "//pkg/v2/model",
+        "//onyx/pkg/configuration",
+        "//onyx/pkg/configuration/versions/v0:versions",
+        "//onyx/pkg/configuration/versions/v1:versions",
+        "//onyx/pkg/logger",
+        "//onyx/pkg/v2/config",
+        "//onyx/pkg/v2/model",
         "@com_github_pkg_errors//:go_default_library",
         "@in_gopkg_yaml_v3//:go_default_library",
     ],
