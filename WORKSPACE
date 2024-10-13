@@ -1,3 +1,8 @@
+workspace(name = "yaku")
+
+###
+# Helm
+###
 load("@rules_helm//helm:defs.bzl", "helm_import_repository")
 
 # Import the Argo Workflows chart

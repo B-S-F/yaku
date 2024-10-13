@@ -1,6 +1,0 @@
-module(
-    name = "yaku_chart",
-    version = "1.0",
-)
-
-bazel_dep(name = "rules_helm", version = "0.5.1")
