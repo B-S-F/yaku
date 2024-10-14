@@ -7,6 +7,9 @@ helm_chart(
     chart = "Chart.yaml",
     registry_url = "oci://ghcr.io/b-s-f/charts/",
     values = "values.yaml",
+    images = [
+        "//core-image:push-image",
+    ],
     deps = [
         "@helm_dep_argo_workflows",
         "@helm_dep_minio",
