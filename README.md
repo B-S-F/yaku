@@ -10,9 +10,9 @@
 | Onyx       | ✔️    | ✔️   |                 |
 | API        |       |      |                 |
 | Chart      | ✔️    | ✔️   |  ✔️             |
-| Component4 |       |      |                 |
-
+| Core-image | (✔️)  |      |  ✔️️             |
 ✔️ works  
+(✔) partially works 
 ❌ does not work
 
 ### Components
