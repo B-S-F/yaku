@@ -11,15 +11,19 @@ Foto from Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahm
 
 ### Overview
 
-| Component  | Build | Test | Artifact Upload |
-|------------|-------|------|-----------------|
-| Onyx       | ✔️    | ✔️   |                 |
-| API        |       |      |                 |
-| Chart      | ✔️    | ✔️   |  ✔️             |
-| Core-image | (✔️)  |      |  ✔️️             |
-✔️ works  
-(✔) partially works 
-❌ does not work
+| Component   | Build | Test | Artifact Upload |
+|-------------|-------|------|-----------------|
+| Onyx        | ✔️    | ✔️   |                 |
+| API         |       |      |                 |
+| Chart       | ✔️    | ✔️   | ✔️              |
+| Core-image  | (✔️)  |      | ✔️️             |
+| Python apps | (✔️)  |      | ️               |
+| TS apps     |       |      | ️               |
+| Frontend    |       |      | ️               |
+
+✔️ works    
+(✔) partially works   
+❌ does not work  
 
 ### Components
 
@@ -30,8 +34,9 @@ Foto from Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahm
 #### Chart
 - see https://github.com/abrisco/rules_helm
 - chart is pushed to this OCI repo here: [ghcr.io/b-s-f/charts/yaku](https://github.com/B-S-F/yaku/pkgs/container/charts%2Fyaku)
+
 ...
-- 
+
 ### Dependency graph 
 
 Overview of the dependencies between the components (reduced):  
