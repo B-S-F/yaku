@@ -54,6 +54,7 @@ oci_push(
     image = ":transitioned_image",
     repository = "ghcr.io/b-s-f/yaku/core-image-test",
     remote_tags = ":stamped",
+    visibility = ["//visibility:public"],
 )
 
 # $ bazel build //core-image:tarball

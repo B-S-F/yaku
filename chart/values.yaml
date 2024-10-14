@@ -21,7 +21,7 @@ global:
   images:
     postgres: postgres:13-alpine
     yakuCoreApi: growpatcr.azurecr.io/yaku-core-api:0.52.0
-    yakuCore: growpatcr.azurecr.io/yaku-core
+    yakuCore: "{@//core-image:push-image}"
     yakuUi: growpatcr.azurecr.io/yaku-ui:1.9.0
     yakuLabs: ollama/ollama
   database:
