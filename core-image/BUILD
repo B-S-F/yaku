@@ -1,7 +1,7 @@
 load("@aspect_bazel_lib//lib:testing.bzl", "assert_archive_contains")
 load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
 load("@container_structure_test//:defs.bzl", "container_structure_test")
-load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball", "oci_push")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load", "oci_push")
 load("@aspect_bazel_lib//lib:expand_template.bzl", "expand_template")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
@@ -39,21 +39,27 @@ platform_transition_filegroup(
 
 # Use the value of --embed_label under --stamp, otherwise use a deterministic constant
 # value to ensure cache hits for actions that depend on this.
-expand_template(
-    name = "stamped",
-    out = "_stamped.tags.txt",
-    stamp_substitutions = {"0.0.0": "{{BUILD_EMBED_LABEL}}"},
-    template = [
-        "0.0.0",
-        "nightly",
-    ],
+#expand_template(
+#    name = "stamped",
+#    out = "_stamped.tags.txt",
+#    stamp_substitutions = {"0.0.0": "{{BUILD_EMBED_LABEL}}"},
+#    template = [
+#        "0.0.0",
+#        "nightly",
+#    ],
+#)
+
+oci_load(
+    name = "load-image",
+    image = ":transitioned_image",
+    repo_tags = ["ghcr.io/b-s-f/yaku/core-image-test:local"],
 )
 
 oci_push(
     name = "push-image",
     image = ":transitioned_image",
     repository = "ghcr.io/b-s-f/yaku/core-image-test",
-    remote_tags = ":stamped",
+    #remote_tags = ":stamped",
     visibility = ["//visibility:public"],
 )
 
