@@ -43,5 +43,9 @@ Overview of the dependencies between the components (click to open in GraphvizOn
 
 Produce the graph with:  
 ```bash
-bazel query --notool_deps --noimplicit_deps "deps(//chart:yaku_helm, 5) except @rules_go//go/toolchain:linux_arm64 except @rules_go//go/toolchain:linux_amd64" --output graph > myraph.dot
+bazel query --notool_deps --noimplicit_deps \
+    "deps(//chart:yaku_helm, 5) \
+    except @rules_go//go/toolchain:linux_arm64 \
+    except @rules_go//go/toolchain:linux_amd64" \
+    --output graph > gr2
 ```
