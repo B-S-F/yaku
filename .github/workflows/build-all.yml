@@ -42,5 +42,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Push the  core image to the OCI registry
+        run: bazel run --embed_label="${GITHUB_SHA::6}" --stamp //core-image:push-image
+
       - name: Push the chart to the OCI registry
         run: bazel run //chart:yaku_helm.push_registry

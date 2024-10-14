@@ -16,9 +16,9 @@ Foto from Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahm
 | Onyx       | ✔️    | ✔️   |                 |
 | API        |       |      |                 |
 | Chart      | ✔️    | ✔️   |  ✔️             |
-| Component4 |       |      |                 |
-
+| Core-image | (✔️)  |      |  ✔️️             |
 ✔️ works  
+(✔) partially works 
 ❌ does not work
 
 ### Components
