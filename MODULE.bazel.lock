@@ -72,19 +72,22 @@
     "https://bcr.bazel.build/modules/rules_jvm_external/5.2/MODULE.bazel": "d9351ba35217ad0de03816ef3ed63f89d411349353077348a45348b096615036",
     "https://bcr.bazel.build/modules/rules_jvm_external/5.2/source.json": "10572111995bc349ce31c78f74b3c147f6b3233975c7fa5eff9211f6db0d34d9",
     "https://bcr.bazel.build/modules/rules_license/0.0.3/MODULE.bazel": "627e9ab0247f7d1e05736b59dbb1b6871373de5ad31c3011880b4133cafd4bd0",
+    "https://bcr.bazel.build/modules/rules_license/0.0.4/MODULE.bazel": "6a88dd22800cf1f9f79ba32cacad0d3a423ed28efa2c2ed5582eaa78dd3ac1e5",
     "https://bcr.bazel.build/modules/rules_license/0.0.7/MODULE.bazel": "088fbeb0b6a419005b89cf93fe62d9517c0a2b8bb56af3244af65ecfe37e7d5d",
     "https://bcr.bazel.build/modules/rules_license/0.0.7/source.json": "355cc5737a0f294e560d52b1b7a6492d4fff2caf0bef1a315df5a298fca2d34a",
     "https://bcr.bazel.build/modules/rules_oci/1.7.2/MODULE.bazel": "2f005fff2b048c7bbd7cc3733da1e666b85721e4ee7ea385c2985d5cdcfbf64e",
     "https://bcr.bazel.build/modules/rules_oci/1.7.2/source.json": "4cd127f207993cd8c30fa962c58277c76fbd1d521203508e5ad7629f9a32109e",
+    "https://bcr.bazel.build/modules/rules_pkg/0.10.1/MODULE.bazel": "d6e593e048db5f1028f1f05ceb64b123aa6f1c2d43cba049c036443ab2cc2044",
+    "https://bcr.bazel.build/modules/rules_pkg/0.10.1/source.json": "a3550442d1530f00fd2a51036250db1891c8fedfd85991c65a0bd0f6daefe0a3",
     "https://bcr.bazel.build/modules/rules_pkg/0.7.0/MODULE.bazel": "df99f03fc7934a4737122518bb87e667e62d780b610910f0447665a7e2be62dc",
-    "https://bcr.bazel.build/modules/rules_pkg/0.7.0/source.json": "c2557066e0c0342223ba592510ad3d812d4963b9024831f7f66fd0584dd8c66c",
     "https://bcr.bazel.build/modules/rules_proto/4.0.0/MODULE.bazel": "a7a7b6ce9bee418c1a760b3d84f83a299ad6952f9903c67f19e4edd964894e06",
     "https://bcr.bazel.build/modules/rules_proto/5.3.0-21.7/MODULE.bazel": "e8dff86b0971688790ae75528fe1813f71809b5afd57facb44dad9e8eca631b7",
     "https://bcr.bazel.build/modules/rules_proto/6.0.0/MODULE.bazel": "b531d7f09f58dce456cd61b4579ce8c86b38544da75184eadaf0a7cb7966453f",
     "https://bcr.bazel.build/modules/rules_proto/6.0.0/source.json": "de77e10ff0ab16acbf54e6b46eecd37a99c5b290468ea1aee6e95eb1affdaed7",
     "https://bcr.bazel.build/modules/rules_python/0.10.2/MODULE.bazel": "cc82bc96f2997baa545ab3ce73f196d040ffb8756fd2d66125a530031cd90e5f",
     "https://bcr.bazel.build/modules/rules_python/0.22.1/MODULE.bazel": "26114f0c0b5e93018c0c066d6673f1a2c3737c7e90af95eff30cfee38d0bbac7",
-    "https://bcr.bazel.build/modules/rules_python/0.22.1/source.json": "57226905e783bae7c37c2dd662be078728e48fa28ee4324a7eabcafb5a43d014",
+    "https://bcr.bazel.build/modules/rules_python/0.24.0/MODULE.bazel": "4bff7f583653d0762cda21303da0643cc4c545ddfd9593337f18dad8d1787801",
+    "https://bcr.bazel.build/modules/rules_python/0.24.0/source.json": "c4bbbd6350883cfc0f4a805577ab94ed94c2f5dc588e84cf1851137c121d3887",
     "https://bcr.bazel.build/modules/rules_python/0.4.0/MODULE.bazel": "9208ee05fd48bf09ac60ed269791cf17fb343db56c8226a720fbb1cdf467166c",
     "https://bcr.bazel.build/modules/stardoc/0.5.0/MODULE.bazel": "f9f1f46ba8d9c3362648eea571c6f9100680efc44913618811b58cc9c02cd678",
     "https://bcr.bazel.build/modules/stardoc/0.5.1/MODULE.bazel": "1a05d92974d0c122f5ccf09291442580317cdd859f07a8655f1db9a60374f9f8",
@@ -1326,6 +1329,150 @@
             "rules_oci~",
             "bazel_skylib",
             "bazel_skylib~"
+          ]
+        ]
+      }
+    },
+    "@@rules_python~//python/extensions:python.bzl%python": {
+      "general": {
+        "bzlTransitiveDigest": "h1WwMtMNhOmMzSsCyaGXLFVp6B/FYYYOnfCnBiq1gtg=",
+        "usagesDigest": "5C1/2n78LWxziEIWtqoZJ1kCnmcf27xhCjlpWffa1Ng=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "python_3_11": {
+            "bzlFile": "@@rules_python~//python/private:toolchains_repo.bzl",
+            "ruleClassName": "toolchain_aliases",
+            "attributes": {
+              "python_version": "3.11.1",
+              "user_repository_name": "python_3_11"
+            }
+          },
+          "python_3_11_aarch64-unknown-linux-gnu": {
+            "bzlFile": "@@rules_python~//python:repositories.bzl",
+            "ruleClassName": "python_repository",
+            "attributes": {
+              "sha256": "debf15783bdcb5530504f533d33fda75a7b905cec5361ae8f33da5ba6599f8b4",
+              "patches": [],
+              "platform": "aarch64-unknown-linux-gnu",
+              "python_version": "3.11.1",
+              "release_filename": "20230116/cpython-3.11.1+20230116-aarch64-unknown-linux-gnu-install_only.tar.gz",
+              "urls": [
+                "https://github.com/indygreg/python-build-standalone/releases/download/20230116/cpython-3.11.1+20230116-aarch64-unknown-linux-gnu-install_only.tar.gz"
+              ],
+              "distutils_content": "",
+              "strip_prefix": "python",
+              "coverage_tool": "",
+              "ignore_root_user_error": false
+            }
+          },
+          "python_3_11_aarch64-apple-darwin": {
+            "bzlFile": "@@rules_python~//python:repositories.bzl",
+            "ruleClassName": "python_repository",
+            "attributes": {
+              "sha256": "4918cdf1cab742a90f85318f88b8122aeaa2d04705803c7b6e78e81a3dd40f80",
+              "patches": [],
+              "platform": "aarch64-apple-darwin",
+              "python_version": "3.11.1",
+              "release_filename": "20230116/cpython-3.11.1+20230116-aarch64-apple-darwin-install_only.tar.gz",
+              "urls": [
+                "https://github.com/indygreg/python-build-standalone/releases/download/20230116/cpython-3.11.1+20230116-aarch64-apple-darwin-install_only.tar.gz"
+              ],
+              "distutils_content": "",
+              "strip_prefix": "python",
+              "coverage_tool": "",
+              "ignore_root_user_error": false
+            }
+          },
+          "python_3_11_x86_64-apple-darwin": {
+            "bzlFile": "@@rules_python~//python:repositories.bzl",
+            "ruleClassName": "python_repository",
+            "attributes": {
+              "sha256": "20a4203d069dc9b710f70b09e7da2ce6f473d6b1110f9535fb6f4c469ed54733",
+              "patches": [],
+              "platform": "x86_64-apple-darwin",
+              "python_version": "3.11.1",
+              "release_filename": "20230116/cpython-3.11.1+20230116-x86_64-apple-darwin-install_only.tar.gz",
+              "urls": [
+                "https://github.com/indygreg/python-build-standalone/releases/download/20230116/cpython-3.11.1+20230116-x86_64-apple-darwin-install_only.tar.gz"
+              ],
+              "distutils_content": "",
+              "strip_prefix": "python",
+              "coverage_tool": "",
+              "ignore_root_user_error": false
+            }
+          },
+          "pythons_hub": {
+            "bzlFile": "@@rules_python~//python/extensions/private:pythons_hub.bzl",
+            "ruleClassName": "hub_repo",
+            "attributes": {
+              "default_python_version": "3.11",
+              "toolchain_prefixes": [
+                "_0000_python_3_11_"
+              ],
+              "toolchain_python_versions": [
+                "3.11"
+              ],
+              "toolchain_set_python_version_constraints": [
+                "False"
+              ],
+              "toolchain_user_repository_names": [
+                "python_3_11"
+              ]
+            }
+          },
+          "python_versions": {
+            "bzlFile": "@@rules_python~//python/private:toolchains_repo.bzl",
+            "ruleClassName": "multi_toolchain_aliases",
+            "attributes": {
+              "python_versions": {
+                "3.11": "python_3_11"
+              }
+            }
+          },
+          "python_3_11_x86_64-pc-windows-msvc": {
+            "bzlFile": "@@rules_python~//python:repositories.bzl",
+            "ruleClassName": "python_repository",
+            "attributes": {
+              "sha256": "edc08979cb0666a597466176511529c049a6f0bba8adf70df441708f766de5bf",
+              "patches": [],
+              "platform": "x86_64-pc-windows-msvc",
+              "python_version": "3.11.1",
+              "release_filename": "20230116/cpython-3.11.1+20230116-x86_64-pc-windows-msvc-shared-install_only.tar.gz",
+              "urls": [
+                "https://github.com/indygreg/python-build-standalone/releases/download/20230116/cpython-3.11.1+20230116-x86_64-pc-windows-msvc-shared-install_only.tar.gz"
+              ],
+              "distutils_content": "",
+              "strip_prefix": "python",
+              "coverage_tool": "",
+              "ignore_root_user_error": false
+            }
+          },
+          "python_3_11_x86_64-unknown-linux-gnu": {
+            "bzlFile": "@@rules_python~//python:repositories.bzl",
+            "ruleClassName": "python_repository",
+            "attributes": {
+              "sha256": "02a551fefab3750effd0e156c25446547c238688a32fabde2995c941c03a6423",
+              "patches": [],
+              "platform": "x86_64-unknown-linux-gnu",
+              "python_version": "3.11.1",
+              "release_filename": "20230116/cpython-3.11.1+20230116-x86_64-unknown-linux-gnu-install_only.tar.gz",
+              "urls": [
+                "https://github.com/indygreg/python-build-standalone/releases/download/20230116/cpython-3.11.1+20230116-x86_64-unknown-linux-gnu-install_only.tar.gz"
+              ],
+              "distutils_content": "",
+              "strip_prefix": "python",
+              "coverage_tool": "",
+              "ignore_root_user_error": false
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "rules_python~",
+            "bazel_tools",
+            "bazel_tools"
           ]
         ]
       }
