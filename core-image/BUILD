@@ -43,6 +43,7 @@ expand_template(
     name = "stamped",
     out = "_stamped.tags.txt",
     stamp_substitutions = {"0.0.0": "{{BUILD_EMBED_LABEL}}"},
+    stamp = 1,
     template = [
         "0.0.0",
         "nightly",
