@@ -67,11 +67,10 @@ type exec struct {
 	transformer     []transformer.Transformer
 	transformerV2   []transformerV2.Transformer
 	logger          logger.Logger
-	userLogger      logger.Logger
 	execParams      parameter.ExecutionParameter
 }
 
-func newExec(execParams parameter.ExecutionParameter, userLogger logger.Logger) *exec {
+func newExec(execParams parameter.ExecutionParameter) *exec {
 	itemEngine := item.NewEngine(ROOT_WORK_DIRECTORY, execParams.Strict, execParams.CheckTimeout)
 	finalizeEngine := finalize.NewEngine(ROOT_WORK_DIRECTORY, execParams.CheckTimeout)
 	resultEngine := result.NewDefaultEngine(ROOT_WORK_DIRECTORY)
@@ -88,7 +87,6 @@ func newExec(execParams parameter.ExecutionParameter, userLogger logger.Logger) 
 		finalizerEngine: finalizeEngine,
 		transformer:     transformer,
 		logger:          logger.Get(),
-		userLogger:      userLogger,
 		execParams:      execParams,
 		transformerV2:   []transformerV2.Transformer{transformerV2.NewAutopilotSkipper(execParams), transformerV2.NewConfigsLoader(ROOT_WORK_DIRECTORY)},
 	}
@@ -101,19 +99,16 @@ func Exec(execParams parameter.ExecutionParameter) error {
 	if err != nil {
 		return errors.Wrap(err, "error reading files")
 	}
-	defaultLogger := logger.NewCommon(logger.Settings{
+	defaultLogger := logger.NewConsoleFileLogger(logger.Settings{
 		Secrets: secrets,
-		File:    filepath.Join(ROOT_WORK_DIRECTORY, "onyx.log"),
-	}) // this logger prevents secrets from being logged
-
-	userLogger := logger.NewCommon(logger.Settings{
-		Secrets:               secrets,
-		File:                  filepath.Join(ROOT_WORK_DIRECTORY, "usererr.log"),
-		DisableConsoleLogging: true,
+		Files: []string{
+			filepath.Join(ROOT_WORK_DIRECTORY, "onyx.log"),
+			filepath.Join(execParams.OutputFolder, "onyx.log"),
+		},
 	}) // this logger prevents secrets from being logged
 
 	logger.Set(defaultLogger)
-	e := newExec(execParams, userLogger)
+	e := newExec(execParams)
 	err = e.prepareRootFolder(ROOT_WORK_DIRECTORY, execParams.InputFolder)
 	if err != nil {
 		return errors.Wrap(err, "error setting up root directory")
@@ -125,7 +120,7 @@ func Exec(execParams parameter.ExecutionParameter) error {
 	if err != nil {
 		var userErr model.UserError
 		if errors.As(err, &userErr) {
-			e.userLogger.Errorf("error creating config: %s", userErr.Error())
+			e.logger.UserErrorf("error creating config: %s", userErr.Error())
 		}
 		return err
 	}
@@ -135,7 +130,7 @@ func Exec(execParams parameter.ExecutionParameter) error {
 	if err != nil {
 		var userErr model.UserError
 		if errors.As(err, &userErr) {
-			e.userLogger.Errorf("schema validation of config file failed: %s", userErr.Error())
+			e.logger.UserErrorf("schema validation of config file failed: %s", userErr.Error())
 		}
 		return err
 	}
@@ -162,7 +157,7 @@ func Exec(execParams parameter.ExecutionParameter) error {
 		if err != nil {
 			var userErr model.UserError
 			if errors.As(err, &userErr) {
-				e.userLogger.Errorf("initialization of execution plan failed: %s", userErr.Error())
+				e.logger.UserErrorf("initialization of execution plan failed: %s", userErr.Error())
 			}
 			return err
 		}
@@ -202,7 +197,7 @@ func (e *exec) execPlanV1(ep *configuration.ExecutionPlan, vars map[string]strin
 
 func (e *exec) execPlanV2(ep *model.ExecutionPlan, secrets map[string]string) error {
 	e.logger.Info("[ RUN EXECUTION PLAN ]")
-	orchestrator := orchestrator.New(ROOT_WORK_DIRECTORY, e.execParams.Strict, e.execParams.CheckTimeout, e.logger, e.userLogger)
+	orchestrator := orchestrator.New(ROOT_WORK_DIRECTORY, e.execParams.Strict, e.execParams.CheckTimeout, e.logger)
 	runResult, err := orchestrator.Run(ep.ManualChecks, ep.AutopilotChecks, ep.Env, secrets)
 	if err != nil {
 		return errors.Wrap(err, "error executing execution plan")
@@ -314,7 +309,7 @@ func (e *exec) initPlanV2(config *v2.Config, vars, secrets map[string]string) (*
 	}
 
 	e.logger.Info("replacing parameters in execution plan")
-	replacerV2.Run(ep, vars, secrets, replacerV2.Initial, e.userLogger)
+	replacerV2.Run(ep, vars, secrets, replacerV2.Initial)
 
 	e.logger.Info("transform execution plan")
 	for _, transformer := range e.transformerV2 {
@@ -325,14 +320,14 @@ func (e *exec) initPlanV2(config *v2.Config, vars, secrets map[string]string) (*
 	}
 
 	e.logger.Info("replacing config file parameters in execution plan")
-	replacerV2.Run(ep, vars, secrets, replacerV2.ConfigValues, e.userLogger)
+	replacerV2.Run(ep, vars, secrets, replacerV2.ConfigValues)
 
 	e.logger.Info("initializing repositories")
 	repositories, err := initializeRepository(ep.Repositories)
 	if err != nil {
 		var userErr model.UserError
 		if errors.As(err, &userErr) {
-			e.userLogger.Errorf("error parsing repositories: %s", userErr.Error())
+			e.logger.UserErrorf("error parsing repositories: %s", userErr.Error())
 		}
 		return nil, err
 	}
