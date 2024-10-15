@@ -1,8 +1,8 @@
+load("@aspect_bazel_lib//lib:expand_template.bzl", "expand_template")
 load("@aspect_bazel_lib//lib:testing.bzl", "assert_archive_contains")
 load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load", "oci_push")
-load("@aspect_bazel_lib//lib:expand_template.bzl", "expand_template")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 # Put app go_binary into a tar layer.

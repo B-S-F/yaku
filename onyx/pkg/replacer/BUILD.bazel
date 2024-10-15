@@ -13,6 +13,7 @@ go_library(
         "//onyx/pkg/configuration",
         "//onyx/pkg/helper",
         "//onyx/pkg/logger",
+        "//onyx/pkg/v2/model",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )
