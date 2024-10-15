@@ -17,24 +17,25 @@ func TestLoggerIntegration(t *testing.T) {
 		// arrange
 		viper.Set("log_level", "info")
 		tmpDir := t.TempDir()
-		logger := NewAutopilot(Settings{
+		autopilotLog := NewAutopilot(Settings{
 			Secrets: map[string]string{
 				"SECRETS": "test-secret",
 			},
 		})
+		logFile := filepath.Join(tmpDir, "test.log")
 
 		// act
-		logger.Info("test message")
-		logger.Info("test-secret")
-		logger.Flush()
-		logger.File = filepath.Join(tmpDir, "test.log")
-		logger.ToFile()
+		autopilotLog.Info("test message")
+		autopilotLog.Info("test-secret")
+		autopilotLog.Flush()
+		autopilotLog.SetFiles([]string{logFile})
+		autopilotLog.ToFile()
 
 		// assert
-		assert.Contains(t, logger.String(), "test message")
-		assert.NotContains(t, logger.String(), "test-secret")
-		assert.FileExists(t, logger.File)
-		content, err := os.ReadFile(logger.File)
+		assert.Contains(t, autopilotLog.String(), "test message")
+		assert.NotContains(t, autopilotLog.String(), "test-secret")
+		assert.FileExists(t, logFile)
+		content, err := os.ReadFile(logFile)
 		if err != nil {
 			t.Fatalf("Failed to open file: %v", err)
 		}
@@ -46,8 +47,9 @@ func TestLoggerIntegration(t *testing.T) {
 		// arrange
 		viper.Set("log_level", "info")
 		tmpDir := t.TempDir()
-		logger := NewCommon(Settings{
-			File: filepath.Join(tmpDir, "test.log"),
+		logFile := filepath.Join(tmpDir, "test.log")
+		logger := NewConsoleFileLogger(Settings{
+			Files: []string{logFile},
 			Secrets: map[string]string{
 				"SECRETS": "test-secret",
 			},
@@ -60,8 +62,8 @@ func TestLoggerIntegration(t *testing.T) {
 		log.Info("test-secret")
 
 		// assert
-		assert.FileExists(t, logger.File)
-		content, err := os.ReadFile(logger.File)
+		assert.FileExists(t, logFile)
+		content, err := os.ReadFile(logFile)
 		if err != nil {
 			t.Fatalf("Failed to open file: %v", err)
 		}

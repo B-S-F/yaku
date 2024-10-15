@@ -41,9 +41,7 @@ var secretsContent = map[string]string{
 	"GITHUB_PASSWORD": "github_password",
 }
 
-var nopLogger = &logger.Log{
-	Logger: zap.NewNop(),
-}
+var nopLogger = logger.NewHideSecretsLogger(zap.NewNop(), logger.Settings{})
 
 func TestReplaceRun(t *testing.T) {
 	executionPlan := simpleExecPlan()
@@ -53,7 +51,6 @@ func TestReplaceRun(t *testing.T) {
 		varsContent,
 		secretsContent,
 		Initial,
-		nopLogger,
 	)
 
 	Run(
@@ -61,7 +58,6 @@ func TestReplaceRun(t *testing.T) {
 		varsContent,
 		secretsContent,
 		ConfigValues,
-		nopLogger,
 	)
 
 	// metadata
@@ -246,7 +242,6 @@ func TestReplaceRunWithoutFinalizer(t *testing.T) {
 		varsContent,
 		secretsContent,
 		Initial,
-		nopLogger,
 	)
 
 	Run(
@@ -254,7 +249,6 @@ func TestReplaceRunWithoutFinalizer(t *testing.T) {
 		varsContent,
 		secretsContent,
 		ConfigValues,
-		nopLogger,
 	)
 
 	// metadata

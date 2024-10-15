@@ -4,7 +4,6 @@
 package executor
 
 import (
-	"bytes"
 	"errors"
 	"testing"
 	"time"
@@ -96,9 +95,7 @@ func TestOutputLog(t *testing.T) {
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
 			observedZapCore, observedLogs := observer.New(zap.InfoLevel)
-			observedLogger := &logger.Log{
-				Logger: zap.New(observedZapCore),
-			}
+			observedLogger := logger.NewHideSecretsLogger(zap.New(observedZapCore), logger.Settings{})
 			tc.output.Log(observedLogger)
 			allLogs := observedLogs.All()
 			for _, log := range allLogs {
@@ -108,13 +105,7 @@ func TestOutputLog(t *testing.T) {
 	}
 }
 
-var nopLogger = &logger.Autopilot{
-	Log: logger.Log{
-		Logger: zap.NewNop(),
-	},
-	HumanReadableBuffer:   bytes.NewBuffer(nil),
-	MachineReadableBuffer: bytes.NewBuffer(nil),
-}
+var nopLogger = logger.NewHideSecretsLogger(zap.NewNop(), logger.Settings{})
 
 type mockRunner struct {
 	mock.Mock

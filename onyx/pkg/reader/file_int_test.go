@@ -11,9 +11,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var nopLoggerInt = &logger.Log{
-	Logger: zap.NewNop(),
-}
+var nopLoggerInt = logger.NewHideSecretsLogger(zap.NewNop(), logger.Settings{})
 
 func TestReaderIntegration(t *testing.T) {
 	t.Run("should read a yaml file", func(t *testing.T) {

@@ -6,6 +6,7 @@ import (
 	"github.com/B-S-F/yaku/onyx/pkg/configuration"
 	"github.com/B-S-F/yaku/onyx/pkg/helper"
 	"github.com/B-S-F/yaku/onyx/pkg/logger"
+	"github.com/B-S-F/yaku/onyx/pkg/v2/model"
 )
 
 var PatternStart = `\${{`
@@ -81,20 +82,20 @@ func (r *Runner) replaceInitialExecutionPlan(varType string) {
 	}
 
 	if e := r.replacer.Env(&r.ep.Env, variablesList); e != nil {
-		r.logger.Error(fmt.Errorf("error replacing '%s' in global Env: %w", varType, e).Error())
+		r.logger.UserError(fmt.Errorf("error replacing '%s' in global Env: %w", varType, e).Error())
 	}
 	// replace Metadata
 	if e := r.replacer.Struct(&r.ep.Metadata, *r.variables); e != nil {
-		r.logger.Error(fmt.Errorf("error replacing '%s' in Metadata: %w", varType, e).Error())
+		r.logger.UserError(fmt.Errorf("error replacing '%s' in Metadata: %w", varType, e).Error())
 	}
 	// replace Header
 	if e := r.replacer.Struct(&r.ep.Header, *r.variables); e != nil {
-		r.logger.Error(fmt.Errorf("error replacing '%s' in Header: %w", varType, e).Error())
+		r.logger.UserError(fmt.Errorf("error replacing '%s' in Header: %w", varType, e).Error())
 	}
 	// Replace Repositories
 	for i := range r.ep.Repositories {
 		if e := r.replacer.Struct(&r.ep.Repositories[i], *r.variables); e != nil {
-			r.logger.Error(fmt.Errorf("error replacing '%s' in Repository: %w", varType, e).Error())
+			r.logger.UserError(fmt.Errorf("error replacing '%s' in Repository: %w", varType, e).Error())
 		}
 	}
 	// replace Items
@@ -102,22 +103,22 @@ func (r *Runner) replaceInitialExecutionPlan(varType string) {
 		item := &r.ep.Items[i]
 		// replace Chapter
 		if e := r.replacer.Struct(&item.Chapter, *r.variables); e != nil {
-			r.logger.Error(fmt.Errorf("error replacing '%s' in Chapter: %w", varType, e).Error())
+			r.logger.UserError(fmt.Errorf("error replacing '%s' in Chapter: %w", varType, e).Error())
 		}
 		// replace Requirement
 		if e := r.replacer.Struct(&item.Requirement, *r.variables); e != nil {
-			r.logger.Error(fmt.Errorf("error replacing '%s' in Requirement: %w", varType, e).Error())
+			r.logger.UserError(fmt.Errorf("error replacing '%s' in Requirement: %w", varType, e).Error())
 		}
 		// replace Check
 		checkEnv := buildEnvironment(*r.variables, item.Env)
 		if e := r.replacer.Struct(&item.Check, checkEnv); e != nil {
-			r.logger.Error(fmt.Errorf("error replacing '%s' in Check: %w", varType, e).Error())
+			r.logger.UserError(fmt.Errorf("error replacing '%s' in Check: %w", varType, e).Error())
 		}
 
 		// replace AppReferences
 		for _, appRef := range item.AppReferences {
 			if e := r.replacer.Struct(appRef, *r.variables); e != nil {
-				r.logger.Error(fmt.Errorf("error replacing '%s' in AppReference: %w", varType, e).Error())
+				r.logger.UserError(fmt.Errorf("error replacing '%s' in AppReference: %w", varType, e).Error())
 			}
 		}
 
@@ -125,7 +126,7 @@ func (r *Runner) replaceInitialExecutionPlan(varType string) {
 			// replace manual answer
 			// replace Manual
 			if e := r.replacer.Struct(&item.Manual, *r.variables); e != nil {
-				r.logger.Error(fmt.Errorf("error replacing variables in Manual: %s", e).Error())
+				r.logger.UserError(fmt.Errorf("error replacing variables in Manual: %s", e).Error())
 			}
 
 		} else {
@@ -142,11 +143,11 @@ func (r *Runner) replaceInitialExecutionPlan(varType string) {
 			}
 			// replace Env
 			if e := r.replacer.Env(&item.Env, itemEnvList); e != nil {
-				r.logger.Error(fmt.Errorf("error replacing '%s' in Env: %w", varType, e).Error())
+				r.logger.UserError(fmt.Errorf("error replacing '%s' in Env: %w", varType, e).Error())
 			}
 			// replace Autopilot.Env
 			if e := r.replacer.Env(&item.Autopilot.Env, autopilotEnvList); e != nil {
-				r.logger.Error(fmt.Errorf("error replacing '%s' in Autopilot.Env: %w", varType, e).Error())
+				r.logger.UserError(fmt.Errorf("error replacing '%s' in Autopilot.Env: %w", varType, e).Error())
 			}
 			var autopilotEnv map[string]string
 			if varType == "env" {
@@ -156,11 +157,11 @@ func (r *Runner) replaceInitialExecutionPlan(varType string) {
 			}
 			// replace Autopilot
 			if e := r.replacer.Struct(&item.Autopilot, autopilotEnv); e != nil {
-				r.logger.Error(fmt.Errorf("error replacing '%s' in Autopilot: %w", varType, e).Error())
+				r.logger.UserError(fmt.Errorf("error replacing '%s' in Autopilot: %w", varType, e).Error())
 			}
 			// replace Config keys
 			if e := r.replaceKeys(varType, &item.Config, autopilotEnv); e != nil {
-				r.logger.Error(fmt.Errorf("error replacing '%s' in Config keys: %w", varType, e).Error())
+				r.logger.UserError(fmt.Errorf("error replacing '%s' in Config keys: %w", varType, e).Error())
 			}
 		}
 	}
@@ -169,7 +170,7 @@ func (r *Runner) replaceInitialExecutionPlan(varType string) {
 	finalizeEnvList := buildEnvironmentList(*r.variables)
 	// replace Finalize.Env
 	if e := r.replacer.Env(&r.ep.Finalize.Autopilot.Env, finalizeEnvList); e != nil {
-		r.logger.Error(fmt.Errorf("error replacing variables in Finalize.Env: %w", e).Error())
+		r.logger.UserError(fmt.Errorf("error replacing variables in Finalize.Env: %w", e).Error())
 	}
 	var finalizeEnv map[string]string
 	if varType == "env" {
@@ -179,11 +180,11 @@ func (r *Runner) replaceInitialExecutionPlan(varType string) {
 	}
 	// replace Finalize
 	if e := r.replacer.Struct(&r.ep.Finalize.Autopilot, finalizeEnv); e != nil {
-		r.logger.Error(fmt.Errorf("error replacing variables in Finalize: %w", e).Error())
+		r.logger.UserError(fmt.Errorf("error replacing variables in Finalize: %w", e).Error())
 	}
 	// replace Config keys in Finalize
 	if e := r.replaceKeys(varType, &r.ep.Finalize.Config, finalizeEnv); e != nil {
-		r.logger.Error(fmt.Errorf("error replacing '%s' in Config keys: %w", varType, e).Error())
+		r.logger.UserError(fmt.Errorf("error replacing '%s' in Config keys: %w", varType, e).Error())
 	}
 }
 
@@ -204,7 +205,7 @@ func (r *Runner) replaceConfigValues(varType string) {
 
 			// replace Config values
 			if e := r.replaceConfig(varType, &item.Config, autopilotEnv); e != nil {
-				r.logger.Error(fmt.Errorf("error replacing '%s' in Config: %w", varType, e).Error())
+				r.logger.UserError(fmt.Errorf("error replacing '%s' in Config: %w", varType, e).Error())
 			}
 
 		}
@@ -219,7 +220,7 @@ func (r *Runner) replaceConfigValues(varType string) {
 
 	// replace Config values in Finalize
 	if e := r.replaceConfig(varType, &r.ep.Finalize.Config, finalizeEnv); e != nil {
-		r.logger.Error(fmt.Errorf("error replacing '%s' in Finalize.Config: %w", varType, e).Error())
+		r.logger.UserError(fmt.Errorf("error replacing '%s' in Finalize.Config: %w", varType, e).Error())
 	}
 }
 
@@ -228,7 +229,7 @@ func (r *Runner) replaceConfig(varType string, config *map[string]string, env ma
 		for k, v := range *config {
 			matches := r.replacer.ListMatches(v)
 			if len(matches) > 0 {
-				return fmt.Errorf("secrets are not allowed in config files: found %d secrets in file '%s'", len(matches), k)
+				return model.NewUserErr(fmt.Errorf("secrets are not allowed in config files: found %d secrets in file '%s'", len(matches), k), "invalid config file")
 			}
 		}
 	} else {

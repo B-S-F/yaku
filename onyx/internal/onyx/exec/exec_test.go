@@ -690,7 +690,7 @@ func TestExecUserErrors(t *testing.T) {
 			if tt.want != nil {
 				assert.ErrorContains(t, err, tt.want.Error())
 
-				userErrLog, err := os.ReadFile(fmt.Sprintf("%s/exec/evidences/usererr.log", tempDir))
+				userErrLog, err := os.ReadFile(fmt.Sprintf("%s/exec/evidences/onyx.log", tempDir))
 				require.NoError(t, err)
 				assert.Contains(t, string(userErrLog), tt.want.Error())
 			}

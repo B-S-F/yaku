@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/viper"
@@ -9,11 +10,12 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-type Common struct {
-	Log
+type ConsoleFileLogger struct {
+	consoleLogger HideSecretsLog
+	fileLogger    HideSecretsLog
 }
 
-func NewCommon(s ...Settings) *Common {
+func NewConsoleFileLogger(s ...Settings) *ConsoleFileLogger {
 	settings := Settings{}
 	if len(s) > 0 {
 		settings = s[0]
@@ -41,35 +43,85 @@ func NewCommon(s ...Settings) *Common {
 	}
 	consoleEncoder := zapcore.NewConsoleEncoder(ENCODER_CONFIG)
 	consoleLogging := zapcore.Lock(zapcore.AddSync(os.Stdout))
-	var core zapcore.Core
 
-	var cores []zapcore.Core
-	if !settings.DisableConsoleLogging {
-		cores = append(cores, zapcore.NewCore(consoleEncoder, consoleLogging, level))
-	}
-
-	if settings.File != "" {
+	var fileCores []zapcore.Core
+	for _, file := range settings.Files {
 		jsonEncoderConfig := zap.NewProductionEncoderConfig()
 		jsonEncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 		jsonEncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 		jsonEncoder := zapcore.NewJSONEncoder(jsonEncoderConfig)
 		fileLogging := zapcore.Lock(zapcore.AddSync(&lumberjack.Logger{
-			Filename:   settings.File,
+			Filename:   file,
 			MaxSize:    10, // megabytes
 			MaxBackups: 3,
 			MaxAge:     28, // days
 		}))
-		cores = append(cores, zapcore.NewCore(jsonEncoder, fileLogging, level))
+		fileCores = append(fileCores, zapcore.NewCore(jsonEncoder, fileLogging, level))
 	}
-	if len(cores) > 1 {
-		core = zapcore.NewTee(cores...)
-	} else {
-		core = cores[0]
-	}
-	return &Common{
-		Log{
-			zap.New(core),
-			settings,
+
+	return &ConsoleFileLogger{
+		consoleLogger: HideSecretsLog{
+			logger:   zap.New(zapcore.NewCore(consoleEncoder, consoleLogging, level)),
+			Settings: settings,
+		},
+		fileLogger: HideSecretsLog{
+			logger:   zap.New(zapcore.NewTee(fileCores...)),
+			Settings: settings,
 		},
 	}
+}
+
+func (c *ConsoleFileLogger) Debug(msg string, fields ...zap.Field) {
+	c.consoleLogger.Debug(msg, fields...)
+	c.fileLogger.Debug(msg, fields...)
+}
+
+func (c *ConsoleFileLogger) Debugf(msg string, args ...interface{}) {
+	c.consoleLogger.Debugf(msg, args...)
+	c.fileLogger.Debugf(msg, args...)
+}
+
+func (c *ConsoleFileLogger) Info(msg string, fields ...zap.Field) {
+	c.consoleLogger.Info(msg, fields...)
+	c.fileLogger.Info(msg, fields...)
+}
+
+func (c *ConsoleFileLogger) Infof(msg string, args ...interface{}) {
+	c.consoleLogger.Infof(msg, args...)
+	c.fileLogger.Infof(msg, args...)
+}
+
+func (c *ConsoleFileLogger) Warn(msg string, fields ...zap.Field) {
+	c.consoleLogger.Warn(msg, fields...)
+	c.fileLogger.Warn(msg, fields...)
+}
+
+func (c *ConsoleFileLogger) Warnf(msg string, args ...interface{}) {
+	c.consoleLogger.Warnf(msg, args...)
+	c.fileLogger.Warnf(msg, args...)
+}
+
+func (c *ConsoleFileLogger) Error(msg string, fields ...zap.Field) {
+	zapFields := []zap.Field{zap.String("category", "SYSTEM")}
+	zapFields = append(zapFields, fields...)
+	c.consoleLogger.Error(msg, fields...)
+	c.fileLogger.Error(msg, zapFields...)
+}
+
+func (c *ConsoleFileLogger) Errorf(msg string, args ...interface{}) {
+	zapField := zap.String("category", "SYSTEM")
+	c.consoleLogger.Errorf(msg, args...)
+	c.fileLogger.Error(fmt.Sprintf(msg, args...), zapField)
+}
+
+func (c *ConsoleFileLogger) UserError(msg string, fields ...zap.Field) {
+	zapFields := []zap.Field{zap.String("category", "USER")}
+	zapFields = append(zapFields, fields...)
+	c.consoleLogger.Warn(msg, fields...)
+	c.fileLogger.Error(msg, zapFields...)
+}
+
+func (c *ConsoleFileLogger) UserErrorf(msg string, args ...interface{}) {
+	c.consoleLogger.Warnf(msg, args...)
+	c.fileLogger.Error(fmt.Sprintf(msg, args...), zap.String("category", "USER"))
 }

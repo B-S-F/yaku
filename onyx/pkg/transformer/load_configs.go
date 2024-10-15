@@ -1,7 +1,6 @@
 package transformer
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -25,7 +24,7 @@ func (d configsLoader) Transform(ep *configuration.ExecutionPlan) error {
 			for config := range ep.Items[index].Config {
 				file, err := os.ReadFile(filepath.Join(d.rootWorkDir, config))
 				if err != nil {
-					logger.Get().Warn(fmt.Sprintf("error reading config file '%s'. Trying to continue without it.", config))
+					logger.Get().UserErrorf("error reading config file '%s'. Trying to continue without it.", config)
 					continue
 				}
 				ep.Items[index].Config[config] = string(file)
@@ -36,7 +35,7 @@ func (d configsLoader) Transform(ep *configuration.ExecutionPlan) error {
 		for config := range ep.Finalize.Config {
 			file, err := os.ReadFile(filepath.Join(d.rootWorkDir, config))
 			if err != nil {
-				logger.Get().Warn(fmt.Sprintf("error reading config file '%s'. Trying to continue without it.", config))
+				logger.Get().UserErrorf("error reading config file '%s'. Trying to continue without it.", config)
 				continue
 			}
 			ep.Finalize.Config[config] = string(file)

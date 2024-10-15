@@ -15,11 +15,11 @@ import (
 func TestNewCommon(t *testing.T) {
 	t.Run("should init a new logger with default log-level", func(t *testing.T) {
 		// act
-		log := NewCommon()
+		log := NewConsoleFileLogger()
 
 		// assert
 		assert.NotNil(t, log)
-		assert.Equal(t, log.Logger.Core().Enabled(zapcore.InfoLevel), true)
+		assert.True(t, log.consoleLogger.logger.Core().Enabled(zapcore.InfoLevel))
 	})
 
 	t.Run("should init a new logger with debug log-level", func(t *testing.T) {
@@ -29,27 +29,27 @@ func TestNewCommon(t *testing.T) {
 		}
 
 		// act
-		log := NewCommon(settings)
+		log := NewConsoleFileLogger(settings)
 
 		// assert
 		assert.NotNil(t, log)
-		assert.Equal(t, log.Logger.Core().Enabled(zapcore.DebugLevel), true)
+		assert.True(t, log.consoleLogger.logger.Core().Enabled(zapcore.DebugLevel), true)
 	})
 	t.Run("should init a new logger with logging to file enabled", func(t *testing.T) {
 		// arrange
 		tmpDir := t.TempDir()
 		settings := Settings{
-			File: filepath.Join(tmpDir, "test.log"),
+			Files: []string{filepath.Join(tmpDir, "test.log")},
 		}
 
 		// act
-		log := NewCommon(settings)
+		log := NewConsoleFileLogger(settings)
 		log.Info("test message")
 
 		// assert
 		assert.NotNil(t, log)
-		assert.FileExists(t, settings.File)
-		content, err := os.ReadFile(log.File)
+		assert.FileExists(t, settings.Files[0])
+		content, err := os.ReadFile(log.fileLogger.Files[0])
 		if err != nil {
 			t.Fatalf("Failed to open file: %v", err)
 		}
@@ -60,19 +60,19 @@ func TestNewCommon(t *testing.T) {
 		// arrange
 		tmpDir := t.TempDir()
 		settings := Settings{
-			File: filepath.Join(tmpDir, "test.log"),
+			Files: []string{filepath.Join(tmpDir, "test.log")},
 			Secrets: map[string]string{
 				"SECRET": "test-secret",
 			},
 		}
 
 		// act
-		log := NewCommon(settings)
+		log := NewConsoleFileLogger(settings)
 		log.Info("test-secret")
 
 		// assert
-		assert.FileExists(t, settings.File)
-		content, err := os.ReadFile(log.File)
+		assert.FileExists(t, settings.Files[0])
+		content, err := os.ReadFile(log.fileLogger.Files[0])
 		if err != nil {
 			t.Fatalf("Failed to open file: %v", err)
 		}

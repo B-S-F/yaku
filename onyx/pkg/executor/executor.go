@@ -86,7 +86,7 @@ type Exec struct {
 	runner      runner.Runner
 	timeout     time.Duration
 	rootWorkDir string
-	logger      *logger.Autopilot
+	logger      logger.Logger
 }
 
 type Executor interface {

@@ -22,7 +22,7 @@ type Subprocess struct {
 	logger logger.Logger
 }
 
-func NewSubprocess(logger *logger.Autopilot) *Subprocess {
+func NewSubprocess(logger logger.Logger) *Subprocess {
 	return &Subprocess{
 		logger: logger,
 	}

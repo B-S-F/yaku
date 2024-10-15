@@ -18,9 +18,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var nopLogger = &logger.Log{
-	Logger: zap.NewNop(),
-}
+var nopLogger = logger.NewHideSecretsLogger(zap.NewNop(), logger.Settings{})
 
 func TestToPercent(t *testing.T) {
 	testCases := map[string]struct {

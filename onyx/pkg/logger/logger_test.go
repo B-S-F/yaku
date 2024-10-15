@@ -15,10 +15,7 @@ func TestLogger(t *testing.T) {
 	t.Run("should log messages for all log levels", func(t *testing.T) {
 		// arrange
 		core, logs := observer.New(zap.DebugLevel)
-		log := &Log{
-			zap.New(core),
-			Settings{},
-		}
+		log := NewHideSecretsLogger(zap.New(core), Settings{})
 
 		// act
 		log.Debug("test debug message")
@@ -40,12 +37,7 @@ func TestLogger(t *testing.T) {
 			"TEST_SECRET": "test-secret",
 		}
 		core, logs := observer.New(zap.DebugLevel)
-		log := &Log{
-			zap.New(core),
-			Settings{
-				Secrets: secrets,
-			},
-		}
+		log := NewHideSecretsLogger(zap.New(core), Settings{Secrets: secrets})
 
 		// act
 		log.Debug("test-secret")

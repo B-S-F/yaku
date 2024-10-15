@@ -22,9 +22,7 @@ func (m *mockFileRead) readFile(name string) ([]byte, error) {
 	return args.Get(0).([]byte), args.Error(1)
 }
 
-var nopLogger = &logger.Log{
-	Logger: zap.NewNop(),
-}
+var nopLogger = logger.NewHideSecretsLogger(zap.NewNop(), logger.Settings{})
 
 func TestRead(t *testing.T) {
 	mock := &mockFileRead{}

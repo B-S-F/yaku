@@ -42,9 +42,7 @@ func TestCreateDir(t *testing.T) {
 func TestCreateFile(t *testing.T) {
 	// arrange
 	fs := afero.NewMemMapFs()
-	nopLogger := &logger.Log{
-		Logger: zap.NewNop(),
-	}
+	nopLogger := logger.NewHideSecretsLogger(zap.NewNop(), logger.Settings{})
 	wdu := &create{
 		fs:     fs,
 		logger: nopLogger,

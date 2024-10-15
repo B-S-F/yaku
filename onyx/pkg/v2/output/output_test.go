@@ -95,9 +95,7 @@ func TestOutputLog(t *testing.T) {
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
 			observedZapCore, observedLogs := observer.New(zap.InfoLevel)
-			observedLogger := &logger.Log{
-				Logger: zap.New(observedZapCore),
-			}
+			observedLogger := logger.NewHideSecretsLogger(zap.New(observedZapCore), logger.Settings{})
 			err := tc.output.Log(observedLogger)
 			require.NoError(t, err)
 			allLogs := observedLogs.All()

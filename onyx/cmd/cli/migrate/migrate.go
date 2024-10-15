@@ -27,8 +27,8 @@ func Run(cmd *cobra.Command, args []string) error {
 	version := viper.GetString("target-version")
 	output := viper.GetString("output")
 	filepath := filepath.Clean(args[0])
-	logger.Set(logger.NewCommon(logger.Settings{
-		File: "onyx.log",
+	logger.Set(logger.NewConsoleFileLogger(logger.Settings{
+		Files: []string{"onyx.log"},
 	}))
 	return onyx.Migrate(version, filepath, output)
 }

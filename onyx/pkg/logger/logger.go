@@ -6,26 +6,6 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var logger Logger
-
-var ENCODER_CONFIG zapcore.EncoderConfig
-
-func init() {
-	logger = NewCommon()
-}
-
-type Settings struct {
-	Level                 string
-	File                  string
-	Secrets               map[string]string
-	DisableConsoleLogging bool
-}
-
-type Log struct {
-	Logger *zap.Logger
-	Settings
-}
-
 type Logger interface {
 	Debug(msg string, fields ...zap.Field)
 	Debugf(msg string, args ...interface{})
@@ -35,38 +15,22 @@ type Logger interface {
 	Warnf(msg string, args ...interface{})
 	Error(msg string, fields ...zap.Field)
 	Errorf(msg string, args ...interface{})
+	UserError(msg string, fields ...zap.Field)
+	UserErrorf(msg string, args ...interface{})
 }
 
-func (l *Log) Debug(msg string, fields ...zap.Field) {
-	l.Logger.Debug(helper.HideSecretsInString(msg, l.Secrets), fields...)
+type Settings struct {
+	Level   string
+	Files   []string
+	Secrets map[string]string
 }
 
-func (l *Log) Debugf(msg string, args ...interface{}) {
-	l.Logger.Sugar().Debugf(helper.HideSecretsInString(msg, l.Secrets), args...)
-}
+var logger Logger
 
-func (l *Log) Info(msg string, fields ...zap.Field) {
-	l.Logger.Info(helper.HideSecretsInString(msg, l.Secrets), fields...)
-}
+var ENCODER_CONFIG zapcore.EncoderConfig
 
-func (l *Log) Infof(msg string, args ...interface{}) {
-	l.Logger.Sugar().Infof(helper.HideSecretsInString(msg, l.Secrets), args...)
-}
-
-func (l *Log) Warn(msg string, fields ...zap.Field) {
-	l.Logger.Warn(helper.HideSecretsInString(msg, l.Secrets), fields...)
-}
-
-func (l *Log) Warnf(msg string, args ...interface{}) {
-	l.Logger.Sugar().Warnf(helper.HideSecretsInString(msg, l.Secrets), args...)
-}
-
-func (l *Log) Error(msg string, fields ...zap.Field) {
-	l.Logger.Error(helper.HideSecretsInString(msg, l.Secrets), fields...)
-}
-
-func (l *Log) Errorf(msg string, args ...interface{}) {
-	l.Logger.Sugar().Errorf(helper.HideSecretsInString(msg, l.Secrets), args...)
+func init() {
+	logger = NewConsoleFileLogger()
 }
 
 func Get() Logger {
@@ -75,4 +39,53 @@ func Get() Logger {
 
 func Set(l Logger) {
 	logger = l
+}
+
+type HideSecretsLog struct {
+	logger *zap.Logger
+	Settings
+}
+
+func NewHideSecretsLogger(logger *zap.Logger, settings Settings) *HideSecretsLog {
+	return &HideSecretsLog{logger: logger, Settings: settings}
+}
+
+func (l *HideSecretsLog) Debug(msg string, fields ...zap.Field) {
+	l.logger.Debug(helper.HideSecretsInString(msg, l.Secrets), fields...)
+}
+
+func (l *HideSecretsLog) Debugf(msg string, args ...interface{}) {
+	l.logger.Sugar().Debugf(helper.HideSecretsInString(msg, l.Secrets), args...)
+}
+
+func (l *HideSecretsLog) Info(msg string, fields ...zap.Field) {
+	l.logger.Info(helper.HideSecretsInString(msg, l.Secrets), fields...)
+}
+
+func (l *HideSecretsLog) Infof(msg string, args ...interface{}) {
+	l.logger.Sugar().Infof(helper.HideSecretsInString(msg, l.Secrets), args...)
+}
+
+func (l *HideSecretsLog) Warn(msg string, fields ...zap.Field) {
+	l.logger.Warn(helper.HideSecretsInString(msg, l.Secrets), fields...)
+}
+
+func (l *HideSecretsLog) Warnf(msg string, args ...interface{}) {
+	l.logger.Sugar().Warnf(helper.HideSecretsInString(msg, l.Secrets), args...)
+}
+
+func (l *HideSecretsLog) Error(msg string, fields ...zap.Field) {
+	l.logger.Error(helper.HideSecretsInString(msg, l.Secrets), fields...)
+}
+
+func (l *HideSecretsLog) Errorf(msg string, args ...interface{}) {
+	l.logger.Sugar().Errorf(helper.HideSecretsInString(msg, l.Secrets), args...)
+}
+
+func (l *HideSecretsLog) UserError(msg string, fields ...zap.Field) {
+	l.logger.Error(helper.HideSecretsInString(msg, l.Secrets), fields...)
+}
+
+func (l *HideSecretsLog) UserErrorf(msg string, args ...interface{}) {
+	l.logger.Sugar().Errorf(helper.HideSecretsInString(msg, l.Secrets), args...)
 }

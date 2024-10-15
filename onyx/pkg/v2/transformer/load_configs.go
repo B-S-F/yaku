@@ -1,7 +1,6 @@
 package transformer
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -28,7 +27,7 @@ func (d configsLoader) Transform(ep *model.ExecutionPlan) error {
 					for config := range step.Configs {
 						file, err := os.ReadFile(filepath.Join(d.rootWorkDir, config))
 						if err != nil {
-							logger.Get().Warn(fmt.Sprintf("error reading config file '%s'. Trying to continue without it.", config))
+							logger.Get().UserErrorf("error reading config file '%s'. Trying to continue without it.", config)
 							continue
 						}
 						step.Configs[config] = string(file)
@@ -39,7 +38,7 @@ func (d configsLoader) Transform(ep *model.ExecutionPlan) error {
 		for config := range autopilotItem.Autopilot.Evaluate.Configs {
 			file, err := os.ReadFile(filepath.Join(d.rootWorkDir, config))
 			if err != nil {
-				logger.Get().Warn(fmt.Sprintf("error reading config file '%s'. Trying to continue without it.", config))
+				logger.Get().UserErrorf("error reading config file '%s'. Trying to continue without it.", config)
 				continue
 			}
 			autopilotItem.Autopilot.Evaluate.Configs[config] = string(file)
@@ -50,7 +49,7 @@ func (d configsLoader) Transform(ep *model.ExecutionPlan) error {
 			for config := range ep.Finalize.Configs {
 				file, err := os.ReadFile(filepath.Join(d.rootWorkDir, config))
 				if err != nil {
-					logger.Get().Warn(fmt.Sprintf("error reading config file '%s'. Trying to continue without it.", config))
+					logger.Get().UserErrorf("error reading config file '%s'. Trying to continue without it.", config)
 					continue
 				}
 				ep.Finalize.Configs[config] = string(file)

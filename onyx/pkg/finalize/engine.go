@@ -37,7 +37,7 @@ func (e *Engine) Run(item *configuration.Item, env, secrets map[string]string) (
 
 	logger := logger.NewAutopilot(logger.Settings{
 		Secrets: secrets,
-		File:    filepath.Join(e.rootWorkDir, "finalizer.log"),
+		Files:   []string{filepath.Join(e.rootWorkDir, "finalizer.log")},
 	})
 	defer logger.Flush()
 	defer logger.ToFile()
