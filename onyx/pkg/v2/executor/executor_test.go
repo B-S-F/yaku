@@ -1,7 +1,6 @@
 package executor
 
 import (
-	"bytes"
 	"strings"
 	"testing"
 	"time"
@@ -13,13 +12,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var nopLogger = &logger.Autopilot{
-	Log: logger.Log{
-		Logger: zap.NewNop(),
-	},
-	HumanReadableBuffer:   bytes.NewBuffer(nil),
-	MachineReadableBuffer: bytes.NewBuffer(nil),
-}
+var nopLogger = logger.NewHideSecretsLogger(zap.NewNop(), logger.Settings{})
 
 func TestStartRunner(t *testing.T) {
 	t.Run("should return correct output", func(t *testing.T) {

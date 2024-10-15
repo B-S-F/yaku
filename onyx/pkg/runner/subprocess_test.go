@@ -13,9 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var nopLogger = &logger.Log{
-	Logger: zap.NewNop(),
-}
+var nopLogger = logger.NewHideSecretsLogger(zap.NewNop(), logger.Settings{})
 
 func TestExecute(t *testing.T) {
 	tmpDir := t.TempDir()

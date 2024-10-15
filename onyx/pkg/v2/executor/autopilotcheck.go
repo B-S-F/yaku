@@ -27,7 +27,6 @@ type AutopilotExecutor struct {
 	logger      *logger.Autopilot
 	timeout     time.Duration
 	runner      *runner.Subprocess
-	userLogger  logger.Logger
 }
 
 type stepDirs struct {
@@ -42,7 +41,7 @@ type evaluateResult struct {
 	results []model.Result
 }
 
-func NewAutopilotExecutor(wdUtils workdir.Utilizer, rootWorkDir string, strict bool, logger *logger.Autopilot, timeout time.Duration, userLogger logger.Logger) *AutopilotExecutor {
+func NewAutopilotExecutor(wdUtils workdir.Utilizer, rootWorkDir string, strict bool, logger *logger.Autopilot, timeout time.Duration) *AutopilotExecutor {
 	return &AutopilotExecutor{
 		wdUtils:     wdUtils,
 		rootWorkDir: rootWorkDir,
@@ -50,12 +49,11 @@ func NewAutopilotExecutor(wdUtils workdir.Utilizer, rootWorkDir string, strict b
 		logger:      logger,
 		timeout:     timeout,
 		runner:      runner.NewSubprocess(logger),
-		userLogger:  userLogger,
 	}
 }
 
 func (a *AutopilotExecutor) ExecuteAutopilotCheck(item *model.AutopilotCheck, env, secrets map[string]string) (*model.AutopilotResult, error) {
-	if result := checkErrors(item, a.logger, a.userLogger); result != nil {
+	if result := checkErrors(item, a.logger); result != nil {
 		return result, nil
 	}
 
@@ -194,7 +192,7 @@ func (a *AutopilotExecutor) ExecuteAutopilotCheck(item *model.AutopilotCheck, en
 	return autopilotResult, nil
 }
 
-func checkErrors(item *model.AutopilotCheck, logger *logger.Autopilot, userLogger logger.Logger) *model.AutopilotResult {
+func checkErrors(item *model.AutopilotCheck, logger *logger.Autopilot) *model.AutopilotResult {
 	if len(item.ValidationErrs) > 0 {
 		msg := fmt.Sprintf("autopilot '%s' has the following validation errors and won't be executed: %s", item.Autopilot.Name, errs.Join(item.ValidationErrs...).Error())
 		output := &model.AutopilotResult{
@@ -205,8 +203,7 @@ func checkErrors(item *model.AutopilotCheck, logger *logger.Autopilot, userLogge
 			},
 			Name: item.Autopilot.Name,
 		}
-		logger.Warn(msg)
-		userLogger.Error(msg)
+		logger.UserError(msg)
 
 		return output
 	}
@@ -327,7 +324,7 @@ func checkResult(result *model.AutopilotResult, strict bool, timeout time.Durati
 		}
 		result.EvaluateResult.Status = "ERROR"
 		result.EvaluateResult.Reason = msg
-		logger.Error(msg)
+		logger.UserError(msg)
 		return
 	}
 	// autopilot must provide a status of RED, GREEN, YELLOW
@@ -336,7 +333,7 @@ func checkResult(result *model.AutopilotResult, strict bool, timeout time.Durati
 		msg := fmt.Sprintf("autopilot '%s' provided an invalid 'status': '%s'", result.Name, result.EvaluateResult.Status)
 		result.EvaluateResult.Status = "ERROR"
 		result.EvaluateResult.Reason = msg
-		logger.Error(msg)
+		logger.UserError(msg)
 		return
 	}
 	// autopilot must provide a reason
@@ -345,7 +342,7 @@ func checkResult(result *model.AutopilotResult, strict bool, timeout time.Durati
 		msgs = append(msgs, fmt.Sprintf("autopilot '%s' did not provide a 'reason'", result.Name))
 	}
 	// autopilot with status RED, GREEN, YELLOW must provide results
-	if result.EvaluateResult.Results == nil || len(result.EvaluateResult.Results) == 0 {
+	if len(result.EvaluateResult.Results) == 0 {
 		msgs = append(msgs, fmt.Sprintf("autopilot '%s' did not provide any 'results'", result.Name))
 	}
 	// autopilot must provide a criterion and justification for each result
@@ -364,7 +361,7 @@ func checkResult(result *model.AutopilotResult, strict bool, timeout time.Durati
 	if strict {
 		result.EvaluateResult.Status = "ERROR"
 		result.EvaluateResult.Reason = msg
-		logger.Error(msg)
+		logger.UserError(msg)
 		return
 	} else {
 		logger.Warn(msg)

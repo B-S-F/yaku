@@ -15,11 +15,10 @@ var PatternVariableType = []string{"vars", "secrets", "env"}
 var DeprecatedVariableType = []string{"var", "secret", "envs"}
 
 type Runner struct {
-	ep         *model.ExecutionPlan
-	variables  *map[string]string
-	replacer   replacer.Replacer
-	logger     logger.Logger
-	userLogger logger.Logger
+	ep        *model.ExecutionPlan
+	variables *map[string]string
+	replacer  replacer.Replacer
+	logger    logger.Logger
 }
 
 type Scope int
@@ -34,31 +33,30 @@ func (s Scope) String() string {
 	return [...]string{"Initial", "ConfigValues"}[s]
 }
 
-func New(ep *model.ExecutionPlan, vars *map[string]string, userLogger logger.Logger, p ...replacer.Pattern) *Runner {
+func New(ep *model.ExecutionPlan, vars *map[string]string, p ...replacer.Pattern) *Runner {
 	r := replacer.NewReplacerImpl(p)
 	variables := helper.MergeMaps(ep.DefaultVars, *vars)
 	return &Runner{
-		ep:         ep,
-		variables:  &variables,
-		replacer:   r,
-		logger:     logger.Get(),
-		userLogger: userLogger,
+		ep:        ep,
+		variables: &variables,
+		replacer:  r,
+		logger:    logger.Get(),
 	}
 }
 
-func Run(ep *model.ExecutionPlan, vars, secrets map[string]string, scope Scope, userLogger logger.Logger) {
+func Run(ep *model.ExecutionPlan, vars, secrets map[string]string, scope Scope) {
 	possibleTypes := PatternVariableType[:]
 	possibleTypes = append(possibleTypes, DeprecatedVariableType...)
 	for _, varType := range possibleTypes {
 		switch varType {
 		case "vars", "var":
-			r := New(ep, &vars, userLogger, replacer.NewPattern(varType, PatternStart, PatternEnd))
+			r := New(ep, &vars, replacer.NewPattern(varType, PatternStart, PatternEnd))
 			r.replace("vars", scope)
 		case "secrets", "secret":
-			r := New(ep, &secrets, userLogger, replacer.NewPattern(varType, PatternStart, PatternEnd))
+			r := New(ep, &secrets, replacer.NewPattern(varType, PatternStart, PatternEnd))
 			r.replace("secrets", scope)
 		case "env", "envs":
-			r := New(ep, &ep.Env, userLogger, replacer.NewPattern(varType, PatternStart, PatternEnd))
+			r := New(ep, &ep.Env, replacer.NewPattern(varType, PatternStart, PatternEnd))
 			r.replace("env", scope)
 		}
 	}
@@ -84,27 +82,23 @@ func (r *Runner) replaceInitialExecutionPlan(varType string) {
 
 	if e := r.replacer.Env(&r.ep.Env, variablesList); e != nil {
 		err := fmt.Errorf("error replacing '%s' in global Env: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	// replace Metadata
 	if e := r.replacer.Struct(&r.ep.Metadata, *r.variables); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Metadata: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	// replace Header
 	if e := r.replacer.Struct(&r.ep.Header, *r.variables); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Header: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	// Replace Repositories
 	for i := range r.ep.Repositories {
 		if e := r.replacer.Struct(&r.ep.Repositories[i], *r.variables); e != nil {
 			err := fmt.Errorf("error replacing '%s' in Repository: %w", varType, e)
-			r.logger.Warn(err.Error())
-			r.userLogger.Error(err.Error())
+			r.logger.UserError(err.Error())
 		}
 	}
 
@@ -125,8 +119,7 @@ func (r *Runner) replaceManualItem(item *model.ManualCheck, varType string) {
 	r.replaceCommonItem(&item.Item, varType)
 	if e := r.replacer.Struct(&item.Manual, *r.variables); e != nil {
 		err := fmt.Errorf("error replacing variables in Manual: %s", e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 }
 
@@ -145,21 +138,18 @@ func (r *Runner) replaceAutopilotItem(item *model.AutopilotCheck, varType string
 	for _, appRef := range item.AppReferences {
 		if e := r.replacer.Struct(appRef, *r.variables); e != nil {
 			err := fmt.Errorf("error replacing '%s' in AppReference: %w", varType, e)
-			r.logger.Warn(err.Error())
-			r.userLogger.Error(err.Error())
+			r.logger.UserError(err.Error())
 		}
 	}
 	// replace Env
 	if e := r.replacer.Env(&item.CheckEnv, itemEnvList); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Env: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	// replace Autopilot.Env
 	if e := r.replacer.Env(&item.Autopilot.Env, autopilotEnvList); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Autopilot.Env: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	var autopilotEnv map[string]string
 	if varType == "env" {
@@ -172,8 +162,7 @@ func (r *Runner) replaceAutopilotItem(item *model.AutopilotCheck, varType string
 	autopilotName, e := r.replacer.String(autopilot.Name, autopilotEnv)
 	if e != nil {
 		err := fmt.Errorf("error replacing '%s' in Autopilot: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	autopilot.Name = autopilotName
 	var stepEnvList []map[string]string
@@ -189,8 +178,7 @@ func (r *Runner) replaceAutopilotItem(item *model.AutopilotCheck, varType string
 			// replace Step.Env
 			if e := r.replacer.Env(&step.Env, stepEnvList); e != nil {
 				err := fmt.Errorf("error replacing '%s' in Step.Env: %w", varType, e)
-				r.logger.Warn(err.Error())
-				r.userLogger.Error(err.Error())
+				r.logger.UserError(err.Error())
 			}
 			var stepEnv map[string]string
 			if varType == "env" {
@@ -202,22 +190,19 @@ func (r *Runner) replaceAutopilotItem(item *model.AutopilotCheck, varType string
 			// replace Step
 			if e := r.replacer.Struct(step, stepEnv); e != nil {
 				err := fmt.Errorf("error replacing '%s' in Step: %w", varType, e)
-				r.logger.Warn(err.Error())
-				r.userLogger.Error(err.Error())
+				r.logger.UserError(err.Error())
 			}
 			// replace Step.Config keys
 			if e := r.replaceKeys(varType, &step.Configs, autopilotEnv); e != nil {
 				err := fmt.Errorf("error replacing '%s' in Step.Config keys: %w", varType, e)
-				r.logger.Warn(err.Error())
-				r.userLogger.Error(err.Error())
+				r.logger.UserError(err.Error())
 			}
 		}
 	}
 	// replace Evaluate.Env
 	if e := r.replacer.Env(&autopilot.Evaluate.Env, stepEnvList); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Evaluate.Env: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	// replace Evaluate
 	var evaluateEnv map[string]string
@@ -229,14 +214,12 @@ func (r *Runner) replaceAutopilotItem(item *model.AutopilotCheck, varType string
 	}
 	if e := r.replacer.Struct(&autopilot.Evaluate, evaluateEnv); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Evaluate: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	// replace Evaluate.Config keys
 	if e := r.replaceKeys(varType, &autopilot.Evaluate.Configs, evaluateEnv); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Evaluate.Config keys: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 
 }
@@ -244,19 +227,16 @@ func (r *Runner) replaceAutopilotItem(item *model.AutopilotCheck, varType string
 func (r *Runner) replaceCommonItem(item *model.Item, varType string) {
 	if e := r.replacer.Struct(&item.Chapter, *r.variables); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Chapter: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	if e := r.replacer.Struct(&item.Requirement, *r.variables); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Requirement: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	checkEnv := buildEnvironment(*r.variables)
 	if e := r.replacer.Struct(&item.Check, checkEnv); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Check: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 }
 
@@ -266,8 +246,7 @@ func (r *Runner) replaceFinalizeItem(item *model.Finalize, varType string) {
 	// replace Finalize.Env
 	if e := r.replacer.Env(&item.Env, finalizeEnvList); e != nil {
 		err := fmt.Errorf("error replacing variables in Finalize.Env: %w", e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	var finalizeEnv map[string]string
 	if varType == "env" {
@@ -278,22 +257,19 @@ func (r *Runner) replaceFinalizeItem(item *model.Finalize, varType string) {
 	// replace Finalize
 	if e := r.replacer.Map(&item.Env, finalizeEnv); e != nil {
 		err := fmt.Errorf("error replacing variables in Finalize: %w", e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	run, e := r.replacer.String(item.Run, finalizeEnv)
 	if e != nil {
 		err := fmt.Errorf("error replacing variables in Finalize: %w", e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 	item.Run = run
 
 	// replace Config keys in Finalize
 	if e := r.replaceKeys(varType, &item.Configs, finalizeEnv); e != nil {
 		err := fmt.Errorf("error replacing '%s' in Config keys: %w", varType, e)
-		r.logger.Warn(err.Error())
-		r.userLogger.Error(err.Error())
+		r.logger.UserError(err.Error())
 	}
 }
 
@@ -324,8 +300,7 @@ func (r *Runner) replaceConfigValues(varType string) {
 				}
 				if e := r.replaceConfig(varType, &step.Configs, stepEnv); e != nil {
 					err := fmt.Errorf("error replacing '%s' in Step.Env: %w", varType, e)
-					r.logger.Warn(err.Error())
-					r.userLogger.Error(err.Error())
+					r.logger.UserError(err.Error())
 				}
 			}
 		}
@@ -339,8 +314,7 @@ func (r *Runner) replaceConfigValues(varType string) {
 		}
 		if e := r.replaceConfig(varType, &autopilotItem.Autopilot.Evaluate.Configs, evaluateEnv); e != nil {
 			err := fmt.Errorf("error replacing '%s' in Config: %w", varType, e)
-			r.logger.Warn(err.Error())
-			r.userLogger.Error(err.Error())
+			r.logger.UserError(err.Error())
 		}
 	}
 
@@ -355,8 +329,7 @@ func (r *Runner) replaceConfigValues(varType string) {
 		// replace Config values in Finalize
 		if e := r.replaceConfig(varType, &r.ep.Finalize.Configs, finalizeEnv); e != nil {
 			err := fmt.Errorf("error replacing '%s' in Finalize.Config: %w", varType, e)
-			r.logger.Warn(err.Error())
-			r.userLogger.Error(err.Error())
+			r.logger.UserError(err.Error())
 		}
 	}
 }

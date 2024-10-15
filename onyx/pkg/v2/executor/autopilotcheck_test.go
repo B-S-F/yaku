@@ -273,7 +273,7 @@ func TestAutopilotExecuteIntegration(t *testing.T) {
 			env := map[string]string{}
 
 			// act
-			autopilotExecutor := NewAutopilotExecutor(wdUtils, tmpDir, tc.strict, logger, timeout, nopLogger)
+			autopilotExecutor := NewAutopilotExecutor(wdUtils, tmpDir, tc.strict, logger, timeout)
 			actual, err := autopilotExecutor.ExecuteAutopilotCheck(tc.check, env, secrets)
 			expected := tc.want(tmpDir)
 
@@ -393,7 +393,7 @@ func TestAutopilotExecuteDirectoryStructure(t *testing.T) {
 			env := map[string]string{}
 
 			// act
-			autopilotExecutor := NewAutopilotExecutor(wdUtils, tmpDir, tc.strict, logger, timeout, nopLogger)
+			autopilotExecutor := NewAutopilotExecutor(wdUtils, tmpDir, tc.strict, logger, timeout)
 			actual, err := autopilotExecutor.ExecuteAutopilotCheck(tc.check, env, secrets)
 
 			// assert

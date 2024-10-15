@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func StartRunner(workDir string, run string, env, secrets map[string]string, logger *logger.Autopilot, scriptRunner runner.Runner, timeout time.Duration) (*runner.Output, error) {
+func StartRunner(workDir string, run string, env, secrets map[string]string, logger logger.Logger, scriptRunner runner.Runner, timeout time.Duration) (*runner.Output, error) {
 	logger.Debug("running", zap.String("workdir", workDir), zap.String("run", run))
 	input := runner.Input{
 		Cmd:     "/bin/bash",

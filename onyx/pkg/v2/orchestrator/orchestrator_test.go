@@ -256,9 +256,9 @@ echo 'done transforming'`},
 		t.Run(name, func(t *testing.T) {
 			tmpDir := t.TempDir()
 
-			defaultLogger := logger.NewCommon(logger.Settings{
+			defaultLogger := logger.NewConsoleFileLogger(logger.Settings{
 				Secrets: nil,
-				File:    filepath.Join(tmpDir, "onyx.log"),
+				Files:   []string{filepath.Join(tmpDir, "onyx.log")},
 			})
 			logger.Set(defaultLogger)
 

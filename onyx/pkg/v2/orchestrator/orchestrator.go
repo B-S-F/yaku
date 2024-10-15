@@ -22,11 +22,10 @@ type Orchestrator struct {
 	strict      bool
 	timeout     time.Duration
 	logger      logger.Logger
-	userLogger  logger.Logger
 }
 
-func New(rootWorkDir string, strict bool, timeout time.Duration, logger logger.Logger, userLogger logger.Logger) *Orchestrator {
-	return &Orchestrator{rootWorkDir: rootWorkDir, timeout: timeout, logger: logger, strict: strict, userLogger: userLogger}
+func New(rootWorkDir string, strict bool, timeout time.Duration, logger logger.Logger) *Orchestrator {
+	return &Orchestrator{rootWorkDir: rootWorkDir, timeout: timeout, logger: logger, strict: strict}
 }
 
 type manualExec struct {
@@ -175,7 +174,6 @@ func (o *Orchestrator) runAutopilots(autopilots []model.AutopilotCheck, env, sec
 				o.strict,
 				logger,
 				o.timeout,
-				o.userLogger,
 			)
 
 			logger.Info(fmt.Sprintf("[[ CHAPTER: %s REQUIREMENT: %s CHECK: %s ]]", strings.ToUpper(autopilot.Chapter.Id), strings.ToUpper(autopilot.Requirement.Id), strings.ToUpper(autopilot.Check.Id)))
@@ -219,7 +217,7 @@ func (o *Orchestrator) RunFinalizer(finalize model.Finalize, env, secrets map[st
 	o.logger.Debug("finalizer config", zap.Any("finalizer", finalize))
 	logger := logger.NewAutopilot(logger.Settings{
 		Secrets: secrets,
-		File:    filepath.Join(o.rootWorkDir, "finalizer.log"),
+		Files:   []string{filepath.Join(o.rootWorkDir, "finalizer.log")},
 	})
 	defer logger.Flush()
 	defer logger.ToFile()

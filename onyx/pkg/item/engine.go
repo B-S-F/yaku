@@ -99,29 +99,29 @@ func (e *Engine) Run(items *[]configuration.Item, env, vars, secrets map[string]
 func (ie *Engine) executeItem(item *configuration.Item, env, vars, secrets map[string]string) (*Result, error) {
 	var err error
 	var output *executor.Output
-	logger := logger.NewAutopilot(logger.Settings{
+	log := logger.NewAutopilot(logger.Settings{
 		Secrets: secrets,
 	})
-	logger.Info(fmt.Sprintf("[[ CHAPTER: %s REQUIREMENT: %s CHECK: %s ]]", strings.ToUpper(item.Chapter.Id), strings.ToUpper(item.Requirement.Id), strings.ToUpper(item.Check.Id)))
+	log.Info(fmt.Sprintf("[[ CHAPTER: %s REQUIREMENT: %s CHECK: %s ]]", strings.ToUpper(item.Chapter.Id), strings.ToUpper(item.Requirement.Id), strings.ToUpper(item.Check.Id)))
 	if item.Manual != (configuration.Manual{}) {
-		me := executor.NewManual(logger)
+		me := executor.NewManual(log)
 		output, err = me.Execute(item, env, vars, secrets)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to run manual item")
 		}
 	} else {
-		ae := executor.NewAutopilot(ie.strict, ie.rootWorkDir, ie.timeout, logger)
+		ae := executor.NewAutopilot(ie.strict, ie.rootWorkDir, ie.timeout, log)
 		output, err = ae.Execute(item, env, vars, secrets)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to run autopilot")
 		}
-		logger.File = filepath.Join(output.EvidencePath, "autopilot.log")
-		defer logger.ToFile()
+		log.SetFiles([]string{filepath.Join(output.EvidencePath, "autopilot.log")})
+		defer log.ToFile()
 	}
 	itemResult := &Result{
 		Config: item,
 		Output: output,
-		Logs:   logger,
+		Logs:   log,
 	}
 	return itemResult, nil
 }

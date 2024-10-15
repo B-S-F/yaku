@@ -204,7 +204,7 @@ func (a *Autopilot) checkItem(item *configuration.Item) (*Output, bool) {
 			Status:        "ERROR",
 			Reason:        msg,
 		}
-		a.logger.Error(msg)
+		a.logger.UserError(msg)
 		return output, false
 	}
 	return nil, true
@@ -220,7 +220,7 @@ func (a *Autopilot) checkOutput(output *Output, strict bool) {
 		}
 		output.Status = "ERROR"
 		output.Reason = msg
-		a.logger.Error(msg)
+		a.logger.UserError(msg)
 		return
 	}
 	// autopilot must provide a status of RED, GREEN, YELLOW, or FAILED
@@ -229,7 +229,7 @@ func (a *Autopilot) checkOutput(output *Output, strict bool) {
 		msg := fmt.Sprintf("autopilot '%s' provided an invalid 'status': '%s'", output.Name, output.Status)
 		output.Status = "ERROR"
 		output.Reason = msg
-		a.logger.Error(msg)
+		a.logger.UserError(msg)
 		return
 	}
 	// autopilot must provide a reason
@@ -259,7 +259,7 @@ func (a *Autopilot) checkOutput(output *Output, strict bool) {
 	if strict {
 		output.Status = "ERROR"
 		output.Reason = msg
-		a.logger.Error(msg)
+		a.logger.UserError(msg)
 		return
 	} else {
 		a.logger.Warn(msg)

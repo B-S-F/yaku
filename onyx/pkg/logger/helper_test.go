@@ -47,9 +47,7 @@ func TestLogKeyValueIndented(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			//  arrange
 			observedZapCore, observedLogs := observer.New(zap.InfoLevel)
-			observedLogger := &Log{
-				Logger: zap.New(observedZapCore),
-			}
+			observedLogger := NewHideSecretsLogger(zap.New(observedZapCore), Settings{})
 
 			// act
 			helper := NewHelper(observedLogger)
@@ -110,9 +108,7 @@ func TestLogFormatMapIndented(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			//  arrange
 			observedZapCore, observedLogs := observer.New(zap.InfoLevel)
-			observedLogger := &Log{
-				Logger: zap.New(observedZapCore),
-			}
+			observedLogger := NewHideSecretsLogger(zap.New(observedZapCore), Settings{})
 
 			// act
 			helper := NewHelper(observedLogger)

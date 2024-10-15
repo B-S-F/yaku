@@ -15,11 +15,12 @@ import (
 func TestNewAutopilot(t *testing.T) {
 	t.Run("should init a new logger with default log-level", func(t *testing.T) {
 		// act
-		log := NewAutopilot()
+		autpilotLogger := NewAutopilot()
 
 		// assert
-		assert.NotNil(t, log)
-		assert.Equal(t, log.Logger.Core().Enabled(zapcore.InfoLevel), true)
+		assert.NotNil(t, autpilotLogger)
+		assert.Equal(t, autpilotLogger.consoleLogger.logger.Core().Enabled(zapcore.InfoLevel), true)
+		assert.Equal(t, autpilotLogger.jsonLogger.logger.Core().Enabled(zapcore.InfoLevel), true)
 	})
 
 	t.Run("should init a new logger with debug log-level", func(t *testing.T) {
@@ -29,11 +30,12 @@ func TestNewAutopilot(t *testing.T) {
 		}
 
 		// act
-		log := NewAutopilot(settings)
+		autopilotLogger := NewAutopilot(settings)
 
 		// assert
-		assert.NotNil(t, log)
-		assert.Equal(t, log.Logger.Core().Enabled(zapcore.DebugLevel), true)
+		assert.NotNil(t, autopilotLogger)
+		assert.Equal(t, autopilotLogger.consoleLogger.logger.Core().Enabled(zapcore.DebugLevel), true)
+		assert.Equal(t, autopilotLogger.jsonLogger.logger.Core().Enabled(zapcore.DebugLevel), true)
 	})
 
 	t.Run("should add message to human readable and machine readable buffer", func(t *testing.T) {
@@ -54,16 +56,17 @@ func TestToFile(t *testing.T) {
 	t.Run("should write logs to file", func(t *testing.T) {
 		// arrange
 		tmpDir := t.TempDir()
-		log := NewAutopilot()
-		log.File = filepath.Join(tmpDir, "test.log")
-		log.Info("test message")
+		logFile := filepath.Join(tmpDir, "test.log")
+		autopilotLogger := NewAutopilot()
+		autopilotLogger.SetFiles([]string{logFile})
+		autopilotLogger.Info("test message")
 
 		// act
-		log.ToFile()
+		autopilotLogger.ToFile()
 
 		// assert
-		assert.FileExists(t, log.File)
-		content, err := os.ReadFile(log.File)
+		assert.FileExists(t, logFile)
+		content, err := os.ReadFile(logFile)
 		if err != nil {
 			t.Fatalf("Failed to open file: %v", err)
 		}
@@ -72,20 +75,21 @@ func TestToFile(t *testing.T) {
 	t.Run("should write logs and mask secrets when writing to file", func(t *testing.T) {
 		// arrange
 		tmpDir := t.TempDir()
-		log := NewAutopilot(Settings{
+		logSettings := Settings{
 			Secrets: map[string]string{
 				"SECRET": "test-secret",
 			},
-			File: filepath.Join(tmpDir, "test.log"),
-		})
-		log.Info("test-secret")
+			Files: []string{filepath.Join(tmpDir, "test.log")},
+		}
+		autopilotLogger := NewAutopilot(logSettings)
+		autopilotLogger.Info("test-secret")
 
 		// act
-		log.ToFile()
+		autopilotLogger.ToFile()
 
 		// assert
-		assert.FileExists(t, log.File)
-		content, err := os.ReadFile(log.File)
+		assert.FileExists(t, logSettings.Files[0])
+		content, err := os.ReadFile(logSettings.Files[0])
 		if err != nil {
 			t.Fatalf("Failed to open file: %v", err)
 		}
