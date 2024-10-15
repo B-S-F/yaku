@@ -76,7 +76,7 @@ fmt:
 
 .PHONY: setup
 setup:
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.52.2
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.61.0
 	go install github.com/axw/gocov/gocov@v1.1.0
 	go install github.com/AlekSi/gocov-xml@latest
 	go install github.com/jstemmer/go-junit-report/v2@latest
