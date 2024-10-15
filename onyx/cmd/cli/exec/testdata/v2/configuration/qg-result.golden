@@ -47,7 +47,7 @@ chapters:
                                     - fetch1
                                   logs:
                                     - '{"source":"stdout","text":"1_1_1"}'
-                                    - '{"source":"stdout","text":"evidences/1_1_1/steps/fetch2/files"}'
+                                    - '{"text":"evidences/1_1_1/steps/fetch2/files","source":"stdout"}'
                                     - '{"source":"stdout","text":"evidences/1_1_1/steps/fetch2/data.json"}'
                                     - '{"source":"stdout","text":"evidences/1_1_1/steps/fetch1/files"}'
                                   configFiles: []
@@ -718,9 +718,16 @@ chapters:
                                   fulfilled: false
                                   justification: Please type the appropriate risk assessment for RTC Ticket with ID 1588653.
                                   metadata:
+                                    Creation Date: "2022-11-08T09:51:00"
+                                    Modified Date: "2023-06-09T14:05:00"
+                                    Defect Occurrence: "Always"
+                                    boolean: "true"
+                                    test-json: "{\"key\":\"value\"}"
+                                    Id: "1588653"
+                                    Filed Against: "Platform_General"
                                     Summary: "[main] after EDLminidump SoC bootup stuck"
                             logs:
-                                - '{"source":"stdout","json":{"result":{"criterion":"FFixed RTC ticket with ID 1588653 must be risk assessed","fulfilled":false,"justification":"Please type the appropriate risk assessment for RTC Ticket with ID 1588653.","metadata":{"Summary":"[main] after EDLminidump SoC bootup stuck"}}}}'
+                                - '{"source":"stdout","json":{"result":{"criterion":"FFixed RTC ticket with ID 1588653 must be risk assessed","fulfilled":false,"justification":"Please type the appropriate risk assessment for RTC Ticket with ID 1588653.","metadata":{"Id":1588653,"Filed Against":"Platform_General","Summary":"[main] after EDLminidump SoC bootup stuck","Creation Date":"2022-11-08T09:51:00","Modified Date":"2023-06-09T14:05:00","Defect Occurrence":"Always","boolean":true,"test-json":{"key":"value"}}}}}'
                                 - '{"source":"stdout","json":{"reason":"test","status":"RED"}}'
 finalize:
     logs:

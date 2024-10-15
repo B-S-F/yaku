@@ -172,7 +172,7 @@ autopilots:
   special-output-provider:
     evaluate:
       run: |
-        echo '{"result": {"criterion": "FFixed RTC ticket with ID 1588653 must be risk assessed", "fulfilled": false, "justification": "Please type the appropriate risk assessment for RTC Ticket with ID 1588653.", "metadata": {"Summary": "[main] after EDLminidump SoC bootup stuck"}}}'
+        echo '{"result": {"criterion": "FFixed RTC ticket with ID 1588653 must be risk assessed", "fulfilled": false, "justification": "Please type the appropriate risk assessment for RTC Ticket with ID 1588653.", "metadata": {"Id": 1588653, "Filed Against": "Platform_General", "Summary": "[main] after EDLminidump SoC bootup stuck", "Creation Date": "2022-11-08T09:51:00", "Modified Date": "2023-06-09T14:05:00", "Defect Occurrence": "Always", "boolean": true, "test-json": {"key": "value"}}}}'
         echo '{"status": "RED", "reason": "test"}'
   status-provider:
     evaluate:
