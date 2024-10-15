@@ -1,0 +1,10 @@
+{
+    "go.lintTool": "golangci-lint",
+    "go.lintFlags": [
+        "--fast"
+    ],
+    "go.testTags": "unit,integration",
+    "gopls": {
+        "buildFlags": ["-tags=unit,integration"],
+    }
+}
