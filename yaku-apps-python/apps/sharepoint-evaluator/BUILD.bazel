@@ -1,0 +1,40 @@
+load("@aspect_rules_py//py:defs.bzl", "py_binary")
+load("@rules_python//python:packaging.bzl", "py_package", "py_wheel")
+load("//tools/pytest-runner:defs.bzl", "py_pytest_test")
+
+NAME = "sharepoint-evaluator"
+
+PKG = "sharepoint_evaluator"
+
+py_binary(
+    name = NAME,
+    srcs = glob(["src/**/*.py"]) + ["src/yaku/" + PKG + "/_version.txt"],
+    imports = ["src"],
+    main = "src/yaku/" + PKG + "/__main__.py",
+    deps = [
+        "//yaku-apps-python/packages/autopilot-utils:lib",
+        "@pip//click",
+        "@pip//pydantic",
+        "@pip//pytz",
+        "@pip//pyyaml",
+    ],
+)
+
+py_pytest_test(
+    name = "test",
+    srcs = glob(["tests/*.py"]),
+    data = glob(["tests/data/**"]),
+    deps = [
+        ":" + NAME,
+        "@pip//mock",
+        "@pip//pytest_mock",
+    ],
+)
+
+py_pytest_test(
+    name = "test-bin",
+    srcs = glob(["tests-pex/*.py"]),
+    deps = [
+        ":" + NAME,
+    ],
+)

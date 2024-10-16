@@ -7,12 +7,6 @@ from splunklib import results as sr
 
 
 class SplunkResult:
-    messages: list[dict] = []
-    results: list[dict] = []
-    fieldnames: list[str] = []
-    override_csv: bytes | None = None
-    override_json: bytes | None = None
-
     # Overrides have to be added,
     # as the results in the reader do not contain empty columns, which are expected so far
     def __init__(
@@ -21,6 +15,12 @@ class SplunkResult:
         override_csv: bytes | None = None,
         override_json: bytes | None = None,
     ):
+        self.messages: list[dict] = []
+        self.results: list[dict] = []
+        self.fieldnames: list[str] = []
+        self.override_csv: bytes | None = None
+        self.override_json: bytes | None = None
+
         logger.info("Processing SplunkResult ...")
         for item in reader:
             logger.debug(f"Processing item {item}")

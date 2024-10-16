@@ -1,0 +1,33 @@
+load("@aspect_rules_py//py:defs.bzl", "py_binary")
+load("@rules_python//python:packaging.bzl", "py_package", "py_wheel")
+load("//tools/pytest-runner:defs.bzl", "py_pytest_test")
+
+PKG = "sharepoint_fetcher"
+
+py_binary(
+    name = "sharepoint-fetcher",
+    srcs = glob(["src/**/*.py"]) + ["src/yaku/" + PKG + "/_version.txt"],
+    imports = ["src"],
+    main = "src/yaku/" + PKG + "/cli.py",
+    deps = [
+        "//yaku-apps-python/packages/autopilot-utils:lib",
+        "@pip//click",
+        "@pip//pydantic",
+        "@pip//pytz",
+        "@pip//pyyaml",
+        "@pip//requests",
+        "@pip//requests_ntlm",
+    ],
+)
+
+py_pytest_test(
+    name = "test",
+    srcs = glob(["tests/*.py"]),
+    data = glob(["tests/data/**"]),
+    deps = [
+        ":sharepoint-fetcher",
+        "@pip//mock",
+        "@pip//pytest_mock",
+        "@pip//requests_mock",
+    ],
+)
