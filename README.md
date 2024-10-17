@@ -11,15 +11,15 @@ Foto from Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahm
 
 ### Overview
 
-| Component   | Build | Test | Artifact Upload |
-|-------------|-------|------|-----------------|
-| Onyx        | ✔️    | ✔️   |                 |
-| API         |       |      |                 |
-| Chart       | ✔️    | ✔️   | ✔️              |
-| Core-image  | (✔️)  |      | ✔️️             |
-| Python apps | (✔️)  |      | ️               |
-| TS apps     |       |      | ️               |
-| Frontend    |       |      | ️               |
+| Component   | Build | Test | Artifact Upload | Comments                     |
+|-------------|-----|------|-----------------|------------------------------|
+| Onyx        | ✔️  | ✔️   |                 |                              |
+| API         |     |      |                 |                              |
+| Chart       | ✔️  | ✔️   | ✔️              |                              |
+| Core-image  |(✔️) |      | ✔️️             | build works but not complete |
+| Python apps | ✔️  | ✔️   | ️               |                              |
+| TS apps     |(✔️) |      | ️               | still some build issue       |
+| Frontend    |     |      | ️               |                              |
 
 ✔️ works    
 (✔) partially works   
