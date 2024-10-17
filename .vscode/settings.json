@@ -1,0 +1,14 @@
+{
+  "cSpell.words": [
+    "bazel",
+    "genhtml",
+    "htmlcov",
+    "lcov",
+    "papsr",
+    "yaku"
+  ],
+  "coverage-gutters.coverageFileNames": [
+    "bazel-out/_coverage/_coverage_report.dat"
+  ],
+  "coverage-gutters.ignoredPathGlobs": "**/{node_modules,venv,.venv,vendor,bazel-bin,bazel-out,bazel-testlogs}/**"
+}
