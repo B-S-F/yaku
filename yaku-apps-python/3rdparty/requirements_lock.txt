@@ -1199,9 +1199,9 @@ pytest==7.4.4 \
     #   pytest-forked
     #   pytest-mock
     #   pytest-xdist
-pytest-cov==3.0.0 \
-    --hash=sha256:578d5d15ac4a25e5f961c938b85a05b09fdaae9deef3bb6de9a6e766622ca7a6 \
-    --hash=sha256:e7f0f5b1617d2210a2cabc266dfe2f4c75a8d32fb89eafb7ad9d06f6d076d470
+pytest-cov==5.0.0 \
+    --hash=sha256:4f0764a1219df53214206bf1feea4633c3b558a2925c8b59f144f682861ce652 \
+    --hash=sha256:5837b58e9f6ebd335b0f8060eecce69b662415b16dc503883a02f45dfeb14857
     # via -r yaku-apps-python/3rdparty/requirements.txt
 pytest-custom-exit-code==0.3.0 \
     --hash=sha256:51ffff0ee2c1ddcc1242e2ddb2a5fd02482717e33a2326ef330e3aa430244635 \
