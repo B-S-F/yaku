@@ -14,6 +14,3 @@ cli = make_autopilot_app(
     provider=CLI,
     version_callback=read_version_from_package(__package__),
 )
-
-if __name__ == "__main__":
-    cli()
