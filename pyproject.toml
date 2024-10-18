@@ -1,2 +1,25 @@
 [tool.pyright]
 include = ["yaku-apps-python"]
+extraPaths = [
+  "yaku-apps-python/packages/autopilot-utils/src",
+  "yaku-apps-python/packages/autopilot-utils/tests/app_multi_evaluator/src",
+  "yaku-apps-python/packages/autopilot-utils/tests/app_subprocess_steps/src",
+  "yaku-apps-python/packages/autopilot-utils/tests/app_single_evaluator/src",
+  "yaku-apps-python/packages/autopilot-utils/tests/app_multi_command/src",
+  "yaku-apps-python/packages/autopilot-utils/tests/app_chained_multi_evaluator/src",
+  "yaku-apps-python/packages/autopilot-utils/tests/demo_app/src",
+  "yaku-apps-python/packages/autopilot-utils/tests/app_super_simple_evaluator/src",
+  "yaku-apps-python/packages/autopilot-utils/tests/app_single_command/src",
+  "yaku-apps-python/apps/splunk-fetcher/src",
+  "yaku-apps-python/apps/sharepoint-fetcher/src",
+  "yaku-apps-python/apps/papsr/src",
+  "yaku-apps-python/apps/sharepoint/src",
+  "yaku-apps-python/apps/sharepoint-evaluator/src",
+  "yaku-apps-python/apps/pdf-signature-evaluator/src",
+  "yaku-apps-python/apps/filecheck/src",
+  "yaku-apps-python/apps/artifactory-fetcher/src",
+  "yaku-apps-python/apps/excel-tools/src",
+  "yaku-apps-python/apps/security-scanner/src",
+  "yaku-apps-python/apps/pex-tool/src",
+
+]

@@ -20,7 +20,6 @@
   2. or use <https://philuvarov.io/bazel-can-be-ruff/>
   3. or use Aspect rules: <https://github.com/aspect-build/rules_lint>
 * How can we debug with VS Code or other remote debugging tools?
-* Can we somehow ignore the `BUILD` files from pants?
 
 ## Development instructions
 
@@ -59,3 +58,36 @@ You will find the coverage report in <../htmlcov/index.html>.
 ```bash
 bazel build //yaku-apps-python/packages/autopilot-utils:wheel
 ```
+
+## IDE Integration (VS Code)
+
+You need to tell the IDE where all the different Python packages are. This can be done in the `pyproject.toml` in
+the root workspace folder.
+
+Just add the paths received from `find yaku-apps-python -type d -name src` to the `extraPaths` list in the `pyproject.toml`.
+
+## Extra virtual environment for VS Code auto-completion and linting
+
+As VS Code doesn't know about the Python dependencies declared in Bazel for the different packages,
+we can instead create a virtual environment with all the dependencies installed.
+
+Then, we can point VS Code to this virtual environment for auto-completion and linting.
+
+```bash
+cd yaku-apps-python/3rdparty/
+python3 -m venv .venv
+.venv/bin/pip install -r requirements_lock.txt
+```
+
+Then, in VS Code, you can select this virtual environment as the Python interpreter.
+
+If you have `uv` installed, you can do this of course with `uv`:
+
+```bash
+cd yaku-apps-python/3rdparty/
+uv venv create
+uv pip install -r requirements_lock.txt
+```
+
+Note: I got a build error in the pip install step, due to some build issue with pyyaml 6.0.
+Perhaps other (older) versions of pyyaml work better.
