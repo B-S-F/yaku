@@ -1,9 +1,0 @@
-load("@rules_go//go:def.bzl", "go_library")
-
-go_library(
-    name = "common",
-    srcs = ["common.go"],
-    importpath = "github.com/B-S-F/yaku/onyx/pkg/result/common",
-    visibility = ["//visibility:public"],
-    deps = ["@in_gopkg_yaml_v3//:go_default_library"],
-)
