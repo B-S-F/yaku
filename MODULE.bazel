@@ -40,3 +40,33 @@ oci.pull(
     ],
 )
 use_repo(oci, "distroless_base", "distroless_base_linux_amd64", "distroless_base_linux_arm64")
+
+###
+# Typescript
+###
+bazel_dep(name = "aspect_rules_js", version = "2.1.0")
+bazel_dep(name = "aspect_rules_ts", version = "3.2.1")
+bazel_dep(name = "aspect_rules_swc", version = "2.0.1")
+bazel_dep(name = "bazel_skylib", version = "1.6.1")
+
+npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
+
+npm.npm_translate_lock(
+    name = "npm",
+    npmrc = "//qg-api-service/qg-api-service:.npmrc",
+    pnpm_lock = "//qg-api-service/qg-api-service:pnpm-lock.yaml",
+    npm_package_lock = "//qg-api-service/qg-api-service:package-lock.json",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+
+use_repo(npm, "npm")
+
+rules_ts_ext = use_extension(
+    "@aspect_rules_ts//ts:extensions.bzl",
+    "ext",
+    dev_dependency = True,
+)
+
+rules_ts_ext.deps(ts_version_from = "//qg-api-service/qg-api-service:package.json")
+
+use_repo(rules_ts_ext, "npm_typescript")

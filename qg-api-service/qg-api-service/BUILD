@@ -1,0 +1,37 @@
+load("@aspect_rules_swc//swc:defs.bzl", "swc")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_js//js:defs.bzl", "js_binary")
+load("@bazel_skylib//lib:partial.bzl", "partial")
+load("@npm//:defs.bzl", "npm_link_all_packages")
+
+npm_link_all_packages(name = "node_modules")
+
+# For more information about using swc to transpile please see the ts_project_transpiler example
+ts_project(
+    name = "swc",
+    srcs = glob([
+        "qg-api-service/qg-api-service/src/*/*.ts",
+        "qg-api-service/qg-api-service/src/*.ts"
+    ]),
+    declaration = True,
+    transpiler = partial.make(
+        swc,
+        swcrc = ".swcrc",
+    ),
+    deps = [
+        ":node_modules/@nestjs/common",
+        ":node_modules/@nestjs/core",
+        ":node_modules/@types/node",
+    ],
+)
+
+js_binary(
+    name = "bin",
+    data = [
+        ":swc",
+
+        # Added by swc during transpilation and used at runtime
+        ":node_modules/regenerator-runtime",
+    ],
+    entry_point = "qg-api-service/qg-api-service/src/main.js",
+)
