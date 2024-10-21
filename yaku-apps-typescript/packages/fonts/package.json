@@ -1,0 +1,21 @@
+{
+  "name": "@B-S-F/fonts",
+  "version": "0.1.0",
+  "description": "Truetype fonts for rendering",
+  "devDependencies": {},
+  "scripts": {
+    "build": "echo 'No build needed'",
+    "test": "echo \"No tests\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/B-S-F/qg-apps-typescript.git"
+  },
+  "keywords": [
+    "fonts"
+  ],
+  "files": [
+    "fonts",
+    "install.sh"
+  ]
+}

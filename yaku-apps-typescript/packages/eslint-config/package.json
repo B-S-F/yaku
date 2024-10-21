@@ -1,0 +1,14 @@
+{
+  "name": "@B-S-F/eslint-config",
+  "version": "0.1.0",
+  "main": "index.js",
+  "files": [
+    "eslint-preset.js"
+  ],
+  "scripts": {
+    "build": "echo 'No build needed'"
+  },
+  "dependencies": {
+    "eslint-config-prettier": "^8.6.0"
+  }
+}

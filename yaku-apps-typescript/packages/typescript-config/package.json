@@ -1,0 +1,11 @@
+{
+  "name": "@B-S-F/typescript-config",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build needed'"
+  },
+  "files": [
+    "base.json"
+  ]
+}

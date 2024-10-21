@@ -1,0 +1,42 @@
+{
+  "name": "@B-S-F/log-utils",
+  "version": "0.1.0",
+  "description": "Log utils for TypeScript",
+  "devDependencies": {
+    "@B-S-F/eslint-config": "*",
+    "@B-S-F/typescript-config": "*",
+    "@vitest/coverage-v8": "*",
+    "eslint": "*",
+    "nodemon": "*",
+    "prettier": "*",
+    "tsup": "*",
+    "vitest": "*"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsup && tsc --emitDeclarationOnly --declaration",
+    "dev": "nodemon --watch \"src/**\" --exec npm run start",
+    "lint": "eslint '**/*.ts'",
+    "format": "prettier --write '**/*.{ts,md}'",
+    "test": "vitest run && npm run test:update-cobertura-file",
+    "test:update-cobertura-file": "sed -i'.bak' 's,package name=\",package name=\"'${npm_package_name}/',g' coverage/cobertura-coverage.xml",
+    "test:dev": "vitest -w",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/B-S-F/qg-apps-typescript.git"
+  },
+  "keywords": [
+    "yaml"
+  ],
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "log-update": "^5.0.1"
+  }
+}
