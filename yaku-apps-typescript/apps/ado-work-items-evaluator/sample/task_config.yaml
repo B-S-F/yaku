@@ -1,0 +1,26 @@
+workItems:
+  query: "SELECT [System.Id], [System.State] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.WorkItemType] == 'Task'"
+  neededFields:
+    - "AssignedTo"
+    - "BugType"
+    - "Microsoft.VSTS.Scheduling.TargetDate"
+  evaluate:
+    settings:
+      dueDateFieldName: "DueDate"
+    checks:
+      fields:
+        state:
+          fieldName: "State"
+          conditions:
+            resolved:
+              - "Closed"
+        assignees:
+          fieldName: "AssignedTo"
+          conditions:
+            expected: 
+              - "Name"
+        bugType:
+          fieldName: "BugType"
+          conditions:
+            illegal:
+              - "Critical"

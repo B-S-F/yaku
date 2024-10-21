@@ -1,0 +1,39 @@
+{
+  "workItems": [
+    {
+      "id": 33,
+      "url": "https://dev.azure.com/tn/00000000-0000-0000-0000-0000000000/_workitems/edit/33",
+      "commentCount": 0,
+      "priority": 2,
+      "state": "To Do",
+      "title": "Test Child Issue 1 for e2e tests",
+      "relations": []
+    },
+    {
+      "id": 34,
+      "url": "https://dev.azure.com/tn/00000000-0000-0000-0000-0000000000/_workitems/edit/34",
+      "assignedTo": {
+        "displayName": "CI CD Automation Technical User",
+        "url": "https://user-url.com",
+        "_links": {
+          "avatar": {
+            "href": "https://user-url.com"
+          }
+        },
+        "id": "bf8ddc1d-b626-6826-a2b3-df3a95e033f1",
+        "uniqueName": "abc1ab@example.com",
+        "imageUrl": "https://dev.azure.com/team-neutrinos/_apis/GraphProfile/MemberAvatars/00000000-0000-0000-0000-0000000000",
+        "descriptor": "00000000-0000-0000-0000-0000000000"
+      },
+      "description": "<div>Some Description </div>",
+      "commentCount": 1,
+      "priority": 2,
+      "startDate": "2023-05-24T00:00:00Z",
+      "targetDate": "2035-04-24T00:00:00Z",
+      "tags": "tag-1; tag-2",
+      "state": "To Do",
+      "title": "Test Related Epic 1 for e2e tests",
+      "relations": []
+    }
+  ]
+}

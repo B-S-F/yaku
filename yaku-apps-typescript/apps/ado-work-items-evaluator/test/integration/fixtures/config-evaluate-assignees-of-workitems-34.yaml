@@ -1,0 +1,20 @@
+workItems:
+  query: 'SELECT [System.Id], [System.State] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.Id] == 34'
+  neededFields:
+    - AssignedTo
+    - Description
+    - CommentCount
+    - Priority
+    - StartDate
+    - TargetDate
+    - Tags
+  evaluate:
+    settings:
+      closedStates:
+    checks:
+      fields:
+        assignee:
+          fieldName: assignedTo
+          conditions:
+            illegal:
+              - ''
