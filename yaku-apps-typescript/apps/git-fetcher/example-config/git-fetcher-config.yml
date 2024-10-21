@@ -1,0 +1,7 @@
+org: aquatest
+repo: bitbucket-fetcher-test-repo
+resource: prs
+filter:
+  state: ALL # Optional. One of: DECLINED, MERGED, OPEN, ALL. Only works with Bitbucket.
+  startDate: 01-06-2020 # Optional. Format dd-MM-yyyy. Only works with Bitbucket.
+  endDate: 31-12-2022 # Optional. Format dd-MM-yyyy. Works only if startDate is provided. Only works with Bitbucket.

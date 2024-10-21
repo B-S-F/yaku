@@ -1,0 +1,14 @@
+{
+  "extends": "@B-S-F/typescript-config/base.json",
+  "ts-node": {
+    "compilerOptions": {
+      "module": "ESNext"
+    }
+  },
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "outDir": "dist"
+  },
+  "include": ["src"]
+}

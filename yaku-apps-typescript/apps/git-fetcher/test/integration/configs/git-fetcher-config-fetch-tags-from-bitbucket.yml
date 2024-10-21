@@ -1,0 +1,3 @@
+org: aquatest
+repo: bitbucket-fetcher-test-repo
+resource: tags

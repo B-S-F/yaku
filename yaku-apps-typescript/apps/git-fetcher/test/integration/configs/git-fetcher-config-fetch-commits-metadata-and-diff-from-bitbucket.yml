@@ -1,0 +1,6 @@
+org: aquatest
+repo: bitbucket-fetcher-test-repo
+resource: metadata-and-diff
+filter:
+  startHash: 35cc5eec543e69aed90503f21cf12666bcbfda4f
+filePath: Somefolder/something.py
