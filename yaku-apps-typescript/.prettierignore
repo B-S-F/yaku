@@ -1,0 +1,7 @@
+*.ejs.*
+*.d.ts
+.pytest_cache
+node_modules
+dist
+*.js
+apps/json-evaluator/test/samples/bad_JSON_data.json
