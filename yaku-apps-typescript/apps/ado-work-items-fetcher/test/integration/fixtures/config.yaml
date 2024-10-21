@@ -1,0 +1,8 @@
+workItems:
+  hierarchyDepth: 2
+  neededFields:
+    - foo
+    - bar
+  relations:
+    get: true
+    relationType: 'Related'

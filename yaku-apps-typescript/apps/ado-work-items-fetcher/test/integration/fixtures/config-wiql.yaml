@@ -1,0 +1,2 @@
+workItems:
+  query: 'SELECT [System.Id] FROM workitems'

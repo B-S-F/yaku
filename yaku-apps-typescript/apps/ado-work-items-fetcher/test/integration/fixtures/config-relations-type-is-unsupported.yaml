@@ -1,0 +1,6 @@
+workItems:
+  relations:
+    get: true
+    relationType: 'Related'
+    relations:
+      relationType: 'UnsupportedType'
