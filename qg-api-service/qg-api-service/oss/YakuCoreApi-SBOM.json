@@ -22,8 +22,8 @@
   },
   "components": [
     {
-      "group": "@B-S-F/ado-work-items-evaluator",
-      "name": "@B-S-F/ado-work-items-evaluator-0.8.0.tgz",
+      "group": "@bosch-grow-pat/ado-work-items-evaluator",
+      "name": "@bosch-grow-pat/ado-work-items-evaluator-0.8.0.tgz",
       "version": "0.8.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -42,11 +42,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/ado-work-items-evaluator-0.8.0.tgz"
+      "bom-ref": "@bosch-grow-pat/ado-work-items-evaluator-0.8.0.tgz"
     },
     {
-      "group": "@B-S-F/ado-work-items-fetcher",
-      "name": "@B-S-F/ado-work-items-fetcher-0.7.2.tgz",
+      "group": "@bosch-grow-pat/ado-work-items-fetcher",
+      "name": "@bosch-grow-pat/ado-work-items-fetcher-0.7.2.tgz",
       "version": "0.7.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -65,11 +65,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/ado-work-items-fetcher-0.7.2.tgz"
+      "bom-ref": "@bosch-grow-pat/ado-work-items-fetcher-0.7.2.tgz"
     },
     {
-      "group": "@B-S-F/api-commons-lib",
-      "name": "@B-S-F/api-commons-lib-0.5.2.tgz",
+      "group": "@bosch-grow-pat/api-commons-lib",
+      "name": "@bosch-grow-pat/api-commons-lib-0.5.2.tgz",
       "version": "0.5.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -88,11 +88,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/api-commons-lib-0.5.2.tgz"
+      "bom-ref": "@bosch-grow-pat/api-commons-lib-0.5.2.tgz"
     },
     {
-      "group": "@B-S-F/api-keycloak-auth-lib",
-      "name": "@B-S-F/api-keycloak-auth-lib-0.8.2.tgz",
+      "group": "@bosch-grow-pat/api-keycloak-auth-lib",
+      "name": "@bosch-grow-pat/api-keycloak-auth-lib-0.8.2.tgz",
       "version": "0.8.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -111,11 +111,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/api-keycloak-auth-lib-0.8.2.tgz"
+      "bom-ref": "@bosch-grow-pat/api-keycloak-auth-lib-0.8.2.tgz"
     },
     {
-      "group": "@B-S-F/autopilot-utils",
-      "name": "@B-S-F/autopilot-utils-0.11.0.tgz",
+      "group": "@bosch-grow-pat/autopilot-utils",
+      "name": "@bosch-grow-pat/autopilot-utils-0.11.0.tgz",
       "version": "0.11.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -134,11 +134,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/autopilot-utils-0.11.0.tgz"
+      "bom-ref": "@bosch-grow-pat/autopilot-utils-0.11.0.tgz"
     },
     {
-      "group": "@B-S-F/defender-for-cloud",
-      "name": "@B-S-F/defender-for-cloud-0.3.1.tgz",
+      "group": "@bosch-grow-pat/defender-for-cloud",
+      "name": "@bosch-grow-pat/defender-for-cloud-0.3.1.tgz",
       "version": "0.3.1",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -157,11 +157,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/defender-for-cloud-0.3.1.tgz"
+      "bom-ref": "@bosch-grow-pat/defender-for-cloud-0.3.1.tgz"
     },
     {
-      "group": "@B-S-F/docupedia-fetcher",
-      "name": "@B-S-F/docupedia-fetcher-0.8.1.tgz",
+      "group": "@bosch-grow-pat/docupedia-fetcher",
+      "name": "@bosch-grow-pat/docupedia-fetcher-0.8.1.tgz",
       "version": "0.8.1",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -180,11 +180,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/docupedia-fetcher-0.8.1.tgz"
+      "bom-ref": "@bosch-grow-pat/docupedia-fetcher-0.8.1.tgz"
     },
     {
-      "group": "@B-S-F/gh-app",
-      "name": "@B-S-F/gh-app-0.3.1.tgz",
+      "group": "@bosch-grow-pat/gh-app",
+      "name": "@bosch-grow-pat/gh-app-0.3.1.tgz",
       "version": "0.3.1",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -203,11 +203,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/gh-app-0.3.1.tgz"
+      "bom-ref": "@bosch-grow-pat/gh-app-0.3.1.tgz"
     },
     {
-      "group": "@B-S-F/git-fetcher",
-      "name": "@B-S-F/git-fetcher-0.7.0.tgz",
+      "group": "@bosch-grow-pat/git-fetcher",
+      "name": "@bosch-grow-pat/git-fetcher-0.7.0.tgz",
       "version": "0.7.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -226,11 +226,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/git-fetcher-0.7.0.tgz"
+      "bom-ref": "@bosch-grow-pat/git-fetcher-0.7.0.tgz"
     },
     {
-      "group": "@B-S-F/html-finalizer",
-      "name": "@B-S-F/html-finalizer-0.30.0.tgz",
+      "group": "@bosch-grow-pat/html-finalizer",
+      "name": "@bosch-grow-pat/html-finalizer-0.30.0.tgz",
       "version": "0.30.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -249,11 +249,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/html-finalizer-0.30.0.tgz"
+      "bom-ref": "@bosch-grow-pat/html-finalizer-0.30.0.tgz"
     },
     {
-      "group": "@B-S-F/issue-validators",
-      "name": "@B-S-F/issue-validators-0.1.0.tgz",
+      "group": "@bosch-grow-pat/issue-validators",
+      "name": "@bosch-grow-pat/issue-validators-0.1.0.tgz",
       "version": "0.1.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -272,11 +272,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/issue-validators-0.1.0.tgz"
+      "bom-ref": "@bosch-grow-pat/issue-validators-0.1.0.tgz"
     },
     {
-      "group": "@B-S-F/jira-evaluator",
-      "name": "@B-S-F/jira-evaluator-0.7.0.tgz",
+      "group": "@bosch-grow-pat/jira-evaluator",
+      "name": "@bosch-grow-pat/jira-evaluator-0.7.0.tgz",
       "version": "0.7.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -295,11 +295,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/jira-evaluator-0.7.0.tgz"
+      "bom-ref": "@bosch-grow-pat/jira-evaluator-0.7.0.tgz"
     },
     {
-      "group": "@B-S-F/jira-fetcher",
-      "name": "@B-S-F/jira-fetcher-0.9.0.tgz",
+      "group": "@bosch-grow-pat/jira-fetcher",
+      "name": "@bosch-grow-pat/jira-fetcher-0.9.0.tgz",
       "version": "0.9.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -318,11 +318,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/jira-fetcher-0.9.0.tgz"
+      "bom-ref": "@bosch-grow-pat/jira-fetcher-0.9.0.tgz"
     },
     {
-      "group": "@B-S-F/jira-finalizer",
-      "name": "@B-S-F/jira-finalizer-0.1.1.tgz",
+      "group": "@bosch-grow-pat/jira-finalizer",
+      "name": "@bosch-grow-pat/jira-finalizer-0.1.1.tgz",
       "version": "0.1.1",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -341,11 +341,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/jira-finalizer-0.1.1.tgz"
+      "bom-ref": "@bosch-grow-pat/jira-finalizer-0.1.1.tgz"
     },
     {
-      "group": "@B-S-F/json-evaluator",
-      "name": "@B-S-F/json-evaluator-0.11.0.tgz",
+      "group": "@bosch-grow-pat/json-evaluator",
+      "name": "@bosch-grow-pat/json-evaluator-0.11.0.tgz",
       "version": "0.11.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -364,11 +364,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/json-evaluator-0.11.0.tgz"
+      "bom-ref": "@bosch-grow-pat/json-evaluator-0.11.0.tgz"
     },
     {
-      "group": "@B-S-F/json-evaluator-lib",
-      "name": "@B-S-F/json-evaluator-lib-0.9.0.tgz",
+      "group": "@bosch-grow-pat/json-evaluator-lib",
+      "name": "@bosch-grow-pat/json-evaluator-lib-0.9.0.tgz",
       "version": "0.9.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -387,11 +387,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/json-evaluator-lib-0.9.0.tgz"
+      "bom-ref": "@bosch-grow-pat/json-evaluator-lib-0.9.0.tgz"
     },
     {
-      "group": "@B-S-F/log-utils",
-      "name": "@B-S-F/log-utils-0.1.0.tgz",
+      "group": "@bosch-grow-pat/log-utils",
+      "name": "@bosch-grow-pat/log-utils-0.1.0.tgz",
       "version": "0.1.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -410,11 +410,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/log-utils-0.1.0.tgz"
+      "bom-ref": "@bosch-grow-pat/log-utils-0.1.0.tgz"
     },
     {
-      "group": "@B-S-F/manual-answer-evaluator",
-      "name": "@B-S-F/manual-answer-evaluator-0.8.0.tgz",
+      "group": "@bosch-grow-pat/manual-answer-evaluator",
+      "name": "@bosch-grow-pat/manual-answer-evaluator-0.8.0.tgz",
       "version": "0.8.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -433,11 +433,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/manual-answer-evaluator-0.8.0.tgz"
+      "bom-ref": "@bosch-grow-pat/manual-answer-evaluator-0.8.0.tgz"
     },
     {
-      "group": "@B-S-F/markdown-utils",
-      "name": "@B-S-F/markdown-utils-0.2.0.tgz",
+      "group": "@bosch-grow-pat/markdown-utils",
+      "name": "@bosch-grow-pat/markdown-utils-0.2.0.tgz",
       "version": "0.2.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -456,11 +456,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/markdown-utils-0.2.0.tgz"
+      "bom-ref": "@bosch-grow-pat/markdown-utils-0.2.0.tgz"
     },
     {
-      "group": "@B-S-F/mend-fetcher",
-      "name": "@B-S-F/mend-fetcher-0.7.0.tgz",
+      "group": "@bosch-grow-pat/mend-fetcher",
+      "name": "@bosch-grow-pat/mend-fetcher-0.7.0.tgz",
       "version": "0.7.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -479,11 +479,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/mend-fetcher-0.7.0.tgz"
+      "bom-ref": "@bosch-grow-pat/mend-fetcher-0.7.0.tgz"
     },
     {
-      "group": "@B-S-F/qg-api-service",
-      "name": "@B-S-F/qg-api-service-0.51.2.tgz",
+      "group": "@bosch-grow-pat/qg-api-service",
+      "name": "@bosch-grow-pat/qg-api-service-0.51.2.tgz",
       "version": "0.51.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -502,11 +502,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/qg-api-service-0.51.2.tgz"
+      "bom-ref": "@bosch-grow-pat/qg-api-service-0.51.2.tgz"
     },
     {
-      "group": "@B-S-F/smb-fetcher",
-      "name": "@B-S-F/smb-fetcher-0.1.1.tgz",
+      "group": "@bosch-grow-pat/smb-fetcher",
+      "name": "@bosch-grow-pat/smb-fetcher-0.1.1.tgz",
       "version": "0.1.1",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -525,11 +525,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/smb-fetcher-0.1.1.tgz"
+      "bom-ref": "@bosch-grow-pat/smb-fetcher-0.1.1.tgz"
     },
     {
-      "group": "@B-S-F/sonarqube",
-      "name": "@B-S-F/sonarqube-0.2.0.tgz",
+      "group": "@bosch-grow-pat/sonarqube",
+      "name": "@bosch-grow-pat/sonarqube-0.2.0.tgz",
       "version": "0.2.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -548,11 +548,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/sonarqube-0.2.0.tgz"
+      "bom-ref": "@bosch-grow-pat/sonarqube-0.2.0.tgz"
     },
     {
-      "group": "@B-S-F/sonarqube-evaluator",
-      "name": "@B-S-F/sonarqube-evaluator-0.4.0.tgz",
+      "group": "@bosch-grow-pat/sonarqube-evaluator",
+      "name": "@bosch-grow-pat/sonarqube-evaluator-0.4.0.tgz",
       "version": "0.4.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -571,11 +571,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/sonarqube-evaluator-0.4.0.tgz"
+      "bom-ref": "@bosch-grow-pat/sonarqube-evaluator-0.4.0.tgz"
     },
     {
-      "group": "@B-S-F/sync-versions",
-      "name": "@B-S-F/sync-versions-0.1.0.tgz",
+      "group": "@bosch-grow-pat/sync-versions",
+      "name": "@bosch-grow-pat/sync-versions-0.1.0.tgz",
       "version": "0.1.0",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -594,7 +594,7 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/sync-versions-0.1.0.tgz"
+      "bom-ref": "@bosch-grow-pat/sync-versions-0.1.0.tgz"
     },
     {
       "group": "DateTime",

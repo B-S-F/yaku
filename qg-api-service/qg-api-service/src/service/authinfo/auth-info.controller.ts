@@ -1,4 +1,4 @@
-import { Public } from '@B-S-F/api-commons-lib'
+import { Public } from '@bosch-grow-pat/api-commons-lib'
 import { Controller, Get, Inject } from '@nestjs/common'
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { AuthInfoDto, AuthInfoService } from './auth-info.service'

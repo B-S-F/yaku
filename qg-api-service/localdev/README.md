@@ -57,7 +57,7 @@
 6. Install the yaku-cli, e.g. with:
 
    ```bash
-   npm install -g @B-S-F/yaku-cli
+   npm install -g @bosch-grow-pat/yaku-cli
    ```
 
 7. Ensure that you have a user in the `bswf` Keycloak realm with `ADMIN` access.

@@ -1,4 +1,4 @@
-import { KEYCLOAK_STRATEGY_NAME } from '@B-S-F/api-keycloak-auth-lib'
+import { KEYCLOAK_STRATEGY_NAME } from '@bosch-grow-pat/api-keycloak-auth-lib'
 import {
   ExecutionContext,
   Inject,

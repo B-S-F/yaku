@@ -1,4 +1,4 @@
-import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakUser } from '@bosch-grow-pat/api-keycloak-auth-lib'
 import { Inject, Injectable } from '@nestjs/common'
 
 interface MapValue {

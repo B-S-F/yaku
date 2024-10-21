@@ -1,6 +1,6 @@
 import { Command } from 'commander'
 import { handleRestApiError, handleStandardParams } from '../common.js'
-import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { ApiClient } from '@bosch-grow-pat/yaku-client-lib'
 import { connect } from '../connect.js'
 
 export function createInfoCommand(program: Command) {

@@ -5,7 +5,7 @@
   "$id": "qg-config",
   "allOf": [
     {
-      "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json"
+      "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json"
     },
     {
       "type": "object",
@@ -49,10 +49,10 @@
                           "const": "All QGs: Measures from the previous IGs, SEs und QGs are incorporated and effectively introduced."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -68,10 +68,10 @@
                           "const": "The project schedule is agreed with all participants.\nThe target dates are up-to-date and achievable.\nThe impact of the target dates on the subprojects and components has been analyzed.\nThe next sprints are planned / defined.\nThe agreed customer features of a contract are prioritized and deviation are agreed by the customer.\nCustomer milestones are taken into account."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -87,10 +87,10 @@
                           "const": "The proportionate project budget was met in each project phase."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -106,10 +106,10 @@
                           "const": "QG0: Existing lessons learned have been evaluated and taken into consideration.\nLessons learned from actual, comparable or processor projects has been taken into account. For critical issues a action is defined and followed up. \n\nQG5: Lessons learned completed and implemented."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -125,10 +125,10 @@
                           "const": "Dependencies / impact from other projects / other products are considered (e.g. capacity consideration in parallel projects; synergistic effects, carry over-parts)"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -144,10 +144,10 @@
                           "const": "At SW-QG0 the systematic assessment of all Open Source components as well as the SW-scan have to be scheduled if no scan exception applies.\nThe SW-Scan must have been performed at SW-QG4, unless there is a scan exception.\n\nIt is demonstrably known whether and which Open Source Software is included in the product including delivered software. \nThe license conditions of all Open Source- and proprietary software components are complied with."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -163,10 +163,10 @@
                           "const": "QG-Level 1-3:\nThe quality targets can be achieved according to updated quality preview.\nQG4/QG5: The quality targets have been achieved."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -182,10 +182,10 @@
                           "const": "Sprint Planning"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -201,10 +201,10 @@
                           "const": "All target markets considered?\n\nInfo: PROMAP-Template: Processing Description (Chapter: Data Recipients)"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -237,10 +237,10 @@
                           "const": "Deliverable:\nCustomer / User Information Leaflet"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -256,10 +256,10 @@
                           "const": "Deliverable:\nProcessing Description incl. Primary and Supporting assets"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -275,10 +275,10 @@
                           "const": "Deliverable :\nData Protection Checklist (also known as Data Privacy and IoTP Relevance Assessment)"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -311,10 +311,10 @@
                           "const": "technical legal requirements, such as legal requirements of the target market, goods subject to approval (export control), Design for Environment, recycling concept, VDE approvals,...\n\nCompetitive analysis considered;\n\nIt is recommended to the GEs to generate a positive list."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -330,10 +330,10 @@
                           "const": "Legality and Bosch values;\nThe development of functions for the cycle / test detection is not permissible;\nAn optimization, purely on the cycle, is not permissible;\nwarranted characteristics are met, human life is protected to the greatest possible extent;"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -349,10 +349,10 @@
                           "const": "SW-QG0, QG1: Analysis of Hazards and Evaluation of Safety Risks\nQG1: Specification of Safety Concepts and Measures,\nQG2: Check plan; \nQG3: Confirmation must be available; \nfrom QG3 onwards: implementation proven\nup to  SW-QGR, QG4:\nAnalysis for the effectiveness of the measures, \nAnalysis to give evidence that the safety requirements are fulfilled (verification) and validation of product safety carried out to an appropriate extent.\n\nBranch-specific norms should be considered;\nAt each QG: Check, whether the hazard analysis and risk evaluation is still up to date."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -368,10 +368,10 @@
                           "const": "QG0: \n• Requirements for information security are known (prescreening).\nQG3/4, QGC3/4: \n• Requirements for information security are considered\n• Data protection compliance is ensured / met\n• Local restrictions/laws and requirements of target markets are considered\n\nData protection: \nIf personal data is processed in the Bosch product, then the data protection compliance (incl. all checks and documentations) have to be guaranteed in the project course (even if QGs Level 1-3 are omitted)."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -387,10 +387,10 @@
                           "const": "QG0: UX relevance evaluated; \nUX activities are considered in the initial requirements, planned and will be implemented starting from QG0\n\nQG3/QG4: UX activities are implemented\n\nIn case of UX Relevance a patent strategy with UX focus determined"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -406,10 +406,10 @@
                           "const": "QG0: QGR-relevant requirements are available;\nQG4: requirements are implemented\n\nDefine the extent to which the acceptance criteria are to be checked in a review.\nSafety-related requirements must be designated as such.\nPerformance requirements to be considered.\nSW: Bidirectional traceability of the requirements for the code and test cases must be ensured."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -442,10 +442,10 @@
                           "const": "Functional and safe Interaction:\nThe cause-effect relationships of the components (mechanics, HW, SW) were analyzed and observed in the development. Changes were observed. Functionality of the system was verified."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -461,10 +461,10 @@
                           "const": "Applicable rules are defined in the GE or by customer"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -480,10 +480,10 @@
                           "const": "QG0: determine which software shall be re-used and which open issues might be known.\nQGR, QG4: Removal of open issues is determined and changes to re-used software will be re-based if required."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -526,10 +526,10 @@
                           "const": "QG0: Test strategy was defined\nQGR/QG4: test strategy was adhered to"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -545,10 +545,10 @@
                           "const": "Remark: At SW-QG0 the process test may e.g. be a supplier self-declaration."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -564,10 +564,10 @@
                           "const": "Industry-specific standards are to be observed"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -583,10 +583,10 @@
                           "const": "Have the assurance/testing methods according to the project’s security level been performed and updated as well as the findings re-evaluated?"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -602,10 +602,10 @@
                           "const": "Deliverable:\nPenetration Test report"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -621,10 +621,10 @@
                           "const": "\"dealt with\" means e.g.\n - errors are analyzed, severity judged,  prioritized and mapped to releases\n - known errors and existing workarounds are transferred to Operation and Support\n - SW-QG4: Notification to customer if functions are not met to the specified scope\n - …"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -640,10 +640,10 @@
                           "const": "Virus Scan Report"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -659,10 +659,10 @@
                           "const": "It should be tested if the SW can be installed on a fresh system by following the documented installation procedure, or in case of an update on systems with older versions of the SW."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -678,10 +678,10 @@
                           "const": "Review result is documented, evaluated and required measures are implemented"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -714,10 +714,10 @@
                           "const": "If required, technical and delivery risks are identified for new parts and carry-over parts.  \nQG1: Approval by project purchase department for the BOM (Bill of material) is available.\n\ninterim order specification up to QG2, order specification up to QG3 and/or at the latest QG4\n\nNew parts: Assessment based on the available Purchasing Reviews (Purchasing Evaluation); \nCarry-over parts, -components and materials: see deadlines in order specifications;\nRisk management to ensure capability to deliver (new parts and carry-over parts; R: Purchase)\nMaterial release: as per RB/GF 131 concluded on time (Automotive: QGC2, Non-Automotive: QG4)\n\nChange management agreed / regulated"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -733,10 +733,10 @@
                           "const": ""
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -752,10 +752,10 @@
                           "const": ""
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -788,10 +788,10 @@
                           "const": ""
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -832,10 +832,10 @@
                           "const": "Relevant risks assessed; measures defined; effectivity of the measures assessed.\nThe updated project risk analysis is available and is confirmed if required."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -851,10 +851,10 @@
                           "const": "By QG1 / SW-QGR: current edition of the Design-FMEA* created;\nBy QG4/ SW-QG4: current Design-FMEA* edition/ risk analysis available, which represents the state of SOP.\n\n*FMEA is the method to be used in the automobile industry (IATF16949, ISO26262). Additional technical risk analysis can be requested.\nIn other branches, alternative methods are permissible for the technical risk analysis.\n\nCurrent approach at BCI: \nHW: FMEA\nSW: Focus Area Matrix (FAM)"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -870,10 +870,10 @@
                           "const": "Quality Indicators for all QGs:\n• Has the scope and the architecture been defined?\n• Has the predefined list of sources for security requirements and standards relevant to the project taken into account?\n• (QG0: As far as known: ) Have all primary and supporting assets been identified?\n• (QG0: As far as known: ) Have all primary assets been classified according to the protection classes from a data protection perspective?\n• (QG0: As far as known: ) Have the  primary assets been classified according to the protection classes (SC- described in CD2900) from a security perspective?\n• (QG0: As far as known: ) Have the supporting assets been classified according to the required protection classes? \n\nAdditional indicators for QG4\n• Has the baseline security approach been followed for each supporting asset to identify requirements?\n• Have requirements been identified for business logic, the specific domain and the communication? (Approach can be additional threat modelling chapter in the template)\n• Has the documentation been sent to the ProSO\n\nDeliverable:\nSecurity Risk Assessment incl. Primary and Supporting Assets"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -889,10 +889,10 @@
                           "const": "Quality Indicators:\nQG4:\n• Do all risks have one of the following statuses (Mitigated, Accepted, Resolved)?\n• If risks have been accepted, is the person authorized to accept a specific risk?\n• Due date should not be in the past\n• Has the resulting risk of not implementing a requirement been made transparent to the project lead? \n• ProSO has been informed about the security risks?\n\nDeliverable:\nSecurity Risk List"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -908,10 +908,10 @@
                           "const": "Quality Indicators:\n• Does the security concept contain a list of requirements derived from the catalogues and has, including information about the implementation details and status for each supporting asset?\n• Have the required applicable security requirements been identified for external components/assets and the status been documented?\n• Does the security concept include additional information regarding secure operations and administration, development environment security, secure decommissioning?\n\nDeliverable:\nSecurity Concept"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -927,10 +927,10 @@
                           "const": "COTS: commercial off the shelf / standard products"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -946,10 +946,10 @@
                           "const": "Deliverable:\nTab Data Protection Risk Assessment in Excel file of C/ISP"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -982,10 +982,10 @@
                           "const": "Standard archiving and labeling of project documents according to CD02900 / BCI DI 0100 including Traceability is assured.\nSpecial requirements (e.g. customer requirement) are met in relation to the archiving and labeling of the documents."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -1001,10 +1001,10 @@
                           "const": "It is defined, which Configuration Items are relevant for the delivery / release, a baseline is created from this and checked for completeness. The allocation of the baseline to the QG has to be unambiguous."
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -1020,10 +1020,10 @@
                           "const": "Release Note"
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false
@@ -1056,10 +1056,10 @@
                           "const": ""
                         },
                         "report": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/ReportOverride"
                         },
                         "checks": {
-                          "$ref": "@B-S-F/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
+                          "$ref": "@bosch-grow-pat/qg-schemas/dist/qg-config-common.schema.json#/definitions/Checks"
                         }
                       },
                       "additionalProperties": false

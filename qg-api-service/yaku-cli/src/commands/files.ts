@@ -3,7 +3,7 @@ import {
   Config,
   getFilenameFromUrl,
   QueryOptions,
-} from '@B-S-F/yaku-client-lib'
+} from '@bosch-grow-pat/yaku-client-lib'
 import { Command } from 'commander'
 import fs from 'fs'
 import inquirer from 'inquirer'

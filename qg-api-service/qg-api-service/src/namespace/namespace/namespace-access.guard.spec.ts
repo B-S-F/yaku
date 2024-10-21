@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
-import { testingNamespaceId } from '@B-S-F/api-commons-lib'
+import { testingNamespaceId } from '@bosch-grow-pat/api-commons-lib'
 import { NamespaceAccessGuard } from './namespace-access.guard'
 import {
   KEYCLOAK_ADMIN_ROLE,
@@ -9,7 +9,7 @@ import {
 import {
   KeyCloakNamespace,
   KeyCloakUser,
-} from '@B-S-F/api-keycloak-auth-lib'
+} from '@bosch-grow-pat/api-keycloak-auth-lib'
 
 describe('NamespaceAccessGuard', () => {
   let testee: NamespaceAccessGuard

@@ -1,4 +1,4 @@
-import { KeyCloakStrategy } from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakStrategy } from '@bosch-grow-pat/api-keycloak-auth-lib'
 import { Module } from '@nestjs/common'
 import { APP_GUARD, APP_INTERCEPTOR, RouterModule } from '@nestjs/core'
 import { ScheduleModule } from '@nestjs/schedule'

@@ -41,7 +41,7 @@ import {
   PaginatedData,
   toListQueryOptions,
   queryOptionsSchema,
-} from '@B-S-F/api-commons-lib'
+} from '@bosch-grow-pat/api-commons-lib'
 
 export class GetListFindingsDTO extends PaginatedData {
   @ApiProperty({

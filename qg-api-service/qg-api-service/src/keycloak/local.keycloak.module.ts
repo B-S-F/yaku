@@ -1,7 +1,7 @@
 import {
   KeyCloakConfig,
   KeyCloakService,
-} from '@B-S-F/api-keycloak-auth-lib'
+} from '@bosch-grow-pat/api-keycloak-auth-lib'
 import { Module } from '@nestjs/common'
 import { LoggerModule } from 'nestjs-pino'
 import {

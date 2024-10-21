@@ -4,7 +4,7 @@ import {
   ApiClient,
   Config,
   QueryOptions,
-} from '@B-S-F/yaku-client-lib'
+} from '@bosch-grow-pat/yaku-client-lib'
 import {
   getResourceDeletionConfirmation,
   handleRestApiError,

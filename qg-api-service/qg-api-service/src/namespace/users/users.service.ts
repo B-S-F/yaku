@@ -1,9 +1,9 @@
-import { EntityList, SortOrder } from '@B-S-F/api-commons-lib'
+import { EntityList, SortOrder } from '@bosch-grow-pat/api-commons-lib'
 import {
   KeyCloakService,
   KeyCloakUserOfRole,
   MissingUserError,
-} from '@B-S-F/api-keycloak-auth-lib'
+} from '@bosch-grow-pat/api-keycloak-auth-lib'
 import {
   Inject,
   Injectable,

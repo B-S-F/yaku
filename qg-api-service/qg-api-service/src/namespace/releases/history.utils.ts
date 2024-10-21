@@ -1,4 +1,4 @@
-import { SortOrder } from '@B-S-F/api-commons-lib'
+import { SortOrder } from '@bosch-grow-pat/api-commons-lib'
 import { ApiExtraModels, ApiProperty, getSchemaPath } from '@nestjs/swagger'
 import { z } from 'zod'
 import { UserInNamespaceDto } from '../users/users.utils'

@@ -27,7 +27,7 @@ import {
   FilterOption,
   ListQueryHandler,
   SortOrder,
-} from '@B-S-F/api-commons-lib'
+} from '@bosch-grow-pat/api-commons-lib'
 import { RunStatus } from '../run/run.entity'
 import { CreateMetricDTO } from '../metrics/dto/createMetric.dto'
 import { UpdateFindingDTO as UpdateFindingMetricDTO } from '../metrics/dto/updateFinding.dto'

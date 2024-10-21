@@ -22,8 +22,8 @@
   },
   "components": [
     {
-      "group": "@B-S-F/yaku-cli",
-      "name": "@B-S-F/yaku-cli-0.51.2.tgz",
+      "group": "@bosch-grow-pat/yaku-cli",
+      "name": "@bosch-grow-pat/yaku-cli-0.51.2.tgz",
       "version": "0.51.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -42,11 +42,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/yaku-cli-0.51.2.tgz"
+      "bom-ref": "@bosch-grow-pat/yaku-cli-0.51.2.tgz"
     },
     {
-      "group": "@B-S-F/yaku-client-lib",
-      "name": "@B-S-F/yaku-client-lib-0.51.2.tgz",
+      "group": "@bosch-grow-pat/yaku-client-lib",
+      "name": "@bosch-grow-pat/yaku-client-lib-0.51.2.tgz",
       "version": "0.51.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -65,7 +65,7 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@B-S-F/yaku-client-lib-0.51.2.tgz"
+      "bom-ref": "@bosch-grow-pat/yaku-client-lib-0.51.2.tgz"
     },
     {
       "group": "agent-base",

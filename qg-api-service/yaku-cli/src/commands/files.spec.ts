@@ -7,7 +7,7 @@ import {
   ApiClient,
   Config,
   SecretMetadata,
-} from '@B-S-F/yaku-client-lib'
+} from '@bosch-grow-pat/yaku-client-lib'
 import inquirer from 'inquirer'
 import { Environment } from './environment'
 import fs from 'fs'

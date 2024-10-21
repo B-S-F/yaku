@@ -3,7 +3,7 @@ import {
   PaginationQueryOptions,
   SortOrder,
   UrlHandler,
-} from '@B-S-F/api-commons-lib'
+} from '@bosch-grow-pat/api-commons-lib'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { z } from 'zod'
 import { UserInNamespaceDto } from '../../../namespace/users/users.utils'

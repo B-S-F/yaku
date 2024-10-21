@@ -3,7 +3,7 @@ import {
   ApiClient,
   QueryOptions,
   SecretMetadata,
-} from '@B-S-F/yaku-client-lib'
+} from '@bosch-grow-pat/yaku-client-lib'
 import readline from 'readline'
 import {
   getResourceDeletionConfirmation,

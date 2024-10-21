@@ -2,7 +2,7 @@ import {
   EntityList,
   ListQueryHandler,
   decodeBufferToUTF8EncodedString,
-} from '@B-S-F/api-commons-lib'
+} from '@bosch-grow-pat/api-commons-lib'
 import {
   BadRequestException,
   Inject,

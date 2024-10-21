@@ -17,7 +17,7 @@ npm run build
 npm pack --pack-destination "../yaku-cli/cli-package"
 cd ../yaku-cli
 npm version $version
-sed -i '.bak' 's#\"@B-S-F/yaku-client-lib\": .*,#"@B-S-F/yaku-client-lib": "^'$new_version'",#g' package.json
+sed -i '.bak' 's#\"@bosch-grow-pat/yaku-client-lib\": .*,#"@bosch-grow-pat/yaku-client-lib": "^'$new_version'",#g' package.json
 rm package.json.bak
 npm install
 npm pack --pack-destination "./cli-package"

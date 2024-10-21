@@ -1,5 +1,5 @@
 import { Command } from 'commander'
-import { ApiClient, QueryOptions, Run } from '@B-S-F/yaku-client-lib'
+import { ApiClient, QueryOptions, Run } from '@bosch-grow-pat/yaku-client-lib'
 import {
   handleRestApiError,
   handleStandardParams,

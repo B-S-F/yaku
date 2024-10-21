@@ -7,7 +7,7 @@ import {
   Token,
   TokenMetadata,
   User,
-} from '@B-S-F/yaku-client-lib'
+} from '@bosch-grow-pat/yaku-client-lib'
 import { randomUUID } from 'crypto'
 import { stat, unlink } from 'fs/promises'
 import path from 'path'
