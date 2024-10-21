@@ -1,0 +1,13 @@
+query: 'project = MYPRJ AND issuetype = Bug AND resolution = Unresolved'
+neededFields:
+  - 'customfield_10'
+evaluate:
+  fields:
+    customfield_10:
+      fieldName: 'customfield_10'
+      conditions:
+        expected:
+          - 'AB 1'
+          - 'AB 2'
+          - 'AB 3'
+          - 'AB 4'

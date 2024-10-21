@@ -1,0 +1,60 @@
+header:
+  name: name
+  version: 1.2.3
+globals:
+  varName: https://some.url
+components:
+  jira:
+    jiraConfigFilePath: '../sample/config.yaml'
+    jiraUrl: 'https://tracker.example.com/tracker'
+autopilots:
+  jira-autopilot:
+    run: |
+      jira-fetcher
+      jira-evaluator
+    env:
+      JIRA_URL: ${component.jiraUrl}
+      JIRA_CONFIG_FILE_PATH: ${component.jiraConfigFilePath}
+reports:
+  jira: jira-autopilot
+finalize:
+  run: html-finalizer
+allocations:
+  '1':
+    title: Environment should work
+    requirements:
+      '1.1':
+        title: dummy-evaluator should return SUCCESS if env is provided
+        text: No time to die
+        checks:
+          '1.1':
+            title: Evaluate legal/official requirements/restrictions
+            components:
+              - jira
+            reports:
+              - jira
+
+      '1.2':
+        title: dummy-evaluator should return FAILED if env is missing
+        text: No time to die
+
+  '2':
+    title: Manual comments should work
+    requirements:
+      '2.1':
+        title: Manual comment
+        text: >-
+          Some comment that should be available in the reports
+      '2.2':
+        title: Manual RED comment
+        text: >-
+          Some comment that should be available in the reports
+  '3':
+    title: Components should be selectable on checks
+    requirements:
+      '3.1':
+        title: Check only needed in app1
+        text: No time to die
+      '3.2':
+        title: Check needed in all components
+        text: No time to die

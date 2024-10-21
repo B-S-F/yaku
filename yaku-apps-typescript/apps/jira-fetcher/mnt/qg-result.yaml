@@ -1,0 +1,400 @@
+allocations:
+  '1':
+    title: Project management
+    requirements:
+      '1.2':
+        title: >-
+          1.2 title
+        text: >-
+          1.2 text
+        id: '1.2'
+        checks: {}
+        overallStatus: PENDING
+      '1.3':
+        title: >-
+          1.3 title
+        text: >-
+          1.3 text
+        id: '1.3'
+        checks: {}
+        overallStatus: PENDING
+      '1.4':
+        title: 1.4 title
+        text: 1.4 text
+        id: '1.4'
+        checks: {}
+        overallStatus: PENDING
+      '1.6':
+        title: 1.6 title
+        text: >-
+          1.6 text
+        id: '1.6'
+        checks: {}
+        overallStatus: PENDING
+      '1.7':
+        title: 1.7 title
+        text: >-
+          1.7 text
+        id: '1.7'
+        checks: {}
+        overallStatus: PENDING
+      '1.15':
+        title: >-
+          1.15 title
+        text: >-
+          1.15 text
+        id: '1.15'
+        checks: {}
+        overallStatus: PENDING
+      '1.20':
+        title: >-
+          1.20 title
+        text: >-
+          1.20 text
+        id: '1.20'
+        checks: {}
+        overallStatus: PENDING
+      '1.21':
+        title: >-
+          1.21 title
+        text: Sprint Planning
+        id: '1.21'
+        checks: {}
+        overallStatus: PENDING
+      '1.22':
+        title: >-
+          1.22 title
+        text: >-
+          1.22 text
+        id: '1.22'
+        checks: {}
+        overallStatus: PENDING
+    id: '1'
+  '2':
+    title: Security
+    requirements:
+      '2.4':
+        title: |-
+          2.4 title
+        text: |-
+          2.4 text
+        id: '2.4'
+        checks: {}
+        overallStatus: PENDING
+      '2.5':
+        title: |-
+          2.5 title
+        text: |-
+          2.5 text
+        id: '2.5'
+        checks: {}
+        overallStatus: PENDING
+      '2.6':
+        title: 2.6 title
+        text: >-
+          2.6 text
+        id: '2.6'
+        checks: {}
+        overallStatus: PENDING
+    id: '2'
+  '3':
+    title: 3 title
+    requirements:
+      '3.4':
+        title: >-
+          3.4 title
+        text: >-
+          3.4 text
+        checks:
+          '1.1':
+            title: 3.1.1 title
+            components:
+              - AzureDevops
+            reports:
+              - reportType: ado-work-items
+                componentResults:
+                  - component:
+                      version: 1.2.3
+                      adoApiOrg: abcdef-bci
+                      adoApiProject: Nx_Base
+                      adoConfigFilePath: /workspaces/qg-cli/mnt/ado-work-items-config.yaml
+                      adoCpplyProxySettings: false
+                      id: AzureDevops
+                    evidencePath: ado-work-items-autopilot/AzureDevops
+                    status: RED
+                    comments:
+                      - "**Results from level 1:**\n\nStatus for property `state`:\n * The following work items which don't have one of the resolved/performed values ( **[Done]** ) are invalid because:\n\t * they are overdue:\n\t\t * [8: 99 - DemoWPR - 2022-03 ](https://example.com//example.com/_workitems/edit/8)\n\t\t * [9: TOP99 - DemoWPR - 2021-09 Data Privacy](https://example.com//example.com/_workitems/edit/9)\n\nStatus for property `assignee`:\n * The following work items are invalid because they don't have one of the expected values ( **[]** ):\n\t * [8: TOP99 - DemoWPR - 2022-03 ](https://example.com//example.com/_workitems/edit/8)\n\t * [9: TOP99 - DemoWPR - 2021-09 Data Privacy](https://example.com//example.com/_workitems/edit/9)\n\nStatus for property `reviewers`:\n * The following work items are invalid because they don't have one of the expected values ( **[]** ):\n\t * [8: TOP99 - DemoWPR - 2022-03 ](https://example.com//example.com/_workitems/edit/8)\n\t * [9: TOP99 - DemoWPR - 2021-09 Data Privacy](https://example.com//example.com/_workitems/edit/9)\n\n**Results from level 2:**\n\nStatus for property `state`:\n * The following work items which don't have one of the resolved/performed values ( **[Closed,Performed]** ) are invalid because:\n\t * they are overdue:\n\t\t * [61: Ensure that all team members perform [PM-AGI-RM-WBT]](https://example.com//example.com/_workitems/edit/61)\n\t\t * [23: Update Data Protection Checklist - Producer](https://example.com//example.com/_workitems/edit/23)\n"
+                    sources: []
+            id: '1.1'
+            checks: {}
+        id: '3.4'
+        overallStatus: RED
+      '3.5':
+        title: >-
+          3.5 title
+        text: >-
+          3.5 text
+        id: '3.5'
+        checks: {}
+        overallStatus: PENDING
+      '3.7':
+        title: 3.7 title
+        text: >-
+          3.7 text
+        id: '3.7'
+        checks: {}
+        overallStatus: PENDING
+      '3.8':
+        title: >-
+          3.8 title
+        text: >-
+          3.8 text
+        id: '3.8'
+        checks: {}
+        overallStatus: PENDING
+      '3.9':
+        title: >-
+          3.9 title
+        text: >-
+          3.9 text
+        id: '3.9'
+        checks: {}
+        overallStatus: PENDING
+      '3.11':
+        title: >-
+          3.11 title
+        text: >-
+          3.11 text
+        id: '3.11'
+        checks: {}
+        overallStatus: PENDING
+    id: '3'
+  '4':
+    title: Product development
+    requirements:
+      '4.4':
+        title: >-
+          4.4 title
+        text: >-
+          4.4 text
+        id: '4.4'
+        checks: {}
+        overallStatus: PENDING
+      '4.6':
+        title: |-
+          4.6 title
+        text: 4.6 text
+        id: '4.6'
+        checks: {}
+        overallStatus: PENDING
+      '4.7':
+        title: >-
+          4.7 title
+        text: >-
+          4.7 text
+        id: '4.7'
+        checks: {}
+        overallStatus: PENDING
+    id: '4'
+  '5':
+    title: Verification / validation
+    requirements:
+      '5.1':
+        title: 5.1 title
+        text: |-
+          5.1 text
+        id: '5.1'
+        checks: {}
+        overallStatus: PENDING
+      '5.2':
+        title: >-
+          5.2 title
+        text: >-
+          5.2 text
+        id: '5.2'
+        checks: {}
+        overallStatus: PENDING
+      '5.3':
+        title: 5.3 title
+        text: 5.3 text
+        id: '5.3'
+        checks: {}
+        overallStatus: PENDING
+      '5.4':
+        title: 5.4 title
+        text: >-
+          5.4 text
+        id: '5.4'
+        checks: {}
+        overallStatus: PENDING
+      '5.5':
+        title: >-
+          5.5 title
+        text: |-
+          5.5 text
+        id: '5.5'
+        checks: {}
+        overallStatus: PENDING
+      '5.6':
+        title: >-
+          5.6 title
+        text: |-
+          5.6 text
+        id: '5.6'
+        checks: {}
+        overallStatus: PENDING
+      '5.7':
+        title: 5.7 title
+        text: 5.7 text
+        id: '5.7'
+        checks: {}
+        overallStatus: PENDING
+      '5.8':
+        title: 5.8 title
+        text: >-
+          5.8 text
+        id: '5.8'
+        checks: {}
+        overallStatus: PENDING
+      '5.9':
+        title: 5.9 title
+        text: >-
+          5.9 text
+        id: '5.9'
+        checks: {}
+        overallStatus: PENDING
+    id: '5'
+  '10':
+    title: Procurement/ external procurement
+    requirements:
+      '10.2':
+        title: 10.2 title
+        text: >-
+          10.2 text
+        id: '10.2'
+        checks: {}
+        overallStatus: PENDING
+      '10.3':
+        title: >-
+          10.3 title
+        text: ''
+        id: '10.3'
+        checks: {}
+        overallStatus: PENDING
+      '10.4':
+        title: >-
+          10.4 title
+        text: ''
+        id: '10.4'
+        checks: {}
+        overallStatus: PENDING
+    id: '10'
+  '12':
+    title: Change management in the project
+    requirements:
+      '12.2':
+        title: >-
+          12.2 title
+        text: ''
+        id: '12.2'
+        checks: {}
+        overallStatus: PENDING
+    id: '12'
+  '13':
+    title: Risk management
+    requirements:
+      '13.1':
+        title: 13.1 title
+        text: >-
+          13.1 text
+        id: '13.1'
+        checks: {}
+        overallStatus: PENDING
+      '13.2':
+        title: >-
+          13.2 title
+        text: >-
+          13.2 text
+        id: '13.2'
+        checks: {}
+        overallStatus: PENDING
+      '13.4':
+        title: |-
+          13.4 title
+        text: >-
+          13.4 text
+        id: '13.4'
+        checks: {}
+        overallStatus: PENDING
+      '13.5':
+        title: |-
+          13.5 title
+        text: >-
+          13.5 text
+        id: '13.5'
+        checks: {}
+        overallStatus: PENDING
+      '13.6':
+        title: |-
+          13.6 title
+        text: >-
+          13.6 text
+        id: '13.6'
+        checks: {}
+        overallStatus: PENDING
+      '13.8':
+        title: 13.8 title
+        text: '13.8 text'
+        id: '13.8'
+        checks: {}
+        overallStatus: PENDING
+      '13.9':
+        title: 13.9 title
+        text: |-
+          13.9 text
+        id: '13.9'
+        checks: {}
+        overallStatus: PENDING
+    id: '13'
+  '15':
+    title: Configuration management
+    requirements:
+      '15.0':
+        title: 15.0 title
+        text: >-
+          15.0 text
+        id: '15.0'
+        checks: {}
+        overallStatus: PENDING
+      '15.1':
+        title: >-
+          15.1 title
+        text: >-
+          15.1 text
+        id: '15.1'
+        checks: {}
+        overallStatus: PENDING
+      '15.2':
+        title: >-
+          15.2 title
+        text: Release Note
+        id: '15.2'
+        checks: {}
+        overallStatus: PENDING
+    id: '15'
+  '17':
+    title: Training and Enabling
+    requirements:
+      '17.2':
+        title: >-
+          17.2 title
+        text: ''
+        id: '17.2'
+        checks: {}
+        overallStatus: PENDING
+    id: '17'
+headers:
+  name: <Your project name>
+  version: 1.2.3
+  Date: 2022-05-13 15:23:07 CEST
+  QG CLI Version: 0.1.8:dfa3dbd7cdaa3291621c80ddd96cc00034e30509
