@@ -21,10 +21,35 @@ go_deps.from_file(go_mod = "//onyx:go.mod")
 use_repo(go_deps, "com_github_azure_azure_sdk_for_go_sdk_azcore", "com_github_azure_azure_sdk_for_go_sdk_azidentity", "com_github_azure_azure_sdk_for_go_sdk_storage_azblob", "com_github_chigopher_pathlib", "com_github_invopop_jsonschema", "com_github_invopop_yaml", "com_github_netflix_go_iomux", "com_github_pkg_errors", "com_github_spf13_afero", "com_github_spf13_cobra", "com_github_spf13_viper", "com_github_stretchr_testify", "com_github_xeipuuv_gojsonschema", "in_gopkg_natefinch_lumberjack_v2", "in_gopkg_yaml_v3", "org_uber_go_zap")
 
 ###
+# Python
+###
+
+PYTHON_VERSION = "3.11"
+
+# Update the version to the release found here:
+# https://github.com/bazelbuild/rules_python/releases.
+bazel_dep(name = "rules_python", dev_dependency = True, version = "0.36.0")
+
+bazel_dep(name = "aspect_rules_py", version = "1.0.0-rc0")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(python_version = PYTHON_VERSION, configure_coverage_tool = True)
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+
+pip.parse(
+    hub_name = "pip",
+    python_version = PYTHON_VERSION,
+    requirements_lock = "//yaku-apps-python:3rdparty/requirements_lock.txt",
+)
+
+use_repo(pip, "pip")
+
+###
 # core image
 ###
 
-bazel_dep(name = "aspect_bazel_lib", version = "2.8.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.9.1")
 bazel_dep(name = "rules_oci", version = "2.0.1")
 bazel_dep(name = "rules_pkg", version = "0.10.1")
 bazel_dep(name = "container_structure_test", version = "1.15.0")

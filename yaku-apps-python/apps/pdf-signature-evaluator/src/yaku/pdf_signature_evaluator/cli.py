@@ -6,7 +6,9 @@ from loguru import logger
 from yaku.autopilot_utils.cli_base import make_autopilot_app, read_version_from_package
 from yaku.autopilot_utils.results import ResultsCollector
 
-from .digital_signature_verification import digital_signature_verification
+from .digital_signature_verification import (
+    digital_signature_verification,
+)
 
 
 class CLI:
@@ -83,6 +85,3 @@ main = make_autopilot_app(
     provider=CLI,
     version_callback=read_version_from_package(__package__),
 )
-
-if __name__ == "__main__":
-    main()

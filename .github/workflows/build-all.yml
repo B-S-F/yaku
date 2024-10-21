@@ -10,6 +10,10 @@ on:
 env:
   REGISTRY: ghcr.io
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,10 +30,7 @@ jobs:
           disk-cache: ${{ github.workflow }}
           repository-cache: true
 
-      - name: Build with Bazel
-        run: bazel build //...
-
-      - name: Test with Bazel
+      - name: Build and Test
         run: bazel test //...
 
       ####
