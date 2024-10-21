@@ -1,0 +1,4 @@
+requirements:
+  '1.15':
+    issues:
+      - AQUATEST-3
