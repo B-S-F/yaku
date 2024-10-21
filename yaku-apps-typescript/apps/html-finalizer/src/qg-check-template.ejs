@@ -1,0 +1,106 @@
+<%_ const rowspan = 1 _%>
+<%_ const hasLogs = (check.type == "Automation" && (check.evaluation.execution.logs || check.evaluation.execution.errorLogs)) _%>
+<tr>
+  <td class="id" rowspan="<%= rowspan %>"><%= id %></td>
+  <td rowspan="<%= rowspan %>"><%- utils.markdown.render(check.title) -%></td>
+  <td class="centered">
+    <%_ const status = check.status == "" ? "FAILED" : check.status _%>
+    <%_ const extraTooltip = check.type == "Manual" ? '*Manual status' : undefined _%>
+    <%- include('status-icon.ejs', { status, extraTooltip }) %>
+  </td>
+  <%_ if (check.evaluation.reason != "") { _%>
+    <td>
+      <%- utils.markdown.render(check.evaluation.reason) %> 
+    </td>
+  <%_ } else { _%>
+    <td class="centered">None</td>
+  <%_ } _%>
+  <%_ if (check.type == "Manual") { _%>
+    <td></td>
+    <td></td>
+  <%_ } _%>
+  <%_ if (check.type == "Automation") { _%>
+    <td <%_ if (typeof pdfExport === 'undefined' || !pdfExport) { %> class="centered"<%_ } _%>>
+      <%_ if (check.evaluation.execution.evidencePath) { _%>
+        <%_ if (typeof pdfExport !=='undefined' && pdfExport) { _%>
+          <span class="small"><%= check.evaluation.execution.evidencePath %></span>
+        <%_ } else { _%>
+          <a href="<%- check.evaluation.execution.evidencePath %>" target="_blank">
+          <svg class="icon" version="2.0">
+            <use href="#icon-arrow-right-frame" />
+          </svg>
+          </a>
+        <%_ } _%>
+      <%_ } _%>
+    </td>
+    <%_ if (check.evaluation.results?.length > 0) { _%>
+      <td>
+        <table class="full-width">
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th>Fulfilled</th>
+              <th>Justification</th>
+            </tr>
+          </thead>
+          <tbody>
+        <%_ for (const result of check.evaluation.results) { _%>
+              <tr>
+                <td><%- utils.markdown.render(result.criterion) %></td>
+                <td><%- result.fulfilled ? "Yes" : "No" %></td>
+                <td><%- utils.markdown.render(result.justification) %> </td>
+              </tr>
+        <%_ } _%>
+            </tbody>
+          </table>
+      </td> 
+    <%_ } else { _%>
+      <td></td>
+    <%_ } _%>
+  <%_ } _%>
+</tr><%_ if (hasLogs) { _%>
+<tr>
+  <td></td>
+  <td colspan="5">
+    <p class="toggle-hidden" onclick="javascript:toggleNextSibling(this)">Log output</p>
+    <div class="logs hidden">
+      <%_ if (check.evaluation.execution.errorLogs) { _%>
+        <p class="logs-header error-logs">stderr logs</p>
+        <pre class="logs">
+<%- utils.formatLogs(check.evaluation.execution.errorLogs) _%>
+        </pre>
+      <%_ } _%>
+      <%_ if (check.evaluation.execution.logs) { _%>
+        <p class="logs-header">stdout logs</p>
+        <pre class="logs">
+<%- utils.formatLogs(check.evaluation.execution.logs) _%>
+        </pre>
+      <%_ } _%>
+    </div>
+  </td>
+</tr>
+<%_ } _%>
+<%_ if (check.evaluation.outputs !== undefined && Object.keys(check.evaluation.outputs).length > 0) { _%>
+<tr>
+  <td></td>
+  <td colspan="5">
+    <p class="toggle-hidden" onclick="javascript:toggleNextSibling(this)">Script outputs</p>
+    <table class="hidden">
+      <thead>
+        <tr>
+          <th>Output</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%_ for (const name of Object.keys(check.evaluation.outputs)) { _%>
+          <tr>
+            <td><%- name -%></td>
+            <td><%- check.evaluation.outputs[name] -%></td>
+          </tr>
+        <%_ } _%>
+      </tbody>
+    </table>
+  </td>
+</tr>
+<%_ } _%>

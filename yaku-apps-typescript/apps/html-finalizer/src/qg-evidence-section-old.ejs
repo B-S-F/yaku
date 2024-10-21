@@ -1,0 +1,31 @@
+<%_ for (const allocation of utils.sortedObjectValues(allocations)) { _%>
+  <h2><%= allocation.id %> <%= allocation.title %></h2>
+<%_ for (const requirement of utils.sortedObjectValues(allocation.requirements)) { _%>
+  <h3 id="<%= requirement.id %>">
+    <span class="status-icon">
+      <%- include('status-icon.ejs', { status: requirement.status, extraTooltip: requirement.manualStatus ? '*Manual status' : undefined }) %>
+      <%_ if (requirement.manualStatus) { _%><span class="nospace">*</span><%_ } _%>
+    </span>
+    <%= requirement.id %> <%= requirement.title %></h3>
+  <%_ if (requirement.reason) { _%><p>Manual status: <%- utils.markdown.render(requirement.reason) %></p><%_ } _%> 
+<%_ if (requirement.checks && Object.keys(requirement.checks).length !== 0) { _%>
+  <table class="full-width">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Check</th>
+        <th>Component</th>
+        <th class="centered">Result</th>
+        <th <%_ if (typeof pdfExport === 'undefined' || !pdfExport) { %> class="centered"<%_ } _%>>Evidence</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%_ for (const check of utils.sortedObjectValues(requirement.checks)) { _%>
+        <%- include('qg-check-template-old.ejs', { check }) %>
+      <%_ } _%>
+    </tbody>
+  </table>
+<%_ } _%>
+<%_ } _%>
+<%_ } _%>

@@ -1,0 +1,72 @@
+<%_ 
+const labels = {
+  auto: 'Automatically',
+  manual: 'Manually',
+  unanswered: 'Unanswered',
+  NA: 'N/A'
+}
+
+const totalChecks = statistics["counted-checks"]
+const checkStatistics = {
+  auto: statistics["counted-automated-checks"],
+  manual: statistics["counted-manual-check"],
+  unanswered: statistics["counted-unanswered-checks"],
+}
+
+const checks = []
+for (const chapter of Object.values(chapters)) {
+  for (const requirement of Object.values(chapter.requirements)) {
+    if (requirement.checks) {
+      checks.push(...Object.values(requirement.checks))
+    }
+  }
+}
+
+const statuses = {
+  GREEN: 0,
+  YELLOW: 0,
+  RED: 0,
+  NA: 0,
+}
+
+for (const check of checks) {
+  if (check.status != 'UNANSWERED') {
+    const status = (check.status == 'FAILED' || check.status == 'ERROR') ? 'RED' : check.status
+    ++statuses[status]
+  }
+}
+
+const totalAnswered = totalChecks - checkStatistics.unanswered
+_%>
+    <h2>Status</h2>
+    <p>
+      Result of answered:
+      <%- include('chart-legend.ejs', {
+        data: Object.entries(statuses).filter(([name, value]) => value),
+        count: totalAnswered,
+        labels
+      }) %>
+    </p>
+    <p>
+      <%- include('bar-chart.ejs', {
+        data: [
+          ...Object.entries(statuses).filter(([name, value]) => value),
+          ['empty', checkStatistics.unanswered]
+        ],
+        count: totalChecks
+      }) %>
+    </p>
+    <p>
+      <%- include('bar-chart.ejs', {
+        data: Object.entries(checkStatistics),
+        count: totalChecks
+      }) %>
+    </p>
+    <p>
+      Answered:
+      <%- include('chart-legend.ejs', {
+        data: Object.entries(checkStatistics),
+        count: totalChecks,
+        labels
+      }) %>
+    </p>

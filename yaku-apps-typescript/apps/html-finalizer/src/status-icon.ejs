@@ -1,0 +1,6 @@
+<%_ const tooltip = typeof extraTooltip === 'undefined' ? '' : ' ' + extraTooltip _%>
+<span title="<%- `${utils.mapTooltip(status)}${tooltip}`%>">
+  <svg class="icon" version="2.0" data-icon="<%- utils.mapStatus(status) %>">
+    <use href="#icon-<%- utils.mapStatus(status) %>" />
+  </svg>
+</span>

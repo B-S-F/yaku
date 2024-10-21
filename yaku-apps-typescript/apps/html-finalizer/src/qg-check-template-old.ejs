@@ -1,0 +1,51 @@
+<%_ if (check.checks && Object.keys(check.checks).length !== 0) { _%>
+  <tr>
+    <td><p><%= check.id %></p></td>
+    <td colspan="6"><p><%= check.title %></p></td>
+  </tr>
+  <%_ for (const subCheck of utils.sortedObjectValues(check.checks)) { _%>
+    <%- include('qg-check-template-old.ejs', { check: subCheck }) %>
+  <%_ } _%>
+<%_ } else { 
+  _%>
+  <%_ for (const report of check.reports) { _%>
+    <%_ const rowspan = report.componentResults.length _%>
+    <tr>
+    <td rowspan="<%= rowspan %>"><%= check.id %></td>
+    <td rowspan="<%= rowspan %>"><%= check.title %></td>
+  <%_ for (const componentResult of report.componentResults) { _%>
+    <td style="white-space: nowrap;"><%= componentResult.component.id %> <%= componentResult.component.version %></td>
+    <td class="centered">
+      <%- include('status-icon.ejs', { status: componentResult.status }) %>
+    </td>
+    <td <%_ if (typeof pdfExport === 'undefined' || !pdfExport) { %> class="centered"<%_ } _%>>
+      <%_ if (componentResult.evidencePath) { _%>
+        <%_ if (typeof pdfExport !=='undefined' && pdfExport) { _%>
+          <span class="small"><%= componentResult.evidencePath %></span>
+        <%_ } else { _%>
+          <a href="<%- componentResult.evidencePath %>" target="_blank">
+          <svg class="icon" version="2.0">
+            <use href="#icon-arrow-right-frame" />
+          </svg>
+          </a>
+        <%_ } _%>
+      <%_ } _%></td>
+    <td><%_ if (componentResult.comments?.length) { _%>
+        <%_ for (const comment of componentResult.comments) { _%>
+          <%- utils.markdown.render(comment) %> 
+        <%_ } _%>
+      <%_ } _%>
+      <%_ if (componentResult.sources?.length) { _%>
+        <p class="sources">Sources:</p>
+        <ul class="sources">
+          <%_ for (const source of componentResult.sources) { _%>
+            <%_ if (typeof source === 'string') { _%>
+              <li><a href="<%- source %>" target="_blank"><%= source %></a></li>
+            <%_ } _%>
+          <%_ } _%>
+        </ul>
+      <%_ } _%>
+    </td>
+  </tr>
+<%_ }} _%>
+<%_ } _%>

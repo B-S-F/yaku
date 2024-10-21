@@ -1,0 +1,16 @@
+<h2>Summary of Findings</h2>
+<div class="marked">
+<%- include('qg-result-table-old.ejs', { 
+  emptyListMessage: 'There are no findings.',
+  sortedAllocations: utils.sortedObjectValues(allocations).map((allocation) => ({
+    ...allocation,
+    requirements: Object.fromEntries(Object.entries(allocation.requirements).filter(([, requirement]) => requirement.status === 'RED' || requirement.status === 'FAILED' || (requirement.status === 'PENDING' && !utils.hideUnanswered)))
+  })).filter((allocation) => Object.entries(allocation.requirements).length > 0)
+}) %>
+</div>
+
+<h2>Details</h2>
+<%- include('qg-result-table-old.ejs', { 
+  sortedAllocations: utils.sortedObjectValues(allocations),
+  showRequirementText: true
+}) %>

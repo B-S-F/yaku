@@ -1,0 +1,29 @@
+<%_ for (const [chapter_id, chapter] of utils.sortedObjectEntries(chapters)) { _%>
+  <h2><%= chapter_id %> <%= chapter.title %></h2>
+  <%_ for (const [id, requirement] of utils.sortedObjectEntries(chapter.requirements)) { _%>
+    <h3 id="<%= chapter_id %>-<%= id %>">
+      <span class="status-icon">
+        <%- include('status-icon.ejs', { status: requirement.status }) %>
+      </span>
+      <%= id %> <%= requirement.title %></h3>
+    <%_ if (requirement.checks && Object.keys(requirement.checks).length !== 0) { _%>
+      <table class="full-width">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Check</th>
+            <th class="centered">Status</th>
+            <th>Reason</th>
+            <th <%_ if (typeof pdfExport === 'undefined' || !pdfExport) { %> class="centered"<%_ } _%>>Evidence</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%_ for (const [id, check] of utils.sortedObjectEntries(requirement.checks)) { _%>
+            <%- include('qg-check-template.ejs', { id, check }) %>
+          <%_ } _%>
+        </tbody>
+      </table>
+    <%_ } _%>
+  <%_ } _%>
+<%_ } _%>

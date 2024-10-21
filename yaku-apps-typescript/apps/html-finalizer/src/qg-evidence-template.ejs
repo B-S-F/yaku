@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>QG Evidence: <%= header.name %></title>
+    <%- include('qg-report-head.ejs') %>
+  </head>
+
+  <body>
+  <%- include('qg-report-body.ejs') %>
+
+  <h1><%= header.name %></h1>
+  
+  <%- include('qg-header.ejs') %>
+
+  <% if (locals.metadata && locals.metadata.version) { %>
+    <%- include('qg-evidence-section.ejs') %>
+  <% } else { %>
+    <%- include('qg-evidence-section-old.ejs') %>
+  <% } %>
+
+  <%- include('footer-legend.ejs') %>
+  </body>
+</html>
