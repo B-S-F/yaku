@@ -1,0 +1,44 @@
+{
+  "name": "@B-S-F/manual-answer-evaluator",
+  "version": "0.8.0",
+  "description": "",
+  "main": "dist/evaluate.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "dev": "nodemon --watch \"src/**\" --exec npm run start",
+    "start": "node ./dist/evaluate.js",
+    "lint": "eslint '**/*.ts'",
+    "format": "prettier --write '**/*.{ts,md}'",
+    "test": "vitest run && npm run test:update-cobertura-file",
+    "test:update-cobertura-file": "sed -i'.bak' 's,package name=\",package name=\"'${npm_package_name}/',g' coverage/cobertura-coverage.xml",
+    "test:dev": "vitest -w",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "devDependencies": {
+    "@B-S-F/eslint-config": "*",
+    "@B-S-F/typescript-config": "*",
+    "@types/node": "*",
+    "@vitest/ui": "*",
+    "c8": "*",
+    "eslint": "*",
+    "nodemon": "*",
+    "prettier": "*",
+    "tsup": "*",
+    "typescript": "*",
+    "vitest": "*"
+  },
+  "dependencies": {
+    "@B-S-F/autopilot-utils": "^0.11.0",
+    "parse-duration": "^1.0.2"
+  },
+  "bin": {
+    "manual-answer-evaluator": "dist/evaluate.js"
+  },
+  "files": [
+    "dist"
+  ]
+}
