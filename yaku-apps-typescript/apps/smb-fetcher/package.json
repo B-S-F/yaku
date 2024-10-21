@@ -1,0 +1,47 @@
+{
+  "name": "@B-S-F/smb-fetcher",
+  "version": "0.1.1",
+  "description": "",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "start": "node --openssl-legacy-provider ./dist/index.js",
+    "dev": "nodemon --watch \"src/**\" --exec npm run start",
+    "lint": "eslint '**/*.ts'",
+    "format": "prettier --write '**/*.{ts,md}'",
+    "test": "vitest run && npm run test:update-cobertura-file",
+    "test:update-cobertura-file": "sed -i'.bak' 's,package name=\",package name=\"'${npm_package_name}/',g' coverage/cobertura-coverage.xml",
+    "test:dev": "vitest -w",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "devDependencies": {
+    "@B-S-F/eslint-config": "*",
+    "@B-S-F/typescript-config": "*",
+    "@types/node": "*",
+    "@vitest/ui": "*",
+    "c8": "*",
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "nodemon": "*",
+    "prettier": "*",
+    "tsup": "*",
+    "typescript": "*",
+    "vitest": "*"
+  },
+  "dependencies": {
+    "@B-S-F/autopilot-utils": "^0.11.0",
+    "v9u-smb2": "^1.0.6",
+    "yaml": "^2.3.2",
+    "zod": "^3.22.3"
+  },
+  "bin": {
+    "smb-fetcher": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ]
+}
