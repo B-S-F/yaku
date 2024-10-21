@@ -1,0 +1,88 @@
+[
+  {
+    "id": "3220403",
+    "url": "https://tracker.example.com/tracker01/browse/AQUATEST-4",
+    "summary": "Example task for e2e tests",
+    "issuetype": {
+      "self": "https://tracker.example.com/tracker01/rest/api/2/issuetype/3",
+      "id": "3",
+      "description": "A task that needs to be done.",
+      "iconUrl": "https://tracker.example.com/tracker01/secure/viewavatar?size=xsmall&avatarId=22918&avatarType=issuetype",
+      "name": "Task",
+      "subtask": false,
+      "avatarId": 22918
+    },
+    "assignee": {
+      "self": "https://tracker.example.com/tracker01/rest/api/2/user?username=XXX7XX",
+      "name": "XXX7XX",
+      "key": "XXXXXXXX333000",
+      "emailAddress": "TechnicalUser.CICDAutomation@example.com",
+      "avatarUrls": {
+        "48x48": "https://tracker.example.com/tracker01/secure/useravatar?avatarId=10122",
+        "24x24": "https://tracker.example.com/tracker01/secure/useravatar?size=small&avatarId=10122",
+        "16x16": "https://tracker.example.com/tracker01/secure/useravatar?size=xsmall&avatarId=10122",
+        "32x32": "https://tracker.example.com/tracker01/secure/useravatar?size=medium&avatarId=10122"
+      },
+      "displayName": "CI/CD Automation Technical User ",
+      "active": true,
+      "timeZone": "Europe/Berlin"
+    },
+    "status": {
+      "self": "https://tracker.example.com/tracker01/rest/api/2/status/10158",
+      "description": "This status is managed internally by JIRA Software",
+      "iconUrl": "https://tracker.example.com/tracker01/images/icons/subtask.gif",
+      "name": "Done",
+      "id": "10158",
+      "statusCategory": {
+        "self": "https://tracker.example.com/tracker01/rest/api/2/statuscategory/3",
+        "id": 3,
+        "key": "done",
+        "colorName": "green",
+        "name": "Done"
+      }
+    }
+  },
+  {
+    "id": "3124436",
+    "url": "https://tracker.example.com/tracker01/browse/AQUATEST-2",
+    "summary": "e2e task",
+    "issuetype": {
+      "self": "https://tracker.example.com/tracker01/rest/api/2/issuetype/3",
+      "id": "3",
+      "description": "A task that needs to be done.",
+      "iconUrl": "https://tracker.example.com/tracker01/secure/viewavatar?size=xsmall&avatarId=22918&avatarType=issuetype",
+      "name": "Task",
+      "subtask": false,
+      "avatarId": 22918
+    },
+    "assignee": {
+      "self": "https://tracker.example.com/tracker01/rest/api/2/user?username=XXX7XX",
+      "name": "XXX7XX",
+      "key": "XXXXXXXX333000",
+      "emailAddress": "TechnicalUser.CICDAutomation@example.com",
+      "avatarUrls": {
+        "48x48": "https://tracker.example.com/tracker01/secure/useravatar?avatarId=10122",
+        "24x24": "https://tracker.example.com/tracker01/secure/useravatar?size=small&avatarId=10122",
+        "16x16": "https://tracker.example.com/tracker01/secure/useravatar?size=xsmall&avatarId=10122",
+        "32x32": "https://tracker.example.com/tracker01/secure/useravatar?size=medium&avatarId=10122"
+      },
+      "displayName": "CI/CD Automation Technical User ",
+      "active": true,
+      "timeZone": "Europe/Berlin"
+    },
+    "status": {
+      "self": "https://tracker.example.com/tracker01/rest/api/2/status/10158",
+      "description": "This status is managed internally by JIRA Software",
+      "iconUrl": "https://tracker.example.com/tracker01/images/icons/subtask.gif",
+      "name": "Done",
+      "id": "10158",
+      "statusCategory": {
+        "self": "https://tracker.example.com/tracker01/rest/api/2/statuscategory/3",
+        "id": 3,
+        "key": "done",
+        "colorName": "green",
+        "name": "Done"
+      }
+    }
+  }
+]
