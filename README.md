@@ -11,15 +11,15 @@ Foto from Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahm
 
 ### Overview
 
-| Component   | Build | Test | Artifact Upload | Comments                     |
-|-------------|-----|------|-----------------|------------------------------|
-| Onyx        | ✔️  | ✔️   |                 |                              |
-| API         |     |      |                 |                              |
-| Chart       | ✔️  | ✔️   | ✔️              |                              |
-| Core-image  |(✔️) |      | ✔️️             | build works but not complete |
-| Python apps | ✔️  | ✔️   | ️               |                              |
-| TS apps     |(✔️) |      | ️               | still some build issue       |
-| Frontend    |     |      | ️               |                              |
+| Component   | Build | Test | Artifact Upload | Comments                                                                         |
+|-------------|-----|------|-----------------|----------------------------------------------------------------------------------|
+| Onyx        | ✔️  | ✔️   |                 |                                                                                  |
+| API         |     |      |                 |                                                                                  |
+| Chart       | ✔️  | ✔️   | ✔️              |                                                                                  |
+| Core-image  |(✔️) |      | ✔️️             | build works but not complete                                                     |
+| Python apps | ✔️  | ✔️   | ️               |                                                                                  |
+| TS apps     |(✔️) |      | ️               | see [private test repo](https://github.com/bosch-grow-pat/bazel-typescript-test) |
+| Frontend    |     |      | ️               |                                                                                  |
 
 ✔️ works    
 (✔) partially works   
@@ -34,6 +34,9 @@ Foto from Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahm
 #### Chart
 - see https://github.com/abrisco/rules_helm
 - chart is pushed to this OCI repo here: [ghcr.io/b-s-f/charts/yaku](https://github.com/B-S-F/yaku/pkgs/container/charts%2Fyaku)
+
+#### Python Apps
+- see https://github.com/B-S-F/yaku/tree/main/yaku-apps-python
 
 ...
 
