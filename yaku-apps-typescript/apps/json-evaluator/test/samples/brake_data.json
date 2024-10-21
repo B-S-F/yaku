@@ -1,0 +1,1617 @@
+{
+  "preview": false,
+  "init_offset": 0,
+  "messages": [],
+  "fields": [
+    {
+      "name": "_time",
+      "groupby_rank": "0"
+    },
+    {
+      "name": "Not reviewed"
+    },
+    {
+      "name": "Reviews partly submitted"
+    },
+    {
+      "name": "All Reviews submitted"
+    },
+    {
+      "name": "Reviews partly completed",
+      "type": "str"
+    },
+    {
+      "name": "All Reviews completed",
+      "type": "str"
+    },
+    {
+      "name": "Completed in DA_Review_Finding"
+    },
+    {
+      "name": "Completed in DA_Review_Finding_Test"
+    }
+  ],
+  "results": [
+    {
+      "_time": "2022-07-05T00:00:00.000+02:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "35",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "57",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "62"
+    },
+    {
+      "_time": "2022-07-06T00:00:00.000+02:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "35",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "57",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "62"
+    },
+    {
+      "_time": "2022-07-07T00:00:00.000+02:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "35",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "57",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "62"
+    },
+    {
+      "_time": "2022-07-08T00:00:00.000+02:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "35",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "57",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "62"
+    },
+    {
+      "_time": "2022-07-10T00:00:00.000+02:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "35",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "57",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "62"
+    },
+    {
+      "_time": "2022-07-12T00:00:00.000+02:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "35",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "57",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "62"
+    },
+    {
+      "_time": "2022-07-14T00:00:00.000+02:00",
+      "Not reviewed": "104",
+      "Reviews partly submitted": "70",
+      "All Reviews submitted": "18",
+      "Reviews partly completed": "56",
+      "All Reviews completed": "116",
+      "Completed in DA_Review_Finding": "162",
+      "Completed in DA_Review_Finding_Test": "126"
+    },
+    {
+      "_time": "2022-07-15T00:00:00.000+02:00",
+      "Not reviewed": "54",
+      "Reviews partly submitted": "35",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "28",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "63"
+    },
+    {
+      "_time": "2022-07-21T00:00:00.000+02:00",
+      "Not reviewed": "55",
+      "Reviews partly submitted": "35",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "28",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "63"
+    },
+    {
+      "_time": "2022-07-23T00:00:00.000+02:00",
+      "Not reviewed": "55",
+      "Reviews partly submitted": "37",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "28",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "63"
+    },
+    {
+      "_time": "2022-07-29T00:00:00.000+02:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "37",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "28",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "83",
+      "Completed in DA_Review_Finding_Test": "65"
+    },
+    {
+      "_time": "2022-07-30T00:00:00.000+02:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "37",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "28",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "83",
+      "Completed in DA_Review_Finding_Test": "65"
+    },
+    {
+      "_time": "2022-08-01T00:00:00.000+02:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "37",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "28",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "83",
+      "Completed in DA_Review_Finding_Test": "65"
+    },
+    {
+      "_time": "2022-08-02T00:00:00.000+02:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "37",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "28",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "83",
+      "Completed in DA_Review_Finding_Test": "65"
+    },
+    {
+      "_time": "2022-08-03T00:00:00.000+02:00",
+      "Not reviewed": "57",
+      "Reviews partly submitted": "56",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "34",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "89",
+      "Completed in DA_Review_Finding_Test": "65"
+    },
+    {
+      "_time": "2022-08-04T00:00:00.000+02:00",
+      "Not reviewed": "162",
+      "Reviews partly submitted": "151",
+      "All Reviews submitted": "27",
+      "Reviews partly completed": "96",
+      "All Reviews completed": "183",
+      "Completed in DA_Review_Finding": "264",
+      "Completed in DA_Review_Finding_Test": "198"
+    },
+    {
+      "_time": "2022-08-05T00:00:00.000+02:00",
+      "Not reviewed": "56",
+      "Reviews partly submitted": "56",
+      "All Reviews submitted": "9",
+      "Reviews partly completed": "34",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "90",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-06T00:00:00.000+02:00",
+      "Not reviewed": "162",
+      "Reviews partly submitted": "151",
+      "All Reviews submitted": "30",
+      "Reviews partly completed": "99",
+      "All Reviews completed": "177",
+      "Completed in DA_Review_Finding": "255",
+      "Completed in DA_Review_Finding_Test": "198"
+    },
+    {
+      "_time": "2022-08-07T00:00:00.000+02:00",
+      "Not reviewed": "50",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-08T00:00:00.000+02:00",
+      "Not reviewed": "50",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-09T00:00:00.000+02:00",
+      "Not reviewed": "50",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-10T00:00:00.000+02:00",
+      "Not reviewed": "50",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-11T00:00:00.000+02:00",
+      "Not reviewed": "50",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-12T00:00:00.000+02:00",
+      "Not reviewed": "51",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-13T00:00:00.000+02:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-14T00:00:00.000+02:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-15T00:00:00.000+02:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-16T00:00:00.000+02:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "39",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "29",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "81",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-17T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-18T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-19T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-20T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-22T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-23T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-24T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-25T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "109",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-26T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "109",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-27T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "109",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "108",
+      "Completed in DA_Review_Finding_Test": "65"
+    },
+    {
+      "_time": "2022-08-28T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "109",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "108",
+      "Completed in DA_Review_Finding_Test": "65"
+    },
+    {
+      "_time": "2022-08-29T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "109",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "57",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "108",
+      "Completed in DA_Review_Finding_Test": "65"
+    },
+    {
+      "_time": "2022-08-30T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-08-31T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-09-01T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-09-02T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-09-03T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-09-05T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-09-07T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-09-08T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-09-09T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "58",
+      "Completed in DA_Review_Finding": "109",
+      "Completed in DA_Review_Finding_Test": "66"
+    },
+    {
+      "_time": "2022-09-10T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-12T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-13T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-14T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-15T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "108",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-17T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-18T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-19T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-20T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-21T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-22T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-23T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-24T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-26T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-27T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-28T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-29T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-09-30T00:00:00.000+02:00",
+      "Not reviewed": "71",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "59",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "110",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-01T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "111",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-03T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "111",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-04T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "111",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-05T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "111",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-06T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "111",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-07T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "111",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-08T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "111",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-10T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "111",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-11T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "124",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-12T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "121",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-13T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "121",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-14T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "63",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "114",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-15T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "63",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "114",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-16T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "63",
+      "All Reviews completed": "59",
+      "Completed in DA_Review_Finding": "114",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-18T00:00:00.000+02:00",
+      "Not reviewed": "145",
+      "Reviews partly submitted": "281",
+      "All Reviews submitted": "20",
+      "Reviews partly completed": "124",
+      "All Reviews completed": "120",
+      "Completed in DA_Review_Finding": "230",
+      "Completed in DA_Review_Finding_Test": "134"
+    },
+    {
+      "_time": "2022-10-19T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "141",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-20T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-21T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-22T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-24T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-25T00:00:00.000+02:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-26T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-27T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-28T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-29T00:00:00.000+02:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-10-31T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-01T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-02T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-03T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-04T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-05T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-07T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-08T00:00:00.000+01:00",
+      "Not reviewed": "146",
+      "Reviews partly submitted": "280",
+      "All Reviews submitted": "22",
+      "Reviews partly completed": "124",
+      "All Reviews completed": "120",
+      "Completed in DA_Review_Finding": "230",
+      "Completed in DA_Review_Finding_Test": "134"
+    },
+    {
+      "_time": "2022-11-09T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-10T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-11T00:00:00.000+01:00",
+      "Not reviewed": "73",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "11",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-12T00:00:00.000+01:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-14T00:00:00.000+01:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-15T00:00:00.000+01:00",
+      "Not reviewed": "72",
+      "Reviews partly submitted": "140",
+      "All Reviews submitted": "10",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "60",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "67"
+    },
+    {
+      "_time": "2022-11-16T00:00:00.000+01:00",
+      "Not reviewed": "58",
+      "Reviews partly submitted": "150",
+      "All Reviews submitted": "12",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "69"
+    },
+    {
+      "_time": "2022-11-17T00:00:00.000+01:00",
+      "Not reviewed": "58",
+      "Reviews partly submitted": "150",
+      "All Reviews submitted": "12",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "69"
+    },
+    {
+      "_time": "2022-11-18T00:00:00.000+01:00",
+      "Not reviewed": "58",
+      "Reviews partly submitted": "144",
+      "All Reviews submitted": "12",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "62",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-11-19T00:00:00.000+01:00",
+      "Not reviewed": "58",
+      "Reviews partly submitted": "144",
+      "All Reviews submitted": "12",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "62",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-11-21T00:00:00.000+01:00",
+      "Not reviewed": "58",
+      "Reviews partly submitted": "144",
+      "All Reviews submitted": "12",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "62",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-11-23T00:00:00.000+01:00",
+      "Not reviewed": "55",
+      "Reviews partly submitted": "144",
+      "All Reviews submitted": "17",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "62",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-11-24T00:00:00.000+01:00",
+      "Not reviewed": "55",
+      "Reviews partly submitted": "144",
+      "All Reviews submitted": "17",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "62",
+      "Completed in DA_Review_Finding": "115",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-11-25T00:00:00.000+01:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "145",
+      "All Reviews submitted": "17",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "64",
+      "Completed in DA_Review_Finding": "117",
+      "Completed in DA_Review_Finding_Test": "72"
+    },
+    {
+      "_time": "2022-11-28T00:00:00.000+01:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "145",
+      "All Reviews submitted": "17",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "64",
+      "Completed in DA_Review_Finding": "117",
+      "Completed in DA_Review_Finding_Test": "72"
+    },
+    {
+      "_time": "2022-11-29T00:00:00.000+01:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "145",
+      "All Reviews submitted": "17",
+      "Reviews partly completed": "61",
+      "All Reviews completed": "64",
+      "Completed in DA_Review_Finding": "116",
+      "Completed in DA_Review_Finding_Test": "73"
+    },
+    {
+      "_time": "2022-11-30T00:00:00.000+01:00",
+      "Not reviewed": "52",
+      "Reviews partly submitted": "145",
+      "All Reviews submitted": "17",
+      "Reviews partly completed": "62",
+      "All Reviews completed": "63",
+      "Completed in DA_Review_Finding": "116",
+      "Completed in DA_Review_Finding_Test": "72"
+    },
+    {
+      "_time": "2022-12-01T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-02T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-03T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-05T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-06T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-07T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-08T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-09T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-11T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-12T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "147",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "60",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "112",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-13T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-14T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-15T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-16T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-17T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-18T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-19T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-20T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-21T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-22T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-23T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-24T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-25T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-26T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-27T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-28T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-29T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-30T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2022-12-31T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-01T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-02T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-03T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-04T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-05T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-06T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-07T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-08T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-09T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-10T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-11T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    },
+    {
+      "_time": "2023-01-12T00:00:00.000+01:00",
+      "Not reviewed": "53",
+      "Reviews partly submitted": "153",
+      "All Reviews submitted": "19",
+      "Reviews partly completed": "54",
+      "All Reviews completed": "61",
+      "Completed in DA_Review_Finding": "106",
+      "Completed in DA_Review_Finding_Test": "70"
+    }
+  ],
+  "highlighted": {}
+}

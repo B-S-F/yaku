@@ -1,0 +1,5 @@
+checks:
+  - name: has_good_coverage
+    ref: $.totals.percent_covered
+    condition: ($) >= 80
+    false: YELLOW

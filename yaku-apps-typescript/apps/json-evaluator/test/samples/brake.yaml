@@ -1,0 +1,12 @@
+checks:
+  - name: not_reviewed_check
+    ref: $.results[*]
+    condition: all(ref, "$.Not_reviewed === 0")
+    log: $._time
+  - name: partly_completed_check
+    ref: $.results[*]
+    condition: all(ref, "$.Reviews_partly_completed === 0")
+    log: $._time
+    false: YELLOW
+concatenation:
+  condition: 'not_reviewed_check && partly_completed_check'
