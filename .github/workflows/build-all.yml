@@ -26,21 +26,8 @@ jobs:
           disk-cache: ${{ github.workflow }}
           repository-cache: true
 
-      - name: Build with Bazel
-        run: bazel build //...
-
-      - name: Test Chart
-        run: bazel test //chart/...
-
-      - name: Test Core Image
-        run: bazel test //core-image/...
-
-      - name: Test Onyx
-        run: bazel test //onyx/...
-
-      - name: Test Python apps
-        continue-on-error: true # currently failing
-        run: bazel test //yaku-apps-python/...
+      - name: Build and Test
+        run: bazel test //...
 
       ####
       ## only on push to main
