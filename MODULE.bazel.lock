@@ -721,8 +721,8 @@
     },
     "@@aspect_rules_swc~//swc:extensions.bzl%swc": {
       "general": {
-        "bzlTransitiveDigest": "TbNx9N6C0WGH06VDrkwGWsUz2+0uP6HZewBFx2FPi7U=",
-        "usagesDigest": "I12B8y1GweXaEB8kYiNXGj6uMQZBJkRwINAgCnhtAt8=",
+        "bzlTransitiveDigest": "3apbvYWdvAuuh7WuuMR7QSBcZYajPR7jtSA8iESt50s=",
+        "usagesDigest": "pMCso+slVcMyBlJn3uJ7jhllxJJUYHvt/aS1jUVyCsE=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -732,7 +732,7 @@
             "ruleClassName": "swc_repositories",
             "attributes": {
               "platform": "linux-arm64-gnu",
-              "swc_version": "v1.3.42"
+              "swc_version": "v1.6.6"
             }
           },
           "swc_win32-ia32-msvc": {
@@ -740,7 +740,7 @@
             "ruleClassName": "swc_repositories",
             "attributes": {
               "platform": "win32-ia32-msvc",
-              "swc_version": "v1.3.42"
+              "swc_version": "v1.6.6"
             }
           },
           "swc_toolchains": {
@@ -755,7 +755,7 @@
             "ruleClassName": "swc_repositories",
             "attributes": {
               "platform": "win32-arm64-msvc",
-              "swc_version": "v1.3.42"
+              "swc_version": "v1.6.6"
             }
           },
           "swc_darwin-x64": {
@@ -763,7 +763,7 @@
             "ruleClassName": "swc_repositories",
             "attributes": {
               "platform": "darwin-x64",
-              "swc_version": "v1.3.42"
+              "swc_version": "v1.6.6"
             }
           },
           "swc_linux-x64-gnu": {
@@ -771,7 +771,7 @@
             "ruleClassName": "swc_repositories",
             "attributes": {
               "platform": "linux-x64-gnu",
-              "swc_version": "v1.3.42"
+              "swc_version": "v1.6.6"
             }
           },
           "swc_win32-x64-msvc": {
@@ -779,7 +779,7 @@
             "ruleClassName": "swc_repositories",
             "attributes": {
               "platform": "win32-x64-msvc",
-              "swc_version": "v1.3.42"
+              "swc_version": "v1.6.6"
             }
           },
           "swc_darwin-arm64": {
@@ -787,7 +787,7 @@
             "ruleClassName": "swc_repositories",
             "attributes": {
               "platform": "darwin-arm64",
-              "swc_version": "v1.3.42"
+              "swc_version": "v1.6.6"
             }
           }
         },
@@ -796,6 +796,42 @@
             "aspect_rules_swc~",
             "bazel_skylib",
             "bazel_skylib~"
+          ]
+        ]
+      }
+    },
+    "@@aspect_rules_ts~//ts:extensions.bzl%ext": {
+      "general": {
+        "bzlTransitiveDigest": "rarN68WhRSFK9alnizJv8je3hABG85EjJmvUYWaxC0w=",
+        "usagesDigest": "zn1H5YroLfNpLgPAFCwa7Fd8a07rDt4Ame30MkBjrD0=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "npm_typescript": {
+            "bzlFile": "@@aspect_rules_ts~//ts/private:npm_repositories.bzl",
+            "ruleClassName": "http_archive_version",
+            "attributes": {
+              "bzlmod": true,
+              "version": "",
+              "version_from": "@@//qg-api-service/qg-api-service:package.json",
+              "integrity": "",
+              "build_file": "@@aspect_rules_ts~//ts:BUILD.typescript",
+              "build_file_substitutions": {
+                "bazel_worker_version": "5.4.2",
+                "google_protobuf_version": "3.20.1"
+              },
+              "urls": [
+                "https://registry.npmjs.org/typescript/-/typescript-{}.tgz"
+              ]
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "aspect_rules_ts~",
+            "bazel_tools",
+            "bazel_tools"
           ]
         ]
       }
