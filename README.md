@@ -70,10 +70,10 @@ bazel test //...
 
 For the CI/CD pipeline, GitHub Actions is used. The workflow is defined in `.github/workflows/build-all.yml`.
 
-### Bazel Remote caching and remote execution
+#### Bazel Remote caching and remote execution
 Remote caching and remote execution in Bazel are powerful features that enhance build efficiency and speed. Remote caching allows Bazel to store build outputs on a server, enabling reuse of these outputs across different builds and machines, which reduces redundant computations and speeds up the build process. Remote execution, on the other hand, offloads the execution of build actions to remote servers, distributing the workload and further accelerating the build process.
 
-### BuildBuddy
+#### BuildBuddy
 Incorporating BuildBuddy into your GitHub workflow leverages these capabilities by integrating a remote cache and execution service directly into your CI/CD pipeline. This setup ensures that builds are consistently fast and reliable, as BuildBuddy manages the caching and execution of build actions, optimizing resource usage and minimizing build times
 
 It is not require for contributers to have a BuildBuddy account. The BuildBuddy instance is hosted by the project owner.
