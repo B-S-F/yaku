@@ -1,4 +1,4 @@
-# yaku
+# Yaku
 !! THIS PROJECT IS UNDER CONSTRUCTION !!
 
 <img src="./misc/under-construction.jpg" alt="Under Construction" width="300"/>  
