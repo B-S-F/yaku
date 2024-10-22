@@ -16,7 +16,7 @@ import {
 } from './approvals.entity'
 import { ApprovalService } from './approvals.service'
 import { SubscriptionModule } from '../../subscriptions/subscription.module'
-import { NotificationModule } from 'src/notifications/notification.module'
+import { NotificationModule } from '../../../notifications/notification.module'
 
 @Module({
   imports: [
