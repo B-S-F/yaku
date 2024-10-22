@@ -1,5 +1,6 @@
 # Yaku
-[![Build all](https://github.com/B-S-F/yaku/actions/workflows/build-all.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build-all.yml)
+[![Build all](https://github.com/B-S-F/yaku/actions/workflows/build-all.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build-all.yml)  
+[Our BuildBuddy dashboard](https://yaku.buildbuddy.io)
 
 !! THIS PROJECT IS UNDER CONSTRUCTION !!
 
