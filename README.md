@@ -54,7 +54,7 @@ Afterwards you are able to [join our organization](https://yaku.buildbuddy.io/jo
 | Component   | Build | Test | Artifact Upload | Comments                                                                         |
 |-------------|-----|------|-----------------|----------------------------------------------------------------------------------|
 | Onyx        | ✔️  | ✔️   |                 |                                                                                  |
-| API         |     |      |                 |                                                                                  |
+| Core-API    |     |      |                 |                                                                                  |
 | Chart       | ✔️  | ✔️   | ✔️              |                                                                                  |
 | Core-image  |(✔️) |      | ✔️️             | build works but not complete                                                     |
 | Python apps | ✔️  | ✔️   | ️               |                                                                                  |
@@ -76,7 +76,16 @@ Afterwards you are able to [join our organization](https://yaku.buildbuddy.io/jo
 ### Python Apps
 - see https://github.com/B-S-F/yaku/tree/main/yaku-apps-python
 
-...
+### Core-Api
+Update dependencies with the following command (executed from root):
+```bash
+bazel run -- @pnpm//:pnpm --dir $PWD install --lockfile-only
+```
+
+Run the servie with:
+```bash
+bazel run //qg-api-service/qg-api-service:bin
+```
 
 ## Misc
 ### Dependency graph
