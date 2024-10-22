@@ -6,3 +6,4 @@ build:ci --remote_timeout=3600
 build:ci --experimental_remote_cache_compression
 build:ci --experimental_remote_cache_compression_threshold=100
 build:ci --nolegacy_important_outputs
+build:ci --remote_executor=grpcs://yaku.buildbuddy.io
