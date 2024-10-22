@@ -1,0 +1,6 @@
+<footer class="small legend">
+  <%_ for (const status of utils.statuses) { _%>
+    <%- include('status-icon.ejs', { status }) %> <div><%= utils.mapTooltip(status) %></div>
+  <%_ } _%>
+  <span style="justify-self: end;">*</span> <div>Manual status</div>
+</footer>

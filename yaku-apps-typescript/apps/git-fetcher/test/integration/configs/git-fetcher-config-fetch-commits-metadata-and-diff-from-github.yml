@@ -1,0 +1,7 @@
+org: aquatest
+repo: github-fetcher-test-repo
+resource: metadata-and-diff
+filter:
+  startHash: afeaebf412c6d0b865a36cfdec37fdb46c0fab63
+  endHash: 8036cf75f4b7365efea76cbd716ef12d352d7d29
+filePath: apps/git-fetcher/src/fetchers/git-fetcher.ts

@@ -1,0 +1,35 @@
+load("@aspect_rules_py//py:defs.bzl", "py_binary")
+load("@rules_python//python:packaging.bzl", "py_package", "py_wheel")
+load("//tools/pytest-runner:defs.bzl", "py_pytest_test")
+
+py_binary(
+    name = "papsr",
+    srcs = glob(["src/**/*.py"]) + ["src/yaku/papsr/_version.txt"],
+    imports = ["src"],
+    main = "src/yaku/papsr/cli.py",
+    deps = [
+        "//yaku-apps-python/packages/autopilot-utils:lib",
+        "@pip//beautifulsoup4",
+        "@pip//jira",
+        "@pip//loguru",
+        "@pip//openpyxl",
+        "@pip//pandas",
+        "@pip//pydantic",
+        "@pip//pyhanko",
+        "@pip//pypdf",
+        "@pip//pytest",
+        "@pip//pyyaml",
+        "@pip//requests",
+        "@pip//xlrd",
+    ],
+)
+
+py_pytest_test(
+    name = "test",
+    srcs = glob(["tests/*.py"]),
+    deps = [
+        ":papsr",
+        "@pip//mock",
+        "@pip//pytest_mock",
+    ],
+)

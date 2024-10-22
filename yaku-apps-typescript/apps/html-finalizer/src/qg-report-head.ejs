@@ -1,0 +1,383 @@
+<meta charset="utf-8"/>
+<style>
+  :root {
+    --gray-60: #8a9097;
+    --gray-95: #eff1f2;
+
+    --blue-50: #007bc0;
+    --blue-90: #d1e4ff;
+
+    --turquoise-30: #0a4f4b;
+    --turquoise-50: #18837e;
+    --turquoise-70: #66b8b2;
+
+    --red-50: #ed0007;
+    --red-90: #ffd9d9;
+
+    --green-50: #00884a;
+    --green-90: #b8efc9;
+
+    --yellow-90: #ffdf95;
+    --yellow-85: #ffcf00;
+
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+
+    -webkit-print-color-adjust: exact; 
+    color-adjust: exact;
+  }
+
+  .minor-signal-neutral {
+    fill: var(--blue-90);
+  }  
+  
+  .minor-signal-error {
+    fill: var(--red-90);
+  }
+
+  .minor-signal-warning {
+    fill: var(--yellow-90);
+  }
+
+  .minor-signal-success {
+    fill: var(--green-90);
+  }
+
+  .major-signal-neutral {
+    fill: var(--blue-50);
+  } 
+  
+  .major-signal-neutral__front {
+    fill: #fff;
+  }
+  
+  .major-signal-error {
+    fill: var(--red-50);
+  }
+
+  .major-signal-error__front {
+    fill: #fff;
+  }
+
+  .major-signal-warning {
+    fill: var(--yellow-85);
+  }
+
+  .major-signal-warning__front {
+    fill: #000;
+  }
+
+  .major-signal-success {
+    fill: var(--green-50);
+  }
+
+  .major-signal-success__front {
+    fill: #fff;
+  }
+
+  :root,
+  html,
+  title {
+    font-family: Ubuntu, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+
+  a {
+    color: var(--blue-50);
+    text-decoration: none;
+  }
+
+  th,
+  td {
+    padding: .5rem;
+    vertical-align: top;
+    word-break: break-all;
+  }
+
+  .id {
+    word-break: keep-all;
+    white-space: nowrap;
+  }
+
+  th {
+    text-align: start;
+    white-space: nowrap;
+  }
+
+  tbody tr:last-child td,
+  tbody tr:last-child th {
+    border-bottom: none;
+  }
+
+  td,
+  th,
+  thead~tbody tr:last-child td {
+    border-bottom: 1px solid var(--gray-60);
+  }
+
+  thead th {
+    border-bottom: 1px solid #000;
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 1rem 0;
+  }
+
+  thead {
+    position: sticky;
+    top: 0;
+    background: #fff;
+  }
+
+  tr,
+  tr * {
+    page-break-inside: avoid;
+  }
+
+  body {
+    margin: 2cm;
+    padding: 0;
+  }
+
+  p, ul {
+    margin: 0;
+  }
+
+  p+p, ul+p, p+ul {
+    margin-top: 1em;
+  }
+
+  .small, .sources {
+    font-size: .75rem;
+  }
+
+  .normal {
+    font-size: 1rem;
+  }
+
+  .centered {
+    text-align: center;
+  }
+
+  .nospace {
+    position: absolute;
+    z-index: 1;
+    transform: translateX(.25rem);
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0;
+    margin-bottom: -0.5rem;
+    vertical-align: top;    
+  }
+
+  .icon[data-icon^="text-"] {
+    width: 3rem;
+  }
+
+  h3 .icon[data-icon^="text-"] {
+    display: none;
+  }
+
+  ul.sources {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 0;
+  }
+
+  h2, h3 {
+    margin: 1em 0;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  h3 .status-icon {
+    float: right;
+    font-weight: normal;
+    font-size: 1rem;
+    white-space: nowrap;
+    margin-left: .25rem;
+  }
+
+  .capture-filter-box {
+    position: fixed;
+    display: none;
+    z-index: 1001;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .logs-header {
+    background: #999;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 0.5em 1em;
+    margin-bottom: 0px;
+    font-weight: bold;
+    border-radius: 0.5em 0.5em 0em 0em;
+    font-size: 0.7rem;
+  }
+
+  .error-logs {
+    background: rgb(119, 14, 14);
+  }
+
+  pre.logs {
+    background: #333;
+    font-size: 0.7rem;
+    color: white;
+    padding: 1em;
+    margin-top: 0;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    border-radius: 0em 0em 0.5em 0.5em;
+  }
+
+  .toggle-hidden::before {
+    content: "▶ "
+  }
+
+  .toggle-hidden::after {
+    content: " (click to expand)"
+  }
+
+  .toggle-expanded::before {
+    content: "▼ "
+  }
+
+  .toggle-expanded::after {
+    content: " (click to minimize) "
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .legend {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-auto-rows: 1.5rem;
+    gap: .25rem .5rem;
+    vertical-align: bottom;
+    margin-top: 2rem;
+    page-break-inside: avoid;
+  }
+
+  .legend .icon {
+    margin: 0;
+  }
+
+  .legend > span {
+    justify-self: center;
+  }
+
+  .legend > * {
+    align-self: center;
+  }
+
+  .marked table, .marked thead {
+    background-color: var(--gray-95);
+  }
+
+  /* === Bar chart === */
+
+  .bar-chart {
+    display: flex;
+    align-content: stretch;
+  }
+
+  .bar-chart > * + * {
+    outline: 2px solid #fff;
+    background-color: var(--gray-60);
+    height: 1.5rem;
+  }
+
+  .bar-chart-legend:first-of-type {
+    margin-left: .5rem;
+  }
+
+  .bar-chart-legend {
+    white-space: nowrap;
+    margin-right: .5rem;
+  }
+
+  .bar-chart-legend__symbol {
+    display: inline-block;
+    width: .75rem;
+    height: .75rem;
+    border-radius: .375rem;
+  }
+
+  [data=auto] {
+    background-color: var(--turquoise-30);
+  }
+
+  [data=manual] {
+    background-color: var(--turquoise-50);
+  }
+
+  [data=unanswered] {
+    background-color: var(--turquoise-70);
+  }
+
+  [data=GREEN] {
+    background-color: var(--green-50);
+  }
+
+  [data=YELLOW] {
+    background-color: var(--yellow-85);
+  }
+
+  [data=RED] {
+    background-color: var(--red-50);
+  }
+
+  [data=NA] {
+    background-color: var(--blue-50);
+  }
+
+  [data=empty] {
+    background-color: var(--gray-95);
+  }
+
+  @media print {
+    :root {
+      font-size: 10pt;
+    }
+
+    body,
+    html {
+      margin: 0 2cm;
+    }
+
+    .no-print,
+    .no-print * {
+      display: none !important;
+    }
+  }
+
+  @page {
+    margin: 2cm 0;
+    font-family: Ubuntu, Helvetica, Arial, sans-serif;
+  }
+</style>
+<script lang="javascript">
+  function toggleNextSibling(source) {
+    source.classList.toggle("toggle-hidden")
+    source.classList.toggle("toggle-expanded")
+    source.nextElementSibling.classList.toggle("hidden")
+  }
+</script>

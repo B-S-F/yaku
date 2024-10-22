@@ -1,0 +1,50 @@
+{
+  "name": "@B-S-F/ado-work-items-fetcher",
+  "version": "0.7.2",
+  "author": "",
+  "bin": {
+    "ado-work-items-fetcher": "dist/index.js"
+  },
+  "dependencies": {
+    "@B-S-F/autopilot-utils": "^0.11.0",
+    "@B-S-F/issue-validators": "^0.1.0",
+    "axios": "^1.6.0",
+    "is-valid-hostname": "^1.0.2",
+    "tunnel": "^0.0.6",
+    "yaml": "^1.10.2",
+    "zod": "^3.22.3",
+    "zod-error": "^1.5.0"
+  },
+  "description": "",
+  "devDependencies": {
+    "@B-S-F/eslint-config": "*",
+    "@B-S-F/typescript-config": "*",
+    "@types/node": "*",
+    "@types/tunnel": "^0.0.2",
+    "@vitest/ui": "*",
+    "c8": "*",
+    "eslint": "*",
+    "prettier": "*",
+    "tsup": "*",
+    "typescript": "*",
+    "vitest": "*"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "start": "node ./dist/index.js",
+    "lint": "eslint '**/*.ts'",
+    "format": "prettier --write '**/*.{ts,md}'",
+    "test:integration:local": "npx rimraf dist && npm run build && npm run test:integration:ci",
+    "test:integration:ci": "npx vitest run --config vitest-integration.config.ts",
+    "test": "vitest run && npm run test:update-cobertura-file",
+    "test:update-cobertura-file": "sed -i'.bak' 's,package name=\",package name=\"'${npm_package_name}/',g' coverage/cobertura-coverage.xml",
+    "test:dev": "vitest -w",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui"
+  }
+}

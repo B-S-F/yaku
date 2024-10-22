@@ -1,0 +1,48 @@
+{
+  "name": "@B-S-F/defender-for-cloud",
+  "version": "0.3.1",
+  "description": "",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsup",
+    "dev": "nodemon --watch \"src/**\" --exec npm run start",
+    "lint": "eslint '**/*.ts'",
+    "start": "npm run build && node ./dist/index.js",
+    "test:coverage": "vitest --coverage",
+    "test:dev": "vitest -w",
+    "test:ui": "vitest --ui",
+    "test:update-cobertura-file": "sed -i'.bak' 's,package name=\",package name=\"'${npm_package_name}/',g' coverage/cobertura-coverage.xml",
+    "test": "vitest run && npm run test:update-cobertura-file",
+    "test:integration:local": "npx rimraf dist && npm run build && npm run test:integration:ci",
+    "test:integration:ci": "npx vitest run --config vitest-integration.config.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "BIOSLv4",
+  "devDependencies": {
+    "@B-S-F/eslint-config": "*",
+    "@B-S-F/typescript-config": "*",
+    "@types/node": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@vitest/coverage-v8": "*",
+    "@vitest/ui": "*",
+    "c8": "*",
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "nodemon": "*",
+    "prettier": "*",
+    "tsup": "*",
+    "typescript": "*",
+    "vitest": "*"
+  },
+  "dependencies": {
+    "@B-S-F/autopilot-utils": "^0.11.0",
+    "axios": "^1.6.0",
+    "qs": "^6.11.0"
+  },
+  "bin": {
+    "defender-for-cloud": "dist/index.js"
+  }
+}

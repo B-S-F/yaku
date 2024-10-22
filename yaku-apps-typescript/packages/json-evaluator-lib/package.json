@@ -1,0 +1,48 @@
+{
+  "name": "@B-S-F/json-evaluator-lib",
+  "version": "0.9.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsup && cp src/index.d.ts dist",
+    "dev": "nodemon --watch \"src/**\" --exec npm run start",
+    "start": "node ./dist/index.js",
+    "lint": "eslint '**/*.ts'",
+    "format": "prettier --write '**/*.{ts,md}'",
+    "test": "vitest run && npm run test:update-cobertura-file",
+    "test:update-cobertura-file": "sed -i'.bak' 's,package name=\",package name=\"'${npm_package_name}/',g' coverage/cobertura-coverage.xml",
+    "test:dev": "vitest -w",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@B-S-F/eslint-config": "*",
+    "@B-S-F/typescript-config": "*",
+    "@types/jsonpath": "^0.2.0",
+    "@types/node": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "c8": "*",
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "prettier": "*",
+    "tsup": "*",
+    "typescript": "*",
+    "vitest": "*"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "colors": "1.4.0",
+    "isolated-vm": "^4.6.0",
+    "jsonpath": "^1.1.1",
+    "yaml": "^2.2.1",
+    "zod": "^3.22.3"
+  }
+}

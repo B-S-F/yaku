@@ -1,0 +1,16 @@
+{
+  "extends": "@B-S-F/typescript-config/base.json",
+  "ts-node": {
+    "compilerOptions": {
+      "module": "ESNext"
+    }
+  },
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "verbose": false
+  },
+  "include": ["src"]
+}

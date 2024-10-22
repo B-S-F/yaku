@@ -1,0 +1,26 @@
+<table>
+  <tbody>
+    <% if (locals.metadata && locals.metadata.version) { %>
+      <tr>
+        <th scope="row">
+          Configuration
+        </th>
+        <td>
+          <%= metadata.version %>
+        </td>
+      </tr>
+    <% } %>
+    <%_ for (const { key, label } of utils.headerDisplayOrder) { _%>
+      <% if (header[key]) { %>
+        <tr>
+          <th scope="row">
+            <%= label %>
+          </th>
+          <td>
+            <%= header[key] %>
+          </td>
+        </tr>
+      <% } %>
+    <%_ } _%>
+  </tbody>
+</table>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>QG <%= header.name %></title>
+    <%- include('qg-report-head.ejs') %>
+  </head>
+
+  <body style="position: relative;">
+    <%- include('qg-report-body.ejs') %>
+
+    <h1><%= header.name %></h1>
+
+    <%- include('qg-header.ejs') %>
+
+    <% if (locals.metadata && locals.metadata.version) { %>
+      <%- include('qg-dashboard-section.ejs') %>
+    <% } else { %>
+      <%- include('qg-dashboard-section-old.ejs') %>
+    <% } %>
+
+    <p>
+      <a href="qg-result.html">
+        <svg class="icon" version="2.0">
+          <use href="#icon-arrow-right-frame" />
+        </svg>
+        Breakdown of results
+      </a>
+    </p>
+  </body>
+</html>

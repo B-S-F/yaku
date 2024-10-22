@@ -1,0 +1,64 @@
+{
+  "workItems": [
+    {
+      "Id": 2,
+      "Url": "https://dev.azure.com/ddt99/00000000-0000-0000-0000-0000000000/_workitems/edit/2",
+      "State": "Done",
+      "Title": "Create fetcher",
+      "AssignedTo": {
+        "displayName": "Name",
+        "url": "",
+        "_links": {
+          "avatar": {
+            "href": ""
+          }
+        },
+        "id": "",
+        "uniqueName": "username@example.com",
+        "imageUrl": "",
+        "descriptor": ""
+      },
+      "children": []
+    },
+    {
+      "Id": 3,
+      "Url": "https://dev.azure.com/ddt99/00000000-0000-0000-0000-0000000000/_workitems/edit/3",
+      "State": "To Do",
+      "Title": "Create evaluator",
+      "AssignedTo": {
+        "displayName": "Name",
+        "url": "",
+        "_links": {
+          "avatar": {
+            "href": ""
+          }
+        },
+        "id": "",
+        "uniqueName": "username@example.com",
+        "imageUrl": "",
+        "descriptor": ""
+      },
+      "children": []
+    },
+    {
+      "Id": 4,
+      "Url": "https://dev.azure.com/ddt99/00000000-0000-0000-0000-0000000000/_workitems/edit/4",
+      "State": "To Do",
+      "Title": "Integrate into QG CLI",
+      "AssignedTo": {
+        "displayName": "Name",
+        "url": "",
+        "_links": {
+          "avatar": {
+            "href": ""
+          }
+        },
+        "id": "",
+        "uniqueName": "username@example.com",
+        "imageUrl": "",
+        "descriptor": ""
+      },
+      "children": []
+    }
+  ]
+}

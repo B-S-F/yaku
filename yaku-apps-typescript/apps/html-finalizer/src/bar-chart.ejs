@@ -1,0 +1,5 @@
+<div class="bar-chart">
+<%_ for (const [name, value] of data) { _%>
+  <div style="width: <%- value / count * 100 %>%;" data="<%-name%>"></div>
+<%_ } _%>
+</div>

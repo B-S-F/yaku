@@ -1,0 +1,3 @@
+test/integration/input/v0/*.html
+test/integration/input/v1/*.html
+test/integration/input/v1-with-logs/*.html

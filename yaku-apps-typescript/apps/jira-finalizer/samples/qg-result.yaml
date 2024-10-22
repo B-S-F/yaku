@@ -1,0 +1,50 @@
+header:
+  name: MACMA
+  version: 1.16.0
+  date: 2022-11-03 14:25:14 CET
+  qgCliVersion: 0.5.1:292e15027d5be1210989d1f3952467d5c97a78b6
+allocations:
+  '1':
+    title: Project management
+    requirements:
+      '1.15':
+        title: ROM/RAM usage is within defined budget
+        text: 'ROM/RAM usage is within defined budget '
+        checks:
+          '1':
+            title: Retrieve and check ROM/RAM usage from Splunk
+            reports:
+              - reportType: splunk
+                componentResults:
+                  - component:
+                      version: 1.16.5
+                      id: webApp
+                    evidencePath: splunk-autopilot/webApp
+                    status: GREEN
+                    comments: []
+                    sources:
+                      - oneqUpload: samples/sample-response-oneq.json
+                      - oneqUpload: .gitignore
+                      - jiraUpload: jira-finalizer-config.yaml
+                      - test
+            id: '1'
+            checks: {}
+          '2':
+            title: Retrieve and check ROM/RAM usage from Splunk
+            reports:
+              - reportType: splunk
+                componentResults:
+                  - component:
+                      version: 1.16.5
+                      id: webApp
+                    evidencePath: splunk-autopilot/webApp
+                    status: GREEN
+                    comments: []
+                    sources: []
+            id: '2'
+            checks: {}
+        id: '1.15'
+        status: GREEN
+    id: '1'
+    status: GREEN
+overallStatus: GREEN

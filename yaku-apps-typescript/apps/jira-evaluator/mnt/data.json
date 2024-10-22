@@ -1,0 +1,83 @@
+[
+  {
+    "url": "https://tracker.example.com/tracker/browseXXXXX297",
+    "summary": "Release  v1.5.3",
+    "issuetype": {
+      "self": "https://tracker.example.com/tracker/rest/api/2/issuetype/2",
+      "id": "2",
+      "description": "A new feature of the product, which has yet to be developed.",
+      "iconUrl": "https://tracker.example.com/tracker/secure/viewavatar?size=xsmall&avatarId=24711&avatarType=issuetype",
+      "name": "New Feature",
+      "subtask": false,
+      "avatarId": 24711
+    },
+    "status": {
+      "self": "https://tracker.example.com/tracker/rest/api/2/status/6",
+      "description": "The issue is considered finished, the resolution is correct. Issues which are closed can be reopened.",
+      "iconUrl": "https://tracker.example.com/tracker/images/icons/statuses/closed.png",
+      "name": "Closed",
+      "id": "6",
+      "statusCategory": {
+        "self": "https://tracker.example.com/tracker/rest/api/2/statuscategory/3",
+        "id": 3,
+        "key": "done",
+        "colorName": "green",
+        "name": "Done"
+      }
+    }
+  },
+  {
+    "url": "https://tracker.example.com/tracker/browseXXXXX295",
+    "summary": "Implement index files with search and filter functionality for IDs and DOCs",
+    "issuetype": {
+      "self": "https://tracker.example.com/tracker/rest/api/2/issuetype/2",
+      "id": "2",
+      "description": "A new feature of the product, which has yet to be developed.",
+      "iconUrl": "https://tracker.example.com/tracker/secure/viewavatar?size=xsmall&avatarId=24711&avatarType=issuetype",
+      "name": "New Feature",
+      "subtask": false,
+      "avatarId": 24711
+    },
+    "status": {
+      "self": "https://tracker.example.com/tracker/rest/api/2/status/6",
+      "description": "The issue is considered finished, the resolution is correct. Issues which are closed can be reopened.",
+      "iconUrl": "https://tracker.example.com/tracker/images/icons/statuses/closed.png",
+      "name": "Closed",
+      "id": "6",
+      "statusCategory": {
+        "self": "https://tracker.example.com/tracker/rest/api/2/statuscategory/3",
+        "id": 3,
+        "key": "done",
+        "colorName": "green",
+        "name": "Done"
+      }
+    }
+  },
+  {
+    "url": "https://tracker.example.com/tracker/browseXXXXX294",
+    "summary": "Release  v1.5.2",
+    "issuetype": {
+      "self": "https://tracker.example.com/tracker/rest/api/2/issuetype/2",
+      "id": "2",
+      "description": "A new feature of the product, which has yet to be developed.",
+      "iconUrl": "https://tracker.example.com/tracker/secure/viewavatar?size=xsmall&avatarId=24711&avatarType=issuetype",
+      "name": "New Feature",
+      "subtask": false,
+      "avatarId": 24711
+    },
+    "status": {
+      "self": "https://tracker.example.com/tracker/rest/api/2/status/6",
+      "description": "The issue is considered finished, the resolution is correct. Issues which are closed can be reopened.",
+      "iconUrl": "https://tracker.example.com/tracker/images/icons/statuses/closed.png",
+      "name": "Closed",
+      "id": "6",
+      "statusCategory": {
+        "self": "https://tracker.example.com/tracker/rest/api/2/statuscategory/3",
+        "id": 3,
+        "key": "done",
+        "colorName": "green",
+        "name": "Done"
+      }
+    }
+  }
+]

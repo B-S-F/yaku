@@ -1,0 +1,5 @@
+org: aquatest
+repo: github-fetcher-test-repo
+resource: prs
+labels:
+  - ignore

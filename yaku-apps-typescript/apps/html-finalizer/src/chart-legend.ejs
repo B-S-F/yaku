@@ -1,0 +1,27 @@
+<%_
+let sumOfPercentages = 0;
+// Calculate percentages for each entry
+const initialPercentages = data.map(([name, value]) => (value / count) * 100);
+const roundedPercentages = initialPercentages.map((percentage) => Math.floor(percentage));
+// Calculate the sum of percentages
+sumOfPercentages = roundedPercentages.reduce((sum, percentage) => sum + percentage, 0);
+// Calculate the remaining percentage to reach 100%
+const remainingPercentage = 100 - sumOfPercentages;
+// Identify the entries with their decimal parts
+const entriesWithDecimalParts = initialPercentages.map((percentage, index) => ({ index, decimalPart: percentage % 1 }));
+// Sort entries in decreasing order of their decimal parts
+entriesWithDecimalParts.sort((a, b) => b.decimalPart - a.decimalPart);
+// Distribute the remaining percentage by adding 1 to items in decreasing order of their decimal parts
+for (let i = 0; i < remainingPercentage; i++) {
+  roundedPercentages[entriesWithDecimalParts[i].index]++;
+}
+// Render the legend entries
+for (let i = 0; i < data.length; i++) {
+  const [name, value] = data[i];
+  const percentage = roundedPercentages[i];
+%>
+  <span class="bar-chart-legend">
+    <span class="bar-chart-legend__symbol" data="<%-name%>"></span>
+    <strong><%- percentage %>&nbsp;%</strong> <%= labels[name] %>
+  </span>
+<%_ } _%>

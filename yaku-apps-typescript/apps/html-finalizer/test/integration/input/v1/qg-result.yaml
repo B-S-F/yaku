@@ -1,0 +1,473 @@
+metadata:
+  version: v1
+header:
+  name: ''
+  version: ''
+  date: 2023-11-16 18:05
+  toolVersion: 0.6.1
+overallStatus: ERROR
+statistics:
+  counted-checks: 24
+  counted-automated-checks: 18
+  counted-manual-check: 5
+  counted-unanswered-checks: 1
+  counted-skipped-checks: 0
+  degree-of-automation: 75
+  degree-of-completion: 95.83
+chapters:
+  '1':
+    title: Manual Answers have to be supported
+    status: RED
+    requirements:
+      '1':
+        title: GREEN answer
+        status: GREEN
+        checks:
+          '1':
+            title: GREEN answer check
+            status: GREEN
+            type: Manual
+            evaluation:
+              status: GREEN
+              reason: It should be GREEN
+      '2':
+        title: YELLOW answer
+        status: YELLOW
+        checks:
+          '1':
+            title: YELLOW answer check
+            status: YELLOW
+            type: Manual
+            evaluation:
+              status: YELLOW
+              reason: It should be YELLOW
+      '3':
+        title: RED answer
+        status: RED
+        checks:
+          '1':
+            title: RED answer check
+            status: RED
+            type: Manual
+            evaluation:
+              status: RED
+              reason: It should be RED
+      '4':
+        title: NA answer
+        status: NA
+        checks:
+          '1':
+            title: NA answer check
+            status: NA
+            type: Manual
+            evaluation:
+              status: NA
+              reason: It should be NA
+      '5':
+        title: UNANSWERED answer
+        status: UNANSWERED
+        checks:
+          '1':
+            title: UNANSWERED answer check
+            status: UNANSWERED
+            type: Manual
+            evaluation:
+              status: UNANSWERED
+              reason: It should be UNANSWERED
+  '2':
+    title: Base Interface
+    status: ERROR
+    requirements:
+      '1':
+        title: Base Interface has to be supported
+        text: |
+          The base interface should be supported to retrieve the status from an autopilot
+          The base interface consists of the following properties:
+          - status
+          - reason
+          - outputs
+        status: ERROR
+        checks:
+          1a:
+            title: Status GREEN should be supported
+            status: GREEN
+            type: Automation
+            evaluation:
+              autopilot: status-provider
+              status: GREEN
+              reason: Some reason
+              results:
+                - criterion: I am a criterion
+                  fulfilled: false
+                  justification: I am the justification
+              execution:
+                logs:
+                  - '{"status": "GREEN"}'
+                  - '{"reason": "Some reason"}'
+                  - '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+                evidencePath: 2_1_1a
+                exitCode: 0
+          1b:
+            title: Status YELLOW should be supported
+            status: YELLOW
+            type: Automation
+            evaluation:
+              autopilot: status-provider
+              status: YELLOW
+              reason: Some reason
+              results:
+                - criterion: I am a criterion
+                  fulfilled: false
+                  justification: I am the justification
+              execution:
+                logs:
+                  - '{"status": "YELLOW"}'
+                  - '{"reason": "Some reason"}'
+                  - '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+                evidencePath: 2_1_1b
+                exitCode: 0
+          1c:
+            title: Status RED should be supported
+            status: RED
+            type: Automation
+            evaluation:
+              autopilot: status-provider
+              status: RED
+              reason: Some reason
+              results:
+                - criterion: I am a criterion
+                  fulfilled: false
+                  justification: I am the justification
+              execution:
+                logs:
+                  - '{"status": "RED"}'
+                  - '{"reason": "Some reason"}'
+                  - '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+                evidencePath: 2_1_1c
+                exitCode: 0
+          1d:
+            title: Status NA should be supported
+            status: ERROR
+            type: Automation
+            evaluation:
+              autopilot: status-provider
+              status: ERROR
+              reason: "autopilot 'status-provider' provided an invalid 'status': 'NA'"
+              results:
+                - criterion: I am a criterion
+                  fulfilled: false
+                  justification: I am the justification
+              execution:
+                logs:
+                  - '{"status": "NA"}'
+                  - '{"reason": "Some reason"}'
+                  - '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+                evidencePath: 2_1_1d
+                exitCode: 0
+          1e:
+            title: Status UNANSWERED should be supported
+            status: ERROR
+            type: Automation
+            evaluation:
+              autopilot: status-provider
+              status: ERROR
+              reason: "autopilot 'status-provider' provided an invalid 'status': 'UNANSWERED'"
+              results:
+                - criterion: I am a criterion
+                  fulfilled: false
+                  justification: I am the justification
+              execution:
+                logs:
+                  - '{"status": "UNANSWERED"}'
+                  - '{"reason": "Some reason"}'
+                  - '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+                evidencePath: 2_1_1e
+                exitCode: 0
+          1f:
+            title: If a status is not supported, it should be set to ERROR
+            status: ERROR
+            type: Automation
+            evaluation:
+              autopilot: status-provider
+              status: ERROR
+              reason: "autopilot 'status-provider' provided an invalid 'status': 'UNKNOWN'"
+              results:
+                - criterion: I am a criterion
+                  fulfilled: false
+                  justification: I am the justification
+              execution:
+                logs:
+                  - '{"status": "UNKNOWN"}'
+                  - '{"reason": "Some reason"}'
+                  - '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+                evidencePath: 2_1_1f
+                exitCode: 0
+          1g:
+            title: If a status is empty, it should be set to ERROR
+            status: ERROR
+            type: Automation
+            evaluation:
+              autopilot: status-provider
+              status: ERROR
+              reason: "autopilot 'status-provider' provided an invalid 'status': ''"
+              results:
+                - criterion: I am a criterion
+                  fulfilled: false
+                  justification: I am the justification
+              execution:
+                logs:
+                  - '{"status": ""}'
+                  - '{"reason": "Some reason"}'
+                  - '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+                evidencePath: 2_1_1g
+                exitCode: 0
+          '3':
+            title: Reason should be supported
+            status: FAILED
+            type: Automation
+            evaluation:
+              autopilot: reason-provider
+              status: FAILED
+              reason: This is a reason
+              execution:
+                logs:
+                  - '{"reason": "This is a reason"}'
+                  - '{"status": "FAILED"}'
+                evidencePath: '2_1_3'
+                exitCode: 0
+          '4':
+            title: Outputs should be supported
+            status: GREEN
+            type: Automation
+            evaluation:
+              autopilot: outputs-provider
+              status: GREEN
+              reason: This is a reason
+              results:
+                - criterion: I am a criterion
+                  fulfilled: false
+                  justification: I am the justification
+              outputs:
+                output1: output1_value
+                output2: output2_value
+              execution:
+                logs:
+                  - '{"output": {"output1": "output1_value"}}'
+                  - '{"output": {"output2": "output2_value"}}'
+                  - '{"status": "GREEN", "reason": "This is a reason"}'
+                  - '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+                evidencePath: '2_1_4'
+                exitCode: 0
+          '5':
+            title: Combined json lines with status, reason, and outputs should be supported
+            status: GREEN
+            type: Automation
+            evaluation:
+              autopilot: combined-json-lines
+              status: GREEN
+              reason: This is a reason
+              outputs:
+                output1: output1_value
+                output2: output2_value
+              execution:
+                logs:
+                  - '{"status": "GREEN", "reason": "This is a reason", "output": {"output1": "output1_value", "output2": "output2_value"}}'
+                evidencePath: '2_1_5'
+                exitCode: 0
+          '6':
+            title: Findings should be supported
+            status: GREEN
+            type: Automation
+            evaluation:
+              autopilot: findings-interface
+              status: GREEN
+              reason: This is a reason
+              results:
+                - criterion: I am a criterion
+                  fulfilled: false
+                  justification: I am the reason
+                - criterion: I am a criterion 2
+                  fulfilled: false
+                  justification: I am another reason
+                - criterion: I am a criterion 3
+                  fulfilled: false
+                  justification: I am yet another reason
+                  metadata:
+                    customer: I am customer in metadata
+                    package: I am a package
+                    severity: I am a severity
+              execution:
+                logs:
+                  - '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the reason"}}'
+                  - '{"result": {"criterion": "I am a criterion 2", "fulfilled": false, "justification": "I am another reason"}}'
+                  - '{"result": {"criterion": "I am a criterion 3", "fulfilled": false, "justification": "I am yet another reason", "metadata": {"customer": "I am customer in metadata", "package": "I am a package", "severity": "I am a severity"}}}'
+                  - '{"status": "GREEN", "reason": "This is a reason"}'
+                evidencePath: '2_1_6'
+                exitCode: 0
+          '7':
+            title: Can provide handle escape characters in a string
+            status: RED
+            type: Automation
+            evaluation:
+              autopilot: escape-characters-autopilot
+              status: RED
+              reason: ''
+              results:
+                - criterion: "criterion is \b \f \n \r \t \n \\ \" \\n"
+                  fulfilled: true
+                  justification: "reason is \b \f \n \r \t \n \\ \" \\n"
+              execution:
+                logs:
+                  - '{"result": {"criterion": "criterion is \b \f \n \r \t \u000A \\ \" \\n", "fulfilled": true, "justification": "reason is \b \f \n \r \t \u000A \\ \" \\n"}}'
+                  - '{"status": "RED"}'
+                evidencePath: '2_1_7'
+                exitCode: 0
+          '8':
+            title: Can provide handle new line characters in a string
+            status: GREEN
+            type: Automation
+            evaluation:
+              autopilot: new-line-autopilot
+              status: GREEN
+              reason: |-
+                reas
+                on
+              results:
+                - criterion: |-
+                    crit
+                    erion
+                  fulfilled: true
+                  justification: |-
+                    reas
+                    on
+                  metadata:
+                    "cust\tomer": |-
+                      cust
+                      omer metadata
+              outputs:
+                "outputkeywith\tinit": |-
+                  Output value with
+                  in it
+              execution:
+                logs:
+                  - '{"status": "GREEN"}'
+                  - '{"reason": "reas\non"}'
+                  - '{"result": {"criterion": "crit\nerion", "fulfilled": true, "justification": "reas\non", "metadata": {"cust\tomer": "cust\nomer metadata"}}}'
+                  - '{"output": {"outputkeywith\tinit": "Output value with\nin it"}}'
+                evidencePath: '2_1_8'
+                exitCode: 0
+  '3':
+    title: Parameter Replacement
+    status: FAILED
+    requirements:
+      '1':
+        title: Should replace parameters in autopilots
+        status: FAILED
+        checks:
+          '1':
+            title: Replace environments
+            status: FAILED
+            type: Automation
+            evaluation:
+              autopilot: env-provider
+              status: FAILED
+              reason: This is a reason
+              execution:
+                logs:
+                  - global-env-1
+                  - global-env-1
+                  - autopilot-ref-env-2
+                  - autopilot-ref-env-2
+                  - autopilot-env-3
+                  - autopilot-env-3
+                  - '{"status": "FAILED", "reason": "This is a reason"}'
+                evidencePath: '3_1_1'
+                exitCode: 0
+          '2':
+            title: Replace secrets
+            status: FAILED
+            type: Automation
+            evaluation:
+              autopilot: secrets-provider
+              status: FAILED
+              reason: This is a reason
+              execution:
+                logs:
+                  - autopilot-ref-secret-1
+                  - '{"status": "FAILED", "reason": "This is a reason"}'
+                evidencePath: '3_1_2'
+                exitCode: 0
+          '3':
+            title: Replace variables
+            status: FAILED
+            type: Automation
+            evaluation:
+              autopilot: vars-provider
+              status: FAILED
+              reason: This is a reason
+              execution:
+                logs:
+                  - autopilot-ref-var-1
+                  - some value that will be overridden
+                  - some value
+                  - '{"status": "FAILED", "reason": "This is a reason"}'
+                evidencePath: '3_1_3'
+                exitCode: 0
+      '2':
+        title: 'Should replace parameters in manual answers like '
+        status: GREEN
+        checks:
+          '1':
+            title: check for var replacement in manual answer
+            status: GREEN
+            type: Manual
+            evaluation:
+              status: GREEN
+              reason: ''
+      '3':
+        title: Should replace parameters in additional config
+        status: FAILED
+        checks:
+          '1':
+            title: Replace parameters in additional config
+            status: FAILED
+            type: Automation
+            evaluation:
+              autopilot: additional-config-provider
+              status: FAILED
+              reason: This is a reason
+              execution:
+                logs:
+                  - '{"status": "FAILED", "reason": "This is a reason"}'
+                  - This autopilot has an additional config
+                evidencePath: '3_3_1'
+                exitCode: 0
+  '4':
+    title: Should hide secrets
+    status: FAILED
+    requirements:
+      '1':
+        title: Hide secrets in logs
+        status: FAILED
+        checks:
+          1a:
+            title: Check 1
+            status: FAILED
+            type: Automation
+            evaluation:
+              autopilot: secrets-provider
+              status: FAILED
+              reason: This is a reason
+              execution:
+                logs:
+                  - '{"status": "FAILED", "reason": "This is a reason"}'
+                evidencePath: 4_1_1a
+                exitCode: 0
+finalize:
+  execution:
+    logs:
+      - global-env-1
+      - global-env-1
+      - qg-result.yaml exists
+    evidencePath: .
+    exitCode: 0

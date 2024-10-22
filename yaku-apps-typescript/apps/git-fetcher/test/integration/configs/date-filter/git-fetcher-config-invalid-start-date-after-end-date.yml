@@ -1,0 +1,6 @@
+org: aquatest
+repo: bitbucket-fetcher-test-repo
+resource: prs
+filter:
+  startDate: 01-03-2020
+  endDate: 01-02-2020

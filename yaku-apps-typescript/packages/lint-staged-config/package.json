@@ -1,0 +1,10 @@
+{
+  "name": "@B-S-F/lint-staged-config",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo 'No build needed'"
+  },
+  "files": [
+    "lint-staged-config.js"
+  ]
+}

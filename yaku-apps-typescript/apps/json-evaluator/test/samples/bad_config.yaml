@@ -1,0 +1,8 @@
+checks:
+  - name: bad_check
+    ref: $.value
+    condition: all(ref, "'FALSE' === $.state")
+    log: $.links.self[*].href
+    bad_property: $.value
+concatenation:
+  condition: 'merged_check && has_reviewer && has_specific_reviewer'

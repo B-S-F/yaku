@@ -1,0 +1,43 @@
+{
+  "name": "@B-S-F/autopilot-utils",
+  "version": "0.11.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsup && cp src/index.d.ts dist",
+    "lint": "eslint '**/*.ts'",
+    "format": "prettier --write '**/*.{ts,md}'",
+    "test": "vitest run && npm run test:update-cobertura-file",
+    "test:update-cobertura-file": "sed -i'.bak' 's,package name=\",package name=\"'${npm_package_name}/',g' coverage/cobertura-coverage.xml",
+    "test:dev": "vitest -w",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui",
+    "test:integration:local": "npx rimraf dist && npm run build && npm run test:integration:ci",
+    "test:integration:ci": "npx vitest run --config vitest-integration.config.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@B-S-F/eslint-config": "*",
+    "@B-S-F/typescript-config": "*",
+    "@types/node": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "c8": "*",
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "prettier": "*",
+    "tsup": "*",
+    "typescript": "*",
+    "vitest": "*"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "winston": "^3.10.0"
+  }
+}

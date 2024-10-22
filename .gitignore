@@ -1,3 +1,4 @@
 /.idea/
 bazel-*
 node_modules
+htmlcov/

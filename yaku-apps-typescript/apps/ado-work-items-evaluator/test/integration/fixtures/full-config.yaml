@@ -1,0 +1,31 @@
+workItems:
+  query: 'SELECT [System.Id], [System.State] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.Id] IN (1, 3, 4, 5)'
+  neededFields:
+    - 'AssignedTo'
+  evaluate:
+    settings:
+      closedStates:
+        - 'Closed'
+        - 'Done'
+    checks:
+      dataExists: true
+      relationsExist: false
+      fields:
+        state:
+          fieldName: 'State'
+          conditions:
+            expected:
+              - 'Closed'
+              - 'Done'
+  relations:
+    get: true
+    evaluate:
+      checks:
+        fields:
+          state:
+            fieldName: 'State'
+            type: 'Child'
+            conditions:
+              expected:
+                - 'Done'
+                - 'Closed'

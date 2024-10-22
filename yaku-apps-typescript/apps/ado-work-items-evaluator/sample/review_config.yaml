@@ -1,0 +1,49 @@
+workItems:
+  query: "SELECT [System.Id], [System.State] FROM WorkItems WHERE ([System.TeamProject] = @project AND [System.WorkItemType] == 'Epic' AND Id = 229047)"
+  neededFields:
+    - "AssignedTo"
+    - "Reviewer"
+    - "DueDate"
+  evaluate:
+    settings:
+      dueDateFieldName: "DueDate"
+      closedStates:
+        - 'Closed'
+        - 'Performed'
+  children:
+    get: true
+    evaluate:
+      checks:
+        dataExists: true
+        cycleInDays: 100
+        fields:
+          state:
+            fieldName: "State"
+            conditions:
+              resolved:
+                - 'Closed'
+                - 'Performed'
+          assignee:
+            fieldName: "AssignedTo"
+            closedAfterDate: '2022.01.01'
+            conditions:
+              expected: 
+                - 'Name'
+
+          reviewers:
+            fieldName: "Reviewer" 
+            closedAfterDate: '2022.01.01'
+            conditions:
+              expected: 
+                - 'Name'
+    children:
+      get: true
+      evaluate:
+        checks:
+          fields:
+            state:
+              fieldName: "State"
+              conditions:
+                resolved:
+                  - 'Closed'
+                  - 'Performed'

@@ -1,0 +1,49 @@
+{
+  "name": "@B-S-F/jira-fetcher",
+  "version": "0.9.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "dev": "nodemon --watch \"src/**\" --exec npm run start",
+    "start": "node dist/index.js",
+    "lint": "eslint '**/*.ts'",
+    "format": "prettier --write '**/*.{ts,md}'",
+    "test": "vitest run && npm run test:update-cobertura-file",
+    "test:update-cobertura-file": "sed -i'.bak' 's,package name=\",package name=\"'${npm_package_name}/',g' coverage/cobertura-coverage.xml",
+    "test:dev": "vitest -w",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui",
+    "test:integration:local": "npx rimraf dist && npm run build && npm run test:integration:ci",
+    "test:integration:ci": "npx vitest run --config vitest-integration.config.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "files": [
+    "dist"
+  ],
+  "license": "",
+  "dependencies": {
+    "@B-S-F/autopilot-utils": "^0.11.0",
+    "@B-S-F/issue-validators": "*",
+    "node-fetch": "^3.2.6",
+    "proxy-agent": "^6.3.1",
+    "yaml": "*"
+  },
+  "devDependencies": {
+    "@B-S-F/eslint-config": "*",
+    "@B-S-F/typescript-config": "*",
+    "@types/node": "*",
+    "c8": "*",
+    "eslint": "*",
+    "nodemon": "*",
+    "prettier": "*",
+    "typescript": "*",
+    "tsup": "*",
+    "vitest": "*"
+  },
+  "bin": {
+    "jira-fetcher": "dist/index.js"
+  }
+}

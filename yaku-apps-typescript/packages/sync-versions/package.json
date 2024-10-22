@@ -1,0 +1,20 @@
+{
+  "name": "@B-S-F/sync-versions",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "echo 'No build needed'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/B-S-F/qg-apps-typescript.git"
+  },
+  "keywords": [],
+  "bin": {
+    "sync-versions": "src/index.js"
+  },
+  "dependencies": {
+    "replace-in-file": "^6.3.5"
+  }
+}

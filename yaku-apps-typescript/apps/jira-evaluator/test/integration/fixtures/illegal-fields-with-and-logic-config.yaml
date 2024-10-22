@@ -1,0 +1,19 @@
+query: "project = AQUATEST and issuetype in ('Task')"
+neededFields:
+  - 'summary'
+  - 'status'
+  - 'issuetype'
+  - 'assignee'
+evaluate:
+  logic: 'AND'
+  fields:
+    assignee:
+      fieldName: 'assignee'
+      conditions:
+        expected:
+          - 'XXX7XX'
+    status:
+      fieldName: 'status'
+      conditions:
+        illegal:
+          - 'Done'

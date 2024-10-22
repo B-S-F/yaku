@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "version": "6.5.0",
+    "timestamp": "2023-03-16T15:56:10.340013",
+    "branch_coverage": true,
+    "show_contexts": false
+  },
+  "totals": {
+    "covered_lines": 1047,
+    "num_statements": 1418,
+    "percent_covered": 70.6989247311828,
+    "percent_covered_display": "71",
+    "missing_lines": 371,
+    "excluded_lines": 0,
+    "num_branches": 442,
+    "num_partial_branches": 21,
+    "covered_branches": 268,
+    "missing_branches": 174
+  }
+}

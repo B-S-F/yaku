@@ -1,0 +1,6 @@
+org: aquatest
+repo: bitbucket-fetcher-test-repo
+resource: prs
+filter:
+  startHash: c11631a0ddccb9579feae43b949b53c369528f43
+  endHash: a71631a0dcccb957afeae43b949b53c369528f4f

@@ -1,0 +1,19 @@
+checks:
+  - name: has_category_check
+    ref: $.store.book[*]
+    condition: ($[*].category).includes('fiction')
+    log: $.title
+  - name: category_check
+    ref: $.store.book[*]
+    condition: $[*].category === ["fiction", "reference"]
+    log: $.title
+  - name: fiction_check
+    ref: $.store.book[*]
+    condition: all(ref, "$.category === 'fiction'")
+    log: $.title
+  - name: none_fantasy_check
+    ref: $.store.book[*]
+    condition: none(ref, "$.category === 'fantasy'")
+    log: $.title
+concatenation:
+  condition: 'has_category_check && category_check && fiction_check && none_fantasy_check'

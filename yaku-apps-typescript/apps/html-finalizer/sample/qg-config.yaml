@@ -1,0 +1,286 @@
+metadata:
+  version: v1
+header:
+  name: ${{ vars.TITLE }}
+  version: ${{ vars.VERSION }}
+default:
+  vars:
+    VAR_4: 'some value'
+    VAR_3: 'some value that will be overridden'
+env:
+  ENV_1: global-env-1
+  ENV_2: global-env-2
+  ENV_3: global-env-3
+autopilots:
+  status-provider:
+    run: |
+      echo '{"status": "${{ env.STATUS }}"}'
+      echo '{"reason": "Some reason"}'
+      echo '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+  reason-provider:
+    run: |
+      echo '{"reason": "${{ env.REASON }}"}'
+      echo '{"status": "FAILED"}'
+  outputs-provider:
+    run: |
+      echo '{"output": {"output1": "${{ env.OUTPUT1 }}"}}'
+      echo '{"output": {"output2": "${{ env.OUTPUT2 }}"}}'
+      echo '{"status": "GREEN", "reason": "This is a reason"}'
+      echo '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+  base-interface:
+    run: |
+      echo '{"reason": "This is a reason"}'
+      echo '{"output": {"output1": "output1_value", "output2": "output2_value"}}'
+      echo '{"status": "FAILED", "reason": "This is a reason"}'
+      echo '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the justification"}}'
+  combined-json-lines:
+    run: |
+      echo '{"status": "GREEN", "reason": "This is a reason", "output": {"output1": "output1_value", "output2": "output2_value"}}'
+  findings-interface:
+    run: |
+      echo '{"result": {"criterion": "I am a criterion", "fulfilled": false, "justification": "I am the reason"}}'
+      echo '{"result": {"criterion": "I am a criterion 2", "fulfilled": false, "justification": "I am another reason"}}'
+      echo '{"result": {"criterion": "I am a criterion 3", "fulfilled": false, "justification": "I am yet another reason", "metadata": {"customer": "I am customer in metadata", "package": "I am a package", "severity": "I am a severity"}}}'
+      echo '{"status": "GREEN", "reason": "This is a reason"}'
+  env-provider:
+    run: |
+      echo "$ENV_1"
+      echo "${{ env.ENV_1 }}"
+      echo "$ENV_2"
+      echo "${{ env.ENV_2 }}"
+      echo "$ENV_3"
+      echo "${{ env.ENV_3 }}"
+      echo '{"status": "FAILED", "reason": "This is a reason"}'
+    env:
+      ENV_3: autopilot-env-3
+  secrets-provider:
+    run: |
+      echo "$SECRET_1"
+      echo "$SECRET_2"
+      echo "${{ secrets.SECRET_3 }}"
+      echo '{"status": "FAILED", "reason": "This is a reason"}'
+    env:
+      SECRET_2: ${{ secrets.SECRET_2}}
+  vars-provider:
+    run: |
+      echo "$VAR_1"
+      echo "$VAR_2"
+      echo "${{ vars.VAR_3}}"
+      echo "${{ vars.VAR_4 }}"
+      echo '{"status": "FAILED", "reason": "This is a reason"}'
+    env:
+      VAR_2: ${{ vars.VAR_2}}
+  additional-config-provider:
+    run: |
+      echo '{"status": "FAILED", "reason": "This is a reason"}'
+      echo "This autopilot has an additional config"
+      cat $evidence_path/additional-config.yaml
+    config:
+      - additional-config.yaml
+  escape-characters-autopilot:
+    run: |
+      echo '{"result": {"criterion": "criterion is \b \f \n \r \t \u000A \\ \" \\n", "fulfilled": true, "justification": "reason is \b \f \n \r \t \u000A \\ \" \\n"}}'
+      echo '{"status": "RED"}'
+  new-line-autopilot:
+    run: |
+      echo '{"status": "GREEN"}'
+      echo '{"reason": "reas\non"}'
+      echo '{"result": {"criterion": "crit\nerion", "fulfilled": true, "justification": "reas\non", "metadata": {"cust\tomer": "cust\nomer metadata"}}}'
+      echo '{"output": {"outputkeywith\tinit": "Output value with\nin it"}}'
+finalize:
+  run: |
+    echo $FINALIZER_ENV_1
+    echo ${{ env.FINALIZER_ENV_1 }}
+    echo $FINALIZER_ENV_2
+    echo ${{ env.FINALIZER_ENV_2 }}
+    echo $FINALIZER_ENV_3
+    echo ${{ env.FINALIZER_ENV_3 }}
+    if [ -f ${result_path}/qg-result.yaml ]; then
+      echo "qg-result.yaml exists"
+    else
+      echo "qg-result.yaml does not exist"
+      exit 1
+    fi
+  env:
+    FINALIZER_ENV_1: ${{ env.ENV_1 }}
+    FINALIZER_ENV_2: ${{ secrets.SECRET_1 }}
+    FINALIZER_ENV_3: ${{ vars.VAR_1 }}
+chapters:
+  '1':
+    title: Manual Answers have to be supported
+    requirements:
+      '1':
+        title: GREEN answer
+        checks:
+          '1':
+            title: GREEN answer check
+            manual:
+              status: GREEN
+              reason: It should be GREEN
+      '2':
+        title: YELLOW answer
+        checks:
+          '1':
+            title: YELLOW answer check
+            manual:
+              status: YELLOW
+              reason: It should be YELLOW
+      '3':
+        title: RED answer
+        checks:
+          '1':
+            title: RED answer check
+            manual:
+              status: RED
+              reason: It should be RED
+      '4':
+        title: NA answer
+        checks:
+          '1':
+            title: NA answer check
+            manual:
+              status: NA
+              reason: It should be NA
+      '5':
+        title: UNANSWERED answer
+        checks:
+          '1':
+            title: UNANSWERED answer check
+            manual:
+              status: UNANSWERED
+              reason: It should be UNANSWERED
+  '2':
+    title: Base Interface
+    requirements:
+      '1':
+        title: Base Interface has to be supported
+        text: |
+          The base interface should be supported to retrieve the status from an autopilot
+          The base interface consists of the following properties:
+          - status
+          - reason
+          - outputs
+        checks:
+          '1a':
+            title: Status GREEN should be supported
+            automation:
+              autopilot: status-provider
+              env:
+                STATUS: GREEN
+          '1b':
+            title: Status YELLOW should be supported
+            automation:
+              autopilot: status-provider
+              env:
+                STATUS: YELLOW
+          '1c':
+            title: Status RED should be supported
+            automation:
+              autopilot: status-provider
+              env:
+                STATUS: RED
+          '1d':
+            title: Status NA should be supported
+            automation:
+              autopilot: status-provider
+              env:
+                STATUS: NA
+          '1e':
+            title: Status UNANSWERED should be supported
+            automation:
+              autopilot: status-provider
+              env:
+                STATUS: UNANSWERED
+          '1f':
+            title: If a status is not supported, it should be set to ERROR
+            automation:
+              autopilot: status-provider
+              env:
+                STATUS: UNKNOWN
+          '1g':
+            title: If a status is empty, it should be set to ERROR
+            automation:
+              autopilot: status-provider
+              env:
+                STATUS: ''
+          '3':
+            title: Reason should be supported
+            automation:
+              autopilot: reason-provider
+              env:
+                REASON: This is a reason
+          '4':
+            title: Outputs should be supported
+            automation:
+              autopilot: outputs-provider
+              env:
+                OUTPUT1: output1_value
+                OUTPUT2: output2_value
+          '5':
+            title: Combined json lines with status, reason, and outputs should be supported
+            automation:
+              autopilot: combined-json-lines
+          '6':
+            title: Findings should be supported
+            automation:
+              autopilot: findings-interface
+          '7':
+            title: Can provide handle escape characters in a string
+            automation:
+              autopilot: escape-characters-autopilot
+          '8':
+            title: Can provide handle new line characters in a string
+            automation:
+              autopilot: new-line-autopilot
+  '3':
+    title: Parameter Replacement
+    requirements:
+      '1':
+        title: Should replace parameters in autopilots
+        checks:
+          '1':
+            title: Replace environments
+            automation:
+              autopilot: env-provider
+              env:
+                ENV_2: autopilot-ref-env-2
+          '2':
+            title: Replace secrets
+            automation:
+              autopilot: secrets-provider
+              env:
+                SECRET_1: autopilot-ref-secret-1
+          '3':
+            title: Replace variables
+            automation:
+              autopilot: vars-provider
+              env:
+                VAR_1: autopilot-ref-var-1
+      '2':
+        title: Should replace parameters in manual answers like ${{ vars.REQUIREMENT_TITLE }}
+        text: ${{ vars.REQUIREMENT_TEXT }}
+        checks:
+          '1':
+            title: check for var replacement in manual answer
+            manual:
+              status: GREEN
+              reason: ${{ vars.REQUIREMENT_REASON }}
+      '3':
+        title: Should replace parameters in additional config
+        checks:
+          '1':
+            title: Replace parameters in additional config
+            automation:
+              autopilot: additional-config-provider
+              env:
+                ADDITIONAL_CONFIG_ENV: autopilot-ref-additional-config-env
+  '4':
+    title: Should hide secrets
+    requirements:
+      '1':
+        title: Hide secrets in logs
+        checks:
+          '1a':
+            title: Check 1
+            automation:
+              autopilot: secrets-provider

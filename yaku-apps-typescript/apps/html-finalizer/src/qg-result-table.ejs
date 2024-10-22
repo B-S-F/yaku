@@ -1,0 +1,140 @@
+<%_ const filterPrefix = `filter${++utils.filterCount}` 
+  const filterIcons = []
+  for (const chapter of sortedChapters) {
+    for (const requirement of Object.values(chapter.requirements)) {
+      if (filterIcons.indexOf(requirement.status) === -1) {
+        filterIcons.push(requirement.status)
+      }
+    }
+  }
+_%>
+<%_ if (typeof emptyListMessage === 'undefined' || !emptyListMessage || sortedChapters.length) { _%>
+<style>
+  [class^="<%- filterPrefix %>-"] {
+    height: 0;
+    visibility: collapse;
+  }
+
+  input[type=checkbox][id^="<%- filterPrefix %>-"],
+  #<%- filterPrefix %>IsOpen {
+    display: none;
+  }
+
+  label[for^="<%- filterPrefix %>-"] {
+    display: inline-block;
+    padding: .25rem;
+  }
+
+  <%- filterIcons.map((status) => `input[type=checkbox][value=${filterPrefix}-${status}]:checked ~ table .${filterPrefix}-${status}`).join(', ') %> {
+    height: initial;
+    visibility: initial;
+  }
+
+  <%- filterIcons.map((status)=> `input[type=checkbox][id="${filterPrefix}-${status}"]:checked ~ * label[for="${filterPrefix}-${status}"]`).join(', ') %> {
+    border-bottom: 2px solid var(--blue-50);
+  }
+
+  .<%- filterPrefix %>-box {
+    position: absolute;
+    transform: translateX(-2rem);
+    display: none;
+    background: #fff;
+    padding: 0.25rem;
+    box-shadow: 0 0 0.5rem 0.1rem rgb(0 0 0 / 25%);
+    user-select: none;
+    font-weight: normal;
+    z-index: 2000;
+  }
+
+  input[type=checkbox][id="<%- filterPrefix %>IsOpen"]:checked~* .<%- filterPrefix %>-box,
+  input[type=checkbox][id="<%- filterPrefix %>IsOpen"]:checked~* .capture-filter-box[for="<%- filterPrefix %>IsOpen"] {
+    display: block;
+  }
+
+  .<%- filterPrefix %>Header {
+    z-index: 1000;
+  }
+
+  input[type=checkbox][id="<%- filterPrefix %>IsOpen"]:checked~* .<%- filterPrefix %>Header {
+    z-index: 2000;
+  }
+</style>
+<%_ for (const status of filterIcons) { _%>
+  <input type="checkbox" value="<%- filterPrefix %>-<%- status %>" checked id="<%- filterPrefix %>-<%- status %>">
+<%_ } _%>
+
+<input type="checkbox" id="<%- filterPrefix %>IsOpen">
+
+<table class="full-width">
+  <thead class="<%- filterPrefix %>Header">
+    <tr>
+      <th>ID</th>
+      <th>Requirement</th>
+      <th class="centered">Result
+      <%_ if (filterIcons.length > 1) { _%>
+      <label for="<%- filterPrefix %>IsOpen">
+        <svg class="no-print icon" version="2.0">
+          <use href="#icon-filter" />
+        </svg>
+      </label>
+      <label for="<%- filterPrefix %>IsOpen" class="capture-filter-box no-print" style></label>
+      <div class="no-print <%- filterPrefix %>-box">
+        <%_ for (const status of filterIcons) { _%>
+          <label for="<%- filterPrefix %>-<%- status %>">
+            <%- include('status-icon.ejs', { status }) %>
+          </label>
+        <%_ } _%>
+      <%_ } _%>
+      </th>
+      <th>Evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%_ for (const chapter of sortedChapters) { _%>
+      <tr>
+        <td>
+          <h3>
+            <%= chapter.id %>
+          </h3>
+        </td>
+        <td colspan="4">
+          <h3>
+            <%= chapter.title %>
+          </h3>
+        </td>
+      </tr>
+      <%_ for (const [id, requirement] of utils.sortedObjectEntries(chapter.requirements)) { _%>
+        <tr class="<%- filterPrefix %>-<%= requirement.status %>">
+          <td class="id">
+            <%= id %>
+          </td>
+          <td class="small">
+            <p class="normal">
+              <%= requirement.title %>
+            </p>
+            <%- typeof showRequirementText !== 'undefined' && showRequirementText ? utils.markdown.render(requirement.text) : null %>
+          </td>
+          <td class="centered">
+            <%- include('status-icon.ejs', { status: requirement.status, extraTooltip: requirement.manualEvaluation ? '*Manual status' : undefined }) %>
+            <%_ if (requirement.manualEvaluation) { _%><span class="nospace">*</span><%_ } _%>
+          </td>
+          <td>
+            <%_ if (requirement.manualEvaluation) { _%>
+              Manual status: <%- utils.markdown.render(requirement.manualEvaluation.reason) %>
+            <%_ } else if (requirement.checks) { _%>
+              <%_ if (typeof pdfExport !== 'undefined' && pdfExport) { _%>
+                <a href="#<%= chapter.id %>-<%= id %>">result</a>
+              <%_ } else { _%>
+                <a href="qg-evidence.html#<%= chapter.id %>-<%= id %>">result</a>
+              <%_ } _%>
+            <%_ } _%>
+          </td>
+        </tr>
+      <%_ } _%>
+    <%_ } _%>
+  </tbody>
+</table>
+
+<%_ } else { _%>
+<p><%= emptyListMessage %></p>
+<%_ } _%>
