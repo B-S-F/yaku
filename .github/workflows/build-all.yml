@@ -3,7 +3,7 @@ name: Build all
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" , "buildbody"]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
