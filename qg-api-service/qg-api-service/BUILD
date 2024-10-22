@@ -33,7 +33,8 @@ js_binary(
         ":swc",
 
         # Added by swc during transpilation and used at runtime
-        ":node_modules/regenerator-runtime",
+        #":node_modules/regenerator-runtime",
+        ":node_modules",
     ],
     entry_point = "src/main.js",
 )
