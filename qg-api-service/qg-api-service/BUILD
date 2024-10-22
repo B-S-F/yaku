@@ -21,6 +21,7 @@ ts_project(
     ),
     deps = [
         ":node_modules",
+#        ":node_modules/pino",
 #        ":node_modules/@nestjs/common",
 #        ":node_modules/@nestjs/core",
 #        ":node_modules/@types/node",
@@ -33,7 +34,10 @@ js_binary(
         ":swc",
 
         # Added by swc during transpilation and used at runtime
-        ":node_modules/regenerator-runtime",
+        #":node_modules/regenerator-runtime",
+        ":node_modules",
+  #      ":node_modules/pino",
+       # ":node_modules/@types/node",
     ],
     entry_point = "src/main.js",
 )
