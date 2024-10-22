@@ -9,7 +9,7 @@ bazel_dep(name = "rules_helm", version = "0.5.1")
 ###
 
 bazel_dep(name = "gazelle", version = "0.37.0")
-bazel_dep(name = "rules_go", version = "0.48.1")
+bazel_dep(name = "rules_go", version = "0.50.1")
 
 go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
 
@@ -42,12 +42,19 @@ oci.pull(
 use_repo(oci, "distroless_base", "distroless_base_linux_amd64", "distroless_base_linux_arm64")
 
 ###
-# Typescript
+# Typescript / Node
 ###
+bazel_dep(name = "rules_nodejs", version = "6.3.1")
 bazel_dep(name = "aspect_rules_js", version = "2.1.0")
 bazel_dep(name = "aspect_rules_ts", version = "3.2.1")
 bazel_dep(name = "aspect_rules_swc", version = "2.0.1")
 bazel_dep(name = "bazel_skylib", version = "1.6.1")
+
+pnpm = use_extension("@aspect_rules_js//npm:extensions.bzl", "pnpm")
+
+# Allows developers to get a local node_modules tree, using
+# bazel run -- @pnpm//:pnpm --dir $PWD install
+use_repo(pnpm, "pnpm")
 
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
 
@@ -55,8 +62,8 @@ npm.npm_translate_lock(
     name = "npm",
     #npmrc = "//qg-api-service/qg-api-service:.npmrc",
     use_home_npmrc = True,
-    pnpm_lock = "//qg-api-service/qg-api-service:pnpm-lock.yaml",
-    npm_package_lock = "//qg-api-service/qg-api-service:package-lock.json",
+    pnpm_lock = "//:pnpm-lock.yaml",
+    #npm_package_lock = "//:package-lock.json",
     verify_node_modules_ignored = "//:.bazelignore",
 )
 
@@ -68,6 +75,6 @@ rules_ts_ext = use_extension(
     dev_dependency = True,
 )
 
-rules_ts_ext.deps(ts_version_from = "//qg-api-service/qg-api-service:package.json")
+rules_ts_ext.deps(ts_version_from = "//:package.json")
 
 use_repo(rules_ts_ext, "npm_typescript")

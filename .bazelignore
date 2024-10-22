@@ -3,3 +3,5 @@ user-documentation
 yaku-apps-python
 yaku-apps-typescript
 qg-api-service/qg-api-service/node_modules
+qg-api-service/node_modules
+node_modules

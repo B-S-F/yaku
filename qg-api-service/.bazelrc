@@ -1,1 +1,0 @@
-common --@aspect_rules_ts//ts:skipLibCheck=always
