@@ -26,7 +26,8 @@
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "madge": "^8.0.0",
-    "turbo": "^2.1.3"
+    "turbo": "^2.1.3",
+    "typescript": "4.9.5"
   },
   "packageManager": "npm@10.9.0",
   "lint-staged": {

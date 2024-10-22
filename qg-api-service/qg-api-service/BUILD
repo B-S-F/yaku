@@ -21,6 +21,7 @@ ts_project(
     ),
     deps = [
         ":node_modules",
+        "//:node_modules",
 #        ":node_modules/pino",
 #        ":node_modules/@nestjs/common",
 #        ":node_modules/@nestjs/core",
