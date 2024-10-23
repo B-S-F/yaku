@@ -20,7 +20,7 @@ import {
   HttpCode,
   Get,
 } from '@nestjs/common'
-import { validateBody } from '@bosch-grow-pat/api-commons-lib'
+import { validateBody } from '@yaku/api-commons-lib'
 import { SubscriptionService } from './subscription.service'
 import { z } from 'zod'
 import { KeyCloakUser } from '@bosch-grow-pat/api-keycloak-auth-lib'

@@ -9,7 +9,7 @@ import {
   createMockResponse,
   namespaceUrl,
   testingNamespaceId,
-} from '@bosch-grow-pat/api-commons-lib'
+} from '@yaku/api-commons-lib'
 import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { JsonValidatorService } from '../../gp-services/json-validator.service'

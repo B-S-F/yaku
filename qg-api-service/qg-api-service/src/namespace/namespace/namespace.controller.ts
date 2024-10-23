@@ -1,4 +1,4 @@
-import { validateBody, validateId } from '@bosch-grow-pat/api-commons-lib'
+import { validateBody, validateId } from '@yaku/api-commons-lib'
 import {
   KeyCloakNamespace,
   KeyCloakUser,

@@ -9,7 +9,7 @@ import { MetricService } from '../metrics/metric.service'
 import {
   UrlHandlerFactory,
   UrlProtocolConfig,
-} from '@bosch-grow-pat/api-commons-lib'
+} from '@yaku/api-commons-lib'
 import { UsersService } from '../users/users.service'
 describe('FindingController', () => {
   let findingController: FindingController

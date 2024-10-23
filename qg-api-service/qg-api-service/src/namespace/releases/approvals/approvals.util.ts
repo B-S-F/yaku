@@ -1,4 +1,4 @@
-import { PaginatedData } from '@bosch-grow-pat/api-commons-lib'
+import { PaginatedData } from '@yaku/api-commons-lib'
 import { ApiProperty } from '@nestjs/swagger'
 import { UserInNamespaceDto } from '../../../namespace/users/users.utils'
 import { z } from 'zod'

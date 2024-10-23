@@ -1,4 +1,4 @@
-import { EntityList, ListQueryHandler } from '@bosch-grow-pat/api-commons-lib'
+import { EntityList, ListQueryHandler } from '@yaku/api-commons-lib'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { In, LessThan, QueryRunner, Repository } from 'typeorm'

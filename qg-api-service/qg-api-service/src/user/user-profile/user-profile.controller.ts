@@ -23,7 +23,7 @@ import { KeyCloakUser } from '@bosch-grow-pat/api-keycloak-auth-lib'
 import { GetUserProfileDto } from './dto/get-user-profile.dto'
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto'
 import { z } from 'zod'
-import { validateBody } from '@bosch-grow-pat/api-commons-lib'
+import { validateBody } from '@yaku/api-commons-lib'
 import { EditorType } from './utils/types'
 
 @ApiBearerAuth()

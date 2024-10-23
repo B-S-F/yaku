@@ -1,7 +1,7 @@
 import {
   UrlHandlerFactory,
   UrlProtocolConfig,
-} from '@bosch-grow-pat/api-commons-lib'
+} from '@yaku/api-commons-lib'
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { SERVICE_PROTOCOL } from '../../config'

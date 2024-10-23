@@ -5,7 +5,7 @@ import {
   toListQueryOptions,
   createMockResponse,
   namespaceUrl,
-} from '@bosch-grow-pat/api-commons-lib'
+} from '@yaku/api-commons-lib'
 import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Response } from 'express'

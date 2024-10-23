@@ -1,4 +1,4 @@
-import { EntityList } from '@bosch-grow-pat/api-commons-lib'
+import { EntityList } from '@yaku/api-commons-lib'
 import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { LoggerModule } from 'nestjs-pino'

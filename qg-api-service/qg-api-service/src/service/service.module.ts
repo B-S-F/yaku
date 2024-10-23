@@ -2,7 +2,7 @@ import {
   OSSComplianceConfig,
   OSSComplianceService,
   OSSSourceController,
-} from '@bosch-grow-pat/api-commons-lib'
+} from '@yaku/api-commons-lib'
 import { Module } from '@nestjs/common'
 import * as path from 'path'
 import {

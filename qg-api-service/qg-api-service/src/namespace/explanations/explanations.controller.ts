@@ -12,7 +12,7 @@ import {
 } from '@nestjs/swagger'
 import { ExplanationsService } from './explanations.service'
 import { ENABLE_EXPLANATIONS_FEATURE } from './../../config'
-import { validateId } from '@bosch-grow-pat/api-commons-lib'
+import { validateId } from '@yaku/api-commons-lib'
 
 class ExplanationsQueryOptions {
   @ApiProperty({

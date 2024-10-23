@@ -1,4 +1,4 @@
-import { SortOrder } from '@bosch-grow-pat/api-commons-lib'
+import { SortOrder } from '@yaku/api-commons-lib'
 import {
   KeyCloakService,
   KeyCloakUserOfRole,

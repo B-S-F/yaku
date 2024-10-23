@@ -1,4 +1,4 @@
-import { testingNamespaceId } from '@bosch-grow-pat/api-commons-lib'
+import { testingNamespaceId } from '@yaku/api-commons-lib'
 import { KeyCloakUser } from '@bosch-grow-pat/api-keycloak-auth-lib'
 
 export const testUser: KeyCloakUser = {

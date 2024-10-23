@@ -1,4 +1,4 @@
-import { streamToString } from '@bosch-grow-pat/api-commons-lib'
+import { streamToString } from '@yaku/api-commons-lib'
 import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
@@ -14,7 +14,7 @@ import {
   SaveOptions,
   SelectQueryBuilder,
 } from 'typeorm'
-import { testingNamespaceId } from '@bosch-grow-pat/api-commons-lib'
+import { testingNamespaceId } from '@yaku/api-commons-lib'
 import { ConfigEntity } from '../configs/config.entity'
 import { ConfigsService } from '../configs/configs.service'
 import { RequestUser } from '../module.utils'

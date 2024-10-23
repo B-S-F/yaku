@@ -13,7 +13,7 @@ import { Metric } from './entity/metric.entity'
 import { StatusType } from '../findings/utils/enums/statusType.enum'
 import { ServiceType } from './utils/enums/serviceType.enum'
 import { Logger, PinoLogger, InjectPinoLogger } from 'nestjs-pino'
-import { ListQueryHandler } from '@bosch-grow-pat/api-commons-lib'
+import { ListQueryHandler } from '@yaku/api-commons-lib'
 
 @Injectable()
 export class MetricService {

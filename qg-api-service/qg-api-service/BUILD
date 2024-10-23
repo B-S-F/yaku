@@ -22,23 +22,20 @@ ts_project(
     deps = [
         ":node_modules",
         "//:node_modules",
-#        ":node_modules/pino",
-#        ":node_modules/@nestjs/common",
-#        ":node_modules/@nestjs/core",
-#        ":node_modules/@types/node",
+        "//:node_modules/@yaku/api-commons-lib",
     ],
 )
 
-js_binary(
-    name = "bin",
-    data = [
-        ":swc",
+# js_binary(
+#     name = "bin",
+#     data = [
+#         ":swc",
 
-        # Added by swc during transpilation and used at runtime
-        #":node_modules/regenerator-runtime",
-        ":node_modules",
-  #      ":node_modules/pino",
-       # ":node_modules/@types/node",
-    ],
-    entry_point = "src/main.js",
-)
+#         # Added by swc during transpilation and used at runtime
+#         #":node_modules/regenerator-runtime",
+#         ":node_modules",
+#   #      ":node_modules/pino",
+#        # ":node_modules/@types/node",
+#     ],
+#     entry_point = "src/main.js",
+# )

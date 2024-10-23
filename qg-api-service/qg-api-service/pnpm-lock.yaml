@@ -8,7 +8,7 @@ onlyBuiltDependencies:
   - '*'
 
 dependencies:
-  '@bosch-grow-pat/api-commons-lib':
+  '@yaku/api-commons-lib':
     specifier: ^0.6.1
     version: 0.6.1(@types/express@4.17.21)(@types/node@18.15.0)(class-transformer@0.5.1)(class-validator@0.14.0)(pg@8.10.0)(sqlite3@5.1.4)(ts-node@10.9.1)
   '@bosch-grow-pat/api-keycloak-auth-lib':
@@ -647,8 +647,8 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@bosch-grow-pat/api-commons-lib@0.6.1(@types/express@4.17.21)(@types/node@18.15.0)(class-transformer@0.5.1)(class-validator@0.14.0)(pg@8.10.0)(sqlite3@5.1.4)(ts-node@10.9.1):
-    resolution: {integrity: sha512-QoU7Bf0Dgu0UE3aMbnPvEqJ2kWHQkZ2NDi/TOEiASRBrIOZx8wyP7hOGKxQ6kYx5cUpH+eNk3xxWz1L6pfxfpg==, tarball: https://npm.pkg.github.com/download/@bosch-grow-pat/api-commons-lib/0.6.1/132370278449d8b4dd9bb268dbe6cd9982c0f28e}
+  /@yaku/api-commons-lib@0.6.1(@types/express@4.17.21)(@types/node@18.15.0)(class-transformer@0.5.1)(class-validator@0.14.0)(pg@8.10.0)(sqlite3@5.1.4)(ts-node@10.9.1):
+    resolution: {integrity: sha512-QoU7Bf0Dgu0UE3aMbnPvEqJ2kWHQkZ2NDi/TOEiASRBrIOZx8wyP7hOGKxQ6kYx5cUpH+eNk3xxWz1L6pfxfpg==, tarball: https://npm.pkg.github.com/download/@yaku/api-commons-lib/0.6.1/132370278449d8b4dd9bb268dbe6cd9982c0f28e}
     engines: {node: '>=18.14.0', npm: '>=9.3.0'}
     dependencies:
       '@nestjs/common': 10.3.8(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)

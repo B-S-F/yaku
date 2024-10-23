@@ -6,7 +6,7 @@ import {
   UrlHandlerFactory,
   validateBody,
   validateId,
-} from '@bosch-grow-pat/api-commons-lib'
+} from '@yaku/api-commons-lib'
 import {
   Body,
   Controller,

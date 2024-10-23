@@ -1,4 +1,4 @@
-import { streamToString } from '@bosch-grow-pat/api-commons-lib'
+import { streamToString } from '@yaku/api-commons-lib'
 import { NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { randomUUID } from 'crypto'

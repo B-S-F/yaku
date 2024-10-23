@@ -3,6 +3,7 @@ load("@aspect_rules_swc//swc:defs.bzl", "swc")
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
 load("@bazel_skylib//lib:partial.bzl", "partial")
 load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@aspect_rules_js//npm:defs.bzl", "npm_package")
 
 npm_link_all_packages(name = "node_modules")
 
@@ -31,14 +32,39 @@ ts_project(
 
 # make this library available via node_modules
 npm_package(
+    name = "api-commons-lib",
+    srcs = [
+        "package.json",
+        "src/index.js",
+        "src/input-validator.js",
+        "src/oss-compliance.controller.js",
+        "src/oss-compliance.service.js",
+        "src/public-decorator.js",
+        "src/query-param-handling-controller.js",
+        "src/query-param-handling-service.js",
+        "src/stream-utils.js",
+        "src/test-services.js",
+        "src/url-handler.js"
+    ],
+    # This is a perf improvement; the default will be flipped to False in rules_js 2.0
+    include_runfiles = False,
+    visibility = ["//visibility:public"],
+)
+
+npm_package(
     name = "pkg",
     srcs = [
         "package.json",
         "src/index.js",
-        "src/app-output.js",
-        "src/app-error.js",
-        "src/logger.js",
-        "src/cli.js"
+        "src/input-validator.js",
+        "src/oss-compliance.controller.js",
+        "src/oss-compliance.service.js",
+        "src/public-decorator.js",
+        "src/query-param-handling-controller.js",
+        "src/query-param-handling-service.js",
+        "src/stream-utils.js",
+        "src/test-services.js",
+        "src/url-handler.js"
     ],
     # This is a perf improvement; the default will be flipped to False in rules_js 2.0
     include_runfiles = False,

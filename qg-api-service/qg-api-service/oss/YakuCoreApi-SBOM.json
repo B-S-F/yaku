@@ -68,8 +68,8 @@
       "bom-ref": "@bosch-grow-pat/ado-work-items-fetcher-0.7.2.tgz"
     },
     {
-      "group": "@bosch-grow-pat/api-commons-lib",
-      "name": "@bosch-grow-pat/api-commons-lib-0.5.2.tgz",
+      "group": "@yaku/api-commons-lib",
+      "name": "@yaku/api-commons-lib-0.5.2.tgz",
       "version": "0.5.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -88,7 +88,7 @@
         }
       ],
       "type": "library",
-      "bom-ref": "@bosch-grow-pat/api-commons-lib-0.5.2.tgz"
+      "bom-ref": "@yaku/api-commons-lib-0.5.2.tgz"
     },
     {
       "group": "@bosch-grow-pat/api-keycloak-auth-lib",

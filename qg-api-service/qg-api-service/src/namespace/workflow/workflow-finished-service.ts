@@ -1,4 +1,4 @@
-import { streamToString } from '@bosch-grow-pat/api-commons-lib'
+import { streamToString } from '@yaku/api-commons-lib'
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { setTimeout } from 'timers/promises'

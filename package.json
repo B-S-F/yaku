@@ -4,13 +4,6 @@
     "npm": ">=8.0.0",
     "node": ">=18.0.0"
   },
-  "workspaces": [
-    "qg-api-service",
-    "yaku-client-lib",
-    "yaku-cli",
-    "e2e-tests",
-    "scale-run-test"
-  ],
   "scripts": {
     "build": "npx turbo run build --continue --cache-dir=.turbo",
     "lint": "npx turbo run lint --cache-dir=.turbo",
@@ -37,5 +30,8 @@
     "*.{ts,json,yml,yaml,md}": [
       "prettier --write"
     ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["*"]
   }
 }

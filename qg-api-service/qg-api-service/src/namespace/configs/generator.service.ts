@@ -1,4 +1,4 @@
-import { decodeBufferToUTF8EncodedString } from '@bosch-grow-pat/api-commons-lib'
+import { decodeBufferToUTF8EncodedString } from '@yaku/api-commons-lib'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import * as YAML from 'yaml'
 import { ZodError, z } from 'zod'

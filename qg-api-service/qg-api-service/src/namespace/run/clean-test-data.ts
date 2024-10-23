@@ -1,4 +1,4 @@
-import { ListQueryHandler, SortOrder } from '@bosch-grow-pat/api-commons-lib'
+import { ListQueryHandler, SortOrder } from '@yaku/api-commons-lib'
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import { Timeout } from '@nestjs/schedule'
 import { ConfigEntity } from '../configs/config.entity'

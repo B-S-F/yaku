@@ -1,4 +1,4 @@
-import { validateId } from '@bosch-grow-pat/api-commons-lib'
+import { validateId } from '@yaku/api-commons-lib'
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { ADMIN_ROLE, NAMESPACE_ACCESS_ROLE } from '../../guards/roles.guard'
 

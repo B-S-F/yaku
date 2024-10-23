@@ -36,7 +36,6 @@
     "migration:revert": "npm run build && npm run typeorm -- migration:revert -d src/database/ormconfig.ts"
   },
   "dependencies": {
-    "@bosch-grow-pat/api-commons-lib": "^0.6.1",
     "@bosch-grow-pat/api-keycloak-auth-lib": "^0.9.0",
     "@nestjs/common": "^10.3.8",
     "@nestjs/core": "^10.3.8",
@@ -118,8 +117,5 @@
     "typescript": "4.9.5",
     "vite-plugin-node": "^3.0.2",
     "vitest": "^0.29.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": ["*"]
   }
 }

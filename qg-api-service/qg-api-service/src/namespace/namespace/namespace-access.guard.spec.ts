@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
-import { testingNamespaceId } from '@bosch-grow-pat/api-commons-lib'
+import { testingNamespaceId } from '@yaku/api-commons-lib'
 import { NamespaceAccessGuard } from './namespace-access.guard'
 import {
   KEYCLOAK_ADMIN_ROLE,

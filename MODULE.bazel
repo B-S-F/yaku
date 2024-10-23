@@ -85,10 +85,8 @@ npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependenc
 
 npm.npm_translate_lock(
     name = "npm",
-    #npmrc = "//qg-api-service/qg-api-service:.npmrc",
     use_home_npmrc = True,
     pnpm_lock = "//:pnpm-lock.yaml",
-    #npm_package_lock = "//:package-lock.json",
     verify_node_modules_ignored = "//:.bazelignore",
 )
 

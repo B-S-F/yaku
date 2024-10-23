@@ -1,4 +1,4 @@
-import { EntityList, SortOrder } from '@bosch-grow-pat/api-commons-lib'
+import { EntityList, SortOrder } from '@yaku/api-commons-lib'
 import {
   KeyCloakService,
   KeyCloakUserOfRole,

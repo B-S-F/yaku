@@ -1,4 +1,4 @@
-import { Public } from '@bosch-grow-pat/api-commons-lib'
+import { Public } from '@yaku/api-commons-lib'
 import { Controller, Get } from '@nestjs/common'
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { VersionInformation, VersionService } from './version.service'
