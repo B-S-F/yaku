@@ -1,0 +1,6 @@
+configure:
+  languages:
+    javascript: true
+    go: false
+    protobuf: false
+    python: false
