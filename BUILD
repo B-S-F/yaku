@@ -1,4 +1,4 @@
-load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_config")
 load("@npm//:defs.bzl", "npm_link_all_packages")
 load("@aspect_rules_js//npm:repositories.bzl", "npm_translate_lock")
 
@@ -6,11 +6,12 @@ load("@aspect_rules_js//npm:repositories.bzl", "npm_translate_lock")
 npm_link_all_packages(name = "node_modules")
 
 
-exports_files(
-    [
-        "tsconfig.json",
-    ],
+ts_config(
+    name = "tsconfig",
+    src = "tsconfig.json",
     visibility = ["//visibility:public"],
+    deps = ["//:node_modules/@tsconfig/node16-strictest"],
 )
+
 
 package(default_visibility = ["//visibility:public"])

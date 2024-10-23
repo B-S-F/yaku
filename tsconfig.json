@@ -1,0 +1,26 @@
+{
+  "extends": "@tsconfig/node16-strictest/tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "noImplicitAny": false,
+    "importsNotUsedAsValues": "preserve",
+    "noPropertyAccessFromIndexSignature": false,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "strict": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "es2021",
+    "module": "es2022",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "incremental": true,
+    "experimentalDecorators": true,
+  },
+  "exclude": ["node_modules"]
+}
+
+

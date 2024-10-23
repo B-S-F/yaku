@@ -1,9 +1,5 @@
 {
   "name": "qg-api-service",
-  "engines": {
-    "npm": ">=8.0.0",
-    "node": ">=18.0.0"
-  },
   "scripts": {
     "build": "npx turbo run build --continue --cache-dir=.turbo",
     "lint": "npx turbo run lint --cache-dir=.turbo",
@@ -15,6 +11,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
+    "@tsconfig/node16-strictest": "1.0.4",
     "cpy-cli": "^5.0.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
@@ -25,7 +22,6 @@
   "dependencies": {
     "@yaku/api-commons-lib": "workspace:*"
   },
-  "packageManager": "npm@10.9.0",
   "lint-staged": {
     "*.{ts,json,yml,yaml,md}": [
       "prettier --write"

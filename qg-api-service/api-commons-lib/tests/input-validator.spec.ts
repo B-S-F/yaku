@@ -5,7 +5,7 @@ import {
   validateId,
   validateName,
   validateFilter,
-} from './input-validator'
+} from '../src/input-validator'
 import { z } from 'zod'
 
 describe('validateId', () => {

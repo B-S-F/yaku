@@ -14,11 +14,14 @@ ts_project(
     ]),
     declaration = True,
     incremental = True,
+    resolve_json_module = True,
     source_map = True,
     transpiler = partial.make(
         swc,
         swcrc = ".swcrc",
     ),
+    tsconfig = "//:tsconfig",
+    validate = False,
     deps = [
         ":node_modules",
         "//:node_modules",
