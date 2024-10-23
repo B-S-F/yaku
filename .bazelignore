@@ -11,5 +11,6 @@ yaku-apps-python/packages/autopilot-utils/tests/app_subprocess_steps
 yaku-apps-python/packages/autopilot-utils/tests/app_super_simple_evaluator
 yaku-apps-python/packages/autopilot-utils/tests/demo_app
 qg-api-service/qg-api-service/node_modules
+qg-api-service/api-commons-lib/node_modules
 qg-api-service/node_modules
 node_modules
