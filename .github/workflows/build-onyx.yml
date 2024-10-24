@@ -26,12 +26,13 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            onyx/bin
-          key: ${{ runner.os }}-golang-${{ hashFiles('onyx/bin') }}
+            onyx
+          key: ${{ runner.os }}-onyx
           restore-keys: |
-            ${{ runner.os }}-golang-
+            ${{ runner.os }}-onyx
       - name: Show cache contents
         run: |
+          ls -ltr onyx
           ls -ltr onyx/bin
       - if: ${{ steps.go-cache.outputs.cache-hit != 'true' }}
         name: Build
