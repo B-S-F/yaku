@@ -45,6 +45,9 @@ jobs:
           key: onyx-${{ hashFiles('onyx/**') }}
   build-typescript-apps:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'yaku-apps-typescript'
     permissions:
       contents: read
       packages: write
@@ -56,8 +59,8 @@ jobs:
         id: turbo-cache
         uses: actions/cache/restore@v4
         with:
-          path: yaku-apps-typescript/.turbo
-          key: typescript-apps-turbo-${{ hashFiles('yaku-apps-typescript/**') }}
+          path: .turbo
+          key: typescript-apps-turbo-${{ hashFiles('./**') }}
           lookup-only: true
           restore-keys: |
             typescript-apps-turbo-
@@ -78,7 +81,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: |
-            yaku-apps-typescript/.turbo
+            .turbo
           key: typescript-apps-turbo-${{ hashFiles('yaku-apps-typescript/**') }}
   test:
     runs-on: ubuntu-latest
