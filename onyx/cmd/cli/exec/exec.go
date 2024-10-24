@@ -1,5 +1,4 @@
 package exec
-// comment
 import (
 	"errors"
 	"path/filepath"
