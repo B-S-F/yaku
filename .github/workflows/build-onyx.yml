@@ -23,37 +23,32 @@ jobs:
         with:
           go-version: ">=1.20.0"
           cache: true
-      - name: Setup Golang caches
+      - name: restore cache if exists
         id: go-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
-            onyx
-          key: ${{ runner.os }}-golang-${{ hashFiles('onyx/src/**') }}
-          # restore-keys: |
-          #   ${{ runner.os }}-golang-
-      # - name: Check if folder has changed
-      #   id: check-changes
-      #   run: |         
-      #     diff_output=$(git diff HEAD HEAD~1 -- onyx/)
-      #     # Check if the output is empty
-      #     if [ -n "$diff_output" ]; then
-      #         echo "There are changes."
-      #         echo "changed=true" >> $GITHUB_OUTPUT
-      #     else
-      #         echo "No changes detected."
-      #         echo "changed=false" >> $GITHUB_OUTPUT
-      #     fi
-      # - name: Show cache contents
-      #   run: |
-      #     ls -ltr onyx
-      # - if: ${{ steps.check-changes.outputs.changed == 'true' || steps.go-cache.outputs.cache-hit != 'true'}}
+            onyx/bin
+          key: onyx-${{ hashFiles('onyx/**') }}
+          lookup-only: true
+          restore-keys: |
+            onyx-
       - if: ${{ steps.go-cache.outputs.cache-hit != 'true'}}
         name: Build
         working-directory: onyx
         run: |
           make setup
           make build
+      - name: Save cache
+        id: go-cache
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            onyx/bin
+          key: onyx-${{ hashFiles('onyx/**') }}
+          lookup-only: true
+          restore-keys: |
+            onyx-
   test:
     runs-on: ubuntu-latest
     needs: 
@@ -64,15 +59,16 @@ jobs:
       attestations: write
       id-token: write
     steps:
-      - name: Setup Golang caches
+      - name: restore cache if exists
         id: go-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
-            onyx
-          key: ${{ runner.os }}-golang-${{ hashFiles('onyx/src/**') }}
+            onyx/bin
+          key: onyx-${{ hashFiles('onyx/**') }}
+          lookup-only: true
           restore-keys: |
-            ${{ runner.os }}-golang-
+            onyx-
       - name: Check
         run: ls -ltr onyx/bin
       
