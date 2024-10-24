@@ -46,9 +46,6 @@ jobs:
           path: |
             onyx/bin
           key: onyx-${{ hashFiles('onyx/**') }}
-          lookup-only: true
-          restore-keys: |
-            onyx-
   test:
     runs-on: ubuntu-latest
     needs: 
@@ -66,7 +63,6 @@ jobs:
           path: |
             onyx/bin
           key: onyx-${{ hashFiles('onyx/**') }}
-          lookup-only: true
           restore-keys: |
             onyx-
       - name: Check
