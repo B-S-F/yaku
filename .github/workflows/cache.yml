@@ -23,6 +23,7 @@ jobs:
       - name: Write dummy file and save cache if needed
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
+          mkdir -p foo/bin
           echo "Dummy file created at $(date)" > foo/bin/dummy.txt
           echo "Cache updated"    
 
