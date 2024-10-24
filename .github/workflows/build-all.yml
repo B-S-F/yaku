@@ -32,11 +32,11 @@ jobs:
 
       - name: Build
         run: |
-          bazel build
+          bazel build //... 
 
       - name: Test
         run: |
-          bazel test
+          bazel test //... 
 
       ####
       ## only on push to main
