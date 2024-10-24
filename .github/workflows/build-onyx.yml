@@ -30,11 +30,22 @@ jobs:
           key: ${{ runner.os }}-onyx
           restore-keys: |
             ${{ runner.os }}-onyx
+      - name: Check if folder has changed
+        id: check-changes
+        run: |         
+          diff_output=$(git diff HEAD HEAD~1 onyx/)
+          # Check if the output is empty
+          if [ -n "$diff_output" ]; then
+              echo "There are changes."
+              echo "changed=true" >> $GITHUB_OUTPUT
+          else
+              echo "No changes detected."
+              echo "changed=false" >> $GITHUB_OUTPUT
+          fi
       - name: Show cache contents
         run: |
           ls -ltr onyx
-          ls -ltr onyx/bin
-      - if: ${{ steps.go-cache.outputs.cache-hit != 'true' }}
+      - if: ${{ steps.check-changes.outputs.changed == 'true' }}
         name: Build
         working-directory: onyx
         run: |
