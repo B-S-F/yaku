@@ -16,9 +16,6 @@ jobs:
         with:
           path: foo/bin
           key: foo-${{ hashFiles('foo/src/**') }}
-          restore-keys: |
-              foo
-              foo-bla
 
       - name: Write dummy file and save cache if needed
         if: steps.cache.outputs.cache-hit != 'true'
