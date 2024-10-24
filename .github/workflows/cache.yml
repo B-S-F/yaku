@@ -16,6 +16,9 @@ jobs:
         with:
           path: foo/bin
           key: foo-${{ hashFiles('foo/src/**') }}
+          restore-keys: |
+              foo
+              foo-bla
 
       - name: Write dummy file and save cache if needed
         if: steps.cache.outputs.cache-hit != 'true'
@@ -28,6 +31,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Restore cached Primes
+        uses: actions/cache/restore@v4
+        with:
+          path: foo/bin
+          key: foo
 
       - name: Use cached bin folder
         run: |
