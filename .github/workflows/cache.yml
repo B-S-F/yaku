@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cache
+      - name: Check cache hit
         id: cache-restore
         uses: actions/cache/restore@v4
         with:
@@ -28,6 +28,7 @@ jobs:
         run: |
           echo "Testing..."
           cat foo/bin/dummy.txt 
+          # fail test
           exit 1
 
       - name: Cache
