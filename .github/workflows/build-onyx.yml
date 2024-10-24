@@ -1,4 +1,4 @@
-name: Test onyx pipeline
+name: Test Onyx Pipeline
 
 on:
   workflow_dispatch:
