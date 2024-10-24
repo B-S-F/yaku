@@ -32,6 +32,7 @@ jobs:
 
       - name: Build
         run: |
+          bazel clean --expunge
           bazel build \
               --config=ci \
               --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_ORG_API_KEY }} \
