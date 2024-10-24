@@ -34,9 +34,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: foo/bin
-          key: foocache-
-          restore-keys: |
-            foocache-
+          key: foocache-${{ hashFiles('foo/src/**') }}
 
       - name: Use cached bin folder
         run: |
