@@ -30,6 +30,9 @@ jobs:
           key: ${{ runner.os }}-golang-${{ hashFiles('onyx/bin') }}
           restore-keys: |
             ${{ runner.os }}-golang-
+      - name: Show cache contents
+        run: |
+          ls -ltr onyx/bin
       - if: ${{ steps.go-cache.outputs.cache-hit != 'true' }}
         name: Build
         working-directory: onyx
