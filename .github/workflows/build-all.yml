@@ -32,18 +32,11 @@ jobs:
 
       - name: Build
         run: |
-          bazel clean --expunge
-          bazel build \
-              --config=ci \
-              --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_ORG_API_KEY }} \
-              //...
+          bazel build
 
       - name: Test
         run: |
-          bazel test \
-              --config=ci \
-              --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_ORG_API_KEY }} \
-              //...
+          bazel test
 
       ####
       ## only on push to main
