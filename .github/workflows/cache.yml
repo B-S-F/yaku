@@ -1,0 +1,31 @@
+name: Detect Changes and Cache Folder
+
+on:
+  push:
+    branches: [ try-cache ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: foo/bin
+          key: foo-${{ hashFiles('foo/src/**') }}
+
+      - name: Write dummy file and save cache if needed
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          echo "Dummy file created at $(date)" > foo/bin/dummy.txt
+          echo "Cache updated"    
+
+      - name: Use cached bin folder
+        run: |
+          ls -la foo/bin/
+          cat foo/bin/dummy.txt
+
+
