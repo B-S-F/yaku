@@ -15,7 +15,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: foo/bin
-          key: foo-${{ hashFiles('foo/src/**') }}
+          key: foocache-${{ hashFiles('foo/src/**') }}
 
       - name: Write dummy file and save cache if needed
         if: steps.cache.outputs.cache-hit != 'true'
@@ -34,9 +34,9 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: foo/bin
-          key: foo-
+          key: foocache-
           restore-keys: |
-            foo-
+            foocache-
 
       - name: Use cached bin folder
         run: |
