@@ -71,6 +71,7 @@ jobs:
 
       - if: ${{ steps.turbo-cache.outputs.cache-hit != 'true'}}
         name: Install and Build
+        working-directory: yaku-apps-typescript
         run: |
           npm ci -ws --include-workspace-root
           npm run build
