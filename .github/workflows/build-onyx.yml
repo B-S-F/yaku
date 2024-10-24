@@ -84,7 +84,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: 
-      - build
+      - build-onyx
+      - build-typescript-apps
     permissions:
       contents: read
       packages: write
