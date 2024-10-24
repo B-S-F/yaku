@@ -16,8 +16,6 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 5
       - name: Setup go
         uses: actions/setup-go@v5
         with:
@@ -53,6 +51,7 @@ jobs:
       attestations: write
       id-token: write
     steps:
+      - uses: actions/checkout@v4
       - name: restore cache if exists
         id: turbo-cache
         uses: actions/cache/restore@v4
