@@ -16,6 +16,7 @@ jobs:
         with:
           path: foo/bin
           key: foocache-${{ hashFiles('foo/src/**') }}
+          lookup-only: true
 
       - name: Build
         if: steps.cache-restore.outputs.cache-hit != 'true'
