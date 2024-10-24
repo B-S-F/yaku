@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            onyx
+            onyx/bin
           key: ${{ runner.os }}-golang-${{ hashFiles('onyx/src/**') }}
           restore-keys: |
             ${{ runner.os }}-golang-
@@ -69,7 +69,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            onyx
+            onyx/bin
           key: ${{ runner.os }}-golang-${{ hashFiles('onyx/src/**') }}
           restore-keys: |
             ${{ runner.os }}-golang-
