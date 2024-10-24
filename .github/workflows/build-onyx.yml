@@ -16,6 +16,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 5
       - name: Setup go
         uses: actions/setup-go@v5
         with:
