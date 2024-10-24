@@ -12,17 +12,29 @@ jobs:
 
       - name: Cache
         id: cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: foo/bin
           key: foocache-${{ hashFiles('foo/src/**') }}
 
-      - name: Write dummy file and save cache if needed
+      - name: Build
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           mkdir -p foo/bin
           echo "Dummy file created at $(date)" > foo/bin/dummy.txt
-          echo "Cache updated"    
+
+      - name: Test
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          echo "Testing..."
+          cat foo/bin/dummy.txt 
+
+      - name: Cache
+        id: cache
+        uses: actions/cache/save@v4
+        with:
+          path: foo/bin
+          key: foocache-${{ hashFiles('foo/src/**') }}
 
   jobtwo:
     needs: jobone
