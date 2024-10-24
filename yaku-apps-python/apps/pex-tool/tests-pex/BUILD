@@ -1,0 +1,10 @@
+python_tests(
+    dependencies=[
+        f"apps/pex-tool:pex-tool",
+    ],
+    runtime_package_dependencies=[
+        f"apps/pex-tool:pex-tool",
+    ],
+    skip_bandit=True,
+    skip_mypy=True,
+)

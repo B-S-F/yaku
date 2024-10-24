@@ -56,7 +56,7 @@ def test_load_cli_shows_error_if_file_does_not_exist():
         load_cli(Path("non_existing_file.abcd"))
 
 
-@pytest.mark.parametrize("module_name", ["os", "sys"])
+@pytest.mark.parametrize("module_name", ["test", "sys"])
 def test_load_cli_shows_proper_import_error_in_case_of_module_name_conflicts(
     tmp_path: Path, module_name: str
 ):

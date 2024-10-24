@@ -1,13 +1,5 @@
 commons-libs
 qg-api-service
 user-documentation
+yaku-apps-python
 yaku-apps-typescript
-yaku-apps-python/packages/autopilot-utils/tests-pex
-yaku-apps-python/packages/autopilot-utils/tests/app_chained_multi_evaluator
-yaku-apps-python/packages/autopilot-utils/tests/app_multi_command
-yaku-apps-python/packages/autopilot-utils/tests/app_multi_evaluator
-yaku-apps-python/packages/autopilot-utils/tests/app_single_command
-yaku-apps-python/packages/autopilot-utils/tests/app_single_evaluator
-yaku-apps-python/packages/autopilot-utils/tests/app_subprocess_steps
-yaku-apps-python/packages/autopilot-utils/tests/app_super_simple_evaluator
-yaku-apps-python/packages/autopilot-utils/tests/demo_app
