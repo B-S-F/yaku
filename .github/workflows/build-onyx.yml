@@ -32,15 +32,6 @@ jobs:
           key: ${{ runner.os }}-golang-${{ hashFiles('onyx/src/**') }}
           restore-keys: |
             ${{ runner.os }}-golang-
-      # - name: Setup Golang caches
-      #   id: go-cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       onyx/bin
-      #     key: ${{ runner.os }}-golang-${{ hashFiles('onyx/bin') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-golang-
       # - name: Check if folder has changed
       #   id: check-changes
       #   run: |         
