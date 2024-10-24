@@ -29,7 +29,7 @@ jobs:
         with:
           path: |
             onyx
-          key: ${{ runner.os }}-golang-${{ hashFiles('onyx/src/**') }}
+          key: ${{ runner.os }}-golang-${{ hashFiles('onyx/bin/onyx') }}
           restore-keys: |
             ${{ runner.os }}-golang-
       # - name: Check if folder has changed
