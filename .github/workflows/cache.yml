@@ -5,7 +5,7 @@ on:
     branches: [ try-cache ]
 
 jobs:
-  build:
+  jobone:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,9 +23,14 @@ jobs:
           echo "Dummy file created at $(date)" > foo/bin/dummy.txt
           echo "Cache updated"    
 
+  jobtwo:
+    needs: jobone
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
       - name: Use cached bin folder
         run: |
           ls -la foo/bin/
           cat foo/bin/dummy.txt
-
 
