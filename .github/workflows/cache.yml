@@ -28,6 +28,7 @@ jobs:
         run: |
           echo "Testing..."
           cat foo/bin/dummy.txt 
+          exit 1
 
       - name: Cache
         id: cache-save
