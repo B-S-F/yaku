@@ -2,7 +2,7 @@ import {
   EntityList,
   ListQueryHandler,
   SortOrder,
-} from '@B-S-F/api-commons-lib'
+} from 'api-commons-lib'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'

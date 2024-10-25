@@ -11,7 +11,7 @@ import {
   createMockResponse,
   namespaceUrl,
   testingNamespaceId,
-} from '@B-S-F/api-commons-lib'
+} from 'api-commons-lib'
 import {
   BadRequestException,
   HttpStatus,

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { testingNamespaceId } from '@B-S-F/api-commons-lib'
+import { testingNamespaceId } from 'api-commons-lib'
 import {
   NamespaceLocalIdService,
   NamespaceSequenceConfig,

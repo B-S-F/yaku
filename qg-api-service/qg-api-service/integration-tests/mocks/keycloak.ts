@@ -3,7 +3,7 @@ import {
   KeyCloakUser,
   KeyCloakUserOfRole,
   MissingUserError,
-} from '@B-S-F/api-keycloak-auth-lib'
+} from 'api-keycloak-auth-lib'
 import { Injectable } from '@nestjs/common'
 import { KEYCLOAK_ADMIN_ROLE } from '../../src/guards/roles.guard'
 

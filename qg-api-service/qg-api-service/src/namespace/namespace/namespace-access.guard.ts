@@ -1,4 +1,4 @@
-import { validateId } from '@B-S-F/api-commons-lib'
+import { validateId } from 'api-commons-lib'
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { ADMIN_ROLE, NAMESPACE_ACCESS_ROLE } from '../../guards/roles.guard'
 

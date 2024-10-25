@@ -3,7 +3,7 @@ import {
   ListQueryHandler,
   toListQueryOptions,
   UrlHandlerFactory,
-} from '@B-S-F/api-commons-lib'
+} from 'api-commons-lib'
 import { Controller, Get, Inject, Param, Query, Res } from '@nestjs/common'
 import {
   ApiBearerAuth,

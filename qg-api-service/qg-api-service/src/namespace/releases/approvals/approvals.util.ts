@@ -1,4 +1,4 @@
-import { PaginatedData } from '@B-S-F/api-commons-lib'
+import { PaginatedData } from 'api-commons-lib'
 import { ApiProperty } from '@nestjs/swagger'
 import { UserInNamespaceDto } from '../../../namespace/users/users.utils'
 import { z } from 'zod'

@@ -9,7 +9,7 @@ import {
   validateBody,
   validateId,
   validateName,
-} from '@B-S-F/api-commons-lib'
+} from 'api-commons-lib'
 import {
   BadRequestException,
   Body,

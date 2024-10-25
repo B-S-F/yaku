@@ -2,7 +2,7 @@ import {
   UrlHandlerFactory,
   validateId,
   validateBody,
-} from '@B-S-F/api-commons-lib'
+} from 'api-commons-lib'
 import {
   Controller,
   Inject,

@@ -1,4 +1,4 @@
-import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakUser } from 'api-keycloak-auth-lib'
 import {
   BadRequestException,
   Inject,

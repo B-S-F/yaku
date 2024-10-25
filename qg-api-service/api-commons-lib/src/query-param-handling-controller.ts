@@ -168,7 +168,7 @@ export const queryOptionsSchema = z.object({
   page: z.number().int().positive().optional(),
   items: z.number().int().positive().optional(),
   sortOrder: z.nativeEnum(SortOrder).optional(),
-  sortBy: z.string().trim().nonempty().optional(),
+  sortBy: z.string().trim().min(1).optional(),
 })
 
 export function toListQueryOptions(

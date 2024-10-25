@@ -1,4 +1,4 @@
-import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { ApiClient } from 'yaku-client-lib'
 import inquirer from 'inquirer'
 import assert from 'node:assert'
 import chalk from 'chalk'

@@ -19,11 +19,11 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 import { Request } from 'express'
-import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakUser } from 'api-keycloak-auth-lib'
 import { GetUserProfileDto } from './dto/get-user-profile.dto'
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto'
 import { z } from 'zod'
-import { validateBody } from '@B-S-F/api-commons-lib'
+import { validateBody } from 'api-commons-lib'
 import { EditorType } from './utils/types'
 
 @ApiBearerAuth()

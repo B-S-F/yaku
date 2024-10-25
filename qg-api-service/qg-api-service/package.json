@@ -36,8 +36,8 @@
     "migration:revert": "npm run build && npm run typeorm -- migration:revert -d src/database/ormconfig.ts"
   },
   "dependencies": {
-    "@B-S-F/api-commons-lib": "^0.6.1",
-    "@B-S-F/api-keycloak-auth-lib": "^0.9.0",
+    "api-commons-lib": "0.7.0",
+    "api-keycloak-auth-lib": "0.9.0",
     "@nestjs/common": "^10.3.8",
     "@nestjs/core": "^10.3.8",
     "@nestjs/jwt": "^10.2.0",

@@ -3,7 +3,7 @@ import {
   KeyCloakService,
   KeyCloakStrategy,
   KeyCloakUser,
-} from '@B-S-F/api-keycloak-auth-lib'
+} from 'api-keycloak-auth-lib'
 import { INestApplication } from '@nestjs/common'
 import { RouterModule } from '@nestjs/core'
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core/constants'

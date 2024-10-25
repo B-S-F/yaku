@@ -1,4 +1,4 @@
-import { ApiClient, QueryOptions } from '@B-S-F/yaku-client-lib'
+import { ApiClient, QueryOptions } from 'yaku-client-lib'
 import { Command } from 'commander'
 import {
   handleRestApiError,

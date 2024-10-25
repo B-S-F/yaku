@@ -1,5 +1,5 @@
 import { Command, Option } from 'commander'
-import { ApiClient, Namespace } from '@B-S-F/yaku-client-lib'
+import { ApiClient, Namespace } from 'yaku-client-lib'
 import {
   consoleErrorRed,
   consoleWarnYellow,

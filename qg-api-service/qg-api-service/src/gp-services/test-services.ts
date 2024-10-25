@@ -1,5 +1,5 @@
-import { testingNamespaceId } from '@B-S-F/api-commons-lib'
-import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
+import { testingNamespaceId } from 'api-commons-lib'
+import { KeyCloakUser } from 'api-keycloak-auth-lib'
 
 export const testUser: KeyCloakUser = {
   id: 1,

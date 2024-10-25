@@ -1,4 +1,4 @@
-import { decodeBufferToUTF8EncodedString } from '@B-S-F/api-commons-lib'
+import { decodeBufferToUTF8EncodedString } from 'api-commons-lib'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import * as xlsx from 'node-xlsx'
 import * as YAML from 'yaml'

@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals'
-import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { ApiClient } from 'yaku-client-lib'
 import { Environment } from './commands/environment'
 import { EnvHttpProxyAgent } from 'undici'
 

@@ -6,7 +6,7 @@ import {
   toListQueryOptions,
   validateBody,
   validateId,
-} from '@B-S-F/api-commons-lib'
+} from 'api-commons-lib'
 import {
   BadRequestException,
   Body,

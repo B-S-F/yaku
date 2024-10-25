@@ -6,7 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common'
 import { Observable } from 'rxjs'
-import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakUser } from 'api-keycloak-auth-lib'
 
 @Injectable()
 export class InteractiveLoginGuard implements CanActivate {

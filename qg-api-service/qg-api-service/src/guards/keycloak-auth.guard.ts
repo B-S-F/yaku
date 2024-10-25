@@ -1,4 +1,4 @@
-import { KEYCLOAK_STRATEGY_NAME } from '@B-S-F/api-keycloak-auth-lib'
+import { KEYCLOAK_STRATEGY_NAME } from 'api-keycloak-auth-lib'
 import {
   ExecutionContext,
   Inject,

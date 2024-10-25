@@ -12,7 +12,7 @@ import {
 } from '@nestjs/swagger'
 import { ExplanationsService } from './explanations.service'
 import { ENABLE_EXPLANATIONS_FEATURE } from './../../config'
-import { validateId } from '@B-S-F/api-commons-lib'
+import { validateId } from 'api-commons-lib'
 
 class ExplanationsQueryOptions {
   @ApiProperty({

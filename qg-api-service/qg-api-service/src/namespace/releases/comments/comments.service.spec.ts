@@ -1,4 +1,4 @@
-import { EntityList } from '@B-S-F/api-commons-lib'
+import { EntityList } from 'api-commons-lib'
 import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { LoggerModule } from 'nestjs-pino'

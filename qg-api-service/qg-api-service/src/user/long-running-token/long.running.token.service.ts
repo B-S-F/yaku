@@ -1,4 +1,4 @@
-import { ListQueryHandler } from '@B-S-F/api-commons-lib'
+import { ListQueryHandler } from 'api-commons-lib'
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { isUUID } from 'class-validator'

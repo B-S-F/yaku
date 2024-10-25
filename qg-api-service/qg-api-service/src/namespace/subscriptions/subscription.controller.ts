@@ -20,10 +20,10 @@ import {
   HttpCode,
   Get,
 } from '@nestjs/common'
-import { validateBody } from '@B-S-F/api-commons-lib'
+import { validateBody } from 'api-commons-lib'
 import { SubscriptionService } from './subscription.service'
 import { z } from 'zod'
-import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakUser } from 'api-keycloak-auth-lib'
 import { Request } from 'express'
 import {
   SubscriptionDto,

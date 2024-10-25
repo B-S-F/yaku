@@ -2,7 +2,7 @@ import {
   PaginatedData,
   PaginationQueryOptions,
   SortOrder,
-} from '@B-S-F/api-commons-lib'
+} from 'api-commons-lib'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { z } from 'zod'
 

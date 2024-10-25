@@ -1,2 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+cd qg-api-service
 npx lint-staged -v
 npx madge --circular --extensions ts qg-api-service/src

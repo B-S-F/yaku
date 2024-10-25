@@ -2,7 +2,7 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-http-bearer'
 import { LongRunningTokenService } from './long.running.token.service'
-import { KeyCloakService } from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakService } from 'api-keycloak-auth-lib'
 import { AuthCache } from './long.running.token.cache'
 
 export const LONG_RUNNING_TOKEN_STRATEGY_NAME = 'LRT'

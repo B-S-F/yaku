@@ -8,7 +8,7 @@ import {
   validateBody,
   validateName,
   validateId,
-} from '@B-S-F/api-commons-lib'
+} from 'api-commons-lib'
 import {
   Body,
   Controller,

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
-import { KeyCloakService } from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakService } from 'api-keycloak-auth-lib'
 import { QG_LOG_LEVEL } from '../config'
 import { Notification } from '../mailing/mailing.utils'
 import { MailingService } from '../mailing/mailing.service'

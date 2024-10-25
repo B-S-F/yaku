@@ -4,7 +4,7 @@ import {
   UrlHandlerFactory,
   UrlProtocolConfig,
   createMockResponse,
-} from '@B-S-F/api-commons-lib'
+} from 'api-commons-lib'
 import { MetricService } from './metric.service'
 import { getFindingsDTOFixtures } from './utils/fixture/data.fixture'
 

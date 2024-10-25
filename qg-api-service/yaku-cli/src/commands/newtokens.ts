@@ -1,7 +1,7 @@
 import { Command } from 'commander'
 import { connect } from '../connect.js'
 
-import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { ApiClient } from 'yaku-client-lib'
 import {
   handleRestApiError,
   handleStandardParams,
