@@ -29,8 +29,6 @@ jobs:
             onyx/bin
           key: onyx-${{ hashFiles('onyx/**') }}
           lookup-only: true
-          restore-keys: |
-            onyx-
       - if: ${{ steps.go-cache.outputs.cache-hit != 'true'}}
         name: Build
         working-directory: onyx
@@ -59,8 +57,6 @@ jobs:
           path: yaku-apps-typescript/.turbo
           key: typescript-apps-turbo-${{ hashFiles('yaku-apps-typescript/**') }}
           lookup-only: true
-          restore-keys: |
-            typescript-apps-turbo-
 
       - uses: actions/setup-node@v4
         with:
@@ -99,8 +95,6 @@ jobs:
           path: |
             onyx/bin
           key: onyx-${{ hashFiles('onyx/**') }}
-          restore-keys: |
-            onyx-
       - name: Check
         run: ls -ltr onyx/bin
       
@@ -110,9 +104,6 @@ jobs:
           path: |
             yaku-apps-typescript/.turbo
           key: typescript-apps-turbo-${{ hashFiles('yaku-apps-typescript/**') }}
-          restore-keys: |
-            typescript-apps-turbo-
-
       - name: Check
         run: ls -ltr yaku-apps-typescript/.turbo
       
