@@ -16,11 +16,13 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup go
         uses: actions/setup-go@v5
         with:
           go-version: ">=1.20.0"
           cache: true
+
       - name: restore cache if exists
         id: cache
         uses: actions/cache/restore@v4
@@ -29,6 +31,7 @@ jobs:
             onyx/bin
           key: onyx-${{ hashFiles('onyx/**') }}
           lookup-only: true
+
       - if: steps.cache.outputs.cache-hit != 'true'
         name: Build
         working-directory: onyx
@@ -58,13 +61,6 @@ jobs:
           restore-keys: |
             typescript-apps-turbo-
 
-      - name: restore cache if exists
-        id: cache
-        uses: actions/cache/restore@v4
-        with:
-          path: yaku-apps-typescript
-          key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
-
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -72,6 +68,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: yaku-apps-typescript/package-lock.json
 
+      - name: restore cache if exists
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: yaku-apps-typescript
+          key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
       
       - if: steps.cache.outputs.cache-hit != 'true'
         name: Install and Build
@@ -103,6 +105,7 @@ jobs:
           path: |
             onyx/bin
           key: onyx-${{ hashFiles('onyx/**') }}
+
       - name: Check
         run: ls -ltr onyx/bin
       
@@ -110,8 +113,9 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: |
-            yaku-apps-typescript/.turbo
+            yaku-apps-typescript
           key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
+
       - name: Check
         run: ls -ltr yaku-apps-typescript
       
