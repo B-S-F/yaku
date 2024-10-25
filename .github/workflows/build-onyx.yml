@@ -29,7 +29,7 @@ jobs:
             onyx/bin
           key: onyx-${{ hashFiles('onyx/**') }}
           #lookup-only: true
-      - if: ${{ steps.go-cache.outputs.cache-hit != 'true'}}
+      - if: steps.cache.outputs.cache-hit != 'true'
         name: Build
         working-directory: onyx
         run: |
@@ -50,13 +50,20 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-      - name: restore cache if exists
-        id: turbo-cache
-        uses: actions/cache/restore@v4
+      - name: Cache turbo build setup
+        uses: actions/cache@v4
         with:
           path: yaku-apps-typescript/.turbo
-          key: typescript-apps-turbo-${{ hashFiles('yaku-apps-typescript/**') }}
-          #lookup-only: true
+          key: typescript-apps-turbo-${{ github.sha }}
+          restore-keys: |
+            typescript-apps-turbo-
+
+      - name: restore cache if exists
+        id: apps-typescript-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: yaku-apps-typescript
+          key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
 
       - uses: actions/setup-node@v4
         with:
@@ -65,7 +72,8 @@ jobs:
           cache: 'npm'
           cache-dependency-path: yaku-apps-typescript/package-lock.json
 
-      - if: ${{ steps.turbo-cache.outputs.cache-hit != 'true'}}
+      
+      - if: steps.apps-typescript-cache.outputs.cache-hit != 'true'
         name: Install and Build
         working-directory: yaku-apps-typescript
         run: |
@@ -76,8 +84,8 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: |
-            yaku-apps-typescript/.turbo
-          key: typescript-apps-turbo-${{ hashFiles('yaku-apps-typescript/**') }}
+            yaku-apps-typescript
+          key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
   test:
     runs-on: ubuntu-latest
     needs: 
@@ -103,7 +111,7 @@ jobs:
         with:
           path: |
             yaku-apps-typescript/.turbo
-          key: typescript-apps-turbo-${{ hashFiles('yaku-apps-typescript/**') }}
+          key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
       - name: Check
-        run: ls -ltr yaku-apps-typescript/.turbo
+        run: ls -ltr yaku-apps-typescript
       
