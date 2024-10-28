@@ -1,4 +1,4 @@
-import { KeyCloakUser } from 'api-keycloak-auth-lib'
+import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
 import { Controller } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Test, TestingModule } from '@nestjs/testing'

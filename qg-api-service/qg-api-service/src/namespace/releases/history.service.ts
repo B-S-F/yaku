@@ -1,4 +1,4 @@
-import { SortOrder, UrlHandler } from 'api-commons-lib'
+import { SortOrder, UrlHandler } from '@B-S-F/api-commons-lib'
 import { Inject } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { QueryRunner, Repository } from 'typeorm'

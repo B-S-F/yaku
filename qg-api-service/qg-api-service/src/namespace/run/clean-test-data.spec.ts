@@ -1,4 +1,4 @@
-import { EntityList, ListQueryHandler } from 'api-commons-lib'
+import { EntityList, ListQueryHandler } from '@B-S-F/api-commons-lib'
 import { Test, TestingModule } from '@nestjs/testing'
 import { ConfigEntity } from '../configs/config.entity'
 import { ConfigsService } from '../configs/configs.service'

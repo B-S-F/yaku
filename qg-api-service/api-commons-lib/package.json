@@ -1,5 +1,5 @@
 {
-  "name": "api-commons-lib",
+  "name": "@B-S-F/api-commons-lib",
   "version": "0.7.0",
   "description": "YAKU API commons lib containing functionality that can be used across YAKU API projects",
   "main": "dist/index.js",

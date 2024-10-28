@@ -41,7 +41,7 @@ import {
   PaginatedData,
   toListQueryOptions,
   queryOptionsSchema,
-} from 'api-commons-lib'
+} from '@B-S-F/api-commons-lib'
 
 export class GetListFindingsDTO extends PaginatedData {
   @ApiProperty({

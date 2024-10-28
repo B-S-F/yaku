@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { LongRunningTokenEntity, STATUS } from './long.running.token.entity'
-import { PaginatedData } from 'api-commons-lib'
+import { PaginatedData } from '@B-S-F/api-commons-lib'
 import { z } from 'zod'
 
 export const allowedSortProperties = [

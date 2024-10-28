@@ -1,7 +1,7 @@
 import {
   UrlHandlerFactory,
   UrlProtocolConfig,
-} from 'api-commons-lib'
+} from '@B-S-F/api-commons-lib'
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { SERVICE_PROTOCOL } from '../../../config'

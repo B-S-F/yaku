@@ -3,7 +3,7 @@ import {
   UrlHandlerFactory,
   validateBody,
   validateId,
-} from 'api-commons-lib'
+} from '@B-S-F/api-commons-lib'
 import {
   Body,
   Controller,

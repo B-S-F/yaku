@@ -1,4 +1,4 @@
-import { streamToString } from 'api-commons-lib'
+import { streamToString } from '@B-S-F/api-commons-lib'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import * as Minio from 'minio'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'

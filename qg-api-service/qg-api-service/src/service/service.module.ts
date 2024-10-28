@@ -2,7 +2,7 @@ import {
   OSSComplianceConfig,
   OSSComplianceService,
   OSSSourceController,
-} from 'api-commons-lib'
+} from '@B-S-F/api-commons-lib'
 import { Module } from '@nestjs/common'
 import * as path from 'path'
 import {

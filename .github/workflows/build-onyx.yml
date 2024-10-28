@@ -170,7 +170,7 @@ jobs:
           pull: true
           push: false
           build-args: |
-            BASE_IMAGE_WORKFLOW_NAME=${{ env.BASE_IMAGE_UBUNTU_NAME }}
+            BASE_IMAGE_WORKFLOW_NAME=node:22-alpine
           tags: ${{ env.BASE_TAG }},${{ env.BASE_TAG_LATEST }}
           context: .
           target: development

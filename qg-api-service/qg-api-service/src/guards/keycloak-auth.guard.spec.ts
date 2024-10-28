@@ -1,4 +1,4 @@
-import { IsPublicAPI } from 'api-commons-lib'
+import { IsPublicAPI } from '@B-S-F/api-commons-lib'
 import { Controller, ExecutionContext } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Test, TestingModule } from '@nestjs/testing'

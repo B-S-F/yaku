@@ -2,7 +2,7 @@ import {
   EntityList,
   ListQueryHandler,
   decodeBufferToUTF8EncodedString,
-} from 'api-commons-lib'
+} from '@B-S-F/api-commons-lib'
 import {
   BadRequestException,
   Inject,

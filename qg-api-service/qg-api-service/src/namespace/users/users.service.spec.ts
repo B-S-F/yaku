@@ -1,9 +1,9 @@
-import { SortOrder } from 'api-commons-lib'
+import { SortOrder } from '@B-S-F/api-commons-lib'
 import {
   KeyCloakService,
   KeyCloakUserOfRole,
   MissingUserError,
-} from 'api-keycloak-auth-lib'
+} from '@B-S-F/api-keycloak-auth-lib'
 import { Test, TestingModule } from '@nestjs/testing'
 import { LoggerModule } from 'nestjs-pino'
 import { LocalKeyCloakModule } from '../../keycloak/local.keycloak.module'

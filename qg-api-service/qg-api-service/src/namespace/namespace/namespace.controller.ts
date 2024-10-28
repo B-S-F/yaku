@@ -1,8 +1,8 @@
-import { validateBody, validateId } from 'api-commons-lib'
+import { validateBody, validateId } from '@B-S-F/api-commons-lib'
 import {
   KeyCloakNamespace,
   KeyCloakUser,
-} from 'api-keycloak-auth-lib'
+} from '@B-S-F/api-keycloak-auth-lib'
 import {
   BadRequestException,
   Body,

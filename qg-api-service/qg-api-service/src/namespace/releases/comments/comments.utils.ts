@@ -1,7 +1,7 @@
 import {
   PaginatedData,
   PaginationQueryOptions,
-} from 'api-commons-lib'
+} from '@B-S-F/api-commons-lib'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { z } from 'zod'
 import { UserInNamespaceDto } from '../../../namespace/users/users.utils'

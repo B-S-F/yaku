@@ -1,9 +1,9 @@
-import { EntityList, SortOrder } from 'api-commons-lib'
+import { EntityList, SortOrder } from '@B-S-F/api-commons-lib'
 import {
   KeyCloakService,
   KeyCloakUserOfRole,
   MissingUserError,
-} from 'api-keycloak-auth-lib'
+} from '@B-S-F/api-keycloak-auth-lib'
 import {
   Inject,
   Injectable,

@@ -1,4 +1,4 @@
-import { streamToString } from 'api-commons-lib'
+import { streamToString } from '@B-S-F/api-commons-lib'
 import { NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { randomUUID } from 'crypto'

@@ -16,7 +16,7 @@
     "build": "npx turbo run build --continue --cache-dir=.turbo",
     "lint": "npx turbo run lint --cache-dir=.turbo",
     "lint-staged": "npx lint-staged",
-    "prepare": "cd ../ && husky install ./qg-api-service/.husky",
+    "prepare": "if [ -z \"$SKIP_HUSKY\" ]; then cd .. && husky install ./qg-api-service/.husky ; fi",
     "format": "npx turbo run format --cache-dir=.turbo",
     "test:cov": "npx turbo run test:cov --cache-dir=.turbo"
   },

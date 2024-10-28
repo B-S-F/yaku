@@ -3,7 +3,7 @@ import { Logger, LoggerModule, PinoLogger } from 'nestjs-pino'
 import {
   KeyCloakService,
   KeyCloakUserOfRole,
-} from 'api-keycloak-auth-lib'
+} from '@B-S-F/api-keycloak-auth-lib'
 import { DELETED_USER, SYSTEM_USER } from '../namespace/users/users.service'
 import { LocalKeyCloakModule } from '../keycloak/local.keycloak.module'
 import { MailingService, NullMailingService } from '../mailing/mailing.service'

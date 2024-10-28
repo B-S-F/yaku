@@ -12,7 +12,7 @@ import { SERVICE_PROTOCOL } from '../../config'
 import {
   UrlHandlerFactory,
   UrlProtocolConfig,
-} from 'api-commons-lib'
+} from '@B-S-F/api-commons-lib'
 import { AuthCache, AuthCacheConfig } from './long.running.token.cache'
 import { LongRunningTokenAuthGuard } from './long.running.token.auth.guard'
 

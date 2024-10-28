@@ -23,7 +23,7 @@ import {
   validateDate,
   PaginatedData,
   toListQueryOptions,
-} from 'api-commons-lib'
+} from '@B-S-F/api-commons-lib'
 import { Logger, PinoLogger, InjectPinoLogger } from 'nestjs-pino'
 
 const allowedSortProperties = ['count', 'runId', 'configId', 'diff', 'datetime']

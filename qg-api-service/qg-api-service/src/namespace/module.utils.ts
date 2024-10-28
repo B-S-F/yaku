@@ -1,4 +1,4 @@
-import { KeyCloakUser } from 'api-keycloak-auth-lib'
+import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
 import { InternalServerErrorException } from '@nestjs/common'
 import { Request } from 'express'
 /**
