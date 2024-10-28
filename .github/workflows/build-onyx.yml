@@ -131,7 +131,7 @@ jobs:
             qg-api-service
           key: ${{ steps.cache.outputs.cache-primary-key }}
 
-  test:
+  Build-docker-image:
     runs-on: ubuntu-latest
     needs: 
       - build-onyx
@@ -149,9 +149,6 @@ jobs:
           path: |
             onyx/bin
           key: onyx-${{ hashFiles('onyx/**') }}
-
-      - name: Check
-        run: ls -ltr onyx/bin
       
       - name: restore typescript-apps cache
         uses: actions/cache/restore@v4
@@ -160,6 +157,23 @@ jobs:
             yaku-apps-typescript
           key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
 
-      - name: Check
-        run: ls -ltr yaku-apps-typescript
+      - name: restore backend cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            qg-api-service
+          key: qg-api-service-${{ hashFiles('qg-api-service/**') }}
+
+      - name: Build docker image
+        uses: docker/build-push-action@v5
+        with:
+          pull: true
+          push: false
+          build-args: |
+            BASE_IMAGE_WORKFLOW_NAME=${{ env.BASE_IMAGE_UBUNTU_NAME }}
+          tags: ${{ env.BASE_TAG }},${{ env.BASE_TAG_LATEST }}
+          context: .
+          target: development
+          file: qg-api-service/qg-api-service/Dockerfile
+          platforms: linux/amd64
       
