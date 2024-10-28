@@ -133,6 +133,8 @@ jobs:
 
   Build-docker-image:
     runs-on: ubuntu-latest
+    env:
+      REGISTRY: ghcr.io
     needs: 
       - build-onyx
       - build-typescript-apps
