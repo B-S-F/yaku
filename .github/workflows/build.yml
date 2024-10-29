@@ -9,6 +9,12 @@ on:
     branches:
       - "main"
 
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+  attestations: write
+
 jobs:
   build-onyx:
     uses: ./.github/workflows/build-onyx.yml
