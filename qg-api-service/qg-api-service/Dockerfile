@@ -2,49 +2,52 @@
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 
-ARG BASE_IMAGE_NODEJS_NAME=node:22-alpine
+ARG BASE_IMAGE_NODEJS_NAME=node:18-alpine
 
 FROM ${BASE_IMAGE_NODEJS_NAME} As development
 
-WORKDIR /app
-COPY . ./
-RUN npm ci -ws --include-workspace-root
+USER node
+RUN mkdir /home/node/app
+WORKDIR /home/node/app
+
+COPY --chown=node:node . .
+RUN npm install -ws --include-workspace-root
 
 ###################
 # BUILD FOR PRODUCTION
 ###################
 
-ARG BASE_IMAGE_NODEJS_NAME=node:22-alpine
+ARG BASE_IMAGE_NODEJS_NAME=node:18-alpine
 
 FROM ${BASE_IMAGE_NODEJS_NAME}  As build
 
-ENV PATH=$PATH:/app/node_modules/.bin \
-    NODE_ENV=development \
-    SKIP_HUSKY=1
-
 RUN apk --no-cache add zip
-WORKDIR /app
 
-COPY --from=development /app/node_modules ./node_modules
+ENV PATH=$PATH:/home/node/app/node_modules/.bin \
+    NODE_ENV=development
+
+WORKDIR /home/node/app
+
+COPY --from=development /home/node/app/node_modules ./node_modules
 COPY . .
 
 RUN npm config set ignore-scripts false
 RUN npm run build
 RUN npm ci -ws --include-workspace-root --omit=dev && npm cache clean --force
 
+RUN chown -R node:node /home/node/app
+USER node
+
+ 
+
 ###################
 # PRODUCTION
 ###################
 
-ARG BASE_IMAGE_NODEJS_NAME=node:22-alpine
+ARG BASE_IMAGE_NODEJS_NAME=node:18-alpine
 
 FROM ${BASE_IMAGE_NODEJS_NAME} AS production
 
-ARG GROUP_NAME=qguser
-ARG GROUP_ID=1000
-ARG USERNAME=qguser
-ARG USER_ID=1001
-ARG USER_HOME=/home/qguser
 ARG VERSION=latest
 ENV IMAGE_VERSION=$VERSION
 ENV PORT=8080
@@ -54,21 +57,21 @@ LABEL description="YAKU core-api docker image based on Ubuntu-nodejs"
 
 ENV PATH=$PATH:/app/node_modules/.bin
 
-
-RUN mkdir /data
-
-WORKDIR /app
+RUN mkdir /data && chown -R node:node /data
+WORKDIR /home/node/app
 
 COPY qg-api-service/examples ./qg-api-service/examples
-COPY --from=build  /app/node_modules ./node_modules
-COPY --from=build  /app/qg-api-service/dist ./qg-api-service/dist
-COPY --from=build  /app/qg-api-service/package.json ./qg-api-service/package.json
-COPY --from=build  /app/api-commons-lib/dist ./api-commons-lib/dist
-COPY --from=build  /app/api-commons-lib/package.json ./api-commons-lib/package.json
-COPY --from=build  /app/api-keycloak-auth-lib/dist ./api-keycloak-auth-lib/dist
-COPY --from=build  /app/api-keycloak-auth-lib/package.json ./api-keycloak-auth-lib/package.json
-
+COPY --from=build  /home/node/app/node_modules ./node_modules
+COPY --from=build  /home/node/app/qg-api-service/dist ./qg-api-service/dist
+COPY --from=build  /home/node/app/qg-api-service/package.json ./qg-api-service/package.json
+COPY --from=build  /home/node/app/api-commons-lib/dist ./api-commons-lib/dist
+COPY --from=build  /home/node/app/api-commons-lib/package.json ./api-commons-lib/package.json
+COPY --from=build  /home/node/app/api-keycloak-auth-lib/dist ./api-keycloak-auth-lib/dist
+COPY --from=build  /home/node/app/api-keycloak-auth-lib/package.json ./api-keycloak-auth-lib/package.json
 
 EXPOSE ${PORT}
 
-CMD [ "node", "qg-api-service/dist/main.js" ]
+RUN chown -R node:node /home/node/app
+USER node
+
+CMD ["node", "qg-api-service/dist/main.js" ]
