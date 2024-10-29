@@ -30,6 +30,7 @@ jobs:
     uses: ./.github/workflows/build-backend.yml
 
   build-backend-docker-image:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
       - build-onyx
       - build-typescript-apps
