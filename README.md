@@ -1,4 +1,6 @@
 # Yaku
+[![Build](https://github.com/B-S-F/yaku/actions/workflows/build.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build.yml)
+
 !! THIS PROJECT IS UNDER CONSTRUCTION !!
 
 <img src="./misc/under-construction.jpg" alt="Under Construction" width="300"/>  
