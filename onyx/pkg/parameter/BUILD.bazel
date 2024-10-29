@@ -1,8 +1,0 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-
-go_library(
-    name = "parameter",
-    srcs = ["parameter.go"],
-    importpath = "github.com/B-S-F/yaku/onyx/pkg/parameter",
-    visibility = ["//visibility:public"],
-)
