@@ -23,6 +23,8 @@ jobs:
         with:
           path: yaku-apps-typescript
           key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
+          restore-keys: |
+            typescript-apps-
 
       - name: Log in to the Container Registry
         uses: docker/login-action@v3.3.0
