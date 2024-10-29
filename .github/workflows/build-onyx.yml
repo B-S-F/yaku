@@ -182,7 +182,6 @@ jobs:
             BASE_IMAGE_WORKFLOW_NAME=node:22-alpine
           tags: ghcr.io/b-s-f/yaku/api-image-test:test
           context: ./qg-api-service
-          target: development
           file: qg-api-service/qg-api-service/Dockerfile
           platforms: linux/amd64
       
