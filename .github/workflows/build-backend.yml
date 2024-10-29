@@ -3,7 +3,6 @@ on:
 
 jobs:
   build-backend:
-    name: Build Backend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

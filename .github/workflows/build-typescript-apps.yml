@@ -3,7 +3,6 @@ on:
 
 jobs:
   build-typescript-apps:
-    name: Build TypeScript Apps
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
