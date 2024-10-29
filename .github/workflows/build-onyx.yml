@@ -22,19 +22,17 @@ jobs:
         with:
           go-version: ">=1.20.0"
           cache: true
-          cache-dependency-path: |
-             onyx/go.sum
+          cache-dependency-path: onyx/go.sum
 
       - name: restore cache if exists
-        id: cache
+        id: onyx-cache
         uses: actions/cache/restore@v4
         with:
-          path: |
-            onyx/bin
+          path: onyx/bin
           key: onyx-${{ hashFiles('onyx/**') }}
           lookup-only: true
 
-      - if: steps.cache.outputs.cache-hit != 'true'
+      - if: steps.onyx-cache.outputs.cache-hit != 'true'
         name: Build
         working-directory: onyx
         run: |
@@ -43,9 +41,8 @@ jobs:
       - name: Save cache
         uses: actions/cache/save@v4
         with:
-          path: |
-            onyx/bin
-          key: ${{ steps.cache.outputs.cache-primary-key }}
+          path: onyx/bin
+          key: ${{ steps.onyx-cache.outputs.cache-primary-key }}
   build-typescript-apps:
     runs-on: ubuntu-latest
     permissions:
