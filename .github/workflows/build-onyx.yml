@@ -1,10 +1,9 @@
-name: Build Onyx
-
 on:
   workflow_call:
 
 jobs:
   build-onyx:
+    name: Build Onyx
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

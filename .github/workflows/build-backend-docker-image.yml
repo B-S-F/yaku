@@ -1,10 +1,9 @@
-name: Build Backend Docker Image
-
 on:
   workflow_call:
 
 jobs:
   build-backend-docker-image:
+    name: Build Backend Docker Image
     runs-on: ubuntu-latest
     env:
       REGISTRY: ghcr.io

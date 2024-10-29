@@ -1,10 +1,9 @@
-name: Build TypeScript Apps
-
 on:
   workflow_call:
 
 jobs:
   build-typescript-apps:
+    name: Build TypeScript Apps
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
