@@ -22,6 +22,8 @@ jobs:
         with:
           go-version: ">=1.20.0"
           cache: true
+          cache-dependency-path: |
+             onyx/go.sum
 
       - name: restore cache if exists
         id: cache
