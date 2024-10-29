@@ -129,8 +129,7 @@ jobs:
           path: |
             qg-api-service
           key: ${{ steps.cache.outputs.cache-primary-key }}
-
-  Build-docker-image:
+  Build-backend-docker-image:
     runs-on: ubuntu-latest
     env:
       REGISTRY: ghcr.io
