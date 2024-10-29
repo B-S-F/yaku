@@ -1,0 +1,45 @@
+name: Build Backend
+
+on:
+  workflow_call:
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Turbo Build Setup
+        uses: actions/cache@v4
+        with:
+          path: qg-api-service/.turbo
+          key: backend-turbo-${{ github.sha }}
+          restore-keys: |
+            backend-turbo-
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+          cache: "npm"
+          cache-dependency-path: qg-api-service/package-lock.json
+
+      - name: Restore Cache if Exists
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: qg-api-service
+          key: qg-api-service-${{ hashFiles('qg-api-service/**') }}
+
+      - name: Install and Build
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: qg-api-service
+        run: |
+          npm ci -ws --include-workspace-root
+          npm run build
+
+      - name: Save Cache
+        uses: actions/cache/save@v4
+        with:
+          path: qg-api-service
+          key: ${{ steps.cache.outputs.cache-primary-key }}
