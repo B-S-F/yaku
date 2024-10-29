@@ -19,7 +19,7 @@ One of the key features of this library is its ability to work with a custom HTT
 ### How to use
 
 ```ts
-import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { ApiClient } from 'yaku-client-lib'
 import { Dispatcher } from 'undici'
 
 // Create a custom HTTP/HTTPS agent

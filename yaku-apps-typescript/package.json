@@ -14,8 +14,7 @@
     "lint-staged": "npx lint-staged",
     "test": "npx turbo run test --parallel --cache-dir=.turbo",
     "test:integration:ci": "npx turbo run test:integration:ci --concurrency=1 --cache-dir=.turbo",
-    "format": "npx prettier --write \"**/*.{ts,tsx,md}\" && npx turbo run format --parallel --cache-dir=.turbo",
-    "prepare": "npx husky install"
+    "format": "npx prettier --write \"**/*.{ts,tsx,md}\" && npx turbo run format --parallel --cache-dir=.turbo"
   },
   "devDependencies": {
     "@B-S-F/eslint-config": "^0.1.0",

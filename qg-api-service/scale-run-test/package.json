@@ -1,5 +1,5 @@
 {
-  "name": "@B-S-F/scale-run-test",
+  "name": "scale-run-test",
   "version": "0.58.0",
   "description": "A small acceptance test that checks the scalability of the service concerning runs",
   "private": true,
@@ -19,7 +19,7 @@
   },
   "author": "GROW/PAT",
   "dependencies": {
-    "@B-S-F/yaku-client-lib": "^0.58.0",
+    "yaku-client-lib": "^0.58.0",
     "commander": "^10.0.0"
   },
   "devDependencies": {

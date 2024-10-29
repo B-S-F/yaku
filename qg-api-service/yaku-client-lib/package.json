@@ -1,5 +1,5 @@
 {
-  "name": "@B-S-F/yaku-client-lib",
+  "name": "yaku-client-lib",
   "version": "0.58.0",
   "description": "A library that provides a wrapper around the rest calls towards the yaku api",
   "private": false,

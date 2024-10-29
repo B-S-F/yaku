@@ -4,7 +4,7 @@ import {
   ApiClient,
   Config,
   QueryOptions,
-} from '@B-S-F/yaku-client-lib'
+} from 'yaku-client-lib'
 import {
   getResourceDeletionConfirmation,
   handleRestApiError,

@@ -6,16 +6,16 @@
   },
   "workspaces": [
     "qg-api-service",
+    "api-commons-lib",
+    "api-keycloak-auth-lib",
     "yaku-client-lib",
     "yaku-cli",
-    "e2e-tests",
     "scale-run-test"
   ],
   "scripts": {
     "build": "npx turbo run build --continue --cache-dir=.turbo",
     "lint": "npx turbo run lint --cache-dir=.turbo",
     "lint-staged": "npx lint-staged",
-    "prepare": "npx husky",
     "format": "npx turbo run format --cache-dir=.turbo",
     "test:cov": "npx turbo run test:cov --cache-dir=.turbo"
   },

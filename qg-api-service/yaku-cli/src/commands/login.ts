@@ -10,7 +10,7 @@ import {
   selectEnvironment,
   updateEnvironmentByKey,
 } from './environment.js'
-import { Namespace } from '@B-S-F/yaku-client-lib'
+import { Namespace } from 'yaku-client-lib'
 import {
   consoleErrorRed,
   handleRestApiError,
