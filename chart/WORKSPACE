@@ -1,3 +1,20 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "rules_helm",
+    integrity = "sha256-easVF1EdnzWNj0sqE7TgqwCfvq3BEfA/poKPAfLA4Kw=",
+    urls = ["https://github.com/abrisco/rules_helm/releases/download/0.6.0/rules_helm-v0.6.0.tar.gz"],
+)
+
+load("@rules_helm//helm:repositories.bzl", "helm_register_toolchains", "rules_helm_dependencies")
+
+rules_helm_dependencies()
+
+helm_register_toolchains()
+
+load("@rules_helm//helm:repositories_transitive.bzl", "rules_helm_transitive_dependencies")
+
+rules_helm_transitive_dependencies()
+
 load("@rules_helm//helm:defs.bzl", "helm_import_repository")
 
 # Import the Argo Workflows chart

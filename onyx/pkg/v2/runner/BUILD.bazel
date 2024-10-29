@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "runner",
@@ -9,9 +9,9 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/runner",
     visibility = ["//visibility:public"],
     deps = [
-        "//onyx/pkg/helper",
-        "//onyx/pkg/logger",
-        "//onyx/pkg/v2/model",
+        "//pkg/helper",
+        "//pkg/logger",
+        "//pkg/v2/model",
         "@com_github_netflix_go_iomux//:go_default_library",
         "@com_github_pkg_errors//:go_default_library",
         "@org_uber_go_zap//:go_default_library",

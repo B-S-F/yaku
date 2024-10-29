@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "transformer",
@@ -10,9 +10,9 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/v2/transformer",
     visibility = ["//visibility:public"],
     deps = [
-        "//onyx/pkg/logger",
-        "//onyx/pkg/parameter",
-        "//onyx/pkg/v2/model",
+        "//pkg/logger",
+        "//pkg/parameter",
+        "//pkg/v2/model",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )

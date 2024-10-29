@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "curl",
@@ -10,9 +10,9 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/repository/types/curl",
     visibility = ["//visibility:public"],
     deps = [
-        "//onyx/pkg/repository",
-        "//onyx/pkg/repository/app",
-        "//onyx/pkg/v2/model",
+        "//pkg/repository",
+        "//pkg/repository/app",
+        "//pkg/v2/model",
     ],
 )
 

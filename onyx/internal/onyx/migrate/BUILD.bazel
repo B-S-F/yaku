@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "migrate",
@@ -6,10 +6,10 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/internal/onyx/migrate",
     visibility = ["//:__subpackages__"],
     deps = [
-        "//onyx/internal/onyx/common",
-        "//onyx/pkg/configuration/versions/v0:versions",
-        "//onyx/pkg/configuration/versions/v1:versions",
-        "//onyx/pkg/logger",
+        "//internal/onyx/common",
+        "//pkg/configuration/versions/v0:versions",
+        "//pkg/configuration/versions/v1:versions",
+        "//pkg/logger",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )

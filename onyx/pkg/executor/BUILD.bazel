@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "executor",
@@ -11,11 +11,11 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/executor",
     visibility = ["//visibility:public"],
     deps = [
-        "//onyx/pkg/configuration",
-        "//onyx/pkg/helper",
-        "//onyx/pkg/logger",
-        "//onyx/pkg/runner",
-        "//onyx/pkg/workdir",
+        "//pkg/configuration",
+        "//pkg/helper",
+        "//pkg/logger",
+        "//pkg/runner",
+        "//pkg/workdir",
         "@com_github_pkg_errors//:go_default_library",
         "@com_github_spf13_afero//:go_default_library",
         "@org_uber_go_zap//:go_default_library",

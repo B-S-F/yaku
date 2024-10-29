@@ -1,4 +1,4 @@
-load("@rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "replacer",
@@ -10,10 +10,9 @@ go_library(
     importpath = "github.com/B-S-F/yaku/onyx/pkg/replacer",
     visibility = ["//visibility:public"],
     deps = [
-        "//onyx/pkg/configuration",
-        "//onyx/pkg/helper",
-        "//onyx/pkg/logger",
-        "//onyx/pkg/v2/model",
+        "//pkg/configuration",
+        "//pkg/helper",
+        "//pkg/logger",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )
