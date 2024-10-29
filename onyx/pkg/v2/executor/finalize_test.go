@@ -1,7 +1,6 @@
 package executor
 
 import (
-	"strings"
 	"testing"
 	"time"
 
@@ -14,7 +13,6 @@ import (
 
 func TestFinalizeExecuteIntegration(t *testing.T) {
 	item := &model.Finalize{
-		Run: "echo 'hello world'",
 		Env: map[string]string{
 			"ENV_VAR1": "value1",
 			"ENV_VAR2": "value2",
@@ -25,22 +23,18 @@ func TestFinalizeExecuteIntegration(t *testing.T) {
 		},
 	}
 	testCases := map[string]struct {
-		run  []string
+		run  string
 		want model.FinalizeResult
 	}{
 		"should return proper finalize result on zero exit": {
-			run: []string{
-				"echo 'hello world'",
-			},
+			run: "echo 'hello world'",
 			want: model.FinalizeResult{
 				ExitCode: 0,
 				Logs:     []model.LogEntry{{Source: "stdout", Text: "hello world"}},
 			},
 		},
 		"should return proper finalize result non zero bad exit": {
-			run: []string{
-				"echo 'hello world'\necho 'an error has occurred' >&2\nexit 1",
-			},
+			run: "echo 'hello world'\necho 'an error has occurred' >&2\nexit 1",
 			want: model.FinalizeResult{
 				ExitCode: 1,
 				Logs: []model.LogEntry{
@@ -56,7 +50,7 @@ func TestFinalizeExecuteIntegration(t *testing.T) {
 			// arrange
 			tmpDir := t.TempDir()
 			logger := logger.NewAutopilot()
-			item.Run = strings.Join(tc.run, "\n")
+			item.Run = tc.run
 			wdUtils := workdir.NewUtils(afero.NewOsFs())
 			env := make(map[string]string)
 			secrets := make(map[string]string)
