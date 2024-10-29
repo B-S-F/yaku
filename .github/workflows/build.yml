@@ -15,6 +15,10 @@ permissions:
   id-token: write
   attestations: write
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-onyx:
     uses: ./.github/workflows/build-onyx.yml
