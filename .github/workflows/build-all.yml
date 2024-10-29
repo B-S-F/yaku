@@ -10,10 +10,6 @@ on:
 env:
   REGISTRY: ghcr.io
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,35 +22,25 @@ jobs:
       - uses: actions/checkout@v4
       - uses: bazel-contrib/setup-bazel@0.9.0
         with:
+          # Avoid downloading Bazel every time.
           bazelisk-cache: true
+          # Store build cache per workflow.
           disk-cache: ${{ github.workflow }}
+          # Share repository cache between workflows.
           repository-cache: true
 
-      - name: Build
-        run: |
-          bazel build //... 
+      - name: Build with Bazel
+        run: bazel build //...
 
-      - name: Test
-        run: |
-          bazel test //... 
-
-      ####
-      ## only on push to main
-      ####
+      - name: Test with Bazel
+        run: bazel test //...
 
       - name: Log in to the Container registry
-        if: github.event_name == 'push'
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push the core image to the OCI registry
-        if: github.event_name == 'push'
-        #run: bazel run --embed_label="${GITHUB_SHA::6}" --stamp //core-image:push-image
-        run: bazel run //core-image:push-image
-
       - name: Push the chart to the OCI registry
-        if: github.event_name == 'push'
         run: bazel run //chart:yaku_helm.push_registry
