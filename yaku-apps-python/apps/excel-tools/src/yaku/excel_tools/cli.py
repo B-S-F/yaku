@@ -283,3 +283,7 @@ def add_empty_column(xlsx_path: str, column_name: str):
     workbook = load_workbook(xlsx_path)
     add_column_to_sheets(workbook, column_name, [])
     workbook.save(xlsx_path)
+
+
+if __name__ == "__main__":
+    main()

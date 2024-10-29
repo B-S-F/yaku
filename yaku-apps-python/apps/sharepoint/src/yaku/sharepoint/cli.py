@@ -85,7 +85,7 @@ def upload_folder(folder: str, sharepoint_path: str, force: bool, colors: bool):
     upload_directory_command(folder, Settings(), sharepoint_path, force)
 
 
-def main():
+if __name__ == "__main__":
     log_level = os.getenv("LOG_LEVEL", "INFO")
     if log_level == "DEBUG":
         logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)

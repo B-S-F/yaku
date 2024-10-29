@@ -1,0 +1,60 @@
+[GLOBAL]
+pants_version = "2.20.0"
+colors = true
+pythonpath = ["%(buildroot)s/pants-plugins"]
+backend_packages = [
+  "pants.backend.build_files.fmt.ruff",
+  "pants.backend.experimental.python.lint.ruff.check",
+  "pants.backend.experimental.python.lint.ruff.format",
+  "pants.backend.plugin_development",
+  "pants.backend.python",
+  "pants.backend.python.lint.bandit",
+  "pants.backend.python.lint.isort",
+  "pants.backend.python.typecheck.mypy",
+  "python-utils",
+]
+pants_ignore.add = ["!papsr_playground/**"]
+
+[anonymous-telemetry]
+enabled = false
+
+[bandit]
+args = ['--ini', '%(buildroot)s/.bandit']
+
+[test]
+timeout_default = 600
+output = "all"
+report = true
+
+[coverage-py]
+global_report = true
+report = ["console", "xml", "json"]
+
+[pytest]
+install_from_resolve = "python-default"
+
+[python]
+interpreter_constraints = ["==3.10.*"]
+enable_resolves = true
+
+[python-infer]
+use_rust_parser = true
+
+[python.resolves]
+python-default = "3rdparty/python-lockfile.txt"
+
+[mypy]
+install_from_resolve = "python-default"
+
+[repl]
+shell = "ipython"
+
+[debug-adapter]
+host = "127.0.0.1"
+port = 5678
+
+[generate-lockfiles]
+diff = true
+
+[subprocess-environment]
+env_vars.add = ["http_proxy", "https_proxy", "no_proxy"]

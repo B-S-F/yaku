@@ -2,8 +2,8 @@ from typing import Tuple
 
 from yaku.autopilot_utils.cli_base import make_autopilot_app, read_version_from_package
 from yaku.autopilot_utils.results import ResultsCollector
-from .config import load_configuration
-from .scanner import SecurityScanner
+from yaku.security_scanner.config import load_configuration
+from yaku.security_scanner.scanner import SecurityScanner
 
 
 class CLI:
@@ -43,3 +43,7 @@ main = make_autopilot_app(
     provider=CLI,
     version_callback=read_version_from_package(__package__),
 )
+
+
+if __name__ == "__main__":
+    main()

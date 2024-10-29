@@ -1,0 +1,11 @@
+externally_versioned_python_distribution(
+    name="dist",
+    dependencies=[
+        "packages/autopilot-utils/src/yaku/autopilot_utils:lib",
+    ],
+    provides=python_artifact(
+        name="autopilot_utils",
+        python_requires=">=3.9",
+        version_file="src/yaku/autopilot_utils/_version.txt",
+    ),
+)
