@@ -2,9 +2,9 @@
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 
-ARG BASE_IMAGE_NODEJS_NAME=node:18-alpine
+ARG BASE_IMAGE_NAME="node:18-alpine"
 
-FROM ${BASE_IMAGE_NODEJS_NAME} As development
+FROM ${BASE_IMAGE_NAME} As development
 
 USER node
 RUN mkdir /home/node/app
@@ -17,9 +17,9 @@ RUN npm install -ws --include-workspace-root
 # BUILD FOR PRODUCTION
 ###################
 
-ARG BASE_IMAGE_NODEJS_NAME=node:18-alpine
+ARG BASE_IMAGE_NAME="node:18-alpine"
 
-FROM ${BASE_IMAGE_NODEJS_NAME}  As build
+FROM ${BASE_IMAGE_NAME}  As build
 
 RUN apk --no-cache add zip
 
@@ -44,16 +44,16 @@ USER node
 # PRODUCTION
 ###################
 
-ARG BASE_IMAGE_NODEJS_NAME=node:18-alpine
+ARG BASE_IMAGE_NAME="node:18-alpine"
 
-FROM ${BASE_IMAGE_NODEJS_NAME} AS production
+FROM ${BASE_IMAGE_NAME} AS production
 
 ARG VERSION=latest
 ENV IMAGE_VERSION=$VERSION
 ENV PORT=8080
 
 LABEL maintainer="Neutrinos GROW/PAT"
-LABEL description="YAKU core-api docker image based on Ubuntu-nodejs"
+LABEL description="YAKU core-api docker image based on node image"
 
 ENV PATH=$PATH:/app/node_modules/.bin
 

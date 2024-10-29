@@ -9,18 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Restore Onyx Cache
-        uses: actions/cache/restore@v4
-        with:
-          path: onyx/bin
-          key: onyx-${{ hashFiles('onyx/**') }}
-
-      - name: Restore TypeScript Apps Cache
-        uses: actions/cache/restore@v4
-        with:
-          path: yaku-apps-typescript
-          key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
-
       - name: Restore Backend Cache
         uses: actions/cache@v4
         with:
@@ -39,8 +27,6 @@ jobs:
         with:
           pull: true
           push: true
-          build-args: |
-            BASE_IMAGE_WORKFLOW_NAME=node:22-alpine
           tags: ghcr.io/b-s-f/yaku/api-image-test:test
           context: ./qg-api-service
           file: qg-api-service/qg-api-service/Dockerfile
