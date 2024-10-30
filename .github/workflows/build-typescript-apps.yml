@@ -36,6 +36,7 @@ jobs:
         run: |
           npm ci -ws --include-workspace-root
           npm run build
+          npm ci -ws --include-workspace-root
 
       - name: Save Cache
         uses: actions/cache/save@v4
