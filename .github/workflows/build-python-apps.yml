@@ -4,7 +4,6 @@ on:
 jobs:
   build-python-apps:
     runs-on: ubuntu-latest
-
     env:
       MIN_COVERAGE: 50
       MAX_COVERAGE: 80
