@@ -71,7 +71,9 @@ COPY --from=build  /home/node/app/api-keycloak-auth-lib/package.json ./api-keycl
 
 EXPOSE ${PORT}
 
+WORKDIR /home/node/app/qg-api-service
 RUN chown -R node:node /home/node/app
+
 USER node
 
-CMD ["node", "qg-api-service/dist/main.js" ]
+CMD ["node", "dist/main.js" ]

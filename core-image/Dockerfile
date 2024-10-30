@@ -91,8 +91,9 @@ ARG USERNAME="qguser"
 ARG USER_UID=1001
 ARG USER_GID=1000
 
+ENV PATH="/home/${USERNAME}/node_modules/.bin:/home/${USERNAME}/yaku-apps-typescript/node_modules/.bin:/home/${USERNAME}/bin:${PATH}"
+
 ADD --chown=${USER_UID}:${USER_GID} ./yaku-apps-typescript "/home/${USERNAME}/yaku-apps-typescript"
 
-ENV PATH="/home/${USERNAME}/node_modules/.bin:/home/${USERNAME}/yaku-apps-typescript/node_modules/.bin:/home/${USERNAME}/bin:${PATH}"
 WORKDIR /home/${USERNAME}/mnt
 CMD [ "qg", "generate" ]
