@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -z "$1" ] 
+if [ -z "$1" ]
 then
 	echo "Please specify either a version or ask to upgrade major, minor or patch version for the created package"
   exit 1

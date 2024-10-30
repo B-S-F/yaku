@@ -6,7 +6,7 @@
   <%_ for (const subCheck of utils.sortedObjectValues(check.checks)) { _%>
     <%- include('qg-check-template-old.ejs', { check: subCheck }) %>
   <%_ } _%>
-<%_ } else { 
+<%_ } else {
   _%>
   <%_ for (const report of check.reports) { _%>
     <%_ const rowspan = report.componentResults.length _%>
@@ -32,7 +32,7 @@
       <%_ } _%></td>
     <td><%_ if (componentResult.comments?.length) { _%>
         <%_ for (const comment of componentResult.comments) { _%>
-          <%- utils.markdown.render(comment) %> 
+          <%- utils.markdown.render(comment) %>
         <%_ } _%>
       <%_ } _%>
       <%_ if (componentResult.sources?.length) { _%>

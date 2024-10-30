@@ -24,7 +24,7 @@ describe('Test "generateAzureAccessToken()" from "auth.ts"', async () => {
           access_token: 'mockAccesstoken',
         },
       })
-  
+
       const result = await generateAzureAccessToken(
         'mockTenantId',
         'mockClientId',
@@ -33,13 +33,13 @@ describe('Test "generateAzureAccessToken()" from "auth.ts"', async () => {
       )
       expect(result).toEqual('mockAccesstoken')
     })
-  
+
     it('Should throw a specific error if status is not 200', async () => {
-      mockedAxiosPost.mockRejectedValueOnce({ 
-        response: { 
-            status: 400, 
+      mockedAxiosPost.mockRejectedValueOnce({
+        response: {
+            status: 400,
         } })
-  
+
       await expect(
         generateAzureAccessToken(
           'mockTenantId',
@@ -51,7 +51,7 @@ describe('Test "generateAzureAccessToken()" from "auth.ts"', async () => {
         'Request for Azure access token does not have status code 200. Status code: 400'
       )
     })
-  
+
     it('Should throw a specific error if field "access_token" does not exist on the response returned by Azure authenticator', async () => {
       mockedAxiosPost.mockResolvedValueOnce({
         status: 200,
@@ -59,7 +59,7 @@ describe('Test "generateAzureAccessToken()" from "auth.ts"', async () => {
           random_field: 'mockAccesstoken',
         },
       })
-  
+
       await expect(
         generateAzureAccessToken(
           'mockTenantId',

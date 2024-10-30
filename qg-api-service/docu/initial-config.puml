@@ -31,4 +31,3 @@ cs --> gs : "transform chapter\ninformation\nto initial config"
 cs --> db : "stores initial config in\nConfigs entity"
 et -[hidden]right-> gs
 ec -[hidden]up-> ic
-

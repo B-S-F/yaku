@@ -72,8 +72,8 @@ describe('Test "getDefenderForCloudAlerts()" from "alertsRetriever.ts"', async (
   })
 
   it('Should throw a specific error if status is not 200', async () => {
-    mockedAxiosGet.mockRejectedValueOnce({ 
-      response: { 
+    mockedAxiosGet.mockRejectedValueOnce({
+      response: {
         status: 400
       } })
 

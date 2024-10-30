@@ -10,17 +10,17 @@ workItems:
       state:
         fieldName: "State"
         conditions:
-          resolvedValues: 
+          resolvedValues:
             - "Closed"
       assignees:
         fieldName: "AssignedTo"
         conditions:
-          expectedValues: 
+          expectedValues:
             - "Name"
       bugType:
         fieldName: "BugType"
         conditions:
           illegalValues:
-            - "Critical" 
-          resolvedValues: 
+            - "Critical"
+          resolvedValues:
             - "Resolved"
