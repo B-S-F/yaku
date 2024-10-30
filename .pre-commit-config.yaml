@@ -13,11 +13,11 @@ repos:
 - repo: https://github.com/hadolint/hadolint
   rev: v2.10.0
   hooks:
-        - id: hadolint  # Lints Dockerfiles
+    - id: hadolint  # Lints Dockerfiles
 # Conventional commit hooks
 - repo: https://github.com/compilerla/conventional-pre-commit
   rev: v3.6.0
   hooks:
-      - id: conventional-pre-commit
-        stages: [commit-msg]
-        args: []
+    - id: conventional-pre-commit
+      stages: [commit-msg]
+      args: []
