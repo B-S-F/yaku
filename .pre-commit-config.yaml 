@@ -1,7 +1,0 @@
-repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0  # Specify the version of the hooks
-    hooks:
-      - id: trailing-whitespace  # Removes trailing whitespace
-      - id: end-of-file-fixer  # Ensures files end with a newline
-      - id: check-added-large-files  # Prevents committing large files
