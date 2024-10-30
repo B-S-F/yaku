@@ -14,13 +14,13 @@ A valid personal access token that has access to the git repo or that has proper
 Remote git repository URL.
 
 ### `VUL_SEVERITY`
-Severities of security issues to be displayed (comma separated). 
+Severities of security issues to be displayed (comma separated).
 Default value: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
 
 ### `LOCAL_REPO_SCANNER`
 If set to TRUE, the app will clone the repository, run `npm install` and run a local fs scan on the repo directory.
 Default value: "FALSE"
-      
+
 ### `PRIVATE_REGISTRY`
 If the repository installs packages from a private registry, set this to TRUE.
 Default value: "FALSE"

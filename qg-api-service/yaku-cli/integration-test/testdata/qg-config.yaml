@@ -23,7 +23,7 @@ reports:
 
 finalize:
   run: |
-    html-finalizer     
+    html-finalizer
     zip-finalizer
 
 allocations:

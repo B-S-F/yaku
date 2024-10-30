@@ -38,7 +38,7 @@ RUN npm ci -ws --include-workspace-root --omit=dev && npm cache clean --force
 RUN chown -R node:node /home/node/app
 USER node
 
- 
+
 
 ###################
 # PRODUCTION

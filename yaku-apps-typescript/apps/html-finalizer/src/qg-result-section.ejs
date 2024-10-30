@@ -1,7 +1,7 @@
 <h2>Summary</h2>
 <div class="marked">
-<h4>Overall Status: <%- include('status-icon.ejs', { status: overallStatus }) %></h4> 
-<%- include('qg-result-table.ejs', { 
+<h4>Overall Status: <%- include('status-icon.ejs', { status: overallStatus }) %></h4>
+<%- include('qg-result-table.ejs', {
   emptyListMessage: 'All checks passed.',
   sortedChapters: utils.sortedObjectEntries(chapters).map(([id, chapter]) => ({
     ...chapter,
@@ -12,7 +12,7 @@
 </div>
 
 <h2>Details</h2>
-<%- include('qg-result-table.ejs', { 
+<%- include('qg-result-table.ejs', {
   sortedChapters: utils.sortedObjectEntries(chapters).map(([id, chapter]) => ({
     ...chapter,
     id,

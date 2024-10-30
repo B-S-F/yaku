@@ -21,7 +21,7 @@ vi.mock('axios', () => ({
 
 const mockedAxiosGet = vi.mocked(axios.get)
 
-describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriever.ts"', async () => { 
+describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriever.ts"', async () => {
   afterEach(() => {
     vi.clearAllMocks()
   })
@@ -76,8 +76,8 @@ describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriev
   })
 
   it('Should throw a specific error if status is not 200', async () => {
-    mockedAxiosGet.mockRejectedValueOnce({ 
-      response: { 
+    mockedAxiosGet.mockRejectedValueOnce({
+      response: {
         status: 400
       } })
 
@@ -89,7 +89,7 @@ describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriev
   })
 })
 
-describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendationsRetriever.ts"', async () => { 
+describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendationsRetriever.ts"', async () => {
   afterEach(() => {
     vi.clearAllMocks()
   })
@@ -142,8 +142,8 @@ describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendation
   })
 
   it('Should throw a specific error if status is not 200', async () => {
-    mockedAxiosGet.mockRejectedValueOnce({ 
-      response: { 
+    mockedAxiosGet.mockRejectedValueOnce({
+      response: {
         status: 400
       } })
 

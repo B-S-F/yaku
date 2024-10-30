@@ -8,7 +8,7 @@ const generalFewShotExamples: {
     input: `#### Code Section ####
   title: >-
       Service Level Agreement is available for BPC deployment.
-      Comment: 
+      Comment:
       No SLA for OnPrem deployment, since we do not operate the service for the OnPrem customers. Support and Updates are part part of the OnPrem contract (see 1.2)
       https://bosch.sharepoint.com/:w:/r/sites/msteams_6298865/Shared%20Documents/General/60_Customers/Legal_Documents/Contract%20SaaS/English%20(not%20approved)/Service%20Level%20Agreement%20EN.docx?    d=wfa6fec680d9a42cb96a6cbb32a5b09df&csf=1&web=1&e=Aa2BT6
   run: |
@@ -41,7 +41,7 @@ const generalFewShotExamples: {
     In summary, this Autopilot fetches a file from a Sharepoint site and validates that the file was modified in the past year.`,
   },
   {
-    input: `#### Code Section ####  
+    input: `#### Code Section ####
     title: >-
       Requirements in product roadmap for milestone \${{ env.PIS }} are closed.
       https://github.com/orgs/B-S-F/projects/80
@@ -61,10 +61,10 @@ const generalFewShotExamples: {
           printf '%s\n' "\${issue_details[@]}" | jq -s . > $PARSED_ISSUES_FILENAME
           if [[ $(cat $PARSED_ISSUES_FILENAME | jq 'length > 0') == false ]]; then
             echo '{ "status": "RED", "reason": "There are no features in column PI-\${{ env.PI }} of the [Yaku Product Roadmap](https://github.com/orgs/B-S-F/projects/80)"}'
-            echo '{"result": {"criterion": "There are features in column PI-\${{ env.PI }} of the [Yaku Product Roadmap](https://github.com/orgs/B-S-F/projects/80)", "justification": "List of fetched features is empty", "fulfilled": false}}' 
+            echo '{"result": {"criterion": "There are features in column PI-\${{ env.PI }} of the [Yaku Product Roadmap](https://github.com/orgs/B-S-F/projects/80)", "justification": "List of fetched features is empty", "fulfilled": false}}'
             exit 0
           else
-            echo '{"result": {"criterion": "There are features in column PI-\${{ env.PI }} of the [Yaku Product Roadmap](https://github.com/orgs/B-S-F/projects/80)", "justification": "List of fetched features is not empty", "fulfilled": true}}' 
+            echo '{"result": {"criterion": "There are features in column PI-\${{ env.PI }} of the [Yaku Product Roadmap](https://github.com/orgs/B-S-F/projects/80)", "justification": "List of fetched features is not empty", "fulfilled": true}}'
           fi
           export JSON_INPUT_FILE=parsed_issues_pi_\${{ env.PI }}.json
           json-evaluator
@@ -89,8 +89,8 @@ const generalFewShotExamples: {
     In summary, this Autopilot fetches a list of issues from a Github project board, filters out issues not labeled 'type:feature' or not in the specified PI column, writes the filtered issues to a JSON file, and then evaluates the file against a "is-not-older-than 1 year" rule.`,
   },
   {
-    input: `#### Code Section #### 
-    title: >- 
+    input: `#### Code Section ####
+    title: >-
         SBOM (Software Bill of Materials) is available for core api.
     run: |
           set -ex

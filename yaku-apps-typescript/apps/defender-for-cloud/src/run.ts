@@ -209,7 +209,7 @@ export function getUnhealthyRecommendations(
   for (const recommendation of recommendations) {
     if (recommendation.properties.status?.code === 'Unhealthy') {
       unhealthyRecommendations.push(recommendation)
-    } 
+    }
   }
   return unhealthyRecommendations
 }

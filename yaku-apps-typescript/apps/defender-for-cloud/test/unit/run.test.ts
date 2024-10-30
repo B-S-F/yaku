@@ -14,7 +14,7 @@ import {
 } from '../../src/run'
 
 import { mockedAlertsUnitTestsFirstSet } from '../fixtures/alerts'
-import { 
+import {
   mockedHealthyRecommendation1,
   mockedHealthyRecommendation2,
   mockedUnhealthyRecommendation1,
@@ -39,8 +39,8 @@ describe('Test "parseFilterValues()" from "run.ts"', () => {
   })
 
   it('Should correctly split an "input filter string" and return the array of input values even when newlines and multiple spaces are present', () => {
-    const inputFilterString = `Kubernetes    ,   
-                                    critical   ,      
+    const inputFilterString = `Kubernetes    ,
+                                    critical   ,
                                     latest`
     const result = parseFilterValues(inputFilterString)
     expect(result).toEqual(['Kubernetes', 'critical', 'latest'])
@@ -600,7 +600,7 @@ describe('Test "getUnhealthyRecommendations()" from "run.ts"', () => {
       mockedUnhealthyRecommendation1,
       mockedUnhealthyRecommendation2
     ]
-    
+
     const result = getUnhealthyRecommendations(mockedMixedRecommendations)
     expect(result).toEqual(mockedUnhealthyRecommendations)
   })
@@ -1055,7 +1055,7 @@ describe('Test "run()" from "run.ts"', async () => {
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-      
+
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
@@ -1102,7 +1102,7 @@ describe('Test "run()" from "run.ts"', async () => {
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-      
+
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
@@ -1122,7 +1122,7 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'Retrieved 1 security recommendations based on given filters'
       )
-    }) 
+    })
 
     it('Should return status RED with 1 retrieved unhealthy recommendation when there is KEY_WORDS_FILTER filter', async () => {
       delete process.env.SEVERITY
@@ -1149,7 +1149,7 @@ describe('Test "run()" from "run.ts"', async () => {
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-      
+
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
@@ -1169,7 +1169,7 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'Retrieved 1 security recommendations based on given filters'
       )
-    }) 
+    })
 
     it('Should return status RED with 1 retrieved unhealthy recommendation when there is CATEGORIES_FILTER filter', async () => {
       delete process.env.KEY_WORDS_FILTER
@@ -1196,7 +1196,7 @@ describe('Test "run()" from "run.ts"', async () => {
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-      
+
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
@@ -1243,7 +1243,7 @@ describe('Test "run()" from "run.ts"', async () => {
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-      
+
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
@@ -1290,7 +1290,7 @@ describe('Test "run()" from "run.ts"', async () => {
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-      
+
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
@@ -1310,7 +1310,7 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'Retrieved 1 security recommendations based on given filters'
       )
-    }) 
+    })
 
     it('Should return status RED with 2 retrieved unhealthy recommendations when there is IMPLEMENTATION_EFFORT_FILTER filter', async () => {
       delete process.env.SEVERITY_FILTER
@@ -1337,7 +1337,7 @@ describe('Test "run()" from "run.ts"', async () => {
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-      
+
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
@@ -1357,7 +1357,7 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'Retrieved 2 security recommendations based on given filters'
       )
-    }) 
+    })
 
     it('Should return status GREEN with 0 retrieved unhealthy recommendations when all the filter are present', async () => {
       const generateAzureAccessTokenSpy = vi.spyOn(
@@ -1378,7 +1378,7 @@ describe('Test "run()" from "run.ts"', async () => {
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-      
+
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
@@ -1398,6 +1398,6 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'No security recommendations found based on given filters'
       )
-    }) 
+    })
   })
 })

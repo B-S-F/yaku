@@ -31,7 +31,7 @@ excel-tools aggregate --csv-path ./csvs --glob-pattern "*.txt" --output-path agg
 
 ```bash
 # create a mapping column in the aggregate.xlsx file based on the mapping.xlsx that uses the values from the <value-column>
-excel-tools add-mapping --xlsx-path aggregate.xlsx --mapping-path other.xlsx --sheet-name "Sheet1" --key-column "A" --value-column "B" --mapping-column-name "col" 
+excel-tools add-mapping --xlsx-path aggregate.xlsx --mapping-path other.xlsx --sheet-name "Sheet1" --key-column "A" --value-column "B" --mapping-column-name "col"
 ```
 
 or

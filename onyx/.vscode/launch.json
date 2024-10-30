@@ -12,7 +12,7 @@
             "program": "cmd/cli/main.go",
             "cwd": "${workspaceFolder}",
             "args": [
-                "exec", 
+                "exec",
                 "${workspaceFolder}/examples",
                 "--output-dir=${workspaceFolder}/output",
                 "--check-timeout=5"
@@ -27,7 +27,7 @@
             "program": "cmd/cli/main.go",
             "cwd": "${workspaceFolder}",
             "args": [
-                "schema", 
+                "schema",
             ],
             "envFile": "${workspaceFolder}/.env"
         },
@@ -39,7 +39,7 @@
             "program": "cmd/cli/main.go",
             "cwd": "${workspaceFolder}",
             "args": [
-                "migrate", 
+                "migrate",
                 "${workspaceFolder}/examples/old-qg-config.yaml",
                 "--output=${workspaceFolder}/examples/new-qg-config.yaml"
             ],

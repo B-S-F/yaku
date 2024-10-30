@@ -1,4 +1,4 @@
-# Developer docs 
+# Developer docs
 
 ## Setup
 
@@ -8,7 +8,7 @@
 
 ### Vscode integration
 
-Go vscode integration is pretty good. 
+Go vscode integration is pretty good.
 Just install the [go extension](https://marketplace.visualstudio.com/items?itemName=golang.Go) and you are good to go.
 
 ### Makefile
@@ -42,13 +42,13 @@ make help
 ├── cmd                             # Contains all executables
 │   └── cli                         # Contains the cli executable (could also be split into multiple executables)
 │       ├── exec                    # Contains the cli exec logic
-│       │   └── exec.go         
+│       │   └── exec.go
 │       ├── main.go
 │       └── translate               # Contains the cli translate logic
 │           └── translate.go
 ├── internal                        # Contains all internal code (buisness logic) -> e.g. creating the execution matrix out of a config and dispatching it to some executor
 └── pkg                             # Contains all library code (e.g. configuration, logger, executor, etc.)
-    ├── configuration           
+    ├── configuration
     │   ├── config.go
     │   └── versions
     │       ├── v1

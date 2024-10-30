@@ -68,4 +68,3 @@ for user in users:
 
 for elem in broken:
     print(f'Broken:  {str(elem[0]).ljust(20)} Reason: {str(elem[1]).ljust(30)} Enabled: {str(elem[2]).ljust(40)}')
-

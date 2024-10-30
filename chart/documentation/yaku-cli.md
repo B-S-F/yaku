@@ -49,14 +49,14 @@ A user that have the role `ADMIN` of Keycloak client `GLOBAL` can perform admin 
 
 If you run the followng command:
 ```bash
-yaku login --admin 
+yaku login --admin
 ```
 
 You will be asked if you want to create a new environment.
  - If you answer `Y`, you will be asked to provide the new environment information:
     - Name of the environment
     - URL of the environment: this is your Yaku api instance URL. e.g. `https://yaku.growpat.com/api/v1`
-    - The cli will provide you a device code. If you have the configured `.yaku-auth` file successfully in previous configuration step, a login page will be opened in your default browser. You will be asked to login to the Keycloak realm with the device code that the cli provides you. After successful login, you will be asked to login. Choose to login with the identity provide you have setup in keycloak. 
+    - The cli will provide you a device code. If you have the configured `.yaku-auth` file successfully in previous configuration step, a login page will be opened in your default browser. You will be asked to login to the Keycloak realm with the device code that the cli provides you. After successful login, you will be asked to login. Choose to login with the identity provide you have setup in keycloak.
     - click `yes` to answer the prompt `Do you grant these access privileges?`in your browser.
     After successful login, the cli will save the environment information in the `$HOME/.yakurc` file.
  - If you answer `n`, you will be asked to choose an existing environment to login to.
@@ -64,12 +64,12 @@ You will be asked if you want to create a new environment.
 
 
 #### Create namespace
-    
+
 ```bash
 yaku ns create <namespace name> <users>
 ```
 
-You can't create an empty namespace. You have to add one user at least to be able to create a namespace. 
+You can't create an empty namespace. You have to add one user at least to be able to create a namespace.
 
 The user should be a valid user in the Keycloak realm.
 
@@ -88,5 +88,3 @@ Then it is similar to the steps in [admin login](#login-as-admin). You will be a
 
 To manage configs and runs, check the help of the command `yaku configs --help` and `yaku runs --help`.
 You can also check [yaku user docs](https://docs.bswf.tech/cli/index.html)
-
-

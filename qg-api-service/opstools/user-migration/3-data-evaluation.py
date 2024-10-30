@@ -294,7 +294,7 @@ def check_comment_audit_table(conn: Connection, logger: Logger) -> int:
                 for mention in possible_mentions:
                     if not UUID_PATTERN.match(mention):
                         error_count += 1
-                
+
                 if last_error_count != error_count:
                     logger.error(
                         f"mentions in row with id: {id} of comment_audit.modified may not be valid UUIDs: {content}"
