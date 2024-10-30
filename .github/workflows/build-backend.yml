@@ -40,7 +40,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: qg-api-service
         run: |
-          npm run test:cov
+          npm run test:cov --workspaces --if-present
 
       - name: Yaku Service Unit Tests
         if: steps.cache.outputs.cache-hit != 'true'
