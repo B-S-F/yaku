@@ -22,15 +22,19 @@ concurrency:
 jobs:
   build-onyx:
     uses: ./.github/workflows/build-onyx.yml
+    secrets: inherit
 
   build-typescript-apps:
     uses: ./.github/workflows/build-typescript-apps.yml
+    secrets: inherit
 
   build-python-apps:
     uses: ./.github/workflows/build-python-apps.yml
+    secrets: inherit
 
   build-backend:
     uses: ./.github/workflows/build-backend.yml
+    secrets: inherit
 
   build-backend-docker-image:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -39,3 +43,4 @@ jobs:
       - build-typescript-apps
       - build-backend
     uses: ./.github/workflows/build-backend-docker-image.yml
+    secrets: inherit
