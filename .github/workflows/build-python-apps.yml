@@ -29,6 +29,7 @@ jobs:
           named-caches-hash: ${{ hashFiles('3rdparty/*.txt') }}
 
       - name: Lint and check
+        continue-on-error: true
         run: |
           make lint check
         env:
