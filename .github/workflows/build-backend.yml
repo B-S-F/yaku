@@ -36,6 +36,37 @@ jobs:
           npm ci -ws --include-workspace-root
           npm run build
 
+      - name: Run all unit tests
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: qg-api-service
+        run: |
+          npm run test:cov
+
+      - name: Yaku Service Unit Tests
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: qg-api-service/qg-api-service
+        run: npm run test:cov && npm run test:update-cobertura-file
+
+      - name: Yaku Service Integration Tests
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: qg-api-service/qg-api-service
+        run: npm run test:integration
+
+      - name: Client Lib Unit Tests
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: qg-api-service/yaku-client-lib
+        run: npm run test:cov
+
+      - name: Yaku CLI Unit Tests
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: qg-api-service/yaku-cli
+        run: npm run test:cov
+
+      - name: Yaku CLI Integration Tests
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: qg-api-service/yaku-cli
+        run: npm run test:integration
+
       - name: Save Cache
         uses: actions/cache/save@v4
         with:
