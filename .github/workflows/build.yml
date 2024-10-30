@@ -26,6 +26,9 @@ jobs:
   build-typescript-apps:
     uses: ./.github/workflows/build-typescript-apps.yml
 
+  build-python-apps:
+    uses: ./.github/workflows/build-python-apps.yml
+
   build-backend:
     uses: ./.github/workflows/build-backend.yml
 

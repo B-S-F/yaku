@@ -1,0 +1,48 @@
+on:
+  workflow_call:
+
+jobs:
+  build-python-apps:
+    runs-on: ubuntu-latest
+
+    env:
+      PYTHON_APPS_FOLDER: yaku-apps-python
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.PYTHON_APPS_FOLDER }}
+
+      - name: Put all files from ${{ env.PYTHON_APPS_FOLDER }} in cwd
+        run: |
+          mv ${{ env.PYTHON_APPS_FOLDER }}/* .
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Setup Pants
+        uses: pantsbuild/actions/init-pants@v8
+        with:
+          cache-lmdb-store: true
+          gha-cache-key: unittest-cache0
+          named-caches-hash: ${{ hashFiles('3rdparty/*.txt') }}
+
+      - name: Lint and check
+        run: |
+          make lint check
+        env:
+          PANTS_CONFIG_FILES: pants.ci.toml
+
+      - name: Run unit tests
+        run: |
+          for APP in apps/*; do
+            make testcov FOLDER=${APP}
+            cp dist/coverage/python/coverage.json ${APP}/coverage.json
+          done
+          for PACKAGE in packages/*; do
+            make testcov FOLDER=${PACKAGE}
+            cp dist/coverage/python/coverage.json ${PACKAGE}/coverage.json
+          done
+        env:
+          PANTS_CONFIG_FILES: pants.ci.toml
