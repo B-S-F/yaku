@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      MIN_COVERAGE: 50
+      MAX_COVERAGE: 80
       PYTHON_APPS_FOLDER: yaku-apps-python
 
     steps:
@@ -47,3 +49,43 @@ jobs:
           done
         env:
           PANTS_CONFIG_FILES: pants.ci.toml
+
+      - name: Private actions checkout
+        uses: daspn/private-actions-checkout@v2
+        with:
+          actions_list: '["B-S-F/github-actions@main"]'
+          checkout_base_path: ./.github/actions
+          app_id: 1007791
+          app_private_key: ${{ secrets.ACCESS_ACTIONS_REPO_APP_PRIVATEKEY }}
+
+      - name: Create Code Coverage Summary
+        id: coverage-summary
+        uses: ./.github/actions/github-actions/json-code-coverage-summary
+        if: github.actor != 'depbot'
+        with:
+          filenames: ./**/coverage.json
+          threshold: ${{ env.MIN_COVERAGE }},${{ env.MAX_COVERAGE }}
+          kind: python
+
+      - name: Add Coverage as PR Comment
+        if: github.event_name == 'pull_request' && github.actor != 'depbot'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: code-coverage-results.md
+
+      - name: Upload Coverage Badge data
+        if: github.event_name == 'push' && github.actor != 'depbot'
+        run: |
+          percentage=${{ steps.coverage-summary.outputs.total-coverage }}
+          if [ $percentage -ge "${{ env.MAX_COVERAGE }}"  ]; then
+            color="green"
+          elif [ $percentage -ge "${{ env.MIN_COVERAGE }}" ]; then
+            color="yellow"
+          else
+            color="red"
+          fi
+          jq -n --arg color "$color" --arg percentage "$percentage%" '{"schemaVersion": 1, "label": "Coverage", "message": $percentage, "color": $color}' > yaku-apps-python-coverage-badge.json
+          gh gist edit ${{ env.COVERAGE_BADGE_GIST_ID }} -a yaku-apps-python-coverage-badge.json
+        env:
+          COVERAGE_BADGE_GIST_ID: 819f17e6f8166534e73c8acf9ee58726
+          GITHUB_TOKEN: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
