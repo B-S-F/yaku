@@ -42,12 +42,12 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: yaku-apps-typescript
         run: |
-          npm run lint
+          npm run lint --workspaces --if-present
 
       - name: Run Unit Tests
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: yaku-apps-typescript
-        run: npm run test
+        run: npm run test --workspaces --if-present
 
       - name: Save Cache
         uses: actions/cache/save@v4
