@@ -14,6 +14,14 @@ jobs:
         with:
           sparse-checkout: ${{ env.PYTHON_APPS_FOLDER }}
 
+      - name: Check if cache exists
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: yaku-apps-typescript
+          key: python-apps-${{ hashFiles('python-apps-typescript/**') }}
+          lookup-only: true
+
       - name: Put all files from ${{ env.PYTHON_APPS_FOLDER }} in cwd
         run: |
           mv ${{ env.PYTHON_APPS_FOLDER }}/* .
