@@ -1,10 +1,4 @@
-# This configuration file is for pre-commit hooks in a monorepo
-# containing Python, Go, Node.js (TypeScript and Vue), Helm, and Docker.
-
-default_stages: [commit, push]  # Define default stages for hooks to run
-
 repos:
-  # General hooks for all file types
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0  # Specify the version of the hooks
     hooks:
