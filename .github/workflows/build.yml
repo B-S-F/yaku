@@ -15,6 +15,7 @@ permissions:
   packages: write
   id-token: write
   attestations: write
+  pull-requests: write
 
 concurrency:
   group: ${{ github.ref }}
@@ -23,12 +24,19 @@ concurrency:
 jobs:
   build-onyx:
     uses: ./.github/workflows/build-onyx.yml
+    secrets: inherit
 
   build-typescript-apps:
     uses: ./.github/workflows/build-typescript-apps.yml
+    secrets: inherit
+
+  build-python-apps:
+    uses: ./.github/workflows/build-python-apps.yml
+    secrets: inherit
 
   build-backend:
     uses: ./.github/workflows/build-backend.yml
+    secrets: inherit
 
   build-backend-docker-image:
     # if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -41,4 +49,6 @@ jobs:
     needs:
       - build-onyx
       - build-typescript-apps
-    uses: ./.github/workflows/build-core-docker-image.yml
+      - build-backend
+    uses: ./.github/workflows/build-backend-docker-image.yml
+    secrets: inherit
