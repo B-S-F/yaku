@@ -19,7 +19,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: ${{ env.PYTHON_APPS_FOLDER }}/dist
-          key: python-apps-${{ hashFiles('python-apps-typescript/**') }}
+          key: python-apps-${{ hashFiles('yaku-python-apps/**') }}
           lookup-only: true
 
       - name: Put all files from ${{ env.PYTHON_APPS_FOLDER }} in cwd
