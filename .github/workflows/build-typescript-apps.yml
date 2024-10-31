@@ -29,6 +29,7 @@ jobs:
         with:
           path: yaku-apps-typescript
           key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
+          lookup-only: true
 
       - name: Install and Build
         if: steps.cache.outputs.cache-hit != 'true'
