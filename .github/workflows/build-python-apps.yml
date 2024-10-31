@@ -1,0 +1,116 @@
+on:
+  workflow_call:
+
+jobs:
+  build-python-apps:
+    runs-on: ubuntu-latest
+    env:
+      MIN_COVERAGE: 50
+      MAX_COVERAGE: 80
+      PYTHON_APPS_FOLDER: yaku-apps-python
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.PYTHON_APPS_FOLDER }}
+
+      - name: Check for cache hit
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.PYTHON_APPS_FOLDER }}/dist
+          key: python-apps-${{ hashFiles('yaku-python-apps/**') }}
+          lookup-only: true
+
+      - name: Put all files from ${{ env.PYTHON_APPS_FOLDER }} in cwd
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mv ${{ env.PYTHON_APPS_FOLDER }}/* .
+
+      - uses: actions/setup-python@v5
+        if: steps.cache.outputs.cache-hit != 'true'
+        with:
+          python-version: "3.10"
+
+      - name: Setup Pants
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: pantsbuild/actions/init-pants@v8
+        with:
+          cache-lmdb-store: true
+          gha-cache-key: unittest-cache0
+          named-caches-hash: ${{ hashFiles('3rdparty/*.txt') }}
+
+      - name: Lint and check
+        if: steps.cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          make lint check
+        env:
+          PANTS_CONFIG_FILES: pants.ci.toml
+
+      - name: Run unit tests
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          for APP in apps/*; do
+            make testcov FOLDER=${APP}
+            cp dist/coverage/python/coverage.json ${APP}/coverage.json
+          done
+          for PACKAGE in packages/*; do
+            make testcov FOLDER=${PACKAGE}
+            cp dist/coverage/python/coverage.json ${PACKAGE}/coverage.json
+          done
+        env:
+          PANTS_CONFIG_FILES: pants.ci.toml
+
+      - name: Private actions checkout
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: daspn/private-actions-checkout@v2
+        with:
+          actions_list: '["B-S-F/github-actions@main"]'
+          checkout_base_path: ./.github/actions
+          app_id: 1007791
+          app_private_key: ${{ secrets.ACCESS_ACTIONS_REPO_APP_PRIVATEKEY }}
+
+      - name: Create Code Coverage Summary
+        if: steps.cache.outputs.cache-hit != 'true' &&  github.actor != 'depbot'
+        id: coverage-summary
+        uses: ./.github/actions/github-actions/json-code-coverage-summary
+        with:
+          filenames: ./**/coverage.json
+          threshold: ${{ env.MIN_COVERAGE }},${{ env.MAX_COVERAGE }}
+          kind: python
+
+      - name: Add Coverage as PR Comment
+        if: steps.cache.outputs.cache-hit != 'true'  && github.event_name == 'pull_request' && github.actor != 'depbot'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: code-coverage-results.md
+
+      - name: Upload Coverage Badge data
+        if: github.event_name == 'push' && github.actor != 'depbot'
+        run: |
+          percentage=${{ steps.coverage-summary.outputs.total-coverage }}
+          if [ $percentage -ge "${{ env.MAX_COVERAGE }}"  ]; then
+            color="green"
+          elif [ $percentage -ge "${{ env.MIN_COVERAGE }}" ]; then
+            color="yellow"
+          else
+            color="red"
+          fi
+          jq -n --arg color "$color" --arg percentage "$percentage%" '{"schemaVersion": 1, "label": "Coverage", "message": $percentage, "color": $color}' > yaku-apps-python-coverage-badge.json
+          gh gist edit ${{ env.COVERAGE_BADGE_GIST_ID }} -a yaku-apps-python-coverage-badge.json
+        env:
+          COVERAGE_BADGE_GIST_ID: 819f17e6f8166534e73c8acf9ee58726
+          GITHUB_TOKEN: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
+
+      - name: Put built binaries from cwd to ${{ env.PYTHON_APPS_FOLDER }}
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mv dist ${{ env.PYTHON_APPS_FOLDER }}
+
+      - name: Save Cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.PYTHON_APPS_FOLDER }}/dist
+          key: ${{ steps.cache.outputs.cache-primary-key }}
