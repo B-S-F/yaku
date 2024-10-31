@@ -9,4 +9,4 @@ Foto from Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahm
 </figcaption>
 
 ## Development
-Developer documentation for the project see [DEVELOPMENT.md](./DEVELOPMENT.md).
+Developer docu for the project see [DEVELOPMENT.md](./DEVELOPMENT.md).
