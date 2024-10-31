@@ -7,22 +7,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache Turbo Build Setup
-        uses: actions/cache@v4
-        with:
-          path: yaku-apps-typescript/.turbo
-          key: typescript-apps-turbo-${{ github.sha }}
-          restore-keys: |
-            typescript-apps-turbo-
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          check-latest: true
-          cache: 'npm'
-          cache-dependency-path: yaku-apps-typescript/package-lock.json
-
       - name: Restore Cache if Exists
         id: cache
         uses: actions/cache/restore@v4
@@ -30,6 +14,15 @@ jobs:
           path: yaku-apps-typescript
           key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
           lookup-only: true
+
+      - name: Setup Node.js
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          check-latest: true
+          cache: 'npm'
+          cache-dependency-path: yaku-apps-typescript/package-lock.json
 
       - name: Install and Build
         if: steps.cache.outputs.cache-hit != 'true'
