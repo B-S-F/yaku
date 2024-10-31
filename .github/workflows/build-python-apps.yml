@@ -103,6 +103,10 @@ jobs:
           COVERAGE_BADGE_GIST_ID: 819f17e6f8166534e73c8acf9ee58726
           GITHUB_TOKEN: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
 
+      - name: Build binaries
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: make package
+
       - name: Put built binaries from cwd to ${{ env.PYTHON_APPS_FOLDER }}
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
