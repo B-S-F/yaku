@@ -70,6 +70,8 @@ RUN curl -fsSL https://github.com/mgdm/htmlq/releases/latest/download/htmlq-x86_
 RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.56.2
 
 ADD --chown=${USER_UID}:${USER_GID} ./onyx/bin "/home/${USERNAME}/bin"
+ADD --chown=${USER_UID}:${USER_GID} ./yaku-apps-python/dist/apps.*/*.pex "/home/${USERNAME}/bin"
+RUN for file in /home/${USERNAME}/bin/*.pex; do mv "$file" /home/${USERNAME}/bin/"$(basename ${file} .pex)"; done
 ADD --chown=${USER_UID}:${USER_GID} ./yaku-apps-typescript/node_modules "/home/${USERNAME}/node_modules"
 # ADD --chown=${USER_UID}:${USER_GID} ./latest-versions.json "/home/${USERNAME}/app-versions.json"
 

@@ -49,6 +49,6 @@ jobs:
     needs:
       - build-onyx
       - build-typescript-apps
-      - build-backend
+      - build-python-apps
     uses: ./.github/workflows/build-backend-docker-image.yml
     secrets: inherit
