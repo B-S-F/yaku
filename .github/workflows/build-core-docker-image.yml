@@ -34,6 +34,11 @@ jobs:
           restore-keys: |
             python-apps-
 
+      - name: Show python cache contents
+        run: |
+          ls -ltr yaku-apps-python/dist
+          ls -ltr yaku-apps-python/dist/apps.sharepoint
+
       - name: Log in to the Container Registry
         uses: docker/login-action@v3.3.0
         with:
