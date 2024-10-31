@@ -14,23 +14,26 @@ jobs:
         with:
           sparse-checkout: ${{ env.PYTHON_APPS_FOLDER }}
 
-      - name: Check if cache exists
+      - name: Check for cache hit
         id: cache
         uses: actions/cache/restore@v4
         with:
-          path: yaku-apps-typescript
+          path: ${{ env.PYTHON_APPS_FOLDER }}/dist
           key: python-apps-${{ hashFiles('python-apps-typescript/**') }}
           lookup-only: true
 
       - name: Put all files from ${{ env.PYTHON_APPS_FOLDER }} in cwd
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           mv ${{ env.PYTHON_APPS_FOLDER }}/* .
 
       - uses: actions/setup-python@v5
+        if: steps.cache.outputs.cache-hit != 'true'
         with:
           python-version: "3.10"
 
       - name: Setup Pants
+        if: steps.cache.outputs.cache-hit != 'true'
         uses: pantsbuild/actions/init-pants@v8
         with:
           cache-lmdb-store: true
@@ -38,6 +41,7 @@ jobs:
           named-caches-hash: ${{ hashFiles('3rdparty/*.txt') }}
 
       - name: Lint and check
+        if: steps.cache.outputs.cache-hit != 'true'
         continue-on-error: true
         run: |
           make lint check
@@ -45,6 +49,7 @@ jobs:
           PANTS_CONFIG_FILES: pants.ci.toml
 
       - name: Run unit tests
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           for APP in apps/*; do
             make testcov FOLDER=${APP}
@@ -58,6 +63,7 @@ jobs:
           PANTS_CONFIG_FILES: pants.ci.toml
 
       - name: Private actions checkout
+        if: steps.cache.outputs.cache-hit != 'true'
         uses: daspn/private-actions-checkout@v2
         with:
           actions_list: '["B-S-F/github-actions@main"]'
@@ -66,16 +72,16 @@ jobs:
           app_private_key: ${{ secrets.ACCESS_ACTIONS_REPO_APP_PRIVATEKEY }}
 
       - name: Create Code Coverage Summary
+        if: steps.cache.outputs.cache-hit != 'true' &&  github.actor != 'depbot'
         id: coverage-summary
         uses: ./.github/actions/github-actions/json-code-coverage-summary
-        if: github.actor != 'depbot'
         with:
           filenames: ./**/coverage.json
           threshold: ${{ env.MIN_COVERAGE }},${{ env.MAX_COVERAGE }}
           kind: python
 
       - name: Add Coverage as PR Comment
-        if: github.event_name == 'pull_request' && github.actor != 'depbot'
+        if: steps.cache.outputs.cache-hit != 'true'  && github.event_name == 'pull_request' && github.actor != 'depbot'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           path: code-coverage-results.md
@@ -96,3 +102,15 @@ jobs:
         env:
           COVERAGE_BADGE_GIST_ID: 819f17e6f8166534e73c8acf9ee58726
           GITHUB_TOKEN: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
+
+      - name: Put all files from ${{ env.PYTHON_APPS_FOLDER }} in cwd
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mv dist ${{ env.PYTHON_APPS_FOLDER }}
+
+      - name: Save Cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: yaku-apps-typescript/dist
+          key: ${{ steps.cache.outputs.cache-primary-key }}
