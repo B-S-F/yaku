@@ -81,13 +81,13 @@ jobs:
           kind: python
 
       - name: Add Coverage as PR Comment
-        if: steps.cache.outputs.cache-hit != 'true'  && github.event_name == 'pull_request' && github.actor != 'depbot'
+        if: steps.cache.outputs.cache-hit != 'true' && github.event_name == 'pull_request' && github.actor != 'depbot'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           path: code-coverage-results.md
 
       - name: Upload Coverage Badge data
-        if: github.event_name == 'push' && github.actor != 'depbot'
+        if: steps.cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.actor != 'depbot'
         run: |
           percentage=${{ steps.coverage-summary.outputs.total-coverage }}
           if [ $percentage -ge "${{ env.MAX_COVERAGE }}"  ]; then
