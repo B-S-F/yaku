@@ -27,7 +27,7 @@ jobs:
         with:
           pull: true
           push: true
-          tags: ghcr.io/b-s-f/yaku/api-image-test:test
+          tags: ghcr.io/b-s-f/yaku/api:latest
           context: ./qg-api-service
           file: qg-api-service/qg-api-service/Dockerfile
           platforms: linux/amd64

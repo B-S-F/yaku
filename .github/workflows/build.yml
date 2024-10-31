@@ -39,13 +39,13 @@ jobs:
     secrets: inherit
 
   build-backend-docker-image:
-    # if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
       - build-backend
     uses: ./.github/workflows/build-backend-docker-image.yml
 
   build-core-docker-image:
-    # if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
       - build-onyx
       - build-typescript-apps

@@ -39,7 +39,7 @@ jobs:
         with:
           pull: true
           push: true
-          tags: ghcr.io/b-s-f/yaku/core-image-test:test
+          tags: ghcr.io/b-s-f/yaku/core:latest
           context: .
           target: development
           file: core-image/Dockerfile
