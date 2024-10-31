@@ -103,7 +103,7 @@ jobs:
           COVERAGE_BADGE_GIST_ID: 819f17e6f8166534e73c8acf9ee58726
           GITHUB_TOKEN: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
 
-      - name: Put all files from ${{ env.PYTHON_APPS_FOLDER }} in cwd
+      - name: Put built binaries from cwd to ${{ env.PYTHON_APPS_FOLDER }}
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           mv dist ${{ env.PYTHON_APPS_FOLDER }}
