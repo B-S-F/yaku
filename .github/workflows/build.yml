@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - "main"
+      - "build-core-image"
   pull_request:
     branches:
       - "main"
@@ -40,8 +41,14 @@ jobs:
   build-backend-docker-image:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
-      - build-onyx
-      - build-typescript-apps
       - build-backend
     uses: ./.github/workflows/build-backend-docker-image.yml
+
+  build-core-docker-image:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    needs:
+      - build-onyx
+      - build-typescript-apps
+      - build-python-apps
+    uses: ./.github/workflows/build-core-docker-image.yml
     secrets: inherit

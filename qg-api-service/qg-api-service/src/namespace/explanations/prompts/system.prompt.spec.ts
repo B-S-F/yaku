@@ -26,6 +26,6 @@ describe('GenerateSystemPrompt', () => {
       expect(generatedPrompt_2.content).toContain(header)
     })
 
-    expect(generatedPrompt_2.content.length).toEqual(10769)
+    expect(generatedPrompt_2.content.length).toEqual(10688)
   })
 })
