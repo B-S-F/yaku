@@ -112,5 +112,5 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
-          path: yaku-apps-typescript/dist
+          path: ${{ env.PYTHON_APPS_FOLDER }}/dist
           key: ${{ steps.cache.outputs.cache-primary-key }}
