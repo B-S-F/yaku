@@ -6,12 +6,13 @@ import mock
 import pytest
 from artifactory import ArtifactoryException
 from pytest_mock import MockerFixture
+from yaku.autopilot_utils.errors import AutopilotError
+
 from yaku.artifactory_fetcher.artifactory_fetcher import (
     create_artifactory_client,
     download_file,
     get_file_checksum,
 )
-from yaku.autopilot_utils.errors import AutopilotError
 
 
 class TestCreateArtifactoryClient:
