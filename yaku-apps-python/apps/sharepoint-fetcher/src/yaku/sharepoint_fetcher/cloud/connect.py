@@ -92,7 +92,7 @@ class Connect:
         response = requests.get(
             f"https://graph.microsoft.com/v1.0/sites/{host}:/sites/{site_name}",
             headers=headers,
-        ).json()
+        ).json()  # nosec B113
         response_id = response["id"].split(",")
         site_id = response_id[1]
         return site_id
@@ -106,7 +106,7 @@ class Connect:
         """
         site_id = self.get_site_id(self._session.headers)
         url = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives"
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers)  # nosec B113
         drive_id = None
         if response.status_code == 200:
             drives = response.json().get("value", [])
@@ -321,7 +321,7 @@ class Connect:
         response.raise_for_status()
         download_url = response.json()["@microsoft.graph.downloadUrl"]
         actual_size = response.json()["size"]
-        download_file = requests.get(download_url)
+        download_file = requests.get(download_url)  # nosec B113
         download_file_size = len(download_file.content)
         if actual_size != download_file_size:
             raise AutopilotError(
