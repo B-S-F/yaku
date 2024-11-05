@@ -1,5 +1,5 @@
 [GLOBAL]
-pants_version = "2.20.0"
+pants_version = "2.22.0"
 colors = true
 pythonpath = ["%(buildroot)s/pants-plugins"]
 backend_packages = [
@@ -25,6 +25,9 @@ args = ['--ini', '%(buildroot)s/.bandit']
 timeout_default = 600
 output = "all"
 report = true
+
+[ruff]
+interpreter_constraints = ["==3.10.*"]
 
 [coverage-py]
 global_report = true
