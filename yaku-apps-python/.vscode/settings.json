@@ -1,0 +1,70 @@
+{
+  "python.analysis.extraPaths": [
+    ".",
+    "apps/artifactory-fetcher/src",
+    "apps/excel-tools/src",
+    "apps/filecheck/src",
+    "apps/papsr/src",
+    "apps/pdf-signature-evaluator/src",
+    "apps/pex-tool/src",
+    "apps/security-scanner/src",
+    "apps/sharepoint-evaluator/src",
+    "apps/sharepoint-fetcher/src",
+    "apps/sharepoint/src",
+    "apps/splunk-fetcher/src",
+    "packages/autopilot-utils/src",
+    "packages/autopilot-utils/tests/app_chained_multi_evaluator/src",
+    "packages/autopilot-utils/tests/app_multi_command/src",
+    "packages/autopilot-utils/tests/app_multi_evaluator/src",
+    "packages/autopilot-utils/tests/app_single_command/src",
+    "packages/autopilot-utils/tests/app_single_evaluator/src",
+    "packages/autopilot-utils/tests/app_subprocess_steps/src",
+    "packages/autopilot-utils/tests/app_super_simple_evaluator/src",
+    "packages/autopilot-utils/tests/demo_app/src"
+  ],
+  "python.defaultInterpreterPath": "dist/export/python/virtualenvs/python-default/3.10.15/bin/python",
+  "python.testing.pytestArgs": [
+    "."
+  ],
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestPath": "dist/export/python/virtualenvs/python-default/3.10.15/bin/pytest",
+  "python.testing.unittestEnabled": false,
+  "mypy-type-checker.interpreter": [
+    "dist/export/python/virtualenvs/python-default/3.10.15/bin/python"
+  ],
+  "coverage-gutters.coverageBaseDir": "dist/coverage/**",
+  "coverage-gutters.coverageFileNames": [
+    "coverage.xml"
+  ],
+  "black-formatter.args": [
+    "--config",
+    "./pyproject.toml"
+  ],
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "capsys",
+    "commitlint",
+    "dateutil",
+    "distinfo",
+    "distinfos",
+    "dohq",
+    "itoa",
+    "LICENCE",
+    "loguru",
+    "maxsplit",
+    "mypy",
+    "ntlm",
+    "oneq",
+    "papsr",
+    "pydantic",
+    "pytz",
+    "rdparty",
+    "reqs",
+    "splunklib",
+    "Yaku"
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  }
+}

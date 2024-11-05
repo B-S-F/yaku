@@ -9,7 +9,6 @@ backend_packages = [
   "pants.backend.plugin_development",
   "pants.backend.python",
   "pants.backend.python.lint.bandit",
-  "pants.backend.python.lint.isort",
   "pants.backend.python.typecheck.mypy",
   "python-utils",
 ]

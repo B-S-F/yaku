@@ -2,7 +2,6 @@ import os
 
 import mock
 from click.testing import CliRunner
-
 from yaku.artifactory_fetcher.cli import main
 
 

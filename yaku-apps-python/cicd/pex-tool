@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+pants run $(dirname $0)/../apps/pex-tool -- $*

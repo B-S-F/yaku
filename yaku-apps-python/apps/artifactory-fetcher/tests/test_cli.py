@@ -3,9 +3,8 @@ from pathlib import Path
 
 import mock
 import pytest
-from yaku.autopilot_utils.errors import AutopilotFailure
-
 from yaku.artifactory_fetcher.cli import CLI
+from yaku.autopilot_utils.errors import AutopilotFailure
 
 
 @mock.patch.dict(
