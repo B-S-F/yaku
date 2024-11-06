@@ -49,7 +49,10 @@ export class FinishedWorkflowDetectionTask {
     let stillRunningRuns: Run[]
     try {
       stillRunningRuns = await this.repository.find({
-        where: [{ status: RunStatus.Running }, { status: RunStatus.Pending }],
+        where: [
+          { status: RunStatus.Running },
+          { status: RunStatus.Pending, synthetic: false || undefined },
+        ],
         relations: ['config', 'namespace'],
       })
     } catch (err) {

@@ -637,6 +637,7 @@ export class ReleasesService {
         where: {
           config: { id: configId },
           namespace: { id: namespaceId },
+          synthetic: false || undefined,
           completionTime: LessThan(lastModificationTime),
         },
         order: { completionTime: 'DESC' },
@@ -644,7 +645,11 @@ export class ReleasesService {
       })
     } else {
       runs = await this.runRepository.find({
-        where: { config: { id: configId }, namespace: { id: namespaceId } },
+        where: {
+          config: { id: configId },
+          namespace: { id: namespaceId },
+          synthetic: false || undefined,
+        },
         order: { creationTime: 'DESC' },
         take: 1,
       })

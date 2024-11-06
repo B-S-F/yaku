@@ -28,7 +28,8 @@ import {
   WorkflowManager,
   WorkflowOptions,
 } from '../workflow/workflow-argo.service'
-import { Run, RunAuditService, RunStatus } from './run.entity'
+import { BlobStore } from '../workflow/minio.service'
+import { Run, RunAuditService, RunResult, RunStatus } from './run.entity'
 
 export const RESULTFILE = 'qg-result.yaml'
 export const EVIDENCEFILE = 'evidences.zip'
@@ -52,6 +53,7 @@ export class RunService {
     @InjectRepository(Run) private readonly repository: Repository<Run>,
     @Inject(WorkflowManager)
     private readonly workflowDispatcher: WorkflowManager,
+    @Inject(BlobStore) private readonly blobStore: BlobStore,
     @Inject(ConfigsService) private readonly configService: ConfigsService,
     @Inject(NamespaceLocalIdService)
     private readonly idService: NamespaceLocalIdService,
@@ -214,6 +216,59 @@ export class RunService {
     }
   }
 
+  async createSynthetic(
+    namespaceId: number,
+    configId: number,
+    actor: RequestUser
+  ) {
+    const createRunStartTime = Date.now()
+    const queryRunner = this.repository.manager.connection.createQueryRunner()
+    await queryRunner.connect()
+    await queryRunner.startTransaction('READ UNCOMMITTED')
+
+    try {
+      let run = await this.createWithTransaction(
+        queryRunner,
+        namespaceId,
+        configId,
+        actor
+      )
+
+      // TODO: Upload data here
+
+      // mark the run as synthetic and completed
+      run = await this.updateWithTransaction(
+        queryRunner,
+        namespaceId,
+        run.id,
+        {
+          completionTime: new Date(),
+          overallResult: RunResult.Failed, // TODO: Set the value from qg-result.yaml content
+          status: RunStatus.Completed,
+          synthetic: true,
+        },
+        actor
+      )
+
+      await queryRunner.commitTransaction()
+
+      return run
+    } catch (err) {
+      this.logger.error({
+        msg: `Error while creating synthetic run: ${err}`,
+      })
+      await queryRunner.rollbackTransaction()
+      throw err
+    } finally {
+      this.logger.debug(
+        `POST /runs: Store initial run took: ${
+          Date.now() - createRunStartTime
+        }ms`
+      )
+      await queryRunner.release()
+    }
+  }
+
   async createWithTransaction(
     queryRunner: QueryRunner,
     namespaceId: number,
@@ -229,6 +284,7 @@ export class RunService {
       storagePath,
       status: RunStatus.Pending,
       creationTime: new Date(),
+      synthetic: false,
       id: await this.idService.nextId(Run.name, namespaceId),
     }
 
@@ -246,6 +302,39 @@ export class RunService {
     )
 
     return run
+  }
+
+  async updateWithTransaction(
+    queryRunner: QueryRunner,
+    namespaceId: number,
+    runId: number,
+    runData: DeepPartial<Run>,
+    actor: RequestUser
+  ): Promise<Run> {
+    const currentRun = await this.getWithTransaction(
+      queryRunner,
+      namespaceId,
+      runId
+    )
+
+    const original = currentRun.DeepCopy()
+
+    const updatedRun = await queryRunner.manager.save(
+      Run,
+      Object.assign(currentRun, runData)
+    )
+
+    await this.auditService.append(
+      namespaceId,
+      runId,
+      original,
+      updatedRun,
+      AuditActor.convertFrom(actor),
+      Action.UPDATE,
+      queryRunner.manager
+    )
+
+    return updatedRun
   }
 
   async getResult(namespaceId: number, runId: number): Promise<Readable> {

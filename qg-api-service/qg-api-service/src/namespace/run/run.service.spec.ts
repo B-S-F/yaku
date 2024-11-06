@@ -25,6 +25,7 @@ import { RequestUser } from '../module.utils'
 import { NamespaceLocalIdService } from '../namespace/namespace-local-id.service'
 import { Namespace } from '../namespace/namespace.entity'
 import { WorkflowManager } from '../workflow/workflow-argo.service'
+import { BlobStore } from '../workflow/minio.service'
 import { Run, RunAuditService, RunResult, RunStatus } from './run.entity'
 import { RunService } from './run.service'
 import { AuditActor } from '../audit/audit.entity'
@@ -63,6 +64,7 @@ describe('RunService', () => {
   run.creationTime = new Date('02 Dec 2022 13:35:00 GMT')
   run.completionTime = new Date('02 Dec 2022 13:35:45 GMT')
   run.storagePath = randomUUID()
+  run.synthetic = false
   run.config = config()
 
   const run2 = new Run()
@@ -75,6 +77,7 @@ describe('RunService', () => {
   run2.argoId = randomUUID()
   run2.creationTime = new Date('02 Dec 2022 13:35:00 GMT')
   run2.storagePath = randomUUID()
+  run.synthetic = false
   run2.config = config()
 
   const actor = new RequestUser(
@@ -109,6 +112,14 @@ describe('RunService', () => {
             updateRunIfFinished: jest.fn(),
             downloadResult: jest.fn(),
             deleteWorkflowArtifacts: jest.fn(),
+          },
+        },
+        {
+          provide: BlobStore,
+          useValue: {
+            uploadPayload: jest.fn(),
+            downloadResult: jest.fn(),
+            removePath: jest.fn(),
           },
         },
         {
@@ -244,6 +255,7 @@ describe('RunService', () => {
           id,
           status,
           storagePath: randomUUID(),
+          synthetic: false,
           creationTime: new Date(Date.now()),
           argoNamespace: 'Arrrrgl22',
           config: currentConf,
@@ -631,6 +643,86 @@ describe('RunService', () => {
     })
   })
 
+  describe('Create synthetic Run', () => {
+    it('should create a synthetic Run', async () => {
+      const creationTime = new Date()
+      const createWithTransactionSpy = jest
+        .spyOn(service, 'createWithTransaction')
+        .mockResolvedValue({
+          ...run,
+          id: 66,
+          globalId: 4711,
+          config: config(),
+          status: RunStatus.Pending,
+          creationTime,
+          overallResult: undefined,
+          argoId: undefined,
+          argoName: undefined,
+          argoNamespace: undefined,
+          log: undefined,
+          completionTime: undefined,
+        } as Run)
+      const completionTime = new Date()
+      const updateWithTransactionSpy = jest
+        .spyOn(service, 'updateWithTransaction')
+        .mockResolvedValue({
+          ...run,
+          id: 66,
+          globalId: 4711,
+          config: config(),
+          synthetic: true,
+          status: RunStatus.Completed,
+          creationTime,
+          overallResult: RunResult.Failed,
+          argoId: undefined,
+          argoName: undefined,
+          argoNamespace: undefined,
+          log: undefined,
+          completionTime,
+        } as Run)
+
+      const result = await service.createSynthetic(
+        namespace.id,
+        config().id,
+        actor
+      )
+
+      expect(result.config).toEqual(config())
+      expect(result.namespace).toEqual(namespace)
+      expect(result.storagePath).toBeDefined()
+      expect(result.status).toBe(RunStatus.Completed)
+      expect(result.creationTime).toEqual(creationTime)
+      expect(result.id).toBe(66)
+      expect(result.globalId).toBe(4711)
+      expect(result.overallResult).toEqual(RunResult.Failed)
+      expect(result.argoNamespace).toBeUndefined()
+      expect(result.argoName).toBeUndefined()
+      expect(result.argoId).toBeUndefined()
+      expect(result.log).toBeUndefined()
+      expect(result.completionTime).toEqual(completionTime)
+      expect(createWithTransactionSpy).toHaveBeenCalledWith(
+        queryRunner,
+        namespace.id,
+        config().id,
+        actor
+      )
+      expect(updateWithTransactionSpy).toHaveBeenCalled()
+      verifySuccessfullTransaction(queryRunner)
+    })
+
+    it('should rollback the transaction if an error occurs', async () => {
+      const createWithTransactionSpy = jest
+        .spyOn(service, 'createWithTransaction')
+        .mockRejectedValue(new Error())
+
+      const result = service.createSynthetic(namespace.id, config().id, actor)
+
+      await expect(result).rejects.toThrow()
+      expect(createWithTransactionSpy).toHaveBeenCalled()
+      verifyFailedTransaction(queryRunner)
+    })
+  })
+
   describe('createWithTransaction', () => {
     let configsService: ConfigsService
     let idService: NamespaceLocalIdService
@@ -789,6 +881,140 @@ describe('RunService', () => {
 
       await expect(result).rejects.toThrow('AuditService append error')
       expect(createSpy).toHaveBeenCalled()
+      expect(saveSpy).toHaveBeenCalled()
+      expect(auditServiceSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe('updateWithTransaction', () => {
+    it('should update a Run and create an audit entry', async () => {
+      const currentRun = run
+      const originalRun = currentRun.DeepCopy()
+      const updatedRun = {
+        ...currentRun,
+        status: RunStatus.Failed,
+        completionTime: new Date(),
+      } as Run
+
+      const getWithTransactionSpy = jest
+        .spyOn(service, 'getWithTransaction')
+        .mockResolvedValueOnce(currentRun.DeepCopy())
+      const saveSpy = jest
+        .spyOn(queryRunner.manager, 'save')
+        .mockResolvedValueOnce(updatedRun)
+      const auditServiceSpy = jest.spyOn(auditService, 'append')
+
+      const result = await service.updateWithTransaction(
+        queryRunner,
+        namespace.id,
+        currentRun.id,
+        updatedRun,
+        actor
+      )
+
+      expect(getWithTransactionSpy).toHaveBeenCalledWith(
+        queryRunner,
+        namespace.id,
+        currentRun.id
+      )
+      expect(saveSpy).toHaveBeenCalledWith(Run, updatedRun)
+      expect(auditServiceSpy).toHaveBeenCalledWith(
+        originalRun.namespace.id,
+        originalRun.id,
+        originalRun,
+        updatedRun,
+        AuditActor.convertFrom(actor),
+        'update',
+        expect.anything()
+      )
+      expect(result).toStrictEqual(updatedRun)
+    })
+
+    it('should throw NotFound error on non-existing Run', async () => {
+      const currentRun = run
+      const updatedRun = {
+        ...currentRun,
+        status: RunStatus.Failed,
+        completionTime: new Date(),
+      } as Run
+      const getWithTransactionSpy = jest
+        .spyOn(service, 'getWithTransaction')
+        .mockRejectedValue(new NotFoundException())
+      const saveSpy = jest.spyOn(queryRunner.manager, 'save')
+      const auditServiceSpy = jest.spyOn(auditService, 'append')
+
+      const result = service.updateWithTransaction(
+        queryRunner,
+        namespace.id,
+        updatedRun.id,
+        updatedRun,
+        actor
+      )
+
+      await expect(result).rejects.toThrow(new NotFoundException())
+      expect(getWithTransactionSpy).toHaveBeenCalledWith(
+        queryRunner,
+        namespace.id,
+        currentRun.id
+      )
+      expect(saveSpy).not.toHaveBeenCalled()
+      expect(auditServiceSpy).not.toHaveBeenCalled()
+    })
+
+    it('should throw an error if updating the run fails', async () => {
+      const currentRun = run
+      const updatedRun = {
+        ...currentRun,
+        status: RunStatus.Failed,
+        completionTime: new Date(),
+      } as Run
+      const getWithTransactionSpy = jest
+        .spyOn(service, 'getWithTransaction')
+        .mockResolvedValueOnce(currentRun.DeepCopy())
+      const saveSpy = jest
+        .spyOn(queryRunner.manager, 'save')
+        .mockRejectedValue(new Error('save error'))
+      const auditServiceSpy = jest.spyOn(auditService, 'append')
+
+      const result = service.updateWithTransaction(
+        queryRunner,
+        namespace.id,
+        config().id,
+        updatedRun,
+        actor
+      )
+
+      await expect(result).rejects.toThrow('save error')
+      expect(getWithTransactionSpy).toHaveBeenCalled()
+      expect(saveSpy).toHaveBeenCalled()
+      expect(auditServiceSpy).not.toHaveBeenCalled()
+    })
+
+    it('should throw an error if saving the audit entry fails', async () => {
+      const currentRun = run
+      const updatedRun = {
+        ...currentRun,
+        status: RunStatus.Failed,
+        completionTime: new Date(),
+      } as Run
+      const getWithTransactionSpy = jest
+        .spyOn(service, 'getWithTransaction')
+        .mockResolvedValueOnce(currentRun.DeepCopy())
+      const saveSpy = jest.spyOn(queryRunner.manager, 'save')
+      const auditServiceSpy = jest
+        .spyOn(auditService, 'append')
+        .mockRejectedValueOnce(new Error('AuditService append error'))
+
+      const result = service.updateWithTransaction(
+        queryRunner,
+        namespace.id,
+        config().id,
+        updatedRun,
+        actor
+      )
+
+      await expect(result).rejects.toThrow('AuditService append error')
+      expect(getWithTransactionSpy).toHaveBeenCalled()
       expect(saveSpy).toHaveBeenCalled()
       expect(auditServiceSpy).toHaveBeenCalled()
     })
