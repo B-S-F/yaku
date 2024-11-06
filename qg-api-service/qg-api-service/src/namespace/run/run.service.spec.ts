@@ -27,9 +27,11 @@ import { Namespace } from '../namespace/namespace.entity'
 import { WorkflowManager } from '../workflow/workflow-argo.service'
 import { Run, RunAuditService, RunResult, RunStatus } from './run.entity'
 import { RunService } from './run.service'
+import { AuditActor } from '../audit/audit.entity'
 
 describe('RunService', () => {
   let service: RunService
+  let auditService: RunAuditService
   let workflowManager: WorkflowManager
   let repository: Repository<Run>
   let queryRunner: QueryRunner
@@ -48,34 +50,32 @@ describe('RunService', () => {
     return config
   }
 
-  const run: Run = {
-    globalId: 1,
-    namespace,
-    id: 1,
-    status: RunStatus.Completed,
-    overallResult: RunResult.Green,
-    argoNamespace: 'arrrrrrgl',
-    argoName: 'arrrrrrgl-42',
-    argoId: randomUUID(),
-    log: ['Worked great', 'Result: Green'],
-    creationTime: new Date('02 Dec 2022 13:35:00 GMT'),
-    completionTime: new Date('02 Dec 2022 13:35:45 GMT'),
-    storagePath: randomUUID(),
-    config: config(),
-  } as Run
+  const run = new Run()
+  run.globalId = 1
+  run.namespace = namespace
+  run.id = 1
+  run.status = RunStatus.Completed
+  run.overallResult = RunResult.Green
+  run.argoNamespace = 'arrrrrrgl'
+  run.argoName = 'arrrrrrgl-42'
+  run.argoId = randomUUID()
+  run.log = ['Worked great', 'Result: Green']
+  run.creationTime = new Date('02 Dec 2022 13:35:00 GMT')
+  run.completionTime = new Date('02 Dec 2022 13:35:45 GMT')
+  run.storagePath = randomUUID()
+  run.config = config()
 
-  const run2: Run = {
-    globalId: 2,
-    namespace,
-    id: 2,
-    status: RunStatus.Running,
-    argoNamespace: 'arrrrrrgl',
-    argoName: 'arrrrrrgl-4711',
-    argoId: randomUUID(),
-    creationTime: new Date('02 Dec 2022 13:35:00 GMT'),
-    storagePath: randomUUID(),
-    config: config(),
-  } as Run
+  const run2 = new Run()
+  run2.globalId = 2
+  run2.namespace = namespace
+  run2.id = 2
+  run2.status = RunStatus.Running
+  run2.argoNamespace = 'arrrrrrgl'
+  run2.argoName = 'arrrrrrgl-4711'
+  run2.argoId = randomUUID()
+  run2.creationTime = new Date('02 Dec 2022 13:35:00 GMT')
+  run2.storagePath = randomUUID()
+  run2.config = config()
 
   const actor = new RequestUser(
     '7341a294-7a51-4fdc-90c6-af58e6bea690',
@@ -136,8 +136,10 @@ describe('RunService', () => {
     }).compile()
 
     service = module.get<RunService>(RunService)
+    auditService = module.get<RunAuditService>(RunAuditService)
     workflowManager = module.get<WorkflowManager>(WorkflowManager)
     repository = module.get(getRepositoryToken(Run))
+
     queryRunner = {
       connect: jest.fn(),
       startTransaction: jest.fn(),
@@ -472,10 +474,23 @@ describe('RunService', () => {
     })
 
     it('should create the run as expected', async () => {
-      const cfgMock = jest
-        .spyOn(configsService, 'getConfig')
-        .mockResolvedValue(config())
-      const idMock = jest.spyOn(idService, 'nextId').mockResolvedValue(66)
+      const currentDate = new Date()
+      const createWithTransactionSpy = jest
+        .spyOn(service, 'createWithTransaction')
+        .mockResolvedValue({
+          ...run,
+          id: 66,
+          globalId: 4711,
+          config: config(),
+          status: RunStatus.Pending,
+          creationTime: currentDate,
+          overallResult: undefined,
+          argoId: undefined,
+          argoName: undefined,
+          argoNamespace: undefined,
+          log: undefined,
+          completionTime: undefined,
+        } as Run)
 
       const retrieved = await service.create(testingNamespaceId, 1, actor)
 
@@ -483,7 +498,7 @@ describe('RunService', () => {
       expect(retrieved.namespace).toEqual(namespace)
       expect(retrieved.storagePath).toBeDefined()
       expect(retrieved.status).toBe(RunStatus.Pending)
-      expect(retrieved.creationTime).toEqual(new Date())
+      expect(retrieved.creationTime).toEqual(currentDate)
       expect(retrieved.id).toBe(66)
       expect(retrieved.globalId).toBe(4711)
       expect(retrieved.overallResult).toBeUndefined()
@@ -493,20 +508,36 @@ describe('RunService', () => {
       expect(retrieved.log).toBeUndefined()
       expect(retrieved.completionTime).toBeUndefined()
 
-      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
-      expect(idMock).toHaveBeenCalled()
-      expect(queryRunner.manager.create).toHaveBeenCalled()
-      expect(queryRunner.manager.save).toHaveBeenCalledWith(Run, retrieved)
+      expect(createWithTransactionSpy).toHaveBeenCalledWith(
+        queryRunner,
+        namespace.id,
+        config().id,
+        actor
+      )
       expect(workflowManager.run).toHaveBeenCalledWith(retrieved, {
         environment: {},
       })
+      verifySuccessfullTransaction(queryRunner)
     })
 
     it(`should call the WorkflowManger with environment variables`, async () => {
-      const cfgMock = jest
-        .spyOn(configsService, 'getConfig')
-        .mockResolvedValue(config())
-      const idMock = jest.spyOn(idService, 'nextId').mockResolvedValue(66)
+      const currentDate = new Date()
+      const createWithTransactionSpy = jest
+        .spyOn(service, 'createWithTransaction')
+        .mockResolvedValue({
+          ...run,
+          id: 66,
+          globalId: 4711,
+          config: config(),
+          status: RunStatus.Pending,
+          creationTime: currentDate,
+          overallResult: undefined,
+          argoId: undefined,
+          argoName: undefined,
+          argoNamespace: undefined,
+          log: undefined,
+          completionTime: undefined,
+        } as Run)
 
       const envs: { [key: string]: string } = {
         TEST_KEY1: 'TEST_VALUE1',
@@ -517,23 +548,39 @@ describe('RunService', () => {
         environment: envs,
       })
 
-      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
-      expect(idMock).toHaveBeenCalled()
-      expect(queryRunner.manager.create).toHaveBeenCalled()
-      expect(queryRunner.manager.save).toHaveBeenCalledWith(Run, retrieved)
+      expect(createWithTransactionSpy).toHaveBeenCalledWith(
+        queryRunner,
+        namespace.id,
+        config().id,
+        actor
+      )
       expect(workflowManager.run).toHaveBeenCalledWith(retrieved, {
         environment: {
           TEST_KEY1: 'TEST_VALUE1',
           TEST_KEY2: 'TEST_VALUE2',
         },
       })
+      verifySuccessfullTransaction(queryRunner)
     })
 
     it('should call the workflow manager with a single check option', async () => {
-      const cfgMock = jest
-        .spyOn(configsService, 'getConfig')
-        .mockResolvedValue(config())
-      const idMock = jest.spyOn(idService, 'nextId').mockResolvedValue(66)
+      const currentDate = new Date()
+      const createWithTransactionSpy = jest
+        .spyOn(service, 'createWithTransaction')
+        .mockResolvedValue({
+          ...run,
+          id: 66,
+          globalId: 4711,
+          config: config(),
+          status: RunStatus.Pending,
+          creationTime: currentDate,
+          overallResult: undefined,
+          argoId: undefined,
+          argoName: undefined,
+          argoNamespace: undefined,
+          log: undefined,
+          completionTime: undefined,
+        } as Run)
 
       const options = {
         environment: {},
@@ -550,7 +597,7 @@ describe('RunService', () => {
       expect(retrieved.namespace).toEqual(namespace)
       expect(retrieved.storagePath).toBeDefined()
       expect(retrieved.status).toBe(RunStatus.Pending)
-      expect(retrieved.creationTime).toEqual(new Date())
+      expect(retrieved.creationTime).toEqual(currentDate)
       expect(retrieved.id).toBe(66)
       expect(retrieved.globalId).toBe(4711)
       expect(retrieved.overallResult).toBeUndefined()
@@ -560,27 +607,190 @@ describe('RunService', () => {
       expect(retrieved.log).toBeUndefined()
       expect(retrieved.completionTime).toBeUndefined()
 
-      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
-      expect(idMock).toHaveBeenCalled()
-      expect(queryRunner.manager.create).toHaveBeenCalled()
-      expect(queryRunner.manager.save).toHaveBeenCalledWith(Run, retrieved)
+      expect(createWithTransactionSpy).toHaveBeenCalledWith(
+        queryRunner,
+        namespace.id,
+        config().id,
+        actor
+      )
       expect(workflowManager.run).toHaveBeenCalledWith(retrieved, options)
+      verifySuccessfullTransaction(queryRunner)
     })
 
-    it('should throw NotFound on a non-existing config', async () => {
-      const cfgMock = jest
+    it('should rollback the transaction if an error occurs', async () => {
+      const createWithTransactionSpy = jest
+        .spyOn(service, 'createWithTransaction')
+        .mockRejectedValue(new Error())
+
+      const result = service.create(namespace.id, config().id, actor)
+
+      await expect(result).rejects.toThrow()
+      expect(createWithTransactionSpy).toHaveBeenCalled()
+      expect(workflowManager.run).not.toHaveBeenCalled()
+      verifyFailedTransaction(queryRunner)
+    })
+  })
+
+  describe('createWithTransaction', () => {
+    let configsService: ConfigsService
+    let idService: NamespaceLocalIdService
+
+    beforeEach(() => {
+      configsService = module.get<ConfigsService>(ConfigsService)
+      idService = module.get<NamespaceLocalIdService>(NamespaceLocalIdService)
+    })
+
+    afterEach(() => jest.restoreAllMocks())
+
+    it('should create a Run and an audit entry', async () => {
+      const runWithoutData = run.DeepCopy()
+      delete runWithoutData['globalId']
+      delete runWithoutData['id']
+      delete runWithoutData['creationTime']
+      delete runWithoutData['status']
+      delete runWithoutData['argoId']
+      delete runWithoutData['argoName']
+      delete runWithoutData['argoNamespace']
+      delete runWithoutData['completionTime']
+      delete runWithoutData['log']
+      delete runWithoutData['overallResult']
+      const creationTime = new Date()
+      const expectedRun = new Run()
+      expectedRun.creationTime = creationTime
+      expectedRun.config = config()
+      expectedRun.status = RunStatus.Pending
+      expectedRun.namespace = namespace
+      expectedRun.storagePath = randomUUID()
+      expectedRun.synthetic = false
+
+      const configsServiceSpy = jest
+        .spyOn(configsService, 'getConfig')
+        .mockResolvedValue(config())
+      const idServiceSpy = jest.spyOn(idService, 'nextId').mockResolvedValue(1)
+      const auditServiceSpy = jest.spyOn(auditService, 'append')
+      const createSpy = jest
+        .spyOn(queryRunner.manager, 'create')
+        .mockImplementation(((
+          entityClass: EntityTarget<Run>,
+          run: DeepPartial<Run>
+        ) => {
+          return { ...run, creationTime } as Run
+        }) as typeof queryRunner.manager.create)
+      const saveSpy = jest
+        .spyOn(queryRunner.manager, 'save')
+        .mockImplementation((entityClass: EntityTarget<Run>, run: Run) => {
+          return new Promise((resolve) => resolve({ ...run, globalId: 4711 }))
+        })
+
+      const result = await service.createWithTransaction(
+        queryRunner,
+        namespace.id,
+        config().id,
+        actor
+      )
+
+      expect(result).toEqual({
+        ...expectedRun,
+        id: 1,
+        namespace: { id: 1 },
+        globalId: 4711,
+        storagePath: expect.anything(),
+      })
+      expect(configsServiceSpy).toHaveBeenCalled()
+      expect(idServiceSpy).toHaveBeenCalled()
+      expect(createSpy).toHaveBeenCalledWith(Run, {
+        ...runWithoutData,
+        namespace: { id: 1 },
+        id: 1,
+        creationTime: expect.anything(),
+        status: RunStatus.Pending,
+        storagePath: expect.anything(),
+      })
+      expect(saveSpy).toHaveBeenCalledWith(Run, {
+        ...runWithoutData,
+        namespace: { id: 1 },
+        id: 1,
+        status: RunStatus.Pending,
+        creationTime,
+        storagePath: expect.anything(),
+      })
+      expect(auditServiceSpy).toHaveBeenCalledWith(
+        namespace.id,
+        run.id,
+        {},
+        {
+          ...runWithoutData,
+          id: 1,
+          namespace: { id: 1 },
+          globalId: 4711,
+          status: RunStatus.Pending,
+          creationTime,
+          storagePath: expect.anything(),
+        },
+        AuditActor.convertFrom(actor),
+        'create',
+        expect.anything()
+      )
+    })
+
+    it('should throw NotFound error on a non-existing config', async () => {
+      const configsServiceSpy = jest
         .spyOn(configsService, 'getConfig')
         .mockRejectedValue(new NotFoundException())
+      const idServiceSpy = jest.spyOn(idService, 'nextId')
+      const auditServiceSpy = jest.spyOn(auditService, 'append')
+      const createSpy = jest.spyOn(queryRunner.manager, 'create')
+      const saveSpy = jest.spyOn(queryRunner.manager, 'save')
 
       await expect(
         service.create(testingNamespaceId, 1, actor),
       ).rejects.toThrow(NotFoundException)
 
-      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
-      expect(idService.nextId).not.toHaveBeenCalled()
-      expect(queryRunner.manager.create).not.toHaveBeenCalled()
-      expect(queryRunner.manager.save).not.toHaveBeenCalled()
-      expect(workflowManager.run).not.toHaveBeenCalled()
+      expect(configsServiceSpy).toHaveBeenCalledWith(testingNamespaceId, 1)
+      expect(idServiceSpy).not.toHaveBeenCalled()
+      expect(createSpy).not.toHaveBeenCalled()
+      expect(saveSpy).not.toHaveBeenCalled()
+      expect(auditServiceSpy).not.toHaveBeenCalled()
+    })
+
+    it('should throw an error if saving the run fails', async () => {
+      const createSpy = jest.spyOn(queryRunner.manager, 'create')
+      const saveSpy = jest
+        .spyOn(queryRunner.manager, 'save')
+        .mockRejectedValue(new Error('save error'))
+      const auditServiceSpy = jest.spyOn(auditService, 'append')
+
+      const result = service.createWithTransaction(
+        queryRunner,
+        namespace.id,
+        config().id,
+        actor
+      )
+
+      await expect(result).rejects.toThrow('save error')
+      expect(createSpy).toHaveBeenCalled()
+      expect(saveSpy).toHaveBeenCalled()
+      expect(auditServiceSpy).not.toHaveBeenCalled()
+    })
+
+    it('should throw an error if saving the audit entry fails', async () => {
+      const createSpy = jest.spyOn(queryRunner.manager, 'create')
+      const saveSpy = jest.spyOn(queryRunner.manager, 'save')
+      const auditServiceSpy = jest
+        .spyOn(auditService, 'append')
+        .mockRejectedValueOnce(new Error('AuditService append error'))
+
+      const result = service.createWithTransaction(
+        queryRunner,
+        namespace.id,
+        config().id,
+        actor
+      )
+
+      await expect(result).rejects.toThrow('AuditService append error')
+      expect(createSpy).toHaveBeenCalled()
+      expect(saveSpy).toHaveBeenCalled()
+      expect(auditServiceSpy).toHaveBeenCalled()
     })
   })
 
@@ -690,3 +900,17 @@ describe('RunService', () => {
     })
   })
 })
+
+function verifySuccessfullTransaction(queryRunner: QueryRunner) {
+  expect(queryRunner.startTransaction).toHaveBeenCalled()
+  expect(queryRunner.commitTransaction).toHaveBeenCalled()
+  expect(queryRunner.release).toHaveBeenCalled()
+  expect(queryRunner.rollbackTransaction).not.toHaveBeenCalled()
+}
+
+function verifyFailedTransaction(queryRunner: QueryRunner) {
+  expect(queryRunner.startTransaction).toHaveBeenCalled()
+  expect(queryRunner.commitTransaction).not.toHaveBeenCalled()
+  expect(queryRunner.release).toHaveBeenCalled()
+  expect(queryRunner.rollbackTransaction).toHaveBeenCalled()
+}
