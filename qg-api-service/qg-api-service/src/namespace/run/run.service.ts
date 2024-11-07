@@ -115,6 +115,20 @@ export class RunService {
     return { itemCount, entities }
   }
 
+  async getWithTransaction(
+    queryRunner: QueryRunner,
+    namespaceId: number,
+    runId: number
+  ): Promise<Run> {
+    return await queryRunner.manager.findOne(Run, {
+      where: {
+        namespace: { id: namespaceId },
+        id: runId,
+      },
+      relations: ['config', 'namespace'],
+    })
+  }
+
   async get(namespaceId: number, runId: number): Promise<Run> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -143,38 +157,6 @@ export class RunService {
     } finally {
       await queryRunner.release()
     }
-  }
-
-  async getWithTransaction(
-    queryRunner: QueryRunner,
-    namespaceId: number,
-    runId: number
-  ): Promise<Run> {
-    return await queryRunner.manager.findOne(Run, {
-      where: {
-        namespace: { id: namespaceId },
-        id: runId,
-      },
-      relations: ['config', 'namespace'],
-    })
-  }
-
-  async checkAndUpdateRun(run: Run): Promise<Run> {
-    const originalRun = structuredClone(run)
-    try {
-      if (run.argoId && run.argoName && run.argoNamespace) {
-        run = await promiseOnTime(
-          this.workflowDispatcher.updateRunIfFinished(run),
-          2000
-        )
-      }
-    } catch (err) {
-      run = originalRun
-      this.logger.warn(
-        `Could not check workflow state for run ${run.globalId} (${run.namespace.id}:${run.id}), error was ${err}`
-      )
-    }
-    return run
   }
 
   async create(
@@ -418,5 +400,23 @@ export class RunService {
   getNamespaceCreatedCallback(): NamespaceCreated {
     return (namespaceId: number) =>
       this.idService.initializeIdCreation(Run.name, namespaceId)
+  }
+
+  async checkAndUpdateRun(run: Run): Promise<Run> {
+    const originalRun = structuredClone(run)
+    try {
+      if (run.argoId && run.argoName && run.argoNamespace) {
+        run = await promiseOnTime(
+          this.workflowDispatcher.updateRunIfFinished(run),
+          2000
+        )
+      }
+    } catch (err) {
+      run = originalRun
+      this.logger.warn(
+        `Could not check workflow state for run ${run.globalId} (${run.namespace.id}:${run.id}), error was ${err}`
+      )
+    }
+    return run
   }
 }
