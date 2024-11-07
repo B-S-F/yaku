@@ -25,7 +25,6 @@ import { RequestUser } from '../module.utils'
 import { NamespaceLocalIdService } from '../namespace/namespace-local-id.service'
 import { Namespace } from '../namespace/namespace.entity'
 import { WorkflowManager } from '../workflow/workflow-argo.service'
-import { BlobStore } from '../workflow/minio.service'
 import { Run, RunAuditService, RunResult, RunStatus } from './run.entity'
 import { RunService } from './run.service'
 import { AuditActor } from '../audit/audit.entity'
@@ -112,14 +111,6 @@ describe('RunService', () => {
             updateRunIfFinished: jest.fn(),
             downloadResult: jest.fn(),
             deleteWorkflowArtifacts: jest.fn(),
-          },
-        },
-        {
-          provide: BlobStore,
-          useValue: {
-            uploadPayload: jest.fn(),
-            downloadResult: jest.fn(),
-            removePath: jest.fn(),
           },
         },
         {

@@ -28,7 +28,6 @@ import {
   WorkflowManager,
   WorkflowOptions,
 } from '../workflow/workflow-argo.service'
-import { BlobStore } from '../workflow/minio.service'
 import { Run, RunAuditService, RunResult, RunStatus } from './run.entity'
 
 export const RESULTFILE = 'qg-result.yaml'
@@ -53,7 +52,6 @@ export class RunService {
     @InjectRepository(Run) private readonly repository: Repository<Run>,
     @Inject(WorkflowManager)
     private readonly workflowDispatcher: WorkflowManager,
-    @Inject(BlobStore) private readonly blobStore: BlobStore,
     @Inject(ConfigsService) private readonly configService: ConfigsService,
     @Inject(NamespaceLocalIdService)
     private readonly idService: NamespaceLocalIdService,
