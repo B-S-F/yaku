@@ -25,7 +25,7 @@ jobs:
       - name: Put all files from ${{ env.PYTHON_APPS_FOLDER }} in cwd
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          mv ${{ env.PYTHON_APPS_FOLDER }}/* .
+          mv ${{ env.PYTHON_APPS_FOLDER }}/* ${{ env.PYTHON_APPS_FOLDER }}/.[!.]* .
 
       - uses: actions/setup-python@v5
         if: steps.cache.outputs.cache-hit != 'true'
@@ -42,7 +42,6 @@ jobs:
 
       - name: Lint and check
         if: steps.cache.outputs.cache-hit != 'true'
-        continue-on-error: true
         run: |
           make lint check
         env:

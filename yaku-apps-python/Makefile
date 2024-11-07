@@ -2,8 +2,7 @@
 help:
 	@echo "Targets:"
 	@echo ""
-	@echo "   install-fast-hooks       Set up Git hooks (linting, formatting)"
-	@echo "   install-slow-hooks       Set up Git hooks (linting, formatting, tests)"
+	@echo "   install-hooks            Set up Git hooks (linting, formatting)"
 	@echo "   remove-hooks             Uninstall Git hooks"
 	@echo ""
 	@echo "   vscode-integration       Set up VS Code so that it works nicely with Pants"
@@ -11,10 +10,11 @@ help:
 	@echo ""
 	@echo "   format                   Run formatters"
 	@echo "   lint                     Run linters (e.g. in CI/CD pipeline)"
+	@echo "   check                    Run checks (e.g. in CI/CD pipeline)"
 	@echo "   test                     Run tests (e.g. in CI/CD pipeline)"
+	@echo "   fix                      Run linters and formatters to fix issues"
 	@echo "   testcov                  Run tests with coverage analysis"
 	@echo "   testint                  Run integration tests only (for external systems)"
-	@echo "   check                    Run checks (e.g. in CI/CD pipeline)"
 	@echo "   package                  Package everything"
 	@echo ""
 	@echo "   coverage-check           Compare list of Python files with coverage analysis files"
@@ -23,15 +23,10 @@ help:
 
 FOLDER ?= '.'
 .PHONY: install-slow-hooks install-fast-hooks remove-hooks
-install-fast-hooks: remove-hooks install-std-hooks
-	ln -s ../../cicd/pre-commit-hook-fast .git/hooks/pre-commit
-install-slow-hooks: remove-hooks install-std-hooks
-	ln -s ../../cicd/pre-commit-hook-slow .git/hooks/pre-commit
-install-std-hooks: remove-hooks
-	ln -s ../../cicd/commit-msg-hook .git/hooks/commit-msg
+install-hooks:
+	pre-commit install
 remove-hooks:
-	rm -f .git/hooks/commit-msg
-	rm -f .git/hooks/pre-commit
+	pre-commit uninstall
 
 .PHONY: vscode-integration
 vscode-integration: vscode-python-paths vscode-virtualenvs
@@ -82,6 +77,11 @@ testint:
 .PHONY: lint
 lint:
 	pants lint ::
+
+.PHONY: fix
+fix:
+	pants fix lint ::
+	pants fix fmt ::
 
 .PHONY: check
 check:

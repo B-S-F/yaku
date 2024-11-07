@@ -60,8 +60,7 @@ def test_print_version_calls_callback():
         click_help_text = "help"
 
         @staticmethod
-        def click_command():
-            ...
+        def click_command(): ...
 
     get_version = mock.Mock(return_value="1.0.2")
     app = make_autopilot_app(SimpleProvider, version_callback=get_version)
@@ -79,8 +78,7 @@ def test_print_version_removes_whitespace():
         click_help_text = "help"
 
         @staticmethod
-        def click_command():
-            ...
+        def click_command(): ...
 
     get_version = mock.Mock(return_value="  1.0.2\n")
     app = make_autopilot_app(SimpleProvider, version_callback=get_version)
