@@ -1,6 +1,6 @@
 Developer documentation for the project.
 
-# Pre-commit hooks (DRAFT / POC)
+# Pre-commit hooks
 This project uses pre-commit hooks to ensure that code is formatted correctly and so on.
 To install pre-commit tool run:
 ```bash
