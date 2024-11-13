@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { renderHtmlFiles } from '../../src/index'
 
 const resultPaths = [
+  'test/integration/input/v0',
   'test/integration/input/v1',
   'test/integration/input/v1-with-logs',
 ]
