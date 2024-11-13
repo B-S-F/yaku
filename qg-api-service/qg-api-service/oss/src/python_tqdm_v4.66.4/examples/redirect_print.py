@@ -1,4 +1,5 @@
-"""Redirecting writing
+"""
+Redirecting writing
 
 If using a library that can print messages to the console, editing the library
 by  replacing `print()` with `tqdm.write()` may not be desirable.
@@ -10,6 +11,7 @@ any input string to `tqdm.write()`, and supply the arguments
 
 A reusable canonical example is given below:
 """
+
 import contextlib
 import sys
 from time import sleep
@@ -44,7 +46,7 @@ with std_out_err_redirect_tqdm() as orig_stdout:
     for i in tqdm(range(3), file=orig_stdout, dynamic_ncols=True):
         # order of the following two lines should not matter
         some_fun(i)
-        sleep(.5)
+        sleep(0.5)
 
 # After the `with`, printing is restored
 print("Done!")

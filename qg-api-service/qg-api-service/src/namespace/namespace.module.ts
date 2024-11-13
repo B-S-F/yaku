@@ -1,7 +1,4 @@
-import {
-  UrlHandlerFactory,
-  UrlProtocolConfig,
-} from '@B-S-F/api-commons-lib'
+import { UrlHandlerFactory, UrlProtocolConfig } from '@B-S-F/api-commons-lib'
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { APP_GUARD } from '@nestjs/core'
 import { TypeOrmModule } from '@nestjs/typeorm'

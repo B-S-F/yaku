@@ -12,6 +12,7 @@ Usage:
 >>> for i in trange(10):
 ...     ...
 """
+
 import warnings
 
 from .std import TqdmExperimentalWarning
@@ -24,6 +25,7 @@ from .asyncio import tqdm as asyncio_tqdm
 from .std import tqdm as std_tqdm
 
 if notebook_tqdm != std_tqdm:
+
     class tqdm(notebook_tqdm, asyncio_tqdm):  # pylint: disable=inconsistent-mro
         pass
 else:

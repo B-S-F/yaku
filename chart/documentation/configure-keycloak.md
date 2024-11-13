@@ -26,7 +26,7 @@ Based on your used Keycloak instance, please follow one of the option below.
 
   1. Login with a user that have admin access to your realm `kcadm.sh config credentials --server <keycloak server> --realm <realm name> --user admin `
 
-  2. Run `./tools/setup-realm.sh` 
+  2. Run `./tools/setup-realm.sh`
 
   3. Go to `Client scopes`, change `global` Assigned type to `optional` and `namespace_1`  Assigned type to `Default`
 
@@ -36,7 +36,7 @@ Based on your used Keycloak instance, please follow one of the option below.
 
      Under (Choose the resources you want to import:), check: Clients, Realm roles and client roles.
 
-     Under (If a resource already exists, specify what should be done:) check: skip 
+     Under (If a resource already exists, specify what should be done:) check: skip
 
 You will then need to perform some manual steps to customize it and get the configuration working with your Yaku instance.
 
@@ -50,7 +50,7 @@ The pre-configured realm imported from [yaku-realm-configmap.yaml file](./tools/
 A users in Keycloak is any entity that can login into your system. Yaku access is based on two users groups:
 - **Admin users**
 
-  Admins have permissions to create and modify namespaces in a Yaku instance. 
+  Admins have permissions to create and modify namespaces in a Yaku instance.
 - **Namespace users**
 
   Normal users that have access to one or multiple namespaces and can run Yaku assessments
@@ -61,7 +61,7 @@ After configuring your identity provider in Keycloak, users will be able to logi
 ### Configure Identity Provider
 
 Keycloak acts as an Identity Broker to connect Yaku services with identity providers. It uses the provider’s identities to access Yaku services.
-Keycloak bases identity providers on SAML v2.0, OpenID Connect v1.0 and OAuth v2.0 protocols. You can configure Keycloak to use any of these protocols to connect with your identity provider. 
+Keycloak bases identity providers on SAML v2.0, OpenID Connect v1.0 and OAuth v2.0 protocols. You can configure Keycloak to use any of these protocols to connect with your identity provider.
 
 To add an identity provider, click on the `Identity Providers` tab in the left side menu and select the identity provider type you want to add. Keycloak displays the configuration page for the identity provider you selected.
 
@@ -70,7 +70,7 @@ We provide below two configuration examples for OpenID Connect and SAML.
 #### OpenID Connect
 
 
-This identity provider uses an Azure Entra ID OpenID Connect app registration created and configured in an Azure subscription. 
+This identity provider uses an Azure Entra ID OpenID Connect app registration created and configured in an Azure subscription.
 
 1. Fill up the configuration page of the OpenID connect identity provider with the following values. You can find the `clientId` and `clientSecret` in your App registration details.
 
@@ -124,7 +124,7 @@ You can find more information about configuring OpenID Connect identity provider
 
 #### SAML
 
-This identity provider uses an Azure Entra ID SAML app registration created and configured in an Azure subscription. 
+This identity provider uses an Azure Entra ID SAML app registration created and configured in an Azure subscription.
 
 1. Fill up the configuration page of the OpenID connect identity provider with the following values. You can find the `clientId` and `clientSecret` in your App registration details.
 

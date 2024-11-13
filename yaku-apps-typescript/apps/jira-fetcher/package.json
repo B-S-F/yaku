@@ -20,9 +20,7 @@
   },
   "keywords": [],
   "author": "",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "license": "",
   "dependencies": {
     "@B-S-F/autopilot-utils": "^0.11.0",

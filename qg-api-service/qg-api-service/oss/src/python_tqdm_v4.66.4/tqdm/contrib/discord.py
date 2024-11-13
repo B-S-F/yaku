@@ -8,6 +8,7 @@ Usage:
 
 ![screenshot](https://tqdm.github.io/img/screenshot-discord.png)
 """
+
 import logging
 from os import getenv
 
@@ -20,11 +21,12 @@ from ..auto import tqdm as tqdm_auto
 from .utils_worker import MonoWorker
 
 __author__ = {"github.com/": ["casperdcl"]}
-__all__ = ['DiscordIO', 'tqdm_discord', 'tdrange', 'tqdm', 'trange']
+__all__ = ["DiscordIO", "tqdm_discord", "tdrange", "tqdm", "trange"]
 
 
 class DiscordIO(MonoWorker):
     """Non-blocking file-like IO using a Discord Bot."""
+
     def __init__(self, token, channel_id):
         """Creates a new message in the given `channel_id`."""
         super().__init__()
@@ -42,7 +44,7 @@ class DiscordIO(MonoWorker):
         """Replaces internal `message`'s text with `s`."""
         if not s:
             s = "..."
-        s = s.replace('\r', '').strip()
+        s = s.replace("\r", "").strip()
         if s == self.text:
             return  # skip duplicate message
         message = self.message
@@ -50,7 +52,7 @@ class DiscordIO(MonoWorker):
             return
         self.text = s
         try:
-            future = self.submit(message.edit, '`' + s + '`')
+            future = self.submit(message.edit, "`" + s + "`")
         except Exception as e:
             tqdm_auto.write(str(e))
         else:
@@ -71,6 +73,7 @@ class tqdm_discord(tqdm_auto):
     >>> for i in tqdm(iterable, token='{token}', channel_id='{channel_id}'):
     ...     ...
     """
+
     def __init__(self, *args, **kwargs):
         """
         Parameters
@@ -84,23 +87,25 @@ class tqdm_discord(tqdm_auto):
 
         See `tqdm.auto.tqdm.__init__` for other parameters.
         """
-        if not kwargs.get('disable'):
+        if not kwargs.get("disable"):
             kwargs = kwargs.copy()
             logging.getLogger("HTTPClient").setLevel(logging.WARNING)
             self.dio = DiscordIO(
-                kwargs.pop('token', getenv("TQDM_DISCORD_TOKEN")),
-                kwargs.pop('channel_id', getenv("TQDM_DISCORD_CHANNEL_ID")))
-            kwargs['mininterval'] = max(1.5, kwargs.get('mininterval', 1.5))
+                kwargs.pop("token", getenv("TQDM_DISCORD_TOKEN")),
+                kwargs.pop("channel_id", getenv("TQDM_DISCORD_CHANNEL_ID")),
+            )
+            kwargs["mininterval"] = max(1.5, kwargs.get("mininterval", 1.5))
         super().__init__(*args, **kwargs)
 
     def display(self, **kwargs):
         super().display(**kwargs)
         fmt = self.format_dict
-        if fmt.get('bar_format', None):
-            fmt['bar_format'] = fmt['bar_format'].replace(
-                '<bar/>', '{bar:10u}').replace('{bar}', '{bar:10u}')
+        if fmt.get("bar_format", None):
+            fmt["bar_format"] = (
+                fmt["bar_format"].replace("<bar/>", "{bar:10u}").replace("{bar}", "{bar:10u}")
+            )
         else:
-            fmt['bar_format'] = '{l_bar}{bar:10u}{r_bar}'
+            fmt["bar_format"] = "{l_bar}{bar:10u}{r_bar}"
         self.dio.write(self.format_meter(**fmt))
 
     def clear(self, *args, **kwargs):

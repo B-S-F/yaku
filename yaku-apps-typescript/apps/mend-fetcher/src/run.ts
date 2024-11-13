@@ -16,11 +16,7 @@ import { AlertService } from './service/alert.service.js'
 import { PolicyAlert } from './model/policyAlert.js'
 import { SecurityAlert } from './model/securityAlert.js'
 import { exportJson } from './utils/export.js'
-import {
-  AppError,
-  AppOutput,
-  InitLogger,
-} from '@B-S-F/autopilot-utils'
+import { AppError, AppOutput, InitLogger } from '@B-S-F/autopilot-utils'
 import Bottleneck from 'bottleneck'
 import path from 'path'
 import z, { ZodError } from 'zod'

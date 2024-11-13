@@ -1,8 +1,8 @@
 """Shared pytest config."""
+
 import sys
 
 from pytest import fixture
-
 from tqdm import tqdm
 
 

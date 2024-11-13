@@ -112,7 +112,7 @@ describe('evaluate', () => {
       data,
       {
         ...config.checks[1],
-      },
+      }
     )
     expect(formatMock).toHaveBeenCalledTimes(2)
     expect(formatMock).toHaveBeenCalledWith('check1', check, options)
@@ -120,7 +120,7 @@ describe('evaluate', () => {
     expect(formatMock).toHaveBeenCalledWith('check2', check, options)
     expect(evalConcatenationMock).toHaveBeenCalledWith(
       'check1 && check2',
-      concatenationInput,
+      concatenationInput
     )
   })
 
@@ -200,14 +200,14 @@ describe('evaluate', () => {
       data,
       {
         ...config.checks[1],
-      },
+      }
     )
     expect(formatMock).toHaveBeenCalledTimes(2)
     expect(formatMock).toHaveBeenCalledWith('check1', check, options)
     expect(formatMock).toHaveBeenCalledWith('check2', check, options)
     expect(evalConcatenationMock).toHaveBeenCalledWith(
       'check1 && check2',
-      concatenationInput,
+      concatenationInput
     )
   })
 })

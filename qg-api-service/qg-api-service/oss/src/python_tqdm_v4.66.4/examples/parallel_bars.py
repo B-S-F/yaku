@@ -15,9 +15,13 @@ def progresser(n, auto_position=True, write_safe=False, blocking=True, progress=
     interval = random() * 0.002 / (NUM_SUBITERS - n + 2)  # nosec
     total = 5000
     text = f"#{n}, est. {interval * total:<04.2g}s"
-    for _ in trange(total, desc=text, disable=not progress,
-                    lock_args=None if blocking else (False,),
-                    position=None if auto_position else n):
+    for _ in trange(
+        total,
+        desc=text,
+        disable=not progress,
+        lock_args=None if blocking else (False,),
+        position=None if auto_position else n,
+    ):
         sleep(interval)
     # NB: may not clear instances with higher `position` upon completion
     # since this worker may not know about other bars #796
@@ -27,7 +31,7 @@ def progresser(n, auto_position=True, write_safe=False, blocking=True, progress=
     return n + 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     freeze_support()  # for Windows support
     L = list(range(NUM_SUBITERS))[::-1]
 

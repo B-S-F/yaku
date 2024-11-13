@@ -2,6 +2,7 @@
 Inserting `tqdm` as a "pipe" in a chain of coroutines.
 Not to be confused with `asyncio.coroutine`.
 """
+
 from functools import wraps
 
 from tqdm.auto import tqdm
@@ -13,6 +14,7 @@ def autonext(func):
         res = func(*args, **kwargs)
         next(res)
         return res
+
     return inner
 
 
@@ -36,7 +38,7 @@ def tqdm_pipe(target, **tqdm_kwargs):
     """
     with tqdm(**tqdm_kwargs) as pbar:
         while True:
-            obj = (yield)
+            obj = yield
             target.send(obj)
             pbar.update()
 
@@ -50,7 +52,7 @@ def source(target):
 @autonext
 def grep(pattern, target):
     while True:
-        line = (yield)
+        line = yield
         if pattern in line:
             target.send(line)
 
@@ -58,12 +60,9 @@ def grep(pattern, target):
 @autonext
 def sink():
     while True:
-        line = (yield)
+        line = yield
         tqdm.write(line)
 
 
 if __name__ == "__main__":
-    source(
-        tqdm_pipe(
-            grep('python',
-                 sink())))
+    source(tqdm_pipe(grep("python", sink())))

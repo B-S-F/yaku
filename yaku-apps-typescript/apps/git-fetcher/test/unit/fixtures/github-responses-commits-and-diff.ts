@@ -295,8 +295,7 @@ export const githubDiffResponse: GithubDiffResponse = {
   url: 'https://api.example.com/repos/compare/afeaebf412c6d0b865a36cfdec37fdb46c0fab63...8036cf75f4b7365efea76cbd716ef12d352d7d29',
   html_url:
     'https://example.com/compare/afeaebf412c6d0b865a36cfdec37fdb46c0fab63...8036cf75f4b7365efea76cbd716ef12d352d7d29',
-  permalink_url:
-    'https://example.com/compare/B-S-F:afeaebf...B-S-F:8036cf7',
+  permalink_url: 'https://example.com/compare/B-S-F:afeaebf...B-S-F:8036cf7',
   diff_url:
     'https://example.com/compare/afeaebf412c6d0b865a36cfdec37fdb46c0fab63...8036cf75f4b7365efea76cbd716ef12d352d7d29.diff',
   patch_url:

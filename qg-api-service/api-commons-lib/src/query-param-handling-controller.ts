@@ -64,7 +64,7 @@ export function createPaginationData<T, L extends PaginatedData>(
   queryOptions: ListQueryHandler,
   requestUrl: UrlHandler,
   totalItemCount: number,
-  data: T[],
+  data: T[]
 ): L {
   const dataItems = data ?? []
   const totalItems = totalItemCount > 0 ? totalItemCount : data.length
@@ -82,7 +82,7 @@ export function createPaginationData<T, L extends PaginatedData>(
       calcPage,
       queryOptions.items,
       totalItems,
-      queryOptions.sortOrder,
+      queryOptions.sortOrder
     ),
   } as unknown as L
 }
@@ -92,7 +92,7 @@ function createLinksSection(
   currentPage: number,
   itemCountPerPage: number,
   totalItemCount: number,
-  sortOrder: SortOrder,
+  sortOrder: SortOrder
 ): Links {
   const maxPages = Math.max(Math.ceil(totalItemCount / itemCountPerPage), 1)
 
@@ -154,7 +154,7 @@ export class PaginationQueryOptions {
 
   @ApiPropertyOptional({
     description: `Sort order of the returned objects, must be one of ${Object.keys(
-      SortOrder,
+      SortOrder
     )}`,
     type: 'string',
     default: SortOrder.DESC,
@@ -175,7 +175,7 @@ export function toListQueryOptions(
   options: PaginationQueryOptions,
   schema: ZodSchema,
   allowedSortProperties: string[],
-  defaultSortBy: string,
+  defaultSortBy: string
 ): ListQueryHandler {
   if (options.page) {
     options.page = Number(options.page)
@@ -192,7 +192,7 @@ export function toListQueryOptions(
 
   if (!allowedSortProperties.includes(sorter) && sorter !== defaultSortBy) {
     throw new BadRequestException(
-      `Sorting by property ${options.sortBy} not supported`,
+      `Sorting by property ${options.sortBy} not supported`
     )
   }
 

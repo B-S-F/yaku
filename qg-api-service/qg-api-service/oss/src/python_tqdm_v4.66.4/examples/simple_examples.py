@@ -58,7 +58,7 @@ for _ in trange(16, leave=True):
     sleep(0.1)
 
 # Profiling/overhead tests
-stmts = filter(None, re.split(r'\n\s*#.*?\n', __doc__))
+stmts = filter(None, re.split(r"\n\s*#.*?\n", __doc__))
 for s in stmts:
-    print(s.replace('import tqdm\n', ''))
-    print(timeit(stmt=s, number=1), 'seconds')
+    print(s.replace("import tqdm\n", ""))
+    print(timeit(stmt=s, number=1), "seconds")

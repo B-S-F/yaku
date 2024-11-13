@@ -38,7 +38,7 @@ The order of precedence for configuration sources is as follows:
 ### Execute a qg-config.yaml
 
 ```bash
-./bin/onyx exec path/to/folder 
+./bin/onyx exec path/to/folder
 ### example
 ./bin/onyx exec ./examples
 ```

@@ -1,6 +1,7 @@
 """
 Helper functionality for interoperability with stdlib `logging`.
 """
+
 import logging
 import sys
 from contextlib import contextmanager
@@ -16,7 +17,7 @@ from ..std import tqdm as std_tqdm
 class _TqdmLoggingHandler(logging.StreamHandler):
     def __init__(
         self,
-        tqdm_class=std_tqdm  # type: Type[std_tqdm]
+        tqdm_class=std_tqdm,  # type: Type[std_tqdm]
     ):
         super().__init__()
         self.tqdm_class = tqdm_class
@@ -33,8 +34,10 @@ class _TqdmLoggingHandler(logging.StreamHandler):
 
 
 def _is_console_logging_handler(handler):
-    return (isinstance(handler, logging.StreamHandler)
-            and handler.stream in {sys.stdout, sys.stderr})
+    return isinstance(handler, logging.StreamHandler) and handler.stream in {
+        sys.stdout,
+        sys.stderr,
+    }
 
 
 def _get_first_found_console_logging_handler(handlers):
@@ -46,7 +49,7 @@ def _get_first_found_console_logging_handler(handlers):
 @contextmanager
 def logging_redirect_tqdm(
     loggers=None,  # type: Optional[List[logging.Logger]],
-    tqdm_class=std_tqdm  # type: Type[std_tqdm]
+    tqdm_class=std_tqdm,  # type: Type[std_tqdm]
 ):
     # type: (...) -> Iterator[None]
     """
@@ -88,8 +91,10 @@ def logging_redirect_tqdm(
                 tqdm_handler.setFormatter(orig_handler.formatter)
                 tqdm_handler.stream = orig_handler.stream
             logger.handlers = [
-                handler for handler in logger.handlers
-                if not _is_console_logging_handler(handler)] + [tqdm_handler]
+                handler
+                for handler in logger.handlers
+                if not _is_console_logging_handler(handler)
+            ] + [tqdm_handler]
         yield
     finally:
         for logger, original_handlers in zip(loggers, original_handlers_list):
@@ -101,7 +106,7 @@ def tqdm_logging_redirect(
     *args,
     # loggers=None,  # type: Optional[List[logging.Logger]]
     # tqdm=None,  # type: Optional[Type[tqdm.tqdm]]
-    **kwargs
+    **kwargs,
 ):
     # type: (...) -> Iterator[None]
     """
@@ -119,8 +124,8 @@ def tqdm_logging_redirect(
     **tqdm_kwargs  : passed to `tqdm_class`.
     """
     tqdm_kwargs = kwargs.copy()
-    loggers = tqdm_kwargs.pop('loggers', None)
-    tqdm_class = tqdm_kwargs.pop('tqdm_class', std_tqdm)
+    loggers = tqdm_kwargs.pop("loggers", None)
+    tqdm_class = tqdm_kwargs.pop("tqdm_class", std_tqdm)
     with tqdm_class(*args, **tqdm_kwargs) as pbar:
         with logging_redirect_tqdm(loggers=loggers, tqdm_class=tqdm_class):
             yield pbar

@@ -75,19 +75,19 @@ echo "Client scope id: $client_scope_id"
 
 
 # Create role mapper
-kcadm.sh create client-scopes/$client_scope_id/protocol-mappers/models -r $realm  -b '{ 
-  "name": "client roles", 
-  "protocol": "openid-connect", 
-  "protocolMapper": "oidc-usermodel-client-role-mapper", 
-  "consentRequired": false, 
-  "config": { 
-    "multivalued": true, 
-    "userinfo.token.claim": false, 
-    "id.token.claim": false, 
-    "access.token.claim": true, 
-    "claim.name": "resource_access.${client_id}.roles", 
-    "usermodel.clientRoleMapping.clientId": "'$client_name'" 
-    } 
+kcadm.sh create client-scopes/$client_scope_id/protocol-mappers/models -r $realm  -b '{
+  "name": "client roles",
+  "protocol": "openid-connect",
+  "protocolMapper": "oidc-usermodel-client-role-mapper",
+  "consentRequired": false,
+  "config": {
+    "multivalued": true,
+    "userinfo.token.claim": false,
+    "id.token.claim": false,
+    "access.token.claim": true,
+    "claim.name": "resource_access.${client_id}.roles",
+    "usermodel.clientRoleMapping.clientId": "'$client_name'"
+    }
   }'
 
 # Add client scope to clients: clients: yaku-cli, yaku-core, yaku-core-swagger and yaku-portal

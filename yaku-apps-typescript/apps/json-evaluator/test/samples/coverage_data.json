@@ -62,14 +62,8 @@
       },
       "missing_lines": [13, 14, 15, 36],
       "excluded_lines": [],
-      "executed_branches": [
-        [11, 12],
-        [35, -1]
-      ],
-      "missing_branches": [
-        [11, 13],
-        [35, 36]
-      ]
+      "executed_branches": [[11, 12], [35, -1]],
+      "missing_branches": [[11, 13], [35, 36]]
     },
     "apps/artifactory-fetcher/src/grow/artifactory_fetcher/artifactory_fetcher.py": {
       "executed_lines": [
@@ -368,11 +362,7 @@
       ],
       "excluded_lines": [],
       "executed_branches": [[40, -1]],
-      "missing_branches": [
-        [12, 13],
-        [12, 14],
-        [40, 41]
-      ]
+      "missing_branches": [[12, 13], [12, 14], [40, 41]]
     },
     "apps/sharepoint-evaluator/src/grow/sharepoint_evaluator/checks.py": {
       "executed_lines": [
@@ -547,10 +537,7 @@
         [100, 101],
         [100, 111]
       ],
-      "missing_branches": [
-        [26, 33],
-        [27, 32]
-      ]
+      "missing_branches": [[26, 33], [27, 32]]
     },
     "apps/sharepoint-evaluator/tests-pex/test_pex.py": {
       "executed_lines": [1, 2, 4, 5, 8, 9, 10, 14],
@@ -607,11 +594,7 @@
       "missing_lines": [9, 11, 12, 13, 14, 15, 28, 29, 30, 31, 32, 36],
       "excluded_lines": [],
       "executed_branches": [[35, -1]],
-      "missing_branches": [
-        [11, 12],
-        [11, 13],
-        [35, 36]
-      ]
+      "missing_branches": [[11, 12], [11, 13], [35, 36]]
     },
     "apps/sharepoint-fetcher/src/grow/sharepoint_fetcher/checks.py": {
       "executed_lines": [
@@ -960,10 +943,7 @@
         [428, 429],
         [428, 430]
       ],
-      "missing_branches": [
-        [123, 125],
-        [261, 257]
-      ]
+      "missing_branches": [[123, 125], [261, 257]]
     },
     "apps/sharepoint-fetcher/src/grow/sharepoint_fetcher/utils.py": {
       "executed_lines": [
@@ -1191,14 +1171,8 @@
       },
       "missing_lines": [33, 34, 37, 44, 50, 64, 70, 79],
       "excluded_lines": [],
-      "executed_branches": [
-        [49, 51],
-        [61, 62]
-      ],
-      "missing_branches": [
-        [49, 50],
-        [61, 64]
-      ]
+      "executed_branches": [[49, 51], [61, 62]],
+      "missing_branches": [[49, 50], [61, 64]]
     },
     "apps/splunk-fetcher/tests-pex/test_pex.py": {
       "executed_lines": [1, 2, 4, 5, 8, 9, 10, 14],
@@ -1256,10 +1230,7 @@
         25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 41, 42, 44, 45, 49
       ],
       "excluded_lines": [],
-      "executed_branches": [
-        [23, 24],
-        [48, -1]
-      ],
+      "executed_branches": [[23, 24], [48, -1]],
       "missing_branches": [
         [23, 25],
         [26, 27],

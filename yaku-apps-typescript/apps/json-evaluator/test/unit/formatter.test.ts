@@ -10,7 +10,7 @@ describe('getConditionQuantity', () => {
 
   it('should throw a AppError on missing condition', () => {
     expect(() => Formatter.getConditionQuantity(undefined)).toThrowError(
-      new AppError('Missing condition'),
+      new AppError('Missing condition')
     )
   })
 
@@ -33,7 +33,7 @@ describe('isolateCondition', () => {
 
   it('should throw a AppError for undefined condition', () => {
     expect(() => Formatter.isolateCondition(undefined)).toThrowError(
-      new AppError('Missing condition'),
+      new AppError('Missing condition')
     )
   })
 
@@ -56,13 +56,13 @@ describe('tokenizeCondition', () => {
 
   it('should throw a AppError for undefined condition', () => {
     expect(() => Formatter.tokenizeCondition(undefined)).toThrowError(
-      new AppError('Missing condition'),
+      new AppError('Missing condition')
     )
   })
 
   it('should throw a AppError on bad match', () => {
     expect(() => Formatter.tokenizeCondition(' ')).toThrowError(
-      new AppError('Condition exists, but no participants were matched'),
+      new AppError('Condition exists, but no participants were matched')
     )
   })
 
@@ -106,14 +106,14 @@ describe('getConditionParticipants', () => {
   it('should throw a AppError on bad condition', () => {
     const condition = ' '
     const expectedError = new AppError(
-      'Condition exists, but no participants were matched',
+      'Condition exists, but no participants were matched'
     )
     const isolateConditionMock = vi.spyOn(Formatter, 'isolateCondition')
     const tokenizeConditionMock = vi.spyOn(Formatter, 'tokenizeCondition')
     const cleanStringMock = vi.spyOn(Formatter, 'cleanString')
 
     expect(() => Formatter.getConditionParticipants(condition)).toThrowError(
-      expectedError,
+      expectedError
     )
 
     expect(isolateConditionMock).not.toBeCalled()
@@ -192,7 +192,7 @@ describe('getReasonMessage', () => {
     const expectedResult = 'Reason 1, Reason 2'
     expect(Formatter.getReasonMessage(reasons, context)).toEqual(expectedResult)
     expect(loggerWarnSpy).toHaveBeenCalledWith(
-      `Warning: log value not found for property: ${context.property}`,
+      `Warning: log value not found for property: ${context.property}`
     )
   })
 
@@ -210,7 +210,7 @@ describe('getJustificationMessage', () => {
     const reasons = ''
     const expectedResult = 'No resulted values from this query'
     expect(Formatter.getJustificationMessage(quantity, reasons)).toEqual(
-      expectedResult,
+      expectedResult
     )
   })
 
@@ -219,7 +219,7 @@ describe('getJustificationMessage', () => {
     const reasons = 'Reason 1, Reason 2'
     const expectedResult = 'Actual values equal: "**Reason 1, Reason 2**"'
     expect(Formatter.getJustificationMessage(quantity, reasons)).toEqual(
-      expectedResult,
+      expectedResult
     )
   })
 
@@ -228,7 +228,7 @@ describe('getJustificationMessage', () => {
     const reasons = 'Reason 1, Reason 2'
     const expectedResult = `One or more values do not satisfy the condition: "**Reason 1, Reason 2**"`
     expect(Formatter.getJustificationMessage(quantity, reasons)).toEqual(
-      expectedResult,
+      expectedResult
     )
   })
 
@@ -237,7 +237,7 @@ describe('getJustificationMessage', () => {
     const reasons = 'Reason 1, Reason 2'
     const expectedResult = `None satisfy the condition. Actual values are: "**Reason 1, Reason 2**"`
     expect(Formatter.getJustificationMessage(quantity, reasons)).toEqual(
-      expectedResult,
+      expectedResult
     )
   })
 
@@ -246,7 +246,7 @@ describe('getJustificationMessage', () => {
     const reasons = 'Reason 1, Reason 2'
     const expectedResult = `None or more than one values satisfy the condition: "**Reason 1, Reason 2**"`
     expect(Formatter.getJustificationMessage(quantity, reasons)).toEqual(
-      expectedResult,
+      expectedResult
     )
   })
 
@@ -255,7 +255,7 @@ describe('getJustificationMessage', () => {
     const reasons = 'Reason 1, Reason 2'
     const expectedResult = `Some values satisfy the condition: "**Reason 1, Reason 2**"`
     expect(Formatter.getJustificationMessage(quantity, reasons)).toEqual(
-      expectedResult,
+      expectedResult
     )
   })
 
@@ -263,7 +263,7 @@ describe('getJustificationMessage', () => {
     const quantity = 'bad'
     const reasons = 'Reason 1, Reason 2'
     expect(() =>
-      Formatter.getJustificationMessage(quantity, reasons),
+      Formatter.getJustificationMessage(quantity, reasons)
     ).toThrowError(new AppError('Bad quantity'))
   })
 })

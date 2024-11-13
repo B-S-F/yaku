@@ -1,6 +1,7 @@
 """
 Tests for `tqdm.contrib.itertools`.
 """
+
 import itertools as it
 
 from tqdm.contrib.itertools import product
@@ -23,4 +24,6 @@ def test_product():
         a = range(9)
         assert list(product(a, a[::-1], file=our_file)) == list(it.product(a, a[::-1]))
 
-        assert list(product(a, NoLenIter(a), file=our_file)) == list(it.product(a, NoLenIter(a)))
+        assert list(product(a, NoLenIter(a), file=our_file)) == list(
+            it.product(a, NoLenIter(a))
+        )

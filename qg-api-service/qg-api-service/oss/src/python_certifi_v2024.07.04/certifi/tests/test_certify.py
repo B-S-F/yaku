@@ -13,6 +13,4 @@ class TestCertifi(unittest.TestCase):
         assert "-----BEGIN CERTIFICATE-----" in content
 
     def test_py_typed_exists(self) -> None:
-        assert os.path.exists(
-            os.path.join(os.path.dirname(certifi.__file__), 'py.typed')
-        )
+        assert os.path.exists(os.path.join(os.path.dirname(certifi.__file__), "py.typed"))

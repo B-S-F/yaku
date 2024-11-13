@@ -1,9 +1,5 @@
 import { jest } from '@jest/globals'
-import {
-  ApiClient,
-  Config,
-  ConfigPaginated,
-} from '@B-S-F/yaku-client-lib'
+import { ApiClient, Config, ConfigPaginated } from '@B-S-F/yaku-client-lib'
 import yp from '../yaku-prompts.js'
 import {
   listConfig,

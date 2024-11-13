@@ -2,10 +2,7 @@
   "name": "@B-S-F/qg-apps-typescript",
   "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "build": "npx turbo run build --continue --cache-dir=.turbo",
     "dev": "npx turbo run dev --parallel --cache-dir=.turbo",
