@@ -9,33 +9,19 @@
   "scripts": {
     "build": "npx turbo run build --continue --cache-dir=.turbo",
     "dev": "npx turbo run dev --parallel --cache-dir=.turbo",
-    "lint": "npx turbo run lint --parallel --cache-dir=.turbo",
-    "lint:prettier": "npx prettier --check \"**/*.{ts,tsx,md}\"",
-    "lint-staged": "npx lint-staged",
     "test": "npx turbo run test --parallel --cache-dir=.turbo",
-    "test:integration:ci": "npx turbo run test:integration:ci --concurrency=1 --cache-dir=.turbo",
-    "format": "npx prettier --write \"**/*.{ts,tsx,md}\" && npx turbo run format --parallel --cache-dir=.turbo",
-    "prepare": "npx husky install"
+    "test:integration:ci": "npx turbo run test:integration:ci --concurrency=1 --cache-dir=.turbo"
   },
   "devDependencies": {
-    "@B-S-F/eslint-config": "^0.1.0",
     "@B-S-F/typescript-config": "^0.1.0",
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
     "@types/node": "^18.14.2",
-    "@typescript-eslint/eslint-plugin": "^6.7.3",
-    "@typescript-eslint/parser": "^6.7.3",
     "@vitest/coverage-v8": "^2.1.1",
     "@vitest/ui": "^2.1.1",
     "c8": "^7.13.0",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-json": "^3.1.0",
     "express": "^5.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.1.2",
     "nodemon": "^3.1.7",
-    "prettier": "^2.8.4",
     "tsup": "^6.6.3",
     "turbo": "^1.10.13",
     "typescript": "^4.9.5",
@@ -45,10 +31,5 @@
     "npm": ">=9.3.0",
     "node": ">=18.17.0"
   },
-  "packageManager": "npm@9.3.1",
-  "lint-staged": {
-    "*.{ts,json,yml,yaml,md}": [
-      "prettier --write"
-    ]
-  }
+  "packageManager": "npm@9.3.1"
 }
