@@ -51,12 +51,6 @@ repos:
   ####
   ## Go related
   ####
-  - repo: https://github.com/golangci/golangci-lint
-    rev: v1.62.0
-    hooks:
-      - id: golangci-lint
-        args: [--fix]
-
   - repo: https://github.com/dnephin/pre-commit-golang
     rev: v0.5.1
     hooks:
