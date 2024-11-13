@@ -60,6 +60,144 @@ def test_trigger_fetcher_with_file(mocker, requests_mock, capsys):
     assert '{"output":' in result.output
 
 
+def test_trigger_fetcher_with_config_file(mocker, requests_mock, capsys, tmp_path: Path):
+    requests_mock.get(
+        "https://bosch.sharepoint.com/sites/123456/_api/web/GetFolderByServerRelativeUrl('/sites/123456/Shared/Documents/Top99/Unittest/')",
+        status_code=200,
+        json={"d": ["_meta", {"Files": ["a", "b"]}]},
+    )
+
+    mocked_download_file = mocker.patch(
+        "yaku.sharepoint_fetcher.on_premise.sharepoint_fetcher_on_premise.SharepointFetcherOnPremise._download_file"
+    )
+    mocked_download_file.return_value = {}
+
+    mocked_download_custom_property_definitions: mock.Mock = mocker.patch(
+        "yaku.sharepoint_fetcher.on_premise.sharepoint_fetcher_on_premise.SharepointFetcherOnPremise.download_custom_property_definitions"
+    )
+
+    mocker.patch("os.makedirs")
+    project_path = "Shared/Documents/Top99/Unittest/MyDocument.docx"
+
+    config_file = tmp_path / "config-file.yaml"
+    os.environ["SHAREPOINT_FETCHER_CONFIG_FILE"] = str(config_file)
+    config_file.write_text(
+        """\
+  username: "testuser"
+  password: "testpassword"
+  project_path: "Shared/Documents/Top99/Unittest/MyDocument.docx"
+  project_site: "https://bosch.sharepoint.com/sites/123456/"
+  custom-properties: ""
+    """
+    )
+    runner = click.testing.CliRunner()
+    app = make_autopilot_app(
+        version_callback=read_version_from_package(__package__),
+        provider=CLI,
+    )
+    result = runner.invoke(
+        app,
+        [
+            "--config-file",
+            config_file,
+        ],
+    )
+    remote_path, remote_file = project_path.rsplit("/", maxsplit=1)
+    output_path = Path(os.getcwd())
+    mocked_download_file.assert_called_with(
+        output_path, "/sites/123456/" + remote_path + "/", remote_file
+    )
+
+    mocked_download_custom_property_definitions.assert_called_once()
+
+    assert '{"output":' in result.output
+
+
+def test_trigger_fetcher_with_missing_config_file(mocker, requests_mock, capsys):
+    runner = click.testing.CliRunner()
+    app = make_autopilot_app(
+        version_callback=read_version_from_package(__package__),
+        provider=CLI,
+    )
+    result = runner.invoke(
+        app,
+        [
+            "--config-file",
+            "config-file",
+        ],
+    )
+
+    assert "Config File config-file does not exist." in result.output
+
+
+def test_trigger_fetcher_with_filter_config_file_and_config_file(
+    mocker, requests_mock, capsys, tmp_path: Path
+):
+    requests_mock.get(
+        "https://bosch.sharepoint.com/sites/123456/_api/web/GetFolderByServerRelativeUrl('/sites/123456/Shared/Documents/Top99/Unittest/')",
+        status_code=200,
+        json={"d": ["_meta", {"Files": ["a", "b"]}]},
+    )
+
+    mocked_download_file = mocker.patch(
+        "yaku.sharepoint_fetcher.on_premise.sharepoint_fetcher_on_premise.SharepointFetcherOnPremise._download_file"
+    )
+    mocked_download_file.return_value = {}
+
+    mocked_download_custom_property_definitions: mock.Mock = mocker.patch(
+        "yaku.sharepoint_fetcher.on_premise.sharepoint_fetcher_on_premise.SharepointFetcherOnPremise.download_custom_property_definitions"
+    )
+
+    mocker.patch("os.makedirs")
+    project_path = "Shared/Documents/Top99/Unittest/MyDocument.docx"
+
+    filter_config_file = tmp_path / "filter-config-file.yaml"
+    os.environ["SHAREPOINT_FETCHER_FILTER_CONFIG_FILE"] = str(filter_config_file)
+    filter_config_file.write_text(
+        """\
+- files: File*.docx
+  title: "File title"
+  select:
+    - property: "Custom List"
+      equals: "valid"
+    """
+    )
+
+    config_file = tmp_path / "config-file.yaml"
+    os.environ["SHAREPOINT_FETCHER_CONFIG_FILE"] = str(config_file)
+    config_file.write_text(
+        f"""\
+  username: "testuser"
+  password: "testpassword"
+  project_path: "Shared/Documents/Top99/Unittest/MyDocument.docx"
+  project_site: "https://bosch.sharepoint.com/sites/123456/"
+  filter_config_file: {filter_config_file}
+    """
+    )
+
+    runner = click.testing.CliRunner()
+    app = make_autopilot_app(
+        version_callback=read_version_from_package(__package__),
+        provider=CLI,
+    )
+    result = runner.invoke(
+        app,
+        [
+            "--config-file",
+            config_file,
+        ],
+    )
+    remote_path, remote_file = project_path.rsplit("/", maxsplit=1)
+    output_path = Path(os.getcwd())
+    mocked_download_file.assert_called_with(
+        output_path, "/sites/123456/" + remote_path + "/", remote_file
+    )
+
+    mocked_download_custom_property_definitions.assert_called_once()
+
+    assert '{"output":' in result.output
+
+
 def test_trigger_fetcher_with_file_with_whitespace(mocker, requests_mock, capsys):
     requests_mock.get(
         "https://my.sharepoint.com/sites/123456/_api/web/GetFolderByServerRelativeUrl('/sites/123456/Shared/My%20Documents/Topic/Unittest/')",
@@ -138,7 +276,7 @@ def test_trigger_fetcher_shows_error_for_filename_without_path():
     assert "doesn't seem to point to a file" in result.output
 
 
-def test_trigger_fetcher_with_missing_config_file():
+def test_trigger_fetcher_with_missing_filter_config_file():
     runner = click.testing.CliRunner()
     app = make_autopilot_app(
         version_callback=read_version_from_package(__package__),
@@ -147,8 +285,8 @@ def test_trigger_fetcher_with_missing_config_file():
     result = runner.invoke(
         app,
         [
-            "--config-file",
-            "missing_config.file",
+            "--filter-config-file",
+            "missing_filter_config.file",
             "--username",
             "testuser",
             "--password",
@@ -162,7 +300,7 @@ def test_trigger_fetcher_with_missing_config_file():
         ],
     )
 
-    assert "missing_config.file" in result.output
+    assert "missing_filter_config.file" in result.output
 
 
 def test_trigger_fetcher_with_missing_file_404(mocker, capsys):
@@ -372,9 +510,9 @@ def test_trigger_fetcher_with_folder_and_selector_with_custom_properties(
         json={"d": {"vti_x005f_filesize": 0}},
     )
 
-    fetcher_config = tmp_path / "fetcher-config.yaml"
-    os.environ["SHAREPOINT_FETCHER_CONFIG_FILE"] = str(fetcher_config)
-    fetcher_config.write_text(
+    fetcher_filter_config = tmp_path / "fetcher-filter-config.yaml"
+    os.environ["SHAREPOINT_FETCHER_FILTER_CONFIG_FILE"] = str(fetcher_filter_config)
+    fetcher_filter_config.write_text(
         """\
 - files: File*.docx
   title: "File title"
@@ -397,8 +535,8 @@ def test_trigger_fetcher_with_folder_and_selector_with_custom_properties(
         [
             "--destination-path",
             evidence_folder,
-            "--config-file",
-            fetcher_config,
+            "--filter-config-file",
+            fetcher_filter_config,
             "--username",
             "testuser",
             "--password",

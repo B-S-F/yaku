@@ -1,21 +1,77 @@
 import ipaddress
-from pathlib import Path
+from pathlib import Path, PosixPath
 
 import pytest
 import yaml
+from _pytest.logging import LogCaptureFixture
+from loguru import logger
 from pydantic import ValidationError
 from yaku.autopilot_utils.errors import AutopilotConfigurationError
 from yaku.sharepoint_fetcher.config import (
     ConfigFile,
-    ConfigFileContent,
+    FileConfiguration,
     FileSelection,
+    FilterConfigFile,
+    FilterConfigFileContent,
     Settings,
 )
 
 
 @pytest.fixture
+def loguru_caplog(caplog: LogCaptureFixture):
+    handler_id = logger.add(
+        caplog.handler,
+        format="{message}",
+        level=0,
+        filter=lambda record: record["level"].no >= caplog.handler.level,
+        enqueue=False,
+    )
+    yield caplog
+    logger.remove(handler_id)
+
+
+@pytest.fixture
 def valid_config_file(tmp_path):
+    config_data = {
+        "is_cloud": True,
+        "project_path": "Shared Documents/",
+    }
+
+    config_file_path = tmp_path / "valid_config_file.yaml"
+    with open(config_file_path, "w") as config_file:
+        yaml.dump(config_data, config_file)
+    return config_file_path
+
+
+@pytest.fixture
+def invalid_format_config_file(tmp_path):
     config_data = [
+        {
+            "is_cloud": "abc",
+            "project_path": True,
+        }
+    ]
+    config_file_path = tmp_path / "invalid_format_config_file.yaml"
+    with open(config_file_path, "w") as config_file:
+        yaml.dump(config_data, config_file)
+    return config_file_path
+
+
+@pytest.fixture
+def invalid_path_config_file(tmp_path):
+    config_data = {
+        "destination_path": "path",
+        "output_dir": "dir/path",
+    }
+    config_file_path = tmp_path / "invalid_path_config_file.yaml"
+    with open(config_file_path, "w") as config_file:
+        yaml.dump(config_data, config_file)
+    return config_file_path
+
+
+@pytest.fixture
+def valid_filter_config_file(tmp_path):
+    filter_config_data = [
         {
             "files": "RevisionSet(1)/*.docx",
             "title": "Latest Process Status Document",
@@ -31,15 +87,15 @@ def valid_config_file(tmp_path):
             "onlyLastModified": True,
         },
     ]
-    config_file_path = tmp_path / "valid_config_file.yaml"
-    with open(config_file_path, "w") as config_file:
-        yaml.dump(config_data, config_file)
-    return config_file_path
+    filter_config_file_path = tmp_path / "valid_filter_config_file.yaml"
+    with open(filter_config_file_path, "w") as filter_config_file:
+        yaml.dump(filter_config_data, filter_config_file)
+    return filter_config_file_path
 
 
 @pytest.fixture
-def invalid_config_file(tmp_path):
-    config_data = [
+def invalid_filter_config_file(tmp_path):
+    filter_config_data = [
         {
             "files": "RevisionSet(1)/*.docx",
             "title": "Latest Process Status Document",
@@ -52,10 +108,10 @@ def invalid_config_file(tmp_path):
             "onlyLastModified": "bar",
         },
     ]
-    config_file_path = tmp_path / "invalid_config_file.yaml"
-    with open(config_file_path, "w") as config_file:
-        yaml.dump(config_data, config_file)
-    return config_file_path
+    filter_config_file_path = tmp_path / "invalid_filter_config_file.yaml"
+    with open(filter_config_file_path, "w") as filter_config_file:
+        yaml.dump(filter_config_data, filter_config_file)
+    return filter_config_file_path
 
 
 def test_FileSelection():
@@ -76,8 +132,8 @@ def test_FileSelection():
         FileSelection(title="Example")
 
 
-def test_ConfigFileContent():
-    # Test valid ConfigFileContent instance
+def test_FilterConfigFileContent():
+    # Test valid FilterConfigFileContent instance
     file_selections_data = [
         {
             "files": "path/to/files",
@@ -86,13 +142,58 @@ def test_ConfigFileContent():
             "onlyLastModified": True,
         }
     ]
-    file_selections = list(ConfigFileContent(__root__=file_selections_data))
+    file_selections = list(FilterConfigFileContent(__root__=file_selections_data))
     assert len(file_selections) == 1
     assert isinstance(file_selections[0], FileSelection)
 
-    # Test invalid ConfigFileContent instance
+    # Test invalid FilterConfigFileContent instance
     with pytest.raises(ValidationError):
-        ConfigFileContent(__root__=[123])
+        FilterConfigFileContent(__root__=[123])
+
+
+def test_FileConfiguration():
+    # Test valid FileConfiguration instance
+    file_configuration = FileConfiguration(
+        destination_path="path/to/files",
+        is_cloud=True,
+        project_path="Shared/Documents",
+        project_site="some/sharepoint/path",
+        username="user",
+        password="password",
+        tenant_id="tenant_id",
+        client_id="client_id",
+        client_secret="client_secret",
+        force_ip="0.0.0.0",
+        download_properties_only=False,
+        sharepoint_file="file",
+        filter_config_file="filter_file",
+        custom_properties=None,
+    )
+
+    assert file_configuration.destination_path == PosixPath("path/to/files")
+    assert file_configuration.is_cloud is True
+    assert file_configuration.project_path == "Shared/Documents"
+    assert file_configuration.project_site == "some/sharepoint/path"
+    assert file_configuration.username == "user"
+    assert file_configuration.password == "password"
+    assert file_configuration.tenant_id == "tenant_id"
+    assert file_configuration.client_id == "client_id"
+    assert file_configuration.client_secret == "client_secret"
+    assert file_configuration.force_ip == "0.0.0.0"
+    assert file_configuration.download_properties_only is False
+    assert file_configuration.sharepoint_file == "file"
+    assert file_configuration.filter_config_file == "filter_file"
+    assert file_configuration.custom_properties == None
+
+    # Test invalid FileConfiguration instance
+    with pytest.raises(ValidationError):
+        FileConfiguration(is_cloud="is_cloud")
+
+
+def test_fileconfiguration_handles_alias_for_destination_path_correctly():
+    file_configuration_w_dest_path = FileConfiguration(destination_path="path/to/files")
+    file_configuration_w_output_dir = FileConfiguration(output_dir="path/to/files")
+    assert file_configuration_w_dest_path == file_configuration_w_output_dir
 
 
 def test_with_integer_as_selector_property():
@@ -105,14 +206,41 @@ def test_with_integer_as_selector_property():
         }
     ]
     with pytest.raises(ValidationError, match="__root__ -> 0 -> select -> 0"):
-        ConfigFileContent(__root__=file_rules_data)
+        FilterConfigFileContent(__root__=file_rules_data)
 
 
-def test_ConfigFile(valid_config_file, invalid_config_file):
+def test_FilterConfigFile(valid_filter_config_file, invalid_filter_config_file):
+    # Test valid FilterConfigFile instance with a valid config file
+    filter_config_file = FilterConfigFile(file_path=str(valid_filter_config_file))
+    assert isinstance(filter_config_file.file_path, Path)
+    assert isinstance(filter_config_file.content, FilterConfigFileContent)
+
+    # Test valid FilterConfigFile instance with no config file
+    filter_config_file = FilterConfigFile()
+    assert filter_config_file.file_path is None
+    assert filter_config_file.content is None
+
+    # Test invalid FilterConfigFile instance with a non-existent config file
+    with pytest.raises(AutopilotConfigurationError):
+        FilterConfigFile(file_path="non_existent_file.yaml")
+
+    # Test invalid FilterConfigFile instance with an invalid config file
+    with pytest.raises(AutopilotConfigurationError):
+        FilterConfigFile(file_path=str(invalid_filter_config_file))
+
+
+def test_ConfigFile(
+    loguru_caplog,
+    valid_config_file,
+    invalid_format_config_file,
+    invalid_path_config_file,
+    valid_filter_config_file,
+    invalid_filter_config_file,
+):
     # Test valid ConfigFile instance with a valid config file
     config_file = ConfigFile(file_path=str(valid_config_file))
     assert isinstance(config_file.file_path, Path)
-    assert isinstance(config_file.content, ConfigFileContent)
+    assert isinstance(config_file.content, FileConfiguration)
 
     # Test valid ConfigFile instance with no config file
     config_file = ConfigFile()
@@ -125,7 +253,66 @@ def test_ConfigFile(valid_config_file, invalid_config_file):
 
     # Test invalid ConfigFile instance with an invalid config file
     with pytest.raises(AutopilotConfigurationError):
-        ConfigFile(file_path=str(invalid_config_file))
+        ConfigFile(file_path=str(invalid_format_config_file))
+
+    # Test invalid ConfigFile instance with an invalid path in the config file
+    with pytest.raises(AutopilotConfigurationError) as exc_info:
+        ConfigFile(file_path=str(invalid_path_config_file))
+
+    log_messages = loguru_caplog
+
+    # Test valid ConfigFile instance with a valid filter config file that triggers a warning log
+    config_file = ConfigFile(file_path=str(valid_filter_config_file))
+
+    assert (
+        "The environment variable 'SHAREPOINT_FETCHER_CONFIG_FILE' is no longer valid"
+        in log_messages.text
+    )
+    # Test invalid ConfigFile instance with an invalid filter config file that triggers an error log
+    with pytest.raises(AutopilotConfigurationError):
+        ConfigFile(file_path=str(invalid_filter_config_file))
+
+    assert "There seems to be an issue with the configuration file" in log_messages.text
+    assert (
+        "SHAREPOINT_FETCHER_CONFIG_FILE' or 'SHAREPOINT_FETCHER_FILTER_CONFIG_FILE' and that the file content is in the correct format"
+        in log_messages.text
+    )
+
+    with open(invalid_path_config_file, "r") as file:
+        invalid_path_config_data = yaml.safe_load(file)
+
+    message = exc_info.value
+    expected_message = (
+        "The SharePoint path values do not match! The value of SHAREPOINT_FETCHER_DESTINATION_PATH is "
+        f"{invalid_path_config_data.get('destination_path')}, while THE SHAREPOINT_FETCHER_OUTPUT_DIR is "
+        f"{invalid_path_config_data.get('output_dir')}. You only need to specify one of these options since they have the same effect!"
+    )
+
+    assert str(message) == expected_message
+
+    output_dir = "path/to/output/dir"
+    destination_path = "path/to/destination"
+
+    # Check if the destination_path and output_dir are synchronized if destination_path is None
+    config_synchronize_destination_path = FileConfiguration(
+        destination_path=None, output_dir=output_dir
+    )
+
+    assert config_synchronize_destination_path.destination_path == Path(output_dir)
+    assert config_synchronize_destination_path.dict(by_alias=True).get("output_dir") == Path(
+        output_dir
+    )
+
+    # Check if the destination_path and output_dir are synchronized if output_dir is None
+    config_synchronize_output_dir = FileConfiguration(
+        output_dir=None,
+        destination_path=destination_path,
+    )
+
+    assert config_synchronize_output_dir.destination_path == Path(destination_path)
+    assert config_synchronize_output_dir.dict(by_alias=True).get("output_dir") == Path(
+        destination_path
+    )
 
 
 def _overwrite_variable(some_dict: dict, **kwargs) -> dict:
