@@ -1,5 +1,5 @@
 {
-  "name": "@bosch-grow-pat/api-commons-lib",
+  "name": "@B-S-F/api-commons-lib",
   "version": "0.8.0",
   "description": "YAKU API commons lib containing functionality that can be used across YAKU API projects",
   "main": "dist/index.js",
@@ -37,10 +37,6 @@
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bosch-grow-pat/commons-libs.git"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.4.5",

@@ -6,9 +6,10 @@
   },
   "workspaces": [
     "qg-api-service",
+    "api-commons-lib",
+    "api-keycloak-auth-lib",
     "yaku-client-lib",
     "yaku-cli",
-    "e2e-tests",
     "scale-run-test"
   ],
   "scripts": {
