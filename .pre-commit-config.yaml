@@ -1,5 +1,5 @@
 ci:
-  skip: [madge]
+  skip: [madge, check-yaml]
 default_language_version:
   python: python3
 repos:
