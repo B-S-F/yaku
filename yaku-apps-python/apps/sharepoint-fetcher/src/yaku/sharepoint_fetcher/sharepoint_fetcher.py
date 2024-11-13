@@ -60,9 +60,13 @@ class SharepointFetcher(ABC):
                 ) = self._generate_filters_and_selectors(filter_config)
         else:
             raise AutopilotConfigurationError(
-                "Missing values for the SharePoint site and path! Make sure you either provide the complete SharePoint URL or both the SharePoint site and path. You can provide the URL either as environment"
-                + "variable SHAREPOINT_FETCHER_URL or as command line argument --project-url. In the same way, the site and path can be provided either as environment variables SHAREPOINT_FETCHER_PROJECT_SITE"
-                + "and SHAREPOINT_FETCHER_PROJECT_PATH or as command line arguments --project-site and --project-path respectively."
+                "Missing values for the SharePoint site and path! Make sure you either "
+                + "provide the complete SharePoint URL or both the SharePoint site and path. "
+                + "You can provide the URL either as environment variable "
+                + "SHAREPOINT_FETCHER_PROJECT_URL or as command line argument --project-url. "
+                + "In the same way, the site and path can be provided either as environment "
+                + "variables SHAREPOINT_FETCHER_PROJECT_SITE and SHAREPOINT_FETCHER_PROJECT_PATH "
+                + "or as command line arguments --project-site and --project-path respectively."
             )
 
     def _remove_url_prefix(self, url: str) -> str:
