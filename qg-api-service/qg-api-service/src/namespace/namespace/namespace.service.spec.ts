@@ -1,7 +1,4 @@
-import {
-  KeyCloakNamespace,
-  KeyCloakUser,
-} from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakNamespace, KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
 import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'

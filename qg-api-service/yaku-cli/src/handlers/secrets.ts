@@ -1,8 +1,4 @@
-import {
-  ApiClient,
-  QueryOptions,
-  SecretMetadata,
-} from '@B-S-F/yaku-client-lib'
+import { ApiClient, QueryOptions, SecretMetadata } from '@B-S-F/yaku-client-lib'
 import {
   getResourceDeletionConfirmation,
   handleStandardParams,
