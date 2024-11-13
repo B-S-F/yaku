@@ -67,8 +67,8 @@ export class Run {
   @Column({ update: false })
   storagePath: string
 
-  @Column({ type: 'boolean', nullable: true })
-  synthetic?: boolean
+  @Column({ type: 'boolean', default: false })
+  synthetic: boolean
 
   @Column({ type: 'timestamptz', nullable: true })
   completionTime?: Date

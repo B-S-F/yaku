@@ -637,7 +637,7 @@ export class ReleasesService {
         where: {
           config: { id: configId },
           namespace: { id: namespaceId },
-          synthetic: false || undefined,
+          synthetic: false,
           completionTime: LessThan(lastModificationTime),
         },
         order: { completionTime: 'DESC' },
@@ -648,7 +648,7 @@ export class ReleasesService {
         where: {
           config: { id: configId },
           namespace: { id: namespaceId },
-          synthetic: false || undefined,
+          synthetic: false,
         },
         order: { creationTime: 'DESC' },
         take: 1,

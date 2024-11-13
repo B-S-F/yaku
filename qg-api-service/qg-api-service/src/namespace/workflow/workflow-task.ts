@@ -51,7 +51,7 @@ export class FinishedWorkflowDetectionTask {
       stillRunningRuns = await this.repository.find({
         where: [
           { status: RunStatus.Running },
-          { status: RunStatus.Pending, synthetic: false || undefined },
+          { status: RunStatus.Pending, synthetic: false },
         ],
         relations: ['config', 'namespace'],
       })
