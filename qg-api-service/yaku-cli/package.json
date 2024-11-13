@@ -1,6 +1,6 @@
 {
-  "name": "yaku-cli",
-  "version": "0.58.0",
+  "name": "@B-S-F/yaku-cli",
+  "version": "0.62.0",
   "description": "A CLI for the yaku API using the yaku client lib",
   "license": "UNLICENSED",
   "engines": {
@@ -18,8 +18,6 @@
     "build": "tsc",
     "postbuild": "npx cpy --flat sbom/*.json dist",
     "dev": "nodemon --watch \"src/**\" --exec npm run start",
-    "lint": "eslint \"src/**/*.ts\"",
-    "format": "prettier --write \"src/**/*.ts\" \"integration-test/**/*.ts\"",
     "setup": "npm run build && npm install",
     "start": "node dist/index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --config jest-unit.config.js",
@@ -29,14 +27,13 @@
     "test:roundtrip": "vitest run integration-test/roundtrip/roundtrip.test.ts"
   },
   "dependencies": {
-    "yaku-client-lib": "^0.58.0",
+    "@B-S-F/yaku-client-lib": "^0.62.0",
+    "@inquirer/prompts": "^6.0.1",
     "call-bind": "^1.0.2",
     "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
     "colors": "1.4.0",
     "commander": "^10.0.0",
-    "inquirer": "^9.1.4",
-    "inquirer-search-list": "^1.2.6",
-    "inquirer-table-input": "^0.0.3",
     "open": "^10.0.3",
     "openid-client": "^5.6.4",
     "proxy-agent": "^6.4.0",
@@ -46,29 +43,17 @@
     "type": "git",
     "url": "https://github.com/B-S-F/qg-api-service.git"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "devDependencies": {
-    "@types/inquirer": "^9.0.3",
     "@types/node": "^18.14.2",
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
     "cpy-cli": "^5.0.0",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.4",
+    "jest": "^29.7.0",
     "tsup": "^6.6.3",
     "typescript": "^4.9.5",
     "vitest": "^0.29.2"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
+    "moduleFileExtensions": ["js", "json", "ts"],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
@@ -77,17 +62,9 @@
     "moduleNameMapper": {
       "^(\\.\\.?\\/.+)\\.jsx?$": "$1"
     },
-    "extensionsToTreatAsEsm": [
-      ".ts"
-    ],
-    "coverageReporters": [
-      "cobertura",
-      "json-summary",
-      "text-summary"
-    ],
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
+    "extensionsToTreatAsEsm": [".ts"],
+    "coverageReporters": ["cobertura", "json-summary", "text-summary"],
+    "collectCoverageFrom": ["**/*.(t|j)s"],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }

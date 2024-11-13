@@ -1,14 +1,13 @@
 import { Command } from 'commander'
 import { connect } from '../connect.js'
 
-import { ApiClient } from 'yaku-client-lib'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { handleRestApiError } from '../common.js'
 import {
-  handleRestApiError,
-  handleStandardParams,
-  logResultAsJson,
-  logSuccess,
-  parseIntParameter,
-} from '../common.js'
+  createNewToken,
+  listNewTokens,
+  revokeNewToken,
+} from '../handlers/newtokens.js'
 
 export function createNewTokensSubcommands(program: Command): void {
   let client: ApiClient
@@ -21,8 +20,7 @@ export function createNewTokensSubcommands(program: Command): void {
     .description('List your tokens')
     .action(async () => {
       try {
-        handleStandardParams(client)
-        await logResultAsJson(client.listNewTokens())
+        await listNewTokens(client)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -38,8 +36,7 @@ export function createNewTokensSubcommands(program: Command): void {
     )
     .action(async (description: string) => {
       try {
-        handleStandardParams(client)
-        await logResultAsJson(client.createNewToken(description))
+        await createNewToken(client, description)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -51,12 +48,7 @@ export function createNewTokensSubcommands(program: Command): void {
     .argument('<id>', 'Id of the token to be deleted')
     .action(async (id: string) => {
       try {
-        handleStandardParams(client)
-        const tokenId = parseIntParameter(id, 'id')
-        await logSuccess(
-          client.revokeNewToken(tokenId),
-          `Token with id ${id} has been revoked. The change will be effective in at most 60 seconds.`
-        )
+        await revokeNewToken(client, id)
       } catch (err) {
         handleRestApiError(err)
       }

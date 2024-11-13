@@ -1,7 +1,8 @@
 import { Command } from 'commander'
-import { handleRestApiError, handleStandardParams } from '../common.js'
-import { ApiClient } from 'yaku-client-lib'
+import { handleRestApiError } from '../common.js'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
 import { connect } from '../connect.js'
+import { info } from '../handlers/info.js'
 
 export function createInfoCommand(program: Command) {
   let client: ApiClient
@@ -12,13 +13,7 @@ export function createInfoCommand(program: Command) {
     .option('--only <name>', 'Get only the specified info')
     .action(async (options) => {
       try {
-        handleStandardParams(client)
-        const info = await client.getServiceInfo()
-        if (options.only && options.only in info) {
-          console.log((info as any)[options.only])
-        } else {
-          console.log(JSON.stringify(info, null, 2))
-        }
+        await info(client, options)
       } catch (err) {
         handleRestApiError(err)
       }

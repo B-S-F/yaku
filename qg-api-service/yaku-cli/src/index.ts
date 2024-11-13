@@ -15,6 +15,7 @@ import { config } from './config.js'
 import { createInfoCommand } from './commands/info.js'
 import { createEnvsSubcommands } from './commands/environment.js'
 import { createNewTokensSubcommands } from './commands/newtokens.js'
+import { createReleasesSubcommands } from './commands/releases.js'
 
 /*
  * Prevent the warning that EnvHttpProxyAgent is experimental.
@@ -105,6 +106,14 @@ const findings = program
   .showHelpAfterError()
 
 createFindingsSubcommands(findings)
+
+const releases = program
+  .command('releases')
+  .alias('re')
+  .description('Manage releases')
+  .showHelpAfterError()
+
+createReleasesSubcommands(releases)
 
 const secrets = program
   .command('secrets')

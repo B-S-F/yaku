@@ -157,9 +157,8 @@ describe('Integration tests for secrets', async () => {
     })
 
     it('should show a help message for list', async () => {
-      const result: RunProcessResult = await cmdManager.runCommand(
-        'secrets list -h'
-      )
+      const result: RunProcessResult =
+        await cmdManager.runCommand('secrets list -h')
 
       const expectedMessage: string[] = [
         'Usage: yaku secrets list|ls [options] [page]',
@@ -248,9 +247,8 @@ describe('Integration tests for secrets', async () => {
     })
 
     it('should show a help message for create', async () => {
-      const result: RunProcessResult = await cmdManager.runCommand(
-        'secrets create -h'
-      )
+      const result: RunProcessResult =
+        await cmdManager.runCommand('secrets create -h')
 
       const expectedMessage: string[] = [
         'Usage: yaku secrets create|c [options] <name> [description]',
@@ -311,9 +309,8 @@ describe('Integration tests for secrets', async () => {
     })
 
     it('should show a help message for update', async () => {
-      const result: RunProcessResult = await cmdManager.runCommand(
-        'secrets update -h'
-      )
+      const result: RunProcessResult =
+        await cmdManager.runCommand('secrets update -h')
 
       const expectedMessage: string[] = [
         'Usage: yaku secrets update|upd [options] <name> [description]',
@@ -370,9 +367,8 @@ describe('Integration tests for secrets', async () => {
     })
 
     it('should show a help message for delete', async () => {
-      const result: RunProcessResult = await cmdManager.runCommand(
-        'secrets delete -h'
-      )
+      const result: RunProcessResult =
+        await cmdManager.runCommand('secrets delete -h')
 
       const expectedMessage: string[] = [
         'Usage: yaku secrets delete [options] <name>',

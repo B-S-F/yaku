@@ -1,20 +1,17 @@
 import { Command } from 'commander'
 
-import {
-  ApiClient,
-  Config,
-  QueryOptions,
-} from 'yaku-client-lib'
-import {
-  getResourceDeletionConfirmation,
-  handleRestApiError,
-  handleStandardParams,
-  logDownloadedFile,
-  logResultAsJson,
-  logSuccess,
-  parseIntParameter,
-} from '../common.js'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { handleRestApiError } from '../common.js'
 import { connect } from '../connect.js'
+import {
+  createConfig,
+  deleteConfig,
+  excelConfig,
+  listConfig,
+  makeConfig,
+  showConfig,
+  updateConfig,
+} from '../handlers/configs.js'
 
 export function createConfigsCommand(program: Command): void {
   let client: ApiClient
@@ -38,26 +35,7 @@ export function createConfigsCommand(program: Command): void {
     .option('-s, --sortBy [property]', 'Sort results by the given property')
     .action(async (page: string, options) => {
       try {
-        handleStandardParams(client, namespace)
-        const pg = page ? parseIntParameter(page, 'page') : 1
-        const ic = options.itemCount
-          ? parseIntParameter(options.itemCount, 'itemCount')
-          : 20
-        const queryOptions = new QueryOptions(
-          pg,
-          ic,
-          undefined,
-          undefined,
-          options.sortBy,
-          options.ascending
-        )
-        if (options.all) {
-          await logResultAsJson(
-            client!.listAllConfigs(namespace!, queryOptions)
-          )
-        } else {
-          await logResultAsJson(client!.listConfigs(namespace!, queryOptions))
-        }
+        await listConfig(client, namespace, page, options)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -70,8 +48,7 @@ export function createConfigsCommand(program: Command): void {
     .argument('<configId>', 'The numeric id of the requested config')
     .action(async (configId: string) => {
       try {
-        const cf = handleStandardParams(client, namespace, configId, 'configId')
-        await logResultAsJson(client!.getConfig(namespace!, cf))
+        await showConfig(client, namespace, configId)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -88,10 +65,7 @@ export function createConfigsCommand(program: Command): void {
     )
     .action(async (name: string, description: string) => {
       try {
-        handleStandardParams(client, namespace)
-        await logResultAsJson(
-          client!.createConfig(namespace!, name, description)
-        )
+        await createConfig(client, namespace, name, description)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -109,10 +83,7 @@ export function createConfigsCommand(program: Command): void {
     )
     .action(async (configId: string, name: string, description: string) => {
       try {
-        const cf = handleStandardParams(client, namespace, configId, 'configId')
-        await logResultAsJson(
-          client!.updateConfig(namespace!, cf, name, description)
-        )
+        await updateConfig(client, namespace, configId, name, description)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -132,20 +103,7 @@ export function createConfigsCommand(program: Command): void {
     )
     .action(async (configId: string, options) => {
       try {
-        const cf = handleStandardParams(client, namespace, configId, 'configId')
-        let confirmation = true
-        if (!options.yes) {
-          const config: Config = await client!.getConfig(namespace!, cf)
-
-          confirmation = await getResourceDeletionConfirmation(config)
-        }
-
-        if (confirmation) {
-          await logSuccess(
-            client!.deleteConfig(namespace!, cf, options.force),
-            `Config with id ${configId} was successfully deleted`
-          )
-        }
+        await deleteConfig(client, namespace, configId, options)
       } catch (err: any) {
         if (err.status == 400) {
           console.error(
@@ -172,14 +130,7 @@ export function createConfigsCommand(program: Command): void {
     )
     .action(async (configId: string, questionnaireFilepath: string) => {
       try {
-        const cf = handleStandardParams(client, namespace, configId, 'configId')
-        await logDownloadedFile(
-          client!.createConfigFromQuestionnaire(
-            namespace!,
-            cf,
-            questionnaireFilepath
-          )
-        )
+        await makeConfig(client, namespace, configId, questionnaireFilepath)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -208,19 +159,12 @@ export function createConfigsCommand(program: Command): void {
         configFilepath: string
       ) => {
         try {
-          const cf = handleStandardParams(
+          await excelConfig(
             client,
             namespace,
             configId,
-            'configId'
-          )
-          await logDownloadedFile(
-            client!.createConfigFromExcel(
-              namespace!,
-              cf,
-              xlsxFilepath,
-              configFilepath
-            )
+            xlsxFilepath,
+            configFilepath
           )
         } catch (err) {
           handleRestApiError(err)

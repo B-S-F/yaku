@@ -1,5 +1,5 @@
-import { ApiClient } from 'yaku-client-lib'
-import inquirer from 'inquirer'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
+import yp from './yaku-prompts.js'
 import assert from 'node:assert'
 import chalk from 'chalk'
 
@@ -107,16 +107,9 @@ export async function getResourceDeletionConfirmation(resource: any) {
   console.log('You are about to delete the following resource:')
   console.log(JSON.stringify(resource, null, 2))
 
-  const answers = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'continue',
-      message: 'Do you want to continue?',
-      default: false,
-    },
-  ])
+  const shouldDelete = await yp.confirm('Do you want to continue?')
 
-  return answers['continue']
+  return shouldDelete
 }
 
 export function getFilenameFromUrl(url: string): string {
@@ -133,10 +126,14 @@ export function consoleWarnYellow(text: string): void {
 }
 
 export function urlToApiUrl(url: string): string {
-  const apiEndpoint = '/api/v1'
+  const apiPath = '/api'
+  const v1Path = '/v1'
+  const apiEndpoint = `${apiPath}${v1Path}`
 
   url = url.replace(/\/$/, '') // Slash the last / if it exists
-  if (!url.endsWith(apiEndpoint)) {
+  if (url.endsWith(apiPath)) {
+    return url + v1Path
+  } else if (!url.endsWith(apiEndpoint)) {
     return url + apiEndpoint
   }
   return url

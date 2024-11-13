@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -z "$1" ] 
+if [ -z "$1" ]
 then
 	echo "Please specify either a version or ask to upgrade major, minor or patch version for the created package"
   exit 1
@@ -17,7 +17,7 @@ npm run build
 npm pack --pack-destination "../yaku-cli/cli-package"
 cd ../yaku-cli
 npm version $version
-sed -i '.bak' 's#\"yaku-client-lib\": .*,#"yaku-client-lib": "^'$new_version'",#g' package.json
+sed -i '.bak' 's#\"@B-S-F/yaku-client-lib\": .*,#"@B-S-F/yaku-client-lib": "^'$new_version'",#g' package.json
 rm package.json.bak
 npm install
 npm pack --pack-destination "./cli-package"

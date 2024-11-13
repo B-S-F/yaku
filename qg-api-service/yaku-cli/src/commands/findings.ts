@@ -1,13 +1,12 @@
-import { ApiClient, QueryOptions } from 'yaku-client-lib'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
 import { Command } from 'commander'
-import {
-  handleRestApiError,
-  handleStandardParams,
-  logResultAsJson,
-  parseFilterOption,
-  parseIntParameter,
-} from '../common.js'
+import { handleRestApiError } from '../common.js'
 import { connect } from '../connect.js'
+import {
+  listFindings,
+  reopenFinding,
+  resolveFinding,
+} from '../handlers/findings.js'
 
 export function createFindingsSubcommands(program: Command): void {
   let client: ApiClient
@@ -36,35 +35,7 @@ export function createFindingsSubcommands(program: Command): void {
     )
     .action(async (configIds: string, page: string, options) => {
       try {
-        handleStandardParams(client, namespace)
-        const pg = page ? parseIntParameter(page, 'page') : 1
-        const ic = options.itemCount
-          ? parseIntParameter(options.itemCount, 'itemCount')
-          : 20
-        const filterOption = parseFilterOption(options.filterBy)
-        const filterProperty: string[] = []
-        const filterValues: string[][] = []
-        if (filterOption.filterProperty) {
-          filterProperty.push(filterOption.filterProperty)
-          filterValues.push(filterOption.filterValues!)
-        }
-
-        // Add configId as the mandatory filter
-        const configIdOption = parseFilterOption('configId=' + configIds)
-
-        filterProperty.push(configIdOption.filterProperty!)
-        filterValues.push(configIdOption.filterValues!)
-
-        const queryOptions = new QueryOptions(
-          pg,
-          ic,
-          filterProperty,
-          filterValues,
-          options.sortBy,
-          options.ascending
-        )
-
-        await logResultAsJson(client.listFindings(namespace!, queryOptions))
+        await listFindings(client, namespace, configIds, page, options)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -78,8 +49,7 @@ export function createFindingsSubcommands(program: Command): void {
     .option('-c, --comment <comment>', 'Comment for the resolution')
     .action(async (id: string, options) => {
       try {
-        handleStandardParams(client, namespace)
-        await logResultAsJson(client!.resolveFinding(namespace!, id, options))
+        await resolveFinding(client, namespace, id, options)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -92,8 +62,7 @@ export function createFindingsSubcommands(program: Command): void {
     .argument('<id>', 'The id of the finding')
     .action(async (id: string) => {
       try {
-        handleStandardParams(client, namespace)
-        await logResultAsJson(client!.reopenFinding(namespace!, id))
+        await reopenFinding(client, namespace, id)
       } catch (err) {
         handleRestApiError(err)
       }

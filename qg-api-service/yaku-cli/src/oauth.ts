@@ -3,7 +3,7 @@ import { BaseClient, custom, Issuer } from 'openid-client'
 import open from 'open'
 import { ProxyAgent } from 'proxy-agent'
 import { config } from './config.js'
-import { Environment } from './commands/environment.js'
+import { Environment } from './handlers/environment.js'
 import { fetch, EnvHttpProxyAgent } from 'undici'
 
 const agent = new ProxyAgent()
@@ -182,5 +182,14 @@ export async function refreshOAuth(env: Environment): Promise<Environment> {
     accessToken: loginResponse.accessToken,
     refreshToken: loginResponse.refreshToken,
     expiresAt: loginResponse.expiresAt,
+  }
+}
+
+// export the private functions for unit test scope
+export let _t: any
+if (process.env.NODE_ENV === 'test') {
+  _t = {
+    generateCodeVerifier,
+    base64URLEncode,
   }
 }

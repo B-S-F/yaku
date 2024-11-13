@@ -34,7 +34,7 @@ export async function createEnvironmentAndSwitch(
 }
 
 export class EnvironmentFacade extends CommandFacade {
-  constructor(executablePath: string, runtimeConfig: string = '.yakurc') {
+  constructor(executablePath: string, runtimeConfig = '.yakurc') {
     super(executablePath, runtimeConfig)
   }
 

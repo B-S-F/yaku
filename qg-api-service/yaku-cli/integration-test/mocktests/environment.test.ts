@@ -89,8 +89,9 @@ describe('Integration tests for envs', async () => {
         'Usage: yaku environments list|ls [options]',
         'List all available environments',
         'Options:',
-        '  -j, --json  Output as JSON',
-        '  -h, --help  display help for command',
+        '  -j, --json                  Output as JSON',
+        '  -p, --page-size <pageSize>  Number of elements per page in the table',
+        '  -h, --help                  display help for command',
       ]
 
       const stdoutArray: string[] = result.stdout
