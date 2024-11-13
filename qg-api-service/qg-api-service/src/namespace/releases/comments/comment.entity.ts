@@ -48,9 +48,9 @@ export class CommentEntity {
   todo: boolean
   @Column({ type: 'enum', enum: commentStatuses, nullable: false })
   status: CommentStatus
-  @Column({ nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   createdBy: string
-  @Column({ nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   lastModifiedBy: string
   @Column({ type: 'timestamptz', nullable: false })
   creationTime: Date

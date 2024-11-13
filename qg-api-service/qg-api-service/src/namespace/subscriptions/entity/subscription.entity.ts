@@ -13,7 +13,7 @@ import {
 
 @Entity({ name: 'subscriptions' })
 export class SubscriptionEntity {
-  @PrimaryColumn({ type: 'varchar' })
+  @PrimaryColumn({ type: 'uuid' })
   userId: string
 
   @PrimaryColumn({ type: 'integer' })
