@@ -10,8 +10,6 @@ repos:
     rev: v5.0.0
     hooks:
       - id: check-added-large-files
-      - id: pretty-format-json
-        exclude: '^(onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
       - id: check-toml
       - id: check-yaml
         exclude: '^(qg-api-service/qg-api-service/src/namespace|onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
