@@ -1,0 +1,32 @@
+metadata:
+  version: v1
+header:
+  name: JSON
+  version: 1.2.3
+  date: 2024-09-19 15:23
+  toolVersion: 0.11.1-dev-2024-09-19_11-15-12-401a1bb
+overallStatus: YELLOW
+statistics:
+  counted-checks: 1
+  counted-automated-checks: 1
+  counted-manual-check: 0
+  counted-unanswered-checks: 0
+  counted-skipped-checks: 0
+  degree-of-automation: 100
+  degree-of-completion: 100
+chapters:
+  '5':
+    title: Verification / validation
+    status: YELLOW
+    requirements:
+      '5.1':
+        title: The json evaluator works well
+        status: YELLOW
+        checks:
+          '1':
+            title: Check json file
+            status: YELLOW
+            type: Automation
+            evaluation:
+              status: YELLOW
+              reason: Some reason

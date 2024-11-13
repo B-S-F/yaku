@@ -61,6 +61,25 @@ export class DeleteOverrideHistoryEventData extends HistoryEventData {
   previousManualColor: CheckColor
 }
 
+export class AddCheckResultOverrideHistoryEventData extends HistoryEventData {
+  comment: string
+  reference: CheckReference
+  previousAutoFulfilled: boolean
+  newManualFulfilled: boolean
+}
+
+export class UpdateCheckResultOverrideHistoryEventData extends HistoryEventData {
+  comment: string
+  reference: CheckReference
+  previousManualFulfilled: boolean
+  newManualFulfilled: boolean
+}
+
+export class DeleteCheckResultOverrideHistoryEventData extends HistoryEventData {
+  reference: CheckReference
+  previousManualFulfilled: boolean
+}
+
 @ApiExtraModels(
   CommentWithRepliesAndReferenceDto,
   HistoryEventData,

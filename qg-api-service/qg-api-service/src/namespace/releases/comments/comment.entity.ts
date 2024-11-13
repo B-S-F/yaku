@@ -54,13 +54,21 @@ export class CommentEntity {
   lastModificationTime: Date
   @Column('jsonb', { nullable: true })
   reference: CheckReference
-  @ManyToOne((type) => CommentEntity, (comment) => comment.children, {
-    nullable: true,
-  })
+  @ManyToOne(
+    (type) => CommentEntity,
+    (comment) => comment.children,
+    {
+      nullable: true,
+    }
+  )
   parent: CommentEntity
-  @OneToMany((type) => CommentEntity, (comment) => comment.parent, {
-    nullable: true,
-  })
+  @OneToMany(
+    (type) => CommentEntity,
+    (comment) => comment.parent,
+    {
+      nullable: true,
+    }
+  )
   children: CommentEntity[]
 
   DeepCopy(): CommentEntity {

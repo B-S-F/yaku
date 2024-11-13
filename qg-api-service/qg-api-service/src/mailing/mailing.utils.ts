@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common'
 
 export enum NotificationType {
   Comment = 'comment.mjml',
+  CommentApprovalRelease = 'comment-approval-release.mjml',
   Mention = 'mention.mjml',
+  MentionApprovalRelease = 'mention-approval-release.mjml',
   Approval = 'approver.mjml',
   ApprovalState = 'approval_status.mjml',
   TaskAssigned = 'task_assigned.mjml',

@@ -12,6 +12,7 @@ import { UsersModule } from '../users/users.module'
 import { ApprovalsModule } from './approvals/approvals.module'
 import { CommentsModule } from './comments/comments.module'
 import { HistoryService } from './history.service'
+import { CheckResultOverridesModule } from './overrides/check-result-overrides/check-result-override.modules'
 import { OverridesModule } from './overrides/overrides.module'
 import {
   ReleaseAuditEntity,
@@ -28,6 +29,7 @@ import { TaskModule } from './tasks/tasks.module'
     ApprovalsModule,
     CommentsModule,
     OverridesModule,
+    CheckResultOverridesModule,
     UsersModule,
     SubscriptionModule,
     NotificationModule,

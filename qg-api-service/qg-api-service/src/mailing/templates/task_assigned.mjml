@@ -54,7 +54,7 @@
               Dear
               <%=user_name%>,
             </p>
-            <p style="font-weight: bold;">you have been assigned to the task <a href="<%=ui_url%>/<%=encodeURIComponent(instance_name)%>/<%=encodeURIComponent(namespace_name)%>/releases/<%=encodeURIComponent(release_id)%>/details/tasks?id=<%=task_id%>"><%=task_title%></a> is still pending</p>
+            <p style="font-weight: bold;">you have been assigned to the task <a href="<%=ui_url%>/<%=encodeURIComponent(instance_name)%>/<%=encodeURIComponent(namespace_name)%>/releases/<%=encodeURIComponent(release_id)%>/details/tasks?id=<%=task_id%>"><%=task_title%></a></p>
           </mj-text>
           <mj-text css-class="body-text">
             <p><%=task_description%></%></p>
@@ -62,7 +62,7 @@
           <mj-text css-class="footer-text" padding="0px" padding-top="32px" font-size="12px">
             <p style="font-weight: bold;">
               <span>Open task </span>
-             <a href="<%=ui_url%>/<%=encodeURIComponent(instance_name)%>/<%=encodeURIComponent(namespace_name)%>/releases/<%=encodeURIComponent(release_id)%>/details/tasks?id=<%=task_id%>"><%=task_title%></a> 
+             <a href="<%=ui_url%>/<%=encodeURIComponent(instance_name)%>/<%=encodeURIComponent(namespace_name)%>/releases/<%=encodeURIComponent(release_id)%>/details/tasks?id=<%=task_id%>"><%=task_title%></a>
             </p>
           </mj-text>
         </mj-column>
@@ -71,7 +71,7 @@
         <mj-column>
           <mj-text padding="0px" padding-top="32px" font-size="12px">
             <p>
-              This message is sent by Yaku because you are assigned to the task 
+              This message is sent by Yaku because you are assigned to the task
               <%=task_title%>.
             </p>
           </mj-text>

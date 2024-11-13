@@ -147,8 +147,10 @@ describe('Notifications', () => {
   })
 
   describe('Comments', () => {
-    const mentionsTitle =
+    const mentionsApprovalReleaseTitle =
       'You have been mentioned in a comment related to a release approval'
+    const mentionsCheckTitle =
+      'You have been mentioned in a comment related to a check'
     const participantsTitle = 'A new comment was added to your discussion'
 
     it.each([
@@ -178,14 +180,14 @@ describe('Notifications', () => {
             ],
             [
               'user2@bosch.com',
-              mentionsTitle,
+              mentionsCheckTitle,
               {
                 type: NotificationType.Mention,
               },
             ],
             [
               'user3@bosch.com',
-              mentionsTitle,
+              mentionsCheckTitle,
               {
                 type: NotificationType.Mention,
               },
@@ -211,14 +213,14 @@ describe('Notifications', () => {
               'user5@bosch.com',
               participantsTitle,
               {
-                type: NotificationType.Comment,
+                type: NotificationType.CommentApprovalRelease,
               },
             ],
             [
               'user2@bosch.com',
-              mentionsTitle,
+              mentionsApprovalReleaseTitle,
               {
-                type: NotificationType.Mention,
+                type: NotificationType.MentionApprovalRelease,
               },
             ],
           ],
@@ -352,7 +354,7 @@ describe('Notifications', () => {
           expectedCalls: [
             [
               'user4@bosch.com',
-              mentionsTitle,
+              mentionsCheckTitle,
               {
                 type: NotificationType.Mention,
               },
@@ -381,9 +383,9 @@ describe('Notifications', () => {
           expectedCalls: [
             [
               'user4@bosch.com',
-              mentionsTitle,
+              mentionsApprovalReleaseTitle,
               {
-                type: NotificationType.Mention,
+                type: NotificationType.MentionApprovalRelease,
               },
             ],
           ],
@@ -556,7 +558,7 @@ describe('Notifications', () => {
             ],
             [
               'user3@bosch.com',
-              mentionsTitle,
+              mentionsCheckTitle,
               {
                 type: NotificationType.Mention,
               },
@@ -584,7 +586,7 @@ describe('Notifications', () => {
             ],
             [
               'user4@bosch.com',
-              mentionsTitle,
+              mentionsCheckTitle,
               {
                 type: NotificationType.Mention,
               },
@@ -627,49 +629,49 @@ describe('Notifications', () => {
               'user3@bosch.com',
               participantsTitle,
               {
-                type: NotificationType.Comment,
+                type: NotificationType.CommentApprovalRelease,
               },
             ],
             [
               'user5@bosch.com',
               participantsTitle,
               {
-                type: NotificationType.Comment,
+                type: NotificationType.CommentApprovalRelease,
               },
             ],
             [
               'user0@bosch.com',
-              mentionsTitle,
+              mentionsApprovalReleaseTitle,
               {
-                type: NotificationType.Mention,
+                type: NotificationType.MentionApprovalRelease,
               },
             ],
             [
               'user3@bosch.com',
               participantsTitle,
               {
-                type: NotificationType.Comment,
+                type: NotificationType.CommentApprovalRelease,
               },
             ],
             [
               'user4@bosch.com',
               participantsTitle,
               {
-                type: NotificationType.Comment,
+                type: NotificationType.CommentApprovalRelease,
               },
             ],
             [
               'user5@bosch.com',
               participantsTitle,
               {
-                type: NotificationType.Comment,
+                type: NotificationType.CommentApprovalRelease,
               },
             ],
             [
               'user0@bosch.com',
-              mentionsTitle,
+              mentionsApprovalReleaseTitle,
               {
-                type: NotificationType.Mention,
+                type: NotificationType.MentionApprovalRelease,
               },
             ],
           ],

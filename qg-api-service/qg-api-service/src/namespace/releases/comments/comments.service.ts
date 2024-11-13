@@ -3,7 +3,12 @@ import {
   ListQueryHandler,
   SortOrder,
 } from '@B-S-F/api-commons-lib'
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 import {
@@ -12,7 +17,12 @@ import {
   QueryRunner,
   Repository,
 } from 'typeorm'
-import { CommentData, MentionData } from '../../../mailing/mailing.service'
+import {
+  CommentApprovalReleaseData,
+  CommentData,
+  MentionApprovalReleaseData,
+  MentionData,
+} from '../../../mailing/mailing.service'
 import { NotificationType } from '../../../mailing/mailing.utils'
 import {
   RequestUser,
@@ -819,28 +829,66 @@ export class CommentsService {
 
     const commentParentId = comment.parent ? comment.parent.id : comment.id
 
-    await this.sendCommentPushNotification(
-      [...participants.values()],
-      release.id,
-      release.name,
-      namespace.name,
-      commentId,
-      commentParentId,
-      commentReference as CheckReference,
-      actor.displayName,
-      processedContent
-    )
-    await this.sendMentionsPushNotification(
-      mentions.filter((mention) => mention.id !== actor.id),
-      release.id,
-      release.name,
-      namespace.name,
-      commentId,
-      commentParentId,
-      commentReference as CheckReference,
-      actor.displayName,
-      processedContent
-    )
+    const rootReference = comment.parent
+      ? this.extractReference(comment.parent)
+      : commentReference
+
+    switch (rootReference.type) {
+      case ReferenceType.CHECK:
+        await this.sendCommentPushNotification(
+          [...participants.values()],
+          release.id,
+          release.name,
+          namespace.name,
+          commentId,
+          commentParentId,
+          rootReference as CheckReference,
+          actor.displayName,
+          processedContent
+        )
+        await this.sendMentionsPushNotification(
+          mentions.filter((mention) => mention.id !== actor.id),
+          release.id,
+          release.name,
+          namespace.name,
+          commentId,
+          commentParentId,
+          rootReference as CheckReference,
+          actor.displayName,
+          processedContent
+        )
+        break
+      case ReferenceType.RELEASE:
+      case ReferenceType.APPROVAL:
+        // release and approval comments lead to the same page in the UI,
+        await this.sendApprovalReleaseCommentPushNotification(
+          [...participants.values()],
+          release.id,
+          release.name,
+          namespace.name,
+          commentId,
+          commentParentId,
+          actor.displayName,
+          processedContent
+        )
+        await this.sendApprovalReleaseMentionsPushNotification(
+          mentions.filter((mention) => mention.id !== actor.id),
+          release.id,
+          release.name,
+          namespace.name,
+          commentId,
+          commentParentId,
+          actor.displayName,
+          processedContent
+        )
+        break
+      case ReferenceType.COMMENT:
+        throw new InternalServerErrorException(
+          `Implementation error: Did not expect the root of the discussion tree to be COMMENT aka a reply`
+        )
+      default:
+        this.shouldBeUnreachable(rootReference.type)
+    }
   }
 
   async updateCommentNotifications(
@@ -880,17 +928,45 @@ export class CommentsService {
       ? newComment.parent.id
       : newComment.id
 
-    await this.sendMentionsPushNotification(
-      newMentions.filter((mention) => mention.id !== actor.id),
-      releaseId,
-      release.name,
-      namespace.name,
-      commentId,
-      commentParentId,
-      commentReference as CheckReference,
-      actor.displayName,
-      processedContent
-    )
+    const rootReference = newComment.parent
+      ? this.extractReference(newComment.parent)
+      : commentReference
+
+    switch (rootReference.type) {
+      case ReferenceType.CHECK:
+        await this.sendMentionsPushNotification(
+          newMentions.filter((mention) => mention.id !== actor.id),
+          release.id,
+          release.name,
+          namespace.name,
+          commentId,
+          commentParentId,
+          rootReference as CheckReference,
+          actor.displayName,
+          processedContent
+        )
+        break
+      case ReferenceType.RELEASE:
+      case ReferenceType.APPROVAL:
+        // release and approval comments lead to the same page in the UI,
+        await this.sendApprovalReleaseMentionsPushNotification(
+          newMentions.filter((mention) => mention.id !== actor.id),
+          release.id,
+          release.name,
+          namespace.name,
+          commentId,
+          commentParentId,
+          actor.displayName,
+          processedContent
+        )
+        break
+      case ReferenceType.COMMENT:
+        throw new InternalServerErrorException(
+          `Implementation error: Did not expect the root of the discussion tree to be COMMENT aka a reply`
+        )
+      default:
+        this.shouldBeUnreachable(rootReference.type)
+    }
   }
 
   private async sendCommentPushNotification(
@@ -914,13 +990,9 @@ export class CommentsService {
         release_name: releaseName,
         comment_id: commentId,
         parent_comment_id: parentCommentId,
-        // No direct link to ReferencyType.RELEASE in UI
-        // We rely on the UI to redirect to the first check comment of the release
-        chapter_id: checkReference.chapter ? checkReference.chapter : '',
-        requirement_id: checkReference.requirement
-          ? checkReference.requirement
-          : '',
-        check_id: checkReference.check ? checkReference.check : '',
+        chapter_id: checkReference.chapter,
+        requirement_id: checkReference.requirement,
+        check_id: checkReference.check,
         created_by: displayName,
         content: content,
       }
@@ -931,6 +1003,41 @@ export class CommentsService {
         {
           type: NotificationType.Comment,
           data: commentData,
+        }
+      )
+    }
+  }
+
+  private async sendApprovalReleaseCommentPushNotification(
+    participants: UserInNamespaceDto[],
+    releaseId: number,
+    releaseName: string,
+    namespaceName: string,
+    commentId: number,
+    parentCommentId: number,
+    displayName: string,
+    content: string
+  ) {
+    for (const participant of participants) {
+      const commentApprovalReleaseData: CommentApprovalReleaseData = {
+        user_name: participant.firstName
+          ? participant.firstName
+          : participant.displayName,
+        namespace_name: namespaceName,
+        release_id: releaseId,
+        release_name: releaseName,
+        comment_id: commentId,
+        parent_comment_id: parentCommentId,
+        created_by: displayName,
+        content: content,
+      }
+
+      await this.notificationService.pushNotification(
+        participant.id,
+        'A new comment was added to your discussion',
+        {
+          type: NotificationType.CommentApprovalRelease,
+          data: commentApprovalReleaseData,
         }
       )
     }
@@ -956,20 +1063,49 @@ export class CommentsService {
         release_name: releaseName,
         comment_id: commentId,
         parent_comment_id: parentCommentId,
-        // No direct link to ReferencyType.RELEASE in UI
-        // We rely on the UI to redirect to the first check comment of the release
-        chapter_id: checkReference.chapter ? checkReference.chapter : '',
-        requirement_id: checkReference.requirement
-          ? checkReference.requirement
-          : '',
-        check_id: checkReference.check ? checkReference.check : '',
+        chapter_id: checkReference.chapter,
+        requirement_id: checkReference.requirement,
+        check_id: checkReference.check,
+        content: content,
+      }
+
+      await this.notificationService.pushNotification(
+        mention.id,
+        'You have been mentioned in a comment related to a check',
+        { type: NotificationType.Mention, data: mentionData }
+      )
+    }
+  }
+
+  private async sendApprovalReleaseMentionsPushNotification(
+    mentions: UserInNamespaceDto[],
+    releaseId: number,
+    releaseName: string,
+    namespaceName: string,
+    commentId: number,
+    parentCommentId: number,
+    displayName: string,
+    content: string
+  ) {
+    for (const mention of mentions) {
+      const mentionApprovalReleaseData: MentionApprovalReleaseData = {
+        user_name: mention.firstName ? mention.firstName : mention.displayName,
+        created_by: displayName,
+        namespace_name: namespaceName,
+        release_id: releaseId,
+        release_name: releaseName,
+        comment_id: commentId,
+        parent_comment_id: parentCommentId,
         content: content,
       }
 
       await this.notificationService.pushNotification(
         mention.id,
         'You have been mentioned in a comment related to a release approval',
-        { type: NotificationType.Mention, data: mentionData }
+        {
+          type: NotificationType.MentionApprovalRelease,
+          data: mentionApprovalReleaseData,
+        }
       )
     }
   }

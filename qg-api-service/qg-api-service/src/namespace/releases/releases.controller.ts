@@ -1,6 +1,7 @@
 import {
   createPaginationData,
   PaginationQueryOptions,
+  parseFilter,
   queryOptionsSchema,
   toListQueryOptions,
   UrlHandlerFactory,
@@ -29,6 +30,7 @@ import {
   ApiOAuth2,
   ApiOkResponse,
   ApiOperation,
+  ApiPropertyOptional,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
@@ -53,6 +55,29 @@ import {
   UpdateReleaseDto,
   updateReleaseDtoSchema,
 } from './releases.utils'
+import { z } from 'zod'
+
+export class ReleasesQueryOptions extends PaginationQueryOptions {
+  @ApiPropertyOptional({
+    description:
+      'Multiple filter expressions to limit the returned entities for the given filter options',
+    type: 'string',
+    example: 'config=1,2',
+    default: 'No filter',
+  })
+  filter?: string[] | string
+}
+
+const releasesQuerySchema = queryOptionsSchema
+  .extend({
+    filter: z
+      .union([
+        z.array(z.string().trim().nonempty()),
+        z.string().trim().nonempty(),
+      ])
+      .optional(),
+  })
+  .strict()
 
 @ApiBearerAuth()
 @ApiOAuth2(['openid'])
@@ -77,18 +102,22 @@ export class ReleasesController {
   })
   async getReleases(
     @Param('namespaceId') namespaceId: number,
-    @Query() queryOptions: PaginationQueryOptions,
+    @Query() queryOptions: ReleasesQueryOptions,
     @Res({ passthrough: true }) response: Response
   ): Promise<ReleaseListDto> {
     validateId(namespaceId)
     const listQueryOptions = toListQueryOptions(
       queryOptions,
-      queryOptionsSchema.strict(),
+      releasesQuerySchema,
       allowedSortProperties,
       'id'
     )
-
+    const filtering = parseFilter(queryOptions.filter)
+    if (filtering) {
+      listQueryOptions.additionalParams.filtering = filtering
+    }
     const requestUrl = this.urlHandler.getHandler(response)
+
     const releases = await this.service.list(namespaceId, listQueryOptions)
 
     return createPaginationData<ReleaseDto, ReleaseListDto>(

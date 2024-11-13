@@ -22,8 +22,10 @@ import { CommentEntity, CommentStatus } from './comments/comment.entity'
 import { CommentsService } from './comments/comments.service'
 import { ReferenceType } from './comments/comments.utils'
 import {
+  AddCheckResultOverrideHistoryEventData,
   AddOverrideHistoryEventData,
   ApprovalHistoryEventData,
+  DeleteCheckResultOverrideHistoryEventData,
   DeleteOverrideHistoryEventData,
   HistoryDto,
   HistoryEventData,
@@ -32,9 +34,15 @@ import {
   HistoryItemDto,
   HistoryQueryOptions,
   HistoryType,
+  UpdateCheckResultOverrideHistoryEventData,
   UpdateOverrideHistoryEventData,
 } from './history.utils'
 import { getRelease } from './module.utils'
+import {
+  CheckResultOverrideAuditService,
+  CheckResultOverrideEntity,
+} from './overrides/check-result-overrides/check-result-override.entity'
+import { CheckResultReference } from './overrides/check-result-overrides/check-result-override.utils'
 import {
   OverrideAuditEntity,
   OverrideAuditService,
@@ -59,6 +67,8 @@ export class HistoryService {
     private readonly runAuditService: RunAuditService,
     @Inject(OverrideAuditService)
     private readonly overrideAuditService: OverrideAuditService,
+    @Inject(CheckResultOverrideAuditService)
+    private readonly checkResultOverrideAuditService: CheckResultOverrideAuditService,
     @Inject(CommentsService)
     private readonly commentService: CommentsService,
     @InjectRepository(ReleaseEntity)
@@ -201,12 +211,22 @@ export class HistoryService {
       direction
     )
 
+    const checkResultOverrideHistory = await this.getCheckResultOverrideHistory(
+      queryRunner,
+      namespaceId,
+      release.id,
+      lastTimestamp,
+      amount,
+      direction
+    )
+
     let historyItems: HistoryItem[] = []
     historyItems.push(...approvalHistory)
     historyItems.push(...commentHistory)
     historyItems.push(...releaseHistory)
     historyItems.push(...runHistory)
     historyItems.push(...overrideHistory)
+    historyItems.push(...checkResultOverrideHistory)
 
     historyItems = this.filterHistoryItems(historyItems, queryOptions.filter)
     this.sortHistoryItems(historyItems, queryOptions.sortOrder)
@@ -426,6 +446,39 @@ export class HistoryService {
     return historyItems
   }
 
+  async getCheckResultOverrideHistory(
+    queryRunner: QueryRunner,
+    namespaceId: number,
+    releaseId: number,
+    timestamp: Date,
+    amount: number,
+    direction: 'before' | 'after'
+  ): Promise<HistoryItem[]> {
+    const overrideAudits = await this.checkResultOverrideAuditService.list(
+      namespaceId,
+      releaseId,
+      timestamp,
+      amount + LOOKAHEAD_AMOUNT,
+      direction,
+      queryRunner.manager
+    )
+    const historyItems: HistoryItem[] = []
+    await Promise.all(
+      overrideAudits.map(async (audit) => {
+        const historyItem = await this.checkResultOverrideAuditToHistoryItem(
+          queryRunner,
+          namespaceId,
+          releaseId,
+          audit
+        )
+        if (historyItem) {
+          historyItems.push(historyItem)
+        }
+      })
+    )
+    return historyItems
+  }
+
   async overrideAuditToHistoryItem(
     queryRunner: QueryRunner,
     namespaceId: number,
@@ -530,6 +583,91 @@ export class HistoryService {
         )
 
         data.previousManualColor = original.manualColor
+
+        historyItem.data = data
+
+        break
+      }
+      default:
+        return undefined
+    }
+
+    return historyItem
+  }
+
+  async checkResultOverrideAuditToHistoryItem(
+    queryRunner: QueryRunner,
+    namespaceId: number,
+    releaseId: number,
+    audit: OverrideAuditEntity
+  ): Promise<HistoryItem | undefined> {
+    const actor = await this.retrieveAuditActor(audit)
+
+    const historyItem = new HistoryItem()
+    historyItem.type = HistoryType.EVENT
+    historyItem.timestamp = audit.modificationTime
+
+    const original = audit.original as CheckResultOverrideEntity
+    const modified = audit.modified as CheckResultOverrideEntity
+
+    switch (audit.action) {
+      case Action.CREATE: {
+        const data = new AddCheckResultOverrideHistoryEventData()
+        data.actor = actor
+
+        data.action = `${data.actor.displayName} added override for check result: "${modified.chapter}" "${modified.requirement}" "${modified.check}" "${modified.hash}", new manual fulfilled: ${modified.manualFulfilled}`
+
+        data.reference = new CheckResultReference(
+          modified.chapter,
+          modified.requirement,
+          modified.check,
+          modified.hash
+        )
+
+        data.previousAutoFulfilled = modified.originalFulfilled
+        data.newManualFulfilled = modified.manualFulfilled
+
+        data.comment = modified.comment
+
+        historyItem.data = data
+
+        break
+      }
+      case Action.UPDATE: {
+        const data = new UpdateCheckResultOverrideHistoryEventData()
+
+        data.actor = actor
+        data.action = `${data.actor.displayName} updated override for check result: "${original.chapter}" "${original.requirement}" "${original.check}" "${original.hash}", new manual fulfilled: ${modified.manualFulfilled}`
+
+        data.reference = new CheckResultReference(
+          original.chapter,
+          original.requirement,
+          original.check,
+          original.hash
+        )
+
+        data.previousManualFulfilled = original.manualFulfilled
+        data.newManualFulfilled = modified.manualFulfilled
+
+        data.comment = modified.comment
+
+        historyItem.data = data
+
+        break
+      }
+      case Action.DELETE: {
+        const data = new DeleteCheckResultOverrideHistoryEventData()
+        data.actor = actor
+        data.action = `${data.actor.displayName} removed override for check result: "${original.chapter}" "${original.requirement}" "${original.check}" "${original.hash}", old manual fulfilled: ${original.manualFulfilled}`
+
+        data.reference = new CheckResultReference(
+          original.chapter,
+          original.requirement,
+          original.check,
+          original.hash
+        )
+
+        data.previousManualFulfilled = original.manualFulfilled
 
         historyItem.data = data
 

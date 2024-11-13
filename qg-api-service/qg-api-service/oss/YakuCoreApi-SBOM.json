@@ -68,8 +68,8 @@
       "bom-ref": "@B-S-F/ado-work-items-fetcher-0.7.2.tgz"
     },
     {
-      "group": "api-commons-lib",
-      "name": "api-commons-lib-0.5.2.tgz",
+      "group": "@B-S-F/api-commons-lib",
+      "name": "@B-S-F/api-commons-lib-0.5.2.tgz",
       "version": "0.5.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -88,11 +88,11 @@
         }
       ],
       "type": "library",
-      "bom-ref": "api-commons-lib-0.5.2.tgz"
+      "bom-ref": "@B-S-F/api-commons-lib-0.5.2.tgz"
     },
     {
-      "group": "api-keycloak-auth-lib",
-      "name": "api-keycloak-auth-lib-0.8.2.tgz",
+      "group": "@B-S-F/api-keycloak-auth-lib",
+      "name": "@B-S-F/api-keycloak-auth-lib-0.8.2.tgz",
       "version": "0.8.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -111,7 +111,7 @@
         }
       ],
       "type": "library",
-      "bom-ref": "api-keycloak-auth-lib-0.8.2.tgz"
+      "bom-ref": "@B-S-F/api-keycloak-auth-lib-0.8.2.tgz"
     },
     {
       "group": "@B-S-F/autopilot-utils",
