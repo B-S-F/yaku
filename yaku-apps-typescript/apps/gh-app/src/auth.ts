@@ -1,4 +1,3 @@
-// Remove me
 import { Octokit } from 'octokit'
 import { ProxyAgent, fetch as undiciFetch } from 'undici'
 import githubAppJwt from 'universal-github-app-jwt'
