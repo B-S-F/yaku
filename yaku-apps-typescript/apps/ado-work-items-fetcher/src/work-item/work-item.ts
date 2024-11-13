@@ -136,7 +136,7 @@ export class WorkItem {
           reference.id
         }" - "${
           reference.url
-        }" at depth "${this.configData.getHierarchyDepth()}"
+        }" at depth "${this.configData.getHierarchyDepth()}" 
         , following error occurred: "${errorMessage}"`)
       }
     }

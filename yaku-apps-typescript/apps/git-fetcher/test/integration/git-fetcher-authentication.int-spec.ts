@@ -88,6 +88,7 @@ describe('Authentication', () => {
         }
       )
 
+
       it.each(supportedAuthMethods)(
         `should fetch file from github and save it for auth method "%s"`,
         async (authMethod: SupportedAuthMethod) => {

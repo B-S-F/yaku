@@ -6,7 +6,10 @@ import { Finding } from './entity/finding.entity'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Metric } from '../metrics/entity/metric.entity'
 import { MetricService } from '../metrics/metric.service'
-import { UrlHandlerFactory, UrlProtocolConfig } from '@B-S-F/api-commons-lib'
+import {
+  UrlHandlerFactory,
+  UrlProtocolConfig,
+} from '@B-S-F/api-commons-lib'
 import { UsersService } from '../users/users.service'
 describe('FindingController', () => {
   let findingController: FindingController

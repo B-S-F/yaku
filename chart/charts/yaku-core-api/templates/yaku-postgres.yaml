@@ -60,7 +60,7 @@ spec:
             - SELECT 1
           initialDelaySeconds: 15
           timeoutSeconds: 2
-      volumes:
+      volumes: 
       - name: pvc-data
         persistentVolumeClaim:
           claimName: {{ .Values.postgres.persistence.name }}

@@ -5,5 +5,7 @@
   "scripts": {
     "build": "echo 'No build needed'"
   },
-  "files": ["base.json"]
+  "files": [
+    "base.json"
+  ]
 }

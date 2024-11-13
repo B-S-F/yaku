@@ -18,19 +18,19 @@ global_client_scope_id=$(kcadm.sh get client-scopes -r $realm | jq -r --arg NAME
 echo "Global client scope id: $global_client_scope_id"
 
 # Create role mapper
-kcadm.sh create client-scopes/$global_client_scope_id/protocol-mappers/models -r $realm  -b '{
-  "name": "client roles",
-  "protocol": "openid-connect",
-  "protocolMapper": "oidc-usermodel-client-role-mapper",
-  "consentRequired": false,
-  "config": {
-    "multivalued": true,
-    "userinfo.token.claim": false,
-    "id.token.claim": false,
-    "access.token.claim": true,
-    "claim.name": "resource_access.${client_id}.roles",
-    "usermodel.clientRoleMapping.clientId": "GLOBAL"
-    }
+kcadm.sh create client-scopes/$global_client_scope_id/protocol-mappers/models -r $realm  -b '{ 
+  "name": "client roles", 
+  "protocol": "openid-connect", 
+  "protocolMapper": "oidc-usermodel-client-role-mapper", 
+  "consentRequired": false, 
+  "config": { 
+    "multivalued": true, 
+    "userinfo.token.claim": false, 
+    "id.token.claim": false, 
+    "access.token.claim": true, 
+    "claim.name": "resource_access.${client_id}.roles", 
+    "usermodel.clientRoleMapping.clientId": "GLOBAL" 
+    } 
   }'
 
 
@@ -41,17 +41,17 @@ namespace_1_client_scope_id=$(kcadm.sh get client-scopes -r $realm | jq -r --arg
 echo "NAMESPACE_1 client scope id: $namespace_1_client_scope_id"
 
 # Create role mapper
-kcadm.sh create client-scopes/$namespace_1_client_scope_id/protocol-mappers/models -r $realm  -b '{
-  "name": "client roles",
-  "protocol": "openid-connect",
-  "protocolMapper": "oidc-usermodel-client-role-mapper",
-  "consentRequired": false,
-  "config": {
-    "multivalued": true,
-    "userinfo.token.claim": false,
-    "id.token.claim": false,
-    "access.token.claim": true,
-    "claim.name": "resource_access.${client_id}.roles",
-    "usermodel.clientRoleMapping.clientId": "NAMESPACE_1"
-    }
+kcadm.sh create client-scopes/$namespace_1_client_scope_id/protocol-mappers/models -r $realm  -b '{ 
+  "name": "client roles", 
+  "protocol": "openid-connect", 
+  "protocolMapper": "oidc-usermodel-client-role-mapper", 
+  "consentRequired": false, 
+  "config": { 
+    "multivalued": true, 
+    "userinfo.token.claim": false, 
+    "id.token.claim": false, 
+    "access.token.claim": true, 
+    "claim.name": "resource_access.${client_id}.roles", 
+    "usermodel.clientRoleMapping.clientId": "NAMESPACE_1" 
+    } 
   }'

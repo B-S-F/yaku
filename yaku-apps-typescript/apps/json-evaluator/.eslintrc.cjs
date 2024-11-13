@@ -9,11 +9,8 @@ module.exports = {
       { destructuredArrayIgnorePattern: '^([.]{3})?_' },
     ],
     'no-control-regex': 0,
-    'no-restricted-imports': [
-      'error',
-      {
-        patterns: ['*.js'],
-      },
-    ],
+    "no-restricted-imports": ["error", {
+      "patterns": ["*.js"]
+    }]
   },
 }

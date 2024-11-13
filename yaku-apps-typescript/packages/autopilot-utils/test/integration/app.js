@@ -1,17 +1,12 @@
 import { Command } from 'commander'
-import {
-  AppError,
-  AppOutput,
-  AutopilotApp,
-  GetLogger,
-} from '../../dist/index.js'
+import { AppError, AppOutput, AutopilotApp, GetLogger } from '../../dist/index.js'
 
 /*
- * This is a command of the autopilot app.
- * It mirrors a simple evaluator
- * that can return green, red, fail or throw an error.
- * It is used for testing the autopilot app.
- */
+    * This is a command of the autopilot app.
+    * It mirrors a simple evaluator
+    * that can return green, red, fail or throw an error.
+    * It is used for testing the autopilot app.
+*/
 const evaluateCommand = new Command('evaluate')
 evaluateCommand.description('Evaluator test command.')
 evaluateCommand.option('--green', 'Return green status.')
@@ -40,20 +35,22 @@ fetchCommand.description('Fetch test command.')
 fetchCommand.option('--fail', 'Fail the fetch.')
 fetchCommand.option('--throw', 'Throw an unexpected error.')
 fetchCommand.action((options) => {
-  GetLogger().info('Fetch command called.')
-  const appOutput = new AppOutput()
-  if (options.fail) {
-    throw new AppError('Test error.')
-  } else if (options.throw) {
-    throw new Error('Test error.')
-  }
-  appOutput.addOutput({ test: 'test' })
-  appOutput.write()
+    GetLogger().info('Fetch command called.')
+    const appOutput = new AppOutput()
+    if (options.fail) {
+        throw new AppError('Test error.')
+    } else if (options.throw) {
+        throw new Error('Test error.')
+    }
+    appOutput.addOutput({ test: 'test' })
+    appOutput.write()
 })
 
-const app = new AutopilotApp('app', '0.0.1', 'some description', [
-  evaluateCommand,
-  fetchCommand,
-])
+const app = new AutopilotApp(
+  'app',
+  '0.0.1',
+  'some description',
+  [evaluateCommand, fetchCommand]
+)
 
 app.run()

@@ -17,7 +17,11 @@ import {
   cleanupSyncFiles,
 } from './files'
 
-import { ApiClient, Config, SecretMetadata } from '@B-S-F/yaku-client-lib'
+import {
+  ApiClient,
+  Config,
+  SecretMetadata,
+} from '@B-S-F/yaku-client-lib'
 import yp from '../yaku-prompts.js'
 import { Environment } from './environment'
 import fs from 'fs'

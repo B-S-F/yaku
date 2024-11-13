@@ -23,7 +23,9 @@
     "packages/autopilot-utils/tests/demo_app/src"
   ],
   "python.defaultInterpreterPath": "dist/export/python/virtualenvs/python-default/3.10.15/bin/python",
-  "python.testing.pytestArgs": ["."],
+  "python.testing.pytestArgs": [
+    "."
+  ],
   "python.testing.pytestEnabled": true,
   "python.testing.pytestPath": "dist/export/python/virtualenvs/python-default/3.10.15/bin/pytest",
   "python.testing.unittestEnabled": false,
@@ -31,8 +33,13 @@
     "dist/export/python/virtualenvs/python-default/3.10.15/bin/python"
   ],
   "coverage-gutters.coverageBaseDir": "dist/coverage/**",
-  "coverage-gutters.coverageFileNames": ["coverage.xml"],
-  "black-formatter.args": ["--config", "./pyproject.toml"],
+  "coverage-gutters.coverageFileNames": [
+    "coverage.xml"
+  ],
+  "black-formatter.args": [
+    "--config",
+    "./pyproject.toml"
+  ],
   "editor.formatOnSave": true,
   "cSpell.words": [
     "capsys",

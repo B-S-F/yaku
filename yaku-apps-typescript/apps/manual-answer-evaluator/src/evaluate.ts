@@ -3,7 +3,11 @@
  * Copyright (c) 2022, 2023 by grow platform GmbH
  */
 
-import { AppError, AppOutput, InitLogger } from '@B-S-F/autopilot-utils'
+import {
+  AppError,
+  AppOutput,
+  InitLogger,
+} from '@B-S-F/autopilot-utils'
 import {
   readEnvAndDoEvaluation,
   ManualAnswerEvaluatorEnv,

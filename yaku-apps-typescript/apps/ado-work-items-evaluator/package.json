@@ -23,7 +23,9 @@
     "typescript": "*",
     "vitest": "*"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "scripts": {
     "build": "tsup",
