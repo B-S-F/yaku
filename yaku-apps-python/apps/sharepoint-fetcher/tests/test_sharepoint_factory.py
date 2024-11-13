@@ -19,14 +19,14 @@ def settings():
     )
 
 
-config_file_data = ""
+filter_config_file_data = ""
 
 
 def test_create_on_premise_sharepoint(settings):
     settings.is_cloud = False
     list_title_property_map = []
     on_premise_sharepoint = SharePointFetcherFactory.selectSharepointInstance(
-        settings, list_title_property_map, config_file_data
+        settings, list_title_property_map, filter_config_file_data
     )
     assert on_premise_sharepoint is not None
 
@@ -35,6 +35,6 @@ def test_create_cloud_sharepoint(settings):
     settings.is_cloud = True
     list_title_property_map = []
     cloud_sharepoint = SharePointFetcherFactory.selectSharepointInstance(
-        settings, list_title_property_map, config_file_data
+        settings, list_title_property_map, filter_config_file_data
     )
     assert cloud_sharepoint is not None

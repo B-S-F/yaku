@@ -4,7 +4,7 @@ from typing import List, Optional, Union
 from yaku.autopilot_utils.checks import checks_dict
 from yaku.autopilot_utils.errors import AutopilotConfigurationError
 
-from .config import ConfigFileContent
+from .config import FilterConfigFileContent
 
 
 @dataclass
@@ -43,11 +43,13 @@ class FilesSelectors:
         return f"FilesSelector(filter: `{self.filter}`, selectors: [{', '.join([str(s) for s in self.selectors])}])"
 
 
-def parse_config_file_data(config_file_data: ConfigFileContent) -> List[FilesSelectors]:
+def parse_filter_config_file_data(
+    filter_config_file_data: FilterConfigFileContent,
+) -> List[FilesSelectors]:
     """
-    Parse filter rules content `config_file_data` from a config file.
+    Parse filter rules content `filter_config_file_data` from a config file.
 
-    The config file must follow the following YAML syntax (ensured by the ConfigFile model):
+    The config file must follow the following YAML syntax (ensured by the FilterConfigFile model):
 
         - files: "UsuallyARevisionSet(1)/*"
           title: "Optional title for referring to the selected file"
@@ -77,7 +79,7 @@ def parse_config_file_data(config_file_data: ConfigFileContent) -> List[FilesSel
     be given behind the operator, e.g. `equals: 5` or `contains: some text`.
     """
     result = []
-    for files_entry in config_file_data:
+    for files_entry in filter_config_file_data:
         selectors = []
         # TODO: warn if there is no select but a rules item
         for selector in files_entry.select:
