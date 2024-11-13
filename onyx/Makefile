@@ -34,7 +34,7 @@ test-coverage: unit-tests-coverage integration-tests-coverage
 .PHONY: unit-tests
 unit-tests:
 	go test --tags unit -v ./...
-	
+
 .PHONY: unit-tests-coverage
 unit-tests-coverage:
 	mkdir -p $(RESULTS_FOLDER)
@@ -55,7 +55,7 @@ integration-tests-coverage:
 	go test -tags integration -coverpkg=./... -race -coverprofile=$(COVERAGE_FOLDER)/int-cover.out -covermode=atomic -v 2>&1 ./... | go-junit-report -set-exit-code > $(RESULTS_FOLDER)/integration-tests.xml
 	gocov convert  $(COVERAGE_FOLDER)/int-cover.out > $(COVERAGE_FOLDER)/integration-coverage.json
 	cat $(COVERAGE_FOLDER)/integration-coverage.json | gocov report > $(COVERAGE_FOLDER)/integration-coverage.txt
-	echo "$(shell go tool cover -func=$(COVERAGE_FOLDER)/int-cover.out | grep total | awk '{print $$3}' | sed 's/%//')" > $(COVERAGE_FOLDER)/integration-totalcoverage.txt	
+	echo "$(shell go tool cover -func=$(COVERAGE_FOLDER)/int-cover.out | grep total | awk '{print $$3}' | sed 's/%//')" > $(COVERAGE_FOLDER)/integration-totalcoverage.txt
 	cat $(COVERAGE_FOLDER)/integration-coverage.json | gocov-xml > $(COVERAGE_FOLDER)/integration-coverage.xml
 
 .PHONY: tidy
@@ -81,7 +81,7 @@ setup:
 	go install github.com/AlekSi/gocov-xml@latest
 	go install github.com/jstemmer/go-junit-report/v2@latest
 	# Testing tools for the future
-	# go get -u github.com/golang/mock/mockgen 
+	# go get -u github.com/golang/mock/mockgen
 	# go get -u github.com/onsi/ginkgo/ginkgo
 	# go get -u github.com/onsi/gomega/...
 
