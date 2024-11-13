@@ -11,7 +11,7 @@ describe('KeyCloakModule', () => {
 
   beforeEach(async () => {
     // Set default values for environment variables
-    process.env.KEYCLOAK_SERVER = 'your_server'
+    process.env.KEYCLOAK_SERVER = 'http://your_server.com'
     process.env.KEYCLOAK_REALM = 'your_realm'
     process.env.KEYCLOAK_AUTH = 'on'
     process.env.KEYCLOAK_CLIENT_ID = 'your_client_id'
@@ -38,7 +38,7 @@ describe('KeyCloakModule', () => {
   it('should use configuration from environment variables', () => {
     const config = module.get<KeyCloakConfig>(KeyCloakConfig)
 
-    expect(config.server).toBe('your_server')
+    expect(config.server).toBe('http://your_server.com')
     expect(config.realm).toBe('your_realm')
     expect(config.enabled).toBe('on')
     expect(config.clientId).toBe('your_client_id')

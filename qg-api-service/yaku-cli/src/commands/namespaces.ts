@@ -1,21 +1,14 @@
 import { Command, Option } from 'commander'
-import { ApiClient, Namespace } from 'yaku-client-lib'
-import {
-  consoleErrorRed,
-  consoleWarnYellow,
-  handleRestApiError,
-  handleStandardParams,
-  logResultAsJson,
-  parseIntParameter,
-} from '../common.js'
-import {
-  getCurrentEnvironment,
-  loadEnvironments,
-  updateEnvironmentByKey,
-} from './environment.js'
-import inquirer from 'inquirer'
-import SearchBox from 'inquirer-search-list'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { handleRestApiError } from '../common.js'
 import { connect } from '../connect.js'
+import {
+  createNamespace,
+  listNamespaces,
+  showNamespaces,
+  switchNamespace,
+  updateNamespace,
+} from '../handlers/namespaces.js'
 
 export function createNamespacesSubcommands(program: Command): void {
   let client: ApiClient
@@ -28,8 +21,7 @@ export function createNamespacesSubcommands(program: Command): void {
     .description('List all namespaces visible for given user')
     .action(async () => {
       try {
-        handleStandardParams(client)
-        await logResultAsJson(client.getNamespaces())
+        await listNamespaces(client)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -40,36 +32,7 @@ export function createNamespacesSubcommands(program: Command): void {
     .alias('select')
     .description('Switch to a different namespace')
     .action(async (namespaceId) => {
-      handleStandardParams(client)
-      let namespaces: Namespace[] = []
-      try {
-        namespaces = await client.getNamespaces()
-      } catch (err) {
-        handleRestApiError(err)
-      }
-      if (namespaceId) {
-        namespaceId = parseIntParameter(namespaceId, 'namespace')
-        if (!namespaces.find((ns) => ns.id === namespaceId)) {
-          consoleErrorRed(
-            `Namespace with id ${namespaceId} not found. Use 'namespaces list' to see available namespaces.`
-          )
-          return
-        }
-      } else {
-        namespaceId = await selectNamespace(namespaces)
-        if (!namespaceId) {
-          consoleErrorRed('No namespace was selected!')
-          return
-        }
-      }
-      const envs = loadEnvironments()
-      const currentEnv = getCurrentEnvironment(envs)
-      updateEnvironmentByKey(
-        currentEnv.name,
-        'namespace',
-        namespaceId.toString()
-      )
-      console.log(`Switched to namespace with id ${namespaceId}`)
+      await switchNamespace(client, namespaceId)
     })
   program
     .command('create')
@@ -86,22 +49,7 @@ export function createNamespacesSubcommands(program: Command): void {
     )
     .action(async (name: string, users: string[], options) => {
       try {
-        handleStandardParams(client)
-
-        if (users.length > 0) {
-          consoleWarnYellow(`
-            DEPRECATION WARNING: "users" argument will be removed soon.
-            Your input "${users.join(' ')}" is ignored
-          `)
-        }
-
-        if (!options.initConfigFile) {
-          await logResultAsJson(client.createNamespace(name))
-        } else {
-          await logResultAsJson(
-            client.createNamespaceWithConfig(name, options.initConfigFile)
-          )
-        }
+        await createNamespace(client, name, users, options)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -114,9 +62,7 @@ export function createNamespacesSubcommands(program: Command): void {
     .argument('<id>', 'Id of the namespace to be shown')
     .action(async (id: string) => {
       try {
-        handleStandardParams(client)
-        const ns = parseIntParameter(id, 'id')
-        await logResultAsJson(client.getNamespace(ns))
+        await showNamespaces(client, id)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -145,58 +91,9 @@ export function createNamespacesSubcommands(program: Command): void {
     )
     .action(async (id: string, options) => {
       try {
-        handleStandardParams(client)
-        const ns = parseIntParameter(id, 'id')
-
-        if (options.users !== undefined) {
-          consoleWarnYellow(`
-            DEPRECATION WARNING: --users option will be removed soon.
-            Your input "--users ${options.users.join(' ')}" is ignored
-          `)
-        }
-
-        if (options.mode !== undefined) {
-          consoleWarnYellow(`
-            DEPRECATION WARNING: --mode option will be removed soon.
-            Your input "--mode ${options.mode}" is ignored
-          `)
-        }
-
-        await logResultAsJson(client.updateNamespace(ns, options.name))
+        await updateNamespace(client, id, options)
       } catch (err) {
         handleRestApiError(err)
       }
     })
-}
-
-export async function selectNamespace(
-  namespaces: Namespace[]
-): Promise<string | undefined> {
-  if (namespaces.length === 0) {
-    consoleErrorRed('No namespaces available!')
-    return
-  }
-  const choices = namespaces.map((ns) => {
-    return ns.name ? ns.id + ' - ' + ns.name : ns.id.toString()
-  })
-  choices.unshift('<empty> - No namespace')
-  inquirer.registerPrompt('search-list', SearchBox)
-  let namespaceId: string | undefined
-  await inquirer
-    .prompt([
-      {
-        type: 'search-list',
-        message: 'Select Namespace',
-        name: 'namespace',
-        choices: choices,
-      },
-    ])
-    .then(function (answers) {
-      if (answers.namespace === '<empty> - No namespace') {
-        namespaceId = undefined
-        return
-      }
-      namespaceId = parseInt(answers.namespace.split(' ')[0]).toString()
-    })
-  return namespaceId
 }

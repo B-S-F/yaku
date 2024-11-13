@@ -40,25 +40,25 @@ export const checkColors = [
 
 export class AddOverrideDto {
   @ApiProperty({
-    description: 'Path to the check for which the result is overridden',
+    description: 'Path to the check for which the status color is overridden',
     example: { chapter: '1', requirement: '1', check: '1' },
   })
   reference: CheckReference
 
   @ApiProperty({
-    description: 'Reason for overriding the check result',
+    description: 'Reason for overriding the checks status color',
     example: 'Not applicable for US markets',
   })
   comment: string
 
   @ApiProperty({
-    description: 'Specify the new color for the overridden check result',
+    description: 'Specify the new status color for the check',
     example: 'GREEN',
   })
   manualColor: CheckColor
 
   @ApiProperty({
-    description: "Specify the the original check result's color",
+    description: "Specify the status color of the original check's status",
     example: 'RED',
   })
   originalColor: CheckColor
@@ -72,25 +72,25 @@ export class OverrideDto {
   id: number
 
   @ApiProperty({
-    description: 'Path to the check for which the result is overridden',
+    description: 'Path to the check for which the status color is overridden',
     example: { chapter: '1', requirement: '1', check: '1' },
   })
   reference: CheckReference
 
   @ApiProperty({
-    description: 'Reason for overriding the check result',
+    description: "Reason for overriding the check's status color",
     example: 'Not applicable for US markets',
   })
   comment: string
 
   @ApiProperty({
-    description: 'Specify the new color for the overridden check result',
+    description: 'Specify the new status color for the check',
     example: 'GREEN',
   })
   manualColor: CheckColor
 
   @ApiProperty({
-    description: "Specify the the original check result's color",
+    description: "Specify the status color of the original check's status",
     example: 'RED',
   })
   originalColor: CheckColor
@@ -111,13 +111,13 @@ export class OverrideDto {
 
 export class UpdateOverrideDto {
   @ApiProperty({
-    description: 'Specify the new color for the overridden check result',
+    description: 'Specify the new check status color',
     example: 'GREEN',
   })
   manualColor: CheckColor
 
   @ApiProperty({
-    description: "Specify the the original check result's color",
+    description: "Specify the status color of the original check's status",
     example: 'RED',
   })
   originalColor: CheckColor

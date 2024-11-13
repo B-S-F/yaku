@@ -72,9 +72,8 @@ describe('Integration tests for namespaces', async () => {
     })
 
     it('should list namespaces', async () => {
-      const result: RunProcessResult = await cmdManager.runCommand(
-        `namespaces list`
-      )
+      const result: RunProcessResult =
+        await cmdManager.runCommand(`namespaces list`)
 
       const expectedData = [
         {
@@ -96,9 +95,8 @@ describe('Integration tests for namespaces', async () => {
     })
 
     it('shows a help message for namespaces list', async () => {
-      const result: RunProcessResult = await cmdManager.runCommand(
-        'namespaces list -h'
-      )
+      const result: RunProcessResult =
+        await cmdManager.runCommand('namespaces list -h')
 
       const expectedMessage: string[] = [
         'Usage: yaku namespaces list|ls [options]',
@@ -150,9 +148,8 @@ describe('Integration tests for namespaces', async () => {
     })
 
     it('should not switch to an inexistent namespace', async () => {
-      const result: RunProcessResult = await cmdManager.runCommand(
-        `namespaces sw 3`
-      )
+      const result: RunProcessResult =
+        await cmdManager.runCommand(`namespaces sw 3`)
 
       const expectedMessage: string[] = [
         `Namespace with id 3 not found. Use 'namespaces list' to see available namespaces.`,
@@ -167,9 +164,8 @@ describe('Integration tests for namespaces', async () => {
     })
 
     it('should show a help messages for switch namespace', async () => {
-      const result: RunProcessResult = await cmdManager.runCommand(
-        'namespaces sw -h'
-      )
+      const result: RunProcessResult =
+        await cmdManager.runCommand('namespaces sw -h')
 
       const expectedMessage: string[] = [
         'Usage: yaku namespaces switch|sw [options] [namespaceId]',
@@ -221,9 +217,8 @@ describe('Integration tests for namespaces', async () => {
 
   describe('Namespaces help', async () => {
     it('should show a help message for namespaces', async () => {
-      const result: RunProcessResult = await cmdManager.runCommand(
-        'namespaces -h'
-      )
+      const result: RunProcessResult =
+        await cmdManager.runCommand('namespaces -h')
 
       const expectedMessage: string[] = [
         'Usage: yaku namespaces|ns [options] [command]',

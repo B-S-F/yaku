@@ -1,15 +1,16 @@
 import { Command } from 'commander'
-import { ApiClient, QueryOptions, Run } from 'yaku-client-lib'
-import {
-  handleRestApiError,
-  handleStandardParams,
-  logDownloadedFile,
-  logResultAsJson,
-  logSuccess,
-  parseFilterOption,
-  parseIntParameter,
-} from '../common.js'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { handleRestApiError } from '../common.js'
 import { connect } from '../connect.js'
+import {
+  createRun,
+  deleteRun,
+  getRunEnvironment,
+  getRunEvidences,
+  getRunResult,
+  listRuns,
+  showRun,
+} from '../handlers/runs.js'
 
 export function createRunsSubcommands(program: Command): void {
   let client: ApiClient
@@ -38,36 +39,7 @@ export function createRunsSubcommands(program: Command): void {
     .option('-lo, --latestOnly', 'Show for each config only the latest run')
     .action(async (page: string, options) => {
       try {
-        handleStandardParams(client, namespace)
-        const pg = page ? parseIntParameter(page, 'page') : 1
-        const ic = options.itemCount
-          ? parseIntParameter(options.itemCount, 'itemCount')
-          : 20
-
-        const filterOption = parseFilterOption(options.filterBy)
-        const filterProperty: string[] = []
-        const filterValues: string[][] = []
-        if (filterOption.filterProperty) {
-          filterProperty.push(filterOption.filterProperty)
-          filterValues.push(filterOption.filterValues!)
-        }
-        if (options.latestOnly) {
-          filterProperty.push('latestOnly')
-          filterValues.push(['true'])
-        }
-        const queryOptions = new QueryOptions(
-          pg,
-          ic,
-          filterProperty,
-          filterValues,
-          options.sortBy,
-          options.ascending
-        )
-        if (options.all) {
-          await logResultAsJson(client!.listAllRuns(namespace!, queryOptions))
-        } else {
-          await logResultAsJson(client!.listRuns(namespace!, queryOptions))
-        }
+        await listRuns(client, namespace, page, options)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -81,10 +53,7 @@ export function createRunsSubcommands(program: Command): void {
     .option('-d, --details', 'Show debug information of the run as well')
     .action(async (runId: string, options) => {
       try {
-        const rn = handleStandardParams(client, namespace, runId, 'runId')
-        await logResultAsJson(
-          client!.getRun(namespace!, rn, Boolean(options.details))
-        )
+        await showRun(client, namespace, runId, options)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -114,49 +83,12 @@ export function createRunsSubcommands(program: Command): void {
         'Do NOT provide secrets. They will be ignored anyways." '
     )
     .action(async (configId: string, options) => {
-      const environment: { [key: string]: string } = {}
-      if (options.environment != null) {
-        if (options.environment.length % 2 != 0) {
-          program.error(
-            'Error: You provided additional environment variables but in the wrong format. Correct: KEY1 VALUE1 KEY2 VALUE2 ...',
-            { exitCode: 1 }
-          )
-        }
-
-        for (let i = 0; i < options.environment.length; i += 2) {
-          const key: string = options.environment[i]
-          if (key.length == 0) {
-            program.error(
-              'Error: You provided an environment variable with an empty key',
-              { exitCode: 1 }
-            )
-          }
-          environment[key] = options.environment[i + 1]
-        }
-      }
+      const environment: { [key: string]: string } = getRunEnvironment(
+        program,
+        options
+      )
       try {
-        const cf = handleStandardParams(client, namespace, configId, 'configId')
-        let result: Run
-        if (options.wait) {
-          const pollInterval = parseIntParameter(
-            options.pollInterval,
-            'poll-interval'
-          )
-          result = await client!.startAndAwaitRun(
-            namespace!,
-            cf,
-            environment,
-            pollInterval * 1000
-          )
-        } else {
-          result = await client!.startRun(namespace!, cf, environment)
-        }
-        if (!options.details) {
-          delete result.argoName
-          delete result.argoNamespace
-          delete result.log
-        }
-        await logResultAsJson(Promise.resolve(result))
+        await createRun(client, namespace, configId, options, environment)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -169,8 +101,7 @@ export function createRunsSubcommands(program: Command): void {
     .argument('<runId>', 'The numeric id of the requested run')
     .action(async (runId: string) => {
       try {
-        const rn = handleStandardParams(client, namespace, runId, 'runId')
-        await logDownloadedFile(client!.getRunResult(namespace!, rn))
+        await getRunResult(client, namespace, runId)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -183,8 +114,7 @@ export function createRunsSubcommands(program: Command): void {
     .argument('<runId>', 'The numeric id of the requested run')
     .action(async (runId: string) => {
       try {
-        const rn = handleStandardParams(client, namespace, runId, 'runId')
-        await logDownloadedFile(client!.getRunEvidences(namespace!, rn))
+        await getRunEvidences(client, namespace, runId)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -196,11 +126,7 @@ export function createRunsSubcommands(program: Command): void {
     .argument('<runId>', 'The numeric id of the run to be deleted')
     .action(async (runId: string) => {
       try {
-        const rn = handleStandardParams(client, namespace, runId, 'runId')
-        await logSuccess(
-          client!.deleteRun(namespace!, rn),
-          `Run with id ${runId} was successfully deleted`
-        )
+        await deleteRun(client, namespace, runId)
       } catch (err) {
         handleRestApiError(err)
       }

@@ -1,0 +1,90 @@
+metadata:
+  version: v2
+header:
+  name: title
+  version: 1.0.0
+  date: 2024-07-10 09:35
+  toolVersion: ''
+overallStatus: ERROR
+statistics:
+  counted-checks: 39
+  counted-automated-checks: 33
+  counted-manual-check: 5
+  counted-unanswered-checks: 1
+  counted-skipped-checks: 0
+  degree-of-automation: 84.62
+  degree-of-completion: 97.44
+chapters:
+  '1':
+    title: test
+    text: text
+    status: RED
+    requirements:
+      '1':
+        title: test
+        text: text
+        status: RED
+        checks:
+          '1':
+            title: test
+            type: automation
+            autopilots:
+              - name: autopilot name
+                steps:
+                  - title: Fetch
+                    id: fetch_2
+                    depends:
+                      - fetch_1
+                    logs:
+                      - '{"source": "stdout", "json": {"result": {"criterion": "Fixed ticket with ID 1234567 must be risk assessed", "fulfilled": false, "justification": "Please type the appropriate risk assessment for ticket with ID 1234567.", "metadata": {"Id": 1234567, "Filed Against": "Platform_General", "Summary": "some summary", "Creation Date": "2022-11-08T09:51:00", "Modified Date": "2023-06-09T14:05:00", "Defect Occurrence": "Always", "boolean": true, "test-json": {"key": "value"}}}}}'
+                      - '{"source": "stdout", "json": {"warning": "Your config file will be deprecated next month"}}'
+                      - '{"source": "stdout", "json": {"message": "I am a message"}}'
+                      - '{"source": "stderr", "text": "some error log"}'
+                    warnings:
+                      - 'Your config file will be deprecated next month'
+                    messages:
+                      - 'I am a message'
+                    configFiles:
+                      - 'configFile.yaml'
+                    outputDir: '1_1_1/files'
+                    resultFile: '1_1_1/data.json'
+                    inputDirs:
+                      - '1_2_1/files'
+                      - 'initializer/pdf-file-download/files'
+                    exitCode: 0
+            evaluation:
+              status: RED
+              reason: test
+              results:
+                - criterion: Criterion description
+                  fulfilled: false
+                  justification: 'Some justification'
+                  metadata:
+                    Creation Date: '2022-11-08T09:51:00'
+                    Modified Date: '2023-06-09T14:05:00'
+              logs:
+                - '{"source": "stdout", "json": {"result": {"criterion": "Fixed ticket with ID 1234567 must be risk assessed", "fulfilled": false, "justification": "Please type the appropriate risk assessment for ticket with ID 1234567.", "metadata": {"Id": 1234567, "Filed Against": "Platform_General", "Summary": "some summary", "Creation Date": "2022-11-08T09:51:00", "Modified Date": "2023-06-09T14:05:00", "Defect Occurrence": "Always", "boolean": true, "test-json": {"key": "value"}}}}}'
+                - '{"source": "stdout", "json": {"warning": "Your config file will be deprecated next month"}}'
+                - '{"source": "stdout", "json": {"message": "I am a message"}}'
+                - '{"source": "stderr", "text": "some error log"}'
+              warnings:
+                - 'Your config file will be deprecated next month'
+              messages:
+                - 'I am a message'
+              configFiles:
+                - 'configFile.yaml'
+              exitCode: 0
+finalize:
+  logs:
+    - '{"source": "stdout", "json": {"result": {"criterion": "Fixed ticket with ID 1234567 must be risk assessed", "fulfilled": false, "justification": "Please type the appropriate risk assessment for ticket with ID 1234567.", "metadata": {"Id": 1234567, "Filed Against": "Platform_General", "Summary": "some summary", "Creation Date": "2022-11-08T09:51:00", "Modified Date": "2023-06-09T14:05:00", "Defect Occurrence": "Always", "boolean": true, "test-json": {"key": "value"}}}}}'
+    - '{"source": "stdout", "json": {"warning": "Your config file will be deprecated next month"}}'
+    - '{"source": "stdout", "json": {"message": "I am a message"}}'
+    - '{"source": "stderr", "text": "some error log"}'
+    - '{"source": "stderr", "json": {"context": "some context", "errMsg": "some error"}}'
+  warnings:
+    - 'Your config file will be deprecated next month'
+  messages:
+    - 'I am a message'
+  configFiles:
+    - 'configFile.yaml'
+  exitCode: 0

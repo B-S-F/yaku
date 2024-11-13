@@ -101,6 +101,9 @@ export const {
   // Feature flag for the override controller - database migrations are still applied
   ENABLE_OVERRIDE_CONTROLLER = 'false',
 
+  // Feature flag for the result override controller - database migrations are still applied
+  ENABLE_RESULT_OVERRIDE_CONTROLLER = 'false',
+
   // Disable authentication with old tokens and log if old tokens are used
   DISABLE_OLD_TOKENS = 'false',
   // Log if old tokens are used, not needed, when DISABLE_OLD_TOKENS is set to "true"
@@ -108,4 +111,7 @@ export const {
 
   // Feature flag for the tasks feature, enabled if set to 'true'
   ENABLE_TASKS_CONTROLLER = 'false',
+
+  // Feature flag for the synthetic run endpoint, enabled if set to 'true
+  ENABLE_SYNTHETIC_RUN_ENDPOINT = 'false',
 } = process.env

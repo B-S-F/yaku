@@ -1,6 +1,6 @@
 {
-  "name": "yaku-client-lib",
-  "version": "0.58.0",
+  "name": "@B-S-F/yaku-client-lib",
+  "version": "0.62.0",
   "description": "A library that provides a wrapper around the rest calls towards the yaku api",
   "private": false,
   "license": "UNLICENSED",
@@ -15,8 +15,6 @@
   "scripts": {
     "build": "tsup && tsc --emitDeclarationOnly --declaration",
     "dev": "nodemon --watch \"src/**\" --exec npm run start",
-    "lint": "eslint \"**/*.ts\"",
-    "format": "prettier --write \"src/**/*.ts\"",
     "setup": "npm run build && npm install",
     "test": "npx jest",
     "test:cov": "npx jest --coverage"
@@ -25,26 +23,15 @@
     "type": "git",
     "url": "https://github.com/B-S-F/qg-api-service.git"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "devDependencies": {
     "@types/node": "^18.14.2",
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.4",
+    "jest": "^29.7.0",
     "tsup": "^6.6.3",
     "typescript": "^4.9.5"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
+    "moduleFileExtensions": ["js", "json", "ts"],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
@@ -53,17 +40,9 @@
     "moduleNameMapper": {
       "^(\\.\\.?\\/.+)\\.jsx?$": "$1"
     },
-    "extensionsToTreatAsEsm": [
-      ".ts"
-    ],
-    "coverageReporters": [
-      "cobertura",
-      "json-summary",
-      "text-summary"
-    ],
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
+    "extensionsToTreatAsEsm": [".ts"],
+    "coverageReporters": ["cobertura", "json-summary", "text-summary"],
+    "collectCoverageFrom": ["**/*.(t|j)s"],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },

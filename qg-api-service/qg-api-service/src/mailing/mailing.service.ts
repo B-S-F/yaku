@@ -28,12 +28,40 @@ type CommentNotification = {
   data: CommentData
 }
 
+// This data is referenced in templates/comment.mjml
+export type CommentApprovalReleaseData = {
+  user_name: string // TODO: maybe "username"
+  namespace_name: string // Needed, as UI does use the namespace name in their URL
+  release_id: number
+  release_name: string
+  comment_id: number
+  parent_comment_id: number
+  created_by: string
+  content: string
+}
+
+type CommentApprovalReleaseNotification = {
+  type: NotificationType.Comment
+  data: CommentApprovalReleaseData
+}
+
 // This data is referenced in templates/mention.mjml
 export type MentionData = Omit<CommentData, 'thread_id'>
 
 type MentionNotification = {
   type: NotificationType.Mention
   data: MentionData
+}
+
+// This data is referenced in templates/mention.mjml
+export type MentionApprovalReleaseData = Omit<
+  CommentApprovalReleaseData,
+  'thread_id'
+>
+
+type MentionApprovalReleaseNotification = {
+  type: NotificationType.MentionApprovalRelease
+  data: MentionApprovalReleaseData
 }
 
 // this data is referenced in templates/approval_status.mjml
@@ -152,7 +180,9 @@ export class MailingServiceImpl extends MailingService {
     subject: string,
     notification:
       | CommentNotification
+      | CommentApprovalReleaseNotification
       | MentionNotification
+      | MentionApprovalReleaseNotification
       | ApprovalStateNotification
       | ApprovalNotification
       | TaskAssignedNotification

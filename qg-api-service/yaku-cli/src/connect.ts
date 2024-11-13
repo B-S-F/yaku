@@ -1,9 +1,9 @@
-import { ApiClient } from 'yaku-client-lib'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
 import {
   Environment,
   loadCurrentEnvironment,
   updateEnvironment,
-} from './commands/environment.js'
+} from './handlers/environment.js'
 import { refreshOAuth } from './oauth.js'
 import { consoleWarnYellow, failWithError } from './common.js'
 import { EnvHttpProxyAgent } from 'undici'
@@ -14,9 +14,8 @@ export async function connect(): Promise<{
 }> {
   let currentEnv: Environment = loadCurrentEnvironment()
   // re-authenticate if it is an oauth environment
-  const updatedEnv: Environment | undefined = await refreshEnvironment(
-    currentEnv
-  )
+  const updatedEnv: Environment | undefined =
+    await refreshEnvironment(currentEnv)
   if (updatedEnv) {
     currentEnv = updatedEnv
   }

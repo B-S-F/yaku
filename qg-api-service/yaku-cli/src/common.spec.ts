@@ -17,7 +17,7 @@ import {
 } from './common.js'
 import { SpiedFunction } from 'jest-mock'
 import chalk from 'chalk'
-import inquirer from 'inquirer'
+import yp from './yaku-prompts.js'
 
 describe('Common functions of client lib', () => {
   afterEach(() => {
@@ -200,9 +200,7 @@ describe('Common functions of client lib', () => {
 
   describe('getResourceDeletionConfirmation()', () => {
     it('should return the provided answer', async () => {
-      const fun = jest
-        .spyOn(inquirer, 'prompt')
-        .mockImplementation((questions) => Promise.resolve({ continue: true }))
+      const fun = jest.spyOn(yp, 'confirm').mockResolvedValue(true)
 
       const result = await getResourceDeletionConfirmation({})
 
@@ -279,6 +277,13 @@ describe('Common functions of client lib', () => {
       const result = urlToApiUrl(urlText)
 
       expect(result).toBe(`${urlText}/api/v1`)
+    })
+    it('should return formatted as api url for partial api path', () => {
+      const urlText = 'http://dot.com/api/'
+
+      const result = urlToApiUrl(urlText)
+
+      expect(result).toBe(`${urlText}v1`)
     })
   })
 

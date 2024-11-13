@@ -22,12 +22,16 @@ import {
   Query,
   Res,
   StreamableFile,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common'
 import {
   ApiAcceptedResponse,
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiBody,
+  ApiConsumes,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOAuth2,
@@ -39,11 +43,14 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
+import { FileFieldsInterceptor } from '@nestjs/platform-express'
 import { ApiTooManyRequestsResponse } from '@nestjs/swagger/dist/decorators/api-response.decorator'
 import { Response } from 'express'
 import { z } from 'zod'
 import { getUserFromRequest } from '../module.utils'
+import { ResultValidatorService } from '../../gp-services/result-validator.service'
 import { Run, RunResult, RunStatus } from './run.entity'
+import { SyntheticRunGuard } from './run.guard'
 import { EVIDENCEFILE, RESULTFILE, RunService } from './run.service'
 
 class RunDto {
@@ -203,6 +210,35 @@ class RunPostDto {
   singleCheck?: SingleCheckDto
 }
 
+class FileResultContentDto {
+  @ApiProperty({
+    description: '',
+    type: 'array',
+    items: { type: 'string', format: 'binary' },
+  })
+  content: Express.Multer.File[]
+}
+
+class FileResultDto extends FileResultContentDto {
+  @ApiProperty({
+    description: '',
+    example: ['qg-result.yaml', 'evidences.zip'],
+    type: 'array',
+    items: { type: 'string' },
+  })
+  filename: string
+}
+
+class FilenameResultDto {
+  @ApiProperty({
+    description: '',
+    example: ['qg-result.yaml', 'evidences.zip'],
+    type: 'array',
+    items: { type: 'string' },
+  })
+  filename: string
+}
+
 const postSchema = z
   .object({
     configId: z.number().int().positive(),
@@ -214,6 +250,12 @@ const postSchema = z
         check: z.string().trim().min(1),
       })
       .optional(),
+  })
+  .strict()
+
+const filePostSchema = z
+  .object({
+    filename: z.string().trim().min(1),
   })
   .strict()
 
@@ -255,7 +297,9 @@ const runQuerySchema = queryOptionsSchema
 export class RunController {
   constructor(
     @Inject(RunService) readonly service: RunService,
-    @Inject(UrlHandlerFactory) readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) readonly urlHandler: UrlHandlerFactory,
+    @Inject(ResultValidatorService)
+    private readonly resultValidator: ResultValidatorService
   ) {}
 
   @Get()
@@ -343,6 +387,58 @@ export class RunController {
     response.status(HttpStatus.ACCEPTED)
 
     return toOutputDto(run, requestUrl.url('/configs', 1))
+  }
+
+  @Post('/synthetic')
+  @UseGuards(SyntheticRunGuard)
+  @ApiOperation({
+    summary: 'Start a new synthetic qg run with the given config',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: FileResultDto })
+  @UseInterceptors(FileFieldsInterceptor([{ name: 'content', maxCount: 2 }]))
+  async createSynthethic(
+    @Param('namespaceId') namespaceId: number,
+    @Query('configId') configId: number,
+    @Body() body: FilenameResultDto,
+    @UploadedFiles() file: FileResultContentDto,
+    @Res({ passthrough: true }) response: Response
+  ): Promise<void> {
+    validateId(namespaceId)
+    validateId(configId)
+    validateBody(body, filePostSchema)
+
+    const user = getUserFromRequest(response.req)
+
+    const requestUrl = this.urlHandler.getHandler(response)
+
+    // match filenames in body to content array
+    const data = {}
+    const filenamesRegex = /[a-zA-Z0-9_\-\s\)\(]+\.[a-zA-Z0-9]+(?=\s*,|\s*$)/g
+    const matches = body.filename.matchAll(filenamesRegex)
+
+    const filenameToContentMap: Map<string, number> = new Map()
+    let index = 0
+    for (const match of matches) {
+      filenameToContentMap.set(`${match[0]}`, index)
+      index++
+    }
+
+    // Guard against wrong filenames/missing files
+    if (filenameToContentMap.get(RESULTFILE) !== undefined && file.content[filenameToContentMap.get(RESULTFILE)]) {
+      const resultData =
+        file.content[filenameToContentMap.get(RESULTFILE)].buffer.toString(
+          'utf-8'
+        )
+      await this.resultValidator.validate(resultData)
+      data[RESULTFILE] = resultData
+    }
+    if (filenameToContentMap.get(EVIDENCEFILE) !== undefined && file.content[filenameToContentMap.get(EVIDENCEFILE)]) {
+      data[EVIDENCEFILE] =
+        file.content[filenameToContentMap.get(EVIDENCEFILE)].buffer
+    }
+
+    response.status(HttpStatus.NOT_IMPLEMENTED)
   }
 
   @Get(':runId')

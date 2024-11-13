@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { KeyCloakConfig, KeyCloakService } from './keycloak.service'
 import { LoggerModule } from 'nestjs-pino'
-import fetch from 'node-fetch'
-jest.mock('node-fetch')
+import { fetch, EnvHttpProxyAgent } from 'undici'
+jest.mock('undici')
 
 describe('KeyCloakService', () => {
   let service: KeyCloakService
@@ -446,15 +446,9 @@ describe('KeyCloakService', () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: 'client_id=foo&client_secret=bar&token=1234567890',
-        agent: expect.any(Object),
+        dispatcher: expect.any(EnvHttpProxyAgent),
       },
     )
-    expect(fetchSpy.mock.calls[0][1].agent).toBeDefined()
-    expect(
-      (fetchSpy.mock.calls[0][1].agent as any).getProxyForUrl(
-        'http://example.com',
-      ),
-    ).toEqual('http://proxy.example.com')
     process.env.HTTP_PROXY = undefined
   })
 

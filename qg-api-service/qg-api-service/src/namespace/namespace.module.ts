@@ -45,6 +45,7 @@ import {
   OpenAIServiceConfig,
 } from '../gp-services/openai.service'
 import { YamlValidatorService } from '../gp-services/yaml-validator.service'
+import { ResultValidatorService } from '../gp-services/result-validator.service'
 import {
   ConfigEntity,
   FileContentEntity,
@@ -151,6 +152,7 @@ import { FinishedWorkflowDetectionTask } from './workflow/workflow-task'
     CleanTestDataTask,
     YamlValidatorService,
     JsonValidatorService,
+    ResultValidatorService,
     FindingService,
     MetricService,
     UrlHandlerFactory,

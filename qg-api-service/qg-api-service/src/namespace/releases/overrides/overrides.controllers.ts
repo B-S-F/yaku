@@ -1,36 +1,38 @@
 import {
   UrlHandlerFactory,
-  validateId,
   validateBody,
+  validateId,
 } from '@B-S-F/api-commons-lib'
 import {
-  Controller,
-  Inject,
-  Post,
-  Param,
-  Req,
-  NotFoundException,
   BadRequestException,
   Body,
+  Controller,
   Delete,
-  HttpCode,
-  Patch,
   Get,
+  HttpCode,
+  Inject,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Req,
   UseGuards,
 } from '@nestjs/common'
 import {
   ApiBearerAuth,
-  ApiOAuth2,
-  ApiUnauthorizedResponse,
-  ApiForbiddenResponse,
-  ApiTags,
-  ApiOperation,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiOAuth2,
   ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
-import { getUserFromRequest } from '../../module.utils'
 import { Request } from 'express'
 import { QueryFailedError } from 'typeorm'
+import { getUserFromRequest } from '../../module.utils'
+import { OverrideAuthGuard } from './override.auth.guard'
+import { OverridesService } from './overrides.service'
 import {
   AddOverrideDto,
   OVERRIDE_UNIQUE_PER_RELEASE_CONSTRAINT,
@@ -39,8 +41,6 @@ import {
   addOverrideDtoSchema,
   updateOverrideDtoSchema,
 } from './overrides.utils'
-import { OverridesService } from './overrides.service'
-import { OverrideAuthGuard } from './override.auth.guard'
 
 @UseGuards(OverrideAuthGuard)
 @ApiBearerAuth()
@@ -57,7 +57,7 @@ export class OverridesController {
 
   @Post()
   @ApiOperation({
-    summary: 'Override a check result for this release',
+    summary: "Override a check's status color for this release",
   })
   @ApiCreatedResponse({ description: 'Override added' })
   async createOverride(
@@ -104,7 +104,7 @@ export class OverridesController {
 
   @Patch('/:overrideId')
   @ApiOperation({
-    summary: 'Update an override for a check result',
+    summary: "Update an override for a check's status color",
   })
   @ApiOkResponse({ description: 'Override modified' })
   @HttpCode(200)
@@ -134,10 +134,10 @@ export class OverridesController {
 
   @Get()
   @ApiOperation({
-    summary: 'Returns all check result overrides for a release',
+    summary: 'Returns all check status color overrides for a release',
   })
   @ApiOkResponse({
-    description: 'All check result overrides for the release provided',
+    description: 'All check status color overrides for the release provided',
   })
   async getAllOverrides(
     @Param('namespaceId') namespaceId: number,
@@ -148,7 +148,7 @@ export class OverridesController {
 
   @Delete('/:overrideId')
   @ApiOperation({
-    summary: 'Delete an override for a check result',
+    summary: "Delete an override for a check's status color",
   })
   @ApiOkResponse({ description: 'Override deleted' })
   @HttpCode(200)

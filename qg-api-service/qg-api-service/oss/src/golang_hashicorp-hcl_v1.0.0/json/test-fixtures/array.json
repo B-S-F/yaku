@@ -1,4 +1,4 @@
 {
-	"foo": [1, 2, "bar"],
-	"bar": "baz"
+  "foo": [1, 2, "bar"],
+  "bar": "baz"
 }

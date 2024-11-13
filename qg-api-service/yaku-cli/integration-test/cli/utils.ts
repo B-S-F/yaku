@@ -3,7 +3,7 @@ import { RunProcessResult, run } from './process'
 export class CommandFacade {
   constructor(
     protected executablePath: string,
-    protected runtimeConfig: string = '.yakurc'
+    protected runtimeConfig = '.yakurc'
   ) {}
 
   public async runCommand(command: string): Promise<RunProcessResult> {

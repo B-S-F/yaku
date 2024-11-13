@@ -200,8 +200,6 @@ describe('CommentsService', () => {
   })
 
   describe('createCommentNotifications', () => {
-    const mentionsTitle =
-      'You have been mentioned in a comment related to a release approval'
     const participantsTitle = 'A new comment was added to your discussion'
 
     afterEach(() => jest.restoreAllMocks())
@@ -221,6 +219,10 @@ describe('CommentsService', () => {
             check_id: '1',
             chapter_id: '1',
           },
+          mentionNotificationTypeReference: NotificationType.Mention,
+          mentionsTitle:
+            'You have been mentioned in a comment related to a check',
+          commentNotificationTypeReference: NotificationType.Comment,
         },
       ],
       [
@@ -228,11 +230,13 @@ describe('CommentsService', () => {
         {
           referenceType: ReferenceType.RELEASE,
           reference: undefined,
-          notificationReference: {
-            requirement_id: '',
-            check_id: '',
-            chapter_id: '',
-          },
+          notificationReference: {},
+          mentionNotificationTypeReference:
+            NotificationType.MentionApprovalRelease,
+          mentionsTitle:
+            'You have been mentioned in a comment related to a release approval',
+          commentNotificationTypeReference:
+            NotificationType.CommentApprovalRelease,
         },
       ],
     ])(
@@ -264,10 +268,10 @@ describe('CommentsService', () => {
         const expectedNotificationCalls = [
           [
             user2.id,
-            mentionsTitle,
+            testData.mentionsTitle,
             {
               data: expectedMentionsNotificationData,
-              type: NotificationType.Mention,
+              type: testData.mentionNotificationTypeReference,
             },
           ],
           [
@@ -275,7 +279,7 @@ describe('CommentsService', () => {
             participantsTitle,
             {
               data: expectedCommentsNotificationData,
-              type: NotificationType.Comment,
+              type: testData.commentNotificationTypeReference,
             },
           ],
         ]
@@ -307,15 +311,48 @@ describe('CommentsService', () => {
       }
     )
 
-    it.each([['ReferenceType.CHECK'], ['ReferenceType.RELEASE']])(
+    it.each([
+      [
+        'ReferenceType.CHECK',
+        ReferenceType.CHECK,
+        'You have been mentioned in a comment related to a check',
+        {
+          requirement_id: '1',
+          check_id: '1',
+          chapter_id: '1',
+        },
+        {
+          requirement: '1',
+          check: '1',
+          chapter: '1',
+        },
+        NotificationType.Mention,
+        NotificationType.Comment,
+      ],
+      [
+        'ReferenceType.RELEASE',
+        ReferenceType.RELEASE,
+        'You have been mentioned in a comment related to a release approval',
+        {},
+        {},
+        NotificationType.MentionApprovalRelease,
+        NotificationType.CommentApprovalRelease,
+      ],
+    ])(
       'should push notifications to mentions, subscribers and participants on reply to %s comment',
-      async (referenceType) => {
-        const childCommentContent = `@user2@domain.gTLD replies to ${referenceType} comment and mentions @user4@domain.gTLD. @nonExistingUser@domain.gTLD does not exists in this namespace`
-        const expectedNotificationContent = `@${user2.displayName} replies to ${referenceType} comment and mentions @${user4.displayName}. @nonExistingUser@domain.gTLD does not exists in this namespace`
+      async (
+        referenceTypeStr,
+        referenceType,
+        mentionsTitle,
+        notificationReference,
+        parentReference,
+        notificationTypeMention,
+        notificationTypeComment
+      ) => {
+        const childCommentContent = `@user2@domain.gTLD replies to ${referenceTypeStr} comment and mentions @user4@domain.gTLD. @nonExistingUser@domain.gTLD does not exists in this namespace`
+        const expectedNotificationContent = `@${user2.displayName} replies to ${referenceTypeStr} comment and mentions @${user4.displayName}. @nonExistingUser@domain.gTLD does not exists in this namespace`
         const expectedNotificationData = {
-          chapter_id: '',
-          requirement_id: '',
-          check_id: '',
+          ...notificationReference,
           comment_id: childComment.id,
           parent_comment_id: basicComment.id,
           content: expectedNotificationContent,
@@ -340,7 +377,7 @@ describe('CommentsService', () => {
                 ...expectedCommentsNotificationData,
                 user_name: userInNamespace(user3).firstName,
               },
-              type: NotificationType.Comment,
+              type: notificationTypeComment,
             },
           ],
           [
@@ -351,7 +388,7 @@ describe('CommentsService', () => {
                 ...expectedCommentsNotificationData,
                 user_name: userInNamespace(user1).firstName,
               },
-              type: NotificationType.Comment,
+              type: notificationTypeComment,
             },
           ],
           [
@@ -359,18 +396,14 @@ describe('CommentsService', () => {
             mentionsTitle,
             {
               data: expectedMentionsNotificationData,
-              type: NotificationType.Mention,
+              type: notificationTypeMention,
             },
           ],
         ]
 
         const parentComment = basicComment
-        parentComment.referenceType = ReferenceType.CHECK
-        parentComment.reference = {
-          chapter: '1',
-          requirement: '1',
-          check: '1',
-        } as CheckReference
+        parentComment.referenceType = referenceType
+        parentComment.reference = parentReference as CheckReference
 
         childComment.referenceType = ReferenceType.COMMENT
         childComment.content = childCommentContent
@@ -411,45 +444,76 @@ describe('CommentsService', () => {
       [
         'ReferenceType.CHECK',
         {
-          referenceType: ReferenceType.CHECK,
-          reference: {
-            requirement: '1',
-            check: '1',
-            chapter: '1',
-          } as CheckReference,
+          reference: {},
           notificationReference: {
-            requirement_id: '1',
-            check_id: '1',
-            chapter_id: '1',
+            requirement_id: '3',
+            check_id: '4',
+            chapter_id: '5',
           },
-          parent: undefined,
+          parent: {
+            referenceType: ReferenceType.CHECK,
+            reference: {
+              chapter: '5',
+              requirement: '3',
+              check: '4',
+            },
+          },
+          mentionNotificationTypeReference: NotificationType.Mention,
+          mentionsTitle:
+            'You have been mentioned in a comment related to a check',
         },
       ],
       [
         'ReferenceType.RELEASE',
         {
-          referenceType: ReferenceType.RELEASE,
-          notificationReference: {
-            requirement_id: '',
-            check_id: '',
-            chapter_id: '',
-          },
+          notificationReference: {},
           reference: undefined,
-          parent: undefined,
+          parent: {
+            referenceType: ReferenceType.RELEASE,
+            reference: {},
+          },
           myItEachValue: 'in IT.EACH',
+          mentionNotificationTypeReference:
+            NotificationType.MentionApprovalRelease,
+          mentionsTitle:
+            'You have been mentioned in a comment related to a release approval',
         },
       ],
       [
-        'ReferenceType.COMMENT',
+        'ReferenceType.CHECK',
         {
-          referenceType: ReferenceType.COMMENT,
           notificationReference: {
-            requirement_id: '',
-            check_id: '',
-            chapter_id: '',
+            requirement_id: '2',
+            check_id: '3',
+            chapter_id: '1',
           },
           reference: undefined,
-          parent: { id: 1 },
+          parent: {
+            referenceType: ReferenceType.CHECK,
+            reference: {
+              chapter: '1',
+              requirement: '2',
+              check: '3',
+            },
+          },
+          mentionNotificationTypeReference: NotificationType.Mention,
+          mentionsTitle:
+            'You have been mentioned in a comment related to a check',
+        },
+      ],
+      [
+        'ReferenceType.RELEASE',
+        {
+          notificationReference: {},
+          reference: undefined,
+          parent: {
+            referenceType: ReferenceType.RELEASE,
+            reference: {},
+          },
+          mentionNotificationTypeReference:
+            NotificationType.MentionApprovalRelease,
+          mentionsTitle:
+            'You have been mentioned in a comment related to a release approval',
         },
       ],
     ])(
@@ -457,8 +521,7 @@ describe('CommentsService', () => {
       async (_referenceType, testData) => {
         const initialContent = `@user1@domain.gTLD creates new ${_referenceType} comment mentioning @user2@domain.gTLD and @user3@domain.gTLD`
         const commentContent = `@user1@domain.gTLD edits ${_referenceType} comment mentioning @user2@domain.gTLD and @user4@domain.gTLD`
-        const mentionsTitle =
-          'You have been mentioned in a comment related to a release approval'
+        const mentionsTitle = testData.mentionsTitle
         const expectedNotificatonContent = `@${user1.displayName} edits ${_referenceType} comment mentioning @${user2.displayName} and @${user4.displayName}`
         const expectedMentionsNotificationData = {
           ...testData.notificationReference,
@@ -477,19 +540,24 @@ describe('CommentsService', () => {
             mentionsTitle,
             {
               data: expectedMentionsNotificationData,
-              type: NotificationType.Mention,
+              type: testData.mentionNotificationTypeReference,
             },
           ],
         ]
 
-        basicComment.referenceType = testData.referenceType
-        basicComment.content = commentContent
-        basicComment.reference = testData.reference
-        basicComment.parent = testData.parent
+        const parentComment = basicComment
+        parentComment.referenceType = testData.parent.referenceType
+        parentComment.reference = testData.parent.reference as CheckReference
+
+        childComment.referenceType = ReferenceType.COMMENT
+        childComment.content = commentContent
+
+        childComment.parent = parentComment
+        parentComment.children = [basicComment]
 
         jest
           .spyOn(queryRunner.manager, 'findOneOrFail')
-          .mockResolvedValue(basicComment)
+          .mockResolvedValue(childComment)
         const notificationServiceSpy: jest.Spied<
           typeof notificationService.pushNotification
         > = jest.spyOn(notificationService, 'pushNotification')
@@ -658,9 +726,8 @@ describe('CommentsService', () => {
       childComment.parent = basicComment
       basicComment.children = [childComment]
       basicComment.referenceType = ReferenceType.RELEASE
-      const result = await service.toCommentWithRepliesAndReferenceDto(
-        basicComment
-      )
+      const result =
+        await service.toCommentWithRepliesAndReferenceDto(basicComment)
       expect(result.replies).toHaveLength(1)
       expect(result.replies[0]).toEqual(
         await service.toCommentDto(childComment)
@@ -676,9 +743,8 @@ describe('CommentsService', () => {
       basicComment.reference = reference
       basicComment.referenceType = ReferenceType.CHECK
       childComment.parent = basicComment
-      const result = await service.toCommentWithRepliesAndReferenceDto(
-        basicComment
-      )
+      const result =
+        await service.toCommentWithRepliesAndReferenceDto(basicComment)
       expect(result.reference).toEqual({
         type: ReferenceType.CHECK,
         chapter: '1',
@@ -690,9 +756,8 @@ describe('CommentsService', () => {
     it('should return a comment reference', async () => {
       basicComment.parent = { id: 1 } as CommentEntity
       basicComment.referenceType = ReferenceType.COMMENT
-      const result = await service.toCommentWithRepliesAndReferenceDto(
-        basicComment
-      )
+      const result =
+        await service.toCommentWithRepliesAndReferenceDto(basicComment)
       expect(result.reference).toEqual({
         type: ReferenceType.COMMENT,
         id: 1,

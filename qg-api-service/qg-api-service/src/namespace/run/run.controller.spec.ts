@@ -26,6 +26,8 @@ import { Namespace } from '../namespace/namespace.entity'
 import { RunController } from './run.controller'
 import { Run, RunResult, RunStatus } from './run.entity'
 import { EVIDENCEFILE, RESULTFILE, RunService } from './run.service'
+import { ResultValidatorService } from '../../gp-services/result-validator.service'
+import { YamlValidatorService } from '../../gp-services/yaml-validator.service'
 import { testUser, baseUrl } from '../../gp-services/test-services'
 
 describe('RunController', () => {
@@ -135,6 +137,8 @@ describe('RunController', () => {
           },
         },
         UrlHandlerFactory,
+        YamlValidatorService,
+        ResultValidatorService,
         {
           provide: UrlProtocolConfig,
           useValue: {

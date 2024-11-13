@@ -15,6 +15,7 @@ import {
   HistoryQueryOptions,
   HistoryType,
 } from './history.utils'
+import { CheckResultOverrideAuditService } from './overrides/check-result-overrides/check-result-override.entity'
 import { OverrideAuditService } from './overrides/override.entity'
 import { ReleaseAuditService, ReleaseEntity } from './release.entity'
 
@@ -67,6 +68,12 @@ describe('HistoryService', () => {
         },
         {
           provide: OverrideAuditService,
+          useValue: {
+            list: jest.fn(),
+          },
+        },
+        {
+          provide: CheckResultOverrideAuditService,
           useValue: {
             list: jest.fn(),
           },
@@ -357,9 +364,8 @@ describe('HistoryService', () => {
         modificationTime: new Date('2021-02-01T00:00:00.000Z'),
       } as any
 
-      const result = await service.approvalAuditToHistoryItem(
-        approvalAuditCreated
-      )
+      const result =
+        await service.approvalAuditToHistoryItem(approvalAuditCreated)
       expect(result.type).toEqual(HistoryType.EVENT)
 
       expect(result.timestamp).toEqual(approvalAuditCreated.modificationTime)
@@ -380,9 +386,8 @@ describe('HistoryService', () => {
         modificationTime: new Date('2021-02-01T00:00:00.000Z'),
       } as any
 
-      const result = await service.approvalAuditToHistoryItem(
-        approvalAuditDeleted
-      )
+      const result =
+        await service.approvalAuditToHistoryItem(approvalAuditDeleted)
       expect(result.type).toEqual(HistoryType.EVENT)
       expect(result.timestamp).toEqual(approvalAuditDeleted.modificationTime)
       expect(result.data).toEqual({
@@ -406,9 +411,8 @@ describe('HistoryService', () => {
         modificationTime: new Date('2021-02-01T00:00:00.000Z'),
       } as any
 
-      const result = await service.releaseAuditToHistoryItem(
-        releaseAuditUpdated
-      )
+      const result =
+        await service.releaseAuditToHistoryItem(releaseAuditUpdated)
       expect(result.type).toEqual(HistoryType.EVENT)
       expect(result.timestamp).toEqual(releaseAuditUpdated.modificationTime)
       expect(result.data).toEqual({
@@ -430,9 +434,8 @@ describe('HistoryService', () => {
         modificationTime: new Date('2021-02-01T00:00:00.000Z'),
       } as any
 
-      const result = await service.releaseAuditToHistoryItem(
-        releaseAuditUpdated
-      )
+      const result =
+        await service.releaseAuditToHistoryItem(releaseAuditUpdated)
       expect(result.type).toEqual(HistoryType.EVENT)
       expect(result.timestamp).toEqual(releaseAuditUpdated.modificationTime)
       expect(result.data).toEqual({
@@ -454,9 +457,8 @@ describe('HistoryService', () => {
         modificationTime: new Date('2021-02-01T00:00:00.000Z'),
       } as any
 
-      const result = await service.releaseAuditToHistoryItem(
-        releaseAuditUpdated
-      )
+      const result =
+        await service.releaseAuditToHistoryItem(releaseAuditUpdated)
       expect(result.type).toEqual(HistoryType.EVENT)
       expect(result.timestamp).toEqual(releaseAuditUpdated.modificationTime)
       expect(result.data).toEqual({
