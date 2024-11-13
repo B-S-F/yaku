@@ -202,14 +202,12 @@ export const validateRequiredEnvVariables = () => {
   return defenderForCloudReportType
 }
 
-export function getUnhealthyRecommendations(
-  recommendations: any[]
-) {
+export function getUnhealthyRecommendations(recommendations: any[]) {
   const unhealthyRecommendations: any[] = []
   for (const recommendation of recommendations) {
     if (recommendation.properties.status?.code === 'Unhealthy') {
       unhealthyRecommendations.push(recommendation)
-    } 
+    }
   }
   return unhealthyRecommendations
 }
@@ -346,7 +344,8 @@ export const run = async () => {
       )
 
       const recommendations = await getRecommendationsOnASubscription()
-      const unhealthyRecommendations = getUnhealthyRecommendations(recommendations)
+      const unhealthyRecommendations =
+        getUnhealthyRecommendations(recommendations)
       const recommendationsMetadata =
         await getRecommendationsMetadataOnASubscription()
       const recommendationsAndMetadata = combineRecommendationAndMetadata(
@@ -474,7 +473,8 @@ export const run = async () => {
               categories: recommendation.properties?.categories,
               severity: recommendation.properties?.severity,
               userImpact: recommendation.properties?.userImpact,
-              implementationEffort: recommendation.properties?.implementationEffort,
+              implementationEffort:
+                recommendation.properties?.implementationEffort,
               threats: recommendation.properties?.threats,
             },
           })

@@ -1,7 +1,4 @@
-import {
-  KeyCloakConfig,
-  KeyCloakService,
-} from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakConfig, KeyCloakService } from '@B-S-F/api-keycloak-auth-lib'
 import { Module } from '@nestjs/common'
 import { LoggerModule } from 'nestjs-pino'
 import {

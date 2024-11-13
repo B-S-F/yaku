@@ -31,9 +31,8 @@ describe('FAILED status scenarios', () => {
 
   it('should set status to FAILED when environment variables are missing', async () => {
     const env = {}
-    const options: MockServerOptions = await getFAILEDEmptyFixture(
-      MOCK_SERVER_PORT
-    )
+    const options: MockServerOptions =
+      await getFAILEDEmptyFixture(MOCK_SERVER_PORT)
     mockServer = new MockServer(options)
 
     const result: RunProcessResult = await run(
@@ -107,9 +106,8 @@ describe('FAILED status scenarios', () => {
     async (envVariable) => {
       const env = { ...defaultEnvironment }
       env[`${envVariable.name}`] = envVariable.value
-      const options: MockServerOptions = await getFAILEDEmptyFixture(
-        MOCK_SERVER_PORT
-      )
+      const options: MockServerOptions =
+        await getFAILEDEmptyFixture(MOCK_SERVER_PORT)
       mockServer = new MockServer(options)
 
       const result: RunProcessResult = await run(
@@ -135,9 +133,8 @@ describe('FAILED status scenarios', () => {
 
   it('should set status to FAILED when login fails', async () => {
     const env = { ...defaultEnvironment }
-    const options: MockServerOptions = await getFAILEDLoginFixture(
-      MOCK_SERVER_PORT
-    )
+    const options: MockServerOptions =
+      await getFAILEDLoginFixture(MOCK_SERVER_PORT)
     mockServer = new MockServer(options)
 
     const result: RunProcessResult = await run(

@@ -34,12 +34,12 @@ RUN set -ex pipefail \
         python-is-python3 \
         unzip \
         xfonts-utils \
-        xz-utils \     
+        xz-utils \
     && echo "Installing nodejs ${NODE_VERSION}" \
         && mkdir -p /etc/apt/keyrings | curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
         && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_VERSION}.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
         && apt-get update -y && apt-get install nodejs -y \
-    # Install Trivy is currently broken see https://github.com/aquasecurity/trivy-repo/issues/32 
+    # Install Trivy is currently broken see https://github.com/aquasecurity/trivy-repo/issues/32
     # && apt-get install -y apt-transport-https gnupg lsb-release \
     # && curl https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add - \
     # && echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | tee -a /etc/apt/sources.list.d/trivy.list \

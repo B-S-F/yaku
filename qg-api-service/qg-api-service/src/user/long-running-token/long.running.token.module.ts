@@ -9,10 +9,7 @@ import { Module } from '@nestjs/common'
 import { LocalKeyCloakModule } from '../../keycloak/local.keycloak.module'
 import { LongRunningTokenService } from './long.running.token.service'
 import { SERVICE_PROTOCOL } from '../../config'
-import {
-  UrlHandlerFactory,
-  UrlProtocolConfig,
-} from '@B-S-F/api-commons-lib'
+import { UrlHandlerFactory, UrlProtocolConfig } from '@B-S-F/api-commons-lib'
 import { AuthCache, AuthCacheConfig } from './long.running.token.cache'
 import { LongRunningTokenAuthGuard } from './long.running.token.auth.guard'
 

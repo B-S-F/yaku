@@ -1,10 +1,6 @@
 import { jest } from '@jest/globals'
 import { listReleases, showRelease, deleteRelease } from './releases'
-import {
-  ApiClient,
-  Release,
-  ReleasePaginated,
-} from '@B-S-F/yaku-client-lib'
+import { ApiClient, Release, ReleasePaginated } from '@B-S-F/yaku-client-lib'
 import yp from '../yaku-prompts.js'
 
 const testApiClient = new ApiClient({

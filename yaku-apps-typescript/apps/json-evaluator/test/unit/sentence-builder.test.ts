@@ -67,7 +67,7 @@ describe('getOperation', () => {
       'subject',
       'reference',
       '===',
-      'receiver',
+      'receiver'
     )
 
     expect(message).toContain(`_receiver_`)

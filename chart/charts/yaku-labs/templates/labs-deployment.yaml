@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "yaku.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount | default 1 }} 
+  replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
       {{- include "yaku.selectorLabels" . | nindent 6 }}
@@ -79,7 +79,7 @@ spec:
           volumeMounts:
           - name: probe-script
             mountPath: /tmp/probe.sh
-            subPath: probe.sh     
+            subPath: probe.sh
       volumes:
       - name: pvc-data
         persistentVolumeClaim:

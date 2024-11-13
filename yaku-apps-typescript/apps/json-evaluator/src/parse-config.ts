@@ -7,14 +7,14 @@ import { Check, Config, ConfigSchema, variableRegex } from './types'
 import { isValidCheckIndex } from './util'
 
 export const readYamlData = async (
-  filePath: string,
+  filePath: string
 ): Promise<{ checks: Check[] }> => {
   try {
     const data = await readFile(filePath, 'utf-8')
     return YAML.parse(data)
   } catch (error) {
     throw new AppError(
-      `File ${filePath} could not be read, failed with error: ${error}`,
+      `File ${filePath} could not be read, failed with error: ${error}`
     )
   }
 }
@@ -35,7 +35,7 @@ export const parseConfig = async (filepath: string) => {
         // This helps remove bad emphasises in markdown
         const checkNameWithUnderscores = config.checks[checkIndex].name.replace(
           /_/g,
-          '\\_',
+          '\\_'
         )
 
         const msg = `check _${checkNameWithUnderscores}_ contains not-allowed characters, allowed characters are alphanumeric and underscores (\\_). [Regexp](https://regex101.com/) used to validate check names: _${variableRegex}_`

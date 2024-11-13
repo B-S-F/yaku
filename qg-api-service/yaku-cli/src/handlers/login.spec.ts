@@ -7,11 +7,7 @@ import {
   loginAndCreateEnv,
   selectNamespaceAndUpdateEnv,
 } from './login'
-import {
-  ApiClient,
-  Namespace,
-  NewTokenMetadata,
-} from '@B-S-F/yaku-client-lib'
+import { ApiClient, Namespace, NewTokenMetadata } from '@B-S-F/yaku-client-lib'
 import fs from 'fs'
 import yp from '../yaku-prompts.js'
 import { OAuthClient } from '../oauth'
