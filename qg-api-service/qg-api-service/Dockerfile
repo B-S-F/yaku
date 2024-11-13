@@ -4,7 +4,7 @@
 
 ARG BASE_IMAGE_NAME="node:18-alpine"
 
-FROM ${BASE_IMAGE_NODEJS_NAME} As development
+FROM ${BASE_IMAGE_NAME} As development
 
 USER node
 RUN mkdir /home/node/app
@@ -24,7 +24,7 @@ FROM ${BASE_IMAGE_NAME}  As build
 
 RUN apk --no-cache add zip
 
-ENV PATH=$PATH:/home/node/app/node_modules/.bin \
+ENV PATH=$PATH:/home/node/app/node_modules/.bin
 
 WORKDIR /home/node/app
 
