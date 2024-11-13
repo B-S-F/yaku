@@ -1,6 +1,8 @@
 package executor
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 
@@ -9,6 +11,7 @@ import (
 	"github.com/B-S-F/yaku/onyx/pkg/workdir"
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFinalizeExecuteIntegration(t *testing.T) {
@@ -55,6 +58,12 @@ func TestFinalizeExecuteIntegration(t *testing.T) {
 			env := make(map[string]string)
 			secrets := make(map[string]string)
 
+			// pre-create existing config files
+			for file, _ := range item.Configs {
+				err := os.WriteFile(filepath.Join(tmpDir, file), []byte("config-data"), os.ModeAppend)
+				require.NoError(t, err)
+			}
+
 			// act
 			finalizeExecutor := NewFinalizeExecutor(wdUtils, tmpDir, logger, 10*time.Minute)
 			result, err := finalizeExecutor.Execute(item, env, secrets)
@@ -64,6 +73,12 @@ func TestFinalizeExecuteIntegration(t *testing.T) {
 			assert.NoError(t, err)
 			assert.Equal(t, tc.want.ExitCode, result.ExitCode)
 			assert.Equal(t, tc.want.Logs, result.Logs)
+
+			for file, content := range item.Configs {
+				b, err := os.ReadFile(filepath.Join(tmpDir, file))
+				require.NoError(t, err)
+				assert.Equal(t, content, string(b))
+			}
 		})
 	}
 }
