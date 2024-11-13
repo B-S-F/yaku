@@ -9,12 +9,11 @@ from .tests_tqdm import StringIO, closing, importorskip, patch_lock, skip
 
 class Time(object):
     """Fake time class class providing an offset"""
-
     offset = 0
 
     @classmethod
     def reset(cls):
-        """Zeroes internal offset"""
+        """zeroes internal offset"""
         cls.offset = 0
 
     @classmethod
@@ -24,21 +23,20 @@ class Time(object):
 
     @staticmethod
     def sleep(dur):
-        """Identical to time.sleep()"""
+        """identical to time.sleep()"""
         sleep(dur)
 
     @classmethod
     def fake_sleep(cls, dur):
-        """Adds `dur` to internal offset"""
+        """adds `dur` to internal offset"""
         cls.offset += dur
         sleep(0.000001)  # sleep to allow interrupt (instead of pass)
 
 
 class FakeEvent(Event):
     """patched `threading.Event` where `wait()` uses `Time.fake_sleep()`"""
-
     def wait(self, timeout=None):
-        """Uses Time.fake_sleep"""
+        """uses Time.fake_sleep"""
         if timeout is not None:
             Time.fake_sleep(timeout)
         return self.is_set()
@@ -46,10 +44,9 @@ class FakeEvent(Event):
 
 def patch_sleep(func):
     """Temporarily makes TMonitor use Time.fake_sleep"""
-
     @wraps(func)
     def inner(*args, **kwargs):
-        """Restores TMonitor on completion regardless of Exceptions"""
+        """restores TMonitor on completion regardless of Exceptions"""
         TMonitor._test["time"] = Time.time
         TMonitor._test["Event"] = FakeEvent
         if tqdm.monitor:
@@ -119,9 +116,8 @@ def test_monitoring_and_cleanup():
     total = 1000
 
     with closing(StringIO()) as our_file:
-        with tqdm(
-            total=total, file=our_file, miniters=500, mininterval=0.1, maxinterval=maxinterval
-        ) as t:
+        with tqdm(total=total, file=our_file, miniters=500, mininterval=0.1,
+                  maxinterval=maxinterval) as t:
             cpu_timify(t, Time)
             # Do a lot of iterations in a small timeframe
             # (smaller than monitor interval)
@@ -163,13 +159,11 @@ def test_monitoring_multi():
     total = 1000
 
     with closing(StringIO()) as our_file:
-        with tqdm(
-            total=total, file=our_file, miniters=500, mininterval=0.1, maxinterval=maxinterval
-        ) as t1:
+        with tqdm(total=total, file=our_file, miniters=500, mininterval=0.1,
+                  maxinterval=maxinterval) as t1:
             # Set high maxinterval for t2 so monitor does not need to adjust it
-            with tqdm(
-                total=total, file=our_file, miniters=500, mininterval=0.1, maxinterval=1e5
-            ) as t2:
+            with tqdm(total=total, file=our_file, miniters=500, mininterval=0.1,
+                      maxinterval=1E5) as t2:
                 cpu_timify(t1, Time)
                 cpu_timify(t2, Time)
                 # Do a lot of iterations in a small timeframe
@@ -206,7 +200,7 @@ def test_imap():
 @patch_lock(thread=True)
 def test_threadpool():
     """Test concurrent.futures.ThreadPoolExecutor"""
-    ThreadPoolExecutor = importorskip("concurrent.futures").ThreadPoolExecutor
+    ThreadPoolExecutor = importorskip('concurrent.futures').ThreadPoolExecutor
 
     with ThreadPoolExecutor(8) as pool:
         res = list(tqdm(pool.map(incr_bar, range(100)), disable=True))

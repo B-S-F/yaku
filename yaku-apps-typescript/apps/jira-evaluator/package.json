@@ -20,7 +20,9 @@
   },
   "keywords": [],
   "author": "",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "license": "",
   "devDependencies": {
     "@B-S-F/eslint-config": "*",

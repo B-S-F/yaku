@@ -8,7 +8,7 @@ import { AppError } from '@B-S-F/autopilot-utils'
  * @returns true | false
  */
 export function searchOnFail(
-  envVariableName = 'CONTINUE_SEARCH_ON_FAIL'
+  envVariableName: string = 'CONTINUE_SEARCH_ON_FAIL'
 ): SearchOnFail {
   const logLevel: string = process.env[envVariableName] || 'TRUE'
   return validateSearchOnFail(logLevel)

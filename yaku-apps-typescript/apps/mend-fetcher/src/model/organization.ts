@@ -1,6 +1,3 @@
 export class Organization {
-  constructor(
-    public uuid: string,
-    public name: string
-  ) {}
+  constructor(public uuid: string, public name: string) {}
 }

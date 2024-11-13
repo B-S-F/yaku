@@ -1,4 +1,8 @@
-import { ApiClient, QueryOptions, Release } from '@B-S-F/yaku-client-lib'
+import {
+  ApiClient,
+  QueryOptions,
+  Release,
+} from '@B-S-F/yaku-client-lib'
 import {
   getResourceDeletionConfirmation,
   handleStandardParams,

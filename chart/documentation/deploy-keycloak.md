@@ -2,7 +2,7 @@
 
 Yaku depends on Keycloak for the management of user authentication and authorization. Keycloak is a an open-source Identity and Access Management (IAM) solution that supports various protocols such as OpenID Connect, OAuth 2.0, and SAML. Official documentation for Keycloak can be found [here](https://www.keycloak.org/documentation.html).
 
-In this document, we will provide you with a step-by-step guide on how to deploy a Keycloak instance on a Kubernetes cluster and how to configure the instance for Yaku.
+In this document, we will provide you with a step-by-step guide on how to deploy a Keycloak instance on a Kubernetes cluster and how to configure the instance for Yaku. 
 
 ## Deploying Keycloak
 
@@ -91,7 +91,7 @@ spec:
           mountPath: /var/lib/postgresql/data
         ports:
         - containerPort: 5432
-      volumes:
+      volumes: 
       - name: pvc-data
         persistentVolumeClaim:
           claimName: keycloak-postgres
@@ -200,7 +200,7 @@ spec:
 `KC_HOSTNAME_URL` and `KC_HOSTNAME_ADMIN_URL` need to be changed based on the hostname you have in your ingress resource.
 
 #### service.yml
-
+    
 ```yaml
 apiVersion: v1
 kind: Service
@@ -247,3 +247,9 @@ spec:
 
 
 If the pod is up and running, you can access keycloak on: https://your-domain.com/keycloak/auth/
+
+
+
+
+
+

@@ -14,7 +14,7 @@ import {
 } from '../../src/run'
 
 import { mockedAlertsUnitTestsFirstSet } from '../fixtures/alerts'
-import {
+import { 
   mockedHealthyRecommendation1,
   mockedHealthyRecommendation2,
   mockedUnhealthyRecommendation1,
@@ -39,8 +39,8 @@ describe('Test "parseFilterValues()" from "run.ts"', () => {
   })
 
   it('Should correctly split an "input filter string" and return the array of input values even when newlines and multiple spaces are present', () => {
-    const inputFilterString = `Kubernetes    ,
-                                    critical   ,
+    const inputFilterString = `Kubernetes    ,   
+                                    critical   ,      
                                     latest`
     const result = parseFilterValues(inputFilterString)
     expect(result).toEqual(['Kubernetes', 'critical', 'latest'])
@@ -186,15 +186,11 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         severity: 'Medium',
-      },
+        },
     }
     const filterValues = ['Low', 'Medium']
     const filterType = Filter.Severity
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(true)
   })
 
@@ -202,15 +198,11 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         severity: 'Medium',
-      },
+        },
     }
     const filterValues = ['Low', 'High']
     const filterType = Filter.Severity
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(false)
   })
 
@@ -218,15 +210,11 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         categories: ['Data'],
-      },
+        },
     }
     const filterValues = ['Data', 'Networking', 'Unknown']
     const filterType = Filter.Categories
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(true)
   })
 
@@ -234,15 +222,11 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         categories: ['Data'],
-      },
+        },
     }
     const filterValues = ['Compute', 'Networking', 'Unknown']
     const filterType = Filter.Categories
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(false)
   })
 
@@ -250,20 +234,16 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         threats: [
-          'DataExfiltration',
-          'DataSpillage',
-          'AccountBreach',
-          'ElevationOfPrivilege',
+          "DataExfiltration",
+          "DataSpillage",
+          "AccountBreach",
+          "ElevationOfPrivilege"
         ],
-      },
+      }
     }
     const filterValues = ['abc', 'DataSpillage', 'xyz']
     const filterType = Filter.Threats
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(true)
   })
 
@@ -271,20 +251,16 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         threats: [
-          'DataExfiltration',
-          'DataSpillage',
-          'AccountBreach',
-          'ElevationOfPrivilege',
+          "DataExfiltration",
+          "DataSpillage",
+          "AccountBreach",
+          "ElevationOfPrivilege"
         ],
-      },
+      }
     }
     const filterValues = ['abc', '123', 'xyz']
     const filterType = Filter.Threats
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(false)
   })
 
@@ -299,11 +275,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const filterValues = ['xyz', 'Standard', 'abc']
     const filterType = Filter.KeyWords
 
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
 
     expect(result).toEqual(true)
   })
@@ -319,11 +291,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const filterValues = ['xyz', 'network', 'abc']
     const filterType = Filter.KeyWords
 
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
 
     expect(result).toEqual(true)
   })
@@ -343,11 +311,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     ]
     const filterType = Filter.KeyWords
 
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
 
     expect(result).toEqual(false)
   })
@@ -356,15 +320,11 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         userImpact: 'Moderate',
-      },
+        },
     }
     const filterValues = ['Moderate', 'Low', 'abc']
     const filterType = Filter.UserImpact
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(true)
   })
 
@@ -372,15 +332,11 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         userImpact: 'Moderate',
-      },
+        },
     }
     const filterValues = ['Low', 'High']
     const filterType = Filter.UserImpact
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(false)
   })
 
@@ -388,15 +344,11 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         implementationEffort: 'Low',
-      },
+        },
     }
     const filterValues = ['Moderate', 'Low', 'abc']
     const filterType = Filter.ImplementationEffort
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(true)
   })
 
@@ -404,15 +356,11 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const recommendation = {
       properties: {
         implementationEffort: 'Low',
-      },
+        },
     }
     const filterValues = ['xyz', 'High']
     const filterType = Filter.ImplementationEffort
-    const result = prefixMatchRecommendations(
-      recommendation,
-      filterValues,
-      filterType
-    )
+    const result = prefixMatchRecommendations(recommendation, filterValues, filterType)
     expect(result).toEqual(false)
   })
 })
@@ -645,14 +593,14 @@ describe('Test "getUnhealthyRecommendations()" from "run.ts"', () => {
       mockedUnhealthyRecommendation1,
       mockedUnhealthyRecommendation2,
       mockedHealthyRecommendation1,
-      mockedHealthyRecommendation2,
+      mockedHealthyRecommendation2
     ]
 
     const mockedUnhealthyRecommendations: any[] = [
       mockedUnhealthyRecommendation1,
-      mockedUnhealthyRecommendation2,
+      mockedUnhealthyRecommendation2
     ]
-
+    
     const result = getUnhealthyRecommendations(mockedMixedRecommendations)
     expect(result).toEqual(mockedUnhealthyRecommendations)
   })
@@ -660,7 +608,7 @@ describe('Test "getUnhealthyRecommendations()" from "run.ts"', () => {
   it('Should return an empty map if there are no unhealthy recommendations', () => {
     const mockedMixedRecommendations = [
       mockedHealthyRecommendation1,
-      mockedHealthyRecommendation2,
+      mockedHealthyRecommendation2
     ]
 
     const result = getUnhealthyRecommendations(mockedMixedRecommendations)
@@ -670,54 +618,31 @@ describe('Test "getUnhealthyRecommendations()" from "run.ts"', () => {
 
 describe('Test "combineRecommendationAndMetadata()" from "run.ts"', () => {
   it('Should return a list of merged recommendations if the metadata input includes items matching the name of any input recommendations', () => {
-    const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(
-      JSON.stringify(mockedRecommendationsUnitTestsFirstSet)
-    )
-    const result = combineRecommendationAndMetadata(
-      copyMockedRecommendationsUnitTestsFirstSet,
-      mockedRecommendationsMetadataUnitTestsFirstSet
-    )
+    const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(JSON.stringify(mockedRecommendationsUnitTestsFirstSet))
+    const result = combineRecommendationAndMetadata(copyMockedRecommendationsUnitTestsFirstSet, mockedRecommendationsMetadataUnitTestsFirstSet)
     expect(result).toEqual(mockedCombinedRecommendationsFirstSet)
   })
 
   it('Should return a list of unchanged recommendations if the metadata input does not include items matching the name of any input recommendations', () => {
-    const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(
-      JSON.stringify(mockedRecommendationsUnitTestsFirstSet)
-    )
-    const result = combineRecommendationAndMetadata(
-      copyMockedRecommendationsUnitTestsFirstSet,
-      mockedRecommendationsMetadataUnitTestsSecondSet
-    )
+    const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(JSON.stringify(mockedRecommendationsUnitTestsFirstSet))
+    const result = combineRecommendationAndMetadata(copyMockedRecommendationsUnitTestsFirstSet, mockedRecommendationsMetadataUnitTestsSecondSet)
     expect(result).toEqual(mockedRecommendationsUnitTestsFirstSet)
   })
 
   it('Should return a list of unchanged recommendations if the metadata input is empty', () => {
-    const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(
-      JSON.stringify(mockedRecommendationsUnitTestsFirstSet)
-    )
-    const result = combineRecommendationAndMetadata(
-      copyMockedRecommendationsUnitTestsFirstSet,
-      []
-    )
+    const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(JSON.stringify(mockedRecommendationsUnitTestsFirstSet))
+    const result = combineRecommendationAndMetadata(copyMockedRecommendationsUnitTestsFirstSet, [])
     expect(result).toEqual(mockedRecommendationsUnitTestsFirstSet)
   })
 
   it('Should return an empty list if the input recommendations list is empty and the metadata input is non-empty', () => {
-    const result = combineRecommendationAndMetadata(
-      [],
-      mockedRecommendationsMetadataUnitTestsFirstSet
-    )
+    const result = combineRecommendationAndMetadata([], mockedRecommendationsMetadataUnitTestsFirstSet)
     expect(result).toEqual([])
   })
 
   it('Should return recommendations with an empty properties field if the property is absent from the metadata properties', () => {
-    const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(
-      JSON.stringify(mockedRecommendationsUnitTestsFirstSet)
-    )
-    const result = combineRecommendationAndMetadata(
-      copyMockedRecommendationsUnitTestsFirstSet,
-      mockedRecommendationsMetadataMissingFields
-    )
+    const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(JSON.stringify(mockedRecommendationsUnitTestsFirstSet))
+    const result = combineRecommendationAndMetadata(copyMockedRecommendationsUnitTestsFirstSet, mockedRecommendationsMetadataMissingFields)
     expect(result).toEqual(mockedCombinedRecommendationsWithEmptyFields)
   })
 })
@@ -1093,10 +1018,7 @@ describe('Test "run()" from "run.ts"', async () => {
       vi.stubEnv('SEVERITY_FILTER', 'High')
       vi.stubEnv('KEY_WORDS_FILTER', 'network, virtual')
       vi.stubEnv('CATEGORIES_FILTER', 'Networking')
-      vi.stubEnv(
-        'THREATS_FILTER',
-        'ThreatResistance, DenialOfService, DataSpillage'
-      )
+      vi.stubEnv('THREATS_FILTER', 'ThreatResistance, DenialOfService, DataSpillage')
       vi.stubEnv('USER_IMPACT_FILTER', 'Moderate')
       vi.stubEnv('IMPLEMENTATION_EFFORT_FILTER', 'Moderate')
       vi.stubEnv('DATA_TYPE', 'recommendations')
@@ -1127,21 +1049,16 @@ describe('Test "run()" from "run.ts"', async () => {
         'getDefenderForCloudRecommendations'
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
-      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
-      )
+      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(mockedRecommendations)
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-
+      
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
-      const mockedRecommendationsMetadata =
-        mockedRecommendationsMetadataUnitTestsFirstSet
-      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
-      )
+      const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
+      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
@@ -1179,21 +1096,16 @@ describe('Test "run()" from "run.ts"', async () => {
         'getDefenderForCloudRecommendations'
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
-      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
-      )
+      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(mockedRecommendations)
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-
+      
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
-      const mockedRecommendationsMetadata =
-        mockedRecommendationsMetadataUnitTestsFirstSet
-      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
-      )
+      const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
+      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
@@ -1210,7 +1122,7 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'Retrieved 1 security recommendations based on given filters'
       )
-    })
+    }) 
 
     it('Should return status RED with 1 retrieved unhealthy recommendation when there is KEY_WORDS_FILTER filter', async () => {
       delete process.env.SEVERITY
@@ -1231,21 +1143,16 @@ describe('Test "run()" from "run.ts"', async () => {
         'getDefenderForCloudRecommendations'
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
-      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
-      )
+      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(mockedRecommendations)
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-
+      
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
-      const mockedRecommendationsMetadata =
-        mockedRecommendationsMetadataUnitTestsFirstSet
-      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
-      )
+      const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
+      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
@@ -1262,7 +1169,7 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'Retrieved 1 security recommendations based on given filters'
       )
-    })
+    }) 
 
     it('Should return status RED with 1 retrieved unhealthy recommendation when there is CATEGORIES_FILTER filter', async () => {
       delete process.env.KEY_WORDS_FILTER
@@ -1283,21 +1190,16 @@ describe('Test "run()" from "run.ts"', async () => {
         'getDefenderForCloudRecommendations'
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
-      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
-      )
+      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(mockedRecommendations)
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-
+      
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
-      const mockedRecommendationsMetadata =
-        mockedRecommendationsMetadataUnitTestsFirstSet
-      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
-      )
+      const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
+      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
@@ -1335,21 +1237,16 @@ describe('Test "run()" from "run.ts"', async () => {
         'getDefenderForCloudRecommendations'
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
-      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
-      )
+      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(mockedRecommendations)
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-
+      
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
-      const mockedRecommendationsMetadata =
-        mockedRecommendationsMetadataUnitTestsFirstSet
-      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
-      )
+      const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
+      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
@@ -1387,21 +1284,16 @@ describe('Test "run()" from "run.ts"', async () => {
         'getDefenderForCloudRecommendations'
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
-      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
-      )
+      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(mockedRecommendations)
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-
+      
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
-      const mockedRecommendationsMetadata =
-        mockedRecommendationsMetadataUnitTestsFirstSet
-      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
-      )
+      const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
+      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
@@ -1418,7 +1310,7 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'Retrieved 1 security recommendations based on given filters'
       )
-    })
+    }) 
 
     it('Should return status RED with 2 retrieved unhealthy recommendations when there is IMPLEMENTATION_EFFORT_FILTER filter', async () => {
       delete process.env.SEVERITY_FILTER
@@ -1439,21 +1331,16 @@ describe('Test "run()" from "run.ts"', async () => {
         'getDefenderForCloudRecommendations'
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
-      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
-      )
+      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(mockedRecommendations)
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-
+      
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
-      const mockedRecommendationsMetadata =
-        mockedRecommendationsMetadataUnitTestsFirstSet
-      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
-      )
+      const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
+      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
@@ -1470,7 +1357,7 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'Retrieved 2 security recommendations based on given filters'
       )
-    })
+    }) 
 
     it('Should return status GREEN with 0 retrieved unhealthy recommendations when all the filter are present', async () => {
       const generateAzureAccessTokenSpy = vi.spyOn(
@@ -1485,21 +1372,16 @@ describe('Test "run()" from "run.ts"', async () => {
         'getDefenderForCloudRecommendations'
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
-      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
-      )
+      getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(mockedRecommendations)
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
         'getDefenderForCloudRecommendationsMetadata'
       )
-
+      
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
-      const mockedRecommendationsMetadata =
-        mockedRecommendationsMetadataUnitTestsFirstSet
-      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
-      )
+      const mockedRecommendationsMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
+      getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(mockedRecommendationsMetadata)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
@@ -1516,6 +1398,6 @@ describe('Test "run()" from "run.ts"', async () => {
       expect(spyReason).toHaveBeenCalledWith(
         'No security recommendations found based on given filters'
       )
-    })
+    }) 
   })
 })

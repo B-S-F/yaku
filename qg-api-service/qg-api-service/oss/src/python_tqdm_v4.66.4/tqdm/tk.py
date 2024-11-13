@@ -6,7 +6,6 @@ Usage:
 >>> for i in trange(10):
 ...     ...
 """
-
 import re
 import sys
 import tkinter
@@ -17,7 +16,7 @@ from .std import TqdmExperimentalWarning, TqdmWarning
 from .std import tqdm as std_tqdm
 
 __author__ = {"github.com/": ["richardsheridan", "casperdcl"]}
-__all__ = ["tqdm_tk", "ttkrange", "tqdm", "trange"]
+__all__ = ['tqdm_tk', 'ttkrange', 'tqdm', 'trange']
 
 
 class tqdm_tk(std_tqdm):  # pragma: no cover
@@ -47,13 +46,13 @@ class tqdm_tk(std_tqdm):  # pragma: no cover
             when the cancel or window close button is clicked.
         """
         kwargs = kwargs.copy()
-        kwargs["gui"] = True
+        kwargs['gui'] = True
         # convert disable = None to False
-        kwargs["disable"] = bool(kwargs.get("disable", False))
-        self._warn_leave = "leave" in kwargs
-        grab = kwargs.pop("grab", False)
-        tk_parent = kwargs.pop("tk_parent", None)
-        self._cancel_callback = kwargs.pop("cancel_callback", None)
+        kwargs['disable'] = bool(kwargs.get('disable', False))
+        self._warn_leave = 'leave' in kwargs
+        grab = kwargs.pop('grab', False)
+        tk_parent = kwargs.pop('tk_parent', None)
+        self._cancel_callback = kwargs.pop('cancel_callback', None)
         super().__init__(*args, **kwargs)
 
         if self.disable:
@@ -64,8 +63,7 @@ class tqdm_tk(std_tqdm):  # pragma: no cover
                 tk_parent = tkinter._default_root
             except AttributeError:
                 raise AttributeError(
-                    "`tk_parent` required when using `tkinter.NoDefaultRoot()`"
-                )
+                    "`tk_parent` required when using `tkinter.NoDefaultRoot()`")
             if tk_parent is None:  # use new default root window as display
                 self._tk_window = tkinter.Tk()
             else:  # some other windows already exist
@@ -84,15 +82,11 @@ class tqdm_tk(std_tqdm):  # pragma: no cover
         self._tk_text_var = tkinter.StringVar(self._tk_window)
         pbar_frame = ttk.Frame(self._tk_window, padding=5)
         pbar_frame.pack()
-        _tk_label = ttk.Label(
-            pbar_frame,
-            textvariable=self._tk_text_var,
-            wraplength=600,
-            anchor="center",
-            justify="center",
-        )
+        _tk_label = ttk.Label(pbar_frame, textvariable=self._tk_text_var,
+                              wraplength=600, anchor="center", justify="center")
         _tk_label.pack()
-        self._tk_pbar = ttk.Progressbar(pbar_frame, variable=self._tk_n_var, length=450)
+        self._tk_pbar = ttk.Progressbar(
+            pbar_frame, variable=self._tk_n_var, length=450)
         if self.total is not None:
             self._tk_pbar.configure(maximum=self.total)
         else:
@@ -114,7 +108,7 @@ class tqdm_tk(std_tqdm):  # pragma: no cover
             self._instances.remove(self)
 
         def _close():
-            self._tk_window.after("idle", self._tk_window.destroy)
+            self._tk_window.after('idle', self._tk_window.destroy)
             if not self._tk_dispatching:
                 self._tk_window.update()
 
@@ -126,9 +120,8 @@ class tqdm_tk(std_tqdm):  # pragma: no cover
             _close()
         elif not self._tk_dispatching:
             if self._warn_leave:
-                warn(
-                    "leave flag ignored if not in tkinter mainloop", TqdmWarning, stacklevel=2
-                )
+                warn("leave flag ignored if not in tkinter mainloop",
+                     TqdmWarning, stacklevel=2)
             _close()
 
     def clear(self, *_, **__):
@@ -138,12 +131,11 @@ class tqdm_tk(std_tqdm):  # pragma: no cover
         self._tk_n_var.set(self.n)
         d = self.format_dict
         # remove {bar}
-        d["bar_format"] = (d["bar_format"] or "{l_bar}<bar/>{r_bar}").replace(
-            "{bar}", "<bar/>"
-        )
+        d['bar_format'] = (d['bar_format'] or "{l_bar}<bar/>{r_bar}").replace(
+            "{bar}", "<bar/>")
         msg = self.format_meter(**d)
-        if "<bar/>" in msg:
-            msg = "".join(re.split(r"\|?<bar/>\|?", msg, maxsplit=1))
+        if '<bar/>' in msg:
+            msg = "".join(re.split(r'\|?<bar/>\|?', msg, maxsplit=1))
         self._tk_text_var.set(msg)
         if not self._tk_dispatching:
             self._tk_window.update()
@@ -175,7 +167,7 @@ class tqdm_tk(std_tqdm):  # pragma: no cover
         ----------
         total  : int or float, optional. Total to use for the new bar.
         """
-        if hasattr(self, "_tk_pbar"):
+        if hasattr(self, '_tk_pbar'):
             if total is None:
                 self._tk_pbar.configure(maximum=100, mode="indeterminate")
             else:
@@ -184,7 +176,7 @@ class tqdm_tk(std_tqdm):  # pragma: no cover
 
     @staticmethod
     def _tk_dispatching_helper():
-        """Determine if Tkinter mainloop is dispatching events"""
+        """determine if Tkinter mainloop is dispatching events"""
         codes = {tkinter.mainloop.__code__, tkinter.Misc.mainloop.__code__}
         for frame in sys._current_frames().values():
             while frame:

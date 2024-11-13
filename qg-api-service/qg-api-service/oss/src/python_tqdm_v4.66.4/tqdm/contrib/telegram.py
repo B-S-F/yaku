@@ -8,7 +8,6 @@ Usage:
 
 ![screenshot](https://tqdm.github.io/img/screenshot-telegram.gif)
 """
-
 from os import getenv
 from warnings import warn
 
@@ -19,13 +18,12 @@ from ..std import TqdmWarning
 from .utils_worker import MonoWorker
 
 __author__ = {"github.com/": ["casperdcl"]}
-__all__ = ["TelegramIO", "tqdm_telegram", "ttgrange", "tqdm", "trange"]
+__all__ = ['TelegramIO', 'tqdm_telegram', 'ttgrange', 'tqdm', 'trange']
 
 
 class TelegramIO(MonoWorker):
     """Non-blocking file-like IO using a Telegram Bot."""
-
-    API = "https://api.telegram.org/bot"
+    API = 'https://api.telegram.org/bot'
 
     def __init__(self, token, chat_id):
         """Creates a new message in the given `chat_id`."""
@@ -38,35 +36,28 @@ class TelegramIO(MonoWorker):
 
     @property
     def message_id(self):
-        if hasattr(self, "_message_id"):
+        if hasattr(self, '_message_id'):
             return self._message_id
         try:
             res = self.session.post(
-                self.API + "%s/sendMessage" % self.token,
-                data={
-                    "text": "`" + self.text + "`",
-                    "chat_id": self.chat_id,
-                    "parse_mode": "MarkdownV2",
-                },
-            ).json()
+                self.API + '%s/sendMessage' % self.token,
+                data={'text': '`' + self.text + '`', 'chat_id': self.chat_id,
+                      'parse_mode': 'MarkdownV2'}).json()
         except Exception as e:
             tqdm_auto.write(str(e))
         else:
-            if res.get("error_code") == 429:
-                warn(
-                    "Creation rate limit: try increasing `mininterval`.",
-                    TqdmWarning,
-                    stacklevel=2,
-                )
+            if res.get('error_code') == 429:
+                warn("Creation rate limit: try increasing `mininterval`.",
+                     TqdmWarning, stacklevel=2)
             else:
-                self._message_id = res["result"]["message_id"]
+                self._message_id = res['result']['message_id']
                 return self._message_id
 
     def write(self, s):
         """Replaces internal `message_id`'s text with `s`."""
         if not s:
             s = "..."
-        s = s.replace("\r", "").strip()
+        s = s.replace('\r', '').strip()
         if s == self.text:
             return  # avoid duplicate message Bot error
         message_id = self.message_id
@@ -75,15 +66,9 @@ class TelegramIO(MonoWorker):
         self.text = s
         try:
             future = self.submit(
-                self.session.post,
-                self.API + "%s/editMessageText" % self.token,
-                data={
-                    "text": "`" + s + "`",
-                    "chat_id": self.chat_id,
-                    "message_id": message_id,
-                    "parse_mode": "MarkdownV2",
-                },
-            )
+                self.session.post, self.API + '%s/editMessageText' % self.token,
+                data={'text': '`' + s + '`', 'chat_id': self.chat_id,
+                      'message_id': message_id, 'parse_mode': 'MarkdownV2'})
         except Exception as e:
             tqdm_auto.write(str(e))
         else:
@@ -93,10 +78,8 @@ class TelegramIO(MonoWorker):
         """Deletes internal `message_id`."""
         try:
             future = self.submit(
-                self.session.post,
-                self.API + "%s/deleteMessage" % self.token,
-                data={"chat_id": self.chat_id, "message_id": self.message_id},
-            )
+                self.session.post, self.API + '%s/deleteMessage' % self.token,
+                data={'chat_id': self.chat_id, 'message_id': self.message_id})
         except Exception as e:
             tqdm_auto.write(str(e))
         else:
@@ -119,7 +102,6 @@ class tqdm_telegram(tqdm_auto):
     >>> for i in tqdm(iterable, token='{token}', chat_id='{chat_id}'):
     ...     ...
     """
-
     def __init__(self, *args, **kwargs):
         """
         Parameters
@@ -131,23 +113,21 @@ class tqdm_telegram(tqdm_auto):
 
         See `tqdm.auto.tqdm.__init__` for other parameters.
         """
-        if not kwargs.get("disable"):
+        if not kwargs.get('disable'):
             kwargs = kwargs.copy()
             self.tgio = TelegramIO(
-                kwargs.pop("token", getenv("TQDM_TELEGRAM_TOKEN")),
-                kwargs.pop("chat_id", getenv("TQDM_TELEGRAM_CHAT_ID")),
-            )
+                kwargs.pop('token', getenv('TQDM_TELEGRAM_TOKEN')),
+                kwargs.pop('chat_id', getenv('TQDM_TELEGRAM_CHAT_ID')))
         super().__init__(*args, **kwargs)
 
     def display(self, **kwargs):
         super().display(**kwargs)
         fmt = self.format_dict
-        if fmt.get("bar_format", None):
-            fmt["bar_format"] = (
-                fmt["bar_format"].replace("<bar/>", "{bar:10u}").replace("{bar}", "{bar:10u}")
-            )
+        if fmt.get('bar_format', None):
+            fmt['bar_format'] = fmt['bar_format'].replace(
+                '<bar/>', '{bar:10u}').replace('{bar}', '{bar:10u}')
         else:
-            fmt["bar_format"] = "{l_bar}{bar:10u}{r_bar}"
+            fmt['bar_format'] = '{l_bar}{bar:10u}{r_bar}'
         self.tgio.write(self.format_meter(**fmt))
 
     def clear(self, *args, **kwargs):

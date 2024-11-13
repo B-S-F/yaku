@@ -6,7 +6,10 @@ import {
   KEYCLOAK_ADMIN_ROLE,
   NAMESPACE_ACCESS_ROLE,
 } from '../../guards/roles.guard'
-import { KeyCloakNamespace, KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
+import {
+  KeyCloakNamespace,
+  KeyCloakUser,
+} from '@B-S-F/api-keycloak-auth-lib'
 
 describe('NamespaceAccessGuard', () => {
   let testee: NamespaceAccessGuard

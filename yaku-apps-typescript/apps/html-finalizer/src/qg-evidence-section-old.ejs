@@ -7,7 +7,7 @@
       <%_ if (requirement.manualStatus) { _%><span class="nospace">*</span><%_ } _%>
     </span>
     <%= requirement.id %> <%= requirement.title %></h3>
-  <%_ if (requirement.reason) { _%><p>Manual status: <%- utils.markdown.render(requirement.reason) %></p><%_ } _%>
+  <%_ if (requirement.reason) { _%><p>Manual status: <%- utils.markdown.render(requirement.reason) %></p><%_ } _%> 
 <%_ if (requirement.checks && Object.keys(requirement.checks).length !== 0) { _%>
   <table class="full-width">
     <thead>

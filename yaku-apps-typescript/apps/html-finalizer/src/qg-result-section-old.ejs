@@ -1,6 +1,6 @@
 <h2>Summary of Findings</h2>
 <div class="marked">
-<%- include('qg-result-table-old.ejs', {
+<%- include('qg-result-table-old.ejs', { 
   emptyListMessage: 'There are no findings.',
   sortedAllocations: utils.sortedObjectValues(allocations).map((allocation) => ({
     ...allocation,
@@ -10,7 +10,7 @@
 </div>
 
 <h2>Details</h2>
-<%- include('qg-result-table-old.ejs', {
+<%- include('qg-result-table-old.ejs', { 
   sortedAllocations: utils.sortedObjectValues(allocations),
   showRequirementText: true
 }) %>

@@ -3,7 +3,6 @@ Thin wrappers around common functions.
 
 Subpackages contain potentially unstable extensions.
 """
-
 from warnings import warn
 
 from ..auto import tqdm as tqdm_auto
@@ -11,7 +10,7 @@ from ..std import TqdmDeprecationWarning, tqdm
 from ..utils import ObjectWrapper
 
 __author__ = {"github.com/": ["casperdcl"]}
-__all__ = ["tenumerate", "tzip", "tmap"]
+__all__ = ['tenumerate', 'tzip', 'tmap']
 
 
 class DummyTqdmFile(ObjectWrapper):
@@ -26,12 +25,8 @@ class DummyTqdmFile(ObjectWrapper):
         pre, sep, post = x.rpartition(nl)
         if sep:
             blank = type(nl)()
-            tqdm.write(
-                blank.join(self._buf + [pre, sep]),
-                end=blank,
-                file=self._wrapped,
-                nolock=nolock,
-            )
+            tqdm.write(blank.join(self._buf + [pre, sep]),
+                       end=blank, file=self._wrapped, nolock=nolock)
             self._buf = [post]
         else:
             self._buf.append(x)
@@ -47,11 +42,8 @@ class DummyTqdmFile(ObjectWrapper):
 
 def builtin_iterable(func):
     """Returns `func`"""
-    warn(
-        "This function has no effect, and will be removed in tqdm==5.0.0",
-        TqdmDeprecationWarning,
-        stacklevel=2,
-    )
+    warn("This function has no effect, and will be removed in tqdm==5.0.0",
+         TqdmDeprecationWarning, stacklevel=2)
     return func
 
 
@@ -69,9 +61,8 @@ def tenumerate(iterable, start=0, total=None, tqdm_class=tqdm_auto, **tqdm_kwarg
         pass
     else:
         if isinstance(iterable, np.ndarray):
-            return tqdm_class(
-                np.ndenumerate(iterable), total=total or iterable.size, **tqdm_kwargs
-            )
+            return tqdm_class(np.ndenumerate(iterable), total=total or iterable.size,
+                              **tqdm_kwargs)
     return enumerate(tqdm_class(iterable, total=total, **tqdm_kwargs), start)
 
 

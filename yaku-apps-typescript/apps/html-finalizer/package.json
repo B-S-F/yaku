@@ -35,5 +35,7 @@
   "bin": {
     "html-finalizer": "dist/run.js"
   },
-  "files": ["dist"]
+  "files": [
+    "dist"
+  ]
 }

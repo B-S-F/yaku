@@ -1,4 +1,7 @@
-import { UrlHandlerFactory, UrlProtocolConfig } from '@B-S-F/api-commons-lib'
+import {
+  UrlHandlerFactory,
+  UrlProtocolConfig,
+} from '@B-S-F/api-commons-lib'
 import { Module } from '@nestjs/common'
 import { SERVICE_PROTOCOL } from '../../config'
 import { UsersController } from './users.controller'

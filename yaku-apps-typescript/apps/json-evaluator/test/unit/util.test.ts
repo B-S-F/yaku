@@ -30,7 +30,7 @@ describe('getPathFromEnvVariable', () => {
 
     const spyStatSync = vi.spyOn(fs, 'statSync')
     spyStatSync.mockImplementation(
-      vi.fn().mockImplementation(() => ({ isFile: () => true }))
+      vi.fn().mockImplementation(() => ({ isFile: () => true })),
     )
 
     process.env[envVariableName] = filePath
@@ -53,7 +53,7 @@ describe('getPathFromEnvVariable', () => {
 
     const spyStatSync = vi.spyOn(fs, 'statSync')
     spyStatSync.mockImplementation(
-      vi.fn().mockImplementation(() => ({ isFile: () => true }))
+      vi.fn().mockImplementation(() => ({ isFile: () => true })),
     )
 
     process.env[envVariableName] = filePath
@@ -79,7 +79,7 @@ describe('validateFilePath', () => {
     spyExistsSync.mockImplementation(() => false)
 
     expect(() => validateFilePath(filePath)).toThrowError(
-      new AppError(errorMessage)
+      new AppError(errorMessage),
     )
   })
 
@@ -95,7 +95,7 @@ describe('validateFilePath', () => {
       throw new AppError(errorMessage)
     })
     expect(() => validateFilePath(filePath)).toThrowError(
-      new AppError(errorMessage)
+      new AppError(errorMessage),
     )
   })
 
@@ -111,7 +111,7 @@ describe('validateFilePath', () => {
 
     const spyStatSync = vi.spyOn(fs, 'statSync')
     spyStatSync.mockImplementation(
-      vi.fn().mockImplementation(() => ({ isFile: () => false }))
+      vi.fn().mockImplementation(() => ({ isFile: () => false })),
     )
 
     expect(() => validateFilePath(filePath)).toThrowError(errorMessage)

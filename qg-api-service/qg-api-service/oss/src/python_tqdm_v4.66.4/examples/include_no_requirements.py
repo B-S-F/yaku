@@ -6,7 +6,6 @@ except ImportError:
     def tqdm(*args, **kwargs):
         if args:
             return args[0]
-        return kwargs.get("iterable", None)
+        return kwargs.get('iterable', None)
 
-
-__all__ = ["tqdm"]
+__all__ = ['tqdm']

@@ -4,7 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "types": "src/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "scripts": {
     "build": "tsup && cp src/index.d.ts dist",

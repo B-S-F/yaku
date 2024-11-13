@@ -1,5 +1,4 @@
 """Test `tqdm.__version__`."""
-
 import re
 from ast import literal_eval
 
@@ -7,8 +6,7 @@ from ast import literal_eval
 def test_version():
     """Test version string"""
     from tqdm import __version__
-
-    version_parts = re.split("[.-]", __version__)
+    version_parts = re.split('[.-]', __version__)
     if __version__ != "UNKNOWN":
         assert 3 <= len(version_parts), "must have at least Major.minor.patch"
         assert all(

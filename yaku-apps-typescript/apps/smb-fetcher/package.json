@@ -41,5 +41,7 @@
   "bin": {
     "smb-fetcher": "dist/index.js"
   },
-  "files": ["dist"]
+  "files": [
+    "dist"
+  ]
 }

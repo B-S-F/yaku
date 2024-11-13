@@ -1,5 +1,7 @@
 module.exports = {
-  extends: ['@B-S-F/eslint-config/eslint-preset'],
+  "extends": [
+    "@B-S-F/eslint-config/eslint-preset"
+  ],
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
@@ -8,6 +10,6 @@ module.exports = {
       'error',
       { destructuredArrayIgnorePattern: '^([.]{3})?_' },
     ],
-    'no-control-regex': 0,
+    "no-control-regex": 0
   },
 }

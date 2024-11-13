@@ -1,8 +1,8 @@
 """
 Tests for `tqdm.contrib`.
 """
-
 import pytest
+
 from tqdm import tqdm
 from tqdm.contrib import tenumerate, tmap, tzip
 
@@ -20,7 +20,9 @@ def test_enumerate(tqdm_kwargs):
     with closing(StringIO()) as our_file:
         a = range(9)
         assert list(tenumerate(a, file=our_file, **tqdm_kwargs)) == list(enumerate(a))
-        assert list(tenumerate(a, 42, file=our_file, **tqdm_kwargs)) == list(enumerate(a, 42))
+        assert list(tenumerate(a, 42, file=our_file, **tqdm_kwargs)) == list(
+            enumerate(a, 42)
+        )
     with closing(StringIO()) as our_file:
         _ = list(tenumerate(iter(a), file=our_file, **tqdm_kwargs))
         assert "100%" not in our_file.getvalue()

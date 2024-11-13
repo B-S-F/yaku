@@ -1,9 +1,6 @@
 import { MockServerOptions } from '../../../../integration-tests/src/util'
 import { mockedAlertsIntegrationTests } from './alerts'
-import {
-  mockedRecommendationsIntegrationTests,
-  mockedRecommendationsMetadataIntegrationTests,
-} from './recommendations'
+import { mockedRecommendationsIntegrationTests, mockedRecommendationsMetadataIntegrationTests } from './recommendations'
 
 export const createMockServerOptions = async (
   port: number,
@@ -49,18 +46,19 @@ export const createMockServerOptions = async (
             },
           },
         },
-      ['/providers/Microsoft.Security/assessmentMetadata']: {
-        get: {
-          responseStatus: responseStatus,
-          responseHeaders: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          responseBody: {
-            value: mockedRecommendationsMetadataIntegrationTests,
+      ['/providers/Microsoft.Security/assessmentMetadata']:
+        {
+          get: {
+            responseStatus: responseStatus,
+            responseHeaders: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            responseBody: {
+              value: mockedRecommendationsMetadataIntegrationTests,
+            },
           },
         },
-      },
     },
   }
 }
@@ -90,11 +88,12 @@ export const createMockServerOptionsFAILED = async (
             responseStatus: responseStatus,
           },
         },
-      ['/providers/Microsoft.Security/assessmentMetadata']: {
-        get: {
-          responseStatus: responseStatus,
+      ['/providers/Microsoft.Security/assessmentMetadata']:
+        {
+          get: {
+            responseStatus: responseStatus,
+          },
         },
-      },
     },
   }
 }

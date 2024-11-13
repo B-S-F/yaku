@@ -30,8 +30,12 @@
     "type": "git",
     "url": "https://github.com/B-S-F/qg-apps-typescript.git"
   },
-  "keywords": ["yaml"],
-  "files": ["dist"],
+  "keywords": [
+    "yaml"
+  ],
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "log-update": "^5.0.1"
   }

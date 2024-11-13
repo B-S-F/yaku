@@ -4,11 +4,11 @@ from .tests_tqdm import StringIO, closing, importorskip, mark, skip
 
 pytestmark = mark.slow
 
-np = importorskip("numpy")
-random = importorskip("numpy.random")
+np = importorskip('numpy')
+random = importorskip('numpy.random')
 rand = random.rand
 randint = random.randint
-pd = importorskip("pandas")
+pd = importorskip('pandas')
 
 
 def test_pandas_setup():
@@ -18,7 +18,7 @@ def test_pandas_setup():
         series = pd.Series(randint(0, 50, (100,)))
         series.progress_apply(lambda x: x + 10)
         res = our_file.getvalue()
-        assert "100/123" in res
+        assert '100/123' in res
 
 
 def test_pandas_rolling_expanding():
@@ -35,14 +35,13 @@ def test_pandas_rolling_expanding():
         res4 = series.expanding(10).apply(lambda x: 2, raw=True)
         assert res3.equals(res4)
 
-        expects = ["114it"]  # 123-10+1
+        expects = ['114it']  # 123-10+1
         for exres in expects:
             our_file.seek(0)
             if our_file.getvalue().count(exres) < 2:
                 our_file.seek(0)
                 raise AssertionError(
-                    f"\nExpected:\n{exres} at least twice.\nIn:\n{our_file.read()}\n"
-                )
+                    f"\nExpected:\n{exres} at least twice.\nIn:\n{our_file.read()}\n")
 
 
 def test_pandas_series():
@@ -59,14 +58,13 @@ def test_pandas_series():
         res4 = series.map(lambda x: x + 10)
         assert res3.equals(res4)
 
-        expects = ["100%", "123/123"]
+        expects = ['100%', '123/123']
         for exres in expects:
             our_file.seek(0)
             if our_file.getvalue().count(exres) < 2:
                 our_file.seek(0)
                 raise AssertionError(
-                    f"\nExpected:\n{exres} at least twice.\nIn:\n{our_file.read()}\n"
-                )
+                    f"\nExpected:\n{exres} at least twice.\nIn:\n{our_file.read()}\n")
 
 
 @mark.filterwarnings("ignore:DataFrame.applymap has been deprecated:FutureWarning")
@@ -85,7 +83,7 @@ def test_pandas_data_frame():
         assert res1.equals(res2)
 
         # map
-        if hasattr(df, "map"):  # pandas>=2.1.0
+        if hasattr(df, 'map'):  # pandas>=2.1.0
             res1 = df.progress_map(task_func)
             res2 = df.map(task_func)
             assert res1.equals(res2)
@@ -96,32 +94,29 @@ def test_pandas_data_frame():
         assert len(res1) == df.size
 
         # apply
-        for axis in [0, 1, "index", "columns"]:
+        for axis in [0, 1, 'index', 'columns']:
             res3 = df.progress_apply(task_func, axis=axis)
             res4 = df.apply(task_func, axis=axis)
             assert res3.equals(res4)
 
         our_file.seek(0)
-        if our_file.read().count("100%") < 3:
+        if our_file.read().count('100%') < 3:
             our_file.seek(0)
             raise AssertionError(
-                f"\nExpected:\n100% at least three times\nIn:\n{our_file.read()}\n"
-            )
+                f"\nExpected:\n100% at least three times\nIn:\n{our_file.read()}\n")
 
         # apply_map, apply axis=0, apply axis=1
-        expects = ["20000/20000", "200/200", "100/100"]
+        expects = ['20000/20000', '200/200', '100/100']
         for exres in expects:
             our_file.seek(0)
             if our_file.getvalue().count(exres) < 1:
                 our_file.seek(0)
                 raise AssertionError(
-                    f"\nExpected:\n{exres} at least once.\nIn:\n{our_file.read()}\n"
-                )
+                    f"\nExpected:\n{exres} at least once.\nIn:\n{our_file.read()}\n")
 
 
 @mark.filterwarnings(
-    "ignore:DataFrameGroupBy.apply operated on the grouping columns:DeprecationWarning"
-)
+    "ignore:DataFrameGroupBy.apply operated on the grouping columns:DeprecationWarning")
 def test_pandas_groupby_apply():
     """Test pandas.DataFrame.groupby(...).progress_apply"""
     with closing(StringIO()) as our_file:
@@ -130,10 +125,10 @@ def test_pandas_groupby_apply():
         df = pd.DataFrame(randint(0, 50, (500, 3)))
         df.groupby(0).progress_apply(lambda x: None)
 
-        dfs = pd.DataFrame(randint(0, 50, (500, 3)), columns=list("abc"))
-        dfs.groupby(["a"]).progress_apply(lambda x: None)
+        dfs = pd.DataFrame(randint(0, 50, (500, 3)), columns=list('abc'))
+        dfs.groupby(['a']).progress_apply(lambda x: None)
 
-        df2 = df = pd.DataFrame({"a": randint(1, 8, 10000), "b": rand(10000)})
+        df2 = df = pd.DataFrame({'a': randint(1, 8, 10000), 'b': rand(10000)})
         res1 = df2.groupby("a").apply(np.maximum.reduce)
         res2 = df2.groupby("a").progress_apply(np.maximum.reduce)
         assert res1.equals(res2)
@@ -142,7 +137,7 @@ def test_pandas_groupby_apply():
 
         # don't expect final output since no `leave` and
         # high dynamic `miniters`
-        nexres = "100%|##########|"
+        nexres = '100%|##########|'
         if nexres in our_file.read():
             our_file.seek(0)
             raise AssertionError(f"\nDid not expect:\n{nexres}\nIn:{our_file.read()}\n")
@@ -150,35 +145,32 @@ def test_pandas_groupby_apply():
     with closing(StringIO()) as our_file:
         tqdm.pandas(file=our_file, leave=True, ascii=True)
 
-        dfs = pd.DataFrame(randint(0, 50, (500, 3)), columns=list("abc"))
+        dfs = pd.DataFrame(randint(0, 50, (500, 3)), columns=list('abc'))
         dfs.loc[0] = [2, 1, 1]
-        dfs["d"] = 100
+        dfs['d'] = 100
 
-        expects = ["500/500", "1/1", "4/4", "4/4"]
+        expects = ['500/500', '1/1', '4/4', '4/4']
         dfs.groupby(dfs.index).progress_apply(lambda x: None)
-        dfs.groupby("d").progress_apply(lambda x: None)
+        dfs.groupby('d').progress_apply(lambda x: None)
         dfs.T.groupby(dfs.columns).progress_apply(lambda x: None)
         dfs.T.groupby([2, 2, 1, 1]).progress_apply(lambda x: None)
 
         our_file.seek(0)
-        if our_file.read().count("100%") < 4:
+        if our_file.read().count('100%') < 4:
             our_file.seek(0)
             raise AssertionError(
-                f"\nExpected:\n100% at least four times\nIn:\n{our_file.read()}\n"
-            )
+                f"\nExpected:\n100% at least four times\nIn:\n{our_file.read()}\n")
 
         for exres in expects:
             our_file.seek(0)
             if our_file.getvalue().count(exres) < 1:
                 our_file.seek(0)
                 raise AssertionError(
-                    f"\nExpected:\n{exres} at least once.\nIn:\n{our_file.read()}\n"
-                )
+                    f"\nExpected:\n{exres} at least once.\nIn:\n{our_file.read()}\n")
 
 
 @mark.filterwarnings(
-    "ignore:DataFrameGroupBy.apply operated on the grouping columns:DeprecationWarning"
-)
+    "ignore:DataFrameGroupBy.apply operated on the grouping columns:DeprecationWarning")
 def test_pandas_leave():
     """Test pandas with `leave=True`"""
     with closing(StringIO()) as our_file:
@@ -188,17 +180,15 @@ def test_pandas_leave():
 
         our_file.seek(0)
 
-        exres = "100%|##########| 100/100"
+        exres = '100%|##########| 100/100'
         if exres not in our_file.read():
             our_file.seek(0)
             raise AssertionError(f"\nExpected:\n{exres}\nIn:{our_file.read()}\n")
 
 
 def test_pandas_apply_args_deprecation():
-    """
-    Test warning info in
-    `pandas.Dataframe(Series).progress_apply(func, *args)`
-    """
+    """Test warning info in
+    `pandas.Dataframe(Series).progress_apply(func, *args)`"""
     try:
         from tqdm import tqdm_pandas
     except ImportError as err:
@@ -210,15 +200,13 @@ def test_pandas_apply_args_deprecation():
         df.progress_apply(lambda x: None, 1)  # 1 shall cause a warning
         # Check deprecation message
         res = our_file.getvalue()
-        assert all(
-            i in res
-            for i in ("TqdmDeprecationWarning", "not supported", "keyword arguments instead")
-        )
+        assert all(i in res for i in (
+            "TqdmDeprecationWarning", "not supported",
+            "keyword arguments instead"))
 
 
 @mark.filterwarnings(
-    "ignore:DataFrameGroupBy.apply operated on the grouping columns:DeprecationWarning"
-)
+    "ignore:DataFrameGroupBy.apply operated on the grouping columns:DeprecationWarning")
 def test_pandas_deprecation():
     """Test bar object instance as argument deprecation"""
     try:

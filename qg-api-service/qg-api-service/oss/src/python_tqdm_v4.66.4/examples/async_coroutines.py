@@ -1,5 +1,4 @@
 """Asynchronous examples using `asyncio`, `async` and `await`."""
-
 import asyncio
 
 from tqdm.asyncio import tqdm, trange
@@ -28,9 +27,8 @@ async def main():
                 assert row == -9
                 break
     # should be ~1sec rather than ~50s due to async scheduling
-    for i in tqdm.as_completed(
-        [asyncio.sleep(0.01 * i) for i in range(100, 0, -1)], desc="as_completed"
-    ):
+    for i in tqdm.as_completed([asyncio.sleep(0.01 * i)
+                                for i in range(100, 0, -1)], desc="as_completed"):
         await i
 
 

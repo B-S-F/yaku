@@ -41,7 +41,7 @@ describe('Logger', async () => {
     logger.writeToStream(testString)
     logger.end()
     expect(logger.getLogString()).resolves.toBe(
-      'This is a url: [http://example.com](http://example.com)'
+      'This is a url: [http://example.com](http://example.com)',
     )
   })
 })

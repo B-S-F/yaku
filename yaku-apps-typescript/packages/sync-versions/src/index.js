@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
-/*
- * Copyright (c) 2022, 2023 by grow platform GmbH
+/* 
+ * Copyright (c) 2022, 2023 by grow platform GmbH 
  */
 
 const replace = require('replace-in-file')
@@ -14,10 +14,7 @@ async function run() {
 
   const [, , scope, version] = process.argv
 
-  const regex = new RegExp(
-    `(?<="dependencies":\\s*\\{[^\}]*"${scope}\\/[^"]+": ")[^"]*(?=")`,
-    'gs'
-  )
+  const regex = new RegExp(`(?<="dependencies":\\s*\\{[^\}]*"${scope}\\/[^"]+": ")[^"]*(?=")`, 'gs')
 
   try {
     const options = {

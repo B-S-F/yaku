@@ -15,13 +15,13 @@ import {
 
 vi.mock('axios', () => ({
   default: {
-    get: vi.fn(),
+    get: vi.fn()
   },
 }))
 
 const mockedAxiosGet = vi.mocked(axios.get)
 
-describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriever.ts"', async () => {
+describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriever.ts"', async () => { 
   afterEach(() => {
     vi.clearAllMocks()
   })
@@ -76,11 +76,10 @@ describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriev
   })
 
   it('Should throw a specific error if status is not 200', async () => {
-    mockedAxiosGet.mockRejectedValueOnce({
-      response: {
-        status: 400,
-      },
-    })
+    mockedAxiosGet.mockRejectedValueOnce({ 
+      response: { 
+        status: 400
+      } })
 
     await expect(
       getDefenderForCloudRecommendations('mockedToken', 'mockTenantId')
@@ -90,7 +89,7 @@ describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriev
   })
 })
 
-describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendationsRetriever.ts"', async () => {
+describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendationsRetriever.ts"', async () => { 
   afterEach(() => {
     vi.clearAllMocks()
   })
@@ -102,8 +101,9 @@ describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendation
       },
     })
 
-    const result =
-      await getDefenderForCloudRecommendationsMetadata('mockedToken')
+    const result = await getDefenderForCloudRecommendationsMetadata(
+      'mockedToken'
+    )
     expect(result).toEqual(mockedRecommendationsMetadataUnitTestsFirstSet)
   })
 
@@ -131,8 +131,9 @@ describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendation
       },
     })
 
-    const result =
-      await getDefenderForCloudRecommendationsMetadata('mockedToken')
+    const result = await getDefenderForCloudRecommendationsMetadata(
+      'mockedToken'
+    )
     expect(result).toEqual(
       mockedRecommendationsMetadataUnitTestsFirstSet
         .concat(mockedRecommendationsMetadataUnitTestsSecondSet)
@@ -141,11 +142,10 @@ describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendation
   })
 
   it('Should throw a specific error if status is not 200', async () => {
-    mockedAxiosGet.mockRejectedValueOnce({
-      response: {
-        status: 400,
-      },
-    })
+    mockedAxiosGet.mockRejectedValueOnce({ 
+      response: { 
+        status: 400
+      } })
 
     await expect(
       getDefenderForCloudRecommendationsMetadata('mockedToken')
