@@ -3,9 +3,7 @@
   "version": "0.3.1",
   "description": "",
   "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "type": "module",
   "scripts": {
     "build": "tsup",

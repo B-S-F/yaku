@@ -17,9 +17,9 @@ export interface Checks {
             status: Status
             comments: any[]
             sources: any[]
-          }
+          },
         ]
-      }
+      },
     ]
   }
 }

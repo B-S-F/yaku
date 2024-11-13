@@ -13,7 +13,7 @@ export function getPathFromEnvVariable(envVariableName: string): string {
 export function validateFilePath(filePath: string): void {
   if (!fs.existsSync(filePath)) {
     throw new AppError(
-      `File ${filePath} does not exist, no data can be evaluated`,
+      `File ${filePath} does not exist, no data can be evaluated`
     )
   }
   try {

@@ -43,7 +43,5 @@
   "bin": {
     "mend-fetcher": "dist/index.js"
   },
-  "files": [
-    "dist"
-  ]
+  "files": ["dist"]
 }

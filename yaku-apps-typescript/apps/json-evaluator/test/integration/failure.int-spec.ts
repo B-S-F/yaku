@@ -9,7 +9,7 @@ describe('Fail', async () => {
     '..',
     '..',
     'dist',
-    'index.js',
+    'index.js'
   )
 
   const testFileLocationPrefix = `${__dirname}/../samples/`
