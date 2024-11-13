@@ -9,14 +9,14 @@ repos:
     hooks:
       - id: check-added-large-files
       - id: pretty-format-json
-        exclude: '^(onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|qg-apps-typescript)/'
+        exclude: '^(onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
       - id: check-toml
       - id: check-yaml
-        exclude: '^(qg-api-service/qg-api-service/src/namespace|onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|qg-apps-typescript)/'
+        exclude: '^(qg-api-service/qg-api-service/src/namespace|onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
       - id: end-of-file-fixer
-        exclude: '^(onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|qg-apps-typescript)/'
+        exclude: '^(onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
       - id: trailing-whitespace
-        exclude: '^(qg-api-service/qg-api-service/src/namespace|onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|qg-apps-typescript)/'
+        exclude: '^(qg-api-service/qg-api-service/src/namespace|onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
 #  ####
 #  ## Commit lint
 #  ####
@@ -33,7 +33,7 @@ repos:
     hooks:
       - id: biome-check
         additional_dependencies: ["@biomejs/biome@1.9.4"]
-        exclude: '^(onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|qg-apps-typescript)/'
+        exclude: '^(onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
   - repo: https://github.com/B-S-F/madge-pre-commit
     rev: v0.0.2
     hooks:
