@@ -1,4 +1,4 @@
-import { Environment } from './commands/environment.js'
+import { Environment } from './handlers/environment.js'
 
 export async function loginToken(
   token: string,

@@ -7,7 +7,7 @@ import {
   Token,
   TokenMetadata,
   User,
-} from 'yaku-client-lib'
+} from '@B-S-F/yaku-client-lib'
 import { randomUUID } from 'crypto'
 import { stat, unlink } from 'fs/promises'
 import path from 'path'
@@ -23,7 +23,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
   const yakuCliExecutable = `${__dirname}/../../dist/index.js`
 
   const serverUrl = 'http://localhost:3000/api/v1'
-  let adminEnv = process.env['LOCAL_ADMIN_ENV'] ?? ''
+  const adminEnv = process.env['LOCAL_ADMIN_ENV'] ?? ''
 
   let userEnvironment: string
 

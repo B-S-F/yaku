@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals'
-import { ApiClient } from 'yaku-client-lib'
-import { Environment } from './commands/environment'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
+import { Environment } from './handlers/environment'
 import { EnvHttpProxyAgent } from 'undici'
 
 const currentEnv: Environment = {
@@ -13,7 +13,7 @@ const currentEnv: Environment = {
 }
 
 // This is a workaround to mock the environment module, given the interference of commonjs and esmodules
-jest.unstable_mockModule('./commands/environment', () => ({
+jest.unstable_mockModule('./handlers/environment', () => ({
   loadCurrentEnvironment: jest.fn(() => {
     return currentEnv
   }),

@@ -18,7 +18,7 @@ from psycopg import Connection, sql
 UUID_PATTERN = re.compile(
     "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$"
 )
-MENTION_PATTERN = re.compile("@(\S+)")
+MENTION_PATTERN = re.compile(r"@(\S+)")
 
 
 def initialize_usermap(users: list, logger: Logger) -> dict:
@@ -76,9 +76,7 @@ def check_user(user: dict, usermap: dict, logger: Logger) -> int:
     return error_count
 
 
-def check_audit_table(
-    conn: Connection, table_name: str, usermap: dict, logger: Logger
-) -> int:
+def check_audit_table(conn: Connection, table_name: str, usermap: dict, logger: Logger) -> int:
     error_count = 0
     with conn.cursor() as cur:
         cur.execute(
@@ -195,7 +193,7 @@ def check_approval_audit_table(conn: Connection, logger: Logger) -> int:
             if original:
                 if not original["approver"]:
                     error_count += 1
-                    logger.error(f"approver in approval_audit.original is missing")
+                    logger.error("approver in approval_audit.original is missing")
                 else:
                     approver = original["approver"]
                     if not UUID_PATTERN.match(approver):
@@ -207,7 +205,7 @@ def check_approval_audit_table(conn: Connection, logger: Logger) -> int:
             if modified:
                 if not modified["approver"]:
                     error_count += 1
-                    logger.error(f"approver in approval_audit.modified is missing")
+                    logger.error("approver in approval_audit.modified is missing")
                 else:
                     approver = modified["approver"]
                     if not UUID_PATTERN.match(approver):
@@ -294,7 +292,7 @@ def check_comment_audit_table(conn: Connection, logger: Logger) -> int:
                 for mention in possible_mentions:
                     if not UUID_PATTERN.match(mention):
                         error_count += 1
-                
+
                 if last_error_count != error_count:
                     logger.error(
                         f"mentions in row with id: {id} of comment_audit.modified may not be valid UUIDs: {content}"

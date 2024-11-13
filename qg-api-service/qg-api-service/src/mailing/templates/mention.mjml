@@ -55,7 +55,7 @@
       <mj-section background-color="#EFF1F2" padding="24px">
         <mj-column padding="0px">
           <mj-text css-class="subject-text" padding="0px" padding-bottom="32px" font-size="16px">
-            <p style="font-weight: bold;"> You have been mentioned in a Release Approval <a href="<%=ui_url%>/<%=encodeURIComponent(instance_name)%>/<%=encodeURIComponent(namespace_name)%>/releases/<%=encodeURIComponent(release_id)%>/details/checks?content=chapter--<%=encodeURIComponent(chapter_id)%>--requirement--<%=encodeURIComponent(requirement_id)%>--check--<%=encodeURIComponent(check_id)%>&commentId=<%=encodeURIComponent(comment_id)%>&parentCommentId=<%=encodeURIComponent(parent_comment_id)%>">comment</a>.</p>
+            <p style="font-weight: bold;"> You have been mentioned in a check <a href="<%=ui_url%>/<%=encodeURIComponent(instance_name)%>/<%=encodeURIComponent(namespace_name)%>/releases/<%=encodeURIComponent(release_id)%>/details/checks?content=chapter--<%=encodeURIComponent(chapter_id)%>--requirement--<%=encodeURIComponent(requirement_id)%>--check--<%=encodeURIComponent(check_id)%>&commentId=<%=encodeURIComponent(comment_id)%>&parentCommentId=<%=encodeURIComponent(parent_comment_id)%>">comment</a>.</p>
           </mj-text>
           <mj-text css-class="body-text">
             <p>
@@ -63,7 +63,7 @@
               <%=user_name%>,
             </p>
             <p>
-              You have been mentioned in a comment related to a release approval.
+              You have been mentioned in a comment related to a check.
             </p>
             <p>
               Details:

@@ -214,7 +214,7 @@ describe('Integration tests for create runs', async () => {
    * Evaluates whether the outgoing HTTP request includes the added variables
    */
   function verifyRequest(envOptions: string[], namespaceId: number): void {
-    let envObject: { [key: string]: string } = {}
+    const envObject: { [key: string]: string } = {}
 
     let i = envOptions.includes('--wait') ? 2 : 1
 

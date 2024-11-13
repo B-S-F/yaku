@@ -51,6 +51,14 @@ describe('TemplatingCache', () => {
         isFile: () => true,
         name: 'check_override.mjml',
       } as any,
+      {
+        isFile: () => true,
+        name: 'comment-approval-release.mjml',
+      } as any,
+      {
+        isFile: () => true,
+        name: 'mention-approval-release.mjml',
+      } as any,
     ])
     jest.spyOn(fs, 'readFile').mockResolvedValue(mjmlTemplate)
     const templatingCache = new TemplatingCache('path/to/templates')

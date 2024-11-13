@@ -3,7 +3,7 @@ import {
   QueryOptions,
   Run,
   RunPaginated,
-} from 'yaku-client-lib'
+} from '@B-S-F/yaku-client-lib'
 import { randomUUID } from 'crypto'
 import path from 'path'
 import { setTimeout } from 'timers/promises'

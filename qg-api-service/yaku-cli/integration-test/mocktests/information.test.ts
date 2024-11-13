@@ -153,6 +153,7 @@ describe('Integration tests for help', async () => {
       '  configs|cfg                Manage configs',
       '  files|f                    Manage files of a config',
       '  findings|fnd               Manage findings of a config',
+      '  releases|re                Manage releases',
       '  secrets|s                  Manage secrets',
       '  namespaces|ns              Manage namespaces',
       '  tokens|tks                 Manage your user tokens',

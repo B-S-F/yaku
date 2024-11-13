@@ -9,6 +9,7 @@ import { ApprovalEntity } from './approvals/approvals.entity'
 import { ApprovalService } from './approvals/approvals.service'
 import { ApprovalState } from './approvals/approvals.util'
 import { CommentsService } from './comments/comments.service'
+import { CheckResultOverridesService } from './overrides/check-result-overrides/check-result-override.service'
 import { OverridesService } from './overrides/overrides.service'
 import {
   ReleaseAuditEntity,
@@ -84,6 +85,12 @@ describe('ReleasesService', () => {
         },
         {
           provide: OverridesService,
+          useValue: {
+            removeAllWithTransaction: jest.fn(),
+          },
+        },
+        {
+          provide: CheckResultOverridesService,
           useValue: {
             removeAllWithTransaction: jest.fn(),
           },
@@ -168,6 +175,35 @@ describe('ReleasesService', () => {
     it('should return a list of releases', async () => {
       const listQueryHandler: any = {
         sortBy: 'id',
+        additionalParams: {},
+        addToQueryBuilder: jest.fn(),
+      }
+      const listWithTransactionSpy = jest.spyOn(service, 'listWithTransaction')
+      const findRunSpy = jest.spyOn(__runRepository, 'find')
+      const entityList = {
+        itemCount: 1,
+        entities: [release],
+      }
+      const approvalList = {
+        itemCount: 1,
+        entities: [approval],
+      }
+      listWithTransactionSpy.mockResolvedValue({
+        releases: entityList,
+        approvals: approvalList,
+      })
+      findRunSpy.mockResolvedValue(runs)
+
+      const result = await service.list(1, listQueryHandler)
+      expect(result).toEqual(
+        await service.toEntityList(entityList, approvalList)
+      )
+    })
+
+    it('should return a list of releases for a config', async () => {
+      const listQueryHandler: any = {
+        sortBy: 'id',
+        additionalParams: { configId: 1 },
         addToQueryBuilder: jest.fn(),
       }
       const listWithTransactionSpy = jest.spyOn(service, 'listWithTransaction')
@@ -208,6 +244,9 @@ describe('ReleasesService', () => {
             where() {
               return this
             },
+            andWhere() {
+              return this
+            },
             async getCount() {
               return itemCount as any
             },
@@ -228,6 +267,35 @@ describe('ReleasesService', () => {
       mockQueryBuilder(1, [release], [approval])
       const listQueryHandler: any = {
         sortBy: 'id',
+        additionalParams: {},
+        addToQueryBuilder: jest.fn(),
+      }
+      const entityList = {
+        itemCount: 1,
+        entities: [release],
+      }
+      const approvalList = {
+        itemCount: 1,
+        entities: [approval],
+      }
+
+      const result = await service.listWithTransaction(
+        queryRunner,
+        1,
+        listQueryHandler
+      )
+      expect(result).toEqual({
+        releases: entityList,
+        approvals: approvalList,
+      })
+      verifyTransactionNotCalled(queryRunner)
+    })
+
+    it('should return a list of releases for a config', async () => {
+      mockQueryBuilder(1, [release], [approval])
+      const listQueryHandler: any = {
+        sortBy: 'id',
+        additionalParams: { configId: 1 },
         addToQueryBuilder: jest.fn(),
       }
       const entityList = {

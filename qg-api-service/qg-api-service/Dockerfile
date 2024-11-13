@@ -2,78 +2,149 @@
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 
-ARG BASE_IMAGE_NAME="node:18-alpine"
+ARG BASE_IMAGE_NODEJS_NAME
 
-FROM ${BASE_IMAGE_NAME} As development
+FROM ${BASE_IMAGE_NODEJS_NAME} As development
 
-USER node
-RUN mkdir /home/node/app
-WORKDIR /home/node/app
+ARG GROUP_NAME=qguser
+ARG GROUP_ID=1000
+ARG USERNAME=qguser
+ARG USER_ID=1001
+ARG USER_HOME=/home/qguser
 
-COPY --chown=node:node . .
-RUN npm install -ws --include-workspace-root
+LABEL maintainer="Neutrinos GROW/PAT"
+LABEL description="YAKU core-api docker image based on Ubuntu-nodejs"
+
+ENV APP_GROUP_NAME=${GROUP_NAME} \
+    APP_GROUP_ID=${GROUP_ID} \
+    APP_USER_NAME=${USERNAME} \
+    APP_USER_ID=${USER_ID} \
+    APP_USER_HOME=${USER_HOME} \
+    PATH=$PATH:$APP_USER_HOME/node_modules/.bin \
+    NODE_ENV=development
+
+# no upgrade, only update - core image must be up-to-date!
+RUN set -uex \
+    && umask 0027 \
+    && /etc/init.d/setup-user.sh \
+    && chown -R ${APP_USER_ID} ${USER_HOME} \
+    && chown -R ${APP_USER_ID} /etc/ssl/node
+
+RUN cp /etc/ssl/certs/ca-certificates.crt /etc/ssl/trusted
+
+# switch to app user
+USER ${APP_USER_ID}
+WORKDIR ${APP_USER_HOME}/app
+
+COPY --chown=${USERNAME}:${USERNAME} package*.json ./
+
+RUN --mount=type=secret,id=npmrc,target=${USER_HOME}/.npmrc,uid=${USER_ID} npm install
+
+COPY --chown=${USERNAME}:${USERNAME} . .
 
 ###################
 # BUILD FOR PRODUCTION
 ###################
 
-ARG BASE_IMAGE_NAME="node:18-alpine"
+ARG BASE_IMAGE_NODEJS_NAME
 
-FROM ${BASE_IMAGE_NAME}  As build
+FROM ${BASE_IMAGE_NODEJS_NAME}  As build
 
-RUN apk --no-cache add zip
+ARG GROUP_NAME=qguser
+ARG GROUP_ID=1000
+ARG USERNAME=qguser
+ARG USER_ID=1001
+ARG USER_HOME=/home/qguser
 
-ENV PATH=$PATH:/home/node/app/node_modules/.bin \
+
+LABEL maintainer="Neutrinos GROW/PAT"
+LABEL description="YAKU core-api docker image based on Ubuntu-nodejs"
+
+ENV APP_GROUP_NAME=${GROUP_NAME} \
+    APP_GROUP_ID=${GROUP_ID} \
+    APP_USER_NAME=${USERNAME} \
+    APP_USER_ID=${USER_ID} \
+    APP_USER_HOME=${USER_HOME} \
+    PATH=$PATH:$APP_USER_HOME/node_modules/.bin \
     NODE_ENV=development
 
-WORKDIR /home/node/app
+# no upgrade, only update - core image must be up-to-date!
+RUN set -uex \
+    && umask 0027 \
+    && /etc/init.d/setup-user.sh \
+    && chown -R ${APP_USER_ID} ${USER_HOME} \
+    && chown -R ${APP_USER_ID} /etc/ssl/node
 
-COPY --from=development /home/node/app/node_modules ./node_modules
+RUN cp /etc/ssl/certs/ca-certificates.crt /etc/ssl/trusted
+
+RUN apt update -y && apt-get install -y zip
+
+
+WORKDIR ${APP_USER_HOME}/app
+
+COPY --from=development ${APP_USER_HOME}/app/node_modules ./node_modules
 COPY . .
 
 RUN npm config set ignore-scripts false
-RUN npm run build
-RUN npm ci -ws --include-workspace-root --omit=dev && npm cache clean --force
+RUN --mount=type=secret,id=npmrc,target=${APP_USER_HOME}/.npmrc,uid=${APP_USER_ID} npm run build
+RUN --mount=type=secret,id=npmrc,target=${APP_USER_HOME}/.npmrc,uid=${APP_USER_ID} npm install --omit=dev && npm cache clean --force
 
-RUN chown -R node:node /home/node/app
-USER node
+RUN chown -R ${APP_USER_ID} ${APP_USER_HOME}/app
 
- 
+# switch to app user
+USER ${APP_USER_ID}
 
 ###################
 # PRODUCTION
 ###################
 
-ARG BASE_IMAGE_NAME="node:18-alpine"
+ARG BASE_IMAGE_NODEJS_NAME
 
-FROM ${BASE_IMAGE_NAME} AS production
+FROM ${BASE_IMAGE_NODEJS_NAME} AS production
 
+ARG GROUP_NAME=qguser
+ARG GROUP_ID=1000
+ARG USERNAME=qguser
+ARG USER_ID=1001
+ARG USER_HOME=/home/qguser
 ARG VERSION=latest
 ENV IMAGE_VERSION=$VERSION
 ENV PORT=8080
 
 LABEL maintainer="Neutrinos GROW/PAT"
-LABEL description="YAKU core-api docker image based on node image"
+LABEL description="YAKU core-api docker image based on Ubuntu-nodejs"
 
-ENV PATH=$PATH:/app/node_modules/.bin
+ENV APP_GROUP_NAME=${GROUP_NAME} \
+    APP_GROUP_ID=${GROUP_ID} \
+    APP_USER_NAME=${USERNAME} \
+    APP_USER_ID=${USER_ID} \
+    APP_USER_HOME=${USER_HOME} \
+    PATH=$PATH:$APP_USER_HOME/node_modules/.bin
 
-RUN mkdir /data && chown -R node:node /data
-WORKDIR /home/node/app
+# no upgrade, only update - core image must be up-to-date!
+RUN set -uex \
+    && umask 0027 \
+    && /etc/init.d/setup-user.sh \
+    && chown -R ${APP_USER_ID} ${APP_USER_HOME} \
+    && chown -R ${APP_USER_ID} /etc/ssl/node
 
-COPY qg-api-service/examples ./qg-api-service/examples
-COPY --from=build  /home/node/app/node_modules ./node_modules
-COPY --from=build  /home/node/app/qg-api-service/dist ./qg-api-service/dist
-COPY --from=build  /home/node/app/qg-api-service/package.json ./qg-api-service/package.json
-COPY --from=build  /home/node/app/api-commons-lib/dist ./api-commons-lib/dist
-COPY --from=build  /home/node/app/api-commons-lib/package.json ./api-commons-lib/package.json
-COPY --from=build  /home/node/app/api-keycloak-auth-lib/dist ./api-keycloak-auth-lib/dist
-COPY --from=build  /home/node/app/api-keycloak-auth-lib/package.json ./api-keycloak-auth-lib/package.json
+RUN cp /etc/ssl/certs/ca-certificates.crt /etc/ssl/trusted
+
+RUN mkdir /data && chown -R ${APP_USER_ID}:${APP_USER_ID} /data
+
+
+WORKDIR ${APP_USER_HOME}/app
+
+
+COPY examples ./examples
+COPY --from=build  ${APP_USER_HOME}/app/node_modules ./node_modules
+COPY --from=build  ${APP_USER_HOME}/app/dist ./dist
+COPY --from=build  ${APP_USER_HOME}/app/package.json ./package.json
 
 EXPOSE ${PORT}
 
-WORKDIR /home/node/app/qg-api-service
-RUN chown -R node:node /home/node/app
+RUN chown -R ${APP_USER_ID}:${APP_USER_ID} ${USER_HOME}/app
+# switch to app user
+USER ${APP_USER_ID}
 
-USER node
-
-CMD ["node", "dist/main.js" ]
+CMD [ "node", "dist/main.js" ]

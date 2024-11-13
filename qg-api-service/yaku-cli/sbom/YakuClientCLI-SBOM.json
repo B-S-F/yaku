@@ -45,8 +45,8 @@
       "bom-ref": "@B-S-F/yaku-cli-0.51.2.tgz"
     },
     {
-      "group": "yaku-client-lib",
-      "name": "yaku-client-lib-0.51.2.tgz",
+      "group": "@B-S-F/yaku-client-lib",
+      "name": "@B-S-F/yaku-client-lib-0.51.2.tgz",
       "version": "0.51.2",
       "description": "Proprietary component from Bosch Software Flow",
       "licenses": [
@@ -65,7 +65,7 @@
         }
       ],
       "type": "library",
-      "bom-ref": "yaku-client-lib-0.51.2.tgz"
+      "bom-ref": "@B-S-F/yaku-client-lib-0.51.2.tgz"
     },
     {
       "group": "agent-base",

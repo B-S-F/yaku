@@ -22,6 +22,8 @@ import {
   Namespace,
   NewToken,
   NewTokenMetadata,
+  Release,
+  ReleasePaginated,
   Run,
   RunPaginated,
   SecretMetadata,
@@ -438,6 +440,27 @@ export class ApiClient {
         return result
       }
     }
+  }
+
+  async getRelease(namespaceId: number, releaseId: number): Promise<Release> {
+    const url = `${this.getServiceUrl(namespaceId)}/releases/${releaseId}`
+    return getResource<Release>(url, this.config.token)
+  }
+
+  async getReleases(
+    namespaceId: number,
+    queryOptions: QueryOptions
+  ): Promise<ReleasePaginated> {
+    const url = this.addQueryOptionsToUrl(
+      `${this.getServiceUrl(namespaceId)}/releases`,
+      queryOptions
+    )
+    return getResource<ReleasePaginated>(url, this.config.token)
+  }
+
+  async deleteRelease(namespaceId: number, releaseId: number): Promise<void> {
+    const url = `${this.getServiceUrl(namespaceId)}/releases/${releaseId}`
+    return deleteResource(url, this.config.token)
   }
 
   async createSecret(

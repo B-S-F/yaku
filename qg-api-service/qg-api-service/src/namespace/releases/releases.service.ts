@@ -1,5 +1,14 @@
-import { EntityList, ListQueryHandler } from '@B-S-F/api-commons-lib'
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import {
+  EntityList,
+  FilterOption,
+  ListQueryHandler,
+} from '@B-S-F/api-commons-lib'
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { In, LessThan, QueryRunner, Repository } from 'typeorm'
 import { Action, AuditActor } from '../audit/audit.entity'
@@ -13,6 +22,7 @@ import { ApprovalService } from './approvals/approvals.service'
 import { ApprovalState } from './approvals/approvals.util'
 import { CommentsService } from './comments/comments.service'
 import { checkForClosed } from './module.utils'
+import { CheckResultOverridesService } from './overrides/check-result-overrides/check-result-override.service'
 import { OverridesService } from './overrides/overrides.service'
 import {
   ApprovalMode,
@@ -21,6 +31,8 @@ import {
 } from './release.entity'
 import { AggregateApprovalDto, ReleaseDto } from './releases.utils'
 import { TaskService } from './tasks/tasks.service'
+
+const allowedFilteringParameters = ['config']
 
 @Injectable()
 export class ReleasesService {
@@ -35,6 +47,8 @@ export class ReleasesService {
     private readonly commentsService: CommentsService,
     @Inject(OverridesService)
     private readonly overridesService: OverridesService,
+    @Inject(CheckResultOverridesService)
+    private readonly checkResultOverridesService: CheckResultOverridesService,
     @Inject(TaskService)
     private readonly taskService: TaskService,
     @InjectRepository(Run)
@@ -84,6 +98,28 @@ export class ReleasesService {
       .leftJoinAndSelect('releases.namespace', 'Namespace')
       .leftJoinAndSelect('releases.config', 'Config')
       .where('releases.namespace.id = :namespaceId', { namespaceId })
+
+    const filters = listQueryHandler.additionalParams[
+      'filtering'
+    ] as FilterOption[]
+
+    if (filters) {
+      const unknowns = filters
+        .filter((cond) => !allowedFilteringParameters.includes(cond.property))
+        .map((unknown) => unknown.property)
+      if (unknowns.length > 0) {
+        throw new BadRequestException(
+          `Filtering for properties [${unknowns}] not supported`
+        )
+      }
+      for (const option of filters) {
+        if (option.property === 'config') {
+          queryBuilder.andWhere('Config.id IN (:...configId)', {
+            configId: option.values,
+          })
+        }
+      }
+    }
 
     listQueryHandler.addToQueryBuilder<ReleaseEntity>(queryBuilder, 'releases')
 
@@ -398,6 +434,13 @@ export class ReleasesService {
     )
 
     await this.overridesService.removeAllWithTransaction(
+      queryRunner,
+      namespaceId,
+      releaseId,
+      actor
+    )
+
+    await this.checkResultOverridesService.removeAllWithTransaction(
       queryRunner,
       namespaceId,
       releaseId,

@@ -32,4 +32,3 @@ days_difference=$((time_difference / 86400))
 
 # Set the output variable
 echo "$days_difference"
-

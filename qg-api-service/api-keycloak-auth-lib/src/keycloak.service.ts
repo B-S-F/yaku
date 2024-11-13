@@ -6,13 +6,7 @@ import {
   OnApplicationBootstrap,
 } from '@nestjs/common'
 import { InjectPinoLogger, Logger, PinoLogger } from 'nestjs-pino'
-import { ProxyAgent } from 'proxy-agent'
-
-/*
-Node 18 does not support proxies with native fetch yet (https://github.com/nodejs/node/issues/42814)
-In Node 20 it is possible by using the proxy-agent from undici
-*/
-import fetch, { RequestInit } from 'node-fetch'
+import { RequestInit, EnvHttpProxyAgent, fetch } from 'undici'
 
 export interface KeyCloakNamespace {
   id: number
@@ -129,7 +123,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
     }),
     {},
   )
-  private readonly proxyAgent = new ProxyAgent()
+  private readonly proxyAgent = new EnvHttpProxyAgent()
   private serviceAccountToken: ServiceAccountToken
   private OIDCEndpoints: {
     introspection_endpoint: string
@@ -392,19 +386,29 @@ export class KeyCloakService implements OnApplicationBootstrap {
         method: 'GET',
       }
 
+      let agent: Partial<RequestInit>
+
       if (this.cfg.useProxyAgent) {
-        config.agent = this.proxyAgent
+        agent = { dispatcher: this.proxyAgent }
       }
 
-      const response = await fetch(wellKnownEndpoint, config)
+      const response = await fetch(wellKnownEndpoint, { ...config, ...agent })
 
       const res = await response.json()
 
       const endpoints = { introspection_endpoint: '', token_endpoint: '' }
       if (res) {
-        if ('introspection_endpoint' in res && 'token_endpoint' in res) {
-          endpoints.introspection_endpoint = res.introspection_endpoint
-          endpoints.token_endpoint = res.token_endpoint
+        if (
+          typeof res === 'object' &&
+          'introspection_endpoint' in res &&
+          'token_endpoint' in res
+        ) {
+          endpoints.introspection_endpoint = (
+            res as { introspection_endpoint: string; token_endpoint: string }
+          ).introspection_endpoint
+          endpoints.token_endpoint = (
+            res as { token_endpoint: string }
+          ).token_endpoint
         } else {
           return Promise.reject()
         }
@@ -412,6 +416,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
       } else {
         return Promise.reject()
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       return Promise.reject()
     }
@@ -473,11 +478,16 @@ export class KeyCloakService implements OnApplicationBootstrap {
       body: `client_id=${this.cfg.clientId}&client_secret=${this.cfg.clientSecret}&token=${token}`,
     }
 
+    let agent: Partial<RequestInit>
+
     if (this.cfg.useProxyAgent) {
-      config.agent = this.proxyAgent
+      agent = { dispatcher: this.proxyAgent }
     }
 
-    const res = await fetch(this.OIDCEndpoints.introspection_endpoint, config)
+    const res = await fetch(this.OIDCEndpoints.introspection_endpoint, {
+      ...config,
+      ...agent,
+    })
 
     if (res) {
       if (res.status !== 200) {
@@ -520,12 +530,17 @@ export class KeyCloakService implements OnApplicationBootstrap {
       body: `client_id=${this.cfg.clientId}&client_secret=${this.cfg.clientSecret}&grant_type=client_credentials`,
     }
 
+    let agent: Partial<RequestInit>
+
     if (this.cfg.useProxyAgent) {
-      config.agent = this.proxyAgent
+      agent = { dispatcher: this.proxyAgent }
     }
 
     const issuedAt = new Date()
-    const res = await fetch(this.OIDCEndpoints.token_endpoint, config)
+    const res = await fetch(this.OIDCEndpoints.token_endpoint, {
+      ...config,
+      ...agent,
+    })
 
     if (!res) {
       throw new InternalServerErrorException(
@@ -567,15 +582,17 @@ export class KeyCloakService implements OnApplicationBootstrap {
       },
     }
 
+    let agent: Partial<RequestInit>
+
     if (this.cfg.useProxyAgent) {
-      config.agent = this.proxyAgent
+      agent = { dispatcher: this.proxyAgent }
     }
 
-    let res = await fetch(clientEndpoint, config)
+    let res = await fetch(clientEndpoint, { ...config, ...agent })
 
     if (res.status == 404) {
       clientEndpoint = `${this.cfg.server}/auth/admin/realms/${this.cfg.realm}/clients?clientId=${clientName}`
-      res = await fetch(clientEndpoint, config)
+      res = await fetch(clientEndpoint, { ...config, ...agent })
     }
 
     if (!res) {
@@ -634,15 +651,23 @@ export class KeyCloakService implements OnApplicationBootstrap {
       },
     }
 
+    let agent: Partial<RequestInit>
+
     if (this.cfg.useProxyAgent) {
-      config.agent = this.proxyAgent
+      agent = { dispatcher: this.proxyAgent }
     }
 
-    let res = await fetch(exampleAccessTokenEndpoint + queryString, config)
+    let res = await fetch(exampleAccessTokenEndpoint + queryString, {
+      ...config,
+      ...agent,
+    })
 
     if (res.status == 404) {
       const exampleAccessTokenEndpoint = `${this.cfg.server}/auth/admin/realms/${this.cfg.realm}/clients/${client_uuid}/evaluate-scopes/generate-example-access-token`
-      res = await fetch(exampleAccessTokenEndpoint + queryString, config)
+      res = await fetch(exampleAccessTokenEndpoint + queryString, {
+        ...config,
+        ...agent,
+      })
     }
 
     if (!res) {
@@ -683,15 +708,17 @@ export class KeyCloakService implements OnApplicationBootstrap {
       },
     }
 
+    let agent: Partial<RequestInit>
+
     if (this.cfg.useProxyAgent) {
-      config.agent = this.proxyAgent
+      agent = { dispatcher: this.proxyAgent }
     }
 
-    let res = await fetch(roleEndpoint, config)
+    let res = await fetch(roleEndpoint, { ...config, ...agent })
 
     if (res.status == 404) {
       const roleEndpoint = `${this.cfg.server}/auth/admin/realms/${this.cfg.realm}/clients/${clientId}/roles/${roleName}/users`
-      res = await fetch(roleEndpoint, config)
+      res = await fetch(roleEndpoint, { ...config, ...agent })
     }
 
     if (!res) {
@@ -787,15 +814,17 @@ export class KeyCloakService implements OnApplicationBootstrap {
       },
     }
 
+    let agent: Partial<RequestInit>
+
     if (this.cfg.useProxyAgent) {
-      config.agent = this.proxyAgent
+      agent = { dispatcher: this.proxyAgent }
     }
 
-    let res = await fetch(userEndpoint, config)
+    let res = await fetch(userEndpoint, { ...config, ...agent })
 
     if (res.status == 404) {
       const userEndpoint = `${this.cfg.server}/auth/admin/realms/${this.cfg.realm}/users/${id}`
-      res = await fetch(userEndpoint, config)
+      res = await fetch(userEndpoint, { ...config, ...agent })
     }
 
     if (!res) {
@@ -842,15 +871,17 @@ export class KeyCloakService implements OnApplicationBootstrap {
       },
     }
 
+    let agent: Partial<RequestInit>
+
     if (this.cfg.useProxyAgent) {
-      config.agent = this.proxyAgent
+      agent = { dispatcher: this.proxyAgent }
     }
 
-    let res = await fetch(userEndpoint, config)
+    let res = await fetch(userEndpoint, { ...config, ...agent })
 
     if (res.status == 404) {
       const userEndpoint = `${this.cfg.server}/auth/admin/realms/${this.cfg.realm}/users?username=${username}`
-      res = await fetch(userEndpoint, config)
+      res = await fetch(userEndpoint, { ...config, ...agent })
     }
 
     if (!res) {

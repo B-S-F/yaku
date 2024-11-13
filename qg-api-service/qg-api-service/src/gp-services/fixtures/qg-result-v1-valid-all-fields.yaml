@@ -1,0 +1,68 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+  date: 2024-09-19 15:21
+  toolVersion: 0.11.1-dev-2024-09-19_11-15-12-401a1bb
+overallStatus: GREEN
+statistics:
+  counted-checks: 1
+  counted-automated-checks: 1
+  counted-manual-check: 0
+  counted-unanswered-checks: 0
+  counted-skipped-checks: 0
+  degree-of-automation: 100
+  degree-of-completion: 100
+chapters:
+  '3':
+    title: Requirements management
+    text: text
+    status: GREEN
+    requirements:
+      '3.4':
+        title: Legal / official requirements / restrictions and regulations are known and were considered.
+        text: |-
+          Text line 1;
+
+          text line 2;
+
+          Text line 3.
+        status: GREEN
+        checks:
+          '1.1':
+            title: Some title
+            status: GREEN
+            type: Automation
+            evaluation:
+              autopilot: autopilot-name
+              status: GREEN
+              reason: All work items are valid
+              results:
+                - criterion: some criterion
+                  fulfilled: true
+                  justification: justification text
+                  metadata:
+                    status: 'YELLOW'
+              outputs:
+                status: GREEN
+              execution:
+                logs:
+                  - '{"result":{"criterion":"some criterion","justification":"justification text","fulfilled":true}}'
+                  - '{"status":"GREEN","reason":"All work items are valid"}'
+                errorlogs:
+                  - '{"Failed to send emails"}'
+                  - '{"Failed to send emails"}'
+                evidencePath: 3_3.4_1.1
+                exitCode: 0
+finalize:
+  execution:
+    logs:
+      - qg-dashboard.html generated successfully.
+      - qg-result.html generated successfully.
+      - qg-evidence.html generated successfully.
+    errorlogs:
+      - '{"Failed to send emails"}'
+      - '{"Failed to send emails"}'
+    evidencePath: .
+    exitCode: 0

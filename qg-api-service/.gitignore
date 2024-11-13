@@ -25,3 +25,4 @@ thunder-tests/
 data
 qg-api-service/oss/src/*.zip
 .devcontainer
+.npmrc

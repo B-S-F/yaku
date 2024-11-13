@@ -1,19 +1,14 @@
 import { Command, Option } from 'commander'
-import {
-  ApiClient,
-  QueryOptions,
-  SecretMetadata,
-} from 'yaku-client-lib'
+import { ApiClient } from '@B-S-F/yaku-client-lib'
 import readline from 'readline'
-import {
-  getResourceDeletionConfirmation,
-  handleRestApiError,
-  handleStandardParams,
-  logResultAsJson,
-  logSuccess,
-  parseIntParameter,
-} from '../common.js'
+import { handleRestApiError } from '../common.js'
 import { connect } from '../connect.js'
+import {
+  createSecret,
+  deleteSecret,
+  exportSecrets,
+  updateSecret,
+} from '../handlers/secrets.js'
 
 export function createSecretsSubcommands(program: Command): void {
   let client: ApiClient
@@ -37,26 +32,7 @@ export function createSecretsSubcommands(program: Command): void {
     .option('-s, --sortBy [property]', 'Sort results by the given property')
     .action(async (page: string, options) => {
       try {
-        handleStandardParams(client, namespace)
-        const pg = page ? parseIntParameter(page, 'page') : 1
-        const ic = options.itemCount
-          ? parseIntParameter(options.itemCount, 'itemCount')
-          : 20
-        const queryOptions = new QueryOptions(
-          pg,
-          ic,
-          undefined,
-          undefined,
-          options.sortBy,
-          options.ascending
-        )
-        if (options.all) {
-          await logResultAsJson(
-            client!.listAllSecrets(namespace!, queryOptions)
-          )
-        } else {
-          await logResultAsJson(client!.listSecrets(namespace!, queryOptions))
-        }
+        await exportSecrets(client, namespace, page, options)
       } catch (err) {
         handleRestApiError(err)
       }
@@ -86,10 +62,7 @@ export function createSecretsSubcommands(program: Command): void {
         const secret = options.secret
         if (secret) {
           try {
-            handleStandardParams(client, namespace)
-            await logResultAsJson(
-              client!.createSecret(namespace!, name, secret, description)
-            )
+            await createSecret(client, namespace, name, description, secret)
           } catch (err) {
             handleRestApiError(err)
           }
@@ -101,10 +74,7 @@ export function createSecretsSubcommands(program: Command): void {
           rl.question('Enter the secret value: ', async (secret: string) => {
             rl.close()
             try {
-              handleStandardParams(client, namespace)
-              await logResultAsJson(
-                client!.createSecret(namespace!, name, secret, description)
-              )
+              await createSecret(client, namespace, name, description, secret)
             } catch (err) {
               handleRestApiError(err)
             }
@@ -134,10 +104,7 @@ export function createSecretsSubcommands(program: Command): void {
         const secret = options.secret
         if (secret) {
           try {
-            handleStandardParams(client, namespace)
-            await logResultAsJson(
-              client!.updateSecret(namespace!, name, secret, description)
-            )
+            await updateSecret(client, namespace, name, description, secret)
           } catch (err) {
             handleRestApiError(err)
           }
@@ -151,10 +118,7 @@ export function createSecretsSubcommands(program: Command): void {
             async (secret: string) => {
               rl.close()
               try {
-                handleStandardParams(client, namespace)
-                await logResultAsJson(
-                  client!.updateSecret(namespace!, name, secret, description)
-                )
+                await updateSecret(client, namespace, name, description, secret)
               } catch (err) {
                 handleRestApiError(err)
               }
@@ -174,31 +138,7 @@ export function createSecretsSubcommands(program: Command): void {
     )
     .action(async (name: string, options) => {
       try {
-        handleStandardParams(client, namespace)
-        let confirmation = true
-
-        if (!options.yes) {
-          const secretPromise: Promise<SecretMetadata[]> =
-            client!.listAllSecrets(
-              namespace!,
-              new QueryOptions(1, 20, undefined, undefined, 'name', false)
-            )
-          const secrets = await secretPromise
-          const secret = secrets.find((s) => s.name === name)
-
-          if (!secret) {
-            throw new Error(`Secret ${name} does not exist`)
-          }
-
-          confirmation = await getResourceDeletionConfirmation(secret)
-        }
-
-        if (confirmation) {
-          await logSuccess(
-            client!.deleteSecret(namespace!, name),
-            `Secret ${name} was successfully deleted`
-          )
-        }
+        await deleteSecret(client, namespace, name, options)
       } catch (err) {
         handleRestApiError(err)
       }

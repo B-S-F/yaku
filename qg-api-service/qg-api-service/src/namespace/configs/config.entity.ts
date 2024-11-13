@@ -37,7 +37,10 @@ export class ConfigEntity {
   @Column({ type: 'timestamptz' })
   lastModificationTime: Date
 
-  @OneToMany(() => FileEntity, (file) => file.config)
+  @OneToMany(
+    () => FileEntity,
+    (file) => file.config
+  )
   files: FileEntity[]
 
   qgConfig(): FileEntity {
@@ -62,9 +65,13 @@ export class FileEntity {
   @Column()
   filename: string
 
-  @ManyToOne(() => ConfigEntity, (config) => config.files, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(
+    () => ConfigEntity,
+    (config) => config.files,
+    {
+      onDelete: 'CASCADE',
+    }
+  )
   config: ConfigEntity
 }
 

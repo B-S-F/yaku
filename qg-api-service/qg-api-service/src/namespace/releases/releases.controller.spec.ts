@@ -15,7 +15,7 @@ import { Request } from 'express'
 import { getUserFromRequest, RequestUser } from '../module.utils'
 import { ApprovalState } from './approvals/approvals.util'
 import { HistoryService } from './history.service'
-import { ReleasesController } from './releases.controller'
+import { ReleasesController, ReleasesQueryOptions } from './releases.controller'
 import { ReleasesService } from './releases.service'
 import { AddReleaseDto, ReleaseDto, UpdateReleaseDto } from './releases.utils'
 import { testUser, baseUrl } from '../../gp-services/test-services'
@@ -203,6 +203,27 @@ describe('ReleasesController', () => {
       )
 
       expect(result.data).toEqual([releaseDto2, releaseDto1])
+    })
+
+    it('should get the releases with the given filter', async () => {
+      const namespaceId = 1
+      const queryOptions: ReleasesQueryOptions = {
+        filter: 'config=1',
+      }
+      const response = createMockResponse(`${baseUrl}/releases`, testUser)
+      const serviceResult: EntityList<ReleaseDto> = {
+        itemCount: 0,
+        entities: [releaseDto1],
+      }
+      jest.spyOn(service, 'list').mockResolvedValue(serviceResult)
+
+      const result = await controller.getReleases(
+        namespaceId,
+        queryOptions,
+        response
+      )
+
+      expect(result.data).toEqual([releaseDto1])
     })
   })
 

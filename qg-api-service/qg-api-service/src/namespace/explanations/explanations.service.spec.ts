@@ -27,7 +27,6 @@ describe('ExplanationsService', () => {
       stream.push(null)
       resolve(Buffer.from(stream.read()))
     })
-
     ;(parseRunFiles as jest.Mock).mockImplementation(() => {
       return {
         name: 'Sample YAML data',
@@ -111,7 +110,6 @@ describe('ExplanationsService', () => {
       const chapter = 'chapter'
       const requirement = 'requirement'
       const check = 'check'
-
       ;(runService.get as jest.Mock).mockImplementation(() => {
         return new Error('QG result not found')
       })
@@ -127,7 +125,6 @@ describe('ExplanationsService', () => {
       const chapter = 'chapter'
       const requirement = 'requirement'
       const check = 'check'
-
       ;(parseRunFiles as jest.Mock).mockImplementation(() => {
         throw new Error('Failed to parse run files')
       })
@@ -143,7 +140,6 @@ describe('ExplanationsService', () => {
       const chapter = 'chapter'
       const requirement = 'requirement'
       const check = 'check'
-
       ;(generatePrompt as jest.Mock).mockImplementation(() => {
         throw new Error('Failed to generate prompt')
       })

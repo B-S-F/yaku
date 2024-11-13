@@ -11,6 +11,27 @@ export type FileMetadata = {
   filename?: string
 }
 
+export const approvalModes = ['one', 'all'] as const
+
+export type ApprovalMode = (typeof approvalModes)[number]
+export enum ApprovalState {
+  APPROVED = 'approved',
+  PENDING = 'pending',
+}
+
+export type Release = {
+  id: number
+  name: string
+  approvalMode: ApprovalMode
+  config: Config
+  createdBy: string
+  lastModifiedBy: string
+  plannedDate: Date
+  lastModificationTime: Date
+  closed: boolean
+  approvalState: ApprovalState
+}
+
 export type Run = {
   id: number
   status: RunStatus
@@ -62,6 +83,10 @@ export type PaginatedData = {
     last: string
     first: string
   }
+}
+
+export type ReleasePaginated = PaginatedData & {
+  data: Release[]
 }
 
 export type RunPaginated = PaginatedData & {
