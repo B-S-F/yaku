@@ -1,3834 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`renderHtmlFiles > should render result %p test/integration/input/v0 1`] = `
-"<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>QG XXXXX</title>
-<meta charset="utf-8"/>
-<style>
-:root {
---gray-60: #8a9097;
---gray-95: #eff1f2;
-
---blue-50: #007bc0;
---blue-90: #d1e4ff;
-
---turquoise-30: #0a4f4b;
---turquoise-50: #18837e;
---turquoise-70: #66b8b2;
-
---red-50: #ed0007;
---red-90: #ffd9d9;
-
---green-50: #00884a;
---green-90: #b8efc9;
-
---yellow-90: #ffdf95;
---yellow-85: #ffcf00;
-
-font-size: 16px;
-margin: 0;
-padding: 0;
-
--webkit-print-color-adjust: exact;
-color-adjust: exact;
-}
-
-.minor-signal-neutral {
-fill: var(--blue-90);
-}
-
-.minor-signal-error {
-fill: var(--red-90);
-}
-
-.minor-signal-warning {
-fill: var(--yellow-90);
-}
-
-.minor-signal-success {
-fill: var(--green-90);
-}
-
-.major-signal-neutral {
-fill: var(--blue-50);
-}
-
-.major-signal-neutral__front {
-fill: #fff;
-}
-
-.major-signal-error {
-fill: var(--red-50);
-}
-
-.major-signal-error__front {
-fill: #fff;
-}
-
-.major-signal-warning {
-fill: var(--yellow-85);
-}
-
-.major-signal-warning__front {
-fill: #000;
-}
-
-.major-signal-success {
-fill: var(--green-50);
-}
-
-.major-signal-success__front {
-fill: #fff;
-}
-
-:root,
-html,
-title {
-font-family: Ubuntu, Helvetica, Arial, sans-serif;
-line-height: 1.5;
-}
-
-a {
-color: var(--blue-50);
-text-decoration: none;
-}
-
-th,
-td {
-padding: .5rem;
-vertical-align: top;
-word-break: break-all;
-}
-
-.id {
-word-break: keep-all;
-white-space: nowrap;
-}
-
-th {
-text-align: start;
-white-space: nowrap;
-}
-
-tbody tr:last-child td,
-tbody tr:last-child th {
-border-bottom: none;
-}
-
-td,
-th,
-thead~tbody tr:last-child td {
-border-bottom: 1px solid var(--gray-60);
-}
-
-thead th {
-border-bottom: 1px solid #000;
-}
-
-table {
-border-collapse: separate;
-border-spacing: 0;
-margin: 1rem 0;
-}
-
-thead {
-position: sticky;
-top: 0;
-background: #fff;
-}
-
-tr,
-tr * {
-page-break-inside: avoid;
-}
-
-body {
-margin: 2cm;
-padding: 0;
-}
-
-p, ul {
-margin: 0;
-}
-
-p+p, ul+p, p+ul {
-margin-top: 1em;
-}
-
-.small, .sources {
-font-size: .75rem;
-}
-
-.normal {
-font-size: 1rem;
-}
-
-.centered {
-text-align: center;
-}
-
-.nospace {
-position: absolute;
-z-index: 1;
-transform: translateX(.25rem);
-}
-
-.full-width {
-width: 100%;
-}
-
-.icon {
-width: 1.5rem;
-height: 1.5rem;
-margin-top: 0;
-margin-bottom: -0.5rem;
-vertical-align: top;
-}
-
-.icon[data-icon^="text-"] {
-width: 3rem;
-}
-
-h3 .icon[data-icon^="text-"] {
-display: none;
-}
-
-ul.sources {
-list-style-type: none;
-padding: 0;
-margin-top: 0;
-}
-
-h2, h3 {
-margin: 1em 0;
-}
-h3 {
-font-size: 1.25rem;
-}
-
-h3 .status-icon {
-float: right;
-font-weight: normal;
-font-size: 1rem;
-white-space: nowrap;
-margin-left: .25rem;
-}
-
-.capture-filter-box {
-position: fixed;
-display: none;
-z-index: 1001;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-}
-
-.logs-header {
-background: #999;
-display: block;
-color: white;
-text-align: center;
-padding: 0.5em 1em;
-margin-bottom: 0px;
-font-weight: bold;
-border-radius: 0.5em 0.5em 0em 0em;
-font-size: 0.7rem;
-}
-
-.error-logs {
-background: rgb(119, 14, 14);
-}
-
-pre.logs {
-background: #333;
-font-size: 0.7rem;
-color: white;
-padding: 1em;
-margin-top: 0;
-white-space: pre-wrap;
-overflow-wrap: break-word;
-border-radius: 0em 0em 0.5em 0.5em;
-}
-
-.toggle-hidden::before {
-content: "▶ "
-}
-
-.toggle-hidden::after {
-content: " (click to expand)"
-}
-
-.toggle-expanded::before {
-content: "▼ "
-}
-
-.toggle-expanded::after {
-content: " (click to minimize) "
-}
-
-.hidden {
-display: none;
-}
-
-.legend {
-display: grid;
-grid-template-columns: min-content 1fr;
-grid-auto-rows: 1.5rem;
-gap: .25rem .5rem;
-vertical-align: bottom;
-margin-top: 2rem;
-page-break-inside: avoid;
-}
-
-.legend .icon {
-margin: 0;
-}
-
-.legend > span {
-justify-self: center;
-}
-
-.legend > * {
-align-self: center;
-}
-
-.marked table, .marked thead {
-background-color: var(--gray-95);
-}
-
-/* === Bar chart === */
-
-.bar-chart {
-display: flex;
-align-content: stretch;
-}
-
-.bar-chart > * + * {
-outline: 2px solid #fff;
-background-color: var(--gray-60);
-height: 1.5rem;
-}
-
-.bar-chart-legend:first-of-type {
-margin-left: .5rem;
-}
-
-.bar-chart-legend {
-white-space: nowrap;
-margin-right: .5rem;
-}
-
-.bar-chart-legend__symbol {
-display: inline-block;
-width: .75rem;
-height: .75rem;
-border-radius: .375rem;
-}
-
-[data=auto] {
-background-color: var(--turquoise-30);
-}
-
-[data=manual] {
-background-color: var(--turquoise-50);
-}
-
-[data=unanswered] {
-background-color: var(--turquoise-70);
-}
-
-[data=GREEN] {
-background-color: var(--green-50);
-}
-
-[data=YELLOW] {
-background-color: var(--yellow-85);
-}
-
-[data=RED] {
-background-color: var(--red-50);
-}
-
-[data=NA] {
-background-color: var(--blue-50);
-}
-
-[data=empty] {
-background-color: var(--gray-95);
-}
-
-@media print {
-:root {
-font-size: 10pt;
-}
-
-body,
-html {
-margin: 0 2cm;
-}
-
-.no-print,
-.no-print * {
-display: none !important;
-}
-}
-
-@page {
-margin: 2cm 0;
-font-family: Ubuntu, Helvetica, Arial, sans-serif;
-}
-</style>
-<script lang="javascript">
-function toggleNextSibling(source) {
-source.classList.toggle("toggle-hidden")
-source.classList.toggle("toggle-expanded")
-source.nextElementSibling.classList.toggle("hidden")
-}
-</script>
-</head>
-
-<body style="position: relative;">
-<svg version="2.0" style="display: none;">
-<style>
-
-</style>
-<defs>
-<symbol id="icon-arrow-right-frame" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--blue-50)>
-<path d="M682.92-460H220q-8.54 0-14.27-5.73T200-480q0-8.54 5.73-14.27T220-500h462.92L533.54-649.38q-5.85-5.85-6.12-13.77-.27-7.93 6.12-14.54 6.61-6.62 14.27-6.73 7.65-.12 14.27 6.5l175.3 175.3q5.24 5.24 7.35 10.7 2.12 5.46 2.12 11.92t-2.12 11.92q-2.11 5.46-7.35 10.7l-175.3 175.3q-5.85 5.85-13.89 6.12-8.04.27-14.65-6.35-6.39-6.61-6.5-14.15-.12-7.54 6.5-14.16L682.92-460Z"/>    </symbol>
-<symbol id="icon-filter" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
-<path d="M455.39-180q-15.08 0-25.23-10.16Q420-200.31 420-215.39v-231.53L196.08-731.38q-11.54-15.39-3.35-32 8.2-16.62 27.66-16.62h519.22q19.46 0 27.66 16.62 8.19 16.61-3.35 32L540-446.92v231.53q0 15.08-10.16 25.23Q519.69-180 504.61-180h-49.22Z"/>
-</symbol>
-<symbol id="icon-report" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-291.54q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02-9.29-9.28-23.02-9.28t-23.02 9.28q-9.29 9.29-9.29 23.02t9.29 23.02q9.29 9.29 23.02 9.29Zm.01-139.23q12.76 0 21.37-8.62 8.62-8.63 8.62-21.38v-181.54q0-12.75-8.63-21.37-8.63-8.63-21.38-8.63-12.76 0-21.37 8.63-8.62 8.62-8.62 21.37v181.54q0 12.75 8.63 21.38 8.63 8.62 21.38 8.62ZM368.39-140q-14.64 0-27.9-5.62-13.26-5.61-23.1-15.46L161.08-317.39q-9.85-9.84-15.46-23.1-5.62-13.26-5.62-27.9v-223.22q0-14.64 5.62-27.9 5.61-13.26 15.46-23.1l156.31-156.31q9.84-9.85 23.1-15.46 13.26-5.62 27.9-5.62h223.22q14.64 0 27.9 5.62 13.26 5.61 23.1 15.46l156.31 156.31q9.85 9.84 15.46 23.1 5.62 13.26 5.62 27.9v223.22q0 14.64-5.62 27.9-5.61 13.26-15.46 23.1L642.61-161.08q-9.84 9.85-23.1 15.46-13.26 5.62-27.9 5.62H368.39Z"/>
-</symbol>
-<symbol id="icon-denied" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--blue-50)>
-<path d="M320-450h320q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37Q652.75-510 640-510H320q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37Q307.25-450 320-450Zm160.07 350q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-alert-warning" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--yellow-85)">
-<path d="M137.02-140q-10.17 0-18.27-4.97t-12.59-13.11q-4.68-8.08-5.15-17.5-.47-9.42 5.08-18.66l342.43-591.52q5.56-9.24 13.9-13.66 8.35-4.42 17.58-4.42 9.23 0 17.58 4.42 8.34 4.42 13.9 13.66l342.43 591.52q5.55 9.24 5.08 18.66-.47 9.42-5.15 17.5-4.49 8.14-12.59 13.11-8.1 4.97-18.27 4.97H137.02ZM480-247.69q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02T480-312.31q-13.73 0-23.02 9.29T447.69-280q0 13.73 9.29 23.02t23.02 9.29Zm.01-104.62q12.76 0 21.37-8.62 8.62-8.63 8.62-21.38v-140q0-12.75-8.63-21.37-8.63-8.63-21.38-8.63-12.76 0-21.37 8.63-8.62 8.62-8.62 21.37v140q0 12.75 8.63 21.38 8.63 8.62 21.38 8.62Z"/>
-</symbol>
-<symbol id="icon-check-circle" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--green-50)>
-<path d="m423.23-394.15-92.92-92.93q-8.31-8.3-20.89-8.5-12.57-.19-21.27 8.5-8.69 8.7-8.69 21.08 0 12.38 8.69 21.08l109.77 109.77q10.85 10.84 25.31 10.84 14.46 0 25.31-10.84l222.54-222.54q8.3-8.31 8.5-20.89.19-12.57-8.5-21.27-8.7-8.69-21.08-8.69-12.38 0-21.08 8.69l-205.69 205.7ZM480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-error" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-290.77q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02-9.29-9.28-23.02-9.28t-23.02 9.28q-9.29 9.29-9.29 23.02t9.29 23.02q9.29 9.29 23.02 9.29Zm.01-146.15q12.76 0 21.37-8.63 8.62-8.62 8.62-21.37v-180q0-12.75-8.63-21.38-8.63-8.62-21.38-8.62-12.76 0-21.37 8.62-8.62 8.63-8.62 21.38v180q0 12.75 8.63 21.37 8.63 8.63 21.38 8.63Zm.06 336.92q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-bug" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-140q-59.61 0-110.11-29.31T289.69-250H210q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-310 210-310h57.08q-6.08-24.61-6.58-49.74-.5-25.13-.5-50.26h-50q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-470 210-470h50q0-25.38.12-50.58.11-25.19 6.96-49.42H210q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-630 210-630h79.69q14.39-24.54 34-44.73 19.62-20.19 44.93-34.04l-47.77-48.38q-8.31-8.12-8.31-20.29t8.99-21.16q8.24-8.24 20.62-8.24 12.39 0 20.7 8.3L427.39-734q25.69-7.84 51.99-7.84 26.31 0 52 7.84l66.54-65.15q8.12-8.31 20.29-8.31t21.16 8.99q8.24 8.24 8.24 20.62 0 12.39-8.3 20.7l-48.39 48.38q25.31 13.85 45.16 33.73 19.84 19.89 34.23 45.04H750q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-570 750-570h-57.08q6.85 24.23 6.96 49.49.12 25.25.12 50.51h50q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-410 750-410h-50q0 25-.5 50.19-.5 25.2-6.58 49.81H750q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-250 750-250h-79.69q-29.7 51.38-80.2 80.69Q539.61-140 480-140Zm-43.85-190h87.7q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37-8.62-8.62-21.37-8.62h-87.7q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37 8.62 8.62 21.37 8.62Zm0-160h87.7q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37-8.62-8.62-21.37-8.62h-87.7q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37 8.62 8.62 21.37 8.62Z"/>    </symbol>
-<symbol id="icon-text-unanswered" viewBox="0 0 192 45.68">
-<text text-anchor="middle" dominant-baseline="central" font-size="40.1511px" font-weight="bold">
-<tspan y="50%" x="50%">PENDING</tspan>
-</text>
-</symbol>
-<symbol id="icon-text-skipped" viewBox="0 0 192 45.68">
-<text text-anchor="middle" dominant-baseline="central" font-size="40.1511px" font-weight="bold">
-<tspan y="50%" x="50%">SKIPPED</tspan>
-</text>
-</symbol>
-</defs>
-</svg>
-
-
-<h1>XXXXX</h1>
-
-<table>
-<tbody>
-
-
-<tr>
-<th scope="row">
-Name
-</th>
-<td>
-XXXXX
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-Version
-</th>
-<td>
-1.16.0
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-Date
-</th>
-<td>
-2022-05-16 9:48:45 CEST
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-QG CLI Version
-</th>
-<td>
-0.1.8:4b50ee26239bb9e7f6084dcb1c005e05b7b79a88
-</td>
-</tr>
-
-
-</tbody>
-</table>
-
-
-
-<h2>Status of Results</h2>
-<p>
-Result of answered:
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="GREEN"></span>
-<strong>40&nbsp;%</strong>
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="YELLOW"></span>
-<strong>20&nbsp;%</strong>
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="RED"></span>
-<strong>40&nbsp;%</strong>
-</span>
-
-</p>
-<p>
-<div class="bar-chart">
-<div style="width: 33.33333333333333%;" data="GREEN"></div>
-<div style="width: 16.666666666666664%;" data="YELLOW"></div>
-<div style="width: 33.33333333333333%;" data="RED"></div>
-<div style="width: 16.666666666666664%;" data="empty"></div>
-</div>
-
-</p>
-<p>
-<div class="bar-chart">
-<div style="width: 50%;" data="auto"></div>
-<div style="width: 33.33333333333333%;" data="manual"></div>
-<div style="width: 16.666666666666664%;" data="unanswered"></div>
-</div>
-
-</p>
-<p>
-Answered:
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="auto"></span>
-<strong>50&nbsp;%</strong> Automatically
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="manual"></span>
-<strong>33&nbsp;%</strong> Manually
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="unanswered"></span>
-<strong>17&nbsp;%</strong> Unanswered
-</span>
-
-</p>
-
-
-
-<p>
-<a href="qg-result.html">
-<svg class="icon" version="2.0">
-<use href="#icon-arrow-right-frame" />
-</svg>
-Breakdown of results
-</a>
-</p>
-</body>
-</html>
-"
-`;
-
-exports[`renderHtmlFiles > should render result %p test/integration/input/v0 2`] = `
-"<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<title>QG XXXXX</title>
-<meta charset="utf-8"/>
-<style>
-:root {
---gray-60: #8a9097;
---gray-95: #eff1f2;
-
---blue-50: #007bc0;
---blue-90: #d1e4ff;
-
---turquoise-30: #0a4f4b;
---turquoise-50: #18837e;
---turquoise-70: #66b8b2;
-
---red-50: #ed0007;
---red-90: #ffd9d9;
-
---green-50: #00884a;
---green-90: #b8efc9;
-
---yellow-90: #ffdf95;
---yellow-85: #ffcf00;
-
-font-size: 16px;
-margin: 0;
-padding: 0;
-
--webkit-print-color-adjust: exact;
-color-adjust: exact;
-}
-
-.minor-signal-neutral {
-fill: var(--blue-90);
-}
-
-.minor-signal-error {
-fill: var(--red-90);
-}
-
-.minor-signal-warning {
-fill: var(--yellow-90);
-}
-
-.minor-signal-success {
-fill: var(--green-90);
-}
-
-.major-signal-neutral {
-fill: var(--blue-50);
-}
-
-.major-signal-neutral__front {
-fill: #fff;
-}
-
-.major-signal-error {
-fill: var(--red-50);
-}
-
-.major-signal-error__front {
-fill: #fff;
-}
-
-.major-signal-warning {
-fill: var(--yellow-85);
-}
-
-.major-signal-warning__front {
-fill: #000;
-}
-
-.major-signal-success {
-fill: var(--green-50);
-}
-
-.major-signal-success__front {
-fill: #fff;
-}
-
-:root,
-html,
-title {
-font-family: Ubuntu, Helvetica, Arial, sans-serif;
-line-height: 1.5;
-}
-
-a {
-color: var(--blue-50);
-text-decoration: none;
-}
-
-th,
-td {
-padding: .5rem;
-vertical-align: top;
-word-break: break-all;
-}
-
-.id {
-word-break: keep-all;
-white-space: nowrap;
-}
-
-th {
-text-align: start;
-white-space: nowrap;
-}
-
-tbody tr:last-child td,
-tbody tr:last-child th {
-border-bottom: none;
-}
-
-td,
-th,
-thead~tbody tr:last-child td {
-border-bottom: 1px solid var(--gray-60);
-}
-
-thead th {
-border-bottom: 1px solid #000;
-}
-
-table {
-border-collapse: separate;
-border-spacing: 0;
-margin: 1rem 0;
-}
-
-thead {
-position: sticky;
-top: 0;
-background: #fff;
-}
-
-tr,
-tr * {
-page-break-inside: avoid;
-}
-
-body {
-margin: 2cm;
-padding: 0;
-}
-
-p, ul {
-margin: 0;
-}
-
-p+p, ul+p, p+ul {
-margin-top: 1em;
-}
-
-.small, .sources {
-font-size: .75rem;
-}
-
-.normal {
-font-size: 1rem;
-}
-
-.centered {
-text-align: center;
-}
-
-.nospace {
-position: absolute;
-z-index: 1;
-transform: translateX(.25rem);
-}
-
-.full-width {
-width: 100%;
-}
-
-.icon {
-width: 1.5rem;
-height: 1.5rem;
-margin-top: 0;
-margin-bottom: -0.5rem;
-vertical-align: top;
-}
-
-.icon[data-icon^="text-"] {
-width: 3rem;
-}
-
-h3 .icon[data-icon^="text-"] {
-display: none;
-}
-
-ul.sources {
-list-style-type: none;
-padding: 0;
-margin-top: 0;
-}
-
-h2, h3 {
-margin: 1em 0;
-}
-h3 {
-font-size: 1.25rem;
-}
-
-h3 .status-icon {
-float: right;
-font-weight: normal;
-font-size: 1rem;
-white-space: nowrap;
-margin-left: .25rem;
-}
-
-.capture-filter-box {
-position: fixed;
-display: none;
-z-index: 1001;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-}
-
-.logs-header {
-background: #999;
-display: block;
-color: white;
-text-align: center;
-padding: 0.5em 1em;
-margin-bottom: 0px;
-font-weight: bold;
-border-radius: 0.5em 0.5em 0em 0em;
-font-size: 0.7rem;
-}
-
-.error-logs {
-background: rgb(119, 14, 14);
-}
-
-pre.logs {
-background: #333;
-font-size: 0.7rem;
-color: white;
-padding: 1em;
-margin-top: 0;
-white-space: pre-wrap;
-overflow-wrap: break-word;
-border-radius: 0em 0em 0.5em 0.5em;
-}
-
-.toggle-hidden::before {
-content: "▶ "
-}
-
-.toggle-hidden::after {
-content: " (click to expand)"
-}
-
-.toggle-expanded::before {
-content: "▼ "
-}
-
-.toggle-expanded::after {
-content: " (click to minimize) "
-}
-
-.hidden {
-display: none;
-}
-
-.legend {
-display: grid;
-grid-template-columns: min-content 1fr;
-grid-auto-rows: 1.5rem;
-gap: .25rem .5rem;
-vertical-align: bottom;
-margin-top: 2rem;
-page-break-inside: avoid;
-}
-
-.legend .icon {
-margin: 0;
-}
-
-.legend > span {
-justify-self: center;
-}
-
-.legend > * {
-align-self: center;
-}
-
-.marked table, .marked thead {
-background-color: var(--gray-95);
-}
-
-/* === Bar chart === */
-
-.bar-chart {
-display: flex;
-align-content: stretch;
-}
-
-.bar-chart > * + * {
-outline: 2px solid #fff;
-background-color: var(--gray-60);
-height: 1.5rem;
-}
-
-.bar-chart-legend:first-of-type {
-margin-left: .5rem;
-}
-
-.bar-chart-legend {
-white-space: nowrap;
-margin-right: .5rem;
-}
-
-.bar-chart-legend__symbol {
-display: inline-block;
-width: .75rem;
-height: .75rem;
-border-radius: .375rem;
-}
-
-[data=auto] {
-background-color: var(--turquoise-30);
-}
-
-[data=manual] {
-background-color: var(--turquoise-50);
-}
-
-[data=unanswered] {
-background-color: var(--turquoise-70);
-}
-
-[data=GREEN] {
-background-color: var(--green-50);
-}
-
-[data=YELLOW] {
-background-color: var(--yellow-85);
-}
-
-[data=RED] {
-background-color: var(--red-50);
-}
-
-[data=NA] {
-background-color: var(--blue-50);
-}
-
-[data=empty] {
-background-color: var(--gray-95);
-}
-
-@media print {
-:root {
-font-size: 10pt;
-}
-
-body,
-html {
-margin: 0 2cm;
-}
-
-.no-print,
-.no-print * {
-display: none !important;
-}
-}
-
-@page {
-margin: 2cm 0;
-font-family: Ubuntu, Helvetica, Arial, sans-serif;
-}
-</style>
-<script lang="javascript">
-function toggleNextSibling(source) {
-source.classList.toggle("toggle-hidden")
-source.classList.toggle("toggle-expanded")
-source.nextElementSibling.classList.toggle("hidden")
-}
-</script>
-</head>
-
-<body>
-<svg version="2.0" style="display: none;">
-<style>
-
-</style>
-<defs>
-<symbol id="icon-arrow-right-frame" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--blue-50)>
-<path d="M682.92-460H220q-8.54 0-14.27-5.73T200-480q0-8.54 5.73-14.27T220-500h462.92L533.54-649.38q-5.85-5.85-6.12-13.77-.27-7.93 6.12-14.54 6.61-6.62 14.27-6.73 7.65-.12 14.27 6.5l175.3 175.3q5.24 5.24 7.35 10.7 2.12 5.46 2.12 11.92t-2.12 11.92q-2.11 5.46-7.35 10.7l-175.3 175.3q-5.85 5.85-13.89 6.12-8.04.27-14.65-6.35-6.39-6.61-6.5-14.15-.12-7.54 6.5-14.16L682.92-460Z"/>    </symbol>
-<symbol id="icon-filter" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
-<path d="M455.39-180q-15.08 0-25.23-10.16Q420-200.31 420-215.39v-231.53L196.08-731.38q-11.54-15.39-3.35-32 8.2-16.62 27.66-16.62h519.22q19.46 0 27.66 16.62 8.19 16.61-3.35 32L540-446.92v231.53q0 15.08-10.16 25.23Q519.69-180 504.61-180h-49.22Z"/>
-</symbol>
-<symbol id="icon-report" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-291.54q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02-9.29-9.28-23.02-9.28t-23.02 9.28q-9.29 9.29-9.29 23.02t9.29 23.02q9.29 9.29 23.02 9.29Zm.01-139.23q12.76 0 21.37-8.62 8.62-8.63 8.62-21.38v-181.54q0-12.75-8.63-21.37-8.63-8.63-21.38-8.63-12.76 0-21.37 8.63-8.62 8.62-8.62 21.37v181.54q0 12.75 8.63 21.38 8.63 8.62 21.38 8.62ZM368.39-140q-14.64 0-27.9-5.62-13.26-5.61-23.1-15.46L161.08-317.39q-9.85-9.84-15.46-23.1-5.62-13.26-5.62-27.9v-223.22q0-14.64 5.62-27.9 5.61-13.26 15.46-23.1l156.31-156.31q9.84-9.85 23.1-15.46 13.26-5.62 27.9-5.62h223.22q14.64 0 27.9 5.62 13.26 5.61 23.1 15.46l156.31 156.31q9.85 9.84 15.46 23.1 5.62 13.26 5.62 27.9v223.22q0 14.64-5.62 27.9-5.61 13.26-15.46 23.1L642.61-161.08q-9.84 9.85-23.1 15.46-13.26 5.62-27.9 5.62H368.39Z"/>
-</symbol>
-<symbol id="icon-denied" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--blue-50)>
-<path d="M320-450h320q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37Q652.75-510 640-510H320q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37Q307.25-450 320-450Zm160.07 350q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-alert-warning" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--yellow-85)">
-<path d="M137.02-140q-10.17 0-18.27-4.97t-12.59-13.11q-4.68-8.08-5.15-17.5-.47-9.42 5.08-18.66l342.43-591.52q5.56-9.24 13.9-13.66 8.35-4.42 17.58-4.42 9.23 0 17.58 4.42 8.34 4.42 13.9 13.66l342.43 591.52q5.55 9.24 5.08 18.66-.47 9.42-5.15 17.5-4.49 8.14-12.59 13.11-8.1 4.97-18.27 4.97H137.02ZM480-247.69q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02T480-312.31q-13.73 0-23.02 9.29T447.69-280q0 13.73 9.29 23.02t23.02 9.29Zm.01-104.62q12.76 0 21.37-8.62 8.62-8.63 8.62-21.38v-140q0-12.75-8.63-21.37-8.63-8.63-21.38-8.63-12.76 0-21.37 8.63-8.62 8.62-8.62 21.37v140q0 12.75 8.63 21.38 8.63 8.62 21.38 8.62Z"/>
-</symbol>
-<symbol id="icon-check-circle" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--green-50)>
-<path d="m423.23-394.15-92.92-92.93q-8.31-8.3-20.89-8.5-12.57-.19-21.27 8.5-8.69 8.7-8.69 21.08 0 12.38 8.69 21.08l109.77 109.77q10.85 10.84 25.31 10.84 14.46 0 25.31-10.84l222.54-222.54q8.3-8.31 8.5-20.89.19-12.57-8.5-21.27-8.7-8.69-21.08-8.69-12.38 0-21.08 8.69l-205.69 205.7ZM480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-error" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-290.77q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02-9.29-9.28-23.02-9.28t-23.02 9.28q-9.29 9.29-9.29 23.02t9.29 23.02q9.29 9.29 23.02 9.29Zm.01-146.15q12.76 0 21.37-8.63 8.62-8.62 8.62-21.37v-180q0-12.75-8.63-21.38-8.63-8.62-21.38-8.62-12.76 0-21.37 8.62-8.62 8.63-8.62 21.38v180q0 12.75 8.63 21.37 8.63 8.63 21.38 8.63Zm.06 336.92q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-bug" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-140q-59.61 0-110.11-29.31T289.69-250H210q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-310 210-310h57.08q-6.08-24.61-6.58-49.74-.5-25.13-.5-50.26h-50q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-470 210-470h50q0-25.38.12-50.58.11-25.19 6.96-49.42H210q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-630 210-630h79.69q14.39-24.54 34-44.73 19.62-20.19 44.93-34.04l-47.77-48.38q-8.31-8.12-8.31-20.29t8.99-21.16q8.24-8.24 20.62-8.24 12.39 0 20.7 8.3L427.39-734q25.69-7.84 51.99-7.84 26.31 0 52 7.84l66.54-65.15q8.12-8.31 20.29-8.31t21.16 8.99q8.24 8.24 8.24 20.62 0 12.39-8.3 20.7l-48.39 48.38q25.31 13.85 45.16 33.73 19.84 19.89 34.23 45.04H750q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-570 750-570h-57.08q6.85 24.23 6.96 49.49.12 25.25.12 50.51h50q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-410 750-410h-50q0 25-.5 50.19-.5 25.2-6.58 49.81H750q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-250 750-250h-79.69q-29.7 51.38-80.2 80.69Q539.61-140 480-140Zm-43.85-190h87.7q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37-8.62-8.62-21.37-8.62h-87.7q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37 8.62 8.62 21.37 8.62Zm0-160h87.7q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37-8.62-8.62-21.37-8.62h-87.7q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37 8.62 8.62 21.37 8.62Z"/>    </symbol>
-<symbol id="icon-text-unanswered" viewBox="0 0 192 45.68">
-<text text-anchor="middle" dominant-baseline="central" font-size="40.1511px" font-weight="bold">
-<tspan y="50%" x="50%">PENDING</tspan>
-</text>
-</symbol>
-<symbol id="icon-text-skipped" viewBox="0 0 192 45.68">
-<text text-anchor="middle" dominant-baseline="central" font-size="40.1511px" font-weight="bold">
-<tspan y="50%" x="50%">SKIPPED</tspan>
-</text>
-</symbol>
-</defs>
-</svg>
-
-
-<h1>XXXXX</h1>
-
-<table>
-<tbody>
-
-
-<tr>
-<th scope="row">
-Name
-</th>
-<td>
-XXXXX
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-Version
-</th>
-<td>
-1.16.0
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-Date
-</th>
-<td>
-2022-05-16 9:48:45 CEST
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-QG CLI Version
-</th>
-<td>
-0.1.8:4b50ee26239bb9e7f6084dcb1c005e05b7b79a88
-</td>
-</tr>
-
-
-</tbody>
-</table>
-
-
-
-<h2>Status of Results</h2>
-<p>
-Result of answered:
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="GREEN"></span>
-<strong>40&nbsp;%</strong>
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="YELLOW"></span>
-<strong>20&nbsp;%</strong>
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="RED"></span>
-<strong>40&nbsp;%</strong>
-</span>
-
-</p>
-<p>
-<div class="bar-chart">
-<div style="width: 33.33333333333333%;" data="GREEN"></div>
-<div style="width: 16.666666666666664%;" data="YELLOW"></div>
-<div style="width: 33.33333333333333%;" data="RED"></div>
-<div style="width: 16.666666666666664%;" data="empty"></div>
-</div>
-
-</p>
-<p>
-<div class="bar-chart">
-<div style="width: 50%;" data="auto"></div>
-<div style="width: 33.33333333333333%;" data="manual"></div>
-<div style="width: 16.666666666666664%;" data="unanswered"></div>
-</div>
-
-</p>
-<p>
-Answered:
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="auto"></span>
-<strong>50&nbsp;%</strong> Automatically
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="manual"></span>
-<strong>33&nbsp;%</strong> Manually
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="unanswered"></span>
-<strong>17&nbsp;%</strong> Unanswered
-</span>
-
-</p>
-
-<h2>Summary of Findings</h2>
-<div class="marked">
-<style>
-[class^="filter1-"] {
-height: 0;
-visibility: collapse;
-}
-
-input[type=checkbox][id^="filter1-"],
-#filter1IsOpen {
-display: none;
-}
-
-label[for^="filter1-"] {
-display: inline-block;
-padding: .25rem;
-}
-
-input[type=checkbox][value=filter1-PENDING]:checked ~ table .filter1-PENDING, input[type=checkbox][value=filter1-FAILED]:checked ~ table .filter1-FAILED {
-height: initial;
-visibility: initial;
-}
-
-input[type=checkbox][id="filter1-PENDING"]:checked ~ * label[for="filter1-PENDING"], input[type=checkbox][id="filter1-FAILED"]:checked ~ * label[for="filter1-FAILED"] {
-border-bottom: 2px solid var(--blue-50);
-}
-
-.filter1-box {
-position: absolute;
-transform: translateX(-2rem);
-display: none;
-background: #fff;
-padding: 0.25rem;
-box-shadow: 0 0 0.5rem 0.1rem rgb(0 0 0 / 25%);
-user-select: none;
-font-weight: normal;
-z-index: 2000;
-}
-
-input[type=checkbox][id="filter1IsOpen"]:checked~* .filter1-box,
-input[type=checkbox][id="filter1IsOpen"]:checked~* .capture-filter-box[for="filter1IsOpen"] {
-display: block;
-}
-
-.filter1Header {
-z-index: 1000;
-}
-
-input[type=checkbox][id="filter1IsOpen"]:checked~* .filter1Header {
-z-index: 2000;
-}
-</style>
-<input type="checkbox" value="filter1-PENDING" checked id="filter1-PENDING">
-<input type="checkbox" value="filter1-FAILED" checked id="filter1-FAILED">
-
-<input type="checkbox" id="filter1IsOpen">
-
-<table class="full-width">
-<thead class="filter1Header">
-<tr>
-<th>ID</th>
-<th>Requirement</th>
-<th class="centered">Result
-<label for="filter1IsOpen">
-<svg class="no-print icon" version="2.0">
-<use href="#icon-filter" />
-</svg>
-</label>
-<label for="filter1IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter1-box">
-<label for="filter1-PENDING">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</label>
-<label for="filter1-FAILED">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</label>
-</th>
-<th>Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<h3>
-1
-</h3>
-</td>
-<td colspan="4">
-<h3>
-title
-</h3>
-</td>
-</tr>
-<tr class="filter1-PENDING">
-<td>
-1.3
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-
-</td>
-<td class="centered">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="#1.3">result</a>
-</td>
-</tr>
-<tr>
-<td>
-<h3>
-2
-</h3>
-</td>
-<td colspan="4">
-<h3>
-title
-</h3>
-</td>
-</tr>
-<tr class="filter1-FAILED">
-<td>
-2.6
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-
-</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="#2.6">result</a>
-</td>
-</tr>
-<tr class="filter1-FAILED">
-<td>
-5.1
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-
-</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="#5.1">result</a>
-</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-
-<h2>Details</h2>
-<style>
-[class^="filter2-"] {
-height: 0;
-visibility: collapse;
-}
-
-input[type=checkbox][id^="filter2-"],
-#filter2IsOpen {
-display: none;
-}
-
-label[for^="filter2-"] {
-display: inline-block;
-padding: .25rem;
-}
-
-input[type=checkbox][value=filter2-GREEN]:checked ~ table .filter2-GREEN, input[type=checkbox][value=filter2-PENDING]:checked ~ table .filter2-PENDING, input[type=checkbox][value=filter2-YELLOW]:checked ~ table .filter2-YELLOW, input[type=checkbox][value=filter2-FAILED]:checked ~ table .filter2-FAILED {
-height: initial;
-visibility: initial;
-}
-
-input[type=checkbox][id="filter2-GREEN"]:checked ~ * label[for="filter2-GREEN"], input[type=checkbox][id="filter2-PENDING"]:checked ~ * label[for="filter2-PENDING"], input[type=checkbox][id="filter2-YELLOW"]:checked ~ * label[for="filter2-YELLOW"], input[type=checkbox][id="filter2-FAILED"]:checked ~ * label[for="filter2-FAILED"] {
-border-bottom: 2px solid var(--blue-50);
-}
-
-.filter2-box {
-position: absolute;
-transform: translateX(-2rem);
-display: none;
-background: #fff;
-padding: 0.25rem;
-box-shadow: 0 0 0.5rem 0.1rem rgb(0 0 0 / 25%);
-user-select: none;
-font-weight: normal;
-z-index: 2000;
-}
-
-input[type=checkbox][id="filter2IsOpen"]:checked~* .filter2-box,
-input[type=checkbox][id="filter2IsOpen"]:checked~* .capture-filter-box[for="filter2IsOpen"] {
-display: block;
-}
-
-.filter2Header {
-z-index: 1000;
-}
-
-input[type=checkbox][id="filter2IsOpen"]:checked~* .filter2Header {
-z-index: 2000;
-}
-</style>
-<input type="checkbox" value="filter2-GREEN" checked id="filter2-GREEN">
-<input type="checkbox" value="filter2-PENDING" checked id="filter2-PENDING">
-<input type="checkbox" value="filter2-YELLOW" checked id="filter2-YELLOW">
-<input type="checkbox" value="filter2-FAILED" checked id="filter2-FAILED">
-
-<input type="checkbox" id="filter2IsOpen">
-
-<table class="full-width">
-<thead class="filter2Header">
-<tr>
-<th>ID</th>
-<th>Requirement</th>
-<th class="centered">Result
-<label for="filter2IsOpen">
-<svg class="no-print icon" version="2.0">
-<use href="#icon-filter" />
-</svg>
-</label>
-<label for="filter2IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter2-box">
-<label for="filter2-GREEN">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</label>
-<label for="filter2-PENDING">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</label>
-<label for="filter2-YELLOW">
-<span title="Check passed with warning">
-<svg class="icon" version="2.0" data-icon="alert-warning">
-<use href="#icon-alert-warning" />
-</svg>
-</span>
-
-</label>
-<label for="filter2-FAILED">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</label>
-</th>
-<th>Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<h3>
-1
-</h3>
-</td>
-<td colspan="4">
-<h3>
-title
-</h3>
-</td>
-</tr>
-<tr class="filter2-GREEN">
-<td>
-1.2
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text text</p>
-
-</td>
-<td class="centered">
-<span title="Check passed *Manual status">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-<span class="nospace">*</span>          </td>
-<td>
-Manual status: <p>Not relevant</p>
-
-</td>
-</tr>
-<tr class="filter2-PENDING">
-<td>
-1.3
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="#1.3">result</a>
-</td>
-</tr>
-<tr class="filter2-GREEN">
-<td>
-1.15
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="#1.15">result</a>
-</td>
-</tr>
-<tr>
-<td>
-<h3>
-2
-</h3>
-</td>
-<td colspan="4">
-<h3>
-title
-</h3>
-</td>
-</tr>
-<tr class="filter2-YELLOW">
-<td>
-2.3
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="Check passed with warning *Manual status">
-<svg class="icon" version="2.0" data-icon="alert-warning">
-<use href="#icon-alert-warning" />
-</svg>
-</span>
-
-<span class="nospace">*</span>          </td>
-<td>
-Manual status: <p>Need verification</p>
-
-</td>
-</tr>
-<tr class="filter2-FAILED">
-<td>
-2.6
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="#2.6">result</a>
-</td>
-</tr>
-<tr class="filter2-FAILED">
-<td>
-5.1
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="#5.1">result</a>
-</td>
-</tr>
-</tbody>
-</table>
-
-
-
-<h2>1 title</h2>
-<h3 id="1.2">
-<span class="status-icon">
-<span title="Check passed *Manual status">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-<span class="nospace">*</span>    </span>
-1.2 title</h3>
-<p>Manual status: <p>Not relevant</p>
-</p>  <h3 id="1.3">
-<span class="status-icon">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</span>
-1.3 title</h3>
-<h3 id="1.15">
-<span class="status-icon">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</span>
-1.15 title</h3>
-<table class="full-width">
-<thead>
-<tr>
-<th>ID</th>
-<th>Check</th>
-<th>Component</th>
-<th class="centered">Result</th>
-<th>Evidence</th>
-<th>Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><p>1</p></td>
-<td colspan="6"><p>title</p></td>
-</tr>
-<tr>
-<td rowspan="2">1.1</td>
-<td rowspan="2">title</td>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-<span class="small">fossid-autopilot/webApp</span>
-</td>
-<td>    </td>
-</tr>
-<td style="white-space: nowrap;">KeyCloak 1.16.5</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-<span class="small">fossid-autopilot/KeyCloak</span>
-</td>
-<td>    </td>
-</tr>
-
-<tr>
-<td rowspan="2">1.2</td>
-<td rowspan="2">title</td>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-<span class="small">fossid-autopilot/webApp</span>
-</td>
-<td>    </td>
-</tr>
-<td style="white-space: nowrap;">KeyCloak 1.16.5</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-<span class="small">fossid-autopilot/KeyCloak</span>
-</td>
-<td>    </td>
-</tr>
-
-
-<tr>
-<td><p>2</p></td>
-<td colspan="6"><p>title</p></td>
-</tr>
-<tr>
-<td rowspan="2">2.1</td>
-<td rowspan="2">title</td>
-<td style="white-space: nowrap;">KeyCloak 1.16.5</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-</td>
-<td>          <p>reason</p>
-
-</td>
-</tr>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-<span class="small">whitesource-autopilot/webApp</span>
-</td>
-<td>          <p>exitStatus.properties exists in /home/xxx2xx/repos/xxxx/qg-cli/evidence/run_2022-05-16T074845.501Z/whitesource-autopilot/webApp</p>
-
-</td>
-</tr>
-
-<tr>
-<td rowspan="2">2.2</td>
-<td rowspan="2">title</td>
-<td style="white-space: nowrap;">KeyCloak 1.16.5</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-</td>
-<td>          <p>comments</p>
-
-</td>
-</tr>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-<span class="small">whitesource-autopilot/webApp</span>
-</td>
-<td>          <p>status.value=OK found in exitStatus.properties file</p>
-
-</td>
-</tr>
-
-
-</tbody>
-</table>
-<h2>2 title</h2>
-<h3 id="2.3">
-<span class="status-icon">
-<span title="Check passed with warning *Manual status">
-<svg class="icon" version="2.0" data-icon="alert-warning">
-<use href="#icon-alert-warning" />
-</svg>
-</span>
-
-<span class="nospace">*</span>    </span>
-2.3 title</h3>
-<p>Manual status: <p>Need verification</p>
-</p>  <h3 id="2.6">
-<span class="status-icon">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</span>
-2.6 title</h3>
-<table class="full-width">
-<thead>
-<tr>
-<th>ID</th>
-<th>Check</th>
-<th>Component</th>
-<th class="centered">Result</th>
-<th>Evidence</th>
-<th>Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="1">1.1</td>
-<td rowspan="1">title</td>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<span class="small">docupedia-autopilot/webApp</span>
-</td>
-<td>    </td>
-</tr>
-
-</tbody>
-</table>
-<h3 id="5.1">
-<span class="status-icon">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</span>
-5.1 title</h3>
-<table class="full-width">
-<thead>
-<tr>
-<th>ID</th>
-<th>Check</th>
-<th>Component</th>
-<th class="centered">Result</th>
-<th>Evidence</th>
-<th>Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="1">1.1</td>
-<td rowspan="1">title</td>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<span class="small">sonarqube-autopilot/webApp</span>
-</td>
-<td>    </td>
-</tr>
-
-</tbody>
-</table>
-
-
-<footer class="small legend">
-<span title="Check did not pass">
-<svg class="icon" version="2.0" data-icon="error">
-<use href="#icon-error" />
-</svg>
-</span>
-<div>Check did not pass</div>
-<span title="Check passed with warning">
-<svg class="icon" version="2.0" data-icon="alert-warning">
-<use href="#icon-alert-warning" />
-</svg>
-</span>
-<div>Check passed with warning</div>
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-<div>Check passed</div>
-<span title="Check not applicable">
-<svg class="icon" version="2.0" data-icon="denied">
-<use href="#icon-denied" />
-</svg>
-</span>
-<div>Check not applicable</div>
-<span title="No check configured">
-<svg class="icon" version="2.0" data-icon="text-unanswered">
-<use href="#icon-text-unanswered" />
-</svg>
-</span>
-<div>No check configured</div>
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-<div>Autopilot failed with user error</div>
-<span title="Autopilot failed with runtime error">
-<svg class="icon" version="2.0" data-icon="bug">
-<use href="#icon-bug" />
-</svg>
-</span>
-<div>Autopilot failed with runtime error</div>
-<span title="Check was skipped">
-<svg class="icon" version="2.0" data-icon="text-skipped">
-<use href="#icon-text-skipped" />
-</svg>
-</span>
-<div>Check was skipped</div>
-<span style="justify-self: end;">*</span> <div>Manual status</div>
-</footer>
-
-</body>
-</html>
-"
-`;
-
-exports[`renderHtmlFiles > should render result %p test/integration/input/v0 3`] = `
-"<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>QG XXXXX</title>
-<meta charset="utf-8"/>
-<style>
-:root {
---gray-60: #8a9097;
---gray-95: #eff1f2;
-
---blue-50: #007bc0;
---blue-90: #d1e4ff;
-
---turquoise-30: #0a4f4b;
---turquoise-50: #18837e;
---turquoise-70: #66b8b2;
-
---red-50: #ed0007;
---red-90: #ffd9d9;
-
---green-50: #00884a;
---green-90: #b8efc9;
-
---yellow-90: #ffdf95;
---yellow-85: #ffcf00;
-
-font-size: 16px;
-margin: 0;
-padding: 0;
-
--webkit-print-color-adjust: exact;
-color-adjust: exact;
-}
-
-.minor-signal-neutral {
-fill: var(--blue-90);
-}
-
-.minor-signal-error {
-fill: var(--red-90);
-}
-
-.minor-signal-warning {
-fill: var(--yellow-90);
-}
-
-.minor-signal-success {
-fill: var(--green-90);
-}
-
-.major-signal-neutral {
-fill: var(--blue-50);
-}
-
-.major-signal-neutral__front {
-fill: #fff;
-}
-
-.major-signal-error {
-fill: var(--red-50);
-}
-
-.major-signal-error__front {
-fill: #fff;
-}
-
-.major-signal-warning {
-fill: var(--yellow-85);
-}
-
-.major-signal-warning__front {
-fill: #000;
-}
-
-.major-signal-success {
-fill: var(--green-50);
-}
-
-.major-signal-success__front {
-fill: #fff;
-}
-
-:root,
-html,
-title {
-font-family: Ubuntu, Helvetica, Arial, sans-serif;
-line-height: 1.5;
-}
-
-a {
-color: var(--blue-50);
-text-decoration: none;
-}
-
-th,
-td {
-padding: .5rem;
-vertical-align: top;
-word-break: break-all;
-}
-
-.id {
-word-break: keep-all;
-white-space: nowrap;
-}
-
-th {
-text-align: start;
-white-space: nowrap;
-}
-
-tbody tr:last-child td,
-tbody tr:last-child th {
-border-bottom: none;
-}
-
-td,
-th,
-thead~tbody tr:last-child td {
-border-bottom: 1px solid var(--gray-60);
-}
-
-thead th {
-border-bottom: 1px solid #000;
-}
-
-table {
-border-collapse: separate;
-border-spacing: 0;
-margin: 1rem 0;
-}
-
-thead {
-position: sticky;
-top: 0;
-background: #fff;
-}
-
-tr,
-tr * {
-page-break-inside: avoid;
-}
-
-body {
-margin: 2cm;
-padding: 0;
-}
-
-p, ul {
-margin: 0;
-}
-
-p+p, ul+p, p+ul {
-margin-top: 1em;
-}
-
-.small, .sources {
-font-size: .75rem;
-}
-
-.normal {
-font-size: 1rem;
-}
-
-.centered {
-text-align: center;
-}
-
-.nospace {
-position: absolute;
-z-index: 1;
-transform: translateX(.25rem);
-}
-
-.full-width {
-width: 100%;
-}
-
-.icon {
-width: 1.5rem;
-height: 1.5rem;
-margin-top: 0;
-margin-bottom: -0.5rem;
-vertical-align: top;
-}
-
-.icon[data-icon^="text-"] {
-width: 3rem;
-}
-
-h3 .icon[data-icon^="text-"] {
-display: none;
-}
-
-ul.sources {
-list-style-type: none;
-padding: 0;
-margin-top: 0;
-}
-
-h2, h3 {
-margin: 1em 0;
-}
-h3 {
-font-size: 1.25rem;
-}
-
-h3 .status-icon {
-float: right;
-font-weight: normal;
-font-size: 1rem;
-white-space: nowrap;
-margin-left: .25rem;
-}
-
-.capture-filter-box {
-position: fixed;
-display: none;
-z-index: 1001;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-}
-
-.logs-header {
-background: #999;
-display: block;
-color: white;
-text-align: center;
-padding: 0.5em 1em;
-margin-bottom: 0px;
-font-weight: bold;
-border-radius: 0.5em 0.5em 0em 0em;
-font-size: 0.7rem;
-}
-
-.error-logs {
-background: rgb(119, 14, 14);
-}
-
-pre.logs {
-background: #333;
-font-size: 0.7rem;
-color: white;
-padding: 1em;
-margin-top: 0;
-white-space: pre-wrap;
-overflow-wrap: break-word;
-border-radius: 0em 0em 0.5em 0.5em;
-}
-
-.toggle-hidden::before {
-content: "▶ "
-}
-
-.toggle-hidden::after {
-content: " (click to expand)"
-}
-
-.toggle-expanded::before {
-content: "▼ "
-}
-
-.toggle-expanded::after {
-content: " (click to minimize) "
-}
-
-.hidden {
-display: none;
-}
-
-.legend {
-display: grid;
-grid-template-columns: min-content 1fr;
-grid-auto-rows: 1.5rem;
-gap: .25rem .5rem;
-vertical-align: bottom;
-margin-top: 2rem;
-page-break-inside: avoid;
-}
-
-.legend .icon {
-margin: 0;
-}
-
-.legend > span {
-justify-self: center;
-}
-
-.legend > * {
-align-self: center;
-}
-
-.marked table, .marked thead {
-background-color: var(--gray-95);
-}
-
-/* === Bar chart === */
-
-.bar-chart {
-display: flex;
-align-content: stretch;
-}
-
-.bar-chart > * + * {
-outline: 2px solid #fff;
-background-color: var(--gray-60);
-height: 1.5rem;
-}
-
-.bar-chart-legend:first-of-type {
-margin-left: .5rem;
-}
-
-.bar-chart-legend {
-white-space: nowrap;
-margin-right: .5rem;
-}
-
-.bar-chart-legend__symbol {
-display: inline-block;
-width: .75rem;
-height: .75rem;
-border-radius: .375rem;
-}
-
-[data=auto] {
-background-color: var(--turquoise-30);
-}
-
-[data=manual] {
-background-color: var(--turquoise-50);
-}
-
-[data=unanswered] {
-background-color: var(--turquoise-70);
-}
-
-[data=GREEN] {
-background-color: var(--green-50);
-}
-
-[data=YELLOW] {
-background-color: var(--yellow-85);
-}
-
-[data=RED] {
-background-color: var(--red-50);
-}
-
-[data=NA] {
-background-color: var(--blue-50);
-}
-
-[data=empty] {
-background-color: var(--gray-95);
-}
-
-@media print {
-:root {
-font-size: 10pt;
-}
-
-body,
-html {
-margin: 0 2cm;
-}
-
-.no-print,
-.no-print * {
-display: none !important;
-}
-}
-
-@page {
-margin: 2cm 0;
-font-family: Ubuntu, Helvetica, Arial, sans-serif;
-}
-</style>
-<script lang="javascript">
-function toggleNextSibling(source) {
-source.classList.toggle("toggle-hidden")
-source.classList.toggle("toggle-expanded")
-source.nextElementSibling.classList.toggle("hidden")
-}
-</script>
-</head>
-
-<body>
-<svg version="2.0" style="display: none;">
-<style>
-
-</style>
-<defs>
-<symbol id="icon-arrow-right-frame" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--blue-50)>
-<path d="M682.92-460H220q-8.54 0-14.27-5.73T200-480q0-8.54 5.73-14.27T220-500h462.92L533.54-649.38q-5.85-5.85-6.12-13.77-.27-7.93 6.12-14.54 6.61-6.62 14.27-6.73 7.65-.12 14.27 6.5l175.3 175.3q5.24 5.24 7.35 10.7 2.12 5.46 2.12 11.92t-2.12 11.92q-2.11 5.46-7.35 10.7l-175.3 175.3q-5.85 5.85-13.89 6.12-8.04.27-14.65-6.35-6.39-6.61-6.5-14.15-.12-7.54 6.5-14.16L682.92-460Z"/>    </symbol>
-<symbol id="icon-filter" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
-<path d="M455.39-180q-15.08 0-25.23-10.16Q420-200.31 420-215.39v-231.53L196.08-731.38q-11.54-15.39-3.35-32 8.2-16.62 27.66-16.62h519.22q19.46 0 27.66 16.62 8.19 16.61-3.35 32L540-446.92v231.53q0 15.08-10.16 25.23Q519.69-180 504.61-180h-49.22Z"/>
-</symbol>
-<symbol id="icon-report" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-291.54q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02-9.29-9.28-23.02-9.28t-23.02 9.28q-9.29 9.29-9.29 23.02t9.29 23.02q9.29 9.29 23.02 9.29Zm.01-139.23q12.76 0 21.37-8.62 8.62-8.63 8.62-21.38v-181.54q0-12.75-8.63-21.37-8.63-8.63-21.38-8.63-12.76 0-21.37 8.63-8.62 8.62-8.62 21.37v181.54q0 12.75 8.63 21.38 8.63 8.62 21.38 8.62ZM368.39-140q-14.64 0-27.9-5.62-13.26-5.61-23.1-15.46L161.08-317.39q-9.85-9.84-15.46-23.1-5.62-13.26-5.62-27.9v-223.22q0-14.64 5.62-27.9 5.61-13.26 15.46-23.1l156.31-156.31q9.84-9.85 23.1-15.46 13.26-5.62 27.9-5.62h223.22q14.64 0 27.9 5.62 13.26 5.61 23.1 15.46l156.31 156.31q9.85 9.84 15.46 23.1 5.62 13.26 5.62 27.9v223.22q0 14.64-5.62 27.9-5.61 13.26-15.46 23.1L642.61-161.08q-9.84 9.85-23.1 15.46-13.26 5.62-27.9 5.62H368.39Z"/>
-</symbol>
-<symbol id="icon-denied" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--blue-50)>
-<path d="M320-450h320q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37Q652.75-510 640-510H320q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37Q307.25-450 320-450Zm160.07 350q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-alert-warning" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--yellow-85)">
-<path d="M137.02-140q-10.17 0-18.27-4.97t-12.59-13.11q-4.68-8.08-5.15-17.5-.47-9.42 5.08-18.66l342.43-591.52q5.56-9.24 13.9-13.66 8.35-4.42 17.58-4.42 9.23 0 17.58 4.42 8.34 4.42 13.9 13.66l342.43 591.52q5.55 9.24 5.08 18.66-.47 9.42-5.15 17.5-4.49 8.14-12.59 13.11-8.1 4.97-18.27 4.97H137.02ZM480-247.69q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02T480-312.31q-13.73 0-23.02 9.29T447.69-280q0 13.73 9.29 23.02t23.02 9.29Zm.01-104.62q12.76 0 21.37-8.62 8.62-8.63 8.62-21.38v-140q0-12.75-8.63-21.37-8.63-8.63-21.38-8.63-12.76 0-21.37 8.63-8.62 8.62-8.62 21.37v140q0 12.75 8.63 21.38 8.63 8.62 21.38 8.62Z"/>
-</symbol>
-<symbol id="icon-check-circle" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--green-50)>
-<path d="m423.23-394.15-92.92-92.93q-8.31-8.3-20.89-8.5-12.57-.19-21.27 8.5-8.69 8.7-8.69 21.08 0 12.38 8.69 21.08l109.77 109.77q10.85 10.84 25.31 10.84 14.46 0 25.31-10.84l222.54-222.54q8.3-8.31 8.5-20.89.19-12.57-8.5-21.27-8.7-8.69-21.08-8.69-12.38 0-21.08 8.69l-205.69 205.7ZM480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-error" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-290.77q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02-9.29-9.28-23.02-9.28t-23.02 9.28q-9.29 9.29-9.29 23.02t9.29 23.02q9.29 9.29 23.02 9.29Zm.01-146.15q12.76 0 21.37-8.63 8.62-8.62 8.62-21.37v-180q0-12.75-8.63-21.38-8.63-8.62-21.38-8.62-12.76 0-21.37 8.62-8.62 8.63-8.62 21.38v180q0 12.75 8.63 21.37 8.63 8.63 21.38 8.63Zm.06 336.92q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-bug" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-140q-59.61 0-110.11-29.31T289.69-250H210q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-310 210-310h57.08q-6.08-24.61-6.58-49.74-.5-25.13-.5-50.26h-50q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-470 210-470h50q0-25.38.12-50.58.11-25.19 6.96-49.42H210q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-630 210-630h79.69q14.39-24.54 34-44.73 19.62-20.19 44.93-34.04l-47.77-48.38q-8.31-8.12-8.31-20.29t8.99-21.16q8.24-8.24 20.62-8.24 12.39 0 20.7 8.3L427.39-734q25.69-7.84 51.99-7.84 26.31 0 52 7.84l66.54-65.15q8.12-8.31 20.29-8.31t21.16 8.99q8.24 8.24 8.24 20.62 0 12.39-8.3 20.7l-48.39 48.38q25.31 13.85 45.16 33.73 19.84 19.89 34.23 45.04H750q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-570 750-570h-57.08q6.85 24.23 6.96 49.49.12 25.25.12 50.51h50q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-410 750-410h-50q0 25-.5 50.19-.5 25.2-6.58 49.81H750q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-250 750-250h-79.69q-29.7 51.38-80.2 80.69Q539.61-140 480-140Zm-43.85-190h87.7q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37-8.62-8.62-21.37-8.62h-87.7q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37 8.62 8.62 21.37 8.62Zm0-160h87.7q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37-8.62-8.62-21.37-8.62h-87.7q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37 8.62 8.62 21.37 8.62Z"/>    </symbol>
-<symbol id="icon-text-unanswered" viewBox="0 0 192 45.68">
-<text text-anchor="middle" dominant-baseline="central" font-size="40.1511px" font-weight="bold">
-<tspan y="50%" x="50%">PENDING</tspan>
-</text>
-</symbol>
-<symbol id="icon-text-skipped" viewBox="0 0 192 45.68">
-<text text-anchor="middle" dominant-baseline="central" font-size="40.1511px" font-weight="bold">
-<tspan y="50%" x="50%">SKIPPED</tspan>
-</text>
-</symbol>
-</defs>
-</svg>
-
-
-<h1>XXXXX</h1>
-
-<table>
-<tbody>
-
-
-<tr>
-<th scope="row">
-Name
-</th>
-<td>
-XXXXX
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-Version
-</th>
-<td>
-1.16.0
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-Date
-</th>
-<td>
-2022-05-16 9:48:45 CEST
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-QG CLI Version
-</th>
-<td>
-0.1.8:4b50ee26239bb9e7f6084dcb1c005e05b7b79a88
-</td>
-</tr>
-
-
-</tbody>
-</table>
-
-
-
-<h2>Status of Results</h2>
-<p>
-Result of answered:
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="GREEN"></span>
-<strong>40&nbsp;%</strong>
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="YELLOW"></span>
-<strong>20&nbsp;%</strong>
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="RED"></span>
-<strong>40&nbsp;%</strong>
-</span>
-
-</p>
-<p>
-<div class="bar-chart">
-<div style="width: 33.33333333333333%;" data="GREEN"></div>
-<div style="width: 16.666666666666664%;" data="YELLOW"></div>
-<div style="width: 33.33333333333333%;" data="RED"></div>
-<div style="width: 16.666666666666664%;" data="empty"></div>
-</div>
-
-</p>
-<p>
-<div class="bar-chart">
-<div style="width: 50%;" data="auto"></div>
-<div style="width: 33.33333333333333%;" data="manual"></div>
-<div style="width: 16.666666666666664%;" data="unanswered"></div>
-</div>
-
-</p>
-<p>
-Answered:
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="auto"></span>
-<strong>50&nbsp;%</strong> Automatically
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="manual"></span>
-<strong>33&nbsp;%</strong> Manually
-</span>
-
-<span class="bar-chart-legend">
-<span class="bar-chart-legend__symbol" data="unanswered"></span>
-<strong>17&nbsp;%</strong> Unanswered
-</span>
-
-</p>
-
-<h2>Summary of Findings</h2>
-<div class="marked">
-<style>
-[class^="filter3-"] {
-height: 0;
-visibility: collapse;
-}
-
-input[type=checkbox][id^="filter3-"],
-#filter3IsOpen {
-display: none;
-}
-
-label[for^="filter3-"] {
-display: inline-block;
-padding: .25rem;
-}
-
-input[type=checkbox][value=filter3-PENDING]:checked ~ table .filter3-PENDING, input[type=checkbox][value=filter3-FAILED]:checked ~ table .filter3-FAILED {
-height: initial;
-visibility: initial;
-}
-
-input[type=checkbox][id="filter3-PENDING"]:checked ~ * label[for="filter3-PENDING"], input[type=checkbox][id="filter3-FAILED"]:checked ~ * label[for="filter3-FAILED"] {
-border-bottom: 2px solid var(--blue-50);
-}
-
-.filter3-box {
-position: absolute;
-transform: translateX(-2rem);
-display: none;
-background: #fff;
-padding: 0.25rem;
-box-shadow: 0 0 0.5rem 0.1rem rgb(0 0 0 / 25%);
-user-select: none;
-font-weight: normal;
-z-index: 2000;
-}
-
-input[type=checkbox][id="filter3IsOpen"]:checked~* .filter3-box,
-input[type=checkbox][id="filter3IsOpen"]:checked~* .capture-filter-box[for="filter3IsOpen"] {
-display: block;
-}
-
-.filter3Header {
-z-index: 1000;
-}
-
-input[type=checkbox][id="filter3IsOpen"]:checked~* .filter3Header {
-z-index: 2000;
-}
-</style>
-<input type="checkbox" value="filter3-PENDING" checked id="filter3-PENDING">
-<input type="checkbox" value="filter3-FAILED" checked id="filter3-FAILED">
-
-<input type="checkbox" id="filter3IsOpen">
-
-<table class="full-width">
-<thead class="filter3Header">
-<tr>
-<th>ID</th>
-<th>Requirement</th>
-<th class="centered">Result
-<label for="filter3IsOpen">
-<svg class="no-print icon" version="2.0">
-<use href="#icon-filter" />
-</svg>
-</label>
-<label for="filter3IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter3-box">
-<label for="filter3-PENDING">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</label>
-<label for="filter3-FAILED">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</label>
-</th>
-<th>Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<h3>
-1
-</h3>
-</td>
-<td colspan="4">
-<h3>
-title
-</h3>
-</td>
-</tr>
-<tr class="filter3-PENDING">
-<td>
-1.3
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-
-</td>
-<td class="centered">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="qg-evidence.html#1.3">result</a>
-</td>
-</tr>
-<tr>
-<td>
-<h3>
-2
-</h3>
-</td>
-<td colspan="4">
-<h3>
-title
-</h3>
-</td>
-</tr>
-<tr class="filter3-FAILED">
-<td>
-2.6
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-
-</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="qg-evidence.html#2.6">result</a>
-</td>
-</tr>
-<tr class="filter3-FAILED">
-<td>
-5.1
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-
-</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="qg-evidence.html#5.1">result</a>
-</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-
-<h2>Details</h2>
-<style>
-[class^="filter4-"] {
-height: 0;
-visibility: collapse;
-}
-
-input[type=checkbox][id^="filter4-"],
-#filter4IsOpen {
-display: none;
-}
-
-label[for^="filter4-"] {
-display: inline-block;
-padding: .25rem;
-}
-
-input[type=checkbox][value=filter4-GREEN]:checked ~ table .filter4-GREEN, input[type=checkbox][value=filter4-PENDING]:checked ~ table .filter4-PENDING, input[type=checkbox][value=filter4-YELLOW]:checked ~ table .filter4-YELLOW, input[type=checkbox][value=filter4-FAILED]:checked ~ table .filter4-FAILED {
-height: initial;
-visibility: initial;
-}
-
-input[type=checkbox][id="filter4-GREEN"]:checked ~ * label[for="filter4-GREEN"], input[type=checkbox][id="filter4-PENDING"]:checked ~ * label[for="filter4-PENDING"], input[type=checkbox][id="filter4-YELLOW"]:checked ~ * label[for="filter4-YELLOW"], input[type=checkbox][id="filter4-FAILED"]:checked ~ * label[for="filter4-FAILED"] {
-border-bottom: 2px solid var(--blue-50);
-}
-
-.filter4-box {
-position: absolute;
-transform: translateX(-2rem);
-display: none;
-background: #fff;
-padding: 0.25rem;
-box-shadow: 0 0 0.5rem 0.1rem rgb(0 0 0 / 25%);
-user-select: none;
-font-weight: normal;
-z-index: 2000;
-}
-
-input[type=checkbox][id="filter4IsOpen"]:checked~* .filter4-box,
-input[type=checkbox][id="filter4IsOpen"]:checked~* .capture-filter-box[for="filter4IsOpen"] {
-display: block;
-}
-
-.filter4Header {
-z-index: 1000;
-}
-
-input[type=checkbox][id="filter4IsOpen"]:checked~* .filter4Header {
-z-index: 2000;
-}
-</style>
-<input type="checkbox" value="filter4-GREEN" checked id="filter4-GREEN">
-<input type="checkbox" value="filter4-PENDING" checked id="filter4-PENDING">
-<input type="checkbox" value="filter4-YELLOW" checked id="filter4-YELLOW">
-<input type="checkbox" value="filter4-FAILED" checked id="filter4-FAILED">
-
-<input type="checkbox" id="filter4IsOpen">
-
-<table class="full-width">
-<thead class="filter4Header">
-<tr>
-<th>ID</th>
-<th>Requirement</th>
-<th class="centered">Result
-<label for="filter4IsOpen">
-<svg class="no-print icon" version="2.0">
-<use href="#icon-filter" />
-</svg>
-</label>
-<label for="filter4IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter4-box">
-<label for="filter4-GREEN">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</label>
-<label for="filter4-PENDING">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</label>
-<label for="filter4-YELLOW">
-<span title="Check passed with warning">
-<svg class="icon" version="2.0" data-icon="alert-warning">
-<use href="#icon-alert-warning" />
-</svg>
-</span>
-
-</label>
-<label for="filter4-FAILED">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</label>
-</th>
-<th>Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<h3>
-1
-</h3>
-</td>
-<td colspan="4">
-<h3>
-title
-</h3>
-</td>
-</tr>
-<tr class="filter4-GREEN">
-<td>
-1.2
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text text</p>
-
-</td>
-<td class="centered">
-<span title="Check passed *Manual status">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-<span class="nospace">*</span>          </td>
-<td>
-Manual status: <p>Not relevant</p>
-
-</td>
-</tr>
-<tr class="filter4-PENDING">
-<td>
-1.3
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="qg-evidence.html#1.3">result</a>
-</td>
-</tr>
-<tr class="filter4-GREEN">
-<td>
-1.15
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="qg-evidence.html#1.15">result</a>
-</td>
-</tr>
-<tr>
-<td>
-<h3>
-2
-</h3>
-</td>
-<td colspan="4">
-<h3>
-title
-</h3>
-</td>
-</tr>
-<tr class="filter4-YELLOW">
-<td>
-2.3
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="Check passed with warning *Manual status">
-<svg class="icon" version="2.0" data-icon="alert-warning">
-<use href="#icon-alert-warning" />
-</svg>
-</span>
-
-<span class="nospace">*</span>          </td>
-<td>
-Manual status: <p>Need verification</p>
-
-</td>
-</tr>
-<tr class="filter4-FAILED">
-<td>
-2.6
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="qg-evidence.html#2.6">result</a>
-</td>
-</tr>
-<tr class="filter4-FAILED">
-<td>
-5.1
-</td>
-<td class="small">
-<p class="normal">
-title
-</p>
-<p>text</p>
-
-</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td>
-<a href="qg-evidence.html#5.1">result</a>
-</td>
-</tr>
-</tbody>
-</table>
-
-
-
-
-
-<footer class="small legend">
-<span title="Check did not pass">
-<svg class="icon" version="2.0" data-icon="error">
-<use href="#icon-error" />
-</svg>
-</span>
-<div>Check did not pass</div>
-<span title="Check passed with warning">
-<svg class="icon" version="2.0" data-icon="alert-warning">
-<use href="#icon-alert-warning" />
-</svg>
-</span>
-<div>Check passed with warning</div>
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-<div>Check passed</div>
-<span title="Check not applicable">
-<svg class="icon" version="2.0" data-icon="denied">
-<use href="#icon-denied" />
-</svg>
-</span>
-<div>Check not applicable</div>
-<span title="No check configured">
-<svg class="icon" version="2.0" data-icon="text-unanswered">
-<use href="#icon-text-unanswered" />
-</svg>
-</span>
-<div>No check configured</div>
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-<div>Autopilot failed with user error</div>
-<span title="Autopilot failed with runtime error">
-<svg class="icon" version="2.0" data-icon="bug">
-<use href="#icon-bug" />
-</svg>
-</span>
-<div>Autopilot failed with runtime error</div>
-<span title="Check was skipped">
-<svg class="icon" version="2.0" data-icon="text-skipped">
-<use href="#icon-text-skipped" />
-</svg>
-</span>
-<div>Check was skipped</div>
-<span style="justify-self: end;">*</span> <div>Manual status</div>
-</footer>
-
-</body>
-</html>
-"
-`;
-
-exports[`renderHtmlFiles > should render result %p test/integration/input/v0 4`] = `
-"<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>QG Evidence: XXXXX</title>
-<meta charset="utf-8"/>
-<style>
-:root {
---gray-60: #8a9097;
---gray-95: #eff1f2;
-
---blue-50: #007bc0;
---blue-90: #d1e4ff;
-
---turquoise-30: #0a4f4b;
---turquoise-50: #18837e;
---turquoise-70: #66b8b2;
-
---red-50: #ed0007;
---red-90: #ffd9d9;
-
---green-50: #00884a;
---green-90: #b8efc9;
-
---yellow-90: #ffdf95;
---yellow-85: #ffcf00;
-
-font-size: 16px;
-margin: 0;
-padding: 0;
-
--webkit-print-color-adjust: exact;
-color-adjust: exact;
-}
-
-.minor-signal-neutral {
-fill: var(--blue-90);
-}
-
-.minor-signal-error {
-fill: var(--red-90);
-}
-
-.minor-signal-warning {
-fill: var(--yellow-90);
-}
-
-.minor-signal-success {
-fill: var(--green-90);
-}
-
-.major-signal-neutral {
-fill: var(--blue-50);
-}
-
-.major-signal-neutral__front {
-fill: #fff;
-}
-
-.major-signal-error {
-fill: var(--red-50);
-}
-
-.major-signal-error__front {
-fill: #fff;
-}
-
-.major-signal-warning {
-fill: var(--yellow-85);
-}
-
-.major-signal-warning__front {
-fill: #000;
-}
-
-.major-signal-success {
-fill: var(--green-50);
-}
-
-.major-signal-success__front {
-fill: #fff;
-}
-
-:root,
-html,
-title {
-font-family: Ubuntu, Helvetica, Arial, sans-serif;
-line-height: 1.5;
-}
-
-a {
-color: var(--blue-50);
-text-decoration: none;
-}
-
-th,
-td {
-padding: .5rem;
-vertical-align: top;
-word-break: break-all;
-}
-
-.id {
-word-break: keep-all;
-white-space: nowrap;
-}
-
-th {
-text-align: start;
-white-space: nowrap;
-}
-
-tbody tr:last-child td,
-tbody tr:last-child th {
-border-bottom: none;
-}
-
-td,
-th,
-thead~tbody tr:last-child td {
-border-bottom: 1px solid var(--gray-60);
-}
-
-thead th {
-border-bottom: 1px solid #000;
-}
-
-table {
-border-collapse: separate;
-border-spacing: 0;
-margin: 1rem 0;
-}
-
-thead {
-position: sticky;
-top: 0;
-background: #fff;
-}
-
-tr,
-tr * {
-page-break-inside: avoid;
-}
-
-body {
-margin: 2cm;
-padding: 0;
-}
-
-p, ul {
-margin: 0;
-}
-
-p+p, ul+p, p+ul {
-margin-top: 1em;
-}
-
-.small, .sources {
-font-size: .75rem;
-}
-
-.normal {
-font-size: 1rem;
-}
-
-.centered {
-text-align: center;
-}
-
-.nospace {
-position: absolute;
-z-index: 1;
-transform: translateX(.25rem);
-}
-
-.full-width {
-width: 100%;
-}
-
-.icon {
-width: 1.5rem;
-height: 1.5rem;
-margin-top: 0;
-margin-bottom: -0.5rem;
-vertical-align: top;
-}
-
-.icon[data-icon^="text-"] {
-width: 3rem;
-}
-
-h3 .icon[data-icon^="text-"] {
-display: none;
-}
-
-ul.sources {
-list-style-type: none;
-padding: 0;
-margin-top: 0;
-}
-
-h2, h3 {
-margin: 1em 0;
-}
-h3 {
-font-size: 1.25rem;
-}
-
-h3 .status-icon {
-float: right;
-font-weight: normal;
-font-size: 1rem;
-white-space: nowrap;
-margin-left: .25rem;
-}
-
-.capture-filter-box {
-position: fixed;
-display: none;
-z-index: 1001;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-}
-
-.logs-header {
-background: #999;
-display: block;
-color: white;
-text-align: center;
-padding: 0.5em 1em;
-margin-bottom: 0px;
-font-weight: bold;
-border-radius: 0.5em 0.5em 0em 0em;
-font-size: 0.7rem;
-}
-
-.error-logs {
-background: rgb(119, 14, 14);
-}
-
-pre.logs {
-background: #333;
-font-size: 0.7rem;
-color: white;
-padding: 1em;
-margin-top: 0;
-white-space: pre-wrap;
-overflow-wrap: break-word;
-border-radius: 0em 0em 0.5em 0.5em;
-}
-
-.toggle-hidden::before {
-content: "▶ "
-}
-
-.toggle-hidden::after {
-content: " (click to expand)"
-}
-
-.toggle-expanded::before {
-content: "▼ "
-}
-
-.toggle-expanded::after {
-content: " (click to minimize) "
-}
-
-.hidden {
-display: none;
-}
-
-.legend {
-display: grid;
-grid-template-columns: min-content 1fr;
-grid-auto-rows: 1.5rem;
-gap: .25rem .5rem;
-vertical-align: bottom;
-margin-top: 2rem;
-page-break-inside: avoid;
-}
-
-.legend .icon {
-margin: 0;
-}
-
-.legend > span {
-justify-self: center;
-}
-
-.legend > * {
-align-self: center;
-}
-
-.marked table, .marked thead {
-background-color: var(--gray-95);
-}
-
-/* === Bar chart === */
-
-.bar-chart {
-display: flex;
-align-content: stretch;
-}
-
-.bar-chart > * + * {
-outline: 2px solid #fff;
-background-color: var(--gray-60);
-height: 1.5rem;
-}
-
-.bar-chart-legend:first-of-type {
-margin-left: .5rem;
-}
-
-.bar-chart-legend {
-white-space: nowrap;
-margin-right: .5rem;
-}
-
-.bar-chart-legend__symbol {
-display: inline-block;
-width: .75rem;
-height: .75rem;
-border-radius: .375rem;
-}
-
-[data=auto] {
-background-color: var(--turquoise-30);
-}
-
-[data=manual] {
-background-color: var(--turquoise-50);
-}
-
-[data=unanswered] {
-background-color: var(--turquoise-70);
-}
-
-[data=GREEN] {
-background-color: var(--green-50);
-}
-
-[data=YELLOW] {
-background-color: var(--yellow-85);
-}
-
-[data=RED] {
-background-color: var(--red-50);
-}
-
-[data=NA] {
-background-color: var(--blue-50);
-}
-
-[data=empty] {
-background-color: var(--gray-95);
-}
-
-@media print {
-:root {
-font-size: 10pt;
-}
-
-body,
-html {
-margin: 0 2cm;
-}
-
-.no-print,
-.no-print * {
-display: none !important;
-}
-}
-
-@page {
-margin: 2cm 0;
-font-family: Ubuntu, Helvetica, Arial, sans-serif;
-}
-</style>
-<script lang="javascript">
-function toggleNextSibling(source) {
-source.classList.toggle("toggle-hidden")
-source.classList.toggle("toggle-expanded")
-source.nextElementSibling.classList.toggle("hidden")
-}
-</script>
-</head>
-
-<body>
-<svg version="2.0" style="display: none;">
-<style>
-
-</style>
-<defs>
-<symbol id="icon-arrow-right-frame" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--blue-50)>
-<path d="M682.92-460H220q-8.54 0-14.27-5.73T200-480q0-8.54 5.73-14.27T220-500h462.92L533.54-649.38q-5.85-5.85-6.12-13.77-.27-7.93 6.12-14.54 6.61-6.62 14.27-6.73 7.65-.12 14.27 6.5l175.3 175.3q5.24 5.24 7.35 10.7 2.12 5.46 2.12 11.92t-2.12 11.92q-2.11 5.46-7.35 10.7l-175.3 175.3q-5.85 5.85-13.89 6.12-8.04.27-14.65-6.35-6.39-6.61-6.5-14.15-.12-7.54 6.5-14.16L682.92-460Z"/>    </symbol>
-<symbol id="icon-filter" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
-<path d="M455.39-180q-15.08 0-25.23-10.16Q420-200.31 420-215.39v-231.53L196.08-731.38q-11.54-15.39-3.35-32 8.2-16.62 27.66-16.62h519.22q19.46 0 27.66 16.62 8.19 16.61-3.35 32L540-446.92v231.53q0 15.08-10.16 25.23Q519.69-180 504.61-180h-49.22Z"/>
-</symbol>
-<symbol id="icon-report" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-291.54q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02-9.29-9.28-23.02-9.28t-23.02 9.28q-9.29 9.29-9.29 23.02t9.29 23.02q9.29 9.29 23.02 9.29Zm.01-139.23q12.76 0 21.37-8.62 8.62-8.63 8.62-21.38v-181.54q0-12.75-8.63-21.37-8.63-8.63-21.38-8.63-12.76 0-21.37 8.63-8.62 8.62-8.62 21.37v181.54q0 12.75 8.63 21.38 8.63 8.62 21.38 8.62ZM368.39-140q-14.64 0-27.9-5.62-13.26-5.61-23.1-15.46L161.08-317.39q-9.85-9.84-15.46-23.1-5.62-13.26-5.62-27.9v-223.22q0-14.64 5.62-27.9 5.61-13.26 15.46-23.1l156.31-156.31q9.84-9.85 23.1-15.46 13.26-5.62 27.9-5.62h223.22q14.64 0 27.9 5.62 13.26 5.61 23.1 15.46l156.31 156.31q9.85 9.84 15.46 23.1 5.62 13.26 5.62 27.9v223.22q0 14.64-5.62 27.9-5.61 13.26-15.46 23.1L642.61-161.08q-9.84 9.85-23.1 15.46-13.26 5.62-27.9 5.62H368.39Z"/>
-</symbol>
-<symbol id="icon-denied" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--blue-50)>
-<path d="M320-450h320q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37Q652.75-510 640-510H320q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37Q307.25-450 320-450Zm160.07 350q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-alert-warning" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--yellow-85)">
-<path d="M137.02-140q-10.17 0-18.27-4.97t-12.59-13.11q-4.68-8.08-5.15-17.5-.47-9.42 5.08-18.66l342.43-591.52q5.56-9.24 13.9-13.66 8.35-4.42 17.58-4.42 9.23 0 17.58 4.42 8.34 4.42 13.9 13.66l342.43 591.52q5.55 9.24 5.08 18.66-.47 9.42-5.15 17.5-4.49 8.14-12.59 13.11-8.1 4.97-18.27 4.97H137.02ZM480-247.69q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02T480-312.31q-13.73 0-23.02 9.29T447.69-280q0 13.73 9.29 23.02t23.02 9.29Zm.01-104.62q12.76 0 21.37-8.62 8.62-8.63 8.62-21.38v-140q0-12.75-8.63-21.37-8.63-8.63-21.38-8.63-12.76 0-21.37 8.63-8.62 8.62-8.62 21.37v140q0 12.75 8.63 21.38 8.63 8.62 21.38 8.62Z"/>
-</symbol>
-<symbol id="icon-check-circle" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--green-50)>
-<path d="m423.23-394.15-92.92-92.93q-8.31-8.3-20.89-8.5-12.57-.19-21.27 8.5-8.69 8.7-8.69 21.08 0 12.38 8.69 21.08l109.77 109.77q10.85 10.84 25.31 10.84 14.46 0 25.31-10.84l222.54-222.54q8.3-8.31 8.5-20.89.19-12.57-8.5-21.27-8.7-8.69-21.08-8.69-12.38 0-21.08 8.69l-205.69 205.7ZM480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-error" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-290.77q13.73 0 23.02-9.29t9.29-23.02q0-13.73-9.29-23.02-9.29-9.28-23.02-9.28t-23.02 9.28q-9.29 9.29-9.29 23.02t9.29 23.02q9.29 9.29 23.02 9.29Zm.01-146.15q12.76 0 21.37-8.63 8.62-8.62 8.62-21.37v-180q0-12.75-8.63-21.38-8.63-8.62-21.38-8.62-12.76 0-21.37 8.62-8.62 8.63-8.62 21.38v180q0 12.75 8.63 21.37 8.63 8.63 21.38 8.63Zm.06 336.92q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/>
-</symbol>
-<symbol id="icon-bug" height="24px" viewBox="0 -960 960 960" width="24px" fill=var(--red-50)>
-<path d="M480-140q-59.61 0-110.11-29.31T289.69-250H210q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-310 210-310h57.08q-6.08-24.61-6.58-49.74-.5-25.13-.5-50.26h-50q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-470 210-470h50q0-25.38.12-50.58.11-25.19 6.96-49.42H210q-12.75 0-21.37-8.63-8.63-8.63-8.63-21.38 0-12.76 8.63-21.37Q197.25-630 210-630h79.69q14.39-24.54 34-44.73 19.62-20.19 44.93-34.04l-47.77-48.38q-8.31-8.12-8.31-20.29t8.99-21.16q8.24-8.24 20.62-8.24 12.39 0 20.7 8.3L427.39-734q25.69-7.84 51.99-7.84 26.31 0 52 7.84l66.54-65.15q8.12-8.31 20.29-8.31t21.16 8.99q8.24 8.24 8.24 20.62 0 12.39-8.3 20.7l-48.39 48.38q25.31 13.85 45.16 33.73 19.84 19.89 34.23 45.04H750q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-570 750-570h-57.08q6.85 24.23 6.96 49.49.12 25.25.12 50.51h50q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-410 750-410h-50q0 25-.5 50.19-.5 25.2-6.58 49.81H750q12.75 0 21.37 8.63 8.63 8.63 8.63 21.38 0 12.76-8.63 21.37Q762.75-250 750-250h-79.69q-29.7 51.38-80.2 80.69Q539.61-140 480-140Zm-43.85-190h87.7q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37-8.62-8.62-21.37-8.62h-87.7q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37 8.62 8.62 21.37 8.62Zm0-160h87.7q12.75 0 21.37-8.63 8.63-8.63 8.63-21.38 0-12.76-8.63-21.37-8.62-8.62-21.37-8.62h-87.7q-12.75 0-21.37 8.63-8.63 8.63-8.63 21.38 0 12.76 8.63 21.37 8.62 8.62 21.37 8.62Z"/>    </symbol>
-<symbol id="icon-text-unanswered" viewBox="0 0 192 45.68">
-<text text-anchor="middle" dominant-baseline="central" font-size="40.1511px" font-weight="bold">
-<tspan y="50%" x="50%">PENDING</tspan>
-</text>
-</symbol>
-<symbol id="icon-text-skipped" viewBox="0 0 192 45.68">
-<text text-anchor="middle" dominant-baseline="central" font-size="40.1511px" font-weight="bold">
-<tspan y="50%" x="50%">SKIPPED</tspan>
-</text>
-</symbol>
-</defs>
-</svg>
-
-
-<h1>XXXXX</h1>
-
-<table>
-<tbody>
-
-
-<tr>
-<th scope="row">
-Name
-</th>
-<td>
-XXXXX
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-Version
-</th>
-<td>
-1.16.0
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-Date
-</th>
-<td>
-2022-05-16 9:48:45 CEST
-</td>
-</tr>
-
-
-<tr>
-<th scope="row">
-QG CLI Version
-</th>
-<td>
-0.1.8:4b50ee26239bb9e7f6084dcb1c005e05b7b79a88
-</td>
-</tr>
-
-
-</tbody>
-</table>
-
-
-
-<h2>1 title</h2>
-<h3 id="1.2">
-<span class="status-icon">
-<span title="Check passed *Manual status">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-<span class="nospace">*</span>    </span>
-1.2 title</h3>
-<p>Manual status: <p>Not relevant</p>
-</p>  <h3 id="1.3">
-<span class="status-icon">
-<span title="">
-<svg class="icon" version="2.0" data-icon="">
-<use href="#icon-" />
-</svg>
-</span>
-
-</span>
-1.3 title</h3>
-<h3 id="1.15">
-<span class="status-icon">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</span>
-1.15 title</h3>
-<table class="full-width">
-<thead>
-<tr>
-<th>ID</th>
-<th>Check</th>
-<th>Component</th>
-<th class="centered">Result</th>
-<th class="centered">Evidence</th>
-<th>Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><p>1</p></td>
-<td colspan="6"><p>title</p></td>
-</tr>
-<tr>
-<td rowspan="2">1.1</td>
-<td rowspan="2">title</td>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-<a href="fossid-autopilot/webApp" target="_blank">
-<svg class="icon" version="2.0">
-<use href="#icon-arrow-right-frame" />
-</svg>
-</a>
-</td>
-<td>    </td>
-</tr>
-<td style="white-space: nowrap;">KeyCloak 1.16.5</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-<a href="fossid-autopilot/KeyCloak" target="_blank">
-<svg class="icon" version="2.0">
-<use href="#icon-arrow-right-frame" />
-</svg>
-</a>
-</td>
-<td>    </td>
-</tr>
-
-<tr>
-<td rowspan="2">1.2</td>
-<td rowspan="2">title</td>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-<a href="fossid-autopilot/webApp" target="_blank">
-<svg class="icon" version="2.0">
-<use href="#icon-arrow-right-frame" />
-</svg>
-</a>
-</td>
-<td>    </td>
-</tr>
-<td style="white-space: nowrap;">KeyCloak 1.16.5</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-<a href="fossid-autopilot/KeyCloak" target="_blank">
-<svg class="icon" version="2.0">
-<use href="#icon-arrow-right-frame" />
-</svg>
-</a>
-</td>
-<td>    </td>
-</tr>
-
-
-<tr>
-<td><p>2</p></td>
-<td colspan="6"><p>title</p></td>
-</tr>
-<tr>
-<td rowspan="2">2.1</td>
-<td rowspan="2">title</td>
-<td style="white-space: nowrap;">KeyCloak 1.16.5</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-</td>
-<td>          <p>reason</p>
-
-</td>
-</tr>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-<a href="whitesource-autopilot/webApp" target="_blank">
-<svg class="icon" version="2.0">
-<use href="#icon-arrow-right-frame" />
-</svg>
-</a>
-</td>
-<td>          <p>exitStatus.properties exists in /home/xxx2xx/repos/xxxx/qg-cli/evidence/run_2022-05-16T074845.501Z/whitesource-autopilot/webApp</p>
-
-</td>
-</tr>
-
-<tr>
-<td rowspan="2">2.2</td>
-<td rowspan="2">title</td>
-<td style="white-space: nowrap;">KeyCloak 1.16.5</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-</td>
-<td>          <p>comments</p>
-
-</td>
-</tr>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-<a href="whitesource-autopilot/webApp" target="_blank">
-<svg class="icon" version="2.0">
-<use href="#icon-arrow-right-frame" />
-</svg>
-</a>
-</td>
-<td>          <p>status.value=OK found in exitStatus.properties file</p>
-
-</td>
-</tr>
-
-
-</tbody>
-</table>
-<h2>2 title</h2>
-<h3 id="2.3">
-<span class="status-icon">
-<span title="Check passed with warning *Manual status">
-<svg class="icon" version="2.0" data-icon="alert-warning">
-<use href="#icon-alert-warning" />
-</svg>
-</span>
-
-<span class="nospace">*</span>    </span>
-2.3 title</h3>
-<p>Manual status: <p>Need verification</p>
-</p>  <h3 id="2.6">
-<span class="status-icon">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</span>
-2.6 title</h3>
-<table class="full-width">
-<thead>
-<tr>
-<th>ID</th>
-<th>Check</th>
-<th>Component</th>
-<th class="centered">Result</th>
-<th class="centered">Evidence</th>
-<th>Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="1">1.1</td>
-<td rowspan="1">title</td>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-<a href="docupedia-autopilot/webApp" target="_blank">
-<svg class="icon" version="2.0">
-<use href="#icon-arrow-right-frame" />
-</svg>
-</a>
-</td>
-<td>    </td>
-</tr>
-
-</tbody>
-</table>
-<h3 id="5.1">
-<span class="status-icon">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</span>
-5.1 title</h3>
-<table class="full-width">
-<thead>
-<tr>
-<th>ID</th>
-<th>Check</th>
-<th>Component</th>
-<th class="centered">Result</th>
-<th class="centered">Evidence</th>
-<th>Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="1">1.1</td>
-<td rowspan="1">title</td>
-<td style="white-space: nowrap;">webApp 1.16.0</td>
-<td class="centered">
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-
-</td>
-<td class="centered">
-<a href="sonarqube-autopilot/webApp" target="_blank">
-<svg class="icon" version="2.0">
-<use href="#icon-arrow-right-frame" />
-</svg>
-</a>
-</td>
-<td>    </td>
-</tr>
-
-</tbody>
-</table>
-
-
-
-<footer class="small legend">
-<span title="Check did not pass">
-<svg class="icon" version="2.0" data-icon="error">
-<use href="#icon-error" />
-</svg>
-</span>
-<div>Check did not pass</div>
-<span title="Check passed with warning">
-<svg class="icon" version="2.0" data-icon="alert-warning">
-<use href="#icon-alert-warning" />
-</svg>
-</span>
-<div>Check passed with warning</div>
-<span title="Check passed">
-<svg class="icon" version="2.0" data-icon="check-circle">
-<use href="#icon-check-circle" />
-</svg>
-</span>
-<div>Check passed</div>
-<span title="Check not applicable">
-<svg class="icon" version="2.0" data-icon="denied">
-<use href="#icon-denied" />
-</svg>
-</span>
-<div>Check not applicable</div>
-<span title="No check configured">
-<svg class="icon" version="2.0" data-icon="text-unanswered">
-<use href="#icon-text-unanswered" />
-</svg>
-</span>
-<div>No check configured</div>
-<span title="Autopilot failed with user error">
-<svg class="icon" version="2.0" data-icon="report">
-<use href="#icon-report" />
-</svg>
-</span>
-<div>Autopilot failed with user error</div>
-<span title="Autopilot failed with runtime error">
-<svg class="icon" version="2.0" data-icon="bug">
-<use href="#icon-bug" />
-</svg>
-</span>
-<div>Autopilot failed with runtime error</div>
-<span title="Check was skipped">
-<svg class="icon" version="2.0" data-icon="text-skipped">
-<use href="#icon-text-skipped" />
-</svg>
-</span>
-<div>Check was skipped</div>
-<span style="justify-self: end;">*</span> <div>Manual status</div>
-</footer>
-
-</body>
-</html>
-"
-`;
-
 exports[`renderHtmlFiles > should render result %p test/integration/input/v1 1`] = `
 "<!DOCTYPE html>
 <html lang="en">
@@ -4928,31 +1099,31 @@ Answered:
 </span>
 </h4>
 <style>
-[class^="filter5-"] {
+[class^="filter1-"] {
 height: 0;
 visibility: collapse;
 }
 
-input[type=checkbox][id^="filter5-"],
-#filter5IsOpen {
+input[type=checkbox][id^="filter1-"],
+#filter1IsOpen {
 display: none;
 }
 
-label[for^="filter5-"] {
+label[for^="filter1-"] {
 display: inline-block;
 padding: .25rem;
 }
 
-input[type=checkbox][value=filter5-YELLOW]:checked ~ table .filter5-YELLOW, input[type=checkbox][value=filter5-RED]:checked ~ table .filter5-RED, input[type=checkbox][value=filter5-UNANSWERED]:checked ~ table .filter5-UNANSWERED, input[type=checkbox][value=filter5-ERROR]:checked ~ table .filter5-ERROR, input[type=checkbox][value=filter5-FAILED]:checked ~ table .filter5-FAILED {
+input[type=checkbox][value=filter1-YELLOW]:checked ~ table .filter1-YELLOW, input[type=checkbox][value=filter1-RED]:checked ~ table .filter1-RED, input[type=checkbox][value=filter1-UNANSWERED]:checked ~ table .filter1-UNANSWERED, input[type=checkbox][value=filter1-ERROR]:checked ~ table .filter1-ERROR, input[type=checkbox][value=filter1-FAILED]:checked ~ table .filter1-FAILED {
 height: initial;
 visibility: initial;
 }
 
-input[type=checkbox][id="filter5-YELLOW"]:checked ~ * label[for="filter5-YELLOW"], input[type=checkbox][id="filter5-RED"]:checked ~ * label[for="filter5-RED"], input[type=checkbox][id="filter5-UNANSWERED"]:checked ~ * label[for="filter5-UNANSWERED"], input[type=checkbox][id="filter5-ERROR"]:checked ~ * label[for="filter5-ERROR"], input[type=checkbox][id="filter5-FAILED"]:checked ~ * label[for="filter5-FAILED"] {
+input[type=checkbox][id="filter1-YELLOW"]:checked ~ * label[for="filter1-YELLOW"], input[type=checkbox][id="filter1-RED"]:checked ~ * label[for="filter1-RED"], input[type=checkbox][id="filter1-UNANSWERED"]:checked ~ * label[for="filter1-UNANSWERED"], input[type=checkbox][id="filter1-ERROR"]:checked ~ * label[for="filter1-ERROR"], input[type=checkbox][id="filter1-FAILED"]:checked ~ * label[for="filter1-FAILED"] {
 border-bottom: 2px solid var(--blue-50);
 }
 
-.filter5-box {
+.filter1-box {
 position: absolute;
 transform: translateX(-2rem);
 display: none;
@@ -4964,41 +1135,41 @@ font-weight: normal;
 z-index: 2000;
 }
 
-input[type=checkbox][id="filter5IsOpen"]:checked~* .filter5-box,
-input[type=checkbox][id="filter5IsOpen"]:checked~* .capture-filter-box[for="filter5IsOpen"] {
+input[type=checkbox][id="filter1IsOpen"]:checked~* .filter1-box,
+input[type=checkbox][id="filter1IsOpen"]:checked~* .capture-filter-box[for="filter1IsOpen"] {
 display: block;
 }
 
-.filter5Header {
+.filter1Header {
 z-index: 1000;
 }
 
-input[type=checkbox][id="filter5IsOpen"]:checked~* .filter5Header {
+input[type=checkbox][id="filter1IsOpen"]:checked~* .filter1Header {
 z-index: 2000;
 }
 </style>
-<input type="checkbox" value="filter5-YELLOW" checked id="filter5-YELLOW">
-<input type="checkbox" value="filter5-RED" checked id="filter5-RED">
-<input type="checkbox" value="filter5-UNANSWERED" checked id="filter5-UNANSWERED">
-<input type="checkbox" value="filter5-ERROR" checked id="filter5-ERROR">
-<input type="checkbox" value="filter5-FAILED" checked id="filter5-FAILED">
+<input type="checkbox" value="filter1-YELLOW" checked id="filter1-YELLOW">
+<input type="checkbox" value="filter1-RED" checked id="filter1-RED">
+<input type="checkbox" value="filter1-UNANSWERED" checked id="filter1-UNANSWERED">
+<input type="checkbox" value="filter1-ERROR" checked id="filter1-ERROR">
+<input type="checkbox" value="filter1-FAILED" checked id="filter1-FAILED">
 
-<input type="checkbox" id="filter5IsOpen">
+<input type="checkbox" id="filter1IsOpen">
 
 <table class="full-width">
-<thead class="filter5Header">
+<thead class="filter1Header">
 <tr>
 <th>ID</th>
 <th>Requirement</th>
 <th class="centered">Result
-<label for="filter5IsOpen">
+<label for="filter1IsOpen">
 <svg class="no-print icon" version="2.0">
 <use href="#icon-filter" />
 </svg>
 </label>
-<label for="filter5IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter5-box">
-<label for="filter5-YELLOW">
+<label for="filter1IsOpen" class="capture-filter-box no-print" style></label>
+<div class="no-print filter1-box">
+<label for="filter1-YELLOW">
 <span title="Check passed with warning">
 <svg class="icon" version="2.0" data-icon="alert-warning">
 <use href="#icon-alert-warning" />
@@ -5006,7 +1177,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter5-RED">
+<label for="filter1-RED">
 <span title="Check did not pass">
 <svg class="icon" version="2.0" data-icon="error">
 <use href="#icon-error" />
@@ -5014,7 +1185,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter5-UNANSWERED">
+<label for="filter1-UNANSWERED">
 <span title="No check configured">
 <svg class="icon" version="2.0" data-icon="text-unanswered">
 <use href="#icon-text-unanswered" />
@@ -5022,7 +1193,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter5-ERROR">
+<label for="filter1-ERROR">
 <span title="Autopilot failed with runtime error">
 <svg class="icon" version="2.0" data-icon="bug">
 <use href="#icon-bug" />
@@ -5030,7 +1201,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter5-FAILED">
+<label for="filter1-FAILED">
 <span title="Autopilot failed with user error">
 <svg class="icon" version="2.0" data-icon="report">
 <use href="#icon-report" />
@@ -5055,7 +1226,7 @@ Manual Answers have to be supported
 </h3>
 </td>
 </tr>
-<tr class="filter5-YELLOW">
+<tr class="filter1-YELLOW">
 <td class="id">
 2
 </td>
@@ -5077,7 +1248,7 @@ YELLOW answer
 <a href="#1-2">result</a>
 </td>
 </tr>
-<tr class="filter5-RED">
+<tr class="filter1-RED">
 <td class="id">
 3
 </td>
@@ -5099,7 +1270,7 @@ RED answer
 <a href="#1-3">result</a>
 </td>
 </tr>
-<tr class="filter5-UNANSWERED">
+<tr class="filter1-UNANSWERED">
 <td class="id">
 5
 </td>
@@ -5133,7 +1304,7 @@ Base Interface
 </h3>
 </td>
 </tr>
-<tr class="filter5-ERROR">
+<tr class="filter1-ERROR">
 <td class="id">
 1
 </td>
@@ -5167,7 +1338,7 @@ Parameter Replacement
 </h3>
 </td>
 </tr>
-<tr class="filter5-FAILED">
+<tr class="filter1-FAILED">
 <td class="id">
 1
 </td>
@@ -5189,7 +1360,7 @@ Should replace parameters in autopilots
 <a href="#3-1">result</a>
 </td>
 </tr>
-<tr class="filter5-FAILED">
+<tr class="filter1-FAILED">
 <td class="id">
 3
 </td>
@@ -5223,7 +1394,7 @@ Should hide secrets
 </h3>
 </td>
 </tr>
-<tr class="filter5-FAILED">
+<tr class="filter1-FAILED">
 <td class="id">
 1
 </td>
@@ -5253,31 +1424,31 @@ Hide secrets in logs
 
 <h2>Details</h2>
 <style>
-[class^="filter6-"] {
+[class^="filter2-"] {
 height: 0;
 visibility: collapse;
 }
 
-input[type=checkbox][id^="filter6-"],
-#filter6IsOpen {
+input[type=checkbox][id^="filter2-"],
+#filter2IsOpen {
 display: none;
 }
 
-label[for^="filter6-"] {
+label[for^="filter2-"] {
 display: inline-block;
 padding: .25rem;
 }
 
-input[type=checkbox][value=filter6-GREEN]:checked ~ table .filter6-GREEN, input[type=checkbox][value=filter6-YELLOW]:checked ~ table .filter6-YELLOW, input[type=checkbox][value=filter6-RED]:checked ~ table .filter6-RED, input[type=checkbox][value=filter6-NA]:checked ~ table .filter6-NA, input[type=checkbox][value=filter6-UNANSWERED]:checked ~ table .filter6-UNANSWERED, input[type=checkbox][value=filter6-ERROR]:checked ~ table .filter6-ERROR, input[type=checkbox][value=filter6-FAILED]:checked ~ table .filter6-FAILED {
+input[type=checkbox][value=filter2-GREEN]:checked ~ table .filter2-GREEN, input[type=checkbox][value=filter2-YELLOW]:checked ~ table .filter2-YELLOW, input[type=checkbox][value=filter2-RED]:checked ~ table .filter2-RED, input[type=checkbox][value=filter2-NA]:checked ~ table .filter2-NA, input[type=checkbox][value=filter2-UNANSWERED]:checked ~ table .filter2-UNANSWERED, input[type=checkbox][value=filter2-ERROR]:checked ~ table .filter2-ERROR, input[type=checkbox][value=filter2-FAILED]:checked ~ table .filter2-FAILED {
 height: initial;
 visibility: initial;
 }
 
-input[type=checkbox][id="filter6-GREEN"]:checked ~ * label[for="filter6-GREEN"], input[type=checkbox][id="filter6-YELLOW"]:checked ~ * label[for="filter6-YELLOW"], input[type=checkbox][id="filter6-RED"]:checked ~ * label[for="filter6-RED"], input[type=checkbox][id="filter6-NA"]:checked ~ * label[for="filter6-NA"], input[type=checkbox][id="filter6-UNANSWERED"]:checked ~ * label[for="filter6-UNANSWERED"], input[type=checkbox][id="filter6-ERROR"]:checked ~ * label[for="filter6-ERROR"], input[type=checkbox][id="filter6-FAILED"]:checked ~ * label[for="filter6-FAILED"] {
+input[type=checkbox][id="filter2-GREEN"]:checked ~ * label[for="filter2-GREEN"], input[type=checkbox][id="filter2-YELLOW"]:checked ~ * label[for="filter2-YELLOW"], input[type=checkbox][id="filter2-RED"]:checked ~ * label[for="filter2-RED"], input[type=checkbox][id="filter2-NA"]:checked ~ * label[for="filter2-NA"], input[type=checkbox][id="filter2-UNANSWERED"]:checked ~ * label[for="filter2-UNANSWERED"], input[type=checkbox][id="filter2-ERROR"]:checked ~ * label[for="filter2-ERROR"], input[type=checkbox][id="filter2-FAILED"]:checked ~ * label[for="filter2-FAILED"] {
 border-bottom: 2px solid var(--blue-50);
 }
 
-.filter6-box {
+.filter2-box {
 position: absolute;
 transform: translateX(-2rem);
 display: none;
@@ -5289,43 +1460,43 @@ font-weight: normal;
 z-index: 2000;
 }
 
-input[type=checkbox][id="filter6IsOpen"]:checked~* .filter6-box,
-input[type=checkbox][id="filter6IsOpen"]:checked~* .capture-filter-box[for="filter6IsOpen"] {
+input[type=checkbox][id="filter2IsOpen"]:checked~* .filter2-box,
+input[type=checkbox][id="filter2IsOpen"]:checked~* .capture-filter-box[for="filter2IsOpen"] {
 display: block;
 }
 
-.filter6Header {
+.filter2Header {
 z-index: 1000;
 }
 
-input[type=checkbox][id="filter6IsOpen"]:checked~* .filter6Header {
+input[type=checkbox][id="filter2IsOpen"]:checked~* .filter2Header {
 z-index: 2000;
 }
 </style>
-<input type="checkbox" value="filter6-GREEN" checked id="filter6-GREEN">
-<input type="checkbox" value="filter6-YELLOW" checked id="filter6-YELLOW">
-<input type="checkbox" value="filter6-RED" checked id="filter6-RED">
-<input type="checkbox" value="filter6-NA" checked id="filter6-NA">
-<input type="checkbox" value="filter6-UNANSWERED" checked id="filter6-UNANSWERED">
-<input type="checkbox" value="filter6-ERROR" checked id="filter6-ERROR">
-<input type="checkbox" value="filter6-FAILED" checked id="filter6-FAILED">
+<input type="checkbox" value="filter2-GREEN" checked id="filter2-GREEN">
+<input type="checkbox" value="filter2-YELLOW" checked id="filter2-YELLOW">
+<input type="checkbox" value="filter2-RED" checked id="filter2-RED">
+<input type="checkbox" value="filter2-NA" checked id="filter2-NA">
+<input type="checkbox" value="filter2-UNANSWERED" checked id="filter2-UNANSWERED">
+<input type="checkbox" value="filter2-ERROR" checked id="filter2-ERROR">
+<input type="checkbox" value="filter2-FAILED" checked id="filter2-FAILED">
 
-<input type="checkbox" id="filter6IsOpen">
+<input type="checkbox" id="filter2IsOpen">
 
 <table class="full-width">
-<thead class="filter6Header">
+<thead class="filter2Header">
 <tr>
 <th>ID</th>
 <th>Requirement</th>
 <th class="centered">Result
-<label for="filter6IsOpen">
+<label for="filter2IsOpen">
 <svg class="no-print icon" version="2.0">
 <use href="#icon-filter" />
 </svg>
 </label>
-<label for="filter6IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter6-box">
-<label for="filter6-GREEN">
+<label for="filter2IsOpen" class="capture-filter-box no-print" style></label>
+<div class="no-print filter2-box">
+<label for="filter2-GREEN">
 <span title="Check passed">
 <svg class="icon" version="2.0" data-icon="check-circle">
 <use href="#icon-check-circle" />
@@ -5333,7 +1504,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter6-YELLOW">
+<label for="filter2-YELLOW">
 <span title="Check passed with warning">
 <svg class="icon" version="2.0" data-icon="alert-warning">
 <use href="#icon-alert-warning" />
@@ -5341,7 +1512,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter6-RED">
+<label for="filter2-RED">
 <span title="Check did not pass">
 <svg class="icon" version="2.0" data-icon="error">
 <use href="#icon-error" />
@@ -5349,7 +1520,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter6-NA">
+<label for="filter2-NA">
 <span title="Check not applicable">
 <svg class="icon" version="2.0" data-icon="denied">
 <use href="#icon-denied" />
@@ -5357,7 +1528,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter6-UNANSWERED">
+<label for="filter2-UNANSWERED">
 <span title="No check configured">
 <svg class="icon" version="2.0" data-icon="text-unanswered">
 <use href="#icon-text-unanswered" />
@@ -5365,7 +1536,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter6-ERROR">
+<label for="filter2-ERROR">
 <span title="Autopilot failed with runtime error">
 <svg class="icon" version="2.0" data-icon="bug">
 <use href="#icon-bug" />
@@ -5373,7 +1544,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter6-FAILED">
+<label for="filter2-FAILED">
 <span title="Autopilot failed with user error">
 <svg class="icon" version="2.0" data-icon="report">
 <use href="#icon-report" />
@@ -5398,7 +1569,7 @@ Manual Answers have to be supported
 </h3>
 </td>
 </tr>
-<tr class="filter6-GREEN">
+<tr class="filter2-GREEN">
 <td class="id">
 1
 </td>
@@ -5420,7 +1591,7 @@ GREEN answer
 <a href="#1-1">result</a>
 </td>
 </tr>
-<tr class="filter6-YELLOW">
+<tr class="filter2-YELLOW">
 <td class="id">
 2
 </td>
@@ -5442,7 +1613,7 @@ YELLOW answer
 <a href="#1-2">result</a>
 </td>
 </tr>
-<tr class="filter6-RED">
+<tr class="filter2-RED">
 <td class="id">
 3
 </td>
@@ -5464,7 +1635,7 @@ RED answer
 <a href="#1-3">result</a>
 </td>
 </tr>
-<tr class="filter6-NA">
+<tr class="filter2-NA">
 <td class="id">
 4
 </td>
@@ -5486,7 +1657,7 @@ NA answer
 <a href="#1-4">result</a>
 </td>
 </tr>
-<tr class="filter6-UNANSWERED">
+<tr class="filter2-UNANSWERED">
 <td class="id">
 5
 </td>
@@ -5520,7 +1691,7 @@ Base Interface
 </h3>
 </td>
 </tr>
-<tr class="filter6-ERROR">
+<tr class="filter2-ERROR">
 <td class="id">
 1
 </td>
@@ -5561,7 +1732,7 @@ Parameter Replacement
 </h3>
 </td>
 </tr>
-<tr class="filter6-FAILED">
+<tr class="filter2-FAILED">
 <td class="id">
 1
 </td>
@@ -5583,7 +1754,7 @@ Should replace parameters in autopilots
 <a href="#3-1">result</a>
 </td>
 </tr>
-<tr class="filter6-GREEN">
+<tr class="filter2-GREEN">
 <td class="id">
 2
 </td>
@@ -5605,7 +1776,7 @@ Should replace parameters in manual answers like
 <a href="#3-2">result</a>
 </td>
 </tr>
-<tr class="filter6-FAILED">
+<tr class="filter2-FAILED">
 <td class="id">
 3
 </td>
@@ -5639,7 +1810,7 @@ Should hide secrets
 </h3>
 </td>
 </tr>
-<tr class="filter6-FAILED">
+<tr class="filter2-FAILED">
 <td class="id">
 1
 </td>
@@ -7550,31 +3721,31 @@ Answered:
 </span>
 </h4>
 <style>
-[class^="filter7-"] {
+[class^="filter3-"] {
 height: 0;
 visibility: collapse;
 }
 
-input[type=checkbox][id^="filter7-"],
-#filter7IsOpen {
+input[type=checkbox][id^="filter3-"],
+#filter3IsOpen {
 display: none;
 }
 
-label[for^="filter7-"] {
+label[for^="filter3-"] {
 display: inline-block;
 padding: .25rem;
 }
 
-input[type=checkbox][value=filter7-YELLOW]:checked ~ table .filter7-YELLOW, input[type=checkbox][value=filter7-RED]:checked ~ table .filter7-RED, input[type=checkbox][value=filter7-UNANSWERED]:checked ~ table .filter7-UNANSWERED, input[type=checkbox][value=filter7-ERROR]:checked ~ table .filter7-ERROR, input[type=checkbox][value=filter7-FAILED]:checked ~ table .filter7-FAILED {
+input[type=checkbox][value=filter3-YELLOW]:checked ~ table .filter3-YELLOW, input[type=checkbox][value=filter3-RED]:checked ~ table .filter3-RED, input[type=checkbox][value=filter3-UNANSWERED]:checked ~ table .filter3-UNANSWERED, input[type=checkbox][value=filter3-ERROR]:checked ~ table .filter3-ERROR, input[type=checkbox][value=filter3-FAILED]:checked ~ table .filter3-FAILED {
 height: initial;
 visibility: initial;
 }
 
-input[type=checkbox][id="filter7-YELLOW"]:checked ~ * label[for="filter7-YELLOW"], input[type=checkbox][id="filter7-RED"]:checked ~ * label[for="filter7-RED"], input[type=checkbox][id="filter7-UNANSWERED"]:checked ~ * label[for="filter7-UNANSWERED"], input[type=checkbox][id="filter7-ERROR"]:checked ~ * label[for="filter7-ERROR"], input[type=checkbox][id="filter7-FAILED"]:checked ~ * label[for="filter7-FAILED"] {
+input[type=checkbox][id="filter3-YELLOW"]:checked ~ * label[for="filter3-YELLOW"], input[type=checkbox][id="filter3-RED"]:checked ~ * label[for="filter3-RED"], input[type=checkbox][id="filter3-UNANSWERED"]:checked ~ * label[for="filter3-UNANSWERED"], input[type=checkbox][id="filter3-ERROR"]:checked ~ * label[for="filter3-ERROR"], input[type=checkbox][id="filter3-FAILED"]:checked ~ * label[for="filter3-FAILED"] {
 border-bottom: 2px solid var(--blue-50);
 }
 
-.filter7-box {
+.filter3-box {
 position: absolute;
 transform: translateX(-2rem);
 display: none;
@@ -7586,41 +3757,41 @@ font-weight: normal;
 z-index: 2000;
 }
 
-input[type=checkbox][id="filter7IsOpen"]:checked~* .filter7-box,
-input[type=checkbox][id="filter7IsOpen"]:checked~* .capture-filter-box[for="filter7IsOpen"] {
+input[type=checkbox][id="filter3IsOpen"]:checked~* .filter3-box,
+input[type=checkbox][id="filter3IsOpen"]:checked~* .capture-filter-box[for="filter3IsOpen"] {
 display: block;
 }
 
-.filter7Header {
+.filter3Header {
 z-index: 1000;
 }
 
-input[type=checkbox][id="filter7IsOpen"]:checked~* .filter7Header {
+input[type=checkbox][id="filter3IsOpen"]:checked~* .filter3Header {
 z-index: 2000;
 }
 </style>
-<input type="checkbox" value="filter7-YELLOW" checked id="filter7-YELLOW">
-<input type="checkbox" value="filter7-RED" checked id="filter7-RED">
-<input type="checkbox" value="filter7-UNANSWERED" checked id="filter7-UNANSWERED">
-<input type="checkbox" value="filter7-ERROR" checked id="filter7-ERROR">
-<input type="checkbox" value="filter7-FAILED" checked id="filter7-FAILED">
+<input type="checkbox" value="filter3-YELLOW" checked id="filter3-YELLOW">
+<input type="checkbox" value="filter3-RED" checked id="filter3-RED">
+<input type="checkbox" value="filter3-UNANSWERED" checked id="filter3-UNANSWERED">
+<input type="checkbox" value="filter3-ERROR" checked id="filter3-ERROR">
+<input type="checkbox" value="filter3-FAILED" checked id="filter3-FAILED">
 
-<input type="checkbox" id="filter7IsOpen">
+<input type="checkbox" id="filter3IsOpen">
 
 <table class="full-width">
-<thead class="filter7Header">
+<thead class="filter3Header">
 <tr>
 <th>ID</th>
 <th>Requirement</th>
 <th class="centered">Result
-<label for="filter7IsOpen">
+<label for="filter3IsOpen">
 <svg class="no-print icon" version="2.0">
 <use href="#icon-filter" />
 </svg>
 </label>
-<label for="filter7IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter7-box">
-<label for="filter7-YELLOW">
+<label for="filter3IsOpen" class="capture-filter-box no-print" style></label>
+<div class="no-print filter3-box">
+<label for="filter3-YELLOW">
 <span title="Check passed with warning">
 <svg class="icon" version="2.0" data-icon="alert-warning">
 <use href="#icon-alert-warning" />
@@ -7628,7 +3799,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter7-RED">
+<label for="filter3-RED">
 <span title="Check did not pass">
 <svg class="icon" version="2.0" data-icon="error">
 <use href="#icon-error" />
@@ -7636,7 +3807,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter7-UNANSWERED">
+<label for="filter3-UNANSWERED">
 <span title="No check configured">
 <svg class="icon" version="2.0" data-icon="text-unanswered">
 <use href="#icon-text-unanswered" />
@@ -7644,7 +3815,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter7-ERROR">
+<label for="filter3-ERROR">
 <span title="Autopilot failed with runtime error">
 <svg class="icon" version="2.0" data-icon="bug">
 <use href="#icon-bug" />
@@ -7652,7 +3823,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter7-FAILED">
+<label for="filter3-FAILED">
 <span title="Autopilot failed with user error">
 <svg class="icon" version="2.0" data-icon="report">
 <use href="#icon-report" />
@@ -7677,7 +3848,7 @@ Manual Answers have to be supported
 </h3>
 </td>
 </tr>
-<tr class="filter7-YELLOW">
+<tr class="filter3-YELLOW">
 <td class="id">
 2
 </td>
@@ -7699,7 +3870,7 @@ YELLOW answer
 <a href="qg-evidence.html#1-2">result</a>
 </td>
 </tr>
-<tr class="filter7-RED">
+<tr class="filter3-RED">
 <td class="id">
 3
 </td>
@@ -7721,7 +3892,7 @@ RED answer
 <a href="qg-evidence.html#1-3">result</a>
 </td>
 </tr>
-<tr class="filter7-UNANSWERED">
+<tr class="filter3-UNANSWERED">
 <td class="id">
 5
 </td>
@@ -7755,7 +3926,7 @@ Base Interface
 </h3>
 </td>
 </tr>
-<tr class="filter7-ERROR">
+<tr class="filter3-ERROR">
 <td class="id">
 1
 </td>
@@ -7789,7 +3960,7 @@ Parameter Replacement
 </h3>
 </td>
 </tr>
-<tr class="filter7-FAILED">
+<tr class="filter3-FAILED">
 <td class="id">
 1
 </td>
@@ -7811,7 +3982,7 @@ Should replace parameters in autopilots
 <a href="qg-evidence.html#3-1">result</a>
 </td>
 </tr>
-<tr class="filter7-FAILED">
+<tr class="filter3-FAILED">
 <td class="id">
 3
 </td>
@@ -7845,7 +4016,7 @@ Should hide secrets
 </h3>
 </td>
 </tr>
-<tr class="filter7-FAILED">
+<tr class="filter3-FAILED">
 <td class="id">
 1
 </td>
@@ -7875,31 +4046,31 @@ Hide secrets in logs
 
 <h2>Details</h2>
 <style>
-[class^="filter8-"] {
+[class^="filter4-"] {
 height: 0;
 visibility: collapse;
 }
 
-input[type=checkbox][id^="filter8-"],
-#filter8IsOpen {
+input[type=checkbox][id^="filter4-"],
+#filter4IsOpen {
 display: none;
 }
 
-label[for^="filter8-"] {
+label[for^="filter4-"] {
 display: inline-block;
 padding: .25rem;
 }
 
-input[type=checkbox][value=filter8-GREEN]:checked ~ table .filter8-GREEN, input[type=checkbox][value=filter8-YELLOW]:checked ~ table .filter8-YELLOW, input[type=checkbox][value=filter8-RED]:checked ~ table .filter8-RED, input[type=checkbox][value=filter8-NA]:checked ~ table .filter8-NA, input[type=checkbox][value=filter8-UNANSWERED]:checked ~ table .filter8-UNANSWERED, input[type=checkbox][value=filter8-ERROR]:checked ~ table .filter8-ERROR, input[type=checkbox][value=filter8-FAILED]:checked ~ table .filter8-FAILED {
+input[type=checkbox][value=filter4-GREEN]:checked ~ table .filter4-GREEN, input[type=checkbox][value=filter4-YELLOW]:checked ~ table .filter4-YELLOW, input[type=checkbox][value=filter4-RED]:checked ~ table .filter4-RED, input[type=checkbox][value=filter4-NA]:checked ~ table .filter4-NA, input[type=checkbox][value=filter4-UNANSWERED]:checked ~ table .filter4-UNANSWERED, input[type=checkbox][value=filter4-ERROR]:checked ~ table .filter4-ERROR, input[type=checkbox][value=filter4-FAILED]:checked ~ table .filter4-FAILED {
 height: initial;
 visibility: initial;
 }
 
-input[type=checkbox][id="filter8-GREEN"]:checked ~ * label[for="filter8-GREEN"], input[type=checkbox][id="filter8-YELLOW"]:checked ~ * label[for="filter8-YELLOW"], input[type=checkbox][id="filter8-RED"]:checked ~ * label[for="filter8-RED"], input[type=checkbox][id="filter8-NA"]:checked ~ * label[for="filter8-NA"], input[type=checkbox][id="filter8-UNANSWERED"]:checked ~ * label[for="filter8-UNANSWERED"], input[type=checkbox][id="filter8-ERROR"]:checked ~ * label[for="filter8-ERROR"], input[type=checkbox][id="filter8-FAILED"]:checked ~ * label[for="filter8-FAILED"] {
+input[type=checkbox][id="filter4-GREEN"]:checked ~ * label[for="filter4-GREEN"], input[type=checkbox][id="filter4-YELLOW"]:checked ~ * label[for="filter4-YELLOW"], input[type=checkbox][id="filter4-RED"]:checked ~ * label[for="filter4-RED"], input[type=checkbox][id="filter4-NA"]:checked ~ * label[for="filter4-NA"], input[type=checkbox][id="filter4-UNANSWERED"]:checked ~ * label[for="filter4-UNANSWERED"], input[type=checkbox][id="filter4-ERROR"]:checked ~ * label[for="filter4-ERROR"], input[type=checkbox][id="filter4-FAILED"]:checked ~ * label[for="filter4-FAILED"] {
 border-bottom: 2px solid var(--blue-50);
 }
 
-.filter8-box {
+.filter4-box {
 position: absolute;
 transform: translateX(-2rem);
 display: none;
@@ -7911,43 +4082,43 @@ font-weight: normal;
 z-index: 2000;
 }
 
-input[type=checkbox][id="filter8IsOpen"]:checked~* .filter8-box,
-input[type=checkbox][id="filter8IsOpen"]:checked~* .capture-filter-box[for="filter8IsOpen"] {
+input[type=checkbox][id="filter4IsOpen"]:checked~* .filter4-box,
+input[type=checkbox][id="filter4IsOpen"]:checked~* .capture-filter-box[for="filter4IsOpen"] {
 display: block;
 }
 
-.filter8Header {
+.filter4Header {
 z-index: 1000;
 }
 
-input[type=checkbox][id="filter8IsOpen"]:checked~* .filter8Header {
+input[type=checkbox][id="filter4IsOpen"]:checked~* .filter4Header {
 z-index: 2000;
 }
 </style>
-<input type="checkbox" value="filter8-GREEN" checked id="filter8-GREEN">
-<input type="checkbox" value="filter8-YELLOW" checked id="filter8-YELLOW">
-<input type="checkbox" value="filter8-RED" checked id="filter8-RED">
-<input type="checkbox" value="filter8-NA" checked id="filter8-NA">
-<input type="checkbox" value="filter8-UNANSWERED" checked id="filter8-UNANSWERED">
-<input type="checkbox" value="filter8-ERROR" checked id="filter8-ERROR">
-<input type="checkbox" value="filter8-FAILED" checked id="filter8-FAILED">
+<input type="checkbox" value="filter4-GREEN" checked id="filter4-GREEN">
+<input type="checkbox" value="filter4-YELLOW" checked id="filter4-YELLOW">
+<input type="checkbox" value="filter4-RED" checked id="filter4-RED">
+<input type="checkbox" value="filter4-NA" checked id="filter4-NA">
+<input type="checkbox" value="filter4-UNANSWERED" checked id="filter4-UNANSWERED">
+<input type="checkbox" value="filter4-ERROR" checked id="filter4-ERROR">
+<input type="checkbox" value="filter4-FAILED" checked id="filter4-FAILED">
 
-<input type="checkbox" id="filter8IsOpen">
+<input type="checkbox" id="filter4IsOpen">
 
 <table class="full-width">
-<thead class="filter8Header">
+<thead class="filter4Header">
 <tr>
 <th>ID</th>
 <th>Requirement</th>
 <th class="centered">Result
-<label for="filter8IsOpen">
+<label for="filter4IsOpen">
 <svg class="no-print icon" version="2.0">
 <use href="#icon-filter" />
 </svg>
 </label>
-<label for="filter8IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter8-box">
-<label for="filter8-GREEN">
+<label for="filter4IsOpen" class="capture-filter-box no-print" style></label>
+<div class="no-print filter4-box">
+<label for="filter4-GREEN">
 <span title="Check passed">
 <svg class="icon" version="2.0" data-icon="check-circle">
 <use href="#icon-check-circle" />
@@ -7955,7 +4126,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter8-YELLOW">
+<label for="filter4-YELLOW">
 <span title="Check passed with warning">
 <svg class="icon" version="2.0" data-icon="alert-warning">
 <use href="#icon-alert-warning" />
@@ -7963,7 +4134,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter8-RED">
+<label for="filter4-RED">
 <span title="Check did not pass">
 <svg class="icon" version="2.0" data-icon="error">
 <use href="#icon-error" />
@@ -7971,7 +4142,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter8-NA">
+<label for="filter4-NA">
 <span title="Check not applicable">
 <svg class="icon" version="2.0" data-icon="denied">
 <use href="#icon-denied" />
@@ -7979,7 +4150,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter8-UNANSWERED">
+<label for="filter4-UNANSWERED">
 <span title="No check configured">
 <svg class="icon" version="2.0" data-icon="text-unanswered">
 <use href="#icon-text-unanswered" />
@@ -7987,7 +4158,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter8-ERROR">
+<label for="filter4-ERROR">
 <span title="Autopilot failed with runtime error">
 <svg class="icon" version="2.0" data-icon="bug">
 <use href="#icon-bug" />
@@ -7995,7 +4166,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter8-FAILED">
+<label for="filter4-FAILED">
 <span title="Autopilot failed with user error">
 <svg class="icon" version="2.0" data-icon="report">
 <use href="#icon-report" />
@@ -8020,7 +4191,7 @@ Manual Answers have to be supported
 </h3>
 </td>
 </tr>
-<tr class="filter8-GREEN">
+<tr class="filter4-GREEN">
 <td class="id">
 1
 </td>
@@ -8042,7 +4213,7 @@ GREEN answer
 <a href="qg-evidence.html#1-1">result</a>
 </td>
 </tr>
-<tr class="filter8-YELLOW">
+<tr class="filter4-YELLOW">
 <td class="id">
 2
 </td>
@@ -8064,7 +4235,7 @@ YELLOW answer
 <a href="qg-evidence.html#1-2">result</a>
 </td>
 </tr>
-<tr class="filter8-RED">
+<tr class="filter4-RED">
 <td class="id">
 3
 </td>
@@ -8086,7 +4257,7 @@ RED answer
 <a href="qg-evidence.html#1-3">result</a>
 </td>
 </tr>
-<tr class="filter8-NA">
+<tr class="filter4-NA">
 <td class="id">
 4
 </td>
@@ -8108,7 +4279,7 @@ NA answer
 <a href="qg-evidence.html#1-4">result</a>
 </td>
 </tr>
-<tr class="filter8-UNANSWERED">
+<tr class="filter4-UNANSWERED">
 <td class="id">
 5
 </td>
@@ -8142,7 +4313,7 @@ Base Interface
 </h3>
 </td>
 </tr>
-<tr class="filter8-ERROR">
+<tr class="filter4-ERROR">
 <td class="id">
 1
 </td>
@@ -8183,7 +4354,7 @@ Parameter Replacement
 </h3>
 </td>
 </tr>
-<tr class="filter8-FAILED">
+<tr class="filter4-FAILED">
 <td class="id">
 1
 </td>
@@ -8205,7 +4376,7 @@ Should replace parameters in autopilots
 <a href="qg-evidence.html#3-1">result</a>
 </td>
 </tr>
-<tr class="filter8-GREEN">
+<tr class="filter4-GREEN">
 <td class="id">
 2
 </td>
@@ -8227,7 +4398,7 @@ Should replace parameters in manual answers like
 <a href="qg-evidence.html#3-2">result</a>
 </td>
 </tr>
-<tr class="filter8-FAILED">
+<tr class="filter4-FAILED">
 <td class="id">
 3
 </td>
@@ -8261,7 +4432,7 @@ Should hide secrets
 </h3>
 </td>
 </tr>
-<tr class="filter8-FAILED">
+<tr class="filter4-FAILED">
 <td class="id">
 1
 </td>
@@ -11343,31 +7514,31 @@ Answered:
 </span>
 </h4>
 <style>
-[class^="filter9-"] {
+[class^="filter5-"] {
 height: 0;
 visibility: collapse;
 }
 
-input[type=checkbox][id^="filter9-"],
-#filter9IsOpen {
+input[type=checkbox][id^="filter5-"],
+#filter5IsOpen {
 display: none;
 }
 
-label[for^="filter9-"] {
+label[for^="filter5-"] {
 display: inline-block;
 padding: .25rem;
 }
 
-input[type=checkbox][value=filter9-ERROR]:checked ~ table .filter9-ERROR {
+input[type=checkbox][value=filter5-ERROR]:checked ~ table .filter5-ERROR {
 height: initial;
 visibility: initial;
 }
 
-input[type=checkbox][id="filter9-ERROR"]:checked ~ * label[for="filter9-ERROR"] {
+input[type=checkbox][id="filter5-ERROR"]:checked ~ * label[for="filter5-ERROR"] {
 border-bottom: 2px solid var(--blue-50);
 }
 
-.filter9-box {
+.filter5-box {
 position: absolute;
 transform: translateX(-2rem);
 display: none;
@@ -11379,25 +7550,25 @@ font-weight: normal;
 z-index: 2000;
 }
 
-input[type=checkbox][id="filter9IsOpen"]:checked~* .filter9-box,
-input[type=checkbox][id="filter9IsOpen"]:checked~* .capture-filter-box[for="filter9IsOpen"] {
+input[type=checkbox][id="filter5IsOpen"]:checked~* .filter5-box,
+input[type=checkbox][id="filter5IsOpen"]:checked~* .capture-filter-box[for="filter5IsOpen"] {
 display: block;
 }
 
-.filter9Header {
+.filter5Header {
 z-index: 1000;
 }
 
-input[type=checkbox][id="filter9IsOpen"]:checked~* .filter9Header {
+input[type=checkbox][id="filter5IsOpen"]:checked~* .filter5Header {
 z-index: 2000;
 }
 </style>
-<input type="checkbox" value="filter9-ERROR" checked id="filter9-ERROR">
+<input type="checkbox" value="filter5-ERROR" checked id="filter5-ERROR">
 
-<input type="checkbox" id="filter9IsOpen">
+<input type="checkbox" id="filter5IsOpen">
 
 <table class="full-width">
-<thead class="filter9Header">
+<thead class="filter5Header">
 <tr>
 <th>ID</th>
 <th>Requirement</th>
@@ -11419,7 +7590,7 @@ title
 </h3>
 </td>
 </tr>
-<tr class="filter9-ERROR">
+<tr class="filter5-ERROR">
 <td class="id">
 2.1
 </td>
@@ -11449,31 +7620,31 @@ title
 
 <h2>Details</h2>
 <style>
-[class^="filter10-"] {
+[class^="filter6-"] {
 height: 0;
 visibility: collapse;
 }
 
-input[type=checkbox][id^="filter10-"],
-#filter10IsOpen {
+input[type=checkbox][id^="filter6-"],
+#filter6IsOpen {
 display: none;
 }
 
-label[for^="filter10-"] {
+label[for^="filter6-"] {
 display: inline-block;
 padding: .25rem;
 }
 
-input[type=checkbox][value=filter10-GREEN]:checked ~ table .filter10-GREEN, input[type=checkbox][value=filter10-ERROR]:checked ~ table .filter10-ERROR {
+input[type=checkbox][value=filter6-GREEN]:checked ~ table .filter6-GREEN, input[type=checkbox][value=filter6-ERROR]:checked ~ table .filter6-ERROR {
 height: initial;
 visibility: initial;
 }
 
-input[type=checkbox][id="filter10-GREEN"]:checked ~ * label[for="filter10-GREEN"], input[type=checkbox][id="filter10-ERROR"]:checked ~ * label[for="filter10-ERROR"] {
+input[type=checkbox][id="filter6-GREEN"]:checked ~ * label[for="filter6-GREEN"], input[type=checkbox][id="filter6-ERROR"]:checked ~ * label[for="filter6-ERROR"] {
 border-bottom: 2px solid var(--blue-50);
 }
 
-.filter10-box {
+.filter6-box {
 position: absolute;
 transform: translateX(-2rem);
 display: none;
@@ -11485,38 +7656,38 @@ font-weight: normal;
 z-index: 2000;
 }
 
-input[type=checkbox][id="filter10IsOpen"]:checked~* .filter10-box,
-input[type=checkbox][id="filter10IsOpen"]:checked~* .capture-filter-box[for="filter10IsOpen"] {
+input[type=checkbox][id="filter6IsOpen"]:checked~* .filter6-box,
+input[type=checkbox][id="filter6IsOpen"]:checked~* .capture-filter-box[for="filter6IsOpen"] {
 display: block;
 }
 
-.filter10Header {
+.filter6Header {
 z-index: 1000;
 }
 
-input[type=checkbox][id="filter10IsOpen"]:checked~* .filter10Header {
+input[type=checkbox][id="filter6IsOpen"]:checked~* .filter6Header {
 z-index: 2000;
 }
 </style>
-<input type="checkbox" value="filter10-GREEN" checked id="filter10-GREEN">
-<input type="checkbox" value="filter10-ERROR" checked id="filter10-ERROR">
+<input type="checkbox" value="filter6-GREEN" checked id="filter6-GREEN">
+<input type="checkbox" value="filter6-ERROR" checked id="filter6-ERROR">
 
-<input type="checkbox" id="filter10IsOpen">
+<input type="checkbox" id="filter6IsOpen">
 
 <table class="full-width">
-<thead class="filter10Header">
+<thead class="filter6Header">
 <tr>
 <th>ID</th>
 <th>Requirement</th>
 <th class="centered">Result
-<label for="filter10IsOpen">
+<label for="filter6IsOpen">
 <svg class="no-print icon" version="2.0">
 <use href="#icon-filter" />
 </svg>
 </label>
-<label for="filter10IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter10-box">
-<label for="filter10-GREEN">
+<label for="filter6IsOpen" class="capture-filter-box no-print" style></label>
+<div class="no-print filter6-box">
+<label for="filter6-GREEN">
 <span title="Check passed">
 <svg class="icon" version="2.0" data-icon="check-circle">
 <use href="#icon-check-circle" />
@@ -11524,7 +7695,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter10-ERROR">
+<label for="filter6-ERROR">
 <span title="Autopilot failed with runtime error">
 <svg class="icon" version="2.0" data-icon="bug">
 <use href="#icon-bug" />
@@ -11549,7 +7720,7 @@ title
 </h3>
 </td>
 </tr>
-<tr class="filter10-ERROR">
+<tr class="filter6-ERROR">
 <td class="id">
 2.1
 </td>
@@ -11572,7 +7743,7 @@ title
 <a href="#2-2.1">result</a>
 </td>
 </tr>
-<tr class="filter10-GREEN">
+<tr class="filter6-GREEN">
 <td class="id">
 2.2
 </td>
@@ -12495,31 +8666,31 @@ Answered:
 </span>
 </h4>
 <style>
-[class^="filter11-"] {
+[class^="filter7-"] {
 height: 0;
 visibility: collapse;
 }
 
-input[type=checkbox][id^="filter11-"],
-#filter11IsOpen {
+input[type=checkbox][id^="filter7-"],
+#filter7IsOpen {
 display: none;
 }
 
-label[for^="filter11-"] {
+label[for^="filter7-"] {
 display: inline-block;
 padding: .25rem;
 }
 
-input[type=checkbox][value=filter11-ERROR]:checked ~ table .filter11-ERROR {
+input[type=checkbox][value=filter7-ERROR]:checked ~ table .filter7-ERROR {
 height: initial;
 visibility: initial;
 }
 
-input[type=checkbox][id="filter11-ERROR"]:checked ~ * label[for="filter11-ERROR"] {
+input[type=checkbox][id="filter7-ERROR"]:checked ~ * label[for="filter7-ERROR"] {
 border-bottom: 2px solid var(--blue-50);
 }
 
-.filter11-box {
+.filter7-box {
 position: absolute;
 transform: translateX(-2rem);
 display: none;
@@ -12531,25 +8702,25 @@ font-weight: normal;
 z-index: 2000;
 }
 
-input[type=checkbox][id="filter11IsOpen"]:checked~* .filter11-box,
-input[type=checkbox][id="filter11IsOpen"]:checked~* .capture-filter-box[for="filter11IsOpen"] {
+input[type=checkbox][id="filter7IsOpen"]:checked~* .filter7-box,
+input[type=checkbox][id="filter7IsOpen"]:checked~* .capture-filter-box[for="filter7IsOpen"] {
 display: block;
 }
 
-.filter11Header {
+.filter7Header {
 z-index: 1000;
 }
 
-input[type=checkbox][id="filter11IsOpen"]:checked~* .filter11Header {
+input[type=checkbox][id="filter7IsOpen"]:checked~* .filter7Header {
 z-index: 2000;
 }
 </style>
-<input type="checkbox" value="filter11-ERROR" checked id="filter11-ERROR">
+<input type="checkbox" value="filter7-ERROR" checked id="filter7-ERROR">
 
-<input type="checkbox" id="filter11IsOpen">
+<input type="checkbox" id="filter7IsOpen">
 
 <table class="full-width">
-<thead class="filter11Header">
+<thead class="filter7Header">
 <tr>
 <th>ID</th>
 <th>Requirement</th>
@@ -12571,7 +8742,7 @@ title
 </h3>
 </td>
 </tr>
-<tr class="filter11-ERROR">
+<tr class="filter7-ERROR">
 <td class="id">
 2.1
 </td>
@@ -12601,31 +8772,31 @@ title
 
 <h2>Details</h2>
 <style>
-[class^="filter12-"] {
+[class^="filter8-"] {
 height: 0;
 visibility: collapse;
 }
 
-input[type=checkbox][id^="filter12-"],
-#filter12IsOpen {
+input[type=checkbox][id^="filter8-"],
+#filter8IsOpen {
 display: none;
 }
 
-label[for^="filter12-"] {
+label[for^="filter8-"] {
 display: inline-block;
 padding: .25rem;
 }
 
-input[type=checkbox][value=filter12-GREEN]:checked ~ table .filter12-GREEN, input[type=checkbox][value=filter12-ERROR]:checked ~ table .filter12-ERROR {
+input[type=checkbox][value=filter8-GREEN]:checked ~ table .filter8-GREEN, input[type=checkbox][value=filter8-ERROR]:checked ~ table .filter8-ERROR {
 height: initial;
 visibility: initial;
 }
 
-input[type=checkbox][id="filter12-GREEN"]:checked ~ * label[for="filter12-GREEN"], input[type=checkbox][id="filter12-ERROR"]:checked ~ * label[for="filter12-ERROR"] {
+input[type=checkbox][id="filter8-GREEN"]:checked ~ * label[for="filter8-GREEN"], input[type=checkbox][id="filter8-ERROR"]:checked ~ * label[for="filter8-ERROR"] {
 border-bottom: 2px solid var(--blue-50);
 }
 
-.filter12-box {
+.filter8-box {
 position: absolute;
 transform: translateX(-2rem);
 display: none;
@@ -12637,38 +8808,38 @@ font-weight: normal;
 z-index: 2000;
 }
 
-input[type=checkbox][id="filter12IsOpen"]:checked~* .filter12-box,
-input[type=checkbox][id="filter12IsOpen"]:checked~* .capture-filter-box[for="filter12IsOpen"] {
+input[type=checkbox][id="filter8IsOpen"]:checked~* .filter8-box,
+input[type=checkbox][id="filter8IsOpen"]:checked~* .capture-filter-box[for="filter8IsOpen"] {
 display: block;
 }
 
-.filter12Header {
+.filter8Header {
 z-index: 1000;
 }
 
-input[type=checkbox][id="filter12IsOpen"]:checked~* .filter12Header {
+input[type=checkbox][id="filter8IsOpen"]:checked~* .filter8Header {
 z-index: 2000;
 }
 </style>
-<input type="checkbox" value="filter12-GREEN" checked id="filter12-GREEN">
-<input type="checkbox" value="filter12-ERROR" checked id="filter12-ERROR">
+<input type="checkbox" value="filter8-GREEN" checked id="filter8-GREEN">
+<input type="checkbox" value="filter8-ERROR" checked id="filter8-ERROR">
 
-<input type="checkbox" id="filter12IsOpen">
+<input type="checkbox" id="filter8IsOpen">
 
 <table class="full-width">
-<thead class="filter12Header">
+<thead class="filter8Header">
 <tr>
 <th>ID</th>
 <th>Requirement</th>
 <th class="centered">Result
-<label for="filter12IsOpen">
+<label for="filter8IsOpen">
 <svg class="no-print icon" version="2.0">
 <use href="#icon-filter" />
 </svg>
 </label>
-<label for="filter12IsOpen" class="capture-filter-box no-print" style></label>
-<div class="no-print filter12-box">
-<label for="filter12-GREEN">
+<label for="filter8IsOpen" class="capture-filter-box no-print" style></label>
+<div class="no-print filter8-box">
+<label for="filter8-GREEN">
 <span title="Check passed">
 <svg class="icon" version="2.0" data-icon="check-circle">
 <use href="#icon-check-circle" />
@@ -12676,7 +8847,7 @@ z-index: 2000;
 </span>
 
 </label>
-<label for="filter12-ERROR">
+<label for="filter8-ERROR">
 <span title="Autopilot failed with runtime error">
 <svg class="icon" version="2.0" data-icon="bug">
 <use href="#icon-bug" />
@@ -12701,7 +8872,7 @@ title
 </h3>
 </td>
 </tr>
-<tr class="filter12-ERROR">
+<tr class="filter8-ERROR">
 <td class="id">
 2.1
 </td>
@@ -12724,7 +8895,7 @@ title
 <a href="qg-evidence.html#2-2.1">result</a>
 </td>
 </tr>
-<tr class="filter12-GREEN">
+<tr class="filter8-GREEN">
 <td class="id">
 2.2
 </td>
