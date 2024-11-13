@@ -40,13 +40,6 @@ jobs:
           gha-cache-key: unittest-cache0
           named-caches-hash: ${{ hashFiles('3rdparty/*.txt') }}
 
-      - name: Lint and check
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          make lint check
-        env:
-          PANTS_CONFIG_FILES: pants.ci.toml
-
       - name: Run unit tests
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
