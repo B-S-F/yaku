@@ -38,7 +38,7 @@ repos:
     rev: v0.0.2
     hooks:
       - id: madge
-        args: [qg-api-service/src]
+        args: [qg-api-service/qg-api-service/src]
   ####
   ## Python related
   ####
