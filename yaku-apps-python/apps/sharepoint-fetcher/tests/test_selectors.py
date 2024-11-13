@@ -1,12 +1,12 @@
 import pydantic
 import pytest
 from yaku.autopilot_utils.errors import AutopilotConfigurationError
-from yaku.sharepoint_fetcher.config import ConfigFileContent
-from yaku.sharepoint_fetcher.selectors import Selector, parse_config_file_data
+from yaku.sharepoint_fetcher.config import FilterConfigFileContent
+from yaku.sharepoint_fetcher.selectors import Selector, parse_filter_config_file_data
 
 
-def test_read_config_file_with_missing_checks_in_selector():
-    config_file_content = [
+def test_read_filter_config_file_with_missing_checks_in_selector():
+    filter_config_file_content = [
         {
             "file": "ProcessStatus.docx",
             "select": [
@@ -16,11 +16,11 @@ def test_read_config_file_with_missing_checks_in_selector():
         }
     ]
     with pytest.raises(pydantic.ValidationError, match="__root__ -> 0 -> files"):
-        ConfigFileContent.parse_obj(config_file_content)
+        FilterConfigFileContent.parse_obj(filter_config_file_content)
 
 
-def test_read_config_file_with_invalid_checks_in_selector():
-    config_file_content = [
+def test_read_filter_config_file_with_invalid_checks_in_selector():
+    filter_config_file_content = [
         {
             "files": "*.docx",
             "select": [
@@ -29,13 +29,13 @@ def test_read_config_file_with_invalid_checks_in_selector():
             ],
         }
     ]
-    config_file_data = ConfigFileContent.parse_obj(config_file_content)
+    filter_config_file_data = FilterConfigFileContent.parse_obj(filter_config_file_content)
     with pytest.raises(AutopilotConfigurationError, match="Unknown operator 'enthaelt'!"):
-        parse_config_file_data(config_file_data)
+        parse_filter_config_file_data(filter_config_file_data)
 
 
-def test_parse_config_file():
-    config_file_content = [
+def test_parse_filter_config_file():
+    filter_config_file_content = [
         {
             "files": "RevisionSet(1)/*.docx",
             "title": "Latest Process Status Document",
@@ -52,9 +52,9 @@ def test_parse_config_file():
         },
     ]
 
-    config_file_data = ConfigFileContent.parse_obj(config_file_content)
+    filter_config_file_data = FilterConfigFileContent.parse_obj(filter_config_file_content)
 
-    files_selectors = parse_config_file_data(config_file_data)
+    files_selectors = parse_filter_config_file_data(filter_config_file_data)
 
     assert len(files_selectors) == 3
 

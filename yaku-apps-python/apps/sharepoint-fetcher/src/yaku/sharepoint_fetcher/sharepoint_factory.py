@@ -10,7 +10,7 @@ class SharePointFetcherFactory:
         cls,
         settings: Settings,
         list_title_property_map,
-        config_file_data,
+        filter_config_file_data,
     ):
         if settings.is_cloud == False:
             return SharepointFetcherOnPremise(
@@ -22,7 +22,7 @@ class SharePointFetcherFactory:
                 force_ip=settings.force_ip,
                 list_title_property_map=list_title_property_map,
                 download_properties_only=settings.download_properties_only,
-                filter_config=config_file_data,
+                filter_config=filter_config_file_data,
             )
         elif settings.is_cloud == True:  # Still keeping this clause for clarity
             return SharepointFetcherCloud(
@@ -34,5 +34,5 @@ class SharePointFetcherFactory:
                 settings.client_secret,
                 force_ip=settings.force_ip,
                 download_properties_only=settings.download_properties_only,
-                filter_config=config_file_data,
+                filter_config=filter_config_file_data,
             )

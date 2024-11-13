@@ -1,8 +1,7 @@
 import json
-import os
 import urllib.parse
 import warnings
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 import click
 import requests
@@ -10,8 +9,9 @@ from loguru import logger
 from yaku.autopilot_utils.cli_base import make_autopilot_app, read_version_from_package
 from yaku.autopilot_utils.errors import AutopilotConfigurationError
 
-from .config import ConfigFile, Settings
-from .selectors import parse_config_file_data
+from .config import ConfigFile, FilterConfigFile, FilterConfigFileContent, Settings
+from .config_file_utils import merge_cli_and_file_params
+from .selectors import parse_filter_config_file_data
 from .sharepoint_factory import SharePointFetcherFactory
 from .utils import PropertiesReader
 
@@ -101,7 +101,6 @@ class CLI:
         click.option(
             "--is-cloud",
             required=False,
-            default=False,
             help="Boolean value to determine whether to fetch data from on-premise or cloud SharePoint instances",
         ),
         click.option("--username", required=False, help="Username to access SharePoint"),
@@ -113,8 +112,8 @@ class CLI:
         ),
         click.option(
             "--destination-path",
-            required=True,
-            default=os.getcwd(),
+            "--output-dir",
+            required=False,
             help="Path to the destination folder",
         ),
         click.option(
@@ -129,6 +128,9 @@ class CLI:
             "--download-properties-only",
             required=False,
             help="Only download the properties of the files",
+        ),
+        click.option(
+            "--filter-config-file", required=False, help="Path to the filter config file"
         ),
         click.option("--config-file", required=False, help="Path to the config file"),
     ]
@@ -149,38 +151,68 @@ class CLI:
         force_ip: str,
         custom_properties: str,
         download_properties_only: bool,
+        filter_config_file: str,
         config_file: str,
     ):
         logger.info("Configuring SharePoint Fetcher")
+        extracted_fields: Dict[str, Any] = {}
+        if config_file:
+            parsed_config_file = ConfigFile(file_path=config_file)
+            if isinstance(parsed_config_file.content, FilterConfigFileContent):
+                filter_config_file = config_file
+            else:
+                assert parsed_config_file.content is not None
+                extracted_fields.update(parsed_config_file.content.dict())
+        cli_arguments = {
+            "project_url": project_url,
+            "project_site": project_site,
+            "project_path": project_path,
+            "file": file,
+            "is_cloud": is_cloud,
+            "username": username,
+            "password": password,
+            "tenant_id": tenant_id,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "destination_path": destination_path,
+            "force_ip": force_ip,
+            "custom_properties": custom_properties,
+            "download_properties_only": download_properties_only,
+            "filter_config_file": filter_config_file,
+            "config_file": config_file,
+        }
+        merged_params = merge_cli_and_file_params(cli_arguments, extracted_fields)
         settings = Settings(
-            sharepoint_url=project_url,
-            sharepoint_site=project_site,
-            sharepoint_path=project_path,
-            is_cloud=is_cloud,
-            username=username,
-            password=password,
-            tenant_id=tenant_id,
-            client_id=client_id,
-            client_secret=client_secret,
-            destination_path=destination_path,
-            force_ip=force_ip,
-            custom_properties=custom_properties,
-            download_properties_only=download_properties_only,
-            sharepoint_file=file,
+            sharepoint_url=merged_params.get("project_url"),
+            sharepoint_site=merged_params.get("project_site"),
+            sharepoint_path=merged_params.get("project_path"),
+            is_cloud=merged_params.get("is_cloud"),
+            username=merged_params.get("username"),
+            password=merged_params.get("password"),
+            tenant_id=merged_params.get("tenant_id"),
+            client_id=merged_params.get("client_id"),
+            client_secret=merged_params.get("client_secret"),
+            destination_path=merged_params.get("destination_path"),
+            force_ip=merged_params.get("force_ip"),
+            custom_properties=merged_params.get("custom_properties"),
+            download_properties_only=merged_params.get("download_properties_only"),
+            sharepoint_file=merged_params.get("file"),
         )
-        parsed_config_file = ConfigFile(file_path=config_file)
-        trigger_fetcher(parsed_config_file, settings)
+        parsed_filter_config_file = FilterConfigFile(
+            file_path=merged_params.get("filter_config_file")
+        )
+        trigger_fetcher(parsed_filter_config_file, settings)
 
 
-def trigger_fetcher(config_file: ConfigFile, settings: Settings):
+def trigger_fetcher(filter_config_file: FilterConfigFile, settings: Settings):
     """Triggers the fetching action."""
-    config_file_data = None
-    if config_file and config_file.content:
-        config_file_data = parse_config_file_data(config_file.content)
+    filter_config_file_data = None
+    if filter_config_file and filter_config_file.content:
+        filter_config_file_data = parse_filter_config_file_data(filter_config_file.content)
 
     list_title_property_map = create_property_title_mapping(settings.custom_properties)
     sharepoint = SharePointFetcherFactory.selectSharepointInstance(
-        settings, list_title_property_map, config_file_data
+        settings, list_title_property_map, filter_config_file_data
     )
     if settings.custom_properties:
         configure_properties_reader(sharepoint._properties_reader, settings.custom_properties)
