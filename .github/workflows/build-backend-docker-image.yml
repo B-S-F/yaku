@@ -6,6 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REGISTRY: ghcr.io
+      IMAGE_NAME: b-s-f/yaku/api
     steps:
       - uses: actions/checkout@v4
 
@@ -22,12 +23,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Generate image tag
+        run: |
+          base_tag="${{ env.IMAGE_NAME }}:$( date '+%Y-%m-%d_%H-%M-%S' )-$(echo ${GITHUB_SHA} | cut -c1-7)"
+          image_tag="${{ env.REGISTRY }}/$base_tag"
+          echo "IMAGE_TAG=$image_tag" >> $GITHUB_ENV
+
       - name: Build Docker Image
         uses: docker/build-push-action@v5
         with:
           pull: true
           push: true
-          tags: ghcr.io/b-s-f/yaku/api:latest
+          tags: ${{ env.IMAGE_TAG }}
           context: ./qg-api-service
           file: qg-api-service/qg-api-service/Dockerfile
           platforms: linux/amd64
