@@ -131,8 +131,8 @@ describe('Environment', () => {
         mockServer,
         gitFetcherExecutable,
         env,
-        '{"status":"FAILED","reason":"GIT_FETCHER_SERVER_API_URL environment variable is not set.'
-        +'\\nGIT_FETCHER_SERVER_API_URL environment variable must use secured connections with https"}',
+        '{"status":"FAILED","reason":"GIT_FETCHER_SERVER_API_URL environment variable is not set.' +
+          '\\nGIT_FETCHER_SERVER_API_URL environment variable must use secured connections with https"}',
         'expected'
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)

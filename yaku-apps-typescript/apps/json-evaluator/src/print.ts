@@ -19,7 +19,7 @@ export const stringifyFirstLevel = (obj: Record<string, unknown>) => {
 }
 
 export const parseReasons = (
-  reasonPackage: ReasonPackage | undefined,
+  reasonPackage: ReasonPackage | undefined
 ): {
   context: string | undefined
   reasons: string[]
@@ -66,7 +66,7 @@ export function colorStatusString(str: string): string {
 
 export const printCheckResult = (
   checkName: string,
-  check: PartialCheckResult,
+  check: PartialCheckResult
 ) => {
   const name = checkName.toUpperCase()
   console.log('\n' + name + '\n' + '-'.repeat(name.length))
@@ -76,6 +76,6 @@ export const printCheckResult = (
   console.log('* **status**: ' + `${colorStatusString(check.status!)}`)
   if (check.reasonPackage && check.reasonPackage!.reasons.length > 0)
     console.log(
-      '* **reasons**: ' + `${parseReasons(check.reasonPackage!).reasons}`,
+      '* **reasons**: ' + `${parseReasons(check.reasonPackage!).reasons}`
     )
 }

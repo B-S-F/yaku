@@ -29,9 +29,7 @@
     "typescript": "*",
     "vitest": "*"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "type": "module",
   "main": "dist/index.js",
   "scripts": {

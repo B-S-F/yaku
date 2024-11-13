@@ -6,10 +6,10 @@ type Callback = (error?: Error | null) => void
 type WriteStream = typeof process.stdout.write
 
 const urlPattern = new RegExp(
-  /https?:\/\/(www.)?[-a-zA-Z0-9@:%._+~#=]{1,256}.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@%_+.~#?&//=]*)/gi,
+  /https?:\/\/(www.)?[-a-zA-Z0-9@:%._+~#=]{1,256}.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@%_+.~#?&//=]*)/gi
 )
 const colorsPattern = new RegExp(
-  /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/gi,
+  /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/gi
 )
 
 export class Logger {

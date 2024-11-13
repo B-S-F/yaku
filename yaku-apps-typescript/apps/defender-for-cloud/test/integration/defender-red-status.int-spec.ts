@@ -19,7 +19,6 @@ import {
   integrationTestResultsRecommendationsFixture3,
 } from '../fixtures/recommendations'
 
-
 describe('Defender Autopilot RED status cases', () => {
   let mockServer: MockServer | undefined
   const communEnvVariables = {
@@ -532,5 +531,4 @@ describe('Defender Autopilot RED status cases', () => {
       )
     )
   })
-
 })

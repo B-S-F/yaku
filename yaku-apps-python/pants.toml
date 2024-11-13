@@ -25,9 +25,6 @@ timeout_default = 600
 output = "all"
 report = true
 
-[ruff]
-interpreter_constraints = ["==3.10.*"]
-
 [coverage-py]
 global_report = true
 report = ["console", "xml", "json"]

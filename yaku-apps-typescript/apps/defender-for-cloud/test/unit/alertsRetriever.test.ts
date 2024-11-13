@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import {
-  getDefenderForCloudAlerts,
-} from '../../src/alertsRetriever'
+import { getDefenderForCloudAlerts } from '../../src/alertsRetriever'
 import {
   mockedAlertsUnitTestsFirstSet,
   mockedAlertsUnitTestsSecondSet,
@@ -11,7 +9,7 @@ import {
 
 vi.mock('axios', () => ({
   default: {
-    get: vi.fn()
+    get: vi.fn(),
   },
 }))
 
@@ -72,10 +70,11 @@ describe('Test "getDefenderForCloudAlerts()" from "alertsRetriever.ts"', async (
   })
 
   it('Should throw a specific error if status is not 200', async () => {
-    mockedAxiosGet.mockRejectedValueOnce({ 
-      response: { 
-        status: 400
-      } })
+    mockedAxiosGet.mockRejectedValueOnce({
+      response: {
+        status: 400,
+      },
+    })
 
     await expect(
       getDefenderForCloudAlerts('mockedToken', 'mockTenantId')

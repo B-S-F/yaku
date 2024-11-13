@@ -38,7 +38,5 @@
   "bin": {
     "manual-answer-evaluator": "dist/evaluate.js"
   },
-  "files": [
-    "dist"
-  ]
+  "files": ["dist"]
 }

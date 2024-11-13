@@ -17,6 +17,6 @@ const config = {
       { outputDirectory: 'results', outputName: 'test-results.xml' },
     ],
   ],
-};
+}
 
-module.exports = config;
+module.exports = config
