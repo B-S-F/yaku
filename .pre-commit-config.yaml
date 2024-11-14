@@ -35,7 +35,7 @@ repos:
         additional_dependencies: ["@biomejs/biome@1.9.4"]
         exclude: '^(onyx/.vscode|onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
   - repo: https://github.com/B-S-F/madge-pre-commit
-    rev: v0.0.2
+    rev: v0.0.3
     hooks:
       - id: madge
         args: [qg-api-service/qg-api-service/src]
