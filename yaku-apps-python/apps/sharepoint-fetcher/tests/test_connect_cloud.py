@@ -41,7 +41,7 @@ class ConnectTest(unittest.TestCase):
         self.mock.reset()
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_file_object(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -77,7 +77,7 @@ class ConnectTest(unittest.TestCase):
         assert result, second_api_response_data_content
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_file_object_wrong_size(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -115,7 +115,7 @@ class ConnectTest(unittest.TestCase):
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_drive_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_file_object_library(self, mock_session, mock_get_site_id, mock_get_drive_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -151,7 +151,7 @@ class ConnectTest(unittest.TestCase):
         assert result, second_api_response_data_content
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_folder_id(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -177,7 +177,7 @@ class ConnectTest(unittest.TestCase):
         assert "folder_id" in connect.get_folder_id(folder, None)
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_file_object_force_ip(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -212,7 +212,7 @@ class ConnectTest(unittest.TestCase):
         connect.get_file_object("/sites/123456", "File.txt", None)
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_check_folder_access_and_presence_with_401(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -243,7 +243,7 @@ class ConnectTest(unittest.TestCase):
         assert api_url in requested_url
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_check_folder_access_and_presence_with_403(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -274,7 +274,7 @@ class ConnectTest(unittest.TestCase):
         assert api_url in requested_url
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_check_folder_access_and_presence_with_404(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -304,7 +304,7 @@ class ConnectTest(unittest.TestCase):
         assert api_url in requested_url
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_check_folder_access_and_presence_with_500(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -338,7 +338,7 @@ class ConnectTest(unittest.TestCase):
         assert api_url in requested_url
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_check_folder_access_and_presence_authorized_no_folder(
         self, mock_session, mock_get_site_id
     ):
@@ -364,7 +364,7 @@ class ConnectTest(unittest.TestCase):
         assert connect.check_folder_access_and_presence(url_path, None, url_path) is True
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_check_folder_access_and_presence_authorized_parent_folder(
         self, mock_session, mock_get_site_id
     ):
@@ -395,7 +395,7 @@ class ConnectTest(unittest.TestCase):
             connect.check_folder_access_and_presence(parent_folder, None, url_path)
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_check_folder_access_and_presence_authorized(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -420,7 +420,7 @@ class ConnectTest(unittest.TestCase):
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_folder_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_folders(self, mock_session, mock_get_site_id, mock_get_folder_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -449,7 +449,7 @@ class ConnectTest(unittest.TestCase):
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_drive_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_folder_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_folders_library(
         self, mock_session, mock_get_site_id, mock_get_folder_id, mock_get_drive_id
     ):
@@ -480,7 +480,7 @@ class ConnectTest(unittest.TestCase):
         assert self.mock.call_count == 1
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_folders_root(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -506,7 +506,7 @@ class ConnectTest(unittest.TestCase):
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_drive_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_folders_root_library(self, mock_session, mock_get_site_id, mock_get_drive_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -534,7 +534,7 @@ class ConnectTest(unittest.TestCase):
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_folder_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_files(self, mock_session, mock_get_site_id, mock_get_folder_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -563,7 +563,7 @@ class ConnectTest(unittest.TestCase):
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_drive_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_folder_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_files_library(
         self, mock_session, mock_get_site_id, mock_get_folder_id, mock_get_drive_id
     ):
@@ -594,7 +594,7 @@ class ConnectTest(unittest.TestCase):
         assert self.mock.call_count == 1
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_files_root(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -620,7 +620,7 @@ class ConnectTest(unittest.TestCase):
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_drive_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_files_root_library(self, mock_session, mock_get_site_id, mock_get_drive_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -647,7 +647,7 @@ class ConnectTest(unittest.TestCase):
         assert self.mock.call_count == 1
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_file_properties(self, mock_session, mock_get_site_id):
         connect = Connect(
             "https://some.sharepoint.server/sites/123456/",
@@ -683,7 +683,7 @@ class ConnectTest(unittest.TestCase):
 
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_drive_id")
     @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.get_site_id")
-    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect.sharepoint_cloud_instance_connect")
+    @patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
     def test_get_file_properties_library(
         self, mock_session, mock_get_site_id, mock_get_drive_id
     ):
