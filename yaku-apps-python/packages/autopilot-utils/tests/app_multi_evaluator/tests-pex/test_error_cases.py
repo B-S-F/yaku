@@ -38,5 +38,7 @@ def test_pex_treats_chained_subcommands_as_autopilot_failure():
     )
     assert process.returncode == 0
     assert_result_status(
-        process.stdout, "FAILED", reason="Got unexpected extra arguments \\(check_b y\\)"
+        process.stdout,
+        "FAILED",
+        reason="Got unexpected extra arguments \\(check_b y\\)",
     )

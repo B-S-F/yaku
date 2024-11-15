@@ -35,7 +35,11 @@ def test_merge_neither_cli_arguments_nor_file_params():
 def test_merge_cli_arguments_with_none_values():
     cli_arguments = {"param1": None, "param2": "cli_value2"}
     file_params = {"param1": "file_value1", "param3": "file_value3"}
-    expected = {"param1": "file_value1", "param2": "cli_value2", "param3": "file_value3"}
+    expected = {
+        "param1": "file_value1",
+        "param2": "cli_value2",
+        "param3": "file_value3",
+    }
     result = merge_cli_and_file_params(cli_arguments, file_params)
     assert result == expected
 

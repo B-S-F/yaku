@@ -106,7 +106,8 @@ def test_get_wheels_info_from_pex_file(tmp_path: Path, mocker: mock):
     wheels.get_distinfo.assert_has_calls(
         [
             mock.call(
-                tmp_path / ".deps" / "pkg-0.1-some_extra_info" / "pkg-0.1.dist-info", False
+                tmp_path / ".deps" / "pkg-0.1-some_extra_info" / "pkg-0.1.dist-info",
+                False,
             ),
             mock.call().__setitem__(wheels.DISTRIBUTION_KEY, "pkg-0.1-some_extra_info"),
             mock.call(tmp_path / ".deps" / "other-0.2-foo" / "other-0.2.dist-info", False),
@@ -131,11 +132,17 @@ def test_get_distinfo_locations_in_nested_folders(tmp_path: Path):
 
     locations = wheels._get_distinfo_locations(tmp_path)
 
-    assert set(locations) == {Path("vendored/pkgA.dist-info"), Path("vendored/pkgB.dist-info")}
+    assert set(locations) == {
+        Path("vendored/pkgA.dist-info"),
+        Path("vendored/pkgB.dist-info"),
+    }
 
     locations = wheels._get_distinfo_locations(vendor_path, tmp_path)
 
-    assert set(locations) == {Path("vendored/pkgA.dist-info"), Path("vendored/pkgB.dist-info")}
+    assert set(locations) == {
+        Path("vendored/pkgA.dist-info"),
+        Path("vendored/pkgB.dist-info"),
+    }
 
 
 def test_get_nested_distinfo(tmp_path: Path):

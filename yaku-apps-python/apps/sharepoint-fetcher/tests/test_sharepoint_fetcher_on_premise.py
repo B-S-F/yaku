@@ -31,7 +31,11 @@ def default_fetcher():
 
 def test_initializer_args(caplog):
     SharepointFetcherOnPremise(
-        "Documents/", Path("out_path"), "https://some.weird.url/", "username", "password"
+        "Documents/",
+        Path("out_path"),
+        "https://some.weird.url/",
+        "username",
+        "password",
     )
     assert "please verify" in caplog.text
 

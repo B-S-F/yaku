@@ -34,7 +34,8 @@ def test_upload_files_with_non_existing_file():
 def test_upload_files_with_existing_file(capsys):
     """Test upload with."""
     with mock.patch(
-        "yaku.sharepoint.client.sharepoint.SharepointClient.upload_file", return_value=None
+        "yaku.sharepoint.client.sharepoint.SharepointClient.upload_file",
+        return_value=None,
     ):
         assert upload_files(["_version.txt"], sharepoint_config, "Documents", True) is None
         captured = capsys.readouterr()

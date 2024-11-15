@@ -201,7 +201,9 @@ class TestMain:
             result = runner.invoke(main, args=[*make_args(exclude=["--query", "--file"])])
             assert result.exit_code == 0
             assert_result_status(
-                result.stdout, "FAILED", reason="Please provide either a query or a file"
+                result.stdout,
+                "FAILED",
+                reason="Please provide either a query or a file",
             )
 
     def test_main_wrong_start_time(self, tmp_path):
@@ -212,7 +214,8 @@ class TestMain:
                 main,
                 args=[
                     *make_args(
-                        exclude=["--file"], override={"--start-time": "2023-wrong-time-format"}
+                        exclude=["--file"],
+                        override={"--start-time": "2023-wrong-time-format"},
                     )
                 ],
             )

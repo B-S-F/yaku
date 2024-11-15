@@ -129,7 +129,11 @@ class SharepointFetcher(ABC):
         path.unlink()
 
     def save_file(
-        self, path: Path, file_name: str, contents: Union[bytes, str], enable_logging: bool
+        self,
+        path: Path,
+        file_name: str,
+        contents: Union[bytes, str],
+        enable_logging: bool,
     ):
         if isinstance(contents, str):
             contents = contents.encode("utf-8")

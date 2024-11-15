@@ -109,7 +109,8 @@ def get_wheels_info_from_pex_file(
 
 
 def _get_distinfo_locations(
-    vendored_libs_path: zipfile.Path | Path, orig_root: zipfile.Path | Path | None = None
+    vendored_libs_path: zipfile.Path | Path,
+    orig_root: zipfile.Path | Path | None = None,
 ) -> list[str]:
     if orig_root is None:
         orig_root = vendored_libs_path

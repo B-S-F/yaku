@@ -21,7 +21,9 @@ class CLI:
             raise Exception("Failing during evaluation")
         RESULTS.append(
             Result(
-                criterion="Some criterion", fulfilled=not red, justification="Needed for test"
+                criterion="Some criterion",
+                fulfilled=not red,
+                justification="Needed for test",
             )
         )
 

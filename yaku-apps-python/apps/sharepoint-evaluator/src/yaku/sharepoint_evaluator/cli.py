@@ -147,7 +147,8 @@ def sharepoint_evaluator(settings: Settings, config_file: ConfigFile):
             if not file_rule.rules:
                 some_yellow = True
                 logger.warning(
-                    "Config has no rules for file {}", file.relative_to(settings.evidence_path)
+                    "Config has no rules for file {}",
+                    file.relative_to(settings.evidence_path),
                 )
                 RESULTS.append(
                     Result(

@@ -10,7 +10,14 @@ def test():
 
 @pytest.mark.parametrize(
     ("column", "expected"),
-    [("A", True), ("AA", True), ("AAA", True), ("XFD", True), ("XFE", False), ("ZZZ", False)],
+    [
+        ("A", True),
+        ("AA", True),
+        ("AAA", True),
+        ("XFD", True),
+        ("XFE", False),
+        ("ZZZ", False),
+    ],
 )
 def test_check_column_limit(column, expected):
     got = check_column_limit(column)

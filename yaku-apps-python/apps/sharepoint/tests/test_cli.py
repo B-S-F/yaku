@@ -136,7 +136,14 @@ def test_upload_multiple_files(mocker, requests_mock):
     )
     output = CliRunner().invoke(
         upload_files,
-        ["--file", file_name_1, "--file", file_name_2, "--sharepoint-path", "Documents"],
+        [
+            "--file",
+            file_name_1,
+            "--file",
+            file_name_2,
+            "--sharepoint-path",
+            "Documents",
+        ],
     )
     assert output.exit_code == 0
     assert mocked_file_path.called

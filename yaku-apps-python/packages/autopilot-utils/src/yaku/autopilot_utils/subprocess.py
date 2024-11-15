@@ -122,7 +122,8 @@ def gen_exit_for_returncode(process_result: ProcessResult):
         if process_result.returncode != 0:
             logger.error(process_result.args)
             logger.error(
-                "Subprocess exited with returncode {code}.", code=process_result.returncode
+                "Subprocess exited with returncode {code}.",
+                code=process_result.returncode,
             )
             if process_result.stdout:
                 logger.error(process_result.stdout)
@@ -174,7 +175,11 @@ def gen_raise_for_status(process_result: ProcessResult):
 
 
 def run(
-    command, /, shell: bool = False, extra_env: Optional[Mapping[str, str]] = None, **kwargs
+    command,
+    /,
+    shell: bool = False,
+    extra_env: Optional[Mapping[str, str]] = None,
+    **kwargs,
 ) -> ProcessResult:
     """
     Run another autopilot app in a subprocess.
