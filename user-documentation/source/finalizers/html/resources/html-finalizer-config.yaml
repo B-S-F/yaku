@@ -1,0 +1,5 @@
+finalize:
+  run: |
+    html-finalizer
+  env:
+     HIDE_UNANSWERED: TRUE

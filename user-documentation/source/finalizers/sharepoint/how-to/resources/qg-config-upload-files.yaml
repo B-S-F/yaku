@@ -1,0 +1,32 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  open-pull-request-autopilot:
+    run: |
+      echo '{"message": "This data would be fetched from some data source/server"}' > git-fetcher-data.json
+      sharepoint upload-files --file git-fetcher-data.json --sharepoint-path "Documents"
+      echo '{"status": "GREEN", "comment": "This evaluation would be done by some evaluator"}'
+    env:
+      SHAREPOINT_PROJECT_SITE: "https://mycompany.sharepoint.com/sites/my-site"
+      SHAREPOINT_USERNAME: ${{ secrets.SHAREPOINT_USERNAME }}
+      SHAREPOINT_PASSWORD: ${{ secrets.SHAREPOINT_PASSWORD }}
+      SHAREPOINT_FORCE_IP: 10.139.201.176
+      no_proxy: 10.139.201.176
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: Make sure all release required changes are done
+        text: Make sure all release required changes are done
+        checks:
+          "1":
+            title: Check the status of all pull requests
+            automation:
+              autopilot: open-pull-request-autopilot

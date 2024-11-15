@@ -1,0 +1,24 @@
+- file: 'Folder/Document.docx'
+        # ↑ Glob pattern for the file to be checked with the following rules
+  rules:
+    # Here comes the list of rules
+
+    - property: 'CSC'  # ← File property name to be checked
+      equals: '1'      # ← Operator and value for the actual check.
+                       #   In this case it will read the value of the 'CSC'
+                       #   property of this file and verify that it is equal to
+                       #   '1'.
+
+    - property: 'Description'
+      contains: 'some word'
+
+    - property: 'Modified'
+      is-not-older-than: "2022-09-01T00:00Z"
+    # OR: is-not-older-than: "1 year"
+
+    - property: 'Revision'
+      is-less-than: 5
+
+# There can be more than one file in the config file
+- file: 'OtherFolder/OtherFile.pdf'
+  # ...

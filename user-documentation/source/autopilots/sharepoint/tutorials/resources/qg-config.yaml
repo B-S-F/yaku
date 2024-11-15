@@ -1,0 +1,34 @@
+metadata:
+  version: v1
+header:
+  name: MyProject
+  version: 1.16.0
+autopilots:
+  sharepoint-fetcher-autopilot:
+    run: |
+      sharepoint-fetcher
+      sharepoint-evaluator
+    env:
+      SHAREPOINT_FETCHER_USERNAME: ${{ secrets.SHAREPOINT_FETCHER_USERNAME }}
+      SHAREPOINT_FETCHER_PASSWORD: ${{ secrets.SHAREPOINT_FETCHER_PASSWORD }}
+      SHAREPOINT_FETCHER_PROJECT_URL: https://sharepoint.inside.mycompany.com/sites/123456/Documents/SomeDocument.docx
+      SHAREPOINT_EVALUATOR_CONFIG_FILE: ./sharepoint-evaluator-config-file.yaml
+      SHAREPOINT_FETCHER_FORCE_IP: 10.123.123.123
+      no_proxy: 10.123.123.123
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  '4':
+    title: Compliance / Risk
+    requirements:
+      '4.6':
+        title: State-of-the-art in the market with reference to product liability evaluated and documented.
+        text: |-
+          If project is not SotA relevant. Reference "SotA relevance assessment" in QG / Release evaluation.
+          If project is SotA relevant: In case a already released state of the art documentation is available,  not older than a year, the feature scope has not changed since last QG: Existing SotA document can be referenced.
+        checks:
+          '1':
+            title: Fetch the SOTA relevance assessment from Sharepoint and check if it has a valid revision
+            automation:
+              autopilot: sharepoint-fetcher-autopilot

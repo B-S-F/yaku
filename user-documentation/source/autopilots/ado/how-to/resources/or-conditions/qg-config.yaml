@@ -1,0 +1,41 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+env:
+  ADO_API_ORG: team-neutrinos #TODO: change this to your Azure DevOps organization
+  ADO_API_PROJECT: playground #TODO: change this to your Azure DevOps project
+  ADO_APPLY_PROXY_SETTINGS: false
+autopilots:
+  ado-work-items-autopilot:
+    run: |
+      ado-work-items-fetcher
+      ado-work-items-evaluator
+    env:
+      ADO_API_PERSONAL_ACCESS_TOKEN: ${{ secrets.ADO_API_PERSONAL_ACCESS_TOKEN }} # TODO: Add this to your namespace secrets
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Requirements management
+    requirements:
+      "1.1":
+        title: Question to be answered using tickets
+        text: Some sample text, stating what this question is about exactly.
+        checks:
+          1:
+            title: Fetch open, epic work items from ado and ensure they're neither overdue,  nor unassigned for priority 1 & 2 and not unassigned for priority 3 & 4.--0
+            automation:
+              autopilot: ado-work-items-autopilot
+            env:
+              ADO_CONFIG_FILE_PATH: ./ado-fetcher-evaluator-config-1.yaml
+              ADO_WORK_ITEMS_JSON_NAME: workItems1.json
+          2:
+            title: Fetch open, epic work items from ado and ensure they're neither overdue,  nor unassigned for priority 1 & 2 and not unassigned for priority 3 & 4.--1
+            automation:
+              autopilot: ado-work-items-autopilot
+            env:
+              ADO_CONFIG_FILE_PATH: ./ado-fetcher-evaluator-config-2.yaml
+              ADO_WORK_ITEMS_JSON_NAME: workItems2.json

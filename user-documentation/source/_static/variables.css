@@ -1,0 +1,318 @@
+html {
+  --yaku-color-black: #000;
+  --yaku-color-white: #fff;
+
+  --yaku-color-gray-90: #f1f1f1;
+  --yaku-color-gray-80: #ebebeb;
+  --yaku-color-gray-70: #cfd0d0;
+  --yaku-color-gray-60: #b7b8b9;
+  --yaku-color-gray-50: #87898a;
+  --yaku-color-gray-40: #707273;
+  --yaku-color-gray-30: #404345;
+  --yaku-color-gray-20: #1c2327;
+  --yaku-color-gray-10: #050606;
+
+  --yaku-color-petrol-90: #d3f4f3;
+  --yaku-color-petrol-80: #a6e9e6;
+  --yaku-color-petrol-70: #7addda;
+  --yaku-color-petrol-60: #21c7c1;
+  --yaku-color-petrol-50: #00948e;
+  --yaku-color-petrol-40: #007b75;
+  --yaku-color-petrol-30: #004842;
+  --yaku-color-petrol-20: #002e28;
+  --yaku-color-petrol-10: #00150f;
+
+  --yaku-color-violet-90: #e8e3ee;
+  --yaku-color-violet-80: #d9d0e3;
+  --yaku-color-violet-70: #c7b9d5;
+  --yaku-color-violet-60: #a18ab8;
+  --yaku-color-violet-50: #7b5b9c;
+  --yaku-color-violet-40: #431572;
+  --yaku-color-violet-30: #2a0059;
+  --yaku-color-violet-20: #10003f;
+  --yaku-color-violet-10: #0a0026;
+
+  --yaku-color-stone-90: #e5ebef;
+  --yaku-color-stone-80: #d3dde4;
+  --yaku-color-stone-70: #bdccd7;
+  --yaku-color-stone-60: #91aabc;
+  --yaku-color-stone-50: #3a6687;
+  --yaku-color-stone-40: #24557a;
+  --yaku-color-stone-30: #0b3c61;
+  --yaku-color-stone-20: #002247;
+  --yaku-color-stone-10: #00092e;
+
+  --yaku-color-blue-90: #daebf6;
+  --yaku-color-blue-80: #a3cde8;
+  --yaku-color-blue-70: #7fbadf;
+  --yaku-color-blue-60: #489cd1;
+  --yaku-color-blue-50: #0e7cc2;
+  --yaku-color-blue-40: #005084;
+  --yaku-color-blue-30: #00366b;
+  --yaku-color-blue-20: #001d52;
+  --yaku-color-blue-10: #00001f;
+
+  --yaku-color-red-90: #fde5e6;
+  --yaku-color-red-80: #fab2b5;
+  --yaku-color-red-70: #f68083;
+  --yaku-color-red-60: #f24d51;
+  --yaku-color-red-50: #ed0007;
+  --yaku-color-red-40: #ba0000;
+  --yaku-color-red-30: #870000;
+  --yaku-color-red-20: #3b0000;
+  --yaku-color-red-10: #210000;
+
+  --yaku-color-yellow-90: #fff5cc;
+  --yaku-color-yellow-80: #ffec99;
+  --yaku-color-yellow-70: #ffe266;
+  --yaku-color-yellow-60: #ffcf00;
+  --yaku-color-yellow-50: #e5b500;
+  --yaku-color-yellow-40: #996900;
+  --yaku-color-yellow-30: #663600;
+  --yaku-color-yellow-20: #4d1d00;
+  --yaku-color-yellow-10: #330300;
+
+  --yaku-color-green-90: #e5f3ed;
+  --yaku-color-green-80: #cce7db;
+  --yaku-color-green-70: #99cfb7;
+  --yaku-color-green-60: #66b892;
+  --yaku-color-green-50: #33a06e;
+  --yaku-color-green-40: #00884a;
+  --yaku-color-green-30: #005517;
+  --yaku-color-green-20: #003c00;
+  --yaku-color-green-10: #002200;
+
+  --yaku-color-petrol: var(--yaku-color-petrol-60);
+  --yaku-color-violet: var(--yaku-color-violet-40);
+  --yaku-color-stone: var(--yaku-color-stone-40);
+  --yaku-color-blue: var(--yaku-color-blue-60);
+  --yaku-color-light-gray: var(--yaku-color-gray-80);
+  --yaku-color-dark-gray: var(--yaku-color-gray-20);
+
+  --yaku-color-primary-background: var(--yaku-color-white);
+  --yaku-color-secondary-background: var(--yaku-color-gray-80);
+  --yaku-color-contrast-background: var(--yaku-color-gray-20);
+
+  --yaku-color-on-primary: var(--yaku-color-black);
+  --yaku-color-on-secondary: var(--yaku-color-black);
+  --yaku-color-on-contrast: var(--yaku-color-white);
+  --yaku-color-disabled: var(--yaku-color-gray-40);
+
+  --yaku-color-highlight-petrol: var(--yaku-color-petrol-60);
+  --yaku-color-highlight-violet: var(--yaku-color-violet-40);
+  --yaku-color-highlight-stone: var(--yaku-color-stone-40);
+  --yaku-color-highlight-blue: var(--yaku-color-blue-60);
+
+  --yaku-color-error: var(--yaku-color-red-50);
+  --yaku-color-warning: var(--yaku-color-yellow-60);
+  --yaku-color-success: var(--yaku-color-green-40);
+  --yaku-color-information: var(--yaku-color-blue-50);
+
+  --yaku-color-interactive: var(--yaku-color-blue-60);
+  --yaku-color-disabled: var(--yaku-color-gray-70);
+
+  --yaku-color-major-accent-default: var(--yaku-color-blue-60);
+  --yaku-color-major-accent-hovered: var(--yaku-color-blue-50);
+  --yaku-color-major-accent-pressed: var(--yaku-color-blue-40);
+  --yaku-color-major-accent-disabled: var(--yaku-color-disabled);
+
+  --yaku-color-neutral-default: var(--yaku-color-gray-80);
+  --yaku-color-neutral-hovered: var(--yaku-color-gray-70);
+  --yaku-color-neutral-pressed: var(--yaku-color-gray-60);
+  --yaku-color-neutral-disabled: var(--yaku-color-disabled);
+
+  --yaku-color-small-default: var(--yaku-color-gray-50);
+  --yaku-color-small-hovered: var(--yaku-color-gray-40);
+  --yaku-color-small-pressed: var(--yaku-color-gray-30);
+  --yaku-color-small-disabled: var(--yaku-color-disabled);
+
+  --yaku-color-major-error-default: var(--yaku-color-red-50);
+  --yaku-color-major-error-hovered: var(--yaku-color-red-40);
+  --yaku-color-major-error-pressed: var(--yaku-color-red-30);
+
+  --yaku-color-minor-error-default: var(--yaku-color-red-80);
+  --yaku-color-minor-error-hovered: var(--yaku-color-red-70);
+  --yaku-color-minor-error-pressed: var(--yaku-color-red-60);
+
+  --yaku-color-major-warning-default: var(--yaku-color-yellow-60);
+  --yaku-color-major-warning-hovered: var(--yaku-color-yellow-50);
+  --yaku-color-major-warning-pressed: var(--yaku-color-yellow-40);
+
+  --yaku-color-minor-warning-default: var(--yaku-color-yellow-80);
+  --yaku-color-minor-warning-hovered: var(--yaku-color-yellow-70);
+  --yaku-color-minor-warning-pressed: var(--yaku-color-yellow-60);
+
+  --yaku-color-major-success-default: var(--yaku-color-green-40);
+  --yaku-color-major-success-hovered: var(--yaku-color-green-30);
+  --yaku-color-major-success-pressed: var(--yaku-color-green-20);
+
+  --yaku-color-minor-success-default: var(--yaku-color-green-80);
+  --yaku-color-minor-success-hovered: var(--yaku-color-green-70);
+  --yaku-color-minor-success-pressed: var(--yaku-color-green-60);
+
+  --yaku-color-major-information-default: var(--yaku-color-information);
+  --yaku-color-major-information-hovered: var(--yaku-color-blue-40);
+  --yaku-color-major-information-pressed: var(--yaku-color-blue-30);
+
+  --yaku-color-minor-information-default: var(--yaku-color-blue-80);
+  --yaku-color-minor-information-hovered: var(--yaku-color-blue-70);
+  --yaku-color-minor-information-pressed: var(--yaku-color-blue-60);
+
+  --pst-font-size-base: 2rem;
+  --pst-font-family-base: "Fira Sans", var(--pst-font-family-base-system);
+  --pst-font-family-monospace: "Fira Code",
+    var(--pst-font-family-monospace-system);
+  --pst-font-family-heading: "Fira Code", var(--pst-font-family-base-system);
+  --pst-font-size-h1: 3rem;
+  --pst-font-size-h2: 2.5rem;
+  --pst-font-size-h3: 2rem;
+  --pst-font-size-h4: 1.5rem;
+  --pst-font-size-h5: 1.25rem;
+  --pst-font-weight-heading: 700;
+}
+
+html[data-theme="light"] {
+  --yaku-primary-button-fill: var(--yaku-color-major-accent-default);
+  --yaku-primary-button-fill-hover: var(--yaku-color-major-accent-hovered);
+  --yaku-primary-button-fill-pressed: var(--yaku-color-major-accent-pressed);
+
+  --yaku-secondary-button: var(--yaku-color-major-accent-default);
+  --yaku-secondary-button-hover: var(--yaku-color-major-accent-hovered);
+  --yaku-secondary-button-pressed: var(--yaku-color-major-accent-pressed);
+  --yaku-secondary-button-fill: none;
+  --yaku-secondary-button-fill-hover: var(--yaku-color-neutral-hovered);
+  --yaku-secondary-button-fill-pressed: var(--yaku-color-neutral-pressed);
+
+  --yaku-text-blue: var(--yaku-color-blue-50);
+  --yaku-text-purple: var(--yaku-color-violet-50);
+  --yaku-text-turquoise: var(--yaku-color-petrol-50);
+
+  --pst-color-primary: var(--yaku-color-petrol-40);
+  --pst-color-secondary: var(--yaku-color-stone);
+  --pst-color-accent: var(--yaku-color-violet);
+  --pst-color-success: var(--yaku-color-success);
+  --pst-color-info: var(--yaku-color-information);
+  --pst-color-warning: var(--yaku-color-warning);
+  --pst-color-attention: var(--pst-color-warning);
+  --pst-color-danger: var(--yaku-color-error);
+
+  --pst-color-primary-bg: var(--yaku-color-petrol-80);
+  --pst-color-secondary-bg: var(--yaku-color-stone-80);
+  --pst-color-accent-bg: var(--yaku-color-violet-70);
+  --pst-color-success-bg: var(--yaku-color-green-70);
+  --pst-color-info-bg: var(--yaku-color-blue-80);
+  --pst-color-warning-bg: var(--yaku-color-yellow-80);
+  --pst-color-attention-bg: var(--pst-color-warning-bg);
+  --pst-color-danger-bg: var(--yaku-color-red-80);
+
+  --pst-color-background: var(--yaku-color-primary-background);
+  --pst-color-on-background: var(--yaku-color-primary-background);
+  --pst-color-surface: var(--yaku-color-secondary-background);
+  --pst-color-on-surface: var(--yaku-color-on-secondary);
+
+  --pst-color-headline: var(--yaku-color-highlight-petrol);
+  --pst-color-link: var(--yaku-color-petrol-40);
+  --pst-color-link-hover: var(--yaku-color-petrol-50);
+
+  --pst-color-text-base: var(--yaku-color-on-primary);
+  --pst-color-text-muted: var(--yaku-color-gray-40);
+  --pst-color-heading-color: #fff;
+  --pst-color-shadow: var(--yaku-color-light-gray);
+  --pst-color-border: #d1d5da;
+  --pst-color-border-muted: rgba(23, 23, 26, 0.2);
+  --pst-color-blockquote-notch: #677384;
+  --pst-color-inline-code: var(--yaku-color-blue-40);
+  --pst-color-inline-code-links: #085d6c;
+  --pst-color-target: var(--yaku-color-violet);
+  --pst-color-table: #14181e;
+  --pst-color-table-row-hover-bg: var(--yaku-color-petrol-90);
+  --pst-color-table-inner-border: #e5e7ea;
+  --pst-color-table-outer-border: var(--pst-color-surface);
+  --pst-color-table-heading-bg: var(--pst-color-surface);
+  --pst-color-table-row-zebra-high-bg: var(--pst-color-on-background);
+  --pst-color-table-row-zebra-low-bg: var(--pst-color-surface);
+
+  --color-mermaid-primary: var(--yaku-color-blue-90);
+  --color-mermaid-primary-text: var(--yaku-color-on-primary);
+  --color-mermaid-primary-border: #222;
+  --color-mermaid-line: var(--yaku-color-on-primary);
+  --color-mermaid-secondary: var(--yaku-color-violet-80);
+  --color-mermaid-tertiary: var(--yaku-color-green-80);
+
+  --yaku-color-inline-code: var(--yaku-color-highlight-blue);
+}
+
+html[data-theme="dark"] {
+  --yaku-primary-button-fill: var(--yaku-color-major-accent-default);
+  --yaku-primary-button-fill-hover: var(--yaku-color-major-accent-hovered);
+  --yaku-primary-button-fill-pressed: var(--yaku-color-major-accent-pressed);
+
+  --yaku-secondary-button: var(--yaku-color-major-accent-default);
+  --yaku-secondary-button-hover: var(--yaku-color-major-accent-hovered);
+  --yaku-secondary-button-pressed: var(--yaku-color-major-accent-pressed);
+  --yaku-secondary-button-fill: none;
+  --yaku-secondary-button-fill-hover: var(--yaku-color-neutral-hovered);
+  --yaku-secondary-button-fill-pressed: var(--yaku-color-neutral-pressed);
+
+  --yaku-text-blue: var(--yaku-color-blue-60);
+  --yaku-text-purple: var(--yaku-color-violet-50);
+  --yaku-text-turquoise: var(--yaku-color-petrol-60);
+
+  --pst-color-primary: var(--yaku-color-petrol);
+  --pst-color-secondary: var(--yaku-color-stone);
+  --pst-color-accent: var(--yaku-color-violet);
+  --pst-color-success: var(--yaku-color-success);
+  --pst-color-info: var(--yaku-color-information);
+  --pst-color-warning: var(--yaku-color-warning);
+  --pst-color-attention: var(--pst-color-warning);
+  --pst-color-danger: var(--yaku-color-error);
+
+  --pst-color-primary-bg: var(--yaku-color-petrol-80);
+  --pst-color-secondary-bg: var(--yaku-color-stone-30);
+  --pst-color-accent-bg: var(--yaku-color-violet-40);
+  --pst-color-success-bg: var(--yaku-color-green-40);
+  --pst-color-info-bg: var(--yaku-color-blue-30);
+  --pst-color-warning-bg: var(--yaku-color-yellow-40);
+  --pst-color-attention-bg: var(--pst-color-warning-bg);
+  --pst-color-danger-bg: var(--yaku-color-red-30);
+
+  --pst-color-background: var(--yaku-color-black);
+  --pst-color-on-background: var(--yaku-color-contrast-background);
+  --pst-color-surface: var(--yaku-color-contrast-background);
+  --pst-color-on-surface: var(--yaku-color-primary-background);
+
+  --pst-color-headline: var(--yaku-color-highlight-petrol);
+  --pst-color-link: var(--yaku-color-highlight-petrol);
+  --pst-color-link-hover: var(--yaku-color-petrol-40);
+
+  --pst-color-text-base: var(--yaku-color-on-contrast);
+  --pst-color-text-muted: var(--yaku-color-gray-60);
+  --pst-color-heading-color: #14181e;
+  --pst-color-shadow: rgba(0, 0, 0, 0.2);
+  --pst-color-border: #48566b;
+  --pst-color-border-muted: #29313d;
+  --pst-color-blockquote-notch: #9ca4af;
+  --pst-color-inline-code: var(--yaku-color-blue-80);
+  --pst-color-inline-code-links: var(--yaku-color-highlight-petrol);
+  --pst-color-target: var(--yaku-color-violet);
+  --pst-color-table: var(--pst-color-text-base);
+  --pst-color-table-row-hover-bg: var(--yaku-color-petrol-30);
+  --pst-color-table-inner-border: #364150;
+  --pst-color-table-outer-border: var(--pst-color-surface);
+  --pst-color-table-heading-bg: var(--yaku-color-gray-20);
+  --pst-color-table-row-zebra-high-bg: var(--yaku-color-black);
+  --pst-color-table-row-zebra-low-bg: var(--yaku-color-gray-20);
+
+  --color-mermaid-primary: var(--yaku-color-primary-dark);
+  --color-mermaid-primary-text: #fff;
+  --color-mermaid-primary-border: #ddd;
+  --color-mermaid-line: #ddd;
+  --color-mermaid-secondary: var(--yaku-color-secondary-dark);
+  --color-mermaid-tertiary: var(--yaku-color-tertiary-dark);
+
+  --yaku-color-inline-code: var(--yaku-color-highlight-blue);
+}
+
+html[data-theme="dark"] .bd-content img:not(.only-dark):not(.dark-light) {
+  border-radius: 0;
+}

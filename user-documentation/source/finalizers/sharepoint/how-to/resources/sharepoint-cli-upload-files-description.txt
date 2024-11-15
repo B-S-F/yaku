@@ -1,0 +1,10 @@
+Usage: python -m grow.sharepoint.cli upload-files [OPTIONS]
+
+  Upload files to SharePoint.
+
+Options:
+  --file TEXT                 File to upload  [required]
+  -p, --sharepoint-path TEXT  SharePoint path  [required]
+  -f, --force                 Force upload even if file exists
+  --colors / --no-colors      Enable or disable colors in output
+  --help                      Show this message and exit.

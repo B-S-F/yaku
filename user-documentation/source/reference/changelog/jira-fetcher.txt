@@ -1,0 +1,5 @@
+## Version 0.9.0 (2023-12-15)
+
+### New features
+
+- Added http(s) proxy support via environment variables, for more information please see the [documentation of the underlying module](https://github.com/Rob--W/proxy-from-env#environment-variables).

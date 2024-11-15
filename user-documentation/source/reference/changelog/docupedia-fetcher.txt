@@ -1,0 +1,18 @@
+## Version 0.8.1 (2024-03-21)
+
+### Fixed bugs 🐞
+
+- Replaced evidence_path with OUTPUT_PATH
+
+
+## Version 0.8.0 (2024-03-13)
+
+### Exciting New Features ✨
+- Added version argument
+- Improved integration tests
+- Added configuration file
+- Added timeout mechanism
+- Enhanced error handling and logging messages
+
+### Fixed bugs 🦋
+- Proper handling of empty pages

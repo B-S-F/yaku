@@ -1,0 +1,34 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  defender-autopilot:
+    run: |
+      defender-for-cloud
+    env:
+      TENANT_ID: <<your_tenant_id>>
+      SUBSCRIPTION_ID: <<your_subscription_id>>
+      CLIENT_ID: <<your_client_id>>
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      DATA_TYPE : "recommendations"
+      SEVERITY_FILTER: <<optional_severity_filter>>
+      KEY_WORDS_FILTER: <<optional_key_words_filter>>
+      CATEGORIES_FILTER: <<optional_category_filter>>
+      THREATS_FILTER: <<optional_threats_filter>>
+      USER_IMPACT_FILTER: <<optional_user_impact_filter>>
+      IMPLEMENTATION_EFFORT_FILTER: <<optional_implementation_effort_filter_filter>>
+
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: Retrieve Defender for Cloud recommendations
+        text: Retrieve Defender for Cloud recommendations based on the input filters, along with the recommendations metadata
+        checks:
+          "1":
+            title: Defender for Cloud Check
+            automation:
+              autopilot: defender-autopilot

@@ -1,0 +1,4 @@
+{
+  "ServerRedirectedEmbedUri": "<<your_sharepoint_site>>/_layouts",
+  "OData__dlc_DocId": "<<shor_id_of_target_file>>"
+}

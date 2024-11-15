@@ -1,0 +1,35 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  pdf-signature-evaluator-autopilot:
+    run: |
+      artifactory-fetcher
+      pdf-signature-evaluator
+    env:
+      ARTIFACT_PATH: ${{ vars.ARTIFACT_PATH }}
+      ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }}
+      ARTIFACTORY_URL: ${{ vars.ARTIFACTORY_URL }}
+      ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+      REPOSITORY_NAME: ${{ vars.REPOSITORY_NAME }}
+      CERTIFICATE_LOCATION: /usr/local/share/ca-certificates/
+      PDF_LOCATION: ./
+      SIGNER_FILE_LOCATION: ./expected_signers.yaml
+      VALIDATE_SIGNERS: "true"
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: Risks are known and considered.
+        text: Responsible people has signed.
+        checks:
+          "1":
+            title: PDF Signature check
+            automation:
+              autopilot: pdf-signature-evaluator-autopilot

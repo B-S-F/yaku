@@ -1,0 +1,37 @@
+metadata:
+  version: v1
+header:
+  name: JSON
+  version: 1.2.3
+autopilots:
+  json-evaluator-autopilot:
+    run: |
+      json-evaluator
+    env:
+      JSON_CONFIG_FILE: json-evaluator-config.yaml
+      JSON_INPUT_FILE: coverage-data.json
+chapters:
+  "5":
+    title: Verification / validation
+    requirements:
+      "5.1":
+        title: The test strategy was defined/adhered to.
+        text: |-
+          QG0: Test strategy was defined
+          QGR/QG4: test strategy was adhered to
+        checks:
+          "1":
+            title: The test strategy was defined/adhered to._check
+            manual:
+              status: PENDING
+              reason: Not answered
+      "5.2":
+        title: All unit tests were performed and their results are good.
+        text: |-
+          QG0: Unit test coverage is greater than 25%
+          QGR/QG4: Unit test coverage is greater than 85%
+        checks:
+          "1":
+            title: Check unit test coverage
+            automation:
+              autopilot: json-evaluator-autopilot

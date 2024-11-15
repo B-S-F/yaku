@@ -1,0 +1,9 @@
+Usage: sharepoint [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --version  Output version information and exit
+  --help     Show this message and exit.
+
+Commands:
+  upload-files   Upload files to SharePoint.
+  upload-folder  Upload a folder to SharePoint.

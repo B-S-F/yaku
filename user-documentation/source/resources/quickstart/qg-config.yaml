@@ -1,0 +1,35 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  sharepoint-evaluator:
+    run: |
+      sharepoint-evaluator
+
+finalize:
+  run: |
+    html-finalizer
+
+chapters:
+  '4':
+    title: Compliance / Risk
+    requirements:
+      '4.6':
+        title: >-
+          State-of-the-art in the market with reference to product liability
+          evaluated and documented.
+        text: >-
+          If project is not SotA relevant. Reference "SotA relevance assessment" in QG / Release evaluation.
+
+          If project is SotA relevant: In case an already released state of the art documentation is available,
+          not older than a year, the feature scope has not changed since last QG: Existing SotA document can be referenced.
+
+        checks:
+          "1":
+            title: Fetch the SOTA relevance assessment from Sharepoint and check that it has been changed in the last year.
+            automation:
+              autopilot: sharepoint-evaluator
+              env:
+                SHAREPOINT_EVALUATOR_CONFIG_FILE: ./sharepoint-evaluator-config-file.yaml

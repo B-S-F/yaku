@@ -1,0 +1,24 @@
+workItems:
+  query: "SELECT [System.Id], [System.State] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.WorkItemType] = 'Epic' AND ([System.State] = 'To Do' OR [System.State] = 'Doing') AND ([Microsoft.VSTS.Common.Priority] = 1 OR [Microsoft.VSTS.Common.Priority] = 2)"
+  neededFields:
+    - "assignedTo" #No spaces allowed between words -> lowerCamelCase
+    - "targetDate"
+  evaluate:
+    settings:
+      dueDateFieldName: "targetDate"
+      closedStates:
+        - "Closed"
+        - "Done"
+    checks:
+      dataExists: true
+      fields:
+        dueDate: #To check, whether the DueDate is non existant/overdue
+          fieldName: "targetDate"
+          conditions:
+            resolved:
+              - ""
+        assignedTo: #To check, whether the ticket is unassigned or not
+          fieldName: "assignedTo"
+          conditions:
+            illegal:
+              - ""

@@ -1,0 +1,36 @@
+## Version 0.8.0 (2024-04-16)
+
+### Changes
+
+- build(deps): bump idna from 3.6 to 3.7 (#376)
+
+
+## Version 0.7.3 (2023-11-28)
+
+### Fixes
+- Excel only supports sheet names up to 31 characters. If sheets are created with longer names, Excel might refuse to open those files.
+  Now, when aggregating tables with `excel-tools` the sheet names are automatically shortened to 31 characters.
+
+## Version 0.7.2 (2023-11-28)
+
+- fix Invalid column letter calculation in format-header (#283)
+
+
+## Version 0.7.1 (2023-11-27)
+
+### Changes
+- When mapping Excel columns, ignore trailing whitespace (#279)
+
+
+
+## Version 0.7.0 (2023-11-21)
+
+### Features
+
+The add-mapping command does now support using a single column in the mapping file.
+
+Example:
+`excel-tools add-mapping --xlsx-path aggregate.xlsx --mapping-path OD_13_4_1_ReqReport.xlsx --sheet-name "ML" --key-column "A" --mapping-column-name "ml_c" --true-value yes --false-value no`
+
+The add-mapping command does now accept `--check-column-identifiers` which allow to define excel column indexes or headers.
+All columns matching the identifiers will now be checked for the mapping values.

@@ -1,0 +1,27 @@
+metadata:
+  version: v1
+header:
+  name: MyProduct
+  version: "1.0"
+autopilots:
+  git-fetcher:
+    run: |
+      git-fetcher
+      echo "{\"status\":\"GREEN\", \"reason\":\"Everything is Good!\"}"
+    env:
+      GIT_FETCHER_API_TOKEN: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
+      GIT_FETCHER_CONFIG_FILE_PATH: ./git-fetcher-config.yaml
+      GIT_FETCHER_SERVER_API_URL: https://api.github.com
+      GIT_FETCHER_SERVER_TYPE: github
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.1":
+        title: Pull Requests Overview exists
+        text: A list of pull requests is available.
+        checks:
+          "1":
+            title: Get list of PRs from GitHub
+            automation:
+              autopilot: git-fetcher

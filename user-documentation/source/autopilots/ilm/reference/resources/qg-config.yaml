@@ -1,0 +1,25 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  ilm-autopilot:
+    run: |
+      ilm-evaluator
+    env:
+      ILM_USERNAME: ${{ secrets.ILM_USERNAME }}
+      ILM_PASSWORD: ${{ secrets.ILM_PASSWORD }}
+      PROPERTIES_FILE_PATH: 'inputFile.json'
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: Ensure ILM workflow status is Approved
+        text: Ensure ILM workflow status is Approved and retrive the requestor and approvers
+        checks:
+          "1":
+            title: ILM Evaluator Check
+            automation:
+              autopilot: ilm-autopilot

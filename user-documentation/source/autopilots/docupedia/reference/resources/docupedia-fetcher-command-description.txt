@@ -1,0 +1,17 @@
+Usage: docupedia-fetcher [options]
+
+CLI Docupedia fetcher
+
+Options:
+  -c, --configFile [file]          Config file
+  --exporterId [string]            HTML Exporter ID
+  --exportSchemeId [string]        HTML Exporter Schema ID
+  --outputName [string]            Content output name
+  --outputPath [path]              Content output path
+  --pageDiff [<offset1, offset2>]  Diff between page versions
+  --pageDiffThreshold [date]       Diff threshold
+  --pageId [string]                Docupedia page ID
+  --timeout [number]               Timeout in seconds
+  --token [string]                 Docupedia Personal Access Token
+  --url [url]                      Docupedia URL
+  -h, --help                       display help for command

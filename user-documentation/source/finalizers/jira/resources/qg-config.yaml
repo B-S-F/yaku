@@ -1,0 +1,28 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  splunk-autopilot:
+    run: |
+      echo "{\"status\":\"GREEN\"}"
+finalize:
+  run: |
+    html-finalizer
+    jira-finalizer update-issues
+  env:
+    JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
+    JIRA_PASSWORD: ${{ secrets.JIRA_PASSWORD }}
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: This is an example requirement
+        text: This is an example requirement
+        checks:
+          "1":
+            title: Run a check to validate our example requirement
+            automation:
+              autopilot: splunk-autopilot

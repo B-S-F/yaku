@@ -1,0 +1,15 @@
+sphinx>=4
+sphinx-autobuild
+#sphinx-autodoc-typehints
+sphinx-book-theme==1.1.3
+sphinx-copybutton
+sphinx_design
+sphinxcontrib-mermaid
+sphinxcontrib-openapi
+myst-parser
+linkify-it-py
+#pydata-sphinx-theme==0.15.3
+#
+# autopilot_utils dependencies
+#pytz
+#pydantic

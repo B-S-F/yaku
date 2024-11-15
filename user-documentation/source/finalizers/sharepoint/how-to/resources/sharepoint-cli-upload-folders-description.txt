@@ -1,0 +1,8 @@
+Usage: sharepoint upload-folder [OPTIONS] FOLDER
+
+  Upload a folder to SharePoint.
+
+Options:
+  -p, --sharepoint-path TEXT  SharePoint path  [required]
+  -f, --force                 Force upload even if folder exists
+  --help                      Show this message and exit.

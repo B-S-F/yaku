@@ -1,0 +1,32 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  docupedia-autopilot:
+    run: |
+      docupedia-fetcher
+      filecheck exists "${{ env.OUTPUT_NAME }}.html"
+    env:
+      DOCUPEDIA_PAGE_ID: ${{ env.DOCUPEDIA_PAGE_ID }}
+      DOCUPEDIA_PAT: ${{ secrets.DOCUPEDIA_PAT }}
+      DOCUPEDIA_URL: ${{ env.DOCUPEDIA_URL }}
+      DOCUPEDIA_PAGE_DIFF_DATE_THRESHOLD: "2023-01-31T23:59:59.999Z"
+      DOCUPEDIA_PAGE_DIFF_VERSIONS: 0,0
+      OUTPUT_NAME: docupedia_content
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "2.6":
+        title: The requirements for information security and data protection are considered.
+        text: The data protection compliance have to be guaranteed
+        checks:
+          "1.1":
+            title: Download docupedia page content diff
+            automation:
+              autopilot: docupedia-autopilot

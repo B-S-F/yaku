@@ -1,0 +1,15 @@
+destination_path: <SomePath>
+is_cloud: True / False
+project_path: <SomeProjectPath>
+project_site: <SomeProjectSite>
+project_url: <SomeProjectUrl>
+username: <username>
+password: <password>
+tenant_id: <tenantId>
+client_id: <clientId>
+client_secret: <clientSecret>
+force_ip: <forceIp>
+custom_properties: <customProperties>
+download_properties_only: True / False
+sharepoint_file: <sharepointFile>
+filter_config_file: <filterConfigFilePath>

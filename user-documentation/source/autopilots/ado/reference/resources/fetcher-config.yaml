@@ -1,0 +1,14 @@
+workItems:
+  query: 'wiql query' # A WiQL query
+  neededFields: # List of work item fields to fetch. Default fields are: State and Title
+    - 'field1'
+    - 'field2'
+
+  relations: # OPTIONAL - Configuration to fetch relations of fetched work items
+    get: true # Fetch the relations work items
+    type: 'Related' # Type of the relation work items. Can have one of the following values: Related, Child, Parent
+    relations: # OPTIONAL - relations of relations work items
+      get: true # Fetch the relations work items
+      type: 'Child' # Type of the relation work items. Can have one of the following values: Related, Child, Parent
+
+  hierarchyDepth: 2 # OPTIONAL - If relations work items should have the same checks as origin work items, this can be used to define the relations depth. And no checks are needed to be defined under relations

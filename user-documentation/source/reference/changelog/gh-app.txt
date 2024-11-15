@@ -1,0 +1,14 @@
+## Version 0.3.1 (2024-05-27)
+
+### Bug fix
+- Print only the token when providing the `--token-only` flag (#470)
+
+
+## Version 0.3.0 (2024-05-17)
+
+- Enable the App to work behind a Proxy  (#463)
+
+
+## Version 0.2.0 (2024-04-04)
+
+Initial Release

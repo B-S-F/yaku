@@ -1,0 +1,42 @@
+metadata:
+  version: v1
+header:
+  name: MyProduct
+  version: "1.0"
+autopilots:
+  github-cli:
+    run: |
+      gh issue list --label bug --json state,title,body -R ${{ env.GH_ORG }}/${{ env.GH_REPO }} > issues.json
+      echo '{"status":"GREEN", "reason":"Everything is Good!"}'
+      echo '{}'
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      GH_ORG: your-github-org
+      GH_REPO: your-repository
+  github-cli-with-gh-app:
+    run: |
+      # get github app installation token
+      token=$(gh-app auth --token-only)
+      export GITHUB_TOKEN=$token
+      # use gh cli with installation token
+      gh issue list --label bug --json state,title,body -R ${{ env.GH_ORG }}/${{ env.GH_REPO }} > issues.json
+      echo '{"status":"GREEN", "reason":"Everything is Good!"}'
+    env:
+      GH_APP_ID: ${{ secrets.GH_APP_ID }}
+      GH_APP_PRIVATE_KEY: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      GH_APP_ORG: your-github-org
+      GH_APP_REPO: your-repository
+      GH_ORG: your-github-org
+      GH_REPO: your-repository
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.1":
+        title: Bug Issues List
+        text: A list of bug issues is available.
+        checks:
+          "1":
+            title: Get list of issues from GitHub
+            automation:
+              autopilot: github-cli

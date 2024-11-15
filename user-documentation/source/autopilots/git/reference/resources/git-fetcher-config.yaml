@@ -1,0 +1,16 @@
+org: github-org    # Organization name
+repo: github-repo  # Repo name
+resource: pull-requests  # Resource to fetch. One of: pull-requests, branches, tags (branches and tags are only supported for Bitbucket)
+labels: # Optional. Labels of the resources to fetch. Only works with GitHub
+  - release
+filter:
+  # date/hash/tag filters can't be combined with one another.
+  # However, it is possible to combine exactly one of these filter types with other, non-mutually-exclusive
+  # filters like 'state' filter.
+  state: ALL # Optional. One of: DECLINED, MERGED, OPEN, ALL. Only works with Bitbucket.
+  startDate: 01-06-2020 # Optional. Format dd-MM-yyyy. Only works with Bitbucket.
+  endDate: 31-12-2022 # Optional. Format dd-MM-yyyy. Works only if startDate was provided. Only works with Bitbucket.
+  startHash: c1b611a # Optional. Not working together with date filter. Only works with Bitbucket.
+  endHash: d916ec2a # Optional. Works only if startHash was provided. Only works with Bitbucket.
+  startTag: release/0.1.0 # Optional. Only works with Bitbucket.
+  endTag: release/0.2.0 # Optional. Only works if startTag was provided. Only works with Bitbucket.

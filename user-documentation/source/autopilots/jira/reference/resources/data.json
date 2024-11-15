@@ -1,0 +1,54 @@
+[
+  {
+    "id": "123456",
+    "url": "https://tracker.server.com/tracker111/browse/PROJECT-4",
+    "summary": "Example task",
+    "issuetype": {
+      "self": "https://tracker.server.com/tracker111/rest/api/2/issuetype/3",
+      "id": "3",
+      "description": "A task that needs to be done."
+    },
+    "assignee": {
+      "self": "https://tracker.server.com/tracker111/rest/api/2/user?username=USER",
+      "name": "USER",
+      "key": "JIRAUSERID",
+      "emailAddress": "User Email",
+      "displayName": "User Display Name",
+      "active": true,
+      "timeZone": "Europe/Berlin"
+    },
+    "status": {
+      "self": "https://tracker.server.com/tracker111/rest/api/2/status/10158",
+      "description": "This status is managed internally by JIRA Software",
+      "iconUrl": "https://tracker.server.com/tracker111/images/icons/subtask.gif",
+      "name": "To Do",
+      "id": "111"
+    }
+  },
+  {
+    "id": "12345",
+    "url": "https://tracker.server.com/tracker111/browse/PROJECT-2",
+    "summary": "Example task",
+    "issuetype": {
+      "self": "https://tracker.server.com/tracker111/rest/api/2/issuetype/3",
+      "id": "3",
+      "description": "A task that has been done."
+    },
+    "assignee": {
+      "self": "https://tracker.server.com/tracker111/rest/api/2/user?username=USER",
+      "name": "USER",
+      "key": "JIRAUSERID",
+      "emailAddress": "User Email",
+      "displayName": "User Display Name",
+      "active": true,
+      "timeZone": "Europe/Berlin"
+    },
+    "status": {
+      "self": "https://tracker.server.com/tracker111/rest/api/2/status/10158",
+      "description": "This status is managed internally by JIRA Software",
+      "iconUrl": "https://tracker.server.com/tracker111/images/icons/subtask.gif",
+      "name": "Done",
+      "id": "222"
+    }
+  }
+]

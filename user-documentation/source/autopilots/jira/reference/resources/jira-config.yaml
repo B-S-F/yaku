@@ -1,0 +1,17 @@
+query: "project = PROJECT1 and issuetype in ('Task')"
+neededFields:
+  - "summary"
+  - "status"
+  - "assignee"
+evaluate:
+  fields:
+    assignee:
+      fieldName: "assignee"
+      conditions:
+        expected:
+          - "USER1"
+    status:
+      fieldName: "status"
+      conditions:
+        expected:
+          - "Done"

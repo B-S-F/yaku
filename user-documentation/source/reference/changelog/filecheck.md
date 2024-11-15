@@ -1,0 +1,4 @@
+# filecheck
+
+```{include} filecheck.txt
+```

@@ -1,0 +1,44 @@
+workItems:
+  query: "<wiql-query>" # used by the fetcher
+  neededFields:
+    - field1
+    - field2
+  evaluate:
+    settings: # elements that can be used inside any check
+      dueDateFieldName: "<date-field-to-be-checked>"
+      closedStates:
+        - 'Closed'
+        - 'Done'
+    checks: # contains generic and field checks
+      dataExists: true # example of generic check
+      cycleInDays: 30 # example of generic check
+      fields:
+        fieldTag1:
+          fieldName: "<field-from-neededFields-or-default-fields-list>"
+          conditions:
+            conditionType: # expected, illegal, resolved
+              - "list-of"
+              - "possible"
+              - "values"
+        fieldTag2:
+          fieldName: "<field-from-neededFields-or-default-fields-list>"
+          conditions:
+            conditionType: # expected, illegal, resolved
+              - "list-of"
+              - "possible"
+              - "values"
+        # ...
+
+  children: # list of workitems to check for children
+    get: true # if false this is not applied
+    evaluate:
+      checks:
+        fields:
+          fieldTag1:
+            fieldName: "<field-from-neededFields-or-default-fields-list>"
+            conditions:
+              conditionType: # expected, illegal, resolved
+                - "list-of"
+                - "possible"
+                - "values"
+          # ...
