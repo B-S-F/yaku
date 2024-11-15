@@ -37,14 +37,14 @@ class Connect:
 
         session = requests.Session()
         self._force_ip = force_ip
-        session.headers = self.sharepoint_cloud_instance_connect(
+        session.headers = self._sharepoint_cloud_instance_connect(
             client_id, tenant_id, client_secret
         )
         session.verify = True
         session.auth = None
         self._session = session
 
-    def sharepoint_cloud_instance_connect(self, client_id, tenant_id, client_secret):
+    def _sharepoint_cloud_instance_connect(self, client_id, tenant_id, client_secret):
         """
         Get the header needed for authentication and authorization for all the Microsoft Graph API calls.
 
@@ -54,20 +54,21 @@ class Connect:
         try:
             token_api = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
             payload = f"grant_type={GRANT_TYPE}&client_id={client_id}&client_secret={client_secret}&resource={RESOURCE}"
-            access_token_request = requests.request(
+            access_token_response = requests.request(
                 "POST", token_api, data=payload, verify=True
-            ).json()
-            access_token = access_token_request["access_token"]
+            )
+            access_token_response.raise_for_status()
+            response_data = access_token_response.json()
+            access_token = response_data["access_token"]
 
             headers = {
                 "Authorization": f"Bearer {access_token}",
             }
             return headers
-
         except HTTPError as http_err:
             print(f"HTTP error occured: {http_err}")
         except Exception as err:
-            print(f"Erorr occured: {err}")
+            print(f"Error occurred: {err}")
 
     def _exchange_url_by_domain_and_site_name(self, sharepoint_site: str) -> Tuple[str, str]:
         """
@@ -89,11 +90,12 @@ class Connect:
         check the official Microsoft Graph Api Documentation.
         """
         host, site_name = self._exchange_url_by_domain_and_site_name(self._sharepoint_site)
-        response = requests.get(
+        response = self._session.get(
             f"https://graph.microsoft.com/v1.0/sites/{host}:/sites/{site_name}",
-            headers=headers,
-        ).json()  # nosec B113
-        response_id = response["id"].split(",")
+        )
+        response.raise_for_status()
+        json_data = response.json()
+        response_id = json_data["id"].split(",")
         site_id = response_id[1]
         return site_id
 
@@ -106,7 +108,7 @@ class Connect:
         """
         site_id = self.get_site_id(self._session.headers)
         url = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives"
-        response = requests.get(url, headers=headers)  # nosec B113
+        response = self._session.get(url)  # nosec B113
         drive_id = None
         if response.status_code == 200:
             drives = response.json().get("value", [])
@@ -149,7 +151,7 @@ class Connect:
             drive_id = self.get_drive_id(self._session.headers, library_name)
             api = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives/{drive_id}/root:/{encoded_path}"
 
-        response = requests.request("GET", api, headers=self._session.headers, verify=True)
+        response = self._session.get(api)
         if response.status_code == 200:
             data = response.json()
             if not data.get("name"):
@@ -194,10 +196,10 @@ class Connect:
             drive_id = self.get_drive_id(self._session.headers, library_name)
             api = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives/{drive_id}/root:/{folder}"
 
-        response = requests.request(
-            "GET", api, headers=self._session.headers, verify=True
-        ).json()
-        id = response["id"]
+        response = self._session.get(api)
+        response.raise_for_status()
+        response_data = response.json()
+        id = response_data["id"]
         return id
 
     def get_folders(self, relative_url, library_name) -> List[str]:
@@ -217,12 +219,12 @@ class Connect:
             drive_id = self.get_drive_id(self._session.headers, library_name)
             api = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives/{drive_id}/items/{folder_id}/children?$filter=folder ne null"
 
-        response = requests.request(
-            "GET", api, headers=self._session.headers, verify=True
-        ).json()
+        response = self._session.get(api)
+        response.raise_for_status()
+        response_data = response.json()
         subfolders = []
         subfolders_path = []
-        for subfolder in response["value"]:
+        for subfolder in response_data["value"]:
             subfolder_name = subfolder["name"]
             subfolder_path = f"{relative_url}/{subfolder_name}"
             subfolders_path.append(subfolder_path)
@@ -243,11 +245,11 @@ class Connect:
             drive_id = self.get_drive_id(self._session.headers, library_name)
             api = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives/{drive_id}/root/children?$filter=folder ne null"
 
-        response = requests.request(
-            "GET", api, headers=self._session.headers, verify=True
-        ).json()
+        response = self._session.get(api)
+        response.raise_for_status()
+        response_data = response.json()
         subfolders_path = []
-        for subfolder in response["value"]:
+        for subfolder in response_data["value"]:
             subfolder_name = subfolder["name"]
             subfolders_path.append(subfolder_name)
         return subfolders_path
@@ -266,12 +268,12 @@ class Connect:
             drive_id = self.get_drive_id(self._session.headers, library_name)
             api = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives/{drive_id}/items/{folder_id}/children"
 
-        response = requests.request(
-            "GET", api, headers=self._session.headers, verify=True
-        ).json()
+        response = self._session.get(api)
+        response.raise_for_status()
+        response_data = response.json()
 
         files = []
-        for file in response["value"]:
+        for file in response_data["value"]:
             if file.get("file"):
                 file_name = file["name"]
                 files.append(file_name)
@@ -291,12 +293,12 @@ class Connect:
             drive_id = self.get_drive_id(self._session.headers, library_name)
             api = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives/{drive_id}/root/children"
 
-        response = requests.request(
-            "GET", api, headers=self._session.headers, verify=True
-        ).json()
+        response = self._session.get(api)
+        response.raise_for_status()
+        response_data = response.json()
 
         files = []
-        for file in response["value"]:
+        for file in response_data["value"]:
             if file.get("file"):
                 file_name = file["name"]
                 files.append(file_name)
@@ -317,10 +319,11 @@ class Connect:
             drive_id = self.get_drive_id(self._session.headers, library_name)
             api = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives/{drive_id}/root:/{relative_url}/{encoded_file_name}?$expand=listItem"
 
-        response = requests.request("GET", api, headers=self._session.headers, verify=True)
+        response = self._session.get(api)
         response.raise_for_status()
-        download_url = response.json()["@microsoft.graph.downloadUrl"]
-        actual_size = response.json()["size"]
+        response_data = response.json()
+        download_url = response_data["@microsoft.graph.downloadUrl"]
+        actual_size = response_data["size"]
         download_file = requests.get(download_url)  # nosec B113
         download_file_size = len(download_file.content)
         if actual_size != download_file_size:
@@ -348,7 +351,7 @@ class Connect:
             drive_id = self.get_drive_id(self._session.headers, library_name)
             api = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives/{drive_id}/root:/{relative_url}/{encoded_file_name}?$expand=listItem"
 
-        response = requests.request("GET", api, headers=self._session.headers, verify=True)
+        response = self._session.get(api)
         response.raise_for_status()
         json_response = response.json()
         return json_response  # type: ignore
