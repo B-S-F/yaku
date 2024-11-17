@@ -253,8 +253,8 @@ yaku-core-api:
     minio_use_ssl: false
     # NOTE: if minio_use_ssl=true and you are running inside your enterprise intranet and you use custom ssl
     # root certificates. You need to specify the kubernetes secret name that contains the SSL cert required to connect to object storage.
-    # This can be done be configuring helm values:
-    #  - cacert_secret_name
+    # This can be done be configuring helm values: 
+    #  - cacert_secret_name 
     #  - cacert_key_name
     # Which are also used to connect to postgres server in you enterprise
 
