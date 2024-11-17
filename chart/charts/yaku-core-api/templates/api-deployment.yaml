@@ -57,7 +57,7 @@ spec:
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
-          {{- end }}       
+          {{- end }}
           image: {{ .Values.global.images.yakuCoreApi }}
           imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
           ports:
@@ -86,8 +86,8 @@ spec:
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
             successThreshold: {{ .Values.livenessProbe.successThreshold }}
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-          {{- end }}  
-          env: 
+          {{- end }}
+          env:
             - name: NODE_TLS_REJECT_UNAUTHORIZED
               value: {{ .Values.env.node_tls_reject_unauthorized | default "0" | quote }}
             - name: PATH_PREFIX
@@ -330,4 +330,4 @@ spec:
               path: cacert.crt
         {{- end }}
       {{- end }}
-      
+

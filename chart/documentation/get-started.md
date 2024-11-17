@@ -37,6 +37,5 @@ Before you start, you need:
     - Free storage if you'll be using persistent storage
 - A namespace where you'll deploy Yaku.
 - A Docker pull Kubernetes secret, with the value of the access token to Yaku's Azure container registry, created in the namespace.
-- A Kubernetes secret for yaku service secret objects encryption is created. This value is needed to encrypt sensitive data stored in the db. Learn [here](./core-api.md#encryption-keys) why you need that. If you want to try Yaku in a playground setup, you can skip this requirement. This will generate a predefined encryption key which you can use. We recommend that you create your own value and deploy it as kuberenets secret, then add the kubernetes secret info in values file under `encryption_secret_name` and `encryption_secret_key` 
+- A Kubernetes secret for yaku service secret objects encryption is created. This value is needed to encrypt sensitive data stored in the db. Learn [here](./core-api.md#encryption-keys) why you need that. If you want to try Yaku in a playground setup, you can skip this requirement. This will generate a predefined encryption key which you can use. We recommend that you create your own value and deploy it as kuberenets secret, then add the kubernetes secret info in values file under `encryption_secret_name` and `encryption_secret_key`
 - Helm deployment values are configured. All configurations are documented in the **values.yaml** file.
-
