@@ -3,6 +3,9 @@ ci:
 default_language_version:
   python: python3
 repos:
+  ####
+  ## User documentation
+  ####
   - repo: local
     hooks:
       - name: Check filenames in user documentation
@@ -11,10 +14,11 @@ repos:
         entry: make -C user-documentation fnlint
         pass_filenames: false
         files: '^user-documentation/'
-      - name: Lint Markdown files in user-documentation
-        language: system
-        id: markdown-lint
-        entry: npx -y markdownlint-cli --disable MD013 MD029 MD033 --
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.41.0
+    hooks:
+      - id: markdownlint
+        args: [ --disable=MD013, --disable=MD029, --disable=MD033 ]
         files: '^user-documentation/.*\.md'
   ####
   ## Common hooks
