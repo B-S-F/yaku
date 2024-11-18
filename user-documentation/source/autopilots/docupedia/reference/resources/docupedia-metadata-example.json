@@ -1,0 +1,106 @@
+{
+  "id": "<string>",
+  "type": "<string>",
+  "status": "<string>",
+  "title": "<string>",
+  "space": {
+    "id": 123,
+    "key": "<string>",
+    "name": "<string>",
+    "type": "<string>",
+    "_links": {
+      "webui": "<string>",
+      "self": "<string>"
+    },
+    "_expandable": {
+      "metadata": "",
+      "icon": "",
+      "description": "",
+      "retentionPolicy": "",
+      "homepage": "<string>"
+    }
+  },
+  "history": {
+    "latest": true,
+    "createdBy": {
+      "type": "<string>",
+      "username": "<string>",
+      "userKey": "<string>",
+      "profilePicture": {
+        "path": "<string>",
+        "width": 123,
+        "height": 123,
+        "isDefault": false
+      },
+      "displayName": "<string>",
+      "_links": {
+        "self": "<string>"
+      },
+      "_expandable": {
+        "status": "<string>"
+      }
+    },
+    "createdDate": "<string>",
+    "_links": {
+      "self": "<string>"
+    },
+    "_expandable": {
+      "lastUpdated": "<string>",
+      "previousVersion": "<string>",
+      "contributors": "<string>",
+      "nextVersion": "<string>"
+    }
+  },
+  "version": {
+    "by": {
+      "type": "<string>",
+      "username": "<string>",
+      "userKey": "<string>",
+      "profilePicture": {
+        "path": "<string>",
+        "width": 123,
+        "height": 123,
+        "isDefault": false
+      },
+      "displayName": "<string>",
+      "_links": {
+        "self": "<string>"
+      },
+      "_expandable": {
+        "status": "<string>"
+      }
+    },
+    "when": "<string>",
+    "number": 123,
+    "minorEdit": false,
+    "hidden": false,
+    "_links": {
+      "self": "<string>"
+    },
+    "_expandable": {
+      "content": "<string>"
+    }
+  },
+  "extensions": {
+    "position": "<string>"
+  },
+  "_links": {
+    "webui": "<string>",
+    "edit": "<string>",
+    "tinyui": "<string>",
+    "collection": "<string>",
+    "base": "<string>",
+    "context": "<string>",
+    "self": "<string>"
+  },
+  "_expandable": {
+    "container": "<string>",
+    "metadata": "<string>",
+    "operations": "<string>",
+    "children": "<string>",
+    "restrictions": "<string>n",
+    "ancestors": "<string>",
+    "body": "<string>",
+    "descendants": "<string>"
+  }
+}

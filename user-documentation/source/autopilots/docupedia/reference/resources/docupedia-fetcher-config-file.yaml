@@ -1,0 +1,11 @@
+exporterId: 'myExporterId'
+exportSchemeId: 'myExportSchemeId'
+outputName: 'myOutputName'
+outputPath: 'myOutputPath'
+pageDiff:
+  current: 0
+  preceding: -1
+pageDiffThreshold: '2001-04-10'
+pageId: 'myPageId'
+timeout: 10
+url: 'https://myUrl'

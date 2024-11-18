@@ -1,0 +1,31 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  artifactory-autopilot:
+    run: |
+      artifactory-fetcher
+      if compgen -G "${ARTIFACT_PATH}" > /dev/null; then echo "{\"status\":\"GREEN\"}"; else echo "{\"status\":\"RED\"}";fi
+    env:
+      ARTIFACT_PATH: ${{ vars.ARTIFACT_PATH }}
+      ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }}
+      ARTIFACTORY_URL: ${{ vars.ARTIFACTOY_URL }}
+      ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+      REPOSITORY_NAME: ${{ vars.REPOSITORY_NAME }}
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: Fetch an artifact from Artifactory
+        text: Fetch an artifact from Artifactory
+        checks:
+          "1":
+            title: Fetch an artifact from Artifactory
+            automation:
+              autopilot: artifactory-autopilot

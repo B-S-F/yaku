@@ -1,0 +1,27 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  json-autopilot:
+    run: |
+      json-evaluator
+    env:
+      JSON_CONFIG_FILE: evaluator-config.yaml
+      JSON_INPUT_FILE: example-input.json
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: Make sure all release required changes are done
+        text: Make sure all release required changes are done
+        checks:
+          "1":
+            title: Check the status of release version Pull requests
+            automation:
+              autopilot: json-autopilot

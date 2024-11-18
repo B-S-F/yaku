@@ -1,0 +1,149 @@
+{
+  "__metadata": {
+    "id": "d0e47cc0-4003-42b5-bca3-28be0bb3dde9",
+    "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)",
+    "etag": "\"2\"",
+    "type": "SP.Data.DocumentsItem"
+  },
+  "FirstUniqueAncestorSecurableObject": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/FirstUniqueAncestorSecurableObject"
+    }
+  },
+  "RoleAssignments": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/RoleAssignments"
+    }
+  },
+  "Activities": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/Activities"
+    }
+  },
+  "AttachmentFiles": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/AttachmentFiles"
+    }
+  },
+  "ContentType": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/ContentType"
+    }
+  },
+  "GetDlpPolicyTip": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/GetDlpPolicyTip"
+    }
+  },
+  "FieldValuesAsHtml": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/FieldValuesAsHtml"
+    }
+  },
+  "FieldValuesAsText": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/FieldValuesAsText"
+    }
+  },
+  "FieldValuesForEdit": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/FieldValuesForEdit"
+    }
+  },
+  "File": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/File"
+    }
+  },
+  "Folder": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/Folder"
+    }
+  },
+  "LikedByInformation": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/LikedByInformation"
+    }
+  },
+  "ParentList": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/ParentList"
+    }
+  },
+  "Properties": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/Properties"
+    }
+  },
+  "Versions": {
+    "__deferred": {
+      "uri": "https://sharepoint.onpremise.com/sites/123456/_api/Web/Lists(guid'd53183ff-07d7-40ed-abcc-99a030ff7d4c')/Items(46)/Versions"
+    }
+  },
+  "FileSystemObjectType": 0,
+  "Id": 46,
+  "ServerRedirectedEmbedUri": null,
+  "ServerRedirectedEmbedUrl": "",
+  "ContentTypeId": "0x01010099A25DF152D35A4D9718CDF8BCA1E81B01009C5EE51C11630547A1D3DB4926ED33C6",
+  "ComplianceAssetId": null,
+  "Title": null,
+  "OData__dlc_DocId": "P15S123456-1745658655-46",
+  "URL": null,
+  "DocumentSetDescription": null,
+  "EditorId": 38,
+  "CSC": "1",
+  "ASC": "1",
+  "ISC": "1",
+  "ArchivingPeriod": null,
+  "Safeguarding": "No",
+  "Historicalrelevance": "No",
+  "OriginalSubject": null,
+  "From1": null,
+  "Cc": null,
+  "Bcc": null,
+  "Conversation_x002d_Topic": null,
+  "Date1": null,
+  "Reply_x002d_To": null,
+  "To": null,
+  "Received": null,
+  "Attachment": true,
+  "Sensitivity": null,
+  "Importance": null,
+  "In_x002d_Reply_x002d_To": null,
+  "References": null,
+  "LikesCount": null,
+  "LikedByStringId": {
+    "__metadata": {
+      "type": "Collection(Edm.String)"
+    },
+    "results": []
+  },
+  "IlmBasedOn": null,
+  "LockedStatus": "Unlocked",
+  "LockedById": null,
+  "ILMItemType": "ConceptualItem",
+  "ILMCreationRevision": false,
+  "ILMComments": null,
+  "ILMExternalReference": null,
+  "ILMRevision": null,
+  "ConceptualVersion": null,
+  "ConceptualVersionTreeview": null,
+  "DocIdOfLinkItem": null,
+  "RevisionStatusId": null,
+  "IlmInvalidRestoreApprovedId": null,
+  "WorkOnStatusId": null,
+  "IlmBaselineContent": null,
+  "IlmBaselineTemplate": null,
+  "BaselineComments": null,
+  "Created": "2023-01-24T11:53:08",
+  "Revisions": null,
+  "Lock": "",
+  "OData__vti_ItemDeclaredRecord": null,
+  "ID": 46,
+  "AuthorId": 38,
+  "Modified": "2023-01-24T11:54:37",
+  "OData__CopySource": null,
+  "CheckoutUserId": 38,
+  "OData__UIVersionString": "1.0",
+  "GUID": "93df1254-240a-4b87-adf0-0ca28743ae30"
+}

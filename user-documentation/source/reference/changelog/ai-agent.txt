@@ -1,0 +1,8 @@
+## Version 0.5.1 (2024-09-06)
+
+- chore: Ai agent code improvement (#457)
+
+
+## Version 0.5.0 (2024-08-16)
+
+- fix: disabled ssl verification (#455)

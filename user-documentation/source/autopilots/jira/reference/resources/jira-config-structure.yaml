@@ -1,0 +1,18 @@
+query: '<jql-query>'  # A jql query
+neededFields: # List of issue fields to fetch.
+  - field1
+  - field2
+evaluate: # Used by the evaluator
+  fields:
+    fieldTag1:
+      fieldName:  # A field from neededFields
+      conditions:
+        expected: # List of possible required values of the field
+          - "a"
+          - "b"
+    fieldTag2:
+      fieldName:  # A field from neededFields
+      conditions:
+        illegal: # List of possible rejected values of the field
+          - "x"
+          - "y"

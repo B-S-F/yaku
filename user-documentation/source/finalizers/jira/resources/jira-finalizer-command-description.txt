@@ -1,0 +1,11 @@
+Usage: jira-finalizer <argument1> <argument2> ...
+
+Options:
+  -V, --version                        output the version number
+  -h, --help                           display help for command
+
+Commands:
+  add-comment <issueId> <comment>
+  add-attachment <issueId> <filePath>
+  update-issues
+  help [command]                       display help for command

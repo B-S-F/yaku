@@ -1,0 +1,30 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  defender-autopilot:
+    run: |
+      defender-for-cloud
+    env:
+      TENANT_ID: <<your_tenant_id>>
+      SUBSCRIPTION_ID: <<your_subscription_id>>
+      CLIENT_ID: <<your_client_id>>
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      DATA_TYPE : "alerts"
+      ALERT_TYPE_FILTER: <<optional_alert_type_filter>>
+      KEY_WORDS_FILTER: <<optional_key_words_filter>>
+      RESOURCE_NAME_FILTER: <<optional_resource_name_filter>>
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: Retrieve Defender for Cloud alerts
+        text: Retrieve Defender for Cloud alerts based on the input filters, along with the alerts metadata
+        checks:
+          "1":
+            title: Defender for Cloud Check
+            automation:
+              autopilot: defender-autopilot

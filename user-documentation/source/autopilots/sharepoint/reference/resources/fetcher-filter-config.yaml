@@ -1,0 +1,8 @@
+- files: 'OneDriving_Q-Activity-List.xlsx(1)/*' # ← first comes a `files` section with a wildcard
+  title: 'File link title' # ← needed if you want a message with the link of the selected file
+  select: # ← list of property checks, similar to Sharepoint evaluator
+    - property: 'CSC'
+      equals: 2
+  onlyLastModified: true # ← (optional) if true, download only the most recent file
+- files: 'PlainFile.pdf' # ← also possible to just specify a single filename
+- files: 'Folder/*.pdf' # ← you can also use wildcards without selectors

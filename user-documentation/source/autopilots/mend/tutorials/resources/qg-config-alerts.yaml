@@ -1,0 +1,36 @@
+metadata:
+  version: v1
+header:
+  name: Test Mend Fetcher
+  version: 0.0.1
+env:
+  MEND_API_URL: https://api-app-eu.whitesourcesoftware.com
+  MEND_SERVER_URL: https://app-eu.whitesourcesoftware.com
+  MEND_USER_EMAIL: "email@domain.gTLD"
+  MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+
+autopilots:
+  mend:
+    run: |
+      mend-fetcher
+    env:
+      MEND_REPORT_TYPE: "alerts"
+
+finalize:
+  run: html-finalizer
+chapters:
+  "1":
+    title: Verify Project does not contain active alerts
+    requirements:
+      "1":
+        title: TEST-GREEN
+        text: ""
+        checks:
+          "1":
+            title: Fetch active alerts
+            automation:
+              autopilot: mend
+              env:
+                MEND_ORG_TOKEN: ${{ secrets.MEND_ORG_TOKEN }}
+                MEND_PROJECT_TOKEN: ${{ secrets.MEND_PROJECT_TOKEN }}
+                MEND_PROJECT_ID: "project-ID"

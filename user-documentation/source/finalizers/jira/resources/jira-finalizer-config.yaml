@@ -1,0 +1,4 @@
+requirements:
+  '1.15': # requirement ids from qg-config
+    issues: # A list of mapped issues that should be updated with the content of the requirement result.
+      - <Jira-Issue-ID>

@@ -1,0 +1,6 @@
+org: your-github-org
+repo: your-repository
+resource: prs
+labels:
+- bugfix
+- fix

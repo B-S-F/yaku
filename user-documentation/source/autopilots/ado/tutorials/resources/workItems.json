@@ -1,0 +1,78 @@
+{
+  "workItems": [
+    {
+      "id": 7,
+      "url": "https://dev.azure.com/team-abc/987b567b-3bd9-4988-bb98-7bc0b811e959/_workitems/edit/7",
+      "assignedTo": {
+        "displayName": "Max Muster",
+        "url": "https://spsprodweu5.vssps.visualstudio.com/4ff5e17-f696-4ff6-bdc4-28a8a5495e17/_apis/Identities/98723a-24f8aac9-64b2-8e84-780430b86bc5",
+        "_links": {
+          "avatar": {
+            "href": "https://dev.azure.com/team-abc/_apis/GraphProfile/MemberAvatars/aad.OIkljsdfI23JDFlAlssiAlsdllAMZ1DQtNzgwNDMwYjg2YmM1"
+          }
+        },
+        "id": "98723a-24f8aac9-64b2-8e84-780430b86bc5",
+        "uniqueName": "max@muster.de",
+        "imageUrl": "https://dev.azure.com/team-abc/_apis/GraphProfile/MemberAvatars/aad.OIkljsdfI23JDFlAlssiAlsdllAMZ1DQtNzgwNDMwYjg2YmM1",
+        "descriptor": "aad.OIkljsdfI23JDFlAlssiAlsdllAMZ1DQtNzgwNDMwYjg2YmM1"
+      },
+      "targetDate": "2023-02-08T00:00:00Z",
+      "state": "Doing",
+      "title": "Invalid – Overdue"
+    },
+    {
+      "id": 8,
+      "url": "https://dev.azure.com/team-abc/987b567b-3bd9-4988-bb98-7bc0b811e959/_workitems/edit/8",
+      "targetDate": "2022-12-28T00:00:00Z",
+      "state": "To Do",
+      "title": "Invalid – Unassigned & Overdue",
+      "relations": []
+    },
+    {
+      "id": 11,
+      "url": "https://dev.azure.com/team-abc/987b567b-3bd9-4988-bb98-7bc0b811e959/_workitems/edit/11",
+      "assignedTo": {
+        "displayName": "Max Muster",
+        "url": "https://spsprodweu5.vssps.visualstudio.com/4ff5e17-f696-4ff6-bdc4-28a8a5495e17/_apis/Identities/98723a-24f8aac9-64b2-8e84-780430b86bc5",
+        "_links": {
+          "avatar": {
+            "href": "https://dev.azure.com/team-abc/_apis/GraphProfile/MemberAvatars/aad.OIkljsdfI23JDFlAlssiAlsdllAMZ1DQtNzgwNDMwYjg2YmM1"
+          }
+        },
+        "id": "98723a-24f8aac9-64b2-8e84-780430b86bc5",
+        "uniqueName": "max@muster.de",
+        "imageUrl": "https://dev.azure.com/team-abc/_apis/GraphProfile/MemberAvatars/aad.OIkljsdfI23JDFlAlssiAlsdllAMZ1DQtNzgwNDMwYjg2YmM1",
+        "descriptor": "aad.OIkljsdfI23JDFlAlssiAlsdllAMZ1DQtNzgwNDMwYjg2YmM1"
+      },
+      "state": "Doing",
+      "title": "Fail – No TargetDate"
+    },
+    {
+      "id": 13,
+      "url": "https://dev.azure.com/team-abc/987b567b-3bd9-4988-bb98-7bc0b811e959/_workitems/edit/13",
+      "targetDate": "2092-02-29T00:00:00Z",
+      "state": "To Do",
+      "title": "Invalid – Unassigned"
+    },
+    {
+      "id": 25,
+      "url": "https://dev.azure.com/team-abc/987b567b-3bd9-4988-bb98-7bc0b811e959/_workitems/edit/25",
+      "assignedTo": {
+        "displayName": "Max Muster",
+        "url": "https://spsprodweu5.vssps.visualstudio.com/4ff5e17-f696-4ff6-bdc4-28a8a5495e17/_apis/Identities/98723a-24f8aac9-64b2-8e84-780430b86bc5",
+        "_links": {
+          "avatar": {
+            "href": "https://dev.azure.com/team-abc/_apis/GraphProfile/MemberAvatars/aad.OIkljsdfI23JDFlAlssiAlsdllAMZ1DQtNzgwNDMwYjg2YmM1"
+          }
+        },
+        "id": "98723a-24f8aac9-64b2-8e84-780430b86bc5",
+        "uniqueName": "max@muster.de",
+        "imageUrl": "https://dev.azure.com/team-abc/_apis/GraphProfile/MemberAvatars/aad.OIkljsdfI23JDFlAlssiAlsdllAMZ1DQtNzgwNDMwYjg2YmM1",
+        "descriptor": "aad.OIkljsdfI23JDFlAlssiAlsdllAMZ1DQtNzgwNDMwYjg2YmM1"
+      },
+      "targetDate": "2092-02-29T00:00:00Z",
+      "state": "To Do",
+      "title": "Valid – Assigned & Target Date in the future"
+    }
+  ]
+}

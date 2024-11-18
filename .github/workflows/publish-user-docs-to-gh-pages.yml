@@ -1,0 +1,51 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - user-documentation/**
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+      - uses: actions/cache@v3
+        id: cache-venv
+        name: Cache virtual environment
+        with:
+          path: user-documentation/.venv/
+          key: ${{ hashFiles('user-documentation/requirements.lock', 'user-documentation/Makefile') }}
+      - name: Setup virtual environment
+        if: ${{ steps.cache-venv.outputs.cache-hit != 'true' }}
+        run: |
+          make -C user-documentation prepare
+      - name: Sphinx Build
+        run: |
+          make -C user-documentation openapi
+          make -C user-documentation html
+        env:
+          SPHINXOPTS: "-D todo_include_todos=1"
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'user-documentation/build/html'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

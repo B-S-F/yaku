@@ -1,0 +1,4 @@
+# papsr
+
+```{include} papsr.txt
+```

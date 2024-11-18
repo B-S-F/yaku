@@ -1,0 +1,29 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  manual-answer-autopilot:
+    run: |
+      manual-answer-evaluator
+    env:
+      expiration_time: 14d
+      expiry_reminder_period: 3d
+      last_modified_date_override: "2023-02-20T15:20:09Z"
+      manual_answer_file: ./example-answer.md
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: Product Owner review done.
+        text: Approved.
+        checks:
+          "1":
+            title: Manual answer check
+            automation:
+              autopilot: manual-answer-autopilot

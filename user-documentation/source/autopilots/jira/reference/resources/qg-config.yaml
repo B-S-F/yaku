@@ -1,0 +1,30 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  jira-autopilot:
+    run: |
+      jira-fetcher
+      jira-evaluator
+    env:
+      JIRA_CONFIG_FILE_PATH: ./jira-config.yaml
+      JIRA_URL: ${{ vars.JIRA_URL }}
+      JIRA_USER_PORTAL_PASSWORD: ${{ secrets.JIRA_USER_PORTAL_PASSWORD }}
+      JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "2.6":
+        title: Release Jira issues are all done and closed
+        text: Release Jira issues are all done and closed
+        checks:
+          "1.1":
+            title: Evaluate Jira issues
+            automation:
+              autopilot: jira-autopilot

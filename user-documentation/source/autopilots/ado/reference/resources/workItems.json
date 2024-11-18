@@ -1,0 +1,39 @@
+{
+  "workItems": [
+    {
+      "id": 1,
+      "url": "https://dev.azure.com/<org>/<id>/_workitems/edit/8",
+      "state": "To Do",
+      "title": "Implement new auto-pilot for Azure DevOps",
+      "targetDate": "2022-04-06T00:00:00Z",
+      "assignedTo": "Name",
+      "relations": [
+        {
+          "id": 2,
+          "url": "https://dev.azure.com/ORG/PROJECT/_workitems/edit/2",
+          "relationType": "Related",
+          "state": "Child",
+          "title": "Implement tests new auto-pilot for Azure DevOps",
+          "relations": [
+            {
+              "id": 3,
+              "url": "https://dev.azure.com/ORG/PROJECT/_workitems/edit/3",
+              "relationType": "Child",
+              "state": "In Focus",
+              "title": "Implement unit tests for new auto-pilot for Azure DevOps",
+              "relations": []
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "url": "https://dev.azure.com/ORG/PROJECT/_workitems/edit//_workitems/edit/4",
+          "relationType": "Child",
+          "state": "In Focus",
+          "title": "Test the new auto-pilot for Azure DevOps",
+          "relations": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+env:
+  ADO_API_ORG: team-neutrinos #TODO: change this to your Azure DevOps organization
+  ADO_API_PROJECT: playground #TODO: change this to your Azure DevOps project
+  ADO_APPLY_PROXY_SETTINGS: "false"
+autopilots:
+  ado-work-items-autopilot:
+    run: |
+      ado-work-items-fetcher
+      ado-work-items-evaluator
+    env:
+      ADO_API_PERSONAL_ACCESS_TOKEN: ${{ secrets.ADO_API_PERSONAL_ACCESS_TOKEN }} # TODO: Add this to your namespace secrets
+      ADO_CONFIG_FILE_PATH: ./ado-fetcher-evaluator-config.yaml
+      ADO_WORK_ITEMS_JSON_NAME: workItems.json
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "3":
+    title: Requirements management
+    requirements:
+      "3.4":
+        title: Legal / official requirements / restrictions and regulations are known and were considered.
+        text: |-
+          technical legal requirements, such as legal requirements of the target market, goods subject to approval (export control), Design for Environment, recycling concept, VDE approvals,...
+
+          Competitive analysis considered;
+
+          It is recommended to the GEs to generate a positive list.
+        checks:
+          "1.1":
+            title: Fetch all epic work items and ensure that they are not overdue in case they have not already been closed. The same applies for all of their related work items (children).
+            automation:
+              autopilot: ado-work-items-autopilot

@@ -1,0 +1,32 @@
+metadata:
+  version: v1
+header:
+  name: MACMA
+  version: 1.16.0
+autopilots:
+  sonarqube-autopilot:
+    run: |
+      sonarqube-fetcher
+      sonarqube-evaluator
+    env:
+      SONARQUBE_ENDPOINT: ${{ vars.SONARQUBE_ENDPOINT }}
+      SONARQUBE_HOSTNAME: ${{ vars.SONARQUBE_HOSTNAME }}
+      SONARQUBE_PORT: ${{ vars.SONARQUBE_PORT }}
+      SONARQUBE_PROJECT_KEY: ${{ vars.SONARQUBE_PROJECT_KEY }}
+      SONARQUBE_PROJECT_TOKEN: ${{ secrets.SONARQUBE_PROJECT_TOKEN }}
+      SONARQUBE_PROTOCOL: https
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "5.1":
+        title: The test strategy was defined/adhered to.
+        text: The test strategy was defined/adhered to.
+        checks:
+          "1.1":
+            title: Sonarqube QG Report
+            automation:
+              autopilot: sonarqube-autopilot

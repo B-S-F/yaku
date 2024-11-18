@@ -1,0 +1,124 @@
+name: Update app changelog
+run-name: Add ${{ inputs.app-name }}-${{ inputs.app-version }} release notes
+
+on:
+  workflow_dispatch:
+    inputs:
+      app-name:
+        description: 'App name. e.g. apps/git-fetcher, onyx '
+        type: string
+        required: true
+      app-version:
+        description: 'App version. e.g. 0.5.0'
+        type: string
+        required: true
+      app-repo:
+        description: 'App repo name'
+        required: true
+        type: choice
+        options:
+          - "bosch-grow-pat/qg-apps-python"
+          - "bosch-grow-pat/qg-apps-typescript"
+          - "bosch-grow-pat/onyx"
+      assignee:
+        description: 'User to assign the PR to'
+        type: string
+        required: true
+
+env:
+  INPUT_APP_NAME: ${{ github.event.inputs.app-name }}
+  APP_VERSION: ${{ github.event.inputs.app-version }}
+  APP_REPO: ${{ github.event.inputs.app-repo }}
+  PR_ASSIGNEE: ${{ github.event.inputs.assignee }}
+  MESSAGE: >+
+    🤖 This PR was automatically generated in order to add new app changes. 🤖
+
+     - [ ] Check this PR for the new release notes added to new released app changelog.
+           Make sure the release notes look good (rephrase commit messages to past tense; group commits by headlines for new features breaking changes, bug fixes; add helpful links to documentation in case of breaking changes or new features)
+    - [ ] **Merge** this PR.
+
+jobs:
+  get-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: authenticate as GH app
+        id: ghappauth
+        uses: bosch-grow-pat/github-actions/ghapptoken@master
+        with:
+          privatekey: ${{ secrets.GH_GROW_PAT_RELEASE_APP_PRIVATEKEY }}
+          appid: 302069
+          baseurl: https://api.github.com
+          installationId: 34968537
+
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Get app file
+        id: get_app_file
+        run: |
+          if [[ $INPUT_APP_NAME == *"apps/"* ]]; then
+              app_name=$(echo "$INPUT_APP_NAME" | awk -F"[/]" '{print $2}')
+              release_url="https://api.github.com/repos/$APP_REPO/releases/tags/$INPUT_APP_NAME/$APP_VERSION"
+          else
+              app_name=$INPUT_APP_NAME
+              release_url="https://api.github.com/repos/$APP_REPO/releases/tags/$APP_VERSION"
+          fi
+          txt_changes_file="source/reference/changelog/${app_name}.txt"
+          md_changes_file="source/reference/changelog/${app_name}.md"
+          if [ ! -f "$md_changes_file" ]; then
+            touch $txt_changes_file
+            echo  "# $app_name" > $md_changes_file
+            echo  "" >> $md_changes_file
+            echo  "\`\`\`{include} ${app_name}.txt" >> $md_changes_file
+            echo  "\`\`\`" >> $md_changes_file
+          fi
+          echo "APP_NAME=${app_name}" >> $GITHUB_ENV
+          echo "RELEASE_URL=${release_url}" >> $GITHUB_ENV
+          echo "changes_file=${txt_changes_file}" >> $GITHUB_OUTPUT
+
+
+      - name: Prepare PR
+        id: prepare_pr
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          branch_name="add-${APP_NAME}-v${APP_VERSION}-changes"
+          git checkout -b ${branch_name}
+          echo "Getting release notes from: $RELEASE_URL"
+          header=$(echo "## Version ${APP_VERSION} ($(date '+%Y-%m-%d'))")
+          echo $header > temp_pr_file.txt
+          echo "" >> temp_pr_file.txt
+          curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ steps.ghappauth.outputs.token }}" -H "X-GitHub-Api-Version: 2022-11-28" $RELEASE_URL | jq -r '.body' >> temp_pr_file.txt
+          echo "" >> temp_pr_file.txt
+          echo "$(cat temp_pr_file.txt; cat ${{ steps.get_app_file.outputs.changes_file }})" > ${{ steps.get_app_file.outputs.changes_file }}
+          cat ${{ steps.get_app_file.outputs.changes_file }}
+          git add --all
+          git commit --no-verify -m "chore: Update ${APP_NAME} docs with version ${APP_VERSION} changes"
+          git push --set-upstream origin ${branch_name}
+          echo "branch_name=${branch_name}" >> $GITHUB_OUTPUT
+
+      - name: Create PR
+        uses: actions/github-script@v6
+        id: create-pr
+        with:
+          github-token: ${{ steps.ghappauth.outputs.token }}
+          script: |
+            const branch_name = "${{ steps.prepare_pr.outputs.branch_name }}"
+            const owner = "${{ github.repository_owner }}"
+            const repo = "${{ github.repository }}".split("/")[1]
+            const title = "chore: Automated workflow to add ${{ env.APP_NAME }} v${{ env.APP_VERSION }} changes"
+            const assignees = "${{ env.PR_ASSIGNEE }}"
+            const { data: { number } } = await github.rest.pulls.create({
+              owner: owner,
+              repo: repo,
+              title: title,
+              head: branch_name,
+              base: 'main',
+              body: process.env.MESSAGE
+            });
+            return await github.rest.issues.addAssignees({
+              owner: owner,
+              repo: repo,
+              issue_number: number,
+              assignees: [assignees],
+            });

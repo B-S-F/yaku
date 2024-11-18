@@ -1,0 +1,37 @@
+metadata:
+  version: v1
+header:
+  name: MyProduct
+  version: "1.0"
+autopilots:
+  verify-splunk-open-issues:
+    run: |
+      splunk-fetcher
+      if [ $(jq '.results | length' ${SPLUNK_RESULT_FILE}) -ne 0 ]; then
+        echo '{"status": "FAILED"}'
+        echo '{"comment": "Splunk result was not empty!"}'
+      else
+        echo '{"status": "SUCCESS"}'
+      fi
+    env:
+      SPLUNK_HOST: nameof.splunk.host
+      SPLUNK_PORT: 8089
+      SPLUNK_USERNAME: splunk_username
+      SPLUNK_PASSWORD: ${{ secrets.SPLUNK_PASSWORD }}
+      SPLUNK_APP: splunk_app
+      SPLUNK_QUERY: "search ..."
+      SPLUNK_RESULT_FILE: result.json
+finalize:
+  run: |
+    html-finalizer
+chapters:
+  "1":
+    title: Project management
+    requirements:
+      "1.15":
+        title: Check that there are no open issues.
+        checks:
+          "1":
+            title: Splunk result returns zero open issues.
+            automation:
+              autopilot: verify-splunk-open-issues

@@ -1,0 +1,19 @@
+checks:
+  - name: has_category_check # Name of the check (can be any name the user wants)
+    ref: $.store.book[*] # Reference to the object inside the json file (line 3 in the example json file below)
+    condition: ($[*].category).includes('fiction') # There should be at least one book with category fiction
+    log: $.title # Get the title of the book to log it
+  - name: category_check # Name of the check (can be any name the user wants)
+    ref: $.store.book[*] # Reference to the object inside the json file (line 3 in the example json file below)
+    condition: $[*].category === ["fiction", "reference"] # The categories of all books are ["fiction", "reference"]
+    log: $.title # Get the title of the book to log it
+  - name: fiction_check # Name of the check (can be any name the user wants)
+    ref: $.store.book[*] # Reference to the object inside the json file (line 3 in the example json file below)
+    condition: all(ref, "$.category === 'fiction'") # All books should have category fiction
+    log: $.title # Get the title of the book to log it
+  - name: none_fantasy_check # Name of the check (can be any name the user wants)
+    ref: $.store.book[*] # Reference to the object inside the json file (line 3 in the example json file below)
+    condition: none(ref, "$.category === 'fantasy'") # There should be no book with category fantasy
+    log: $.title # Get the title of the book to log it
+concatenation:
+  condition: "has_category_check && category_check && fiction_check && none_fantasy_check"
