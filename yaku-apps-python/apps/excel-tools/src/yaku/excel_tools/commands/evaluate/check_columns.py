@@ -21,7 +21,10 @@ def check_columns(
         excel_path, sheet_name, [ref_column_ind], header_row
     )
     df = clean_columns(df)
-    return (check_df_columns(df, column_inds, ref_column_ind, allowed_values), all_hyperlinks)
+    return (
+        check_df_columns(df, column_inds, ref_column_ind, allowed_values),
+        all_hyperlinks,
+    )
 
 
 def check_df_columns(

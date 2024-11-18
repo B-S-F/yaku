@@ -5,7 +5,8 @@ import subprocess
 def test_pex_version_flag():
     file_version = importlib.resources.read_text("yaku.demo", "_version.txt")
     output = subprocess.check_output(
-        ["packages.autopilot-utils.tests.demo_app/demo.pex", "--version"], encoding="utf-8"
+        ["packages.autopilot-utils.tests.demo_app/demo.pex", "--version"],
+        encoding="utf-8",
     )
 
     assert output.strip() == file_version.strip()

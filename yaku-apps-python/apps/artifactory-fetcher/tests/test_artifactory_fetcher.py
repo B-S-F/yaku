@@ -123,7 +123,8 @@ class TestGetFileChecksum:
         mocker.patch("pathlib.Path.exists", return_value=True)
         mocker.patch("pathlib.Path.is_file", return_value=True)
         mocker.patch(
-            "yaku.artifactory_fetcher.artifactory_fetcher.sha256sum", return_value="shasha"
+            "yaku.artifactory_fetcher.artifactory_fetcher.sha256sum",
+            return_value="shasha",
         )
 
         result = get_file_checksum(destination_path, artifactory_repository_path)

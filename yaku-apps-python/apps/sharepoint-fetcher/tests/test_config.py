@@ -402,7 +402,9 @@ def test_Settings():
     with pytest.raises(AutopilotConfigurationError):
         Settings(
             **_overwrite_variable(
-                input_variables, sharepoint_url=None, sharepoint_path="invalid_sharepoint_path"
+                input_variables,
+                sharepoint_url=None,
+                sharepoint_path="invalid_sharepoint_path",
             )
         )
 

@@ -264,7 +264,14 @@ def get_row(
 ):
     workbook = load_workbook(xlsx_path, read_only=False)
     print_cell_value_from_filtered_row(
-        workbook, sheet_name, filter_column, filter_value, column, url, return_all, skip_rows
+        workbook,
+        sheet_name,
+        filter_column,
+        filter_value,
+        column,
+        url,
+        return_all,
+        skip_rows,
     )
 
 

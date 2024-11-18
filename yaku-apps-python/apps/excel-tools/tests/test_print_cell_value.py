@@ -89,7 +89,9 @@ def test_print_cell_value_can_skip_rows(make_workbook, capsys):
 
 def test_print_cell_value_can_extract_hyperlinks(make_workbook, capsys):
     wb = make_workbook(
-        "Sheet 1", [["A", "one"], ["B", "two"]], hyperlinks={(2, 1): "http://some.where/"}
+        "Sheet 1",
+        [["A", "one"], ["B", "two"]],
+        hyperlinks={(2, 1): "http://some.where/"},
     )
 
     print_cell_value_from_filtered_row(

@@ -35,7 +35,12 @@ class TestCreateOutputs:
         oneq_upload = True
         result = create_outputs(file_paths, oneq_upload)
         assert result == [{"output": {"fetched": str(p.resolve())}} for p in file_paths] + [
-            {"output": {"oneqUpload": True, **{p.name: str(p.resolve()) for p in file_paths}}}
+            {
+                "output": {
+                    "oneqUpload": True,
+                    **{p.name: str(p.resolve()) for p in file_paths},
+                }
+            }
         ]
 
 

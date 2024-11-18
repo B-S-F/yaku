@@ -145,7 +145,9 @@ def test_cli_treats_as_failure_if_property_in_rule_does_not_exist(tmp_path: Path
 
     assert result.exit_code == 0
     assert_result_status(
-        result.output, expected_status="FAILED", reason="Could not get property `missing-prop`"
+        result.output,
+        expected_status="FAILED",
+        reason="Could not get property `missing-prop`",
     )
 
 

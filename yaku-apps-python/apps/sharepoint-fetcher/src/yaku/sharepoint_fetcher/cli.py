@@ -117,7 +117,9 @@ class CLI:
             help="Path to the destination folder",
         ),
         click.option(
-            "--force-ip", required=False, help="Force the IP address of the SharePoint server"
+            "--force-ip",
+            required=False,
+            help="Force the IP address of the SharePoint server",
         ),
         click.option(
             "--custom-properties",
@@ -130,7 +132,9 @@ class CLI:
             help="Only download the properties of the files",
         ),
         click.option(
-            "--filter-config-file", required=False, help="Path to the filter config file"
+            "--filter-config-file",
+            required=False,
+            help="Path to the filter config file",
         ),
         click.option("--config-file", required=False, help="Path to the config file"),
     ]

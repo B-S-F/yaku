@@ -50,7 +50,10 @@ class SecurityScanner:
                 self.install_npm_dependencies(tmp_folder_name, env)
 
                 self.run_trivy(
-                    tmp_folder_name, env, configuration.vulnerability_threshold, result_file
+                    tmp_folder_name,
+                    env,
+                    configuration.vulnerability_threshold,
+                    result_file,
                 )
 
         # if result file does not exist, raise an exception
@@ -72,7 +75,11 @@ class SecurityScanner:
             )
 
     def run_trivy(
-        self, git_repo_location: str, env: dict, vulnerability_threshold: str, result_file: str
+        self,
+        git_repo_location: str,
+        env: dict,
+        vulnerability_threshold: str,
+        result_file: str,
     ) -> str:
         logger.info("Running trivy on {} ...", git_repo_location)
         if git_repo_location.startswith("https://"):

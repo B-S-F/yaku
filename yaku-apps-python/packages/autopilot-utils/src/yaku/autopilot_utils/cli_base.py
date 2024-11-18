@@ -380,7 +380,9 @@ class ClickUsageErrorHandlerDecorator:
         return getattr(self._f, name)
 
 
-def handle_app_result_decorator(provider: ClickCommandProvider | ClickSubCommandProvider):
+def handle_app_result_decorator(
+    provider: ClickCommandProvider | ClickSubCommandProvider,
+):
     def wrapper(f):
         @functools.wraps(f)
         def result_handler_decorator(*args, **kwargs) -> None:

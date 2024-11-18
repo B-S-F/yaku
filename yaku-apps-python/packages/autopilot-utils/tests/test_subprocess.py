@@ -45,7 +45,10 @@ def test_exit_for_returncode_exits_on_nonzero_returncode():
 def test_exit_for_returncode_does_not_print_full_stdout_on_success(capsys):
     exit_for_returncode = gen_exit_for_returncode(
         DummyProcessResult(
-            returncode=0, clean_stdout="only clean", stderr="stderr", stdout="normal stdout"
+            returncode=0,
+            clean_stdout="only clean",
+            stderr="stderr",
+            stdout="normal stdout",
         )
     )
     exit_for_returncode()
@@ -73,7 +76,10 @@ def caplog(caplog: LogCaptureFixture):
 def test_exit_for_returncode_prints_stderr_and_full_stdout_on_error(capsys, caplog):
     exit_for_returncode = gen_exit_for_returncode(
         DummyProcessResult(
-            returncode=1, clean_stdout="only clean", stderr="stderr", stdout="normal stdout"
+            returncode=1,
+            clean_stdout="only clean",
+            stderr="stderr",
+            stdout="normal stdout",
         )
     )
     with pytest.raises(SystemExit):
@@ -111,7 +117,11 @@ def test_gen_raise_for_status_asserts_if_returncode_unequal_zero(capsys):
 @pytest.mark.parametrize("status", ["GREEN", "YELLOW"])
 def test_output_is_shown_only_once_on_success(status, capsys):
     dummy_result = DummyProcessResult(
-        returncode=0, status=status, stdout="stdout", stderr="stderr", clean_stdout="cleanout"
+        returncode=0,
+        status=status,
+        stdout="stdout",
+        stderr="stderr",
+        clean_stdout="cleanout",
     )
     exit_for_returncode = gen_exit_for_returncode(dummy_result)
     exit_for_returncode()
