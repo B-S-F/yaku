@@ -6,10 +6,9 @@ and with the help of the [myst-parser](https://github.com/executablebooks/MyST-P
 This allows us to write Sphinx documentation in (a superset of) **Markdown**, and still
 have all the flexibility and features from Sphinx.
 
-The **latest main version** is always pushed directly to <https://docs.bswf.tech/>
-(with a short delay due to the Docker build and GitOps setup).
+The **latest main version** is always pushed directly to <https://b-s-f.github.io/yaku/>.
 
-[![Build and Push Docker image](https://github.com/bosch-grow-pat/user-documentation/actions/workflows/publish-docker-image.yml/badge.svg)](https://github.com/bosch-grow-pat/user-documentation/actions/workflows/publish-docker-image.yml)
+[![.github/workflows/publish-user-docs-to-gh-pages.yml](https://github.com/B-S-F/yaku/actions/workflows/publish-user-docs-to-gh-pages.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/publish-user-docs-to-gh-pages.yml)
 
 ## Quickstart
 
