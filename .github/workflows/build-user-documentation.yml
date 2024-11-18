@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
@@ -26,7 +26,7 @@ jobs:
         name: Cache virtual environment
         with:
           path: user-documentation/.venv/
-          key: ${{ hashFiles('user-documentation/requirements.lock', 'user-documentation/Makefile') }}
+          key: user-documentation-venv-${{ hashFiles('user-documentation/requirements.lock', 'user-documentation/Makefile') }}
       - name: Setup virtual environment
         if: ${{ steps.cache-venv.outputs.cache-hit != 'true' }}
         run: |
