@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export const tryParseResponse = async (response: Response) => {
   try {
     const responseBody = await response.json()

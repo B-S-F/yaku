@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Writing a simple evaluator app
 
 In contrast to the [fetcher app from the tutorial](./write-a-simple-fetcher), an

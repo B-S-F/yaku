@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException } from '@nestjs/common'
 import { ZodSchema, z } from 'zod'
 import { fromZodError } from 'zod-validation-error'

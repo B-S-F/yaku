@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   ListQueryHandler,
   PaginatedData,
@@ -425,7 +429,10 @@ export class RunController {
     }
 
     // Guard against wrong filenames/missing files
-    if (filenameToContentMap.get(RESULTFILE) !== undefined && file.content[filenameToContentMap.get(RESULTFILE)]) {
+    if (
+      filenameToContentMap.get(RESULTFILE) !== undefined &&
+      file.content[filenameToContentMap.get(RESULTFILE)]
+    ) {
       const resultData =
         file.content[filenameToContentMap.get(RESULTFILE)].buffer.toString(
           'utf-8'
@@ -433,7 +440,10 @@ export class RunController {
       await this.resultValidator.validate(resultData)
       data[RESULTFILE] = resultData
     }
-    if (filenameToContentMap.get(EVIDENCEFILE) !== undefined && file.content[filenameToContentMap.get(EVIDENCEFILE)]) {
+    if (
+      filenameToContentMap.get(EVIDENCEFILE) !== undefined &&
+      file.content[filenameToContentMap.get(EVIDENCEFILE)]
+    ) {
       data[EVIDENCEFILE] =
         file.content[filenameToContentMap.get(EVIDENCEFILE)].buffer
     }

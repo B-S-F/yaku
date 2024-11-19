@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Mock Server Usage
 
 Some commands directly call the API. For testing purposes, a mock server is created.

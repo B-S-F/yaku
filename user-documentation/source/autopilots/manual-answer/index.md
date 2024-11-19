@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Manual Answer
 
 For questions that can't be answered via an automatic check, we have got a solution for you!

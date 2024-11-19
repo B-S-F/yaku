@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Sharepoint Evaluator Background Information
 
 The SharePoint evaluator is usually being used together with the `sharepoint-fetcher` in order to evaluate file properties of files stored on SharePoint sites.

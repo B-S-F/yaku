@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 org: github-org    # Organization name
 repo: github-repo  # Repo name
 resource: pull-requests  # Resource to fetch. One of: pull-requests, branches, tags (branches and tags are only supported for Bitbucket)

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # create namespace
 NAMESPACE_ID=$(yaku namespaces create mynamespace | jq -r '.id')
 

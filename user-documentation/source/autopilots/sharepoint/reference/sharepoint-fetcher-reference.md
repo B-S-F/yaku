@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # SharePoint Fetcher Background Information
 
 The fetcher makes a request against the SharePoint REST API, downloads all the specified files and folders present inside the directory and saves it to the evidence path. The evidence path is set during the execution of a run and read as an environment variable by the sharepoint-fetcher.

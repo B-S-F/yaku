@@ -1,2 +1,6 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 [tool.coverage.run]
 omit = ["tests"]

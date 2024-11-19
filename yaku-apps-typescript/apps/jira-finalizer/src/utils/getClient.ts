@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { JiraClient, RestClientImpl } from '../../lib/index.js'
 // import { DebugClient } from "../../lib/index.js";
 

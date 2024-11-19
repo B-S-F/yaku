@@ -1,4 +1,9 @@
 #! /usr/bin/env node
+
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Command } from 'commander'
 import executeTest from './test-execution.js'
 

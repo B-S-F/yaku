@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-http-bearer'
@@ -35,9 +39,8 @@ export class LongRunningTokenStrategy extends PassportStrategy(
         return user
       }
 
-      const { id, try_admin } = await this.tokenService.retrieveKeyCloakUserId(
-        token
-      )
+      const { id, try_admin } =
+        await this.tokenService.retrieveKeyCloakUserId(token)
 
       user = await this.keycloakService.getKeyCloakUserFromCliClient(
         id,

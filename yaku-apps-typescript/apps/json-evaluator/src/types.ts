@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { z } from 'zod'
 
 import { CheckResults } from '@B-S-F/json-evaluator-lib'

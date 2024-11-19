@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export abstract class SecretStorage {
   abstract getSecrets(namespaceId: number): Promise<{ [key: string]: string }>
   abstract storeSecret(

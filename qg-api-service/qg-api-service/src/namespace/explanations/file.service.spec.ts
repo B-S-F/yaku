@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { parseRunFiles } from './file.service'
 import { File, ParsedQGConfig } from './types'
 

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { HttpStatus } from '@nestjs/common'
 import * as supertest from 'supertest'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # filter list for pdf files
 # read pdf file (check if corrupt)
 # get list of digital signatures

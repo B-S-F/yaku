@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # -*- coding: utf-8 -*-
 """Usage:
   7zx.py [--help | options] <zipfiles>...

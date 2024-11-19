@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { HttpStatus } from '@nestjs/common'
 import { DefaultBodyType, MockedRequest } from 'msw'
 import { SetupServer, setupServer } from 'msw/node'

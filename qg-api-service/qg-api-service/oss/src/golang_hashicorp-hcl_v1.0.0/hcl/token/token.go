@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 // Package token defines constants representing the lexical tokens for HCL
 // (HashiCorp Configuration Language)
 package token

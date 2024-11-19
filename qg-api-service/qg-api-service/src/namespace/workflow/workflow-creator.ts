@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { AssertionError } from 'assert'
 import crypto from 'crypto'
 import * as path from 'path'

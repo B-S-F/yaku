@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import * as tiktoken from 'tiktoken'
 import { TiktokenModel } from 'tiktoken'
 

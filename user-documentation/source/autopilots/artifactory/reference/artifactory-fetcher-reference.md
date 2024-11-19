@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Fetcher Background Information
 
 The fetcher makes a request against jFrog Artifactory REST API, downloads the specified artifact and stores it in the evidence path.

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import * as fs from 'fs'
 import YAML from 'yaml'
 import { SafeParseReturnType } from 'zod'

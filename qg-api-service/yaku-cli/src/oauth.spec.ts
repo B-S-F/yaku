@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { jest } from '@jest/globals'
 import { loginOAuth, OAuthClient, refreshOAuth, _t } from './oauth'
 import { Environment } from './handlers/environment'

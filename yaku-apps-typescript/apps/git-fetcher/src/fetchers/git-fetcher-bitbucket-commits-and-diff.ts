@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { CommitsMetadataAndDiff } from '../model/commits-metadata-and-diff'
 import { ConfigFileData } from '../model/config-file-data'
 import { GitServerConfig } from '../model/git-server-config'

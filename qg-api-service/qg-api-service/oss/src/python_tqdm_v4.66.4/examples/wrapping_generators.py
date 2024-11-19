@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import numpy as np
 
 from tqdm.contrib import tenumerate, tmap, tzip

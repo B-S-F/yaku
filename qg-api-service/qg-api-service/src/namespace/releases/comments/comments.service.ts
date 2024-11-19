@@ -1,8 +1,8 @@
-import {
-  EntityList,
-  ListQueryHandler,
-  SortOrder,
-} from '@B-S-F/api-commons-lib'
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
+import { EntityList, ListQueryHandler, SortOrder } from '@B-S-F/api-commons-lib'
 import {
   Inject,
   Injectable,
@@ -102,9 +102,8 @@ export class CommentsService {
         listQueryOptions
       )
 
-      const commentsWithRepliesAndReferenceDto = await this.toEntityList(
-        comments
-      )
+      const commentsWithRepliesAndReferenceDto =
+        await this.toEntityList(comments)
 
       await queryRunner.commitTransaction()
       return commentsWithRepliesAndReferenceDto

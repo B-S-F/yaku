@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from click.testing import CliRunner
 from yaku.app_single_command.cli import cli
 

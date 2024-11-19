@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { readFile } from 'fs/promises'
 import YAML from 'yaml'
 import { AppError } from '@B-S-F/autopilot-utils'

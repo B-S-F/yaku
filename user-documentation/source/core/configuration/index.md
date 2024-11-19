@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Configuration Files
 
 A {{ PNAME }} {term}`workflow` is defined by one or more configuration files.

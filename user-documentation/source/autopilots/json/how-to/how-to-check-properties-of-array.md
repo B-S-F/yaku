@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Checking properties of an array of objects
 
 Given the sample data set below, we want to check if the `price` of each book is greater than `10`.

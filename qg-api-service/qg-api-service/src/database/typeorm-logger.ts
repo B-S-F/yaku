@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { PinoLogger, Logger, InjectPinoLogger } from 'nestjs-pino'
 import { QG_LOG_LEVEL } from '../config'
 import { QueryRunner, Logger as TypeOrmLogger } from 'typeorm'

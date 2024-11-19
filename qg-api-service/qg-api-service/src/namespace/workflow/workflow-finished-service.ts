@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { streamToString } from '@B-S-F/api-commons-lib'
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -123,9 +127,8 @@ export class WorkflowFinishedService {
 
     try {
       const requestStartTime = Date.now()
-      const status = await this.argoService.getArchivedWorkflowStatus(
-        workflowId
-      )
+      const status =
+        await this.argoService.getArchivedWorkflowStatus(workflowId)
       this.logger.debug(
         `Runtime for getArchivedWorkflowStatus: ${
           Date.now() - requestStartTime

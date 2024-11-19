@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 // This comes from Terraform, as a test
 variable "foo" {
     default = "bar"

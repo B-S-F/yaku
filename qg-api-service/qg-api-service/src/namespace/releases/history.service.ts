@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { SortOrder, UrlHandler } from '@B-S-F/api-commons-lib'
 import { Inject } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -252,12 +256,12 @@ export class HistoryService {
     const lastTimestamp = queryOptions.lastTimestamp
       ? new Date(queryOptions.lastTimestamp)
       : queryOptions.sortOrder === 'ASC'
-      ? releaseCreationTime
-      : new Date()
+        ? releaseCreationTime
+        : new Date()
     const amount = queryOptions.items
-    const direction = (
-      queryOptions.sortOrder === 'ASC' ? 'after' : 'before'
-    ) as 'before' | 'after'
+    const direction = (queryOptions.sortOrder === 'ASC' ? 'after' : 'before') as
+      | 'before'
+      | 'after'
     return {
       lastTimestamp,
       amount,

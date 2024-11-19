@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { createLogger, Logger, format, transports } from 'winston'
 
 let logger: Logger | null = null

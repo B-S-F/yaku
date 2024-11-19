@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject } from '@nestjs/common'
 import { Interval } from '@nestjs/schedule'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -148,9 +152,8 @@ export class TaskNotificationsService {
   }
 
   private async synchronizeTaskNotifications(entityManager: EntityManager) {
-    const currentTaskNotifications = await this.getTaskNotifications(
-      entityManager
-    )
+    const currentTaskNotifications =
+      await this.getTaskNotifications(entityManager)
     const currentTaskIds = currentTaskNotifications.map(
       (taskNotification) => taskNotification.task.id
     )

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { EntityList, SortOrder } from '@B-S-F/api-commons-lib'
 import {
   KeyCloakService,
@@ -45,9 +49,8 @@ export class UsersService {
     private readonly usersCache: UsersCache
   ) {}
   async list(namespaceId: number): Promise<UserInNamespaceDto[]> {
-    const usersOfNamespace = await this.keycloakService.getUsersOfNamespace(
-      namespaceId
-    )
+    const usersOfNamespace =
+      await this.keycloakService.getUsersOfNamespace(namespaceId)
     return usersOfNamespace.map((user) => this.toUserInNamespaceDto(user))
   }
 

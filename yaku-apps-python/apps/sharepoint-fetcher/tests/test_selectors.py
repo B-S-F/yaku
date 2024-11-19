@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import pydantic
 import pytest
 from yaku.autopilot_utils.errors import AutopilotConfigurationError

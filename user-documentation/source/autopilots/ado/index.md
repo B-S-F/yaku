@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Azure DevOps (ADO)
 
 You are tracking task items in Azure DevOps? You want to know if all bugs are

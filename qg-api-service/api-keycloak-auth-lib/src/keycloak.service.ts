@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   BadRequestException,
   Inject,
@@ -85,11 +89,11 @@ export class KeyCloakConfig {
     readonly globalRoleClientId: string = 'GLOBAL',
     readonly namespaceAccessRoleName: string = 'ACCESS',
     readonly namespaceClientNamePrefix: string = 'NAMESPACE',
-    readonly cliClientId: string = 'yaku-cli',
+    readonly cliClientId: string = 'yaku-cli'
   ) {
     if (enabled != 'off' && enabled != 'on') {
       throw new InternalServerErrorException(
-        `Keycloak enabled must be either "on" or "off", but is "${enabled}"`,
+        `Keycloak enabled must be either "on" or "off", but is "${enabled}"`
       )
     }
     if (
@@ -102,7 +106,7 @@ export class KeyCloakConfig {
         !wellKnownConfig)
     ) {
       throw new InternalServerErrorException(
-        `Keycloak is enabled, but server, realm, client id, client secret, admin URL or well-known config URL is not set`,
+        `Keycloak is enabled, but server, realm, client id, client secret, admin URL or well-known config URL is not set`
       )
     }
   }
@@ -121,7 +125,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
         },
       },
     }),
-    {},
+    {}
   )
   private readonly proxyAgent = new EnvHttpProxyAgent()
   private serviceAccountToken: ServiceAccountToken
@@ -135,12 +139,12 @@ export class KeyCloakService implements OnApplicationBootstrap {
   async onApplicationBootstrap(): Promise<void> {
     try {
       const endpoints = await this.getOpenIdConnectEndpoints(
-        this.cfg.wellKnownConfig,
+        this.cfg.wellKnownConfig
       )
       this.OIDCEndpoints = endpoints
     } catch {
       console.error(
-        `Could not get OIDC endpoints. Using hard-coded endpoints instead.`,
+        `Could not get OIDC endpoints. Using hard-coded endpoints instead.`
       )
       this.OIDCEndpoints = {
         introspection_endpoint: `${this.cfg.server}/auth/realms/${this.cfg.realm}/protocol/openid-connect/token/introspect`,
@@ -222,13 +226,13 @@ export class KeyCloakService implements OnApplicationBootstrap {
    */
   async getKeyCloakUserFromCliClient(
     userId: string,
-    additionalScopes: string[],
+    additionalScopes: string[]
   ): Promise<KeyCloakUser> {
     const client_uuid = await this.getClientIdFromName(this.cfg.cliClientId)
     const access_token = (await this.getAccessTokenFromClient(
       client_uuid,
       userId,
-      additionalScopes,
+      additionalScopes
     )) as any
 
     const username = this.getUsername(access_token, 'placeholder_value')
@@ -261,7 +265,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
    */
   parseToken(token: string): any {
     const obj = JSON.parse(
-      Buffer.from(token.split('.')[1], 'base64').toString(),
+      Buffer.from(token.split('.')[1], 'base64').toString()
     )
     if (!obj) {
       throw new Error(`Unable to parse token: ${token}`)
@@ -379,7 +383,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
    * @returns {Promise<{ introspection_endpoint: string; token_endpoint: string }>} - A Promise that resolves to a JSON object containing the OpenID Connect Endpoints (introspection_endpoint and token_endpoint).
    */
   async getOpenIdConnectEndpoints(
-    wellKnownEndpoint: string,
+    wellKnownEndpoint: string
   ): Promise<{ introspection_endpoint: string; token_endpoint: string }> {
     try {
       const config: RequestInit = {
@@ -466,7 +470,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (bearerType.toLowerCase() !== 'bearer') {
       throw new BadRequestException(
-        'Authorization header is not using Bearer token.',
+        'Authorization header is not using Bearer token.'
       )
     }
 
@@ -492,7 +496,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
     if (res) {
       if (res.status !== 200) {
         throw new InternalServerErrorException(
-          `Token introspection failed with status ${res.status}`,
+          `Token introspection failed with status ${res.status}`
         )
       }
 
@@ -502,12 +506,12 @@ export class KeyCloakService implements OnApplicationBootstrap {
         return json.active
       } else {
         throw new InternalServerErrorException(
-          'Invalid response from token introspection',
+          'Invalid response from token introspection'
         )
       }
     } else {
       throw new InternalServerErrorException(
-        'Token introspection request failed',
+        'Token introspection request failed'
       )
     }
   }
@@ -523,7 +527,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
         Authorization:
           'Basic ' +
           Buffer.from(`${this.cfg.clientId}:${this.cfg.clientSecret}`).toString(
-            'base64',
+            'base64'
           ),
         'Content-Type': 'application/x-www-form-urlencoded',
       },
@@ -544,13 +548,13 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!res) {
       throw new InternalServerErrorException(
-        'Did not receive a response from Keycloak token endpoint',
+        'Did not receive a response from Keycloak token endpoint'
       )
     }
 
     if (res.status !== 200) {
       throw new InternalServerErrorException(
-        `Retrieving service account token failed with status ${res.status}`,
+        `Retrieving service account token failed with status ${res.status}`
       )
     }
 
@@ -558,14 +562,14 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!json || !json.access_token || !json.expires_in) {
       throw new InternalServerErrorException(
-        'Keycloak service account token has invalid format',
+        'Keycloak service account token has invalid format'
       )
     }
 
     const token = new ServiceAccountToken(
       json.access_token,
       json.expires_in,
-      issuedAt,
+      issuedAt
     )
     this.serviceAccountToken = token
     return this.serviceAccountToken
@@ -597,13 +601,13 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!res) {
       throw new InternalServerErrorException(
-        'Did not receive a response from client request',
+        'Did not receive a response from client request'
       )
     }
 
     if (res.status !== 200) {
       throw new InternalServerErrorException(
-        `Retrieving client id failed with status ${res.status}`,
+        `Retrieving client id failed with status ${res.status}`
       )
     }
 
@@ -611,19 +615,19 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!json || !Array.isArray(json)) {
       throw new InternalServerErrorException(
-        `Keycloak response has an invalid format`,
+        `Keycloak response has an invalid format`
       )
     }
 
     if (json.length === 0) {
       throw new InternalServerErrorException(
-        `Client with name ${clientName} not found`,
+        `Client with name ${clientName} not found`
       )
     }
 
     if (json.length > 1) {
       throw new InternalServerErrorException(
-        `Multiple clients with name ${clientName} found`,
+        `Multiple clients with name ${clientName} found`
       )
     }
 
@@ -633,7 +637,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
   async getAccessTokenFromClient(
     client_uuid: string,
     userId: string,
-    additionalScopes: string[],
+    additionalScopes: string[]
   ): Promise<string> {
     const serviceAccountToken = await this.getServiceAccountToken()
     const exampleAccessTokenEndpoint = `${this.cfg.adminUrl}/clients/${client_uuid}/evaluate-scopes/generate-example-access-token`
@@ -672,13 +676,13 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!res) {
       throw new InternalServerErrorException(
-        'Did not receive a response from example token request',
+        'Did not receive a response from example token request'
       )
     }
 
     if (res.status !== 200) {
       throw new InternalServerErrorException(
-        `Retrieving example token failed with status ${res.status}`,
+        `Retrieving example token failed with status ${res.status}`
       )
     }
 
@@ -686,7 +690,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!json) {
       throw new InternalServerErrorException(
-        `Keycloak response has an invalid format`,
+        `Keycloak response has an invalid format`
       )
     }
 
@@ -695,7 +699,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
   async getUsersOfClientRole(
     clientName: string,
-    roleName: string,
+    roleName: string
   ): Promise<InternalKeycloakUser[]> {
     const serviceAccountToken = await this.getServiceAccountToken()
     const clientId = await this.getClientIdFromName(clientName)
@@ -723,13 +727,13 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!res) {
       throw new InternalServerErrorException(
-        'Did not receive a response from users request',
+        'Did not receive a response from users request'
       )
     }
 
     if (res.status !== 200) {
       throw new InternalServerErrorException(
-        `Retrieving users of client role failed with status ${res.status}`,
+        `Retrieving users of client role failed with status ${res.status}`
       )
     }
 
@@ -737,7 +741,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!json || !Array.isArray(json)) {
       throw new InternalServerErrorException(
-        `Keycloak response has an invalid format`,
+        `Keycloak response has an invalid format`
       )
     }
 
@@ -775,12 +779,12 @@ export class KeyCloakService implements OnApplicationBootstrap {
   }
 
   async getUsersOfNamespace(
-    namespaceId: number,
+    namespaceId: number
   ): Promise<KeyCloakUserOfRole[]> {
     const namespaceClientName = `${this.cfg.namespaceClientNamePrefix}_${namespaceId}`
     const users = await this.getUsersOfClientRole(
       namespaceClientName,
-      this.cfg.namespaceAccessRoleName,
+      this.cfg.namespaceAccessRoleName
     )
 
     return users.map(this.toKeycloakUserOfRole)
@@ -829,7 +833,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!res) {
       throw new InternalServerErrorException(
-        'Did not receive a response from user request',
+        'Did not receive a response from user request'
       )
     }
 
@@ -839,7 +843,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (res.status !== 200) {
       throw new InternalServerErrorException(
-        `Retrieving user by user id failed with status ${res.status}`,
+        `Retrieving user by user id failed with status ${res.status}`
       )
     }
 
@@ -847,7 +851,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!json || !json.id) {
       throw new InternalServerErrorException(
-        `Keycloak response has an invalid format`,
+        `Keycloak response has an invalid format`
       )
     }
 
@@ -886,7 +890,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!res) {
       throw new InternalServerErrorException(
-        'Did not receive a response from user request',
+        'Did not receive a response from user request'
       )
     }
 
@@ -896,7 +900,7 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (res.status !== 200) {
       throw new InternalServerErrorException(
-        `Retrieving user by username failed with status ${res.status}`,
+        `Retrieving user by username failed with status ${res.status}`
       )
     }
 
@@ -904,19 +908,19 @@ export class KeyCloakService implements OnApplicationBootstrap {
 
     if (!json || !Array.isArray(json)) {
       throw new InternalServerErrorException(
-        `Keycloak response has an invalid format`,
+        `Keycloak response has an invalid format`
       )
     }
 
     if (json.length === 0) {
       throw new InternalServerErrorException(
-        `User with username ${username} not found`,
+        `User with username ${username} not found`
       )
     }
 
     if (json.length > 1) {
       throw new InternalServerErrorException(
-        `Multiple users with username ${username} found`,
+        `Multiple users with username ${username} found`
       )
     }
 

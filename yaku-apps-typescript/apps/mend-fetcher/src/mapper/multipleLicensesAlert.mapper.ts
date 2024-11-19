@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { MultipleLicensesAlertDTO } from '../dto/multipleLicensesAlert.dto.js'
 import { MultipleLicensesAlert } from '../model/multipleLicensesAlert.js'
 import { Project } from '../model/project.js'

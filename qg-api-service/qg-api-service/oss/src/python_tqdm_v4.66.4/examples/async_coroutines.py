@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 """Asynchronous examples using `asyncio`, `async` and `await`."""
 import asyncio
 

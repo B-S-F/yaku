@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export const organizationData = {
   uuid: 'organization-uuid',
   name: 'organization-name',

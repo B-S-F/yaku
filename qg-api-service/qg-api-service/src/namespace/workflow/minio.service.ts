@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { streamToString } from '@B-S-F/api-commons-lib'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import * as Minio from 'minio'

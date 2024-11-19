@@ -1,6 +1,8 @@
-/**
- * Copyright (c) 2022, 2023 by grow platform GmbH
- */
+// SPDX-FileCopyrightText: 2022 2023 by grow platform GmbH
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { describe, expect, it } from 'vitest'
 import { getExpDate } from '../../src/utils/getExpDate'
 const date = new Date('2030-01-01T00:00:00.000Z')

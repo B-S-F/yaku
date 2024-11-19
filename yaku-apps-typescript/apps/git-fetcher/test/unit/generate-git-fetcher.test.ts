@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { beforeEach, describe, expect, it } from 'vitest'
 import { GitFetcher, GitResource } from '../../src/fetchers'
 import { GitFetcherBitbucketTagsAndBranches } from '../../src/fetchers/git-fetcher-bitbucket-tags-and-branches'

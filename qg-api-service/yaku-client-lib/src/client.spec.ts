@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { randomUUID } from 'crypto'
 import { readFile, unlink, writeFile } from 'fs/promises'
 import * as api from './api-calls.js'

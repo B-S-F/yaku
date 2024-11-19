@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import pytest
 from _pytest.logging import LogCaptureFixture
 from loguru import logger

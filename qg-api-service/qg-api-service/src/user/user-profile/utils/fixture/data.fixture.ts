@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { CreateUserProfileDto } from '../../dto/create-user-profile.dto'
 import { GetUserProfileDto } from '../../dto/get-user-profile.dto'
 import { UpdateUserProfileDto } from '../../dto/update-user-profile.dto'

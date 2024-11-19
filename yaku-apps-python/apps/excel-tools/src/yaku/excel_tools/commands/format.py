@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from openpyxl import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
 

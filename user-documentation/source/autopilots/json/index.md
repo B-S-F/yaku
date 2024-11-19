@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # JSON
 
 Because JSON data format is so common, we have got a JSON autopilot for you! It can evaluate generic json files by defining conditions for required values.

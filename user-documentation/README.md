@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Yaku User Documentation
 
 The Yaku user documentation is created with [Sphinx](https://www.sphinx-doc.org)

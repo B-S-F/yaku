@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 // Package hcl decodes HCL into usable Go structures.
 //
 // hcl input can come in either pure HCL format or JSON format.

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import fs from 'fs/promises'
 import { NotificationType } from './mailing.utils'
 import { TemplatingCache } from './templating-cache.service'

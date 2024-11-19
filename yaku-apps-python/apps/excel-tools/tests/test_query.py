@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import pytest
 from openpyxl import Workbook
 from yaku.excel_tools.commands.query import query

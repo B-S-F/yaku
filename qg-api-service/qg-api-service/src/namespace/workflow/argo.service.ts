@@ -1,7 +1,14 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 @Injectable()
 export class ArgoConfig {
-  constructor(readonly namespace: string, readonly server: string) {}
+  constructor(
+    readonly namespace: string,
+    readonly server: string
+  ) {}
 }
 
 @Injectable()

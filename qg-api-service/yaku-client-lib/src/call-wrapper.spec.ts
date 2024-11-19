@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   DEFAULT_EXPONENTIAL_BASE_FOR_RETRIES,
   DEFAULT_MAXIMUM_RETRY_COUNT_FOR_RATE_LIMIT_RETRIES,

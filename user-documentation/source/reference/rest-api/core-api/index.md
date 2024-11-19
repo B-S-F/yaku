@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Core API Specification
 
 You can find the OpenAPI YAML specification in the Swagger UI of your Yaku

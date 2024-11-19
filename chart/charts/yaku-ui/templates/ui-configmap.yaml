@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 {{- if and (not (eq (toString .Values.enabled) "false")) .Values.enabled (not (eq (toString .Values.config.enabled) "false")) .Values.config.enabled }}
 apiVersion: v1
 kind: ConfigMap

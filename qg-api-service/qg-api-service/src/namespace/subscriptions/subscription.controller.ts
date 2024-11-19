@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -34,7 +38,7 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 
 const operationEnum = Object.values(SubscriptionOperation) as [
   string,
-  ...string[]
+  ...string[],
 ]
 
 const postSchema = z

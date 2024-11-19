@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # pdf-signature-evaluator
 
 An evaluator that checks the integrity of PDF signatures and optionally:

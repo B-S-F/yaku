@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Controller, Get, Inject, Param, Query, Res } from '@nestjs/common'
 import { GetFindingsDTO } from './dto/getFindings.dto'
 import { MetricService } from './metric.service'

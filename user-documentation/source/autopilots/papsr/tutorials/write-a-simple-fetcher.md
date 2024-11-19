@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Writing a simple fetcher app
 
 You can easily write a custom app for fetching data from some URL.

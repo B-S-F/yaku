@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import 'colors'
 import { ReasonPackage } from '@B-S-F/json-evaluator-lib/src/types'
 

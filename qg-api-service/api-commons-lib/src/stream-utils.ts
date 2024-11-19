@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Readable } from 'stream'
 
 export async function streamToString(stream: Readable): Promise<string> {

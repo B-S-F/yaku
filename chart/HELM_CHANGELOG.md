@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Helm Chart Changelog
 
 In this file we keep track of the changes we make to the helm chart to be deployed in our SAAS.

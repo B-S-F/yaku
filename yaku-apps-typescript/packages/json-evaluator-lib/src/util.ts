@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { SearchOnFail } from './types'
 import { AppError } from '@B-S-F/autopilot-utils'
 

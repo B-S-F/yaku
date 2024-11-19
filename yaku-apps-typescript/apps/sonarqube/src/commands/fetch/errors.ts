@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { AppError } from '@B-S-F/autopilot-utils'
 
 export class ConfigurationError extends AppError {

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # Base image: Ubuntu 22.04
 
 ARG BASE_IMAGE_NAME=ubuntu:22.04

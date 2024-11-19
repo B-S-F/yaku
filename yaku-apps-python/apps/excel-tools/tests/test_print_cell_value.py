@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import openpyxl
 import pytest
 from yaku.excel_tools.commands.print_cell_value import (

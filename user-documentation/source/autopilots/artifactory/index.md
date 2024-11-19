@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Artifactory
 
 You store code analysis reports, PDF documents or any other artifacts that you need to gather before a software new version release?
