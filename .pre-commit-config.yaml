@@ -8,6 +8,16 @@ default_language_version:
   python: python3
 repos:
   ####
+  ## Licenses and copyright
+  ####
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v5.0.2
+    hooks:
+      - id: reuse-lint-file
+        files: '\.(applescript|aspx|bat|bib|c|cpp|f|ftl|hbs|hs|html|jinja|jinja2|jl|lisp|lsp|m4|md|ml|f90|puml|plantuml|py|rst|tex|ts|man|vim|yaml|xq|xquery)$'
+        exclude: 'user-documentation/source/resources/features/image-source-information\.md|user-documentation/source/onboarding\.md'
+
+  ####
   ## User documentation
   ####
   - repo: local
