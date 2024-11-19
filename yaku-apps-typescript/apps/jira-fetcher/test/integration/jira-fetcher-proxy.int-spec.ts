@@ -37,7 +37,7 @@ describe('Proxy', () => {
       undefined,
       {
         env: env,
-      }
+      },
     )
 
     // We do not implement CONNECT in the mock server which is needed for proxy functionality
@@ -63,7 +63,7 @@ describe('Proxy', () => {
       })
 
       expect(
-        mockServer.getRequests('/rest/api/2/search', 'post').length
+        mockServer.getRequests('/rest/api/2/search', 'post').length,
       ).toEqual(1)
       expect(mockServer.getNumberOfRequests()).toEqual(1)
     })

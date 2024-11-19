@@ -38,17 +38,17 @@ const processResponseError = (response: any): never => {
   const logger = GetLogger()
   if (!response.data) {
     throw new ResponseError(
-      `Response status code ${response.status}: ${response.message}`
+      `Response status code ${response.status}: ${response.message}`,
     )
   }
   if (!response.data.retVal) {
     if (response.statusText && response.statusText.length > 0) {
       throw new ResponseError(
-        `Response status code ${response.status}: ${response.statusText}`
+        `Response status code ${response.status}: ${response.statusText}`,
       )
     }
     throw new ResponseError(
-      `Response status code ${response.status}: ${response.data.error}`
+      `Response status code ${response.status}: ${response.data.error}`,
     )
   }
   if (response.data.supportToken) {
@@ -56,16 +56,16 @@ const processResponseError = (response: any): never => {
   }
   if (typeof response.data.retVal === 'string') {
     throw new ResponseError(
-      `Response status code ${response.status}: ${response.data.retVal}`
+      `Response status code ${response.status}: ${response.data.retVal}`,
     )
   }
   if (typeof response.data.retVal === 'object') {
     throw new ResponseError(
-      `Response status code ${response.status}: ${response.data.retVal.errorMessage}`
+      `Response status code ${response.status}: ${response.data.retVal.errorMessage}`,
     )
   }
   throw new ResponseError(
-    `Response status code ${response.status}: ${response.message}`
+    `Response status code ${response.status}: ${response.message}`,
   )
 }
 

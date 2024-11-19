@@ -39,7 +39,7 @@ export class ConfigEntity {
 
   @OneToMany(
     () => FileEntity,
-    (file) => file.config
+    (file) => file.config,
   )
   files: FileEntity[]
 
@@ -52,7 +52,7 @@ export class ConfigEntity {
       (file) =>
         file.filename !== QG_CONFIG_FILENAME &&
         (includeAlternativeQgConfigs ||
-          !file.filename.match(QG_CONFIG_ALTERNATIVE_FILENAME_PATTERN))
+          !file.filename.match(QG_CONFIG_ALTERNATIVE_FILENAME_PATTERN)),
     )
   }
 }
@@ -70,7 +70,7 @@ export class FileEntity {
     (config) => config.files,
     {
       onDelete: 'CASCADE',
-    }
+    },
   )
   config: ConfigEntity
 }

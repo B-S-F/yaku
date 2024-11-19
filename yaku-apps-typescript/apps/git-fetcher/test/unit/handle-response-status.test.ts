@@ -57,6 +57,6 @@ describe('HandleResponseStatus', () => {
     ({ status, serverType, message }) => {
       vi.stubEnv('GIT_FETCHER_SERVER_TYPE', serverType)
       expect(() => handleResponseStatus(status)).toThrowError(message)
-    }
+    },
   )
 })

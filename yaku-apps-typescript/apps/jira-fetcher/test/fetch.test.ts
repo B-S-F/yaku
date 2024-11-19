@@ -65,8 +65,8 @@ describe('fetchData()', () => {
           pat,
           undefined,
           undefined,
-          configData
-        )
+          configData,
+        ),
     ).rejects.toThrowError(AppError)
   })
 
@@ -83,8 +83,8 @@ describe('fetchData()', () => {
           pat,
           undefined,
           undefined,
-          configData
-        )
+          configData,
+        ),
     ).rejects.toThrowError(AppError)
   })
 
@@ -102,8 +102,8 @@ describe('fetchData()', () => {
           pat,
           undefined,
           undefined,
-          configData
-        )
+          configData,
+        ),
     ).rejects.toThrowError(AppError)
   })
 
@@ -121,8 +121,8 @@ describe('fetchData()', () => {
           pat,
           undefined,
           undefined,
-          configData
-        )
+          configData,
+        ),
     ).rejects.toThrowError(AppError)
   })
 
@@ -136,7 +136,7 @@ describe('fetchData()', () => {
             startAt: 0,
             maxResults: 1,
             total: 2,
-          })
+          }),
         ),
     } as Response)
 
@@ -149,7 +149,7 @@ describe('fetchData()', () => {
             startAt: 1,
             maxResults: 1,
             total: 2,
-          })
+          }),
         ),
     } as Response)
 
@@ -158,7 +158,7 @@ describe('fetchData()', () => {
       pat,
       undefined,
       undefined,
-      configData
+      configData,
     )
     const expectedResult = [{ id: 1 }, { id: 2 }]
     expect(result).toEqual(expectedResult)

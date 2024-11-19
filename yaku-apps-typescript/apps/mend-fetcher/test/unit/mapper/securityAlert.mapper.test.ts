@@ -22,7 +22,7 @@ describe('securityAlert.mapper', () => {
     const expected = securityAlertsDTO[1]
 
     const result: SecurityAlertDTO = SecurityAlertMap.toDTO(
-      securityAlertsModel[1]
+      securityAlertsModel[1],
     )
 
     expect(result).toStrictEqual(expected)

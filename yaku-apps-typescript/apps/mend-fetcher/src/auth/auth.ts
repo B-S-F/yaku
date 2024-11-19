@@ -24,7 +24,7 @@ export class Authenticator {
         this.env.apiUrl,
         this.env.email,
         this.env.orgToken,
-        this.env.userKey
+        this.env.userKey,
       )
     } else {
       if (this.isLoginExpired()) {
@@ -32,7 +32,7 @@ export class Authenticator {
           this.env.apiUrl,
           this.env.email,
           this.env.orgToken,
-          this.env.userKey
+          this.env.userKey,
         )
       }
     }

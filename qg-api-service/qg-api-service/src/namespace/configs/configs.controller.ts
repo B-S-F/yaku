@@ -164,7 +164,7 @@ const patchSchema = z
       Boolean(value.name || value.description || value.description === null),
     {
       message: `At least one of the properties 'name' or 'description' need to be changed`,
-    }
+    },
   )
 
 class ConfigListDto extends PaginatedData {
@@ -352,7 +352,7 @@ export class FileFormatValidator extends FileValidator {
 export const fileSizeCheck = new ParseFilePipe({
   validators: [
     new ContentSizeValidator({
-      maxSizeMB: parseInt(MAX_FILE_SIZE_MB),
+      maxSizeMB: Number.parseInt(MAX_FILE_SIZE_MB),
     }),
   ],
   errorHttpStatusCode: HttpStatus.PAYLOAD_TOO_LARGE,
@@ -368,7 +368,7 @@ function validateFilename(filename: string): void {
   const matches = filename.match(filenameReservedRegex)
   if (matches) {
     throw new BadRequestException(
-      `Filename contains reserved characters: ${matches.join(', ')}`
+      `Filename contains reserved characters: ${matches.join(', ')}`,
     )
   }
 }
@@ -384,7 +384,7 @@ export class ConfigsController {
     @Inject(ConfigsService) private readonly service: ConfigsService,
     @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory,
     @Inject(YamlValidatorService) private yamlValidator: YamlValidatorService,
-    @Inject(JsonValidatorService) private jsonValidator: JsonValidatorService
+    @Inject(JsonValidatorService) private jsonValidator: JsonValidatorService,
   ) {}
 
   @Get()
@@ -398,27 +398,27 @@ export class ConfigsController {
   async getConfigs(
     @Param('namespaceId') namespaceId: number,
     @Query() queryOptions: ConfigsQueryOptions,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<ConfigListDto> {
     validateId(namespaceId)
     const listQueryOptions: ListQueryHandler = toListQueryOptions(
       queryOptions,
       queryOptionsSchema.strict(),
       allowedSortProperties,
-      'id'
+      'id',
     )
     const requestUrl = this.urlHandler.getHandler(response)
 
     const rawData = await this.service.getConfigs(namespaceId, listQueryOptions)
     const data = rawData.entities.map((config: ConfigEntity) =>
-      toOutputDto(config, requestUrl.url(`/${config.id}/files`))
+      toOutputDto(config, requestUrl.url(`/${config.id}/files`)),
     )
 
     return createPaginationData<ConfigDto, ConfigListDto>(
       listQueryOptions,
       requestUrl,
       rawData.itemCount,
-      data
+      data,
     )
   }
 
@@ -436,7 +436,7 @@ export class ConfigsController {
   async createConfig(
     @Param('namespaceId') namespaceId: number,
     @Body() body: ConfigPostDto,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<ConfigDto> {
     validateBody(body, postSchema)
     validateId(namespaceId)
@@ -446,11 +446,11 @@ export class ConfigsController {
     const newConfigEntity = await this.service.create(
       namespaceId,
       body.name,
-      body.description
+      body.description,
     )
     const newConfig = toOutputDto(
       newConfigEntity,
-      requestUrl.url(`/${newConfigEntity.id}/files`)
+      requestUrl.url(`/${newConfigEntity.id}/files`),
     )
     response.header('Location', requestUrl.url(`/${newConfig.id}`))
     return newConfig
@@ -466,7 +466,7 @@ export class ConfigsController {
   async getConfig(
     @Param('namespaceId') namespaceId: number,
     @Param('configId') configId: number,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<ConfigDto> {
     validateId(configId)
     validateId(namespaceId)
@@ -475,7 +475,7 @@ export class ConfigsController {
 
     return toOutputDto(
       await this.service.getConfig(namespaceId, configId),
-      requestUrl.url('/files')
+      requestUrl.url('/files'),
     )
   }
 
@@ -491,7 +491,7 @@ export class ConfigsController {
     @Param('namespaceId') namespaceId: number,
     @Param('configId') configId: number,
     @Body() body: ConfigPatchDto,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<ConfigDto> {
     validateId(configId)
     validateBody(body, patchSchema)
@@ -504,9 +504,9 @@ export class ConfigsController {
         namespaceId,
         configId,
         body.name,
-        body.description
+        body.description,
       ),
-      requestUrl.url('/files')
+      requestUrl.url('/files'),
     )
   }
 
@@ -519,7 +519,7 @@ export class ConfigsController {
   })
   async deleteConfig(
     @Param('namespaceId') namespaceId: number,
-    @Param('configId') configId: number
+    @Param('configId') configId: number,
   ): Promise<void> {
     validateId(configId)
     validateId(namespaceId)
@@ -541,7 +541,7 @@ export class ConfigsController {
   async validateConfig(
     @Param('namespaceId') namespaceId: number,
     @Param('configId') configId: number,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<ValidationReport> {
     validateId(configId)
     validateId(namespaceId)
@@ -577,7 +577,7 @@ export class ConfigsController {
     @Param('namespaceId') namespaceId: number,
     @Param('configId') configId: number,
     @UploadedFiles(fileSizeCheck, fileFormatCheck) file: FileContentDto,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<StreamableFile> {
     validateId(configId)
     validateBody(file, filePatchSchema)
@@ -588,16 +588,16 @@ export class ConfigsController {
     const qgConfig = await this.service.createInitialConfig(
       namespaceId,
       configId,
-      file.content[0].buffer
+      file.content[0].buffer,
     )
     response.header('Content-Type', 'application/octet-stream')
     response.header(
       'Content-Disposition',
-      `attachment; filename="${qgConfig.filename}"`
+      `attachment; filename="${qgConfig.filename}"`,
     )
     response.header(
       'Location',
-      requestUrl.url(`/files/${qgConfig.filename}`, 1)
+      requestUrl.url(`/files/${qgConfig.filename}`, 1),
     )
 
     return new StreamableFile(qgConfig.content)
@@ -625,13 +625,13 @@ export class ConfigsController {
     FileFieldsInterceptor([
       { name: 'xlsx', maxCount: 1 },
       { name: 'config', maxCount: 1 },
-    ])
+    ]),
   )
   async createInitialConfigFromExcel(
     @Param('namespaceId') namespaceId: number,
     @Param('configId') configId: number,
     @UploadedFiles(fileSizeCheck, fileFormatCheck) files: ExcelQuestionnaire,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<StreamableFile> {
     validateId(configId)
     validateBody(files, excelSchema)
@@ -644,17 +644,17 @@ export class ConfigsController {
       configId,
       files.xlsx[0].originalname,
       files.xlsx[0].buffer,
-      files.config[0].buffer
+      files.config[0].buffer,
     )
 
     response.header('Content-Type', 'application/octet-stream')
     response.header(
       'Content-Disposition',
-      `attachment; filename="${qgConfig.filename}"`
+      `attachment; filename="${qgConfig.filename}"`,
     )
     response.header(
       'Location',
-      requestUrl.url(`/files/${qgConfig.filename}`, 1)
+      requestUrl.url(`/files/${qgConfig.filename}`, 1),
     )
 
     return new StreamableFile(qgConfig.content)
@@ -673,7 +673,7 @@ export class ConfigsController {
     @Param('namespaceId') namespaceId: number,
     @Param('configId') configId: number,
     @Body() body: CopyConfigDto,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<ConfigDto> {
     validateId(configId)
     validateId(namespaceId)
@@ -685,7 +685,7 @@ export class ConfigsController {
       namespaceId,
       configId,
       body.name,
-      body.description
+      body.description,
     )
 
     const requestUrlWithNewId = requestUrl
@@ -716,7 +716,7 @@ export class ConfigsController {
     @Param('configId') configId: number,
     @Body() body: FilenameDto,
     @UploadedFiles(fileSizeCheck, fileFormatCheck) file: FileContentDto,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<void> {
     validateId(configId)
     validateBody(body, filePostSchema)
@@ -744,7 +744,7 @@ export class ConfigsController {
       namespaceId,
       configId,
       decodedFilename,
-      file.content[0].buffer
+      file.content[0].buffer,
     )
     const encodedFilename = encodeURIComponent(decodedFilename)
     response.header('Location', requestUrl.url(`/${encodedFilename}`))
@@ -759,7 +759,7 @@ export class ConfigsController {
     @Param('namespaceId') namespaceId: number,
     @Param('configId') configId: number,
     @Param('filename') filename: string,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<StreamableFile> {
     validateId(configId)
     validateName(filename)
@@ -769,14 +769,14 @@ export class ConfigsController {
     const fileContent = await this.service.getFileContent(
       namespaceId,
       configId,
-      decodedFilename
+      decodedFilename,
     )
     response.header(
       'Content-Disposition',
       // We are unable to return the decoded filename as it may contain insecure characters that are not allowed to be part of the header
       // That's why we apply to https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition#filename_2
       // We still support the old filename for backward compatibility
-      `attachment; filename="${decodedFilename}"; filename*="${filename}"`
+      `attachment; filename="${decodedFilename}"; filename*="${filename}"`,
     )
     return new StreamableFile(fileContent)
   }
@@ -795,7 +795,7 @@ export class ConfigsController {
     @Param('namespaceId') namespaceId: number,
     @Param('configId') configId: number,
     @Param('filename') filename: string,
-    @UploadedFiles(fileSizeCheck, fileFormatCheck) file: FileContentDto
+    @UploadedFiles(fileSizeCheck, fileFormatCheck) file: FileContentDto,
   ): Promise<void> {
     validateId(configId)
     validateName(filename)
@@ -817,7 +817,7 @@ export class ConfigsController {
       namespaceId,
       configId,
       decodedFilename,
-      file.content[0].buffer
+      file.content[0].buffer,
     )
   }
 
@@ -827,7 +827,7 @@ export class ConfigsController {
   async deleteFile(
     @Param('namespaceId') namespaceId: number,
     @Param('configId') configId: number,
-    @Param('filename') filename: string
+    @Param('filename') filename: string,
   ): Promise<void> {
     validateId(configId)
     validateName(filename)

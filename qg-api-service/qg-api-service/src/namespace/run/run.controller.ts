@@ -119,7 +119,7 @@ class DetailedRunDto extends RunDto {
 function toOutputDto(
   run: Run,
   configsUrl: string,
-  details = false
+  details = false,
 ): RunDto | DetailedRunDto {
   const dto = details ? new DetailedRunDto() : new RunDto()
   dto.id = run.id
@@ -299,7 +299,7 @@ export class RunController {
     @Inject(RunService) readonly service: RunService,
     @Inject(UrlHandlerFactory) readonly urlHandler: UrlHandlerFactory,
     @Inject(ResultValidatorService)
-    private readonly resultValidator: ResultValidatorService
+    private readonly resultValidator: ResultValidatorService,
   ) {}
 
   @Get()
@@ -318,14 +318,14 @@ export class RunController {
   async getRuns(
     @Param('namespaceId') namespaceId: number,
     @Query() queryOptions: RunsQueryOptions,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<RunListDto> {
     validateId(namespaceId)
     const listQueryOptions: ListQueryHandler = toListQueryOptions(
       queryOptions,
       runQuerySchema,
       allowedSortProperties,
-      'id'
+      'id',
     )
     const filtering = parseFilter(queryOptions.filter)
     if (filtering) {
@@ -335,14 +335,14 @@ export class RunController {
 
     const rawData = await this.service.getList(namespaceId, listQueryOptions)
     const data = rawData.entities.map((run) =>
-      toOutputDto(run, requestUrl.url('/configs', 1))
+      toOutputDto(run, requestUrl.url('/configs', 1)),
     )
 
     return createPaginationData<RunDto, RunListDto>(
       listQueryOptions,
       requestUrl,
       rawData.itemCount,
-      data
+      data,
     )
   }
 
@@ -368,7 +368,7 @@ export class RunController {
   async create(
     @Param('namespaceId') namespaceId: number,
     @Body() dto: RunPostDto,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<RunDto> {
     validateBody(dto, postSchema)
     validateId(namespaceId)
@@ -402,7 +402,7 @@ export class RunController {
     @Query('configId') configId: number,
     @Body() body: FilenameResultDto,
     @UploadedFiles() file: FileResultContentDto,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(configId)
@@ -425,15 +425,21 @@ export class RunController {
     }
 
     // Guard against wrong filenames/missing files
-    if (filenameToContentMap.get(RESULTFILE) !== undefined && file.content[filenameToContentMap.get(RESULTFILE)]) {
+    if (
+      filenameToContentMap.get(RESULTFILE) !== undefined &&
+      file.content[filenameToContentMap.get(RESULTFILE)]
+    ) {
       const resultData =
         file.content[filenameToContentMap.get(RESULTFILE)].buffer.toString(
-          'utf-8'
+          'utf-8',
         )
       await this.resultValidator.validate(resultData)
       data[RESULTFILE] = resultData
     }
-    if (filenameToContentMap.get(EVIDENCEFILE) !== undefined && file.content[filenameToContentMap.get(EVIDENCEFILE)]) {
+    if (
+      filenameToContentMap.get(EVIDENCEFILE) !== undefined &&
+      file.content[filenameToContentMap.get(EVIDENCEFILE)]
+    ) {
       data[EVIDENCEFILE] =
         file.content[filenameToContentMap.get(EVIDENCEFILE)].buffer
     }
@@ -457,7 +463,7 @@ export class RunController {
   async get(
     @Param('namespaceId') namespaceId: number,
     @Param('runId') runId: number,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<DetailedRunDto> {
     validateId(runId)
 
@@ -465,7 +471,7 @@ export class RunController {
     return toOutputDto(
       await this.service.get(namespaceId, runId),
       requestUrl.url('/configs', 2),
-      true
+      true,
     )
   }
 
@@ -481,7 +487,7 @@ export class RunController {
   async getResult(
     @Param('namespaceId') namespaceId: number,
     @Param('runId') runId: number,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<StreamableFile> {
     validateId(runId)
     validateId(namespaceId)
@@ -491,7 +497,7 @@ export class RunController {
     response.header('Content-Type', 'application/yaml')
     response.header(
       'Content-Disposition',
-      `attachment; filename="${RESULTFILE}"`
+      `attachment; filename="${RESULTFILE}"`,
     )
 
     return new StreamableFile(content)
@@ -513,7 +519,7 @@ export class RunController {
   async getEvidence(
     @Param('namespaceId') namespaceId: number,
     @Param('runId') runId: number,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ) {
     validateId(runId)
     validateId(namespaceId)
@@ -523,7 +529,7 @@ export class RunController {
     response.header('Content-Type', 'application/zip')
     response.header(
       'Content-Disposition',
-      `attachment; filename="${EVIDENCEFILE}"`
+      `attachment; filename="${EVIDENCEFILE}"`,
     )
 
     return new StreamableFile(content)
@@ -538,7 +544,7 @@ export class RunController {
   async delete(
     @Param('namespaceId') namespaceId: number,
     @Param('runId') runId: number,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<void> {
     validateId(runId)
     validateId(namespaceId)

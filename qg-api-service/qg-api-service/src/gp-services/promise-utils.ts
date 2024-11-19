@@ -1,6 +1,6 @@
 export async function promiseOnTime(
   promise: Promise<any>,
-  timeout: number
+  timeout: number,
 ): Promise<any> {
   let timeoutId: any
   const result = await Promise.race([

@@ -15,14 +15,14 @@ export class MultipleLicensesAlertMap {
         multipleLicensesAlertDTO.project.name,
         multipleLicensesAlertDTO.project.path,
         multipleLicensesAlertDTO.project.path,
-        multipleLicensesAlertDTO.project.productUuid
+        multipleLicensesAlertDTO.project.productUuid,
       ),
       {
         uuid: multipleLicensesAlertDTO.project.productUuid,
         name: multipleLicensesAlertDTO.project.path,
       },
       multipleLicensesAlertDTO.numberOfLicenses,
-      multipleLicensesAlertDTO.licenses
+      multipleLicensesAlertDTO.licenses,
     )
   }
   public static toDTO(multipleLicensesAlert: MultipleLicensesAlert) {
@@ -39,7 +39,7 @@ export class MultipleLicensesAlertMap {
         productUuid: multipleLicensesAlert.project.productUuid,
       },
       multipleLicensesAlert.numberOfLicenses,
-      multipleLicensesAlert.licenses
+      multipleLicensesAlert.licenses,
     )
   }
 }

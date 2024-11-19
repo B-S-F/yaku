@@ -46,23 +46,23 @@ describe('Findings Controller', () => {
 
     vi.spyOn(
       nestTestingApp.testingModule.get<SecretStorage>(SecretStorage),
-      'getSecrets'
+      'getSecrets',
     ).mockImplementation(() => Promise.resolve({}))
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'uploadConfig'
+      'uploadConfig',
     ).mockImplementation(() => {
       return Promise.resolve()
     })
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'fileExists'
+      'fileExists',
     ).mockImplementation(() => Promise.resolve(true))
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'downloadLogs'
+      'downloadLogs',
     ).mockImplementation(() =>
-      Promise.resolve('Cool logs\nOverall result: GREEN')
+      Promise.resolve('Cool logs\nOverall result: GREEN'),
     )
   })
 
@@ -79,7 +79,7 @@ describe('Findings Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -99,16 +99,16 @@ describe('Findings Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -135,7 +135,7 @@ describe('Findings Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -143,17 +143,17 @@ describe('Findings Controller', () => {
       expect(result.statusCode).toBe(HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
       ).toBe(expectedUnresolved)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.RESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.RESOLVED),
       ).toBe(expectedResolved)
 
       result.body.data.forEach((finding: GetFindingDTO) =>
         expect(finding).toHaveProperty(
           'occurrenceCount',
-          expectedOccurrenceCount
-        )
+          expectedOccurrenceCount,
+        ),
       )
     })
 
@@ -166,16 +166,16 @@ describe('Findings Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       let resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -205,11 +205,11 @@ describe('Findings Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-4-findings-red-status.yaml'
+        'qg-result-4-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -231,7 +231,7 @@ describe('Findings Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -239,10 +239,10 @@ describe('Findings Controller', () => {
       expect(result.statusCode).toBe(HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
       ).toBe(expectedUnresolved)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.RESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.RESOLVED),
       ).toBe(expectedResolved)
     })
 
@@ -254,23 +254,23 @@ describe('Findings Controller', () => {
       expectedMetadata.set('{}', '{}')
       expectedMetadata.set(
         '{"key1":"value1","key2":"value2"}',
-        '{"key1":"value1","key2":"value2"}'
+        '{"key1":"value1","key2":"value2"}',
       )
 
       const httpServer = await nestTestingApp.app.getHttpServer()
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       let resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -299,7 +299,7 @@ describe('Findings Controller', () => {
       let result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -309,11 +309,11 @@ describe('Findings Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-4-findings-red-status.yaml'
+        'qg-result-4-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -335,7 +335,7 @@ describe('Findings Controller', () => {
       result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -343,22 +343,22 @@ describe('Findings Controller', () => {
       expect(result.statusCode).toBe(HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
       ).toBe(expectedUnresolved)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.RESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.RESOLVED),
       ).toBe(expectedResolved)
       expect(countFindingsWithManualResolveFlag(result.body.data, false)).toBe(
-        expectedResolved
+        expectedResolved,
       )
       // we're interested in resolved findings only
       const resolvedFindings: GetFindingDTO[] = result.body.data.filter(
-        (finding: GetFindingDTO) => finding.status == 'resolved'
+        (finding: GetFindingDTO) => finding.status == 'resolved',
       )
       checkFindingsMetadata(
         resolvedFindings,
         originalMetadata,
-        expectedMetadata
+        expectedMetadata,
       )
     })
 
@@ -372,16 +372,16 @@ describe('Findings Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -418,7 +418,7 @@ describe('Findings Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -426,10 +426,10 @@ describe('Findings Controller', () => {
       expect(result.statusCode).toBe(HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
       ).toBe(expectedUnresolved)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.RESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.RESOLVED),
       ).toBe(expectedResolved)
       checkFindingsOccurrenceCount(result.body.data, expectedOccurrenceCount)
     })
@@ -442,23 +442,23 @@ describe('Findings Controller', () => {
       expectedMetadata.set('{}', '{}')
       expectedMetadata.set(
         '{"key1":"value1","key2":"value2"}',
-        '{"keyA":"newValueA","keyB":"newValueB","keyC":"newValueC"}'
+        '{"keyA":"newValueA","keyB":"newValueB","keyC":"newValueC"}',
       )
 
       const httpServer = await nestTestingApp.app.getHttpServer()
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       let resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -487,7 +487,7 @@ describe('Findings Controller', () => {
       let result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -497,11 +497,11 @@ describe('Findings Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-4-new-metadata-findings-red-status.yaml'
+        'qg-result-4-new-metadata-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -523,7 +523,7 @@ describe('Findings Controller', () => {
       result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -531,19 +531,19 @@ describe('Findings Controller', () => {
       expect(result.statusCode).toBe(HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
       ).toBe(expectedUnresolved)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.RESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.RESOLVED),
       ).toBe(expectedResolved)
       // we're interested in unresolved findings only
       const unresolvedFindings: GetFindingDTO[] = result.body.data.filter(
-        (finding: GetFindingDTO) => finding.status == 'unresolved'
+        (finding: GetFindingDTO) => finding.status == 'unresolved',
       )
       checkFindingsMetadata(
         unresolvedFindings,
         originalMetadata,
-        expectedMetadata
+        expectedMetadata,
       )
     })
 
@@ -557,16 +557,16 @@ describe('Findings Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-5-findings-error-status.yaml'
+        'qg-config-5-findings-error-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-5-findings-error-status.yaml'
+        'qg-result-5-findings-error-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -594,7 +594,7 @@ describe('Findings Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -602,10 +602,10 @@ describe('Findings Controller', () => {
       expect(result.statusCode).toBe(HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
       ).toBe(expectedUnresolved)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.RESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.RESOLVED),
       ).toBe(expectedResolved)
       checkFindingsOccurrenceCount(result.body.data, expectedOccurrenceCount)
     })
@@ -620,16 +620,16 @@ describe('Findings Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-0-findings-green-status.yaml'
+        'qg-config-0-findings-green-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-0-findings-green-status.yaml'
+        'qg-result-0-findings-green-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -666,7 +666,7 @@ describe('Findings Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -674,10 +674,10 @@ describe('Findings Controller', () => {
       expect(result.statusCode).toBe(HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
       ).toBe(expectedUnresolved)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.RESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.RESOLVED),
       ).toBe(expectedResolved)
       checkFindingsOccurrenceCount(result.body.data, expectedOccurrenceCount)
     })
@@ -691,16 +691,16 @@ describe('Findings Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -728,7 +728,7 @@ describe('Findings Controller', () => {
         await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
           )
           .set('Accept', 'application/json')
           .set('Authorization', `Bearer ${apiToken}`)
@@ -737,7 +737,7 @@ describe('Findings Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${findings[0].id}`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${findings[0].id}`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -755,16 +755,16 @@ describe('Findings Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -792,7 +792,7 @@ describe('Findings Controller', () => {
         await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
           )
           .set('Accept', 'application/json')
           .set('Authorization', `Bearer ${apiToken}`)
@@ -802,7 +802,7 @@ describe('Findings Controller', () => {
         const result = await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${finding.id}`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${finding.id}`,
           )
           .set('Accept', 'application/json')
           .set('Authorization', `Bearer ${apiToken}`)
@@ -826,16 +826,16 @@ describe('Findings Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -863,7 +863,7 @@ describe('Findings Controller', () => {
         await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
           )
           .set('Accept', 'application/json')
           .set('Authorization', `Bearer ${apiToken}`)
@@ -878,7 +878,7 @@ describe('Findings Controller', () => {
       await supertest
         .agent(httpServer)
         .patch(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${findings[0].id}`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${findings[0].id}`,
         )
         .send(patchBody)
         .set('Accept', 'application/json')
@@ -889,19 +889,19 @@ describe('Findings Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
       ).toBe(expectedUnresolved)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.RESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.RESOLVED),
       ).toBe(expectedResolved)
       expect(countFindingsWithManualResolveFlag(result.body.data, true)).toBe(
-        expectedResolved
+        expectedResolved,
       )
       checkFindingsOccurrenceCount(result.body.data, expectedOccurrenceCount)
     })
@@ -914,16 +914,16 @@ describe('Findings Controller', () => {
     const configFile = path.join(
       __dirname,
       'mocks',
-      'qg-config-10-findings-red-status.yaml'
+      'qg-config-10-findings-red-status.yaml',
     )
     const resultFile = path.join(
       __dirname,
       'mocks',
-      'qg-result-10-findings-red-status.yaml'
+      'qg-result-10-findings-red-status.yaml',
     )
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'downloadResult'
+      'downloadResult',
     ).mockImplementation(async (): Promise<Readable> => {
       const buffer = await readFile(resultFile)
       const readableStream = new Readable({
@@ -951,7 +951,7 @@ describe('Findings Controller', () => {
       await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -967,7 +967,7 @@ describe('Findings Controller', () => {
     const result = await supertest
       .agent(httpServer)
       .patch(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${findings[0].id}`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${findings[0].id}`,
       )
       .send(patchBody)
       .set('Accept', 'application/json')
@@ -990,16 +990,16 @@ describe('Findings Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -1027,7 +1027,7 @@ describe('Findings Controller', () => {
         await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
           )
           .set('Accept', 'application/json')
           .set('Authorization', `Bearer ${apiToken}`)
@@ -1037,7 +1037,7 @@ describe('Findings Controller', () => {
       await supertest
         .agent(httpServer)
         .delete(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${findings[0].id}`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings/${findings[0].id}`,
         )
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
@@ -1047,7 +1047,7 @@ describe('Findings Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -1055,13 +1055,13 @@ describe('Findings Controller', () => {
       await checkFindingsDatabaseEntries(runId * expectedResultingEntries)
       expect(result.statusCode).toBe(HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(
-        runId * expectedResultingEntries
+        runId * expectedResultingEntries,
       )
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
       ).toBe(expectedUnresolved)
       expect(
-        countFindingsWithStatus(result.body.data, StatusType.RESOLVED)
+        countFindingsWithStatus(result.body.data, StatusType.RESOLVED),
       ).toBe(expectedResolved)
       checkFindingsOccurrenceCount(result.body.data, expectedOccurrenceCount)
     })
@@ -1082,7 +1082,7 @@ describe('Findings Controller', () => {
     await supertest
       .agent(httpServer)
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
       )
       .field('filename', 'qg-config.yaml')
       .attach('content', await readFile(filepath), {
@@ -1106,16 +1106,16 @@ describe('Findings Controller', () => {
     ])
     expect(
       runEntity.storagePath.length,
-      `Run in database does not have a storage path`
+      `Run in database does not have a storage path`,
     ).toBeDefined()
   }
 
   async function checkFindingsDatabaseEntries(
-    expectedNumber: number
+    expectedNumber: number,
   ): Promise<void> {
     expect(
       await nestTestingApp.repositories.findingRepository.count(),
-      `Expected ${expectedNumber} elements in database`
+      `Expected ${expectedNumber} elements in database`,
     ).toBe(expectedNumber)
   }
 
@@ -1124,16 +1124,16 @@ describe('Findings Controller', () => {
       await nestTestingApp.repositories.findingRepository.find()
 
     findingsEntity.forEach((finding) =>
-      expect(finding).toHaveProperty('runId', runId)
+      expect(finding).toHaveProperty('runId', runId),
     )
   }
 
   function checkFindingsOccurrenceCount(
     findings: GetFindingDTO[],
-    expectedCount: number
+    expectedCount: number,
   ) {
     findings.forEach((finding: GetFindingDTO) =>
-      expect(finding).toHaveProperty('occurrenceCount', expectedCount)
+      expect(finding).toHaveProperty('occurrenceCount', expectedCount),
     )
   }
 
@@ -1149,19 +1149,19 @@ describe('Findings Controller', () => {
 
     expect(
       response.body.id,
-      `The id of created run does not exist`
+      `The id of created run does not exist`,
     ).toBeDefined()
     expect(
       response.headers.location.endsWith(`${response.body.id}`),
-      `The location header of created run is not as expected`
+      `The location header of created run is not as expected`,
     ).toBeTruthy()
     expect(
       response.body.status,
-      `The status of created run is not as expected, it is ${response.body.status}`
+      `The status of created run is not as expected, it is ${response.body.status}`,
     ).oneOf([RunStatus.Running, RunStatus.Pending])
     expect(
       response.body.config,
-      `The config ref of created run is not as expected, it is ${response.body.config}`
+      `The config ref of created run is not as expected, it is ${response.body.config}`,
     ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
 
     return response.body.id
@@ -1202,7 +1202,7 @@ describe('Findings Controller', () => {
 
   function countFindingsWithStatus(
     findings: GetFindingDTO[],
-    status: StatusType
+    status: StatusType,
   ): number {
     return findings.reduce((total: number, item: GetFindingDTO) => {
       if (item.status == status) {
@@ -1214,7 +1214,7 @@ describe('Findings Controller', () => {
 
   function countFindingsWithManualResolveFlag(
     findings: GetFindingDTO[],
-    status: boolean
+    status: boolean,
   ): number {
     return findings.reduce((total: number, item: GetFindingDTO) => {
       if (item.resolver && item.resolvedManually == status) {
@@ -1225,11 +1225,11 @@ describe('Findings Controller', () => {
   }
 
   function saveFindingsMetadata(
-    findings: GetFindingDTO[]
+    findings: GetFindingDTO[],
   ): Map<string, string> {
     const metadata: Map<string, string> = new Map()
     findings.forEach((item: GetFindingDTO) =>
-      metadata.set(item.uniqueIdHash, JSON.stringify(item.metadata))
+      metadata.set(item.uniqueIdHash, JSON.stringify(item.metadata)),
     )
 
     return metadata
@@ -1238,11 +1238,11 @@ describe('Findings Controller', () => {
   function checkFindingsMetadata(
     findings: GetFindingDTO[],
     originalMetadata: Map<any, any>,
-    expectedMetadata: Map<any, any>
+    expectedMetadata: Map<any, any>,
   ) {
     findings.forEach((finding: GetFindingDTO) => {
       expect(JSON.stringify(finding.metadata)).toBe(
-        expectedMetadata.get(originalMetadata.get(finding.uniqueIdHash))
+        expectedMetadata.get(originalMetadata.get(finding.uniqueIdHash)),
       )
     })
   }

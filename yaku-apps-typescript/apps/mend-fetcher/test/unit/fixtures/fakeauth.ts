@@ -18,7 +18,7 @@ export class FakeAuthenticator {
       1800000,
       organizationData.name,
       organizationData.uuid,
-      new Date().valueOf()
+      new Date().valueOf(),
     )
   }
 }

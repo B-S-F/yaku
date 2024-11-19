@@ -1006,8 +1006,8 @@ describe('evalConcatenation', () => {
   it('should throw an error if a referenced check does not exist', () => {
     expect(() => evalConcatenation('check1 && check4', checks)).toThrow(
       Error(
-        'Error in concatenation condition. Please check the concatenation condition.'
-      )
+        'Error in concatenation condition. Please check the concatenation condition.',
+      ),
     )
   })
 })

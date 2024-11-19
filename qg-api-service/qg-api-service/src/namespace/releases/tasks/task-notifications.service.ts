@@ -35,12 +35,12 @@ export class TaskNotificationsService {
     @Inject(UsersService)
     private readonly usersService: UsersService,
     @Inject(NotificationService)
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
   ) {}
 
   async removeTaskNotifications(
     entityManager: EntityManager,
-    taskIds: number[]
+    taskIds: number[],
   ) {
     await entityManager.delete(TaskNotificationEntity, {
       task: {
@@ -59,7 +59,7 @@ export class TaskNotificationsService {
     try {
       // Ensures that only one instance of the reminder task can access the task_notification table
       await queryRunner.query(
-        'LOCK TABLE task_notification IN ACCESS EXCLUSIVE MODE NOWAIT'
+        'LOCK TABLE task_notification IN ACCESS EXCLUSIVE MODE NOWAIT',
       )
       await this.synchronizeTaskNotifications(queryRunner.manager)
       await this.sendTaskNotifications(queryRunner.manager)
@@ -77,14 +77,14 @@ export class TaskNotificationsService {
     const now = new Date()
     const taskNotifications = await this.getValidTaskNotifications(
       entityManager,
-      now
+      now,
     )
 
     for (const taskNotification of taskNotifications) {
       const task = taskNotification.task
       if (!task.namespace || !task.release) {
         throw new Error(
-          'Unexpected state when pushing notification, missing relational data in task'
+          'Unexpected state when pushing notification, missing relational data in task',
         )
       }
 
@@ -110,7 +110,7 @@ export class TaskNotificationsService {
           {
             type: NotificationType.TaskRecurring,
             data,
-          }
+          },
         )
       }
 
@@ -121,10 +121,10 @@ export class TaskNotificationsService {
 
   private async getValidTaskNotifications(
     entityManager: EntityManager,
-    currentDate: Date
+    currentDate: Date,
   ) {
     const lastNotifiedThreshold = new Date(
-      currentDate.getTime() - DEFAULT_RECURRING_NOTIFICATION_INTERVAL
+      currentDate.getTime() - DEFAULT_RECURRING_NOTIFICATION_INTERVAL,
     )
     return await entityManager
       .createQueryBuilder(TaskNotificationEntity, 'taskNotification')
@@ -142,17 +142,16 @@ export class TaskNotificationsService {
           overdueReminder: ReminderMode.OVERDUE,
           lastNotifiedThreshold,
           currentDate,
-        }
+        },
       )
       .getMany()
   }
 
   private async synchronizeTaskNotifications(entityManager: EntityManager) {
-    const currentTaskNotifications = await this.getTaskNotifications(
-      entityManager
-    )
+    const currentTaskNotifications =
+      await this.getTaskNotifications(entityManager)
     const currentTaskIds = currentTaskNotifications.map(
-      (taskNotification) => taskNotification.task.id
+      (taskNotification) => taskNotification.task.id,
     )
 
     const newTaskNotifications = await entityManager
@@ -173,7 +172,7 @@ export class TaskNotificationsService {
           taskNotification.lastNotified = new Date(0)
           taskNotification.task = task
           return taskNotification
-        })
+        }),
       )
 
     await entityManager.save(newTaskNotifications)

@@ -111,7 +111,7 @@ export class KeyCloakServiceMock {
 
   async getUsersOfNamespace(
     // eslint-disable-next-line no-unused-vars
-    _namespaceId: number
+    _namespaceId: number,
   ): Promise<KeyCloakUserOfRole[]> {
     // If _namespaceId is among the user's namespace ids,
     // map that user to a KeyCloakUserOfRole
@@ -119,7 +119,7 @@ export class KeyCloakServiceMock {
     const usersInNamespace: KeyCloakUserOfRole[] = this.mockusers
       .filter((kc_user: KeyCloakUser) => {
         const namespaceIds = kc_user.namespaces.map(
-          (namespace: KeyCloakNamespace) => namespace.id
+          (namespace: KeyCloakNamespace) => namespace.id,
         )
         return namespaceIds.includes(_namespaceId)
       })
@@ -141,7 +141,7 @@ export class KeyCloakServiceMock {
   // eslint-disable-next-line no-unused-vars
   async getUserById(id: string): Promise<KeyCloakUserOfRole> {
     const foundUser: KeyCloakUser = this.mockusers.find(
-      (mockuser) => mockuser.kc_sub === id
+      (mockuser) => mockuser.kc_sub === id,
     )
     if (!foundUser) {
       throw new MissingUserError(`User with id ${id} not found`)
@@ -160,7 +160,7 @@ export class KeyCloakServiceMock {
   // eslint-disable-next-line no-unused-vars
   async getUserByUsername(_username: string): Promise<KeyCloakUserOfRole> {
     const foundUser: KeyCloakUser = this.mockusers.find(
-      (mockuser) => String(mockuser.username) === _username
+      (mockuser) => String(mockuser.username) === _username,
     )
 
     if (!foundUser) {
@@ -179,10 +179,10 @@ export class KeyCloakServiceMock {
 
   async getKeyCloakUserFromCliClient(
     userId: string,
-    additionalScopes: string[]
+    additionalScopes: string[],
   ): Promise<KeyCloakUser> {
     const foundUser: KeyCloakUser = this.mockusers.find(
-      (mockuser) => String(mockuser.id) === userId
+      (mockuser) => String(mockuser.id) === userId,
     )
 
     return Promise.resolve(foundUser)
@@ -210,14 +210,14 @@ export class KeyCloakServiceMock {
   grantAccessToMockuserForNamespace(
     user_kc_sub: string,
     namespaceId: number,
-    roles?: string[]
+    roles?: string[],
   ) {
     const foundUser: KeyCloakUser = this.mockusers.find(
-      (mockuser) => mockuser.kc_sub === user_kc_sub
+      (mockuser) => mockuser.kc_sub === user_kc_sub,
     )
 
     const userNamespaces = foundUser.namespaces.find(
-      (namespace) => namespace.id === namespaceId
+      (namespace) => namespace.id === namespaceId,
     )
 
     const kcUserNamespace = {
@@ -233,7 +233,7 @@ export class KeyCloakServiceMock {
 
   grantAdmin(id: number) {
     const foundUser: KeyCloakUser = this.mockusers.find(
-      (mockuser) => mockuser.id === id
+      (mockuser) => mockuser.id === id,
     )
 
     foundUser.roles = [KEYCLOAK_ADMIN_ROLE]
@@ -241,7 +241,7 @@ export class KeyCloakServiceMock {
 
   revokeAdmin(id: number) {
     const foundUser: KeyCloakUser = this.mockusers.find(
-      (mockuser) => mockuser.id === id
+      (mockuser) => mockuser.id === id,
     )
 
     foundUser.roles = []

@@ -21,7 +21,7 @@ export const getREDStatusFixture = async (
     project: string
     vulnerabilityId: string
     vulnerabilityId2: string
-  }
+  },
 ): Promise<MockServerOptions> => {
   return {
     port: port,

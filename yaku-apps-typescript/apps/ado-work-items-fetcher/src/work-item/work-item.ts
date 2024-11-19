@@ -34,7 +34,7 @@ export function createHeaders(personalAccessToken: string): Headers {
 }
 
 export function createWiqlRequestBody(
-  query: string | undefined
+  query: string | undefined,
 ): WiqlRequestBody {
   return {
     query: query,
@@ -46,7 +46,7 @@ export class WorkItem {
     private readonly headers: Headers,
     private readonly httpClient: AxiosInstance,
     private readonly configData: WorkItemConfigData,
-    private readonly apiDetails: ApiDetails
+    private readonly apiDetails: ApiDetails,
   ) {}
 
   async queryReferences(): Promise<WorkItemReference[]> {
@@ -61,11 +61,11 @@ export class WorkItem {
       if (isAxiosError(error) && error.response) {
         if (error.response.status == 400) {
           throw new Error(
-            `Request failed with status code ${error.response.status} ${error.response.statusText}. Please check your WIQL query for errors.`
+            `Request failed with status code ${error.response.status} ${error.response.statusText}. Please check your WIQL query for errors.`,
           )
         }
         throw new Error(
-          `Request failed with status code ${error.response.status} ${error.response.statusText}`
+          `Request failed with status code ${error.response.status} ${error.response.statusText}`,
         )
       }
       throw error
@@ -77,7 +77,7 @@ export class WorkItem {
       contentType?.toString().split(';', 1)[0] == 'text/html'
     ) {
       throw new Error(
-        `Server returned status 203 and some HTML code instead of JSON. It could be that your API token is wrong!`
+        `Server returned status 203 and some HTML code instead of JSON. It could be that your API token is wrong!`,
       )
     }
     if (response.data.workItems) {
@@ -89,7 +89,7 @@ export class WorkItem {
 
   private async getRecursively(
     parentUrl: string,
-    depth: number
+    depth: number,
   ): Promise<Issue> {
     const url: URL = new URL(parentUrl)
     url.searchParams.append('api-version', ADO_API_VERSION)
@@ -102,7 +102,7 @@ export class WorkItem {
     } catch (error: any) {
       const errorMessage = error.message ? error.message : error
       console.log(
-        `Couldn't fetch relations, following error occurred: "${errorMessage}"`
+        `Couldn't fetch relations, following error occurred: "${errorMessage}"`,
       )
       return {}
     }
@@ -162,7 +162,7 @@ export class WorkItem {
         filteredWorkItem[neededFieldName] = workItem.fields[firstFoundValue]
       } else {
         console.warn(
-          `The field '${neededFieldName}' is not available on work item with id ${workItem.id}`
+          `The field '${neededFieldName}' is not available on work item with id ${workItem.id}`,
         )
       }
     }
@@ -171,7 +171,7 @@ export class WorkItem {
 
   private filterFieldsFromAllLevels(
     workItems: Issue[],
-    neededFieldNames: string[]
+    neededFieldNames: string[],
   ): Issue[] {
     const filteredWorkItems: Issue[] = []
     workItems.forEach((workItem: Issue) => {
@@ -179,7 +179,7 @@ export class WorkItem {
       if (workItem.relations) {
         filteredData.relations = this.filterFieldsFromAllLevels(
           workItem.relations as Issue[],
-          neededFieldNames
+          neededFieldNames,
         )
       }
       filteredWorkItems.push(filteredData)
@@ -190,7 +190,7 @@ export class WorkItem {
   private filterRelations(
     workItems: Issue[],
     depth: number,
-    configData: YamlData
+    configData: YamlData,
   ): Issue[] {
     workItems.forEach((workItem: Issue) => {
       if ('relations' in workItem && workItem.relations.length !== 0) {
@@ -209,7 +209,7 @@ export class WorkItem {
           workItem.relations = this.filterRelations(
             workItem.relations,
             depth - 1,
-            configData
+            configData,
           )
         }
       }
@@ -224,12 +224,12 @@ export class WorkItem {
     const neededFieldNames: string[] = this.configData.getRequestedFields()
     const filteredWorkItems: Issue[] = this.filterFieldsFromAllLevels(
       workItems,
-      neededFieldNames
+      neededFieldNames,
     )
     const finalWorkItems: Issue[] = this.filterRelations(
       filteredWorkItems,
       this.configData.getHierarchyDepth(),
-      this.configData
+      this.configData,
     )
     return finalWorkItems
   }

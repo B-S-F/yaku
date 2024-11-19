@@ -44,7 +44,7 @@ describe('getProjectStatus', async () => {
       options.protocol,
       options.projectKey,
       options.accessToken,
-      undefined
+      undefined,
     )
     expect(result).toEqual({
       projectStatus: {
@@ -71,10 +71,10 @@ describe('getProjectStatus', async () => {
         options.protocol,
         options.projectKey,
         options.accessToken,
-        undefined
-      )
+        undefined,
+      ),
     ).rejects.toThrowError(
-      'Failed to fetch project status with status 404, some error message'
+      'Failed to fetch project status with status 404, some error message',
     )
   })
 
@@ -96,10 +96,10 @@ describe('getProjectStatus', async () => {
         options.protocol,
         options.projectKey,
         options.accessToken,
-        undefined
-      )
+        undefined,
+      ),
     ).rejects.toThrowError(
-      'Could not parse sonarqube response as JSON, Unexpected token s in JSON at position 0'
+      'Could not parse sonarqube response as JSON, Unexpected token s in JSON at position 0',
     )
   })
 })
@@ -157,19 +157,19 @@ describe('projectStatus', async () => {
       options.port,
       options.protocol,
       'api/qualitygates/project_status',
-      { projectKey: options.projectKey }
+      { projectKey: options.projectKey },
     )
     expect(mockedFetch).toHaveBeenCalled()
     expect(mockedCreateDashboardUrl).toHaveBeenCalledWith(
       options.hostname,
       options.port,
       options.protocol,
-      options.projectKey
+      options.projectKey,
     )
     expect(mockedConfigureProxyTunnel).not.toHaveBeenCalled()
     expect(mockedWriteFile).toHaveBeenCalledWith(
       options.outputPath,
-      JSON.stringify(sonarqubeResult, null, 2)
+      JSON.stringify(sonarqubeResult, null, 2),
     )
   })
 })

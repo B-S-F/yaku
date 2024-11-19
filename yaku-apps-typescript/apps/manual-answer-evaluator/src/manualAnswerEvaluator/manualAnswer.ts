@@ -38,7 +38,7 @@ export const getManualAnswer = (parsedInput: FileData) => {
 }
 
 export const readManualAnswer = async (
-  filePath: string
+  filePath: string,
 ): Promise<ManualAnswer> => {
   const fileData = await readContentAndMtime(filePath)
   const answer = getManualAnswer(fileData)
@@ -58,7 +58,7 @@ export const evaluate = async ({
     manualAnswer.modificationDate = new Date(last_modified_date_override)
     if (manualAnswer.modificationDate.toString() === 'Invalid Date') {
       throw new ConfigurationError(
-        `Invalid date format for last_modified_date_override: ${last_modified_date_override}`
+        `Invalid date format for last_modified_date_override: ${last_modified_date_override}`,
       )
     }
   }
@@ -66,7 +66,7 @@ export const evaluate = async ({
   logger.debug(
     `LastModified: ${
       manualAnswer.modificationDate
-    },Expiration date: ${expDate.toISOString()}`
+    },Expiration date: ${expDate.toISOString()}`,
   )
   const result = validateExpDate(expDate)
   logger.debug(`Status: ${result}`)
@@ -76,21 +76,21 @@ export const evaluate = async ({
       output.setReason(
         `${
           manualAnswer.answer
-        }\n**The manual answer is expired at ${expDate.toISOString()}**`
+        }\n**The manual answer is expired at ${expDate.toISOString()}**`,
       )
       break
     case 'YELLOW':
       output.setReason(
         `${
           manualAnswer.answer
-        }\n**The manual answer will expire at ${expDate.toISOString()}**`
+        }\n**The manual answer will expire at ${expDate.toISOString()}**`,
       )
       break
     case 'GREEN':
       output.setReason(
         `${
           manualAnswer.answer
-        }\n**The manual answer is valid until ${expDate.toISOString()}**`
+        }\n**The manual answer is valid until ${expDate.toISOString()}**`,
       )
       break
     default:

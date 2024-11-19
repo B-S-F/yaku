@@ -65,7 +65,7 @@ import {
 export class TaskController {
   constructor(
     @Inject(TaskService) private readonly service: TaskService,
-    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   @Get()
@@ -81,7 +81,7 @@ export class TaskController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Query() queryOptions: TaskQueryOptions,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<TaskListDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -95,7 +95,7 @@ export class TaskController {
       queryOptions,
       taskQueryOptionsSchema,
       allowedSortPropertiesTaskList as any,
-      'id'
+      'id',
     )
 
     const requestUrl = this.urlHandler.getHandler(response)
@@ -104,14 +104,14 @@ export class TaskController {
       releaseId,
       listQueryOptions,
       queryOptions.state,
-      queryOptions.assignees
+      queryOptions.assignees,
     )
 
     return createPaginationData(
       queryOptions,
       requestUrl,
       tasks.itemCount,
-      tasks.entities
+      tasks.entities,
     )
   }
 
@@ -130,7 +130,7 @@ export class TaskController {
   async getTask(
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
-    @Param('taskId') taskId: number
+    @Param('taskId') taskId: number,
   ): Promise<TaskDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -141,7 +141,7 @@ export class TaskController {
     } catch (e) {
       if (e.name === EntityNotFoundError.name) {
         throw new NotFoundException(
-          `Task not found, namespace: ${namespaceId}, release: ${releaseId}, task: ${taskId}`
+          `Task not found, namespace: ${namespaceId}, release: ${releaseId}, task: ${taskId}`,
         )
       }
       throw e
@@ -161,7 +161,7 @@ export class TaskController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Body() body: AddTaskDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<TaskDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -175,7 +175,7 @@ export class TaskController {
       body.dueDate,
       body.reminder,
       body.description,
-      user
+      user,
     )
   }
 
@@ -192,7 +192,7 @@ export class TaskController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Body() body: AddReferenceTaskDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<TaskDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -205,7 +205,7 @@ export class TaskController {
       body.reference,
       body.dueDate,
       body.reminder,
-      user
+      user,
     )
   }
 
@@ -222,7 +222,7 @@ export class TaskController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Param('taskId') taskId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -245,7 +245,7 @@ export class TaskController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Param('taskId') taskId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -269,7 +269,7 @@ export class TaskController {
     @Param('releaseId') releaseId: number,
     @Param('taskId') taskId: number,
     @Body() body: UpdateTaskDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<TaskDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -285,7 +285,7 @@ export class TaskController {
       body.dueDate,
       body.reminder,
       body.description,
-      user
+      user,
     )
   }
 
@@ -301,7 +301,7 @@ export class TaskController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Param('taskId') taskId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -325,7 +325,7 @@ export class TaskController {
     @Param('releaseId') releaseId: number,
     @Param('taskId') taskId: number,
     @Body() body: AddRemoveAssigneesDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<AssigneesDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -338,7 +338,7 @@ export class TaskController {
       releaseId,
       taskId,
       body.assignees,
-      user
+      user,
     )
   }
 
@@ -356,7 +356,7 @@ export class TaskController {
     @Param('releaseId') releaseId: number,
     @Param('taskId') taskId: number,
     @Body() body: AddRemoveAssigneesDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<AssigneesDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -369,7 +369,7 @@ export class TaskController {
       releaseId,
       taskId,
       body.assignees,
-      user
+      user,
     )
   }
 }

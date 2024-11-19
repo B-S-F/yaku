@@ -12,7 +12,7 @@ export default async function executeTest(
   baseUrl: string,
   token: string,
   namespaceId: number,
-  rounds: number
+  rounds: number,
 ): Promise<void> {
   try {
     const client = new ApiClient({ baseUrl, token })
@@ -27,7 +27,7 @@ export default async function executeTest(
           filename: 'qg-config.yaml',
           filepath: path.join('config', 'qg-config1.yaml'),
         },
-      ]
+      ],
     )
     console.log(`Created config with id ${qgConfig1.id}`)
     const qgConfig2 = await client.createConfigWithFiles(
@@ -39,7 +39,7 @@ export default async function executeTest(
           filename: 'qg-config.yaml',
           filepath: path.join('config', 'qg-config2.yaml'),
         },
-      ]
+      ],
     )
     console.log(`Created config with id ${qgConfig2.id}`)
 
@@ -49,13 +49,13 @@ export default async function executeTest(
         client.startRun(namespaceId, qgConfig1.id, {}).then((run) => {
           console.log(`Created run ${run.id}`)
           return run
-        })
+        }),
       )
       promises.push(
         client.startRun(namespaceId, qgConfig2.id, {}).then((run) => {
           console.log(`Created run ${run.id}`)
           return run
-        })
+        }),
       )
     }
     const results = (await Promise.all(promises)).map((run) => run.id)
@@ -102,7 +102,7 @@ export default async function executeTest(
     console.log(
       `${succeeded} of ${results.length} runs (${
         (succeeded * 100.0) / results.length
-      }%) succeeded`
+      }%) succeeded`,
     )
     console.log(`Average runtime of a run was ${total / succeeded} sec`)
     console.log(`Longest runtime of a run was ${longest} sec`)
@@ -127,7 +127,7 @@ export default async function executeTest(
 async function waitForTestToFinish(
   client: ApiClient,
   namespaceId: number,
-  rounds: number
+  rounds: number,
 ): Promise<void> {
   const window = rounds > 50 ? 50 : rounds
 
@@ -138,13 +138,13 @@ async function waitForTestToFinish(
     try {
       const runsOfWindow: RunPaginated = await client.listRuns(
         namespaceId,
-        new QueryOptions(1, window, [''], [[]], '', false)
+        new QueryOptions(1, window, [''], [[]], '', false),
       )
       const finished = runsOfWindow.data.filter(
-        (run) => run.status === 'running'
+        (run) => run.status === 'running',
       ).length
       console.log(
-        `${finished} of ${window} runs still active in control window`
+        `${finished} of ${window} runs still active in control window`,
       )
       if (finished === 0) {
         return

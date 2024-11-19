@@ -133,7 +133,7 @@ describe('SecretStorageService', () => {
       expect(encSrv.encryptSecret).toBeCalledWith(value13)
       expect(repository.update).toBeCalledWith(
         { namespaceId: 1, name: name11 },
-        { namespaceId: 1, name: name11, value: value13 }
+        { namespaceId: 1, name: name11, value: value13 },
       )
       expect(repository.save).toBeCalledWith({
         namespaceId: 1,
@@ -146,7 +146,7 @@ describe('SecretStorageService', () => {
     it('should throw error, if bad names are given on store', async () => {
       for (const current of [undefined, null, '', ' \t\n']) {
         await expect(service.storeSecret(1, current, value11)).rejects.toThrow(
-          BadRequestException
+          BadRequestException,
         )
 
         expect(repository.findOneBy).not.toBeCalled()
@@ -160,7 +160,7 @@ describe('SecretStorageService', () => {
     it('should throw error, if bad secret values are given on store', async () => {
       for (const current of [undefined, null, '', ' \t\n']) {
         await expect(service.storeSecret(1, name11, current)).rejects.toThrow(
-          BadRequestException
+          BadRequestException,
         )
 
         expect(repository.findOneBy).not.toBeCalled()

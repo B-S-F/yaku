@@ -21,7 +21,7 @@ const argoPost: RequestHandler = rest.post(
   (
     req: RestRequest<never, PathParams<string>>,
     res: ResponseComposition<DefaultBodyType>,
-    ctx: RestContext
+    ctx: RestContext,
   ) => {
     return res(
       ctx.json({
@@ -32,9 +32,9 @@ const argoPost: RequestHandler = rest.post(
           uid: ARGO_WORKFLOW_UUID,
           creationTimestamp: Date.now(),
         },
-      })
+      }),
     )
-  }
+  },
 )
 
 const argoWorkflowStatus: RequestHandler = rest.get(
@@ -42,7 +42,7 @@ const argoWorkflowStatus: RequestHandler = rest.get(
   (
     req: RestRequest<never, PathParams<string>>,
     res: ResponseComposition<DefaultBodyType>,
-    ctx: RestContext
+    ctx: RestContext,
   ) => {
     return res(
       ctx.json({
@@ -56,9 +56,9 @@ const argoWorkflowStatus: RequestHandler = rest.get(
           uuid: ARGO_WORKFLOW_UUID,
           creationTimestamp: Date.now(),
         },
-      })
+      }),
     )
-  }
+  },
 )
 
 const argoWorkflowLogs: RequestHandler = rest.get(
@@ -66,10 +66,10 @@ const argoWorkflowLogs: RequestHandler = rest.get(
   (
     req: RestRequest<never, PathParams<string>>,
     res: ResponseComposition<DefaultBodyType>,
-    ctx: RestContext
+    ctx: RestContext,
   ) => {
     return res(ctx.text('Inconsequential logs'))
-  }
+  },
 )
 
 export const handlers = [argoPost, argoWorkflowStatus, argoWorkflowLogs]

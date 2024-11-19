@@ -47,7 +47,7 @@ describe('Run', () => {
     it('throws an error with corresponding error message, when env_var GIT_FETCHER_SERVER_TYPE is undefined', async () => {
       vi.stubEnv('GIT_FETCHER_SERVER_TYPE', '')
       await expect(run.run(output)).rejects.toThrowError(
-        'GIT_FETCHER_SERVER_TYPE environment variable is not set'
+        'GIT_FETCHER_SERVER_TYPE environment variable is not set',
       )
     })
 
@@ -55,7 +55,7 @@ describe('Run', () => {
       vi.stubEnv('GIT_FETCHER_SERVER_TYPE', 'foo')
 
       await expect(run.run(output)).rejects.toThrowError(
-        'The server type "foo" is not supported'
+        'The server type "foo" is not supported',
       )
     })
 
@@ -64,7 +64,7 @@ describe('Run', () => {
       vi.stubEnv('GIT_FETCHER_SERVER_API_URL', '')
 
       await expect(run.run(output)).rejects.toThrowError(
-        'GIT_FETCHER_SERVER_API_URL environment variable is not set.'
+        'GIT_FETCHER_SERVER_API_URL environment variable is not set.',
       )
     })
 
@@ -73,7 +73,7 @@ describe('Run', () => {
       vi.stubEnv('GIT_FETCHER_SERVER_API_URL', 'http://www.foo.bar')
 
       await expect(run.run(output)).rejects.toThrowError(
-        'GIT_FETCHER_SERVER_API_URL environment variable must use secured connections with https'
+        'GIT_FETCHER_SERVER_API_URL environment variable must use secured connections with https',
       )
     })
 
@@ -83,7 +83,7 @@ describe('Run', () => {
       vi.stubEnv('GIT_FETCHER_API_TOKEN', '')
 
       await expect(run.run(output)).rejects.toThrowError(
-        'GIT_FETCHER_API_TOKEN environment variable is required for "token" authentication, but is not set or empty.'
+        'GIT_FETCHER_API_TOKEN environment variable is required for "token" authentication, but is not set or empty.',
       )
     })
 
@@ -93,7 +93,7 @@ describe('Run', () => {
       vi.stubEnv('GIT_FETCHER_SERVER_AUTH_METHOD', 'fooBar')
 
       await expect(run.run(output)).rejects.toThrowError(
-        'No valid authentication method provided. Valid authentication methods are: token,basic'
+        'No valid authentication method provided. Valid authentication methods are: token,basic',
       )
     })
 
@@ -104,7 +104,7 @@ describe('Run', () => {
       vi.stubEnv('GIT_FETCHER_USERNAME', 'foo')
 
       await expect(run.run(output)).rejects.toThrowError(
-        'GIT_FETCHER_PASSWORD environment variable is required for "basic" authentication, but is not set or empty.'
+        'GIT_FETCHER_PASSWORD environment variable is required for "basic" authentication, but is not set or empty.',
       )
     })
 
@@ -116,7 +116,7 @@ describe('Run', () => {
       vi.stubEnv('GIT_FETCHER_PASSWORD', 'foo')
 
       await expect(run.run(output)).rejects.toThrowError(
-        'GIT_FETCHER_USERNAME environment variable is required for "basic" authentication, but is not set or empty.'
+        'GIT_FETCHER_USERNAME environment variable is required for "basic" authentication, but is not set or empty.',
       )
     })
   })
@@ -155,14 +155,14 @@ describe('Run', () => {
         labels: ['foo'],
       }
       generateGitFetcherSpy.mockReturnValue(
-        new GitFetcherBitbucketPrs(gitServerConfig, { data: gitFetcherConfig })
+        new GitFetcherBitbucketPrs(gitServerConfig, { data: gitFetcherConfig }),
       )
 
       const gitFetcherConfigPromise: Promise<GitFetcherConfig> = new Promise(
-        (resolve) => resolve(gitFetcherConfig)
+        (resolve) => resolve(gitFetcherConfig),
       )
       vi.spyOn(validation, 'validateFetcherConfig').mockReturnValue(
-        gitFetcherConfigPromise
+        gitFetcherConfigPromise,
       )
 
       Object.defineProperty(GitFetcherBitbucketPrs.prototype, 'fetchUrl', {
@@ -170,7 +170,7 @@ describe('Run', () => {
       })
 
       vi.mocked(
-        GitFetcherBitbucketPrs.prototype.fetchResource
+        GitFetcherBitbucketPrs.prototype.fetchResource,
       ).mockImplementation(async () => {
         return [
           {
@@ -185,7 +185,7 @@ describe('Run', () => {
 
       expect(logSpy).toBeCalledTimes(1)
       expect(logSpy).toBeCalledWith(
-        'Fetch from https://www.foo.bar was successful with config {"org":"fooOrg","repo":"barRepo","resource":"prs","labels":["foo"]}'
+        'Fetch from https://www.foo.bar was successful with config {"org":"fooOrg","repo":"barRepo","resource":"prs","labels":["foo"]}',
       )
       expect(compareLabelsSpy).not.toHaveBeenCalled()
     })
@@ -202,14 +202,14 @@ describe('Run', () => {
         resource: 'pr',
       }
       generateGitFetcherSpy.mockReturnValue(
-        new GitFetcherGithubPrs(gitServerConfig, { data: gitFetcherConfig })
+        new GitFetcherGithubPrs(gitServerConfig, { data: gitFetcherConfig }),
       )
 
       const gitFetcherConfigPromise: Promise<GitFetcherConfig> = new Promise(
-        (resolve) => resolve(gitFetcherConfig)
+        (resolve) => resolve(gitFetcherConfig),
       )
       vi.spyOn(validation, 'validateFetcherConfig').mockReturnValue(
-        gitFetcherConfigPromise
+        gitFetcherConfigPromise,
       )
 
       Object.defineProperty(GitFetcherGithubPrs.prototype, 'fetchUrl', {
@@ -230,14 +230,14 @@ describe('Run', () => {
               labels: [labels],
             },
           ]
-        }
+        },
       )
 
       await run.run(new AppOutput())
 
       expect(logSpy).toBeCalledTimes(1)
       expect(logSpy).toBeCalledWith(
-        'Fetch from https://www.foo.bar was successful with config {"org":"foo org","repo":"bar repo","resource":"pr"}'
+        'Fetch from https://www.foo.bar was successful with config {"org":"foo org","repo":"bar repo","resource":"pr"}',
       )
       expect(compareLabelsSpy).not.toHaveBeenCalled()
     })
@@ -255,10 +255,10 @@ describe('Run', () => {
         resource: 'pr',
       }
       const gitFetcherConfigPromise: Promise<GitFetcherConfig> = new Promise(
-        (resolve) => resolve(gitFetcherConfig)
+        (resolve) => resolve(gitFetcherConfig),
       )
       vi.spyOn(validation, 'validateFetcherConfig').mockReturnValue(
-        gitFetcherConfigPromise
+        gitFetcherConfigPromise,
       )
       expect(run.run(new AppOutput())).rejects.toThrowError('mock error')
     })

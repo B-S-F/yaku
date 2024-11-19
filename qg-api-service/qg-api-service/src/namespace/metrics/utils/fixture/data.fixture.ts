@@ -231,7 +231,7 @@ const metricData: Metric[] = findingData.map((finding: Finding) => {
 export const createMetricDTOFixtures: CreateMetricDTO[] = findingData.map(
   (item: Finding) => {
     return { service: ServiceType.FINDINGS, metric: item } as CreateMetricDTO
-  }
+  },
 )
 
 export const updateFindingDTOFixtures: UpdateFindingDTO[] = findingData.map(
@@ -244,11 +244,11 @@ export const updateFindingDTOFixtures: UpdateFindingDTO[] = findingData.map(
       runId: item.runId,
       updated: item.updated,
     }
-  }
+  },
 )
 
 export const getMetricDTOFixtures: GetMetricDTO[] = metricData.map(
-  (metric: Metric) => new GetMetricDTO(metric)
+  (metric: Metric) => new GetMetricDTO(metric),
 )
 
 export const getFindingsDTOFixtures: GetFindingsDTO[] = [

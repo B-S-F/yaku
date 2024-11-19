@@ -12,7 +12,7 @@ export class GitFetcherBitbucketCommitsAndDiff
 {
   constructor(
     private readonly gitServerConfig: GitServerConfig,
-    private readonly config: ConfigFileData
+    private readonly config: ConfigFileData,
   ) {}
 
   private stripUrl = (url: string) => {
@@ -21,7 +21,7 @@ export class GitFetcherBitbucketCommitsAndDiff
 
   public async fetchResource(): Promise<CommitsMetadataAndDiff> {
     const requestOptions: RequestInit = await getRequestOptions(
-      this.gitServerConfig
+      this.gitServerConfig,
     )
     const result: CommitsMetadataAndDiff = {
       commitsMetadata: [],
@@ -36,12 +36,12 @@ export class GitFetcherBitbucketCommitsAndDiff
       let endHash = this.config.data.filter?.endHash
       if (!filePath) {
         throw new ConfigurationError(
-          `Please define the 'filePath' parameter in the config and try again`
+          `Please define the 'filePath' parameter in the config and try again`,
         )
       }
       if (!startHash) {
         throw new ConfigurationError(
-          `Please define the 'filter.startHash' parameter in the config and try again`
+          `Please define the 'filter.startHash' parameter in the config and try again`,
         )
       }
       if (!endHash) {
@@ -57,13 +57,13 @@ export class GitFetcherBitbucketCommitsAndDiff
         }
         responseBody = await tryParseResponse(response)
         result.commitsMetadata = result.commitsMetadata.concat(
-          responseBody.values
+          responseBody.values,
         )
         startPage = responseBody.nextPageStart ?? 0
       } while (!responseBody.isLastPage)
 
       console.log(
-        `Fetched medata about ${result.commitsMetadata.length} commits`
+        `Fetched medata about ${result.commitsMetadata.length} commits`,
       )
 
       const diffUrl = `${serverName}/projects/${projectKey}/repos/${repositorySlug}/diff/${filePath}?since=${startHash}&until=${endHash}`

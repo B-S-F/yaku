@@ -61,6 +61,6 @@ export class SecurityAlertDTO implements IAlertDTO {
       message: string
       extraData: Record<string, never>
     },
-    public effective: string
+    public effective: string,
   ) {}
 }

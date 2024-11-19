@@ -42,12 +42,12 @@ export class ConfigsService {
     @Inject(ExcelTransformerService)
     private readonly excelReaderService: ExcelTransformerService,
     @Inject(FindingService)
-    private readonly findingService: FindingService
+    private readonly findingService: FindingService,
   ) {}
 
   async getConfigs(
     namespaceId: number,
-    listQueryHandler: ListQueryHandler
+    listQueryHandler: ListQueryHandler,
   ): Promise<EntityList<ConfigEntity>> {
     const queryBuilder = this.repository
       .createQueryBuilder('configs')
@@ -65,7 +65,7 @@ export class ConfigsService {
 
   async getConfig(
     namespaceId: number,
-    configId: number
+    configId: number,
   ): Promise<ConfigEntity> {
     return this.getConfigObject(namespaceId, configId)
   }
@@ -73,7 +73,7 @@ export class ConfigsService {
   async create(
     namespaceId: number,
     name: string,
-    description: string
+    description: string,
   ): Promise<ConfigEntity> {
     if (!name || !name.trim()) {
       throw new BadRequestException('Name needed for a config object')
@@ -95,7 +95,7 @@ export class ConfigsService {
     namespaceId: number,
     configId: number,
     name: string,
-    description: string | null
+    description: string | null,
   ): Promise<ConfigEntity> {
     const config = await this.getConfigObject(namespaceId, configId)
     const changedConfig: DeepPartial<ConfigEntity> = {
@@ -127,7 +127,7 @@ export class ConfigsService {
 
   private async updateConfigModificationTime(
     namespaceId: number,
-    configId: number
+    configId: number,
   ): Promise<void> {
     const config = await this.getConfigObject(namespaceId, configId)
     const changedConfig: DeepPartial<ConfigEntity> = {
@@ -156,7 +156,7 @@ export class ConfigsService {
         err.message.includes('violates foreign key constraint')
       ) {
         throw new BadRequestException(
-          `There are still runs or releases associated to config with id ${configId}, delete them first`
+          `There are still runs or releases associated to config with id ${configId}, delete them first`,
         )
       }
       throw err
@@ -165,7 +165,7 @@ export class ConfigsService {
 
   async validate(
     namespaceId: number,
-    configId: number
+    configId: number,
   ): Promise<{ status: any; findings: string[] }> {
     throw new NotImplementedException('Validation not implemented.')
   }
@@ -173,12 +173,12 @@ export class ConfigsService {
   async createInitialConfig(
     namespaceId: number,
     configId: number,
-    questionnaire: Buffer
+    questionnaire: Buffer,
   ): Promise<{ filename: string; content: Buffer }> {
     return this.createConfigFromQuestionnaire(
       namespaceId,
       configId,
-      questionnaire
+      questionnaire,
     )
   }
 
@@ -187,28 +187,28 @@ export class ConfigsService {
     configId: number,
     excelFileName: string,
     excelFileContent: Buffer,
-    configFileContent: Buffer
+    configFileContent: Buffer,
   ): Promise<{ filename: string; content: Buffer }> {
     const questionnaire =
       this.excelReaderService.transformExcelToQuestionnaireData(
         excelFileName,
         excelFileContent,
-        configFileContent
+        configFileContent,
       )
     return this.createConfigFromQuestionnaire(
       namespaceId,
       configId,
-      questionnaire
+      questionnaire,
     )
   }
 
   private async createConfigFromQuestionnaire(
     namespaceId: number,
     configId: number,
-    questionnaire: Buffer | Questionnaire
+    questionnaire: Buffer | Questionnaire,
   ): Promise<{ filename: string; content: Buffer }> {
     const qgConfig = Buffer.from(
-      this.generationService.generateInitialConfig(questionnaire)
+      this.generationService.generateInitialConfig(questionnaire),
     )
 
     const filename = await this.storeConfig(namespaceId, configId, qgConfig)
@@ -219,7 +219,7 @@ export class ConfigsService {
   private async storeConfig(
     namespaceId: number,
     configId: number,
-    content: Buffer
+    content: Buffer,
   ): Promise<string> {
     const config = await this.getConfig(namespaceId, configId)
     const findInFiles = (filename: string) =>
@@ -245,7 +245,7 @@ export class ConfigsService {
     namespaceId: number,
     configId: number,
     filename: string,
-    content: Buffer
+    content: Buffer,
   ): Promise<void> {
     const dataString = decodeBufferToUTF8EncodedString(content)
     if (!dataString || !dataString.trim()) {
@@ -255,11 +255,11 @@ export class ConfigsService {
     const existingFile = await this.getFileEntity(
       namespaceId,
       configId,
-      filename
+      filename,
     )
     if (existingFile) {
       throw new BadRequestException(
-        `File with name "${filename}" already exists`
+        `File with name "${filename}" already exists`,
       )
     }
 
@@ -282,12 +282,12 @@ export class ConfigsService {
   async getFileContent(
     namespaceId: number,
     configId: number,
-    filename: string
+    filename: string,
   ): Promise<Buffer> {
     const content = await this.getFileContentEntity(
       namespaceId,
       configId,
-      filename
+      filename,
     )
     if (!content) {
       throw new NotFoundException('File not found')
@@ -298,7 +298,7 @@ export class ConfigsService {
   async getContentOfMultipleFiles(
     namespaceId: number,
     configId: number,
-    filenames: string[]
+    filenames: string[],
   ): Promise<{ [filename: string]: string }> {
     const contentList = await this.fileContentRepo.find({
       where: {
@@ -322,12 +322,12 @@ export class ConfigsService {
     namespaceId: number,
     configId: number,
     filename: string,
-    content: Buffer
+    content: Buffer,
   ): Promise<void> {
     const fileContent = await this.getFileContentEntity(
       namespaceId,
       configId,
-      filename
+      filename,
     )
     if (!fileContent) {
       throw new NotFoundException('File not found')
@@ -336,7 +336,7 @@ export class ConfigsService {
     const newContent = decodeBufferToUTF8EncodedString(content)
     if (!newContent) {
       throw new BadRequestException(
-        'File content either empty or not utf-8 encoded'
+        'File content either empty or not utf-8 encoded',
       )
     }
     fileContent.content = newContent
@@ -348,7 +348,7 @@ export class ConfigsService {
   async deleteFile(
     namespaceId: number,
     configId: number,
-    filename: string
+    filename: string,
   ): Promise<void> {
     try {
       const config = await this.getConfigObject(namespaceId, configId)
@@ -372,7 +372,7 @@ export class ConfigsService {
 
   private async getConfigObject(
     namespaceId: number,
-    configId: number
+    configId: number,
   ): Promise<ConfigEntity> {
     if (!namespaceId || namespaceId <= 0) {
       throw new BadRequestException('Missing proper namespace id')
@@ -397,7 +397,7 @@ export class ConfigsService {
   private async getFileEntity(
     namespaceId: number,
     configId: number,
-    filename: string
+    filename: string,
   ): Promise<FileEntity> {
     return this.fileRepo.findOneBy({
       config: { namespace: { id: namespaceId }, id: configId },
@@ -408,7 +408,7 @@ export class ConfigsService {
   private async getFileContentEntity(
     namespaceId: number,
     configId: number,
-    filename: string
+    filename: string,
   ): Promise<FileContentEntity> {
     return this.fileContentRepo.findOneBy({
       file: {
@@ -422,7 +422,7 @@ export class ConfigsService {
     namespaceId: number,
     configId: number,
     name: string,
-    description?: string
+    description?: string,
   ): Promise<ConfigEntity> {
     const querryRunner = this.repository.manager.connection.createQueryRunner()
     await querryRunner.connect()
@@ -433,7 +433,7 @@ export class ConfigsService {
         namespaceId,
         configId,
         name,
-        description
+        description,
       )
       await querryRunner.commitTransaction()
       return copiedConfig
@@ -450,7 +450,7 @@ export class ConfigsService {
     namespaceId: number,
     configId: number,
     name: string,
-    description?: string
+    description?: string,
   ): Promise<ConfigEntity> {
     // TODO: As soon as we refactor the configs service to use transactions, we can reduce duplicate code in this method
     const configToCopy = await queryRunner.manager.findOne(ConfigEntity, {
@@ -496,12 +496,12 @@ export class ConfigsService {
               filename: fileToCopy.filename,
             },
           },
-        }
+        },
       )
 
       if (!fileContentToCopy) {
         throw new InternalServerErrorException(
-          `Implementation error: File content for file ${fileToCopy.filename} not found`
+          `Implementation error: File content for file ${fileToCopy.filename} not found`,
         )
       }
 
@@ -510,7 +510,7 @@ export class ConfigsService {
         {
           content: fileContentToCopy.content,
           file: newFile,
-        }
+        },
       )
 
       await queryRunner.manager.save(newFileContent)

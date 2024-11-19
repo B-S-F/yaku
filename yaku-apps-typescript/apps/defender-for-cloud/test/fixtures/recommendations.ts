@@ -451,7 +451,7 @@ export const integrationTestResultsRecommendationsFixture1 = [
       fulfilled: false,
       metadata: setMetadata(
         mockedRecommendationsIntegrationTests[0],
-        mockedRecommendationsMetadataIntegrationTests[0]
+        mockedRecommendationsMetadataIntegrationTests[0],
       ),
     },
   },
@@ -463,7 +463,7 @@ export const integrationTestResultsRecommendationsFixture1 = [
       fulfilled: false,
       metadata: setMetadata(
         mockedRecommendationsIntegrationTests[1],
-        mockedRecommendationsMetadataIntegrationTests[1]
+        mockedRecommendationsMetadataIntegrationTests[1],
       ),
     },
   },
@@ -475,7 +475,7 @@ export const integrationTestResultsRecommendationsFixture1 = [
       fulfilled: false,
       metadata: setMetadata(
         mockedRecommendationsIntegrationTests[2],
-        mockedRecommendationsMetadataIntegrationTests[2]
+        mockedRecommendationsMetadataIntegrationTests[2],
       ),
     },
   },
@@ -494,7 +494,7 @@ export const integrationTestResultsRecommendationsFixture2 = [
       fulfilled: false,
       metadata: setMetadata(
         mockedRecommendationsIntegrationTests[1],
-        mockedRecommendationsMetadataIntegrationTests[1]
+        mockedRecommendationsMetadataIntegrationTests[1],
       ),
     },
   },
@@ -506,7 +506,7 @@ export const integrationTestResultsRecommendationsFixture2 = [
       fulfilled: false,
       metadata: setMetadata(
         mockedRecommendationsIntegrationTests[2],
-        mockedRecommendationsMetadataIntegrationTests[2]
+        mockedRecommendationsMetadataIntegrationTests[2],
       ),
     },
   },
@@ -525,7 +525,7 @@ export const integrationTestResultsRecommendationsFixture3 = [
       fulfilled: false,
       metadata: setMetadata(
         mockedRecommendationsIntegrationTests[2],
-        mockedRecommendationsMetadataIntegrationTests[2]
+        mockedRecommendationsMetadataIntegrationTests[2],
       ),
     },
   },

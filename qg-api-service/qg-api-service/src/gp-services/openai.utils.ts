@@ -27,7 +27,7 @@ export class OpenAIInitializationError extends Error {
 
 export const getTokenLength = async (
   text: string,
-  model: TiktokenModel = 'gpt-3.5-turbo'
+  model: TiktokenModel = 'gpt-3.5-turbo',
 ): Promise<number> => {
   try {
     const tk = await tiktoken.encoding_for_model(model)

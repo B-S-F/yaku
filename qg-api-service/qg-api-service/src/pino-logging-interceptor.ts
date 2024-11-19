@@ -20,12 +20,12 @@ export class PinoLoggingInterceptor implements NestInterceptor {
         },
       },
     }),
-    {}
+    {},
   )
 
   intercept(
     context: ExecutionContext,
-    next: CallHandler<any>
+    next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
     const request = context.switchToHttp().getRequest()
     const user = context.getArgs()[0].user
@@ -65,7 +65,7 @@ export class PinoLoggingInterceptor implements NestInterceptor {
           })
         }
         return throwError(() => err)
-      })
+      }),
     )
   }
 }

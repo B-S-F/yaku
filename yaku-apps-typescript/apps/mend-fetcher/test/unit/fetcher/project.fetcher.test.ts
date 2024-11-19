@@ -36,14 +36,14 @@ describe('project.fetcher', () => {
             additionalData: {},
             retVal: projectData,
           },
-        })
+        }),
       )
       const expected: ProjectDTO = projectDTO
 
       const result: ProjectDTO = await getProjectDTO(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -57,11 +57,11 @@ describe('project.fetcher', () => {
       const result = getProjectDTO(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError(
-        'No expected values are returned'
+        'No expected values are returned',
       )
     })
 
@@ -73,13 +73,13 @@ describe('project.fetcher', () => {
           isAxiosError: true,
           request: {},
           message: 'Request Error Message',
-        })
+        }),
       )
 
       const result = getProjectDTO(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('Request Error Message')
@@ -98,19 +98,19 @@ describe('project.fetcher', () => {
               data: {},
               statusText: httpStatus.message,
             },
-          })
+          }),
         )
 
         const result = getProjectDTO(
           env.apiUrl,
           { projectToken: env.projectToken },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it.each(HTTPResponseStatusCodes)(
@@ -129,19 +129,19 @@ describe('project.fetcher', () => {
               statusText: '',
               status: httpStatus.code,
             },
-          })
+          }),
         )
 
         const result = getProjectDTO(
           env.apiUrl,
           { projectToken: env.projectToken },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it('should throw an error when it fails for unexpected reasons', async () => {
@@ -152,7 +152,7 @@ describe('project.fetcher', () => {
       const result = getProjectDTO(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError()
@@ -170,14 +170,14 @@ describe('project.fetcher', () => {
             retVal: projectVitalsData,
             supportToken: 'supportToken',
           },
-        })
+        }),
       )
       const expected: ProjectVitalsDTO = projectVitalsDTO
 
       const result: ProjectVitalsDTO = await getProjectVitalsDTO(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -191,11 +191,11 @@ describe('project.fetcher', () => {
       const result = getProjectVitalsDTO(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError(
-        'No expected values are returned'
+        'No expected values are returned',
       )
     })
 
@@ -207,13 +207,13 @@ describe('project.fetcher', () => {
           isAxiosError: true,
           request: {},
           message: 'Request Error Message',
-        })
+        }),
       )
 
       const result = getProjectVitalsDTO(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('Request Error Message')
@@ -232,19 +232,19 @@ describe('project.fetcher', () => {
               data: {},
               statusText: httpStatus.message,
             },
-          })
+          }),
         )
 
         const result = getProjectVitalsDTO(
           env.apiUrl,
           { projectToken: env.projectToken },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it.each(HTTPResponseStatusCodes)(
@@ -263,19 +263,19 @@ describe('project.fetcher', () => {
               statusText: '',
               status: httpStatus.code,
             },
-          })
+          }),
         )
 
         const result = getProjectVitalsDTO(
           env.apiUrl,
           { projectToken: env.projectToken },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it('should throw an error when it fails for unexpected reasons', async () => {
@@ -286,7 +286,7 @@ describe('project.fetcher', () => {
       const result = getProjectVitalsDTO(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError()

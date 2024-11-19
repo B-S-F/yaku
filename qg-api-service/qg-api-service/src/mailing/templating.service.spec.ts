@@ -62,7 +62,7 @@ describe('TemplatingService', () => {
     jest
       .spyOn(templatingCache, 'get')
       .mockReturnValue(
-        (() => (data: any) => 'test') as unknown as TemplateFunction
+        (() => (data: any) => 'test') as unknown as TemplateFunction,
       )
     const notification = {
       type: NotificationType.Comment,

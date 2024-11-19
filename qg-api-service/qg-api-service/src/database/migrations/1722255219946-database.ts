@@ -7,16 +7,16 @@ export class Database1722255219946 implements MigrationInterface {
       checkType = 'check',
       commentType = 'comment'
     const releaseRows = await queryRunner.query(
-      `UPDATE comment SET "referenceType" = '${releaseType}', "lastModifiedBy" = 'SYSTEM_ACTOR', "lastModificationTime" = '${timestamp}'  WHERE "referenceType" IS NULL AND "reference" IS NULL AND "parentId" IS NULL returning *`
+      `UPDATE comment SET "referenceType" = '${releaseType}', "lastModifiedBy" = 'SYSTEM_ACTOR', "lastModificationTime" = '${timestamp}'  WHERE "referenceType" IS NULL AND "reference" IS NULL AND "parentId" IS NULL returning *`,
     )
     const checkRows = await queryRunner.query(
-      `UPDATE comment SET "referenceType" = '${checkType}', "lastModifiedBy" = 'SYSTEM_ACTOR', "lastModificationTime" = '${timestamp}' WHERE "referenceType" IS NULL AND "reference" IS NOT NULL returning *`
+      `UPDATE comment SET "referenceType" = '${checkType}', "lastModifiedBy" = 'SYSTEM_ACTOR', "lastModificationTime" = '${timestamp}' WHERE "referenceType" IS NULL AND "reference" IS NOT NULL returning *`,
     )
     const commentRows = await queryRunner.query(
-      `UPDATE comment SET "referenceType" = '${commentType}', "lastModifiedBy" = 'SYSTEM_ACTOR', "lastModificationTime" = '${timestamp}' WHERE "referenceType" IS NULL AND "parentId" IS NOT NULL returning *`
+      `UPDATE comment SET "referenceType" = '${commentType}', "lastModifiedBy" = 'SYSTEM_ACTOR', "lastModificationTime" = '${timestamp}' WHERE "referenceType" IS NULL AND "parentId" IS NOT NULL returning *`,
     )
     await queryRunner.query(
-      `ALTER TABLE comment ALTER COLUMN "referenceType" SET NOT NULL`
+      `ALTER TABLE comment ALTER COLUMN "referenceType" SET NOT NULL`,
     )
     const audits = [
       {
@@ -35,7 +35,7 @@ export class Database1722255219946 implements MigrationInterface {
     for (const { rows, ct } of audits) {
       for (const row of rows) {
         const auditRows = await queryRunner.query(
-          `SELECT * FROM comment_audit WHERE "entityId" = ${row.id} ORDER BY "modificationTime" DESC LIMIT 1`
+          `SELECT * FROM comment_audit WHERE "entityId" = ${row.id} ORDER BY "modificationTime" DESC LIMIT 1`,
         )
         if (auditRows.length !== 1)
           throw new Error('expected exactly 1 audit row')
@@ -55,8 +55,8 @@ export class Database1722255219946 implements MigrationInterface {
               id: 'SYSTEM_ACTOR',
               username: 'SYSTEM_ACTOR',
               displayName: 'SYSTEM_ACTOR',
-            }
-          )}')`
+            },
+          )}')`,
         )
       }
     }
@@ -64,7 +64,7 @@ export class Database1722255219946 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE comment ALTER COLUMN "referenceType" DROP NOT NULL`
+      `ALTER TABLE comment ALTER COLUMN "referenceType" DROP NOT NULL`,
     )
   }
 }

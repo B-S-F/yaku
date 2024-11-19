@@ -131,10 +131,10 @@ describe('NamespaceController', () => {
           .mockRejectedValue(new BadRequestException())
 
         await expect(
-          controller.create({ name: value, users: usernameList })
+          controller.create({ name: value, users: usernameList }),
         ).rejects.toThrow(BadRequestException)
         expect(service.create).not.toBeCalled()
-      }
+      },
     )
 
     it('should accept empty users array', async () => {
@@ -187,7 +187,7 @@ describe('NamespaceController', () => {
         .mockRejectedValue(new NotFoundException())
 
       await expect(
-        controller.update(666, { name: 'something', users: usernameList })
+        controller.update(666, { name: 'something', users: usernameList }),
       ).rejects.toThrow(NotFoundException)
       expect(serviceSpy).toBeCalledWith(666, 'something')
     })
@@ -202,11 +202,11 @@ describe('NamespaceController', () => {
         controller.update(testNamespace.id, {
           name: testNamespace.name,
           users: usernameList,
-        })
+        }),
       ).rejects.toThrow(BadRequestException)
       expect(service.update).toBeCalledWith(
         testNamespace.id,
-        testNamespace.name
+        testNamespace.name,
       )
     })
   })

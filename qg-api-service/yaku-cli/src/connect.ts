@@ -27,7 +27,7 @@ export async function connect(): Promise<{
 }
 
 export async function refreshEnvironment(
-  env: Environment
+  env: Environment,
 ): Promise<Environment> {
   // re-authenticate if it is an oauth environment
   if (env.refreshToken) {
@@ -38,7 +38,7 @@ export async function refreshEnvironment(
       return updatedEnv
     } catch (err) {
       failWithError(
-        `Error refreshing token or re-login failed. Please login again with 'yaku login --env ${env.name}'`
+        `Error refreshing token or re-login failed. Please login again with 'yaku login --env ${env.name}'`,
       )
     }
   } else {

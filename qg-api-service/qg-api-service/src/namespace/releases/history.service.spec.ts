@@ -121,7 +121,7 @@ describe('HistoryService', () => {
       module.get<ApprovalAuditService>(ApprovalAuditService)
     commentService = module.get<CommentsService>(CommentsService)
     releaseRepository = module.get<Repository<ReleaseEntity>>(
-      getRepositoryToken(ReleaseEntity)
+      getRepositoryToken(ReleaseEntity),
     )
   })
 
@@ -154,7 +154,7 @@ describe('HistoryService', () => {
 
       const resultDesc = service.extractMarkers(queryOptions, new Date(0))
       expect(resultDesc.lastTimestamp.getTime()).toBeGreaterThan(
-        new Date().getTime() - 1000
+        new Date().getTime() - 1000,
       )
 
       queryOptions.sortOrder = SortOrder.ASC
@@ -217,7 +217,7 @@ describe('HistoryService', () => {
       it('should return only history items that match the specified filter', () => {
         const result = service.filterHistoryItems(
           historyItems,
-          HistoryFilter.EVENT
+          HistoryFilter.EVENT,
         )
         expect(result).toEqual([
           historyItems[0],
@@ -228,13 +228,13 @@ describe('HistoryService', () => {
 
         const result4 = service.filterHistoryItems(
           historyItems,
-          HistoryFilter.RESOLVED
+          HistoryFilter.RESOLVED,
         )
         expect(result4).toEqual([historyItems[4]])
 
         const result5 = service.filterHistoryItems(
           historyItems,
-          HistoryFilter.UNRESOLVED
+          HistoryFilter.UNRESOLVED,
         )
         expect(result5).toEqual([historyItems[4]])
       })
@@ -276,7 +276,7 @@ describe('HistoryService', () => {
         const result = service.calculateNewLastTimestamp(
           historyItems,
           lastTimestamp,
-          direction
+          direction,
         )
         expect(result).toEqual(new Date('2021-02-03T23:59:59.999Z'))
       })
@@ -288,7 +288,7 @@ describe('HistoryService', () => {
         const result = service.calculateNewLastTimestamp(
           historyItems,
           lastTimestamp,
-          direction
+          direction,
         )
         expect(result).toEqual(new Date('2021-02-04T00:00:00.001Z'))
       })
@@ -319,7 +319,7 @@ describe('HistoryService', () => {
       } as any
 
       const result = await service.approvalAuditToHistoryItem(
-        approvalAuditApproved
+        approvalAuditApproved,
       )
       expect(result.type).toEqual(HistoryType.EVENT)
       expect(result.timestamp).toEqual(approvalAuditApproved.modificationTime)
@@ -343,7 +343,7 @@ describe('HistoryService', () => {
       } as any
 
       const result = await service.approvalAuditToHistoryItem(
-        approvalAuditApproved
+        approvalAuditApproved,
       )
       expect(result.type).toEqual(HistoryType.EVENT)
       expect(result.timestamp).toEqual(approvalAuditApproved.modificationTime)
@@ -494,7 +494,7 @@ describe('HistoryService', () => {
           actor: user1,
           action: `run 1 succeeded with status ${status} and automatically resolved its findings`,
         })
-      }
+      },
     )
 
     it('should handle failed overallResult', async () => {
@@ -553,7 +553,7 @@ describe('HistoryService', () => {
 
       const result = await service.runAuditToHistoryItem(
         runAuditCompleted,
-        new Date('2021-01-01T00:00:00.001Z')
+        new Date('2021-01-01T00:00:00.001Z'),
       )
       expect(result).toBeUndefined()
     })
@@ -576,7 +576,7 @@ describe('HistoryService', () => {
       const result = await service.runAuditToHistoryItem(
         runAuditCompleted,
         undefined,
-        new Date('2021-01-01T00:00:00.000Z')
+        new Date('2021-01-01T00:00:00.000Z'),
       )
       expect(result).toBeUndefined()
     })

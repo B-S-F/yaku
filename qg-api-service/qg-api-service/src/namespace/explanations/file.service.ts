@@ -5,7 +5,7 @@ export const parseRunFiles = (
   files: File[],
   selectedChapter: string,
   selectedRequirement: string,
-  selectedCheck: string
+  selectedCheck: string,
 ): File[] | null => {
   const parsedFiles: File[] = []
 
@@ -14,7 +14,7 @@ export const parseRunFiles = (
       ?.content as string) ?? '',
     selectedChapter,
     selectedRequirement,
-    selectedCheck
+    selectedCheck,
   )
   //if files are specifed in the config, they are for sure used in the script, so we add them
   if (parsedQGConfig.run.config.length > 0) {
@@ -48,7 +48,7 @@ const parseQGConfig = (
   data: string,
   selectedChapter: string,
   selectedRequirement: string,
-  selectedCheck: string
+  selectedCheck: string,
 ): ParsedQGConfig => {
   const parsedData: QGConfig = yaml.parse(data, { strict: true })
 

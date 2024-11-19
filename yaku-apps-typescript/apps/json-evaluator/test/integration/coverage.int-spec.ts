@@ -25,7 +25,7 @@ describe('coverage.json', async () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
@@ -44,7 +44,7 @@ describe('coverage.json', async () => {
     })
     const results = result.stdout.reduce(
       (count, str) => count + (str.includes('result') ? 1 : 0),
-      0
+      0,
     )
 
     for (const issue of baseIssues) {

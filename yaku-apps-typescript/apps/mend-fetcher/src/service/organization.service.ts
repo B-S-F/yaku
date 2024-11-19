@@ -17,7 +17,7 @@ export class OrganizationService {
     const organizationDto = await getOrganizationDTO(
       this.env.apiUrl,
       { orgToken: orgToken },
-      this.auth
+      this.auth,
     )
     const organization = OrganizationMap.toModel(organizationDto)
 

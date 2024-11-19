@@ -14,7 +14,7 @@ export class CheckResultReference {
     chapter: string,
     requirement: string,
     check: string,
-    hash: string
+    hash: string,
   ) {
     this.chapter = chapter
     this.requirement = requirement

@@ -15,7 +15,7 @@ describe('NamespaceAccessGuard', () => {
   function getRequest(
     namespaceId: number,
     user: any,
-    requiresAdmin = false
+    requiresAdmin = false,
   ): any {
     const request: any = {
       params: { namespaceId },
@@ -146,7 +146,7 @@ describe('NamespaceAccessGuard', () => {
     const request = getRequest(3.5, undefined)
 
     await expect(testee.canActivate(request)).rejects.toThrow(
-      BadRequestException
+      BadRequestException,
     )
   })
 })

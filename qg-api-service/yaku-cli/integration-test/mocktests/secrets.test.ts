@@ -20,11 +20,11 @@ const testYakurc = '.yakurc-test'
 const yakuCliExecutable: string = `${__dirname}/../../dist/index.js`
 const cmdManager: CommandFacade = new CommandFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 const envManager: EnvironmentFacade = new EnvironmentFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 
 describe('Integration tests for secrets', async () => {
@@ -33,7 +33,7 @@ describe('Integration tests for secrets', async () => {
     'http',
     'localhost',
     String(port),
-    '/api/v1'
+    '/api/v1',
   )
 
   const environment: Environment = {
@@ -182,7 +182,7 @@ describe('Integration tests for secrets', async () => {
 
     it('should fail to list secrets with extra arguments', async () => {
       const result: RunProcessResult = await cmdManager.runCommand(
-        'secrets list a b c '
+        'secrets list a b c ',
       )
 
       const expectedMessage: string[] = [
@@ -275,7 +275,7 @@ describe('Integration tests for secrets', async () => {
     const mockServerOptions = createSecretsMockServerResponse(
       1,
       port,
-      'TEMP_SEC'
+      'TEMP_SEC',
     )
 
     let mockServer: MockServer | undefined
@@ -337,7 +337,7 @@ describe('Integration tests for secrets', async () => {
     const mockServerOptions = createSecretsMockServerResponse(
       1,
       port,
-      'TEMP_SEC'
+      'TEMP_SEC',
     )
 
     let mockServer: MockServer | undefined

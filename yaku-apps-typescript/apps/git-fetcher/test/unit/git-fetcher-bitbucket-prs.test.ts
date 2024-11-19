@@ -46,13 +46,13 @@ describe('GitFetcherBitBucket', () => {
 
     gitFetcherBitbucketPrs = new GitFetcherBitbucketPrs(
       gitServerConfigDefault,
-      configDefault
+      configDefault,
     )
   })
 
   it('should throw an error message, when fetch-method is unable to get response', async () => {
     await expect(gitFetcherBitbucketPrs.fetchResource()).rejects.toThrow(
-      'Failed to parse URL from www.foo.bar/projects/foo_org/repos/foo_repo/pull-requests?state=ALL&start=0'
+      'Failed to parse URL from www.foo.bar/projects/foo_org/repos/foo_repo/pull-requests?state=ALL&start=0',
     )
   })
 
@@ -76,7 +76,7 @@ describe('GitFetcherBitBucket', () => {
     expect(consoleSpy).toHaveBeenCalledWith(
       `Fetched ${responseFixture.values.length} pull request${
         expectedNumberOfPrs === 1 ? '' : 's'
-      }`
+      }`,
     )
     expect(result).toEqual(responseFixture.values)
   })
@@ -85,7 +85,7 @@ describe('GitFetcherBitBucket', () => {
     const responseFixture: BitbucketResponse<BitbucketPr>[] = multiPageResponse
 
     const expectedResultArray: BitbucketPr[] = responseFixture.flatMap(
-      (response) => response.values
+      (response) => response.values,
     )
 
     fetchMock.mockImplementation(async (url: string) => {
@@ -105,7 +105,7 @@ describe('GitFetcherBitBucket', () => {
     expect(fetchMock).toHaveBeenCalledTimes(2)
     const expectedLength = expectedResultArray.length
     expect(consoleSpy).toHaveBeenCalledWith(
-      `Fetched ${expectedLength} pull request${expectedLength === 1 ? '' : 's'}`
+      `Fetched ${expectedLength} pull request${expectedLength === 1 ? '' : 's'}`,
     )
     expect(result).toEqual(expectedResultArray)
   })
@@ -145,7 +145,7 @@ describe('GitFetcherBitBucket', () => {
 
     gitFetcherBitbucketPrs = new GitFetcherBitbucketPrs(
       gitServerConfigDefault,
-      config
+      config,
     )
     const responseFixture: BitbucketResponse<Partial<BitbucketPr>> =
       singlePageResponse
@@ -167,7 +167,7 @@ describe('GitFetcherBitBucket', () => {
     expect(composeUrlSpy).toBeCalledTimes(1)
     expect(composeUrlSpy).toBeCalledWith(undefined, 0)
     expect(composeUrlSpy).toReturnWith(
-      'www.foo.bar/projects/foo_org/repos/foo_repo/pull-requests?state=ALL&start=0'
+      'www.foo.bar/projects/foo_org/repos/foo_repo/pull-requests?state=ALL&start=0',
     )
   })
 
@@ -181,7 +181,7 @@ describe('GitFetcherBitBucket', () => {
 
       gitFetcherBitbucketPrs = new GitFetcherBitbucketPrs(
         gitServerConfigDefault,
-        config
+        config,
       )
       const responseFixture: BitbucketResponse<Partial<BitbucketPr>> =
         singlePageResponse
@@ -202,8 +202,8 @@ describe('GitFetcherBitBucket', () => {
       expect(composeUrlSpy).toBeCalledTimes(1)
       expect(composeUrlSpy).toBeCalledWith(state, 0)
       expect(composeUrlSpy).toReturnWith(
-        `www.foo.bar/projects/foo_org/repos/foo_repo/pull-requests?state=${state}&start=0`
+        `www.foo.bar/projects/foo_org/repos/foo_repo/pull-requests?state=${state}&start=0`,
       )
-    }
+    },
   )
 })

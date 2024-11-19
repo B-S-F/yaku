@@ -24,11 +24,11 @@ import { tmpdir } from 'os'
 export async function list(
   client: ApiClient,
   namespace: number | undefined,
-  configId: string
+  configId: string,
 ) {
   const cf = handleStandardParams(client, namespace, configId, 'configId')
   await logResultAsJson(
-    client!.getConfig(namespace!, cf).then((config: Config) => config.files)
+    client!.getConfig(namespace!, cf).then((config: Config) => config.files),
   )
 }
 
@@ -37,12 +37,12 @@ export async function add(
   namespace: number | undefined,
   configId: string,
   filepath: string,
-  options: any
+  options: any,
 ) {
   const cf = handleStandardParams(client, namespace, configId, 'configId')
   await logSuccess(
     client!.uploadFileToConfig(namespace!, cf, filepath, options.filename),
-    `File ${filepath} uploaded`
+    `File ${filepath} uploaded`,
   )
 }
 
@@ -51,14 +51,14 @@ export async function update(
   namespace: number | undefined,
   configId: string,
   filepath: string,
-  options: any
+  options: any,
 ) {
   const cf = handleStandardParams(client, namespace, configId, 'configId')
   const filename = options.filename ?? path.parse(filepath).base
 
   await logSuccess(
     client!.replaceFileInConfig(namespace!, cf, filepath, filename),
-    `File ${filename} replaced`
+    `File ${filename} replaced`,
   )
 }
 
@@ -66,7 +66,7 @@ export async function download(
   client: ApiClient,
   namespace: number | undefined,
   configId: string,
-  filename: string
+  filename: string,
 ) {
   const cf = handleStandardParams(client, namespace, configId, 'configId')
   await logDownloadedFile(client!.downloadFileData(namespace!, cf, filename))
@@ -77,7 +77,7 @@ export async function deleteFiles(
   namespace: number | undefined,
   configId: string,
   filenames: string[],
-  options: any
+  options: any,
 ) {
   const cf = handleStandardParams(client, namespace, configId, 'configId')
 
@@ -88,7 +88,7 @@ export async function deleteFiles(
     if (!options.yes) {
       const config = await client!.getConfig(namespace!, cf)
       const shouldDeleteAll = await yp.confirm(
-        `Do you really want to delete all files from config #${configId} ('${config.name}')?`
+        `Do you really want to delete all files from config #${configId} ('${config.name}')?`,
       )
       if (!shouldDeleteAll) {
         return
@@ -97,7 +97,7 @@ export async function deleteFiles(
 
     await client!.deleteAllFilesFromConfig(namespace!, cf, true)
     await logResultAsJson(
-      client!.getConfig(namespace!, cf).then((config: Config) => config.files)
+      client!.getConfig(namespace!, cf).then((config: Config) => config.files),
     )
   } else {
     if (filenames.length == 0) {
@@ -106,7 +106,7 @@ export async function deleteFiles(
     if (!options.yes) {
       const config = await client!.getConfig(namespace!, cf)
       const shouldDelete = await yp.confirm(
-        `Do you really want to delete ${filenames.length} file(s) from config #${configId} ('${config.name}')?`
+        `Do you really want to delete ${filenames.length} file(s) from config #${configId} ('${config.name}')?`,
       )
       if (!shouldDelete) {
         return
@@ -115,7 +115,7 @@ export async function deleteFiles(
     await Promise.all(
       filenames.map((filename) => {
         return client!.deleteFileFromConfig(namespace!, cf, filename)
-      })
+      }),
     )
   }
 }
@@ -125,13 +125,13 @@ export async function syncDown(
   namespace: number | undefined,
   configId: string,
   directory: string,
-  options: any
+  options: any,
 ): Promise<void | void[]> {
   const validatedConfigId = handleStandardParams(
     client,
     namespace,
     configId,
-    'configId'
+    'configId',
   )
 
   const existingLocalFiles: fs.Dirent[] = fs.readdirSync(directory, {
@@ -155,7 +155,7 @@ export async function syncDown(
       if (dirent.isDirectory()) {
         throw new Error(
           'Error: The target directory contains a directory with the same name as a config file. ' +
-            'Please remove the directory first from the target directory before trying again.'
+            'Please remove the directory first from the target directory before trying again.',
         )
       }
       filesWhichWillBeOverwritten.push(dirent.name)
@@ -165,7 +165,7 @@ export async function syncDown(
   if (filesWhichWillBeOverwritten.length > 0 && !options.yes) {
     console.log(filesWhichWillBeOverwritten)
     const shouldOverride = await yp.confirm(
-      `The above listed files in ${directory} will be overwritten! Do you want to continue?`
+      `The above listed files in ${directory} will be overwritten! Do you want to continue?`,
     )
     if (!shouldOverride) {
       return
@@ -178,10 +178,10 @@ export async function syncDown(
       const fileData = await client!.getFileData(
         namespace!,
         validatedConfigId,
-        filename
+        filename,
       )
       return fs.promises.writeFile(directory + '/' + filename, fileData.data)
-    })
+    }),
   )
 }
 
@@ -190,7 +190,7 @@ export async function syncUp(
   namespace: number | undefined,
   configId: string,
   directory: string,
-  options: any
+  options: any,
 ) {
   const cf = handleStandardParams(client, namespace, configId, 'configId')
 
@@ -231,13 +231,13 @@ export async function syncUp(
         namespace!,
         cf,
         directory + sep + file.name,
-        file.name
+        file.name,
       )
-    })
+    }),
   )
 
   await logResultAsJson(
-    client!.getConfig(namespace!, cf).then((config: Config) => config.files)
+    client!.getConfig(namespace!, cf).then((config: Config) => config.files),
   )
 }
 
@@ -249,12 +249,12 @@ export async function sync(srcPath: string, dstPath: string, options: any) {
   let srcEnv: Environment = extractEnvironment(
     src.envName,
     src.namespaceId,
-    envs
+    envs,
   )
   let dstEnv: Environment = extractEnvironment(
     dst.envName,
     dst.namespaceId,
-    envs
+    envs,
   )
 
   // keep envs up to date
@@ -315,7 +315,7 @@ export function parseSyncPathParameter(param: string, name: string) {
   const pathExp = /^(([a-zA-Z0-9-]+\/)?[0-9]+\/)?[0-9]+$/
   if (!pathExp.test(param)) {
     failWithError(
-      `${name} is not valid, please use [[<envName>/]<namespaceId>/]<configId> format`
+      `${name} is not valid, please use [[<envName>/]<namespaceId>/]<configId> format`,
     )
   }
   const pathParts = param.split('/')
@@ -332,7 +332,7 @@ export function parseSyncPathParameter(param: string, name: string) {
 export function extractEnvironment(
   envName: string | undefined,
   namespaceId: number | undefined,
-  envs: Environment[]
+  envs: Environment[],
 ): Environment {
   let resultEnv: Environment | undefined
   for (const env of envs) {
@@ -344,7 +344,7 @@ export function extractEnvironment(
       } else if (!resultEnv.namespace) {
         // cannot continue without a namespaceId
         failWithError(
-          `Environment '${resultEnv.name}' does not have a namespace. Please login to select a default, or provide a custom one`
+          `Environment '${resultEnv.name}' does not have a namespace. Please login to select a default, or provide a custom one`,
         )
       }
     }
@@ -357,7 +357,7 @@ export function extractEnvironment(
   failWithError(
     envName
       ? `Could not find environment: '${envName}'`
-      : `Could not find current environment`
+      : `Could not find current environment`,
   )
 }
 
@@ -393,7 +393,7 @@ export function extractSecretsList(directory: string): string[] {
 export async function listMissingSecrets(
   client: ApiClient,
   namespace: number | undefined,
-  directory: string
+  directory: string,
 ): Promise<void> {
   const srcSecrets = extractSecretsList(directory)
   if (srcSecrets.length === 0) {
@@ -402,11 +402,11 @@ export async function listMissingSecrets(
   const dstSecrets: string[] = (
     await client.listAllSecrets(
       namespace!,
-      new QueryOptions(1, 20, undefined, undefined, undefined, true)
+      new QueryOptions(1, 20, undefined, undefined, undefined, true),
     )
   ).map(({ name }) => name)
   const missingSecrets = srcSecrets.filter(
-    (item) => dstSecrets.indexOf(item) < 0
+    (item) => dstSecrets.indexOf(item) < 0,
   )
   if (missingSecrets.length > 0) {
     consoleWarnYellow('The following secrets are missing in the destination:')

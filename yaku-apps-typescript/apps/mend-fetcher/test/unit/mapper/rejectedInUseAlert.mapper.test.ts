@@ -14,7 +14,7 @@ describe('rejectedInUseAlert.mapper', () => {
     const expected = rejectedInUseAlertsModel[0]
 
     const result: RejectedInUseAlert = RejectedInUseAlertMap.toModel(
-      rejectedInUseAlertsDTO[0]
+      rejectedInUseAlertsDTO[0],
     )
 
     expect(result).toStrictEqual(expected)
@@ -24,7 +24,7 @@ describe('rejectedInUseAlert.mapper', () => {
     const expected = rejectedInUseAlertsDTO[1]
 
     const result: RejectedInUseAlertDTO = RejectedInUseAlertMap.toDTO(
-      rejectedInUseAlertsModel[1]
+      rejectedInUseAlertsModel[1],
     )
 
     expect(result).toStrictEqual(expected)

@@ -77,7 +77,7 @@ describe('RunService', () => {
     '7341a294-7a51-4fdc-90c6-af58e6bea690',
     'actor',
     'actor',
-    'actor'
+    'actor',
   )
 
   beforeEach(async () => {
@@ -149,14 +149,14 @@ describe('RunService', () => {
           .mockImplementation(
             (entityClass: EntityTarget<Run>, run: DeepPartial<Run>) => {
               return { ...run, globalId: 4711, namespace } as Run
-            }
+            },
           ),
         remove: jest.fn() as any,
         save: jest
           .fn()
           .mockImplementation(
             (entityClass: EntityTarget<Run>, run: Run, options: SaveOptions) =>
-              run
+              run,
           ),
         update: jest.fn() as any,
         delete: jest.fn() as any,
@@ -209,7 +209,7 @@ describe('RunService', () => {
     function mockQueryBuilder(
       itemCount: number,
       entities: Run[],
-      filtered: boolean
+      filtered: boolean,
     ) {
       return jest
         .spyOn(repository, 'createQueryBuilder')
@@ -275,7 +275,7 @@ describe('RunService', () => {
       expect(queryBuilderMock.getRawAndEntities).toBeCalledTimes(1)
       expect(listQueryHandler.addToQueryBuilder).toBeCalledWith(
         queryBuilderMock,
-        'runs'
+        'runs',
       )
     })
 
@@ -303,7 +303,7 @@ describe('RunService', () => {
       expect(queryBuilderMock.getRawAndEntities).toBeCalledTimes(1)
       expect(listQueryHandler.addToQueryBuilder).toBeCalledWith(
         queryBuilderMock,
-        'runs'
+        'runs',
       )
     })
 
@@ -331,7 +331,7 @@ describe('RunService', () => {
       expect(queryBuilderMock.getRawAndEntities).toBeCalledTimes(1)
       expect(listQueryHandler.addToQueryBuilder).toBeCalledWith(
         queryBuilderMock,
-        'runs'
+        'runs',
       )
     })
 
@@ -347,7 +347,7 @@ describe('RunService', () => {
           addToQueryBuilder: jest.fn(),
         }
         await expect(
-          service.getList(testingNamespaceId, listQueryHandler)
+          service.getList(testingNamespaceId, listQueryHandler),
         ).rejects.toThrow(BadRequestException)
         expect(queryBuilderMock.andWhereValue).toBeNull()
         expect(queryBuilderMock.getCount).not.toBeCalled()
@@ -374,7 +374,7 @@ describe('RunService', () => {
       const repoSpy = jest.spyOn(repository, 'findOne').mockResolvedValue(null)
 
       await expect(service.get(testingNamespaceId, 666)).rejects.toThrow(
-        NotFoundException
+        NotFoundException,
       )
 
       expect(repoSpy).toBeCalledWith({
@@ -441,7 +441,7 @@ describe('RunService', () => {
       })
       expect(mgrSpy).toBeCalledWith(run2)
       expect(logSpy).toBeCalledWith(
-        'Could not check workflow state for run 2 (1:2), error was Error: Timeout'
+        'Could not check workflow state for run 2 (1:2), error was Error: Timeout',
       )
     })
   })
@@ -530,7 +530,7 @@ describe('RunService', () => {
         testingNamespaceId,
         1,
         actor,
-        options
+        options,
       )
 
       expect(retrieved.config).toEqual(config())
@@ -560,7 +560,7 @@ describe('RunService', () => {
         .mockRejectedValue(new NotFoundException())
 
       await expect(
-        service.create(testingNamespaceId, 1, actor)
+        service.create(testingNamespaceId, 1, actor),
       ).rejects.toThrow(NotFoundException)
 
       expect(cfgMock).toBeCalledWith(testingNamespaceId, 1)
@@ -586,7 +586,7 @@ describe('RunService', () => {
       expect(service.get).toBeCalledWith(testingNamespaceId, run.id)
       expect(workflowManager.downloadResult).toBeCalledWith(
         run.storagePath,
-        'qg-result.yaml'
+        'qg-result.yaml',
       )
     })
 
@@ -602,7 +602,7 @@ describe('RunService', () => {
       expect(service.get).toBeCalledWith(testingNamespaceId, run.id)
       expect(workflowManager.downloadResult).toBeCalledWith(
         run.storagePath,
-        'evidences.zip'
+        'evidences.zip',
       )
     })
 
@@ -610,7 +610,7 @@ describe('RunService', () => {
       jest.spyOn(service, 'get').mockResolvedValue(run2)
 
       await expect(
-        service.getResult(testingNamespaceId, run2.id)
+        service.getResult(testingNamespaceId, run2.id),
       ).rejects.toThrow(BadRequestException)
 
       expect(service.get).toBeCalledWith(testingNamespaceId, run2.id)
@@ -641,7 +641,7 @@ describe('RunService', () => {
       jest.spyOn(service, 'get').mockResolvedValue(run2)
 
       await expect(
-        service.delete(testingNamespaceId, run.id, actor)
+        service.delete(testingNamespaceId, run.id, actor),
       ).rejects.toThrow(BadRequestException)
 
       expect(workflowManager.deleteWorkflowArtifacts).not.toBeCalled()
@@ -652,7 +652,7 @@ describe('RunService', () => {
       jest.spyOn(service, 'get').mockRejectedValue(new Error())
 
       await expect(
-        service.delete(testingNamespaceId, run.id, actor)
+        service.delete(testingNamespaceId, run.id, actor),
       ).rejects.toThrow()
 
       expect(workflowManager.deleteWorkflowArtifacts).not.toBeCalled()
@@ -668,7 +668,7 @@ describe('RunService', () => {
 
     it('should call the idService', () => {
       const idService = module.get<NamespaceLocalIdService>(
-        NamespaceLocalIdService
+        NamespaceLocalIdService,
       )
       const callback = service.getNamespaceCreatedCallback()
       callback(1)

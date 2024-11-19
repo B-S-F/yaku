@@ -5,7 +5,7 @@ export const generateAzureAccessToken = async (
   tenantId: string,
   clientId: string,
   grantType: string,
-  clientSecret: string
+  clientSecret: string,
 ) => {
   const baseUrl =
     process.env.IS_INTEGRATION_TEST === 'true'
@@ -26,7 +26,7 @@ export const generateAzureAccessToken = async (
 
     if (!response.data?.access_token) {
       throw new Error(
-        `Field "access_token" does not exist on response returned by Azure authenticator`
+        `Field "access_token" does not exist on response returned by Azure authenticator`,
       )
     }
     return response.data.access_token
@@ -37,7 +37,7 @@ export const generateAzureAccessToken = async (
       console.log('Error response: ')
       console.log(error.response.data)
       throw new Error(
-        `Request for Azure access token does not have status code 200. Status code: ${error.response.status}`
+        `Request for Azure access token does not have status code 200. Status code: ${error.response.status}`,
       )
     }
   }

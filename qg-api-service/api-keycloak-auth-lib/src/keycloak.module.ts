@@ -29,7 +29,7 @@ import { LoggerModule } from 'nestjs-pino'
           process.env.KEYCLOAK_CLIENT_ID.trim(),
           process.env.KEYCLOAK_CLIENT_SECRET.trim(),
           process.env.KEYCLOAK_ADMIN_URL.trim(),
-          process.env.KEYCLOAK_WELL_KNOWN_CONFIG.trim()
+          process.env.KEYCLOAK_WELL_KNOWN_CONFIG.trim(),
         ),
     },
     KeyCloakService,

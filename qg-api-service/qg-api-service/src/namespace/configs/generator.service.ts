@@ -17,7 +17,7 @@ const RequirementSchema = z.object({
       z.string(),
       z.object({
         title: z.string(),
-      })
+      }),
     )
     .optional(),
 })
@@ -56,7 +56,7 @@ export class GeneratorService {
     let chapter = `  '${id}':\n${this.yamlizeString(
       'title',
       4,
-      input.title
+      input.title,
     )}    requirements:\n`
     for (const rid of Object.keys(input.requirements)) {
       chapter = chapter + this.handleRequirement(rid, input.requirements[rid])
@@ -68,7 +68,7 @@ export class GeneratorService {
     let requirement = `      '${rid}':\n${this.yamlizeString(
       'title',
       8,
-      input.title
+      input.title,
     )}`
 
     if (input.text) {
@@ -81,7 +81,7 @@ export class GeneratorService {
         const check = `          '${id}':\n${this.yamlizeString(
           'title',
           12,
-          input.checks[id].title ?? 'Generated check title'
+          input.checks[id].title ?? 'Generated check title',
         )}${initialCheck}`
         requirement = requirement + check
       }
@@ -91,7 +91,7 @@ export class GeneratorService {
         `          '1':\n${this.yamlizeString(
           'title',
           12,
-          'Generated Check'
+          'Generated Check',
         )}${initialCheck}`
     }
     return requirement
@@ -125,7 +125,7 @@ export class GeneratorService {
       const errorMessage =
         err instanceof ZodError ? fromZodError(err) : err.message
       throw new BadRequestException(
-        `Could not parse the questionnaire data, error was ${errorMessage}`
+        `Could not parse the questionnaire data, error was ${errorMessage}`,
       )
     }
   }

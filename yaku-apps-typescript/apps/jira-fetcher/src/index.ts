@@ -21,7 +21,7 @@ const main = async () => {
       process.env.JIRA_CONFIG_FILE_PATH ??
       environmentError('JIRA_CONFIG_FILE_PATH')
     const configData = await YAML.parse(
-      await readFile(configFilePath, { encoding: 'utf8' })
+      await readFile(configFilePath, { encoding: 'utf8' }),
     )
     const issues = await fetchData(url, pat, username, password, configData)
     const jsonData = prepareDataToBeExported(issues, url)

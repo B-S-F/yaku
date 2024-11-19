@@ -31,7 +31,7 @@ describe('library.fetcher', () => {
           additionalData: {},
           retVal: librariesData,
         },
-      })
+      }),
     )
     spy.mockReturnValueOnce(
       Promise.resolve({
@@ -39,14 +39,14 @@ describe('library.fetcher', () => {
           additionalData: {},
           retVal: [],
         },
-      })
+      }),
     )
     const expected: LibraryDTO[] = librariesDTO
 
     const result: LibraryDTO[] = await getLibraryDTOs(
       env.apiUrl,
       { projectToken: env.projectToken },
-      fakeAuth as unknown as Authenticator
+      fakeAuth as unknown as Authenticator,
     )
 
     expect(result).toStrictEqual(expected)
@@ -61,7 +61,7 @@ describe('library.fetcher', () => {
           additionalData: {},
           retVal: [librariesData[0]],
         },
-      })
+      }),
     )
     spy.mockReturnValueOnce(
       Promise.resolve({
@@ -69,7 +69,7 @@ describe('library.fetcher', () => {
           additionalData: {},
           retVal: [librariesData[1]],
         },
-      })
+      }),
     )
     spy.mockReturnValueOnce(
       Promise.resolve({
@@ -77,14 +77,14 @@ describe('library.fetcher', () => {
           additionalData: {},
           retVal: [],
         },
-      })
+      }),
     )
     const expected: LibraryDTO[] = librariesDTO
 
     const result: LibraryDTO[] = await getLibraryDTOs(
       env.apiUrl,
       { projectToken: env.projectToken },
-      fakeAuth as unknown as Authenticator
+      fakeAuth as unknown as Authenticator,
     )
 
     expect(result).toStrictEqual(expected)
@@ -98,7 +98,7 @@ describe('library.fetcher', () => {
     const result = getLibraryDTOs(
       env.apiUrl,
       { projectToken: env.projectToken },
-      fakeAuth as unknown as Authenticator
+      fakeAuth as unknown as Authenticator,
     )
 
     await expect(result).rejects.toThrowError('No expected values are returned')
@@ -112,13 +112,13 @@ describe('library.fetcher', () => {
         isAxiosError: true,
         request: {},
         message: 'Request Error Message',
-      })
+      }),
     )
 
     const result = getLibraryDTOs(
       env.apiUrl,
       { projectToken: env.projectToken },
-      fakeAuth as unknown as Authenticator
+      fakeAuth as unknown as Authenticator,
     )
 
     await expect(result).rejects.toThrowError('Request Error Message')
@@ -137,19 +137,19 @@ describe('library.fetcher', () => {
             data: {},
             statusText: httpStatus.message,
           },
-        })
+        }),
       )
 
       const result = getLibraryDTOs(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError(
-        `Response status code ${httpStatus.code}: ${httpStatus.message}`
+        `Response status code ${httpStatus.code}: ${httpStatus.message}`,
       )
-    }
+    },
   )
 
   it.each(HTTPResponseStatusCodes)(
@@ -168,19 +168,19 @@ describe('library.fetcher', () => {
             statusText: '',
             status: httpStatus.code,
           },
-        })
+        }),
       )
 
       const result = getLibraryDTOs(
         env.apiUrl,
         { projectToken: env.projectToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError(
-        `Response status code ${httpStatus.code}: ${httpStatus.message}`
+        `Response status code ${httpStatus.code}: ${httpStatus.message}`,
       )
-    }
+    },
   )
 
   it('should throw an error when it fails for unexpected reasons', async () => {
@@ -191,7 +191,7 @@ describe('library.fetcher', () => {
     const result = getLibraryDTOs(
       env.apiUrl,
       { projectToken: env.projectToken },
-      fakeAuth as unknown as Authenticator
+      fakeAuth as unknown as Authenticator,
     )
 
     await expect(result).rejects.toThrowError()

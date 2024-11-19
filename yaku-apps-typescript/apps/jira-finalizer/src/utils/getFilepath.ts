@@ -17,7 +17,7 @@ async function getFilesRecursive(dir: string): Promise<string[]> {
 
 export default async function (
   dirpath: string,
-  filename: string
+  filename: string,
 ): Promise<string> {
   const files: string[] = await getFilesRecursive(dirpath)
   const file = files.find((file) => file.endsWith(filename))

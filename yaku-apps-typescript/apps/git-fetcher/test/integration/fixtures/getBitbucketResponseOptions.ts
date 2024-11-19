@@ -16,7 +16,7 @@ export function requestUrlTag(tagName: string): string {
 
 export function createBitbucketCommits(
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ): [BitbucketCommit, BitbucketCommit] {
   return [
     {
@@ -31,7 +31,7 @@ export function createBitbucketCommits(
 }
 
 export function createBitbucketTags(
-  commits: [BitbucketCommit, BitbucketCommit]
+  commits: [BitbucketCommit, BitbucketCommit],
 ): [BitbucketTag, BitbucketTag] {
   return [
     {
@@ -84,7 +84,7 @@ export type BitbucketMockConfig = {
 }
 
 export function getBitbucketResponseOptions(
-  config: BitbucketMockConfig
+  config: BitbucketMockConfig,
 ): MockServerOptions {
   if (config.pullRequestResponses.length > 25) {
     throw new Error('The number of pull requests must not be greater than 25.')
