@@ -12,10 +12,10 @@ export const KEYCLOAK_STRATEGY_NAME = 'KeyCloak'
 @Injectable()
 export class KeyCloakStrategy extends PassportStrategy(
   Strategy,
-  KEYCLOAK_STRATEGY_NAME
+  KEYCLOAK_STRATEGY_NAME,
 ) {
   constructor(
-    @Inject(KeyCloakService) private readonly keyCloakService: KeyCloakService
+    @Inject(KeyCloakService) private readonly keyCloakService: KeyCloakService,
   ) {
     super()
   }
