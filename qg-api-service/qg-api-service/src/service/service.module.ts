@@ -31,10 +31,10 @@ import {
       provide: ServiceConfig,
       useFactory: () => {
         return new ServiceConfig(
-          parseInt(PORT),
+          Number.parseInt(PORT),
           PATH_PREFIX,
           getServiceVersion(),
-          IMAGE_VERSION
+          IMAGE_VERSION,
         )
       },
     },
@@ -49,23 +49,23 @@ import {
               '..',
               'oss',
               'src',
-              'python_certifi_v2023.11.17.zip'
+              'python_certifi_v2023.11.17.zip',
             ),
             fqdn: path.join(
               __dirname,
               '..',
               'oss',
               'src',
-              'python_fqdn_v1.5.1.zip'
+              'python_fqdn_v1.5.1.zip',
             ),
             'hashicorp-hcl': path.join(
               __dirname,
               '..',
               'oss',
               'src',
-              'golang_hashicorp-hcl_v1.0.0.zip'
+              'golang_hashicorp-hcl_v1.0.0.zip',
             ),
-          }
+          },
         )
       },
     },

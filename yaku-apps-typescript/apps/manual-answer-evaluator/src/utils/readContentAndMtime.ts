@@ -10,7 +10,7 @@ export interface FileData {
 }
 
 export const readContentAndMtime = async (
-  filename: string
+  filename: string,
 ): Promise<FileData> => {
   const text = await readFile(filename, 'utf8')
   const { mtime } = await stat(filename)

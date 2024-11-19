@@ -29,7 +29,7 @@ describe('Test "getDefenderForCloudAlerts()" from "alertsRetriever.ts"', async (
 
     const result = await getDefenderForCloudAlerts(
       'mockedToken',
-      'mockTenantId'
+      'mockTenantId',
     )
     expect(result).toEqual(mockedAlertsUnitTestsFirstSet)
   })
@@ -60,12 +60,12 @@ describe('Test "getDefenderForCloudAlerts()" from "alertsRetriever.ts"', async (
 
     const result = await getDefenderForCloudAlerts(
       'mockedToken',
-      'mockTenantId'
+      'mockTenantId',
     )
     expect(result).toEqual(
       mockedAlertsUnitTestsFirstSet
         .concat(mockedAlertsUnitTestsSecondSet)
-        .concat(mockedAlertsUnitTestsThirdSet)
+        .concat(mockedAlertsUnitTestsThirdSet),
     )
   })
 
@@ -77,9 +77,9 @@ describe('Test "getDefenderForCloudAlerts()" from "alertsRetriever.ts"', async (
     })
 
     await expect(
-      getDefenderForCloudAlerts('mockedToken', 'mockTenantId')
+      getDefenderForCloudAlerts('mockedToken', 'mockTenantId'),
     ).rejects.toThrowError(
-      'Request for Azure alerts does not have status code 200. Status code: 400'
+      'Request for Azure alerts does not have status code 200. Status code: 400',
     )
   })
 })

@@ -13,7 +13,7 @@ interface AdoHttpClientArgs {
 }
 
 export function createHttpClient(
-  adoHttpClientArgs: AdoHttpClientArgs
+  adoHttpClientArgs: AdoHttpClientArgs,
 ): AxiosInstance {
   let proxyTunnel: Agent
   let httpClient: AxiosInstance
@@ -39,7 +39,7 @@ function getProxyHost(): string {
   let proxyHost: string | undefined = process.env.PROXY_HOST
   if (proxyHost === undefined || proxyHost.trim() === '') {
     throw new ReferenceError(
-      'The environment variable "PROXY_HOST" is not set!'
+      'The environment variable "PROXY_HOST" is not set!',
     )
   }
   proxyHost = proxyHost.trim()
@@ -58,10 +58,10 @@ function getProxyPort(): number {
   if (!proxyPortAsString.match(/^[0-9]{1,5}$/)) {
     throw new Error('environment variable PROXY_PORT must contain digits only')
   }
-  const proxyPort: number = parseInt(proxyPortAsString, 10)
+  const proxyPort: number = Number.parseInt(proxyPortAsString, 10)
   if (isNaN(proxyPort) || proxyPort <= 0 || proxyPort > 65535) {
     throw new Error(
-      'environment variable PROXY_PORT does not represent an integer value in the range 0 < PROXY_PORT < 65535'
+      'environment variable PROXY_PORT does not represent an integer value in the range 0 < PROXY_PORT < 65535',
     )
   }
   return proxyPort

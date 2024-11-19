@@ -47,10 +47,10 @@ describe('EncryptionService', () => {
   it('should not allow to encrypt or decrypt with invalid strings', () => {
     for (const current of [undefined, null, '']) {
       expect(() => service.encryptSecret(current)).toThrow(
-        'Parameter secret must contain valid data'
+        'Parameter secret must contain valid data',
       )
       expect(() => service.decryptSecret(current)).toThrow(
-        'Parameter secret must contain valid data'
+        'Parameter secret must contain valid data',
       )
     }
   })
@@ -59,7 +59,7 @@ describe('EncryptionService', () => {
     expect(
       new EncryptionService({
         encryptionKey: randomBytes(16).toString('hex'),
-      } as EncryptionServiceConfig)
+      } as EncryptionServiceConfig),
     ).toBeDefined()
   })
 
@@ -69,7 +69,7 @@ describe('EncryptionService', () => {
         () =>
           new EncryptionService({
             encryptionKey: randomBytes(length).toString('hex'),
-          } as EncryptionServiceConfig)
+          } as EncryptionServiceConfig),
       ).toThrow('Invalid key length')
     }
   })

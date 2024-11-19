@@ -27,7 +27,7 @@ export class WorkItemConfigData {
       throw new Error(generateErrorMessage(result.error.issues))
     }
 
-    this.hierarchyDepth = this.data.workItems?.hierarchyDepth ?? NaN
+    this.hierarchyDepth = this.data.workItems?.hierarchyDepth ?? Number.NaN
   }
   getRequestedFields(): string[] {
     const uncheckedNeededFields: unknown[] =

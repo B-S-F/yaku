@@ -231,7 +231,7 @@ describe('ConfigsService', () => {
     it('should throw an error if the config does not exist', async () => {
       jest.spyOn(configRepository, 'findOne').mockResolvedValue(null)
       await expect(service.getConfig(namespace1.id, 1)).rejects.toThrowError(
-        NotFoundException
+        NotFoundException,
       )
     })
 
@@ -239,7 +239,7 @@ describe('ConfigsService', () => {
       const invalidIds = [undefined, null, '', -1]
       for (const id of invalidIds) {
         await expect(
-          service.getConfig(namespace1.id, id as any)
+          service.getConfig(namespace1.id, id as any),
         ).rejects.toThrow(BadRequestException)
       }
     })
@@ -248,7 +248,7 @@ describe('ConfigsService', () => {
       const invalidIds = [undefined, null, '', -1]
       for (const id of invalidIds) {
         await expect(service.getConfig(id as any, 1)).rejects.toThrow(
-          BadRequestException
+          BadRequestException,
         )
       }
     })
@@ -264,7 +264,7 @@ describe('ConfigsService', () => {
       const result = await service.create(
         namespace1.id,
         'config1',
-        'some description'
+        'some description',
       )
 
       expect(nextIdSpy).toBeCalledTimes(1)
@@ -288,7 +288,7 @@ describe('ConfigsService', () => {
         .spyOn(namespaceLocalIdService, 'nextId')
         .mockRejectedValue(new Error('some error'))
       await expect(
-        service.create(namespace1.id, 'config1', 'some description')
+        service.create(namespace1.id, 'config1', 'some description'),
       ).rejects.toThrowError()
       expect(nextIdSpy).toBeCalledTimes(1)
       expect(configRepository.create).not.toBeCalled()
@@ -298,7 +298,7 @@ describe('ConfigsService', () => {
       const invalidNames = [undefined, null, '']
       for (const name of invalidNames) {
         await expect(
-          service.create(namespace1.id, name as any, 'some description')
+          service.create(namespace1.id, name as any, 'some description'),
         ).rejects.toThrowError(BadRequestException)
       }
     })
@@ -313,7 +313,7 @@ describe('ConfigsService', () => {
         namespace1.id,
         1,
         'new config name',
-        'new description'
+        'new description',
       )
 
       expect(configRepository.update).toBeCalledTimes(1)
@@ -324,7 +324,7 @@ describe('ConfigsService', () => {
           name: 'new config name',
           description: 'new description',
           lastModificationTime: new Date(),
-        }
+        },
       )
       expect(configRepository.save).toBeCalledTimes(1)
       expect(configRepository.save).toBeCalledWith({
@@ -342,7 +342,7 @@ describe('ConfigsService', () => {
         namespace1.id,
         1,
         'some config name',
-        undefined as any
+        undefined as any,
       )
 
       expect(configRepository.update).toBeCalledTimes(1)
@@ -353,7 +353,7 @@ describe('ConfigsService', () => {
           name: 'some config name',
           description: config1Ns1.description,
           lastModificationTime: new Date(),
-        }
+        },
       )
       expect(configRepository.save).toBeCalledTimes(1)
       expect(configRepository.save).toBeCalledWith({
@@ -371,7 +371,7 @@ describe('ConfigsService', () => {
         namespace1.id,
         1,
         undefined as any,
-        'some description'
+        'some description',
       )
 
       expect(configRepository.update).toBeCalledTimes(1)
@@ -382,7 +382,7 @@ describe('ConfigsService', () => {
           name: config1Ns1.name,
           description: 'some description',
           lastModificationTime: new Date(),
-        }
+        },
       )
       expect(configRepository.save).toBeCalledTimes(1)
       expect(configRepository.save).toBeCalledWith({
@@ -429,7 +429,7 @@ describe('ConfigsService', () => {
         .mockResolvedValue(undefined)
 
       await expect(
-        service.update(namespace1.id, 1, 'new config name', 'new description')
+        service.update(namespace1.id, 1, 'new config name', 'new description'),
       ).rejects.toThrowError(NotFoundException)
 
       expect(findOneSpy).toBeCalledTimes(1)
@@ -447,7 +447,7 @@ describe('ConfigsService', () => {
         ...config1Ns1,
         files: undefined,
         lastModificationTime: new Date(
-          config1Ns1.lastModificationTime.getTime() + 3
+          config1Ns1.lastModificationTime.getTime() + 3,
         ),
       })
     })
@@ -467,7 +467,7 @@ describe('ConfigsService', () => {
       })
       expect(findingService.deleteAssociatedFindings).toHaveBeenCalledWith(
         namespace1.id,
-        1
+        1,
       )
     })
 
@@ -478,12 +478,12 @@ describe('ConfigsService', () => {
           new QueryFailedError(
             'delete something',
             [],
-            'violates foreign key constraint' as unknown as QueryFailedError
-          )
+            'violates foreign key constraint' as unknown as QueryFailedError,
+          ),
         )
 
       await expect(service.delete(namespace1.id, 1)).rejects.toThrow(
-        BadRequestException
+        BadRequestException,
       )
     })
 
@@ -497,7 +497,7 @@ describe('ConfigsService', () => {
   describe('validate', () => {
     it('should respond that the method is not implemented', async () => {
       await expect(service.validate(1, 1)).rejects.toThrow(
-        NotImplementedException
+        NotImplementedException,
       )
     })
   })
@@ -519,7 +519,7 @@ describe('ConfigsService', () => {
       const res = await service.createInitialConfig(
         1,
         1,
-        questionnaireDataBuffer
+        questionnaireDataBuffer,
       )
 
       expect(generateConfigSpy).toBeCalledTimes(1)
@@ -531,12 +531,12 @@ describe('ConfigsService', () => {
         namespace1.id,
         config1Ns1.id,
         'qg-config.yaml',
-        Buffer.from('I am content', 'utf-8')
+        Buffer.from('I am content', 'utf-8'),
       )
       expect(updateConfigModificationTimeSpy).toBeCalledTimes(2)
       expect(updateConfigModificationTimeSpy).toBeCalledWith(
         namespace1.id,
-        config1Ns1.id
+        config1Ns1.id,
       )
       expect(res.filename).toEqual('qg-config.yaml')
       expect(res.content.toString()).toEqual('I am content')
@@ -568,14 +568,14 @@ describe('ConfigsService', () => {
       const res = await service.createInitialConfig(
         1,
         1,
-        Buffer.from('questionnaire data', 'utf-8')
+        Buffer.from('questionnaire data', 'utf-8'),
       )
 
       expect(createFileSpy).toBeCalledWith(
         namespace1.id,
         config1Ns1.id,
         'qg-config-2.yaml',
-        Buffer.from('I am content', 'utf-8')
+        Buffer.from('I am content', 'utf-8'),
       )
       expect(res.filename).toEqual('qg-config-2.yaml')
     })
@@ -591,8 +591,8 @@ describe('ConfigsService', () => {
         service.createInitialConfig(
           1,
           1,
-          Buffer.from('questionnaire data', 'utf-8')
-        )
+          Buffer.from('questionnaire data', 'utf-8'),
+        ),
       ).rejects.toThrow(BadRequestException)
     })
   })
@@ -625,14 +625,14 @@ describe('ConfigsService', () => {
         1,
         excelContentData.project,
         excelContent,
-        configContent
+        configContent,
       )
 
       expect(excelTransformServiceSpy).toBeCalledTimes(1)
       expect(excelTransformServiceSpy).toBeCalledWith(
         'TestData',
         excelContent,
-        configContent
+        configContent,
       )
       expect(generateConfigSpy).toBeCalledTimes(1)
       expect(generateConfigSpy).toBeCalledWith(excelContentData)
@@ -643,12 +643,12 @@ describe('ConfigsService', () => {
         namespace1.id,
         config1Ns1.id,
         'qg-config.yaml',
-        Buffer.from('I am content', 'utf-8')
+        Buffer.from('I am content', 'utf-8'),
       )
       expect(updateConfigModificationTimeSpy).toBeCalledTimes(2)
       expect(updateConfigModificationTimeSpy).toBeCalledWith(
         namespace1.id,
-        config1Ns1.id
+        config1Ns1.id,
       )
       expect(res.filename).toEqual('qg-config.yaml')
       expect(res.content.toString()).toEqual('I am content')
@@ -667,8 +667,8 @@ describe('ConfigsService', () => {
           1,
           'TestProject',
           Buffer.from('questionnaire data', 'utf-8'),
-          Buffer.from('config data', 'utf-8')
-        )
+          Buffer.from('config data', 'utf-8'),
+        ),
       ).rejects.toThrow(BadRequestException)
     })
   })
@@ -708,13 +708,13 @@ describe('ConfigsService', () => {
       expect(updateConfigModificationTimeSpy).toBeCalledTimes(1)
       expect(updateConfigModificationTimeSpy).toBeCalledWith(
         namespace1.id,
-        config1Ns1.id
+        config1Ns1.id,
       )
     })
 
     it('should throw an error if the fileContent is empty', async () => {
       await expect(
-        service.createFile(1, 1, 'some-name', Buffer.from('', 'utf-8'))
+        service.createFile(1, 1, 'some-name', Buffer.from('', 'utf-8')),
       ).rejects.toThrow(BadRequestException)
 
       expect(fileContentRepository.save).not.toBeCalled()
@@ -726,8 +726,8 @@ describe('ConfigsService', () => {
           1,
           1,
           'some-name',
-          Buffer.from('\ufeffTEST', 'utf16le')
-        )
+          Buffer.from('\ufeffTEST', 'utf16le'),
+        ),
       ).rejects.toThrow(BadRequestException)
 
       expect(fileContentRepository.save).not.toBeCalled()
@@ -737,7 +737,7 @@ describe('ConfigsService', () => {
       jest.spyOn(configRepository, 'findOne').mockResolvedValue(undefined)
 
       await expect(
-        service.createFile(1, 1, 'some-name', Buffer.from('TEST', 'utf-8'))
+        service.createFile(1, 1, 'some-name', Buffer.from('TEST', 'utf-8')),
       ).rejects.toThrow(NotFoundException)
 
       expect(fileContentRepository.save).not.toBeCalled()
@@ -750,7 +750,7 @@ describe('ConfigsService', () => {
         .mockResolvedValue({} as FileEntity)
 
       await expect(
-        service.createFile(1, 1, 'some-name', Buffer.from('TEST', 'utf-8'))
+        service.createFile(1, 1, 'some-name', Buffer.from('TEST', 'utf-8')),
       ).rejects.toThrow(BadRequestException)
 
       expect(fileContentRepository.save).not.toBeCalled()
@@ -784,7 +784,7 @@ describe('ConfigsService', () => {
       jest.spyOn(fileRepository, 'findOneBy').mockResolvedValue(undefined)
 
       await expect(service.getFileContent(1, 1, 'file1')).rejects.toThrow(
-        NotFoundException
+        NotFoundException,
       )
     })
   })
@@ -868,7 +868,7 @@ describe('ConfigsService', () => {
       expect(fileContentRepository.update).toBeCalledTimes(1)
       expect(fileContentRepository.update).toHaveBeenCalledWith(
         { id: 1 },
-        { ...fileContent1, content: 'NEW TEST' }
+        { ...fileContent1, content: 'NEW TEST' },
       )
       expect(fileContentRepository.save).toBeCalledTimes(1)
       expect(fileContentRepository.save).toHaveBeenCalledWith({
@@ -878,7 +878,7 @@ describe('ConfigsService', () => {
       expect(updateConfigModificationTimeSpy).toBeCalledTimes(1)
       expect(updateConfigModificationTimeSpy).toBeCalledWith(
         namespace1.id,
-        config1Ns1.id
+        config1Ns1.id,
       )
     })
 
@@ -889,7 +889,7 @@ describe('ConfigsService', () => {
         .mockResolvedValue(undefined)
 
       await expect(
-        service.updateFile(1, 1, 'file1', Buffer.from('TEST', 'utf-8'))
+        service.updateFile(1, 1, 'file1', Buffer.from('TEST', 'utf-8')),
       ).rejects.toThrow(NotFoundException)
 
       expect(fileContentRepository.save).not.toBeCalled()
@@ -902,7 +902,7 @@ describe('ConfigsService', () => {
         .mockResolvedValue(fileContent1)
 
       await expect(
-        service.updateFile(1, 1, 'file1', Buffer.from('\ufeffTEST', 'utf16le'))
+        service.updateFile(1, 1, 'file1', Buffer.from('\ufeffTEST', 'utf16le')),
       ).rejects.toThrow(BadRequestException)
 
       expect(fileContentRepository.save).not.toBeCalled()
@@ -929,7 +929,7 @@ describe('ConfigsService', () => {
       expect(service['updateConfigModificationTime']).toBeCalledTimes(1)
       expect(service['updateConfigModificationTime']).toBeCalledWith(
         namespace1.id,
-        config1Ns1.id
+        config1Ns1.id,
       )
     })
 
@@ -961,7 +961,7 @@ describe('ConfigsService', () => {
       expect(namespaceLocalIdService.initializeIdCreation).toBeCalledTimes(1)
       expect(namespaceLocalIdService.initializeIdCreation).toBeCalledWith(
         'ConfigEntity',
-        1
+        1,
       )
     })
   })
@@ -1026,7 +1026,7 @@ describe('ConfigsService', () => {
         2,
         1,
         'copyOfConfig1',
-        'copy of config1 description'
+        'copy of config1 description',
       )
 
       expect(queryRunnerMock.manager.create).toBeCalledTimes(3)
@@ -1049,7 +1049,7 @@ describe('ConfigsService', () => {
               filename: 'file1',
             },
           },
-        }
+        },
       )
     })
 
@@ -1069,8 +1069,8 @@ describe('ConfigsService', () => {
           namespace1.id,
           1,
           'copyOfConfig1',
-          'copy of config1 description'
-        )
+          'copy of config1 description',
+        ),
       ).rejects.toThrow(NotFoundException)
     })
   })

@@ -7,7 +7,7 @@ import {
 
 export const createMockServerOptions = async (
   port: number,
-  responseStatus: number
+  responseStatus: number,
 ): Promise<MockServerOptions> => {
   return {
     port: port,
@@ -67,7 +67,7 @@ export const createMockServerOptions = async (
 
 export const createMockServerOptionsFAILED = async (
   port: number,
-  responseStatus: number
+  responseStatus: number,
 ): Promise<MockServerOptions> => {
   return {
     port: port,

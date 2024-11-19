@@ -6,18 +6,18 @@ import { searchOnFail } from './util.js'
 
 export const evaluateCondition = (
   ref: unknown,
-  condition: string
+  condition: string,
 ): [boolean, any] => {
   let newCondition = ''
   const query = condition.match(
-    /(?<=\()[$](?=\))|\$(\S+?)(?=[\s=!()])|\$(\S+)/g
+    /(?<=\()[$](?=\))|\$(\S+?)(?=[\s=!()])|\$(\S+)/g,
   )
   if (!query || query.length === 0) {
     throw new Error(`Error in condition: ${condition}`)
   }
   if (query.length > 1) {
     throw new Error(
-      `Error in condition: ${condition}. Only one reference is allowed.`
+      `Error in condition: ${condition}. Only one reference is allowed.`,
     )
   }
   let values: unknown[] = []
@@ -44,7 +44,7 @@ export const evaluateCondition = (
 
 export const all = (
   iterable: any[],
-  condition: string
+  condition: string,
 ): { result: boolean; reasonPackage?: ReasonPackage[] } => {
   const continueSearchOnFail = searchOnFail()
   const invalidElements: ReasonPackage[] = []
@@ -74,7 +74,7 @@ export const all = (
 
 export const any = (
   iterable: any[],
-  condition: string
+  condition: string,
 ): { result: boolean; reasonPackage?: ReasonPackage[] } => {
   const invalidElements: ReasonPackage[] = []
 
@@ -93,7 +93,7 @@ export const any = (
 
 export const one = (
   iterable: any[],
-  condition: string
+  condition: string,
 ): { result: boolean; reasonPackage?: ReasonPackage[] } => {
   const invalidElements: ReasonPackage[] = []
   const validElements: ReasonPackage[] = []
@@ -125,7 +125,7 @@ export const one = (
 
 export const none = (
   iterable: any[],
-  condition: string
+  condition: string,
 ): { result: boolean; reasonPackage?: ReasonPackage[] } => {
   const invalidElements: ReasonPackage[] = []
   const continueSearchOnFail = searchOnFail()

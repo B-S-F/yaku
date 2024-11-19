@@ -108,6 +108,6 @@ describe('TemplatingCache', () => {
       const templatingCache = new TemplatingCache('path/to/templates')
       expect(templatingCache).toBeDefined()
       await expect(templatingCache.onApplicationBootstrap()).rejects.toThrow()
-    }
+    },
   )
 })

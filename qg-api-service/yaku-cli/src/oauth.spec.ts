@@ -60,7 +60,7 @@ describe('refreshOAuth()', () => {
         name: envName,
         url: url,
         refreshToken: testLoginResponse.refreshToken,
-      } as Environment)
+      } as Environment),
     ).resolves.toEqual({
       name: envName,
       url: url,
@@ -81,7 +81,7 @@ describe('refreshOAuth()', () => {
         name: envName,
         url: url,
         refreshToken: testLoginResponse.refreshToken,
-      } as Environment)
+      } as Environment),
     ).resolves.toEqual({
       name: envName,
       url: url,

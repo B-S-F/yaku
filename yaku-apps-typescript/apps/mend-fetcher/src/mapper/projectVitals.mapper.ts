@@ -12,7 +12,7 @@ export class ProjectVitalsMap {
       projectVitalsDTO.projectCreationDate,
       projectVitalsDTO.pluginName,
       projectVitalsDTO.pluginVersion,
-      projectVitalsDTO.libraryCount
+      projectVitalsDTO.libraryCount,
     )
   }
 
@@ -26,7 +26,7 @@ export class ProjectVitalsMap {
       projectVitals.projectCreationDate,
       projectVitals.pluginName,
       projectVitals.pluginVersion,
-      projectVitals.libraryCount
+      projectVitals.libraryCount,
     )
   }
 }

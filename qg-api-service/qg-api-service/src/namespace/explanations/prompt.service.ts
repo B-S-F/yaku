@@ -52,7 +52,7 @@ export const generatePrompt = async (files: File[]): Promise<Prompt[]> => {
   ${
     usedAutopilotsDescription.length > 0
       ? usedAutopilotsDescription.map(
-          (autopilot) => `- ${autopilot.name}: ${autopilot.description}`
+          (autopilot) => `- ${autopilot.name}: ${autopilot.description}`,
         )
       : '- *see bash script*'
   }
@@ -65,11 +65,11 @@ export const generatePrompt = async (files: File[]): Promise<Prompt[]> => {
 
 const trimPrompts = async (
   prompts: Prompt[],
-  files: File[]
+  files: File[],
 ): Promise<Prompt[]> => {
   //1. Check if prompt fits in the token limit
   const promptLength = await getTokenLength(
-    prompts.reduce((acc, prompt) => acc + prompt.content, '')
+    prompts.reduce((acc, prompt) => acc + prompt.content, ''),
   )
 
   if (promptLength > getMaxPromptLength()) {
@@ -114,7 +114,7 @@ const trimPrompts = async (
     while (extraAmount > 0 && fileIndex >= 0) {
       prompts[1].content = prompts[1].content.replace(
         `- ${filesLength[fileIndex].filename}: ${filesLength[fileIndex].content}`,
-        ''
+        '',
       )
       extraAmount -= filesLength[fileIndex].length
       fileIndex--

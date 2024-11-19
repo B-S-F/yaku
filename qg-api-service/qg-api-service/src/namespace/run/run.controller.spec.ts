@@ -127,7 +127,7 @@ describe('RunController', () => {
                     entities: createListOf20Runs(),
                     itemCount: mockedTotalCount,
                   }
-                }
+                },
               ),
             get: jest.fn(),
             getResult: jest.fn(),
@@ -161,13 +161,13 @@ describe('RunController', () => {
       const srvSpy = jest.spyOn(service, 'get').mockResolvedValue(run1)
       const response = createMockResponse(
         `${baseUrl}/runs/${run1.id}`,
-        testUser
+        testUser,
       )
 
       const retrieved = await controller.get(
         testingNamespaceId,
         run1.id,
-        response
+        response,
       )
 
       expect(retrieved.id).toBe(run1.id)
@@ -188,11 +188,11 @@ describe('RunController', () => {
         .mockRejectedValue(new NotFoundException())
       const response = createMockResponse(
         `${baseUrl}/runs/${run1.id}`,
-        testUser
+        testUser,
       )
 
       await expect(
-        controller.get(testingNamespaceId, run1.id + 1, response)
+        controller.get(testingNamespaceId, run1.id + 1, response),
       ).rejects.toThrow(NotFoundException)
 
       expect(srvSpy).toBeCalledWith(testingNamespaceId, run1.id + 1)
@@ -206,7 +206,7 @@ describe('RunController', () => {
         .mockResolvedValue(Readable.from(run1ResultContent))
       const response = createMockResponse(
         `${baseUrl}/runs/${run1.id}/results`,
-        testUser
+        testUser,
       )
       const mockedReadStream = Readable.from([run1ResultContent])
       jest
@@ -216,16 +216,16 @@ describe('RunController', () => {
       const retrieved = await controller.getResult(
         testingNamespaceId,
         run1.id,
-        response
+        response,
       )
 
       expect(response.header).toBeCalledWith('Content-Type', 'application/yaml')
       expect(response.header).toBeCalledWith(
         'Content-Disposition',
-        `attachment; filename="${RESULTFILE}"`
+        `attachment; filename="${RESULTFILE}"`,
       )
       expect(await streamToString(retrieved.getStream())).toBe(
-        run1ResultContent
+        run1ResultContent,
       )
       expect(srvSpy).toBeCalledWith(testingNamespaceId, run1.id)
     })
@@ -236,11 +236,11 @@ describe('RunController', () => {
         .mockRejectedValue(new NotFoundException())
       const response = createMockResponse(
         `${baseUrl}/runs/${run1.id}/results`,
-        testUser
+        testUser,
       )
 
       await expect(
-        controller.getResult(testingNamespaceId, run1.id + 1, response)
+        controller.getResult(testingNamespaceId, run1.id + 1, response),
       ).rejects.toThrow(NotFoundException)
 
       expect(srvSpy).toBeCalledWith(testingNamespaceId, run1.id + 1)
@@ -254,7 +254,7 @@ describe('RunController', () => {
         .mockResolvedValue(Readable.from(run1EvidenceContent))
       const response = createMockResponse(
         `${baseUrl}/runs/${run1.id}/evidences`,
-        testUser
+        testUser,
       )
       const mockedReadStream = Readable.from([run1EvidenceContent])
       jest
@@ -264,16 +264,16 @@ describe('RunController', () => {
       const retrieved = await controller.getEvidence(
         testingNamespaceId,
         run1.id,
-        response
+        response,
       )
 
       expect(response.header).toBeCalledWith('Content-Type', 'application/zip')
       expect(response.header).toBeCalledWith(
         'Content-Disposition',
-        `attachment; filename="${EVIDENCEFILE}"`
+        `attachment; filename="${EVIDENCEFILE}"`,
       )
       expect(await streamToString(retrieved.getStream())).toBe(
-        run1EvidenceContent
+        run1EvidenceContent,
       )
       expect(srvSpy).toBeCalledWith(testingNamespaceId, run1.id)
     })
@@ -284,11 +284,11 @@ describe('RunController', () => {
         .mockRejectedValue(new NotFoundException())
       const response = createMockResponse(
         `${baseUrl}/runs/${run1.id}/evidences`,
-        testUser
+        testUser,
       )
 
       await expect(
-        controller.getEvidence(testingNamespaceId, run1.id + 1, response)
+        controller.getEvidence(testingNamespaceId, run1.id + 1, response),
       ).rejects.toThrow(NotFoundException)
 
       expect(srvSpy).toBeCalledWith(testingNamespaceId, run1.id + 1)
@@ -303,13 +303,13 @@ describe('RunController', () => {
       const run = await controller.create(
         testingNamespaceId,
         { configId: config.id },
-        response
+        response,
       )
 
       expect(response.status).toBeCalledWith(HttpStatus.ACCEPTED)
       expect(response.header).toBeCalledWith(
         'Location',
-        `${mockRunsUrl}/${createdRun.id}`
+        `${mockRunsUrl}/${createdRun.id}`,
       )
       expect(run.id).toBe(createdRun.id)
       expect(run.status).toBe(RunStatus.Running)
@@ -327,7 +327,7 @@ describe('RunController', () => {
         },
         {
           environment: {},
-        }
+        },
       )
     })
 
@@ -341,8 +341,8 @@ describe('RunController', () => {
         controller.create(
           testingNamespaceId,
           { configId: config.id + 1 },
-          response
-        )
+          response,
+        ),
       ).rejects.toThrow(NotFoundException)
 
       expect(srvSpy).toBeCalledWith(
@@ -356,7 +356,7 @@ describe('RunController', () => {
         },
         {
           environment: {},
-        }
+        },
       )
     })
 
@@ -375,8 +375,8 @@ describe('RunController', () => {
               ENV_KEY1: 'env-value1',
             },
           },
-          response
-        )
+          response,
+        ),
       ).rejects.toThrow(BadRequestException)
 
       expect(srvSpy).toBeCalledWith(
@@ -392,7 +392,7 @@ describe('RunController', () => {
           environment: {
             ENV_KEY1: 'env-value1',
           },
-        }
+        },
       )
     })
 
@@ -406,13 +406,13 @@ describe('RunController', () => {
           configId: config.id,
           environment: { ENV_KEY1: 'env-value1', ENV_KEY2: 'env-value2' },
         },
-        response
+        response,
       )
 
       expect(response.status).toBeCalledWith(HttpStatus.ACCEPTED)
       expect(response.header).toBeCalledWith(
         'Location',
-        `${mockRunsUrl}/${createdRun.id}`
+        `${mockRunsUrl}/${createdRun.id}`,
       )
       expect(run.id).toBe(createdRun.id)
       expect(run.status).toBe(RunStatus.Running)
@@ -432,7 +432,7 @@ describe('RunController', () => {
             ENV_KEY1: 'env-value1',
             ENV_KEY2: 'env-value2',
           },
-        }
+        },
       )
     })
 
@@ -446,13 +446,13 @@ describe('RunController', () => {
           configId: config.id,
           singleCheck,
         },
-        response
+        response,
       )
 
       expect(response.status).toBeCalledWith(HttpStatus.ACCEPTED)
       expect(response.header).toBeCalledWith(
         'Location',
-        `${mockRunsUrl}/${createdRun.id}`
+        `${mockRunsUrl}/${createdRun.id}`,
       )
       expect(run.id).toBe(createdRun.id)
       expect(run.status).toBe(RunStatus.Running)
@@ -470,7 +470,7 @@ describe('RunController', () => {
         {
           environment: {},
           singleCheck,
-        }
+        },
       )
     })
 
@@ -538,11 +538,11 @@ describe('RunController', () => {
         const response = createMockResponse(`${baseUrl}/runs`, testUser)
 
         await expect(
-          controller.create(testingNamespaceId, body, response)
+          controller.create(testingNamespaceId, body, response),
         ).rejects.toThrow(BadRequestException)
 
         expect(service.create).not.toBeCalled()
-      }
+      },
     )
   })
 
@@ -569,7 +569,7 @@ describe('RunController', () => {
       const retrieved = await controller.getRuns(
         testingNamespaceId,
         { page: 2, items: 20, sortOrder: SortOrder.ASC },
-        response
+        response,
       )
 
       expect(retrieved.pagination.pageNumber).toBe(2)
@@ -581,16 +581,16 @@ describe('RunController', () => {
       expect(retrieved.data[0].creationTime).toBeDefined()
       expect(retrieved.data[0].config).toBeDefined()
       expect(retrieved.links.first).toBe(
-        `${mockRunsUrl}?page=1&items=20&sortOrder=ASC`
+        `${mockRunsUrl}?page=1&items=20&sortOrder=ASC`,
       )
       expect(retrieved.links.last).toBe(
-        `${mockRunsUrl}?page=52&items=20&sortOrder=ASC`
+        `${mockRunsUrl}?page=52&items=20&sortOrder=ASC`,
       )
       expect(retrieved.links.prev).toBe(
-        `${mockRunsUrl}?page=1&items=20&sortOrder=ASC`
+        `${mockRunsUrl}?page=1&items=20&sortOrder=ASC`,
       )
       expect(retrieved.links.next).toBe(
-        `${mockRunsUrl}?page=3&items=20&sortOrder=ASC`
+        `${mockRunsUrl}?page=3&items=20&sortOrder=ASC`,
       )
 
       expect(srvSpy).toBeCalledWith(
@@ -599,8 +599,8 @@ describe('RunController', () => {
           { page: 2, items: 20, sortOrder: SortOrder.ASC },
           queryOptionsSchema.strict(),
           [],
-          'id'
-        )
+          'id',
+        ),
       )
     })
 
@@ -613,7 +613,7 @@ describe('RunController', () => {
       const retrieved = await controller.getRuns(
         testingNamespaceId,
         {} as PaginationQueryOptions,
-        response
+        response,
       )
 
       expect(retrieved.pagination.pageNumber).toBe(1)
@@ -631,7 +631,7 @@ describe('RunController', () => {
 
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
-        toListQueryOptions({}, queryOptionsSchema.strict(), [], 'id')
+        toListQueryOptions({}, queryOptionsSchema.strict(), [], 'id'),
       )
     })
 
@@ -644,7 +644,7 @@ describe('RunController', () => {
       const retrieved = await controller.getRuns(
         testingNamespaceId,
         { items: 10 } as PaginationQueryOptions,
-        response
+        response,
       )
 
       expect(retrieved.pagination.pageNumber).toBe(1)
@@ -662,8 +662,8 @@ describe('RunController', () => {
           { items: 10 } as PaginationQueryOptions,
           queryOptionsSchema.strict(),
           [],
-          'id'
-        )
+          'id',
+        ),
       )
     })
 
@@ -676,7 +676,7 @@ describe('RunController', () => {
       const retrieved = await controller.getRuns(
         testingNamespaceId,
         { filter: 'config=1,2' } as PaginationQueryOptions,
-        response
+        response,
       )
 
       expect(retrieved.pagination.pageNumber).toBe(1)
@@ -696,7 +696,7 @@ describe('RunController', () => {
         {},
         queryOptionsSchema.strict(),
         [],
-        'id'
+        'id',
       )
       queryOptions.additionalParams.filtering = [
         { property: 'config', values: ['1', '2'] } as FilterOption,
@@ -713,7 +713,7 @@ describe('RunController', () => {
       const retrieved = await controller.getRuns(
         testingNamespaceId,
         { filter: ['config=1,2', 'latestOnly=true'] } as PaginationQueryOptions,
-        response
+        response,
       )
 
       expect(retrieved.pagination.pageNumber).toBe(1)
@@ -733,7 +733,7 @@ describe('RunController', () => {
         {},
         queryOptionsSchema.strict(),
         [],
-        'id'
+        'id',
       )
       queryOptions.additionalParams.filtering = [
         { property: 'config', values: ['1', '2'] } as FilterOption,
@@ -748,8 +748,8 @@ describe('RunController', () => {
         controller.getRuns(
           testingNamespaceId,
           { sortBy: 'column' } as PaginationQueryOptions,
-          response
-        )
+          response,
+        ),
       ).rejects.toThrow(BadRequestException)
     })
   })

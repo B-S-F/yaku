@@ -41,11 +41,11 @@ export function createNamespacesSubcommands(program: Command): void {
     .argument('<name>', 'Name of the namespace')
     .argument(
       '[users...]',
-      'IGNORED - DEPRECATED - WILL BE REMOVED IN THE FUTURE'
+      'IGNORED - DEPRECATED - WILL BE REMOVED IN THE FUTURE',
     )
     .option(
       '-i, --init-config-file <qg-config-path>',
-      'Adds an config object with a qg-config file to the namespace'
+      'Adds an config object with a qg-config file to the namespace',
     )
     .action(async (name: string, users: string[], options) => {
       try {
@@ -75,19 +75,19 @@ export function createNamespacesSubcommands(program: Command): void {
     .description('Update a namespace (admin access required)')
     .argument('<id>', 'Id of the namespace to be changed')
     .addOption(
-      new Option('-n, --name <name>', 'Name of the namespace').default('')
+      new Option('-n, --name <name>', 'Name of the namespace').default(''),
     )
     .addOption(
       new Option(
         '-u, --users [users...]',
-        'IGNORED - DEPRECATED - WILL BE REMOVED IN THE FUTURE'
-      )
+        'IGNORED - DEPRECATED - WILL BE REMOVED IN THE FUTURE',
+      ),
     )
     .addOption(
       new Option(
         '-m, --mode <type>',
-        'IGNORED - DEPRECATED - WILL BE REMOVED IN THE FUTURE'
-      )
+        'IGNORED - DEPRECATED - WILL BE REMOVED IN THE FUTURE',
+      ),
     )
     .action(async (id: string, options) => {
       try {

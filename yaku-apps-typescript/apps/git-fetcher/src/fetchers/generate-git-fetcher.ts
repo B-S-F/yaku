@@ -29,7 +29,7 @@ export type GitResource =
 
 export default function generateGitFetcher(
   gitServerConfig: GitServerConfig,
-  configFileData: ConfigFileData
+  configFileData: ConfigFileData,
 ): GitFetcher<GitResource> {
   const gitServerType: SupportedGitServerType = gitServerConfig.gitServerType
   const gitConfigResource: GitConfigResource = configFileData.data.resource
@@ -51,19 +51,19 @@ export default function generateGitFetcher(
       return new GitFetcherBitbucketTagsAndBranches(
         gitServerConfig,
         configFileData,
-        gitConfigResource
+        gitConfigResource,
       )
     } else if (pullRequestAliases.includes(gitConfigResource)) {
       return new GitFetcherBitbucketPrs(gitServerConfig, configFileData)
     } else if (gitConfigResource === 'metadata-and-diff') {
       return new GitFetcherBitbucketCommitsAndDiff(
         gitServerConfig,
-        configFileData
+        configFileData,
       )
     }
   }
 
   throw new ConfigurationError(
-    `Unsupported git server / git resource combination: ${gitServerType}/${gitConfigResource}`
+    `Unsupported git server / git resource combination: ${gitServerType}/${gitConfigResource}`,
   )
 }

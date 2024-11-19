@@ -28,7 +28,7 @@ describe('AuthCache', () => {
 
     // look up shortly before expiration
     jest.setSystemTime(
-      insertionTime + AuthCacheConfig.DEFAULT_VALIDITY_PERIOD_IN_MILLIS - 1
+      insertionTime + AuthCacheConfig.DEFAULT_VALIDITY_PERIOD_IN_MILLIS - 1,
     )
 
     cachedUser = cache.get('04f48c06-e016-42fa-8b53-98a58a976e12')
@@ -36,7 +36,7 @@ describe('AuthCache', () => {
 
     // look up shortly after expiration
     jest.setSystemTime(
-      insertionTime + AuthCacheConfig.DEFAULT_VALIDITY_PERIOD_IN_MILLIS + 1
+      insertionTime + AuthCacheConfig.DEFAULT_VALIDITY_PERIOD_IN_MILLIS + 1,
     )
 
     cachedUser = cache.get('04f48c06-e016-42fa-8b53-98a58a976e12')
@@ -191,13 +191,13 @@ describe('AuthCache', () => {
 
     // put again shortly before expiration
     jest.setSystemTime(
-      insertionTime + AuthCacheConfig.DEFAULT_VALIDITY_PERIOD_IN_MILLIS - 10
+      insertionTime + AuthCacheConfig.DEFAULT_VALIDITY_PERIOD_IN_MILLIS - 10,
     )
 
     cache.put('04f48c06-e016-42fa-8b53-98a58a976e12', kcUser)
 
     jest.setSystemTime(
-      insertionTime + AuthCacheConfig.DEFAULT_VALIDITY_PERIOD_IN_MILLIS + 1
+      insertionTime + AuthCacheConfig.DEFAULT_VALIDITY_PERIOD_IN_MILLIS + 1,
     )
 
     // we expect that the expiry date was not changed and the entry has expired

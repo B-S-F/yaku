@@ -51,7 +51,7 @@ export class MailingModule {
               MAILJET_API_URL,
               MAILJET_API_KEY,
               MAILJET_API_SECRET,
-              MAILJET_USE_PROXY === 'true'
+              MAILJET_USE_PROXY === 'true',
             ),
           },
           {
@@ -70,7 +70,7 @@ export class MailingModule {
               SMTP_USERNAME,
               SMTP_PASSWORD,
               SMTP_SECURE === 'true',
-              true
+              true,
             ),
           },
           {

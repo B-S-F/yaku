@@ -33,12 +33,12 @@ export class ExplanationsService {
   constructor(
     @Inject(RunService) private readonly runService: RunService,
     @Inject(OpenAIService) private readonly openaiService: OpenAIService,
-    @Inject(ConfigsService) private readonly configsService: ConfigsService
+    @Inject(ConfigsService) private readonly configsService: ConfigsService,
   ) {}
 
   private async getConfigId(
     namespaceId: number,
-    runId: number
+    runId: number,
   ): Promise<number> {
     const run = await this.runService.get(namespaceId, runId)
     return run.config.id
@@ -47,12 +47,12 @@ export class ExplanationsService {
   private async getFileContent(
     namespaceId: number,
     configId: number,
-    fileName: string
+    fileName: string,
   ): Promise<string> {
     const fileBuffer = await this.configsService.getFileContent(
       namespaceId,
       configId,
-      fileName
+      fileName,
     )
 
     return fileBuffer.toString()
@@ -63,7 +63,7 @@ export class ExplanationsService {
     runId: number,
     chapter: string,
     requirement: string,
-    check: string
+    check: string,
   ): Promise<string> {
     let configId: number
     const files: File[] = []
@@ -76,7 +76,7 @@ export class ExplanationsService {
         const content = await this.getFileContent(
           namespaceId,
           configId,
-          file.filename
+          file.filename,
         )
         files.push({
           filename: file.filename,
@@ -95,10 +95,10 @@ export class ExplanationsService {
       parsedFiles = parseRunFiles(files, chapter, requirement, check)
     } catch (error) {
       this.logger.error(
-        `Issue encountered when trying to parse run files': ${error.message}`
+        `Issue encountered when trying to parse run files': ${error.message}`,
       )
       throw new UnprocessableEntityException(
-        'Could not understand the qg-config.'
+        'Could not understand the qg-config.',
       )
     }
     //3. Create the System and User prompts
@@ -118,13 +118,13 @@ export class ExplanationsService {
       if (error instanceof OpenAIInitializationError) {
         this.logger.error(`OpenAI initialization error: ${error.message}`)
         throw new UnprocessableEntityException(
-          'Explanation Service not available.'
+          'Explanation Service not available.',
         )
       }
 
       this.logger.error(`Error sending messages: ${error.message}`)
       throw new UnprocessableEntityException(
-        'Explanation Service could not create an explanation.'
+        'Explanation Service could not create an explanation.',
       )
     }
   }

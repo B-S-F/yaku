@@ -266,7 +266,7 @@ describe('NamespaceService', () => {
       saveSpy = jest
         .spyOn(repository, 'save')
         .mockImplementation((namespace: Namespace) =>
-          Promise.resolve(namespace)
+          Promise.resolve(namespace),
         )
     })
 
@@ -292,7 +292,7 @@ describe('NamespaceService', () => {
         expect(createSpy).not.toBeCalled()
         expect(saveSpy).not.toBeCalled()
         expect(callback).not.toBeCalled()
-      }
+      },
     )
   })
 
@@ -306,7 +306,7 @@ describe('NamespaceService', () => {
       saveSpy = jest
         .spyOn(repository, 'save')
         .mockImplementation((namespace: Namespace) =>
-          Promise.resolve(namespace)
+          Promise.resolve(namespace),
         )
       getSpy = jest
         .spyOn(repository, 'findOneBy')
@@ -330,7 +330,7 @@ describe('NamespaceService', () => {
 
     it('should throw a NotFound if namespace is unknown', async () => {
       await expect(service.update(666, namespaceName)).rejects.toThrow(
-        NotFoundException
+        NotFoundException,
       )
 
       expect(getSpy).toBeCalledWith({ id: 666 })

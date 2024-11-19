@@ -42,23 +42,23 @@ describe('Metrics Controller', () => {
 
     vi.spyOn(
       nestTestingApp.testingModule.get<SecretStorage>(SecretStorage),
-      'getSecrets'
+      'getSecrets',
     ).mockImplementation(() => Promise.resolve({}))
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'uploadConfig'
+      'uploadConfig',
     ).mockImplementation(() => {
       return Promise.resolve()
     })
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'fileExists'
+      'fileExists',
     ).mockImplementation(() => Promise.resolve(true))
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'downloadLogs'
+      'downloadLogs',
     ).mockImplementation(() =>
-      Promise.resolve('Cool logs\nOverall result: GREEN')
+      Promise.resolve('Cool logs\nOverall result: GREEN'),
     )
   })
 
@@ -75,7 +75,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=count`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=count`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -95,16 +95,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -131,7 +131,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=ASC&sortBy=runId`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=ASC&sortBy=runId`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -151,16 +151,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       let resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -189,11 +189,11 @@ describe('Metrics Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-4-findings-red-status.yaml'
+        'qg-result-4-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -214,7 +214,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -235,16 +235,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-4-findings-red-status.yaml'
+        'qg-config-4-findings-red-status.yaml',
       )
       let resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-4-findings-red-status.yaml'
+        'qg-result-4-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -273,11 +273,11 @@ describe('Metrics Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -298,7 +298,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -321,16 +321,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       let resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -360,7 +360,7 @@ describe('Metrics Controller', () => {
       const response = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/findings?page=1&items=20&sortOrder=DESC&sortBy=id`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -376,9 +376,9 @@ describe('Metrics Controller', () => {
                 item.chapter === '1' &&
                 item.requirement === '1' &&
                 item.check === '1' &&
-                item.justification === 'I am the reason 1'
+                item.justification === 'I am the reason 1',
             )[0].id
-          }`
+          }`,
         )
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
@@ -397,9 +397,9 @@ describe('Metrics Controller', () => {
                 item.chapter === '1' &&
                 item.requirement === '1' &&
                 item.check === '1' &&
-                item.justification === 'I am the reason 2'
+                item.justification === 'I am the reason 2',
             )[0].id
-          }`
+          }`,
         )
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
@@ -413,7 +413,7 @@ describe('Metrics Controller', () => {
       const manuallyResolvedResult = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -422,11 +422,11 @@ describe('Metrics Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-4-findings-red-status.yaml'
+        'qg-result-4-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -447,23 +447,23 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
       expect(manuallyResolvedResult.statusCode).toBe(HttpStatus.OK)
       expect(+manuallyResolvedResult.body.pagination.totalCount).toBe(
-        manuallyResolvedRunId
+        manuallyResolvedRunId,
       )
       expect(+manuallyResolvedResult.body.data[0].runId).toBe(
-        manuallyResolvedRunId
+        manuallyResolvedRunId,
       )
       expect(+manuallyResolvedResult.body.data[0].count).toBe(
-        expectedManuallyResolvedCount
+        expectedManuallyResolvedCount,
       )
       expect(+manuallyResolvedResult.body.data[0].diff).toBe(
-        expectedManuallyResolvedDiff
+        expectedManuallyResolvedDiff,
       )
 
       expect(result.statusCode).toBe(HttpStatus.OK)
@@ -482,16 +482,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -526,7 +526,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -547,16 +547,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       let resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -585,11 +585,11 @@ describe('Metrics Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-0-findings-green-status.yaml'
+        'qg-result-0-findings-green-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -611,11 +611,11 @@ describe('Metrics Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-0-findings-green-status.yaml'
+        'qg-result-0-findings-green-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -636,7 +636,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -655,16 +655,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-0-findings-green-status.yaml'
+        'qg-config-0-findings-green-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-0-findings-green-status.yaml'
+        'qg-result-0-findings-green-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -700,7 +700,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findings?page=1&items=20&sortOrder=DESC&sortBy=runId`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -718,7 +718,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findingsInRange?page=1&items=20&sortOrder=ASC&sortBy=runId&startRange=1970-01-01%2000%3A00%3A00&endRange=2038-01-19%2003%3A14%3A07`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findingsInRange?page=1&items=20&sortOrder=ASC&sortBy=runId&startRange=1970-01-01%2000%3A00%3A00&endRange=2038-01-19%2003%3A14%3A07`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -737,16 +737,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -784,7 +784,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findingsInRange?page=1&items=20&sortOrder=DESC&sortBy=count&startRange=${startDate}&endRange=${endDate}`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/findingsInRange?page=1&items=20&sortOrder=DESC&sortBy=count&startRange=${startDate}&endRange=${endDate}`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -804,7 +804,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/latestRunFindings?page=1&items=20&sortOrder=DESC&sortBy=count`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/latestRunFindings?page=1&items=20&sortOrder=DESC&sortBy=count`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -823,16 +823,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       let resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -861,11 +861,11 @@ describe('Metrics Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-4-findings-red-status.yaml'
+        'qg-result-4-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -886,7 +886,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/latestRunFindings?page=1&items=20&sortOrder=DESC&sortBy=runId`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/latestRunFindings?page=1&items=20&sortOrder=DESC&sortBy=runId`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -906,7 +906,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/latestRunFindingsInRange?page=1&items=20&sortOrder=DESC&sortBy=count&startRange=1970-01-01%2000%3A00%3A00&endRange=2038-01-19%2003%3A14%3A07`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/latestRunFindingsInRange?page=1&items=20&sortOrder=DESC&sortBy=count&startRange=1970-01-01%2000%3A00%3A00&endRange=2038-01-19%2003%3A14%3A07`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -925,16 +925,16 @@ describe('Metrics Controller', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       let resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -968,11 +968,11 @@ describe('Metrics Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-4-findings-red-status.yaml'
+        'qg-result-4-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -999,11 +999,11 @@ describe('Metrics Controller', () => {
       resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -1024,7 +1024,7 @@ describe('Metrics Controller', () => {
       const result = await supertest
         .agent(httpServer)
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/latestRunFindingsInRange?page=1&items=20&sortOrder=DESC&sortBy=count&startRange=${startDate}&endRange=${endDate}`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/metrics/latestRunFindingsInRange?page=1&items=20&sortOrder=DESC&sortBy=count&startRange=${startDate}&endRange=${endDate}`,
         )
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
@@ -1052,7 +1052,7 @@ describe('Metrics Controller', () => {
     await supertest
       .agent(httpServer)
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
       )
       .field('filename', 'qg-config.yaml')
       .attach('content', await readFile(filepath), {
@@ -1076,16 +1076,16 @@ describe('Metrics Controller', () => {
     ])
     expect(
       runEntity.storagePath.length,
-      `Run in database does not have a storage path`
+      `Run in database does not have a storage path`,
     ).toBeDefined()
   }
 
   async function checkMetricsDatabaseEntries(
-    expectedNumber: number
+    expectedNumber: number,
   ): Promise<void> {
     expect(
       await nestTestingApp.repositories.metricRepository.count(),
-      `Expected ${expectedNumber} elements in database`
+      `Expected ${expectedNumber} elements in database`,
     ).toBe(expectedNumber)
   }
 
@@ -1101,19 +1101,19 @@ describe('Metrics Controller', () => {
 
     expect(
       response.body.id,
-      `The id of created run does not exist`
+      `The id of created run does not exist`,
     ).toBeDefined()
     expect(
       response.headers.location.endsWith(`${response.body.id}`),
-      `The location header of created run is not as expected`
+      `The location header of created run is not as expected`,
     ).toBeTruthy()
     expect(
       response.body.status,
-      `The status of created run is not as expected, it is ${response.body.status}`
+      `The status of created run is not as expected, it is ${response.body.status}`,
     ).oneOf([RunStatus.Running, RunStatus.Pending])
     expect(
       response.body.config,
-      `The config ref of created run is not as expected, it is ${response.body.config}`
+      `The config ref of created run is not as expected, it is ${response.body.config}`,
     ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
 
     return response.body.id

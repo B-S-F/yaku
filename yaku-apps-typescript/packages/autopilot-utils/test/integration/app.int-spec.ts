@@ -14,7 +14,7 @@ function executeApp(args: string[], command: string): Promise<string> {
           reject(stderr)
         }
         resolve(stdout)
-      }
+      },
     )
   })
 }

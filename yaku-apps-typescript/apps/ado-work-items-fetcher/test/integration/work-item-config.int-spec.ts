@@ -40,7 +40,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-workitems-is-empty.yaml'
+          'config-workitems-is-empty.yaml',
         ),
       },
     })
@@ -48,7 +48,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path: workItems ~ Message: Expected object, received null',
-      mockServer
+      mockServer,
     )
   })
 
@@ -63,7 +63,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path:  ~ Message: Expected object, received null',
-      mockServer
+      mockServer,
     )
   })
 
@@ -78,7 +78,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path:  ~ Message: Expected object, received string',
-      mockServer
+      mockServer,
     )
   })
 
@@ -88,7 +88,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-workitems-no-object.yaml'
+          'config-workitems-no-object.yaml',
         ),
       },
     })
@@ -96,7 +96,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path: workItems ~ Message: Expected object, received string',
-      mockServer
+      mockServer,
     )
   })
 
@@ -106,7 +106,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-query-is-no-string.yaml'
+          'config-query-is-no-string.yaml',
         ),
       },
     })
@@ -114,7 +114,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path: workItems.query ~ Message: Expected string, received number',
-      mockServer
+      mockServer,
     )
   })
 
@@ -124,7 +124,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-neededfields-is-no-array.yaml'
+          'config-neededfields-is-no-array.yaml',
         ),
       },
     })
@@ -132,7 +132,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path: workItems.neededFields ~ Message: Expected array, received number',
-      mockServer
+      mockServer,
     )
   })
 
@@ -142,7 +142,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-neededfields-contains-object.yaml'
+          'config-neededfields-contains-object.yaml',
         ),
       },
     })
@@ -150,7 +150,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path: workItems.neededFields[0] ~ Message: Expected string, received object',
-      mockServer
+      mockServer,
     )
   })
 
@@ -160,7 +160,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-hierarchydepth-is-no-number.yaml'
+          'config-hierarchydepth-is-no-number.yaml',
         ),
       },
     })
@@ -168,7 +168,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path: workItems.hierarchyDepth ~ Message: Expected number, received string',
-      mockServer
+      mockServer,
     )
   })
 
@@ -178,7 +178,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-hierarchydepth-is-floating-point-number.yaml'
+          'config-hierarchydepth-is-floating-point-number.yaml',
         ),
       },
     })
@@ -186,7 +186,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path: workItems.hierarchyDepth ~ Message: Expected integer, received float',
-      mockServer
+      mockServer,
     )
   })
 
@@ -196,7 +196,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-hierarchydepth-is-negative.yaml'
+          'config-hierarchydepth-is-negative.yaml',
         ),
       },
     })
@@ -204,7 +204,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: too_small ~ Path: workItems.hierarchyDepth ~ Message: Number must be greater than 0',
-      mockServer
+      mockServer,
     )
   })
 
@@ -214,7 +214,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-relations-is-no-object.yaml'
+          'config-relations-is-no-object.yaml',
         ),
       },
     })
@@ -222,7 +222,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path: workItems.relations ~ Message: Expected object, received string',
-      mockServer
+      mockServer,
     )
   })
 
@@ -232,7 +232,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-relations-get-is-no-boolean.yaml'
+          'config-relations-get-is-no-boolean.yaml',
         ),
       },
     })
@@ -240,7 +240,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_type ~ Path: workItems.relations.relations.get ~ Message: Expected boolean, received string',
-      mockServer
+      mockServer,
     )
   })
 
@@ -250,7 +250,7 @@ describe('Work Item Configuration', () => {
         ...defaultAdoEnvironment,
         ADO_CONFIG_FILE_PATH: path.join(
           fixturesPath,
-          'config-relations-type-is-unsupported.yaml'
+          'config-relations-type-is-unsupported.yaml',
         ),
       },
     })
@@ -258,7 +258,7 @@ describe('Work Item Configuration', () => {
     verifyError(
       result,
       'Error: Code: invalid_union ~ Path: workItems.relations.relations.relationType ~ Message: Invalid input',
-      mockServer
+      mockServer,
     )
   })
 })

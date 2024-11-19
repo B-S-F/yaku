@@ -3,7 +3,7 @@ import { MockServerOptions } from '../cli/mockserver'
 export function createRunMockServerResponse(
   port: number,
   nameSpaceId: number,
-  runId: number
+  runId: number,
 ): MockServerOptions {
   return {
     port: port,

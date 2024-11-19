@@ -10,7 +10,7 @@ export class YamlValidatorService {
 
     if (!parsableFile || isJsonFile) {
       throw new BadRequestException(
-        `No valid yaml content for file ${filename}`
+        `No valid yaml content for file ${filename}`,
       )
     }
     return parsableFile

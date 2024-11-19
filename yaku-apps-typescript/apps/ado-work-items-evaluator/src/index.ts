@@ -17,7 +17,7 @@ const main = async () => {
   try {
     const filepath = getPathFromEnvVariable(
       'ADO_WORK_ITEMS_JSON_NAME',
-      'data.json'
+      'data.json',
     )
     const configFilePath = getPathFromEnvVariable(CONFIG_FILE_ENV_VAR)
     const rawData = await readFile(filepath)

@@ -9,7 +9,7 @@ export function createAboutCommand(program: Command) {
 
     .option(
       '--sbom',
-      'Get an cycloneDX sbom with all components used by this command line tool'
+      'Get an cycloneDX sbom with all components used by this command line tool',
     )
     .action((options) => {
       about(options)

@@ -23,7 +23,7 @@ function escape(mdText: any) {
 }
 
 export default function FileRenderer(data: Data, resultPath: string) {
-  return async function ({ template, output, additionalConfig }: OutputFile) {
+  return async ({ template, output, additionalConfig }: OutputFile) => {
     const mergedData = additionalConfig
       ? { ...data, ...additionalConfig }
       : data
@@ -32,7 +32,7 @@ export default function FileRenderer(data: Data, resultPath: string) {
       mergedData,
       {
         escape,
-      }
+      },
     )
     await outputFile(path.join(resultPath, output), html)
     if (!(additionalConfig && additionalConfig.silent))

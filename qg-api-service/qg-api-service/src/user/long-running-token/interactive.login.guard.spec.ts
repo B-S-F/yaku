@@ -79,7 +79,7 @@ describe('Interactive login guard', () => {
     })
 
     expect(() => guard.canActivate(context as ExecutionContext)).toThrow(
-      HttpException
+      HttpException,
     )
   })
 

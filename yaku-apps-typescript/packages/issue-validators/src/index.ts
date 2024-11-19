@@ -27,18 +27,18 @@ export const checkInCycle = (
   fieldName: string,
   acceptedValues: string[],
   days: number,
-  dueDateFieldName: string
+  dueDateFieldName: string,
 ) => {
   acceptedValues = acceptedValues.map((value) => value.toLowerCase())
   const validIssues = issues.filter((issue) =>
-    acceptedValues.includes(issue[fieldName].toLowerCase())
+    acceptedValues.includes(issue[fieldName].toLowerCase()),
   )
 
   if (validIssues.length === 0) return false
 
   const dates = validIssues.map((issue) => new Date(issue[dueDateFieldName]))
   const mostRecentDate: Date = new Date(
-    Math.max(...dates.map((d) => d.getTime()))
+    Math.max(...dates.map((d) => d.getTime())),
   )
 
   const cycleStartDate = new Date()
@@ -63,7 +63,7 @@ export const checkClosedIssuesAfterDate = (
   fieldName: string,
   acceptedValues: string[],
   dueDateFieldName: string,
-  afterDate?: Date
+  afterDate?: Date,
 ) => {
   if (afterDate && dueDateFieldName) {
     return issues.filter((issue) => {
@@ -97,7 +97,7 @@ export const checkProperty = (
   fieldName: string,
   conditionType: Conditions,
   values?: string[],
-  dueDateFieldName?: string
+  dueDateFieldName?: string,
 ): Issue[] | InvalidResolvedValues => {
   switch (conditionType) {
     case Conditions.exists:

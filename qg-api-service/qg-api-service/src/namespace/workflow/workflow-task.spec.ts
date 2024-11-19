@@ -46,10 +46,10 @@ describe('Workflow Task', () => {
     }).compile()
 
     finishedWorkflowTask = moduleRef.get<FinishedWorkflowDetectionTask>(
-      FinishedWorkflowDetectionTask
+      FinishedWorkflowDetectionTask,
     )
     workflowFinishedService = moduleRef.get<WorkflowFinishedService>(
-      WorkflowFinishedService
+      WorkflowFinishedService,
     )
     runRepository = moduleRef.get(getRepositoryToken(Run))
   })
@@ -98,7 +98,7 @@ describe('Workflow Task', () => {
       await Promise.all(promises)
 
       expect(workflowFinishedService.checkWorkflowHasFinished).toBeCalledTimes(
-        2
+        2,
       )
       expect(workflowFinishedService.updateWorkflowData).not.toBeCalled()
       expect(runRepository.save).not.toBeCalled()
@@ -124,11 +124,11 @@ describe('Workflow Task', () => {
       await Promise.all(promises)
 
       expect(workflowFinishedService.checkWorkflowHasFinished).toBeCalledTimes(
-        2
+        2,
       )
       expect(workflowFinishedService.updateWorkflowData).toBeCalledWith(
         { status: argoStatusObject, hasFinished: true },
-        runs[0]
+        runs[0],
       )
       expect(runRepository.save).not.toBeCalled()
       expect(runRepository.update).not.toBeCalled()
@@ -238,7 +238,7 @@ describe('Workflow Task', () => {
       await Promise.all(promises)
 
       expect(workflowFinishedService.checkWorkflowHasFinished).toBeCalledTimes(
-        2
+        2,
       )
       expect(workflowFinishedService.updateWorkflowData).not.toBeCalled()
       expect(finishedWorkflowTask['logger']['warn']).toBeCalledWith({
@@ -271,11 +271,11 @@ describe('Workflow Task', () => {
       await Promise.all(promises)
 
       expect(workflowFinishedService.checkWorkflowHasFinished).toBeCalledTimes(
-        2
+        2,
       )
       expect(workflowFinishedService.updateWorkflowData).toBeCalledWith(
         { status: argoStatusObject, hasFinished: true },
-        runs[0]
+        runs[0],
       )
       expect(finishedWorkflowTask['logger']['warn']).toBeCalledWith({
         msg: 'Check of run 1000 (100:94) failed due to Error: updating workflow failed',

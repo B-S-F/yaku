@@ -31,7 +31,7 @@ export class VersionService {
 
   constructor(
     @Inject(ServiceConfig) serviceConfig: ServiceConfig,
-    @Inject(WorkflowImageConfig) workflowImageConfig: WorkflowImageConfig
+    @Inject(WorkflowImageConfig) workflowImageConfig: WorkflowImageConfig,
   ) {
     const qgcliVersions: { [_key in Version]: string } = {
       v0: '',

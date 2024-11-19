@@ -24,6 +24,6 @@ export class RejectedInUseAlert implements IAlert {
       uuid: string
       name: string
     },
-    public description: string
+    public description: string,
   ) {}
 }

@@ -1,0 +1,150 @@
+{
+  "css": {
+    "formatter": {
+      "indentStyle": "space",
+      "quoteStyle": "double"
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "indentStyle": "space",
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "trailingCommas": "all"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": false
+    }
+  },
+  "linter": {
+    "rules": {
+      "complexity": {
+        "noBannedTypes": {
+          "level": "off"
+        },
+        "noForEach": {
+          "level": "off"
+        },
+        "noStaticOnlyClass": {
+          "level": "off"
+        },
+        "noThisInStatic": {
+          "level": "off"
+        },
+        "noUselessCatch": {
+          "level": "off"
+        },
+        "noUselessConstructor": {
+          "level": "off"
+        },
+        "noUselessTernary": {
+          "level": "off"
+        },
+        "useLiteralKeys": {
+          "level": "off"
+        },
+        "useOptionalChain": {
+          "level": "off"
+        }
+      },
+      "correctness": {
+        "noUnnecessaryContinue": {
+          "level": "off"
+        },
+        "noConstantCondition": {
+          "level": "off"
+        },
+        "noUnreachable": {
+          "level": "off"
+        }
+      },
+      "performance": {
+        "noAccumulatingSpread": {
+          "level": "off"
+        },
+        "noDelete": {
+          "level": "off"
+        }
+      },
+      "style": {
+        "noArguments": {
+          "level": "off"
+        },
+        "noCommaOperator": {
+          "level": "off"
+        },
+        "noNonNullAssertion": {
+          "fix": "none",
+          "level": "off"
+        },
+        "noParameterAssign": {
+          "level": "off"
+        },
+        "noUnusedTemplateLiteral": {
+          "level": "off"
+        },
+        "noUselessElse": {
+          "level": "off"
+        },
+        "useDefaultParameterLast": {
+          "level": "off"
+        },
+        "useExponentiationOperator": {
+          "level": "off"
+        },
+        "useImportType": {
+          "level": "off"
+        },
+        "useNodejsImportProtocol": {
+          "level": "off"
+        },
+        "useSingleVarDeclarator": {
+          "level": "off"
+        },
+        "useTemplate": {
+          "level": "off"
+        }
+      },
+      "suspicious": {
+        "noAssignInExpressions": {
+          "level": "off"
+        },
+        "noAsyncPromiseExecutor": {
+          "level": "off"
+        },
+        "noConfusingVoidType": {
+          "level": "off"
+        },
+        "noControlCharactersInRegex": {
+          "level": "off"
+        },
+        "noDoubleEquals": {
+          "level": "off"
+        },
+        "noExplicitAny": {
+          "level": "off"
+        },
+        "noGlobalIsNan": {
+          "level": "off"
+        },
+        "noImplicitAnyLet": {
+          "level": "off"
+        },
+        "noPrototypeBuiltins": {
+          "level": "off"
+        },
+        "noShadowRestrictedNames": {
+          "level": "off"
+        }
+      }
+    }
+  },
+  "organizeImports": {
+    "enabled": false
+  }
+}

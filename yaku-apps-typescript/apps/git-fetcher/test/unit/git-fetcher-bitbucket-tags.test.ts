@@ -45,7 +45,7 @@ describe('Git Fetcher BitBucket Tags', () => {
     gitFetcherBitBucketTags = new GitFetcherBitbucketTagsAndBranches(
       gitServerConfigDefault,
       configDefault,
-      'tags'
+      'tags',
     )
   })
 
@@ -141,6 +141,6 @@ describe('Git Fetcher BitBucket Tags', () => {
       expect(errorWasThrown).toBe(true)
       expect(responseStatusHandlerSpy).toHaveBeenCalledOnce()
       expect(responseStatusHandlerSpy).toHaveBeenCalledWith(responseCode)
-    }
+    },
   )
 })

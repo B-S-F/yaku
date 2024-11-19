@@ -145,7 +145,7 @@ describe('RunController', () => {
               return returnValue
             }
             throw new Error('Wrong parameters')
-          }
+          },
         )
     })
 

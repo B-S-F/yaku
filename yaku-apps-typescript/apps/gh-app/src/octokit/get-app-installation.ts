@@ -6,7 +6,7 @@ const logger = GetLogger()
 export async function getAppInstallation(
   octokit: Octokit,
   org: string,
-  repo: string | undefined
+  repo: string | undefined,
 ) {
   try {
     if (repo) {
@@ -22,7 +22,7 @@ export async function getAppInstallation(
       logger.error(
         `Error looking for app installation in ${target}: ${
           (e as Error).message
-        }`
+        }`,
       )
       process.exit(1)
     }

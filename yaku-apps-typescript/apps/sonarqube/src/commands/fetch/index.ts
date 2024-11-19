@@ -17,27 +17,27 @@ export function addFetchOptions(command: Command) {
     .option(
       '--hostname <hostname>',
       'Sonarqube hostname e.g. "sonarqube.bosch.com"',
-      process.env.SONARQUBE_HOSTNAME
+      process.env.SONARQUBE_HOSTNAME,
     )
     .option(
       '--access-token <access-token>',
       'Sonarqube access token',
-      process.env.SONARQUBE_ACCESS_TOKEN
+      process.env.SONARQUBE_ACCESS_TOKEN,
     )
     .option(
       '--port [port]',
       'Sonarqube port',
-      process.env.SONARQUBE_PORT ?? '443'
+      process.env.SONARQUBE_PORT ?? '443',
     )
     .option(
       '--protocol [protocol]',
       'Sonarqube protocol ("https", "http")',
-      process.env.SONARQUBE_PROTOCOL ?? 'https'
+      process.env.SONARQUBE_PROTOCOL ?? 'https',
     )
     .option(
       '--output-path [output-path]',
       'File to write the fetched data to',
-      process.env.SONARQUBE_OUTPUT_PATH ?? 'sonarqube_data.json'
+      process.env.SONARQUBE_OUTPUT_PATH ?? 'sonarqube_data.json',
     )
     .option('--debug', 'Enable debug logging', process.env.DEBUG ?? false)
     .option('--enable-proxy', 'Enable proxy', process.env.ENABLE_PROXY ?? false)
@@ -60,13 +60,13 @@ export function verifyOptions(options: any): options is FetchOptions {
   if (Number(options.port) < 1 || Number(options.port) > 65535) {
     environmentErrors.push(
       new ConfigurationError(
-        `port ${options.port} is not set to a valid port number`
-      )
+        `port ${options.port} is not set to a valid port number`,
+      ),
     )
   }
   if (options.protocol !== 'http' && options.protocol !== 'https') {
     environmentErrors.push(
-      new ConfigurationError('protocol not set to http or https')
+      new ConfigurationError('protocol not set to http or https'),
     )
   }
   if (!options.outputPath) {
@@ -86,7 +86,7 @@ const projectStatusCommand = new Command('project-status')
   .option(
     '--project-key <project-key>',
     'Sonarqube project key',
-    process.env.SONARQUBE_PROJECT_KEY
+    process.env.SONARQUBE_PROJECT_KEY,
   )
   .action(async (options: any) => {
     verifyOptions(options)

@@ -57,13 +57,13 @@ export class ApprovalService {
     @Inject(SubscriptionService)
     private readonly subscriptionService: SubscriptionService,
     @Inject(NotificationService)
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
   ) {}
 
   async get(
     namespaceId: number,
     releaseId: number,
-    approverId: number
+    approverId: number,
   ): Promise<ApprovalDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -73,7 +73,7 @@ export class ApprovalService {
         queryRunner,
         namespaceId,
         releaseId,
-        approverId
+        approverId,
       )
       const dto = await this.toApprovalDto(entity)
       await queryRunner.commitTransaction()
@@ -90,7 +90,7 @@ export class ApprovalService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    approverId: number
+    approverId: number,
   ): Promise<ApprovalEntity> {
     const approver = await queryRunner.manager.findOneOrFail(ApprovalEntity, {
       where: {
@@ -107,7 +107,7 @@ export class ApprovalService {
   async list(
     namespaceId: number,
     releaseId: number,
-    listQueryHandler: ListQueryHandler
+    listQueryHandler: ListQueryHandler,
   ): Promise<EntityList<ApprovalDto>> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -117,7 +117,7 @@ export class ApprovalService {
         queryRunner,
         namespaceId,
         releaseId,
-        listQueryHandler
+        listQueryHandler,
       )
       const entityList = await this.toEntityList(releases)
       await queryRunner.commitTransaction()
@@ -134,7 +134,7 @@ export class ApprovalService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    listQueryHandler: ListQueryHandler
+    listQueryHandler: ListQueryHandler,
   ): Promise<EntityList<ApprovalEntity>> {
     const queryBuilder = queryRunner.manager
       .getRepository(ApprovalEntity)
@@ -146,7 +146,7 @@ export class ApprovalService {
 
     listQueryHandler.addToQueryBuilder<ApprovalEntity>(
       queryBuilder,
-      'approvals'
+      'approvals',
     )
 
     const itemCount = await queryBuilder.getCount()
@@ -162,7 +162,7 @@ export class ApprovalService {
     namespaceId: number,
     releasedId: number,
     approver: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<ApprovalDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -173,7 +173,7 @@ export class ApprovalService {
         namespaceId,
         releasedId,
         approver,
-        actor
+        actor,
       )
       const dto = await this.toApprovalDto(entity)
       await queryRunner.commitTransaction()
@@ -183,7 +183,7 @@ export class ApprovalService {
         releasedId,
         dto.id,
         actor,
-        queryRunner
+        queryRunner,
       )
 
       return dto
@@ -208,7 +208,7 @@ export class ApprovalService {
     namespaceId: number,
     releaseId: number,
     approver: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<ApprovalEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -229,7 +229,7 @@ export class ApprovalService {
 
     if (!foundUserInNamespace) {
       throw new BadRequestException(
-        `Approver not found in namespace, namespace: ${namespaceId}, approver: ${approver}`
+        `Approver not found in namespace, namespace: ${namespaceId}, approver: ${approver}`,
       )
     }
 
@@ -251,7 +251,7 @@ export class ApprovalService {
       approval,
       AuditActor.convertFrom(actor),
       Action.CREATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
     const approvals = await queryRunner.manager.find(ApprovalEntity, {
       where: {
@@ -263,7 +263,7 @@ export class ApprovalService {
 
     const newReleaseApprovalState = await this.computeAggregateApproval(
       release.approvalMode,
-      approvals
+      approvals,
     )
 
     await this.updateReleaseApprovalState(
@@ -272,12 +272,12 @@ export class ApprovalService {
       releaseId,
       release,
       newReleaseApprovalState,
-      actor
+      actor,
     )
     const subscribtionResult =
       await this.subscriptionService.getSubscriptionStatus(
         approverId,
-        releaseId
+        releaseId,
       )
     if (!subscribtionResult) {
       await this.subscriptionService.createSubscription(approverId, releaseId)
@@ -290,7 +290,7 @@ export class ApprovalService {
     namespaceId: number,
     releaseId: number,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -302,7 +302,7 @@ export class ApprovalService {
         releaseId,
         ApprovalState.APPROVED,
         comment,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
       return res
@@ -318,7 +318,7 @@ export class ApprovalService {
     namespaceId: number,
     releaseId: number,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -330,7 +330,7 @@ export class ApprovalService {
         releaseId,
         ApprovalState.PENDING,
         comment,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
       return res
@@ -348,7 +348,7 @@ export class ApprovalService {
     releaseId: number,
     approvalState: ApprovalState,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -362,7 +362,7 @@ export class ApprovalService {
           namespace: { id: namespaceId },
         },
         relations: ['namespace', 'release', 'comment'],
-      }
+      },
     )
 
     if (currentApproval.approvalState === approvalState) return
@@ -380,7 +380,7 @@ export class ApprovalService {
       commentReference,
       comment,
       false,
-      actor
+      actor,
     )
 
     currentApproval.approvalState = approvalState
@@ -396,7 +396,7 @@ export class ApprovalService {
       newApproval,
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     const approvals = await queryRunner.manager.find(ApprovalEntity, {
@@ -409,7 +409,7 @@ export class ApprovalService {
 
     const newReleaseApprovalState = this.computeAggregateApproval(
       release.approvalMode,
-      approvals
+      approvals,
     )
 
     await this.updateReleaseApprovalState(
@@ -418,7 +418,7 @@ export class ApprovalService {
       releaseId,
       release,
       newReleaseApprovalState,
-      actor
+      actor,
     )
   }
 
@@ -426,7 +426,7 @@ export class ApprovalService {
     namespaceId: number,
     releaseId: number,
     approverId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -437,14 +437,14 @@ export class ApprovalService {
         namespaceId,
         releaseId,
         approverId,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
     } catch (e) {
       await queryRunner.rollbackTransaction()
       if (e.name === EntityNotFoundError.name) {
         throw new NotFoundException(
-          `Approver not found in release, release ${releaseId}, approver ${approverId}`
+          `Approver not found in release, release ${releaseId}, approver ${approverId}`,
         )
       }
       throw e
@@ -458,7 +458,7 @@ export class ApprovalService {
     namespaceId: number,
     releaseId: number,
     approverId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -467,7 +467,7 @@ export class ApprovalService {
       queryRunner,
       namespaceId,
       releaseId,
-      approverId
+      approverId,
     )
 
     if (!original) {
@@ -487,7 +487,7 @@ export class ApprovalService {
       {},
       AuditActor.convertFrom(actor),
       Action.DELETE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     const approvals = await queryRunner.manager.find(ApprovalEntity, {
@@ -500,7 +500,7 @@ export class ApprovalService {
 
     const newReleaseApprovalState = this.computeAggregateApproval(
       release.approvalMode,
-      approvals
+      approvals,
     )
 
     await this.updateReleaseApprovalState(
@@ -509,7 +509,7 @@ export class ApprovalService {
       releaseId,
       release,
       newReleaseApprovalState,
-      actor
+      actor,
     )
   }
 
@@ -517,7 +517,7 @@ export class ApprovalService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const approvals = await queryRunner.manager.find(ApprovalEntity, {
       where: {
@@ -535,7 +535,7 @@ export class ApprovalService {
         {},
         AuditActor.convertFrom(actor),
         Action.DELETE,
-        queryRunner.manager
+        queryRunner.manager,
       )
 
       await queryRunner.manager.remove(approval)
@@ -546,7 +546,7 @@ export class ApprovalService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    mode: ApprovalMode
+    mode: ApprovalMode,
   ): Promise<ApprovalState> {
     const approvals = await queryRunner.manager.find(ApprovalEntity, {
       where: {
@@ -561,7 +561,7 @@ export class ApprovalService {
 
   computeAggregateApproval(
     mode: ApprovalMode,
-    approvals: ApprovalEntity[]
+    approvals: ApprovalEntity[],
   ): ApprovalState {
     if (approvals.length === 0) {
       return ApprovalState.PENDING
@@ -576,7 +576,7 @@ export class ApprovalService {
 
   private isApproved(
     approvalMode: ApprovalMode,
-    states: ApprovalState[]
+    states: ApprovalState[],
   ): boolean {
     if (states.length === 0) {
       throw new Error('Illegal argument, approvals may not be empty')
@@ -593,12 +593,12 @@ export class ApprovalService {
   }
 
   async toEntityList(
-    approvals: EntityList<ApprovalEntity>
+    approvals: EntityList<ApprovalEntity>,
   ): Promise<EntityList<ApprovalDto>> {
     const dtos = await Promise.all(
       approvals.entities.map(async (approval) => {
         return await this.toApprovalDto(approval)
-      })
+      }),
     )
     return {
       entities: dtos,
@@ -612,7 +612,7 @@ export class ApprovalService {
     releaseId: number,
     currentRelease: ReleaseEntity,
     newApprovalState: ApprovalState,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     if (newApprovalState === currentRelease.approvalState) {
       return
@@ -636,7 +636,7 @@ export class ApprovalService {
       release,
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     await this.updateReleaseApprovalStateNotification(
@@ -644,7 +644,7 @@ export class ApprovalService {
       release.name,
       release.namespace.name,
       actor.displayName,
-      currentRelease.approvalState
+      currentRelease.approvalState,
     )
   }
 
@@ -653,7 +653,7 @@ export class ApprovalService {
     releaseName: string,
     namespaceName: string,
     displayName: string,
-    approvalState: ApprovalState
+    approvalState: ApprovalState,
   ) {
     const subscribers = await this.subscriptionService.getSubscribers(releaseId)
     for (const subscriber of subscribers) {
@@ -670,7 +670,7 @@ export class ApprovalService {
       await this.notificationService.pushNotification(
         subscriber.id,
         'The approval status of a release you are subscribed to has changed',
-        { type: NotificationType.ApprovalState, data: approvalData }
+        { type: NotificationType.ApprovalState, data: approvalData },
       )
     }
   }
@@ -680,13 +680,13 @@ export class ApprovalService {
     releaseId: number,
     approverId: number,
     actor: RequestUser,
-    queryRunner: QueryRunner
+    queryRunner: QueryRunner,
   ) {
     const approval = await this.getWithTransaction(
       queryRunner,
       namespaceId,
       releaseId,
-      approverId
+      approverId,
     )
     const namespace = approval.namespace
     const release = approval.release
@@ -706,7 +706,7 @@ export class ApprovalService {
       {
         type: NotificationType.Approval,
         data: approvalData,
-      }
+      },
     )
   }
 }

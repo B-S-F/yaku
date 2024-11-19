@@ -73,12 +73,12 @@ describe('POST run', () => {
 
     vi.spyOn(
       nestTestingApp.testingModule.get<SecretStorage>(SecretStorage),
-      'getSecrets'
+      'getSecrets',
     ).mockImplementation(() => Promise.resolve({}))
 
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'uploadConfig'
+      'uploadConfig',
     ).mockImplementation(() => Promise.resolve())
   })
 
@@ -105,11 +105,11 @@ describe('POST run', () => {
     await waitForRequests(3)
     expect(
       allRequests.filter((req) => req.method === 'POST'),
-      `Argo post requests are not as expected`
+      `Argo post requests are not as expected`,
     ).length(1)
     expect(
       allRequests.filter((req) => req.method === 'GET').length,
-      `Argo get requests are not as expected`
+      `Argo get requests are not as expected`,
     ).toBeGreaterThanOrEqual(1)
     await checkArgoRequest(allRequests[0], {})
   })
@@ -137,11 +137,11 @@ describe('POST run', () => {
     await waitForRequests(3)
     expect(
       allRequests.filter((req) => req.method === 'POST'),
-      `Argo post requests are not as expected`
+      `Argo post requests are not as expected`,
     ).length(1)
     expect(
       allRequests.filter((req) => req.method === 'GET').length,
-      `Argo get requests are not as expected`
+      `Argo get requests are not as expected`,
     ).toBeGreaterThanOrEqual(1)
     await checkArgoRequest(allRequests[0], {})
   })
@@ -173,7 +173,7 @@ describe('POST run', () => {
 
     expect(
       allRequests.filter((req) => req.method === 'GET').length,
-      `Argo get requests are not as expected`
+      `Argo get requests are not as expected`,
     ).toBeGreaterThanOrEqual(1)
   })
 
@@ -196,7 +196,7 @@ describe('POST run', () => {
       .expect(HttpStatus.OK)
 
     expect(response.body.status, `Run in GET response has not failed`).toEqual(
-      RunStatus.Failed
+      RunStatus.Failed,
     )
 
     expect(response.body.log).toBeDefined()
@@ -220,14 +220,14 @@ describe('POST run', () => {
     ])
     expect(
       runEntity.storagePath.length,
-      `Run in database does not have a storage path`
+      `Run in database does not have a storage path`,
     ).toBeDefined()
   }
 
   async function checkDatabaseEntities(expectedNumber: number): Promise<void> {
     expect(
       await nestTestingApp.repositories.runRepository.count(),
-      `Expected ${expectedNumber} elements in database`
+      `Expected ${expectedNumber} elements in database`,
     ).toBe(expectedNumber)
   }
 
@@ -243,15 +243,15 @@ describe('POST run', () => {
     const response = await getRun(runId)
     expect(
       response.body.id,
-      `Run in GET response has not the right id`
+      `Run in GET response has not the right id`,
     ).toBeDefined()
     expect(
       response.body.status,
-      `Run in GET response has not the right status`
+      `Run in GET response has not the right status`,
     ).oneOf([RunStatus.Running, RunStatus.Pending])
     expect(
       response.body.config,
-      `Config reference in run of GET reference is not as expected`
+      `Config reference in run of GET reference is not as expected`,
     ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
   }
 
@@ -265,24 +265,24 @@ describe('POST run', () => {
 
   async function checkArgoRequest(
     request: MockedRequest<DefaultBodyType>,
-    expectedEnvs: { [s: string]: any }
+    expectedEnvs: { [s: string]: any },
   ): Promise<void> {
     const requestBody: any = await request.json()
     const env: { name: string; value: string }[] =
       requestBody.Workflow.spec.templates[0].script.env
     expect(
       Array.isArray(env),
-      `Expected an array for environment variables`
+      `Expected an array for environment variables`,
     ).toBe(true)
 
     for (const element of env) {
       expect(
         Object.keys(expectedEnvs),
-        `The given environment variables sent to argo do not contain variable ${element.name}`
+        `The given environment variables sent to argo do not contain variable ${element.name}`,
       ).contains(element.name)
       expect(
         element.value,
-        `The given environment variables sent to argo do not contain the content of variable ${element.name}`
+        `The given environment variables sent to argo do not contain the content of variable ${element.name}`,
       ).toEqual(expectedEnvs[element.name])
     }
   }
@@ -300,7 +300,7 @@ describe('POST run', () => {
         }
 
         await new Promise((resolve) =>
-          setTimeout(resolve, pollIntervalInMillis)
+          setTimeout(resolve, pollIntervalInMillis),
         )
         passedTimeInMillis = Date.now() - startTimeInMillis
       }
@@ -318,19 +318,19 @@ describe('POST run', () => {
 
     expect(
       response.body.id,
-      `The id of created run does not exist`
+      `The id of created run does not exist`,
     ).toBeDefined()
     expect(
       response.headers.location.endsWith(`${response.body.id}`),
-      `The location header of created run is not as expected`
+      `The location header of created run is not as expected`,
     ).toBeTruthy()
     expect(
       response.body.status,
-      `The status of created run is not as expected, it is ${response.body.status}`
+      `The status of created run is not as expected, it is ${response.body.status}`,
     ).oneOf([RunStatus.Running, RunStatus.Pending])
     expect(
       response.body.config,
-      `The config ref of created run is not as expected, it is ${response.body.config}`
+      `The config ref of created run is not as expected, it is ${response.body.config}`,
     ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
     return response.body.id
   }
@@ -349,7 +349,7 @@ describe('POST run', () => {
     await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
       )
       .field('filename', 'qg-config.yaml')
       .attach('content', Buffer.from(config), {

@@ -73,7 +73,7 @@ function retrieveReason(outputLines: string[]): string {
 
 function retrieveCriterionAmount(outputLines: string[]): number {
   const criterionLines = outputLines.filter((line) =>
-    line.includes('criterion')
+    line.includes('criterion'),
   )
   return criterionLines.length
 }
@@ -84,7 +84,7 @@ describe('Jira evaluator', () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
@@ -96,12 +96,12 @@ describe('Jira evaluator', () => {
       JIRA_CONFIG_FILE_PATH: path.join(
         __dirname,
         'fixtures',
-        testCase.configName
+        testCase.configName,
       ),
       JIRA_ISSUES_JSON_NAME: path.join(
         __dirname,
         'fixtures',
-        testCase.dataName
+        testCase.dataName,
       ),
     }
     const result: RunProcessResult = await run(jiraEvaluatorExecutable, [], {
@@ -114,7 +114,7 @@ describe('Jira evaluator', () => {
     expect(retrieveStatus(result.stdout)).toEqual(testCase.expectedStatus)
     expect(retrieveReason(result.stdout)).toEqual(testCase.expectedReason)
     expect(retrieveCriterionAmount(result.stdout)).toEqual(
-      testCase.expectedCriterionAmount
+      testCase.expectedCriterionAmount,
     )
   })
 })

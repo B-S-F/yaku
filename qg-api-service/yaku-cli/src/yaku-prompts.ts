@@ -49,7 +49,7 @@ async function input(msg: string, defaultValue?: string): Promise<string> {
 
 async function select(
   msg: string,
-  choices: { name: string; value: string }[]
+  choices: { name: string; value: string }[],
 ): Promise<string> {
   return await inquirer.select({
     message: msg,
@@ -60,7 +60,7 @@ async function select(
 async function search(
   msg: string,
   choices: { name: string; value: string }[],
-  itemsPerPage?: number
+  itemsPerPage?: number,
 ): Promise<string> {
   return await inquirer.search({
     message: msg,
@@ -75,7 +75,7 @@ async function search(
 }
 
 async function createTablePrompt(
-  config: TableConfig
+  config: TableConfig,
 ): Promise<any[] | undefined> {
   return (await yakuTablePrompt(config)) as any[] | undefined
 }

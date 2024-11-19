@@ -39,7 +39,7 @@ describe('ApiDetails', () => {
     }
     const result = createApiUrl(apiDetails)
     expect(result.href).toEqual(
-      'https://dev.azure.com/ORG/PROJECT/_apis/wit/wiql?api-version=6.0'
+      'https://dev.azure.com/ORG/PROJECT/_apis/wit/wiql?api-version=6.0',
     )
   })
 })

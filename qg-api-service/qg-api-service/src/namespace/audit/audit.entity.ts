@@ -17,7 +17,7 @@ export class AuditActor {
     readonly id: string,
     readonly username: string,
     readonly email: string,
-    readonly displayName: string
+    readonly displayName: string,
   ) {}
 
   static convertFrom(user: RequestUser): AuditActor {

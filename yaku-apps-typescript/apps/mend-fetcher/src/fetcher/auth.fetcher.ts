@@ -8,7 +8,7 @@ export const auth = async (
   apiUrl: string,
   email: string,
   org: string,
-  token: string
+  token: string,
 ): Promise<Login> => {
   const url = '/api/v2.0/login'
   const headers = {
@@ -43,7 +43,7 @@ export const auth = async (
       response.data.retVal.jwtTTL,
       response.data.retVal.orgName,
       response.data.retVal.orgUuid,
-      response.data.retVal.sessionStartTime
+      response.data.retVal.sessionStartTime,
     )
 
     return login

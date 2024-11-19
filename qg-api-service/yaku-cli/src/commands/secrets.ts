@@ -25,7 +25,7 @@ export function createSecretsSubcommands(program: Command): void {
     .argument('[page]', 'The page requested, defaults to page 1')
     .option(
       '-i, --itemCount <value>',
-      'Number of items requested per page, defaults to 20'
+      'Number of items requested per page, defaults to 20',
     )
     .option('-a, --ascending', 'Revert sort order for the items')
     .option('--all', 'Retrieve all secrets in one call')
@@ -45,19 +45,19 @@ export function createSecretsSubcommands(program: Command): void {
     .argument('<name>', 'The name of the new secret')
     .argument(
       '[description]',
-      'An optional description to specify the purpose of the secret'
+      'An optional description to specify the purpose of the secret',
     )
     .addOption(
       new Option(
         '-s, --secret <secret>',
-        'The secret value to be stored (Deprecated: For security reasons, please use STDIN to input the secret value)'
-      )
+        'The secret value to be stored (Deprecated: For security reasons, please use STDIN to input the secret value)',
+      ),
     )
     .action(
       async (
         name: string,
         description: string,
-        options: { secret?: string }
+        options: { secret?: string },
       ) => {
         const secret = options.secret
         if (secret) {
@@ -80,7 +80,7 @@ export function createSecretsSubcommands(program: Command): void {
             }
           })
         }
-      }
+      },
     )
 
   program
@@ -92,14 +92,14 @@ export function createSecretsSubcommands(program: Command): void {
     .addOption(
       new Option(
         '-s, --secret <secret>',
-        'An optional change of the secret value, use empty string to not change the secret (Deprecated: For security reasons, please use STDIN to input the secret value)'
-      )
+        'An optional change of the secret value, use empty string to not change the secret (Deprecated: For security reasons, please use STDIN to input the secret value)',
+      ),
     )
     .action(
       async (
         name: string,
         description: string,
-        options: { secret?: string }
+        options: { secret?: string },
       ) => {
         const secret = options.secret
         if (secret) {
@@ -122,10 +122,10 @@ export function createSecretsSubcommands(program: Command): void {
               } catch (err) {
                 handleRestApiError(err)
               }
-            }
+            },
           )
         }
-      }
+      },
     )
 
   program
@@ -134,7 +134,7 @@ export function createSecretsSubcommands(program: Command): void {
     .argument('<name>', 'The name of the secret to be changed')
     .option(
       '-y --yes',
-      'Skip the confirmation prompt and delete the secret immediately. Use with caution!'
+      'Skip the confirmation prompt and delete the secret immediately. Use with caution!',
     )
     .action(async (name: string, options) => {
       try {

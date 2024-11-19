@@ -85,7 +85,7 @@ describe('NotificationService', () => {
       {
         should: 'push',
         when: 'emailNotification on',
-      } as any
+      } as any,
     )
   })
 
@@ -117,7 +117,7 @@ describe('NotificationService', () => {
       } as any)
 
       expect(mailServiceSpy).not.toHaveBeenCalled()
-    }
+    },
   )
 
   it.each([' ', undefined])(
@@ -127,7 +127,7 @@ describe('NotificationService', () => {
       jest
         .spyOn(keycloakService, 'getUserById')
         .mockResolvedValue(
-          user as Omit<KeyCloakUserOfRole, 'email'> as KeyCloakUserOfRole
+          user as Omit<KeyCloakUserOfRole, 'email'> as KeyCloakUserOfRole,
         )
       jest.spyOn(userProfileService, 'get').mockResolvedValue({
         id: user.kc_id,
@@ -141,6 +141,6 @@ describe('NotificationService', () => {
       } as any)
 
       expect(mailServiceSpy).not.toHaveBeenCalled()
-    }
+    },
   )
 })

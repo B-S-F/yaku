@@ -19,7 +19,7 @@ export type FetchProjectStatusOptions = {
 }
 
 export async function projectStatus(
-  options: FetchOptions & FetchProjectStatusOptions
+  options: FetchOptions & FetchProjectStatusOptions,
 ): Promise<void> {
   const logger = GetLogger()
   logger.info(`Fetching project status for ${options.projectKey}`)
@@ -27,7 +27,7 @@ export async function projectStatus(
     options.hostname,
     options.port,
     options.protocol,
-    options.projectKey
+    options.projectKey,
   )
   logger.debug(`dashboardUrl url: ${dashboardUrl.href}`)
 
@@ -47,7 +47,7 @@ export async function projectStatus(
     options.protocol,
     options.projectKey,
     options.accessToken,
-    proxyTunnel
+    proxyTunnel,
   )
 
   logger.info(`Writing response to ${options.outputPath}`)
@@ -84,7 +84,7 @@ export async function getProjectStatus(
   protocol: 'http' | 'https',
   projectKey: string,
   accessToken: string,
-  proxyTunnel?: HttpAgent | HttpsAgent
+  proxyTunnel?: HttpAgent | HttpsAgent,
 ): Promise<ProjectStatus> {
   const logger = GetLogger()
   const apiUrl = createApiUrl(
@@ -92,7 +92,7 @@ export async function getProjectStatus(
     port,
     protocol,
     PROJECT_STATUS_API_PATH,
-    { projectKey: projectKey }
+    { projectKey: projectKey },
   )
   logger.debug(`apiUrl: ${apiUrl.href}`)
   const response = await fetch(apiUrl.href, {
@@ -107,7 +107,7 @@ export async function getProjectStatus(
   const text = await response.text()
   if (!response.ok) {
     throw new RequestError(
-      `Failed to fetch project status with status ${response.status}, ${text}`
+      `Failed to fetch project status with status ${response.status}, ${text}`,
     )
   }
 
@@ -115,7 +115,7 @@ export async function getProjectStatus(
     return JSON.parse(text)
   } catch (error: any) {
     throw new Error(
-      `Could not parse sonarqube response as JSON, ${error.message}`
+      `Could not parse sonarqube response as JSON, ${error.message}`,
     )
   }
 }

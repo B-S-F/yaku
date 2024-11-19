@@ -45,7 +45,7 @@ describe('Git Fetcher BitBucket Branches', () => {
     gitFetcherBitBucketBranches = new GitFetcherBitbucketTagsAndBranches(
       gitServerConfigDefault,
       configDefault,
-      'branches'
+      'branches',
     )
   })
 
@@ -141,6 +141,6 @@ describe('Git Fetcher BitBucket Branches', () => {
       expect(errorWasThrown).toBe(true)
       expect(responseStatusHandlerSpy).toHaveBeenCalledOnce()
       expect(responseStatusHandlerSpy).toHaveBeenCalledWith(responseCode)
-    }
+    },
   )
 })

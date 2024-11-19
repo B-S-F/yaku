@@ -24,17 +24,17 @@ export class CoreAuthGuard implements CanActivate {
         },
       },
     }),
-    {}
+    {},
   )
 
   constructor(
     @Inject(KeyCloakAuthGuard) private readonly keyCloakAuthGuard,
     @Inject(LongRunningTokenAuthGuard)
-    private readonly longRunningTokenAuthGuard
+    private readonly longRunningTokenAuthGuard,
   ) {}
 
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     return this.checkAccess(context)
   }

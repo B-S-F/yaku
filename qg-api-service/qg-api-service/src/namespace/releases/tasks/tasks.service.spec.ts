@@ -119,19 +119,19 @@ describe('TasksService', () => {
 
     it('should not be possible to update a closed task', async () => {
       await expect(
-        service.update(2, 3, 1, 'title', testDate, undefined, undefined, user1)
+        service.update(2, 3, 1, 'title', testDate, undefined, undefined, user1),
       ).rejects.toThrowError()
     })
 
     it('should not be possible to add assignees to a closed task', async () => {
       await expect(
-        service.addAssignees(2, 3, 1, [user2.id], user1)
+        service.addAssignees(2, 3, 1, [user2.id], user1),
       ).rejects.toThrowError()
     })
 
     it('should not be possible to remove assignees from a closed task', async () => {
       await expect(
-        service.removeAssignees(2, 3, 1, [user2.id], user1)
+        service.removeAssignees(2, 3, 1, [user2.id], user1),
       ).rejects.toThrowError()
     })
   })
@@ -152,8 +152,8 @@ describe('TasksService', () => {
           new Date(),
           ReminderMode.DISABLED,
           'Description 1',
-          user1
-        )
+          user1,
+        ),
       ).rejects.toThrowError()
     })
 
@@ -175,20 +175,20 @@ describe('TasksService', () => {
           new Date(),
           undefined,
           undefined,
-          user1
-        )
+          user1,
+        ),
       ).rejects.toThrowError()
     })
 
     it('should not be possible to add assignees to a task for a closed release', async () => {
       await expect(
-        service.addAssignees(2, 3, 1, [user2.id], user1)
+        service.addAssignees(2, 3, 1, [user2.id], user1),
       ).rejects.toThrowError()
     })
 
     it('should not be possible to remove assignees from a task for a closed release', async () => {
       await expect(
-        service.removeAssignees(2, 3, 1, [user2.id], user1)
+        service.removeAssignees(2, 3, 1, [user2.id], user1),
       ).rejects.toThrowError()
     })
   })
@@ -353,7 +353,7 @@ describe('TasksService', () => {
       const assignees = [user1.id, user2.id]
 
       await expect(
-        service.checkAssignees(1, assignees)
+        service.checkAssignees(1, assignees),
       ).resolves.toBeUndefined()
     })
 

@@ -17,7 +17,7 @@ export const checkEnvVariables = () => {
   }
   if (!(GH_APP_ORG || (GH_APP_ORG && GH_APP_REPO))) {
     logger.error(
-      'Either GH_APP_ORG or both GH_APP_ORG and GH_APP_REPO must be set'
+      'Either GH_APP_ORG or both GH_APP_ORG and GH_APP_REPO must be set',
     )
     exit = true
   }

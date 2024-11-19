@@ -67,7 +67,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('other')))
+          Readable.from(items.filter((item) => item.name.startsWith('other'))),
         )
       minioClient.getObject = jest
         .fn()
@@ -80,7 +80,7 @@ describe('MinioService', () => {
         bucket,
         'other',
         true,
-        ''
+        '',
       )
       expect(minioClient.getObject).toBeCalledWith(bucket, items[2].name)
     })
@@ -92,14 +92,14 @@ describe('MinioService', () => {
         expect(result).toBeNull()
         expect(minioClient.listObjectsV2).not.toBeCalled()
         expect(minioClient.getObject).not.toBeCalled()
-      }
+      },
     )
 
     it('should return null if the requested log is not available', async () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('some')))
+          Readable.from(items.filter((item) => item.name.startsWith('some'))),
         )
       const result = await service.downloadLogs('some')
 
@@ -120,7 +120,7 @@ describe('MinioService', () => {
         bucket,
         'other',
         true,
-        ''
+        '',
       )
       expect(minioClient.getObject).not.toBeCalled()
     })
@@ -135,7 +135,7 @@ describe('MinioService', () => {
         bucket,
         'other',
         true,
-        ''
+        '',
       )
       expect(minioClient.getObject).not.toBeCalled()
     })
@@ -148,7 +148,7 @@ describe('MinioService', () => {
             read: () => {
               throw new Error()
             },
-          })
+          }),
       )
 
       const result = await service.downloadLogs('other')
@@ -158,7 +158,7 @@ describe('MinioService', () => {
         bucket,
         'other',
         true,
-        ''
+        '',
       )
       expect(minioClient.getObject).not.toBeCalled()
     })
@@ -167,7 +167,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('other')))
+          Readable.from(items.filter((item) => item.name.startsWith('other'))),
         )
       minioClient.getObject = jest
         .fn()
@@ -180,7 +180,7 @@ describe('MinioService', () => {
         bucket,
         'other',
         true,
-        ''
+        '',
       )
       expect(minioClient.getObject).toBeCalledWith(bucket, items[2].name)
     })
@@ -189,7 +189,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('other')))
+          Readable.from(items.filter((item) => item.name.startsWith('other'))),
         )
       minioClient.getObject = jest.fn().mockResolvedValue(null)
 
@@ -200,7 +200,7 @@ describe('MinioService', () => {
         bucket,
         'other',
         true,
-        ''
+        '',
       )
       expect(minioClient.getObject).toBeCalledWith(bucket, items[2].name)
     })
@@ -209,7 +209,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('other')))
+          Readable.from(items.filter((item) => item.name.startsWith('other'))),
         )
       minioClient.getObject = jest.fn().mockImplementation(
         () =>
@@ -217,7 +217,7 @@ describe('MinioService', () => {
             read: () => {
               throw new Error()
             },
-          })
+          }),
       )
 
       const result = await service.downloadLogs('other')
@@ -227,7 +227,7 @@ describe('MinioService', () => {
         bucket,
         'other',
         true,
-        ''
+        '',
       )
       expect(minioClient.getObject).toBeCalledWith(bucket, items[2].name)
     })
@@ -241,7 +241,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('some')))
+          Readable.from(items.filter((item) => item.name.startsWith('some'))),
         )
       minioClient.getObject = jest
         .fn()
@@ -250,7 +250,7 @@ describe('MinioService', () => {
       const content = service.downloadResult('some', 'object1')
 
       expect(await content.then((data) => streamToString(data))).toEqual(
-        filedata
+        filedata,
       )
       expect(minioClient.listObjectsV2).toBeCalledWith(bucket, 'some', true, '')
       expect(minioClient.getObject).toBeCalledWith(bucket, items[0].name)
@@ -260,7 +260,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('some')))
+          Readable.from(items.filter((item) => item.name.startsWith('some'))),
         )
       minioClient.getObject = jest
         .fn()
@@ -269,7 +269,7 @@ describe('MinioService', () => {
       const content = service.downloadResult('some', 'evidences.zip')
 
       expect(await content.then((data) => streamToString(data))).toEqual(
-        filedata
+        filedata,
       )
       expect(minioClient.listObjectsV2).toBeCalledWith(bucket, 'some', true, '')
       expect(minioClient.getObject).toBeCalledWith(bucket, items[1].name)
@@ -279,33 +279,33 @@ describe('MinioService', () => {
       'should return BadRequest if the storage path is not defined',
       async (path: string) => {
         await expect(service.downloadResult(path, 'object1')).rejects.toThrow(
-          Error
+          Error,
         )
         expect(minioClient.listObjectsV2).not.toBeCalled()
         expect(minioClient.getObject).not.toBeCalled()
-      }
+      },
     )
 
     it.each([undefined, null, '', ' \t\n'])(
       'should return BadRequest if the filename is not defined',
       async (filename: string) => {
         await expect(service.downloadResult('some', filename)).rejects.toThrow(
-          Error
+          Error,
         )
         expect(minioClient.listObjectsV2).not.toBeCalled()
         expect(minioClient.getObject).not.toBeCalled()
-      }
+      },
     )
 
     it('should return NotFound if the requested file is not available', async () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('some')))
+          Readable.from(items.filter((item) => item.name.startsWith('some'))),
         )
 
       await expect(service.downloadResult('some', 'main.log')).rejects.toThrow(
-        NotFoundException
+        NotFoundException,
       )
 
       expect(minioClient.listObjectsV2).toBeCalledWith(bucket, 'some', true, '')
@@ -318,7 +318,7 @@ describe('MinioService', () => {
         .mockImplementation(() => Readable.from([]))
 
       await expect(service.downloadResult('some', 'object1')).rejects.toThrow(
-        NotFoundException
+        NotFoundException,
       )
       expect(minioClient.listObjectsV2).toBeCalledWith(bucket, 'some', true, '')
     })
@@ -338,7 +338,7 @@ describe('MinioService', () => {
             read: () => {
               throw new Error()
             },
-          })
+          }),
       )
 
       await expect(service.downloadResult('some', 'object1')).rejects.toThrow()
@@ -349,7 +349,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('some')))
+          Readable.from(items.filter((item) => item.name.startsWith('some'))),
         )
       minioClient.getObject = jest
         .fn()
@@ -365,7 +365,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('some')))
+          Readable.from(items.filter((item) => item.name.startsWith('some'))),
         )
       minioClient.getObject = jest.fn().mockResolvedValue(null)
 
@@ -379,7 +379,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('some')))
+          Readable.from(items.filter((item) => item.name.startsWith('some'))),
         )
 
       const exists = await service.fileExists('some', 'object1')
@@ -392,7 +392,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('some')))
+          Readable.from(items.filter((item) => item.name.startsWith('some'))),
         )
 
       const exists = await service.fileExists('some', 'main.log')
@@ -417,17 +417,17 @@ describe('MinioService', () => {
       async (path: string) => {
         await expect(service.fileExists(path, 'object1')).rejects.toThrow(Error)
         expect(minioClient.listObjectsV2).not.toBeCalled()
-      }
+      },
     )
 
     it.each([undefined, null, '', ' \t\n'])(
       'should return BadRequest if the filename is not defined',
       async (filename: string) => {
         await expect(service.fileExists('some', filename)).rejects.toThrow(
-          Error
+          Error,
         )
         expect(minioClient.listObjectsV2).not.toBeCalled()
-      }
+      },
     )
 
     it('should throw an error in case of minio client returning null on listObjects', async () => {
@@ -445,7 +445,7 @@ describe('MinioService', () => {
             read: () => {
               throw new Error()
             },
-          })
+          }),
       )
 
       await expect(service.fileExists('some', 'object1')).rejects.toThrow()
@@ -468,12 +468,12 @@ describe('MinioService', () => {
       expect(minioClient.putObject).toBeCalledWith(
         bucket,
         `${storagePath}/file1`,
-        configData['file1']
+        configData['file1'],
       )
       expect(minioClient.putObject).toBeCalledWith(
         bucket,
         `${storagePath}/file2`,
-        configData['file2']
+        configData['file2'],
       )
     })
 
@@ -481,10 +481,10 @@ describe('MinioService', () => {
       'should not upload anything, if storage path is undefined',
       async (path: string) => {
         await expect(service.uploadConfig(path, configData)).rejects.toThrow(
-          Error
+          Error,
         )
         expect(minioClient.putObject).not.toBeCalled()
-      }
+      },
     )
 
     it('should not do anything, if an empty list of data is provided', async () => {
@@ -499,7 +499,7 @@ describe('MinioService', () => {
       minioClient.listObjectsV2 = jest
         .fn()
         .mockImplementation(() =>
-          Readable.from(items.filter((item) => item.name.startsWith('some')))
+          Readable.from(items.filter((item) => item.name.startsWith('some'))),
         )
 
       await service.removePath('some')
@@ -543,9 +543,9 @@ describe('MinioService', () => {
                 uniqueList.map((pItem) => pItem.prefix).includes(item.prefix)
                   ? uniqueList
                   : [...uniqueList, item],
-              []
-            )
-          )
+              [],
+            ),
+          ),
         )
 
       const list = await service.listTopLevelFolders()
@@ -580,7 +580,7 @@ describe('MinioService', () => {
             read: () => {
               throw new Error()
             },
-          })
+          }),
       )
 
       await expect(service.listTopLevelFolders()).rejects.toThrow()

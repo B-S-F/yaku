@@ -32,7 +32,7 @@ export function createNewTokensSubcommands(program: Command): void {
     .description('Create a token')
     .argument(
       '<description>',
-      'Description of the token (for example its purpose)'
+      'Description of the token (for example its purpose)',
     )
     .action(async (description: string) => {
       try {

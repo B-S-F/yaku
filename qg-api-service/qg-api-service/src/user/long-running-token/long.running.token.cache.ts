@@ -24,7 +24,7 @@ export class AuthCache {
 
   constructor(
     @Inject(AuthCacheConfig)
-    private readonly config: AuthCacheConfig
+    private readonly config: AuthCacheConfig,
   ) {
     this.map = new Map<string, MapValue>()
     this.entryValidForMilliSeconds = config.entryValidForMilliSeconds

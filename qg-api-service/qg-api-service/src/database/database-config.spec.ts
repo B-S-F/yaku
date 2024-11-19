@@ -25,12 +25,12 @@ describe('Db Config', () => {
       dbName,
       'true',
       dbMigrationsRun,
-      testFolder
+      testFolder,
     ) as any
 
     expect(config.type).toBe(dbPostgresType)
     expect(config.host).toBe(dbHost)
-    expect(config.port).toBe(parseInt(dbPort))
+    expect(config.port).toBe(Number.parseInt(dbPort))
     expect(config.username).toBe(dbUsername)
     expect(config.password).toBe(dbPassword)
     expect(config.database).toBe(dbName)
@@ -54,12 +54,12 @@ describe('Db Config', () => {
       dbName,
       'false',
       dbMigrationsRun,
-      testFolder
+      testFolder,
     ) as any
 
     expect(config.type).toBe(dbPostgresType)
     expect(config.host).toBe(dbHost)
-    expect(config.port).toBe(parseInt(dbPort))
+    expect(config.port).toBe(Number.parseInt(dbPort))
     expect(config.username).toBe(dbUsername)
     expect(config.password).toBe(dbPassword)
     expect(config.database).toBe(dbName)
@@ -83,7 +83,7 @@ describe('Db Config', () => {
       dbName,
       'false',
       dbMigrationsRun,
-      testFolder
+      testFolder,
     )
 
     expect(config.type).toBe(dbSqliteType)
@@ -108,8 +108,8 @@ describe('Db Config', () => {
         dbName,
         'false',
         dbMigrationsRun,
-        testFolder
-      )
+        testFolder,
+      ),
     ).toThrow()
   })
 })

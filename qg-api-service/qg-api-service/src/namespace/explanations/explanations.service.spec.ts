@@ -98,7 +98,7 @@ describe('ExplanationsService', () => {
         runId,
         chapter,
         requirement,
-        check
+        check,
       )
 
       expect(explanation).toEqual('Mock OpenAI Response')
@@ -115,7 +115,7 @@ describe('ExplanationsService', () => {
       })
 
       await expect(
-        service.getExplanation(namespaceId, runId, chapter, requirement, check)
+        service.getExplanation(namespaceId, runId, chapter, requirement, check),
       ).rejects.toThrowError(NotFoundException)
     })
 
@@ -130,7 +130,7 @@ describe('ExplanationsService', () => {
       })
 
       await expect(
-        service.getExplanation(namespaceId, runId, chapter, requirement, check)
+        service.getExplanation(namespaceId, runId, chapter, requirement, check),
       ).rejects.toThrowError(UnprocessableEntityException)
     })
 
@@ -145,7 +145,7 @@ describe('ExplanationsService', () => {
       })
 
       await expect(
-        service.getExplanation(namespaceId, runId, chapter, requirement, check)
+        service.getExplanation(namespaceId, runId, chapter, requirement, check),
       ).rejects.toThrowError(UnprocessableEntityException)
     })
   })

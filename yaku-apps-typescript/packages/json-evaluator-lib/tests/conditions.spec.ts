@@ -38,7 +38,7 @@ describe('evaluateCondition', () => {
     const ref = [{ foo: { bar: 'baz' }, qux: 'quux' }]
     const condition = '$[*].foo.bar === "baz" && $[*].qux === "quux"'
     expect(() => evaluateCondition(ref, condition)).toThrow(
-      'Error in condition: $[*].foo.bar === "baz" && $[*].qux === "quux". Only one reference is allowed.'
+      'Error in condition: $[*].foo.bar === "baz" && $[*].qux === "quux". Only one reference is allowed.',
     )
   })
 
@@ -46,7 +46,7 @@ describe('evaluateCondition', () => {
     const ref = { foo: 'bar' }
     const condition = 'foo === "bar"' // missing $ symbol
     expect(() => evaluateCondition([ref], condition)).toThrow(
-      'Error in condition: foo === "bar"'
+      'Error in condition: foo === "bar"',
     )
   })
 })
@@ -179,7 +179,7 @@ describe('all', () => {
   ]
   testCases.forEach((testCase) => {
     it(`should return ${JSON.stringify(
-      testCase.expectedOutput
+      testCase.expectedOutput,
     )} when called with ${JSON.stringify(testCase.input)} and "${
       testCase.condition
     }" continue search on fail set to "${
@@ -219,7 +219,7 @@ describe('any', () => {
   ]
   testCases.forEach((testCase) => {
     it(`should return ${JSON.stringify(
-      testCase.expectedOutput
+      testCase.expectedOutput,
     )} when called with ${JSON.stringify(testCase.input)} and "${
       testCase.condition
     }"`, () => {
@@ -291,7 +291,7 @@ describe('one', () => {
   ]
   testCases.forEach((testCase) => {
     it(`should return ${JSON.stringify(
-      testCase.expectedOutput
+      testCase.expectedOutput,
     )} when called with ${JSON.stringify(testCase.input)} and "${
       testCase.condition
     }"`, () => {
@@ -361,7 +361,7 @@ describe('none', () => {
   ]
   testCases.forEach((testCase) => {
     it(`should return ${JSON.stringify(
-      testCase.expectedOutput
+      testCase.expectedOutput,
     )} when called with ${JSON.stringify(testCase.input)} and "${
       testCase.condition
     }"`, () => {
