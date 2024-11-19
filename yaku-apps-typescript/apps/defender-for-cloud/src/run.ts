@@ -103,7 +103,7 @@ export const parseFilterValues = (inputFilter: string | null | undefined) => {
   if (inputFilter == null || inputFilter.length <= 0) {
     return null
   }
-  return inputFilter.split(', ').map((entry) => {
+  return inputFilter.split(',').map((entry) => {
     return entry.trim()
   })
 }

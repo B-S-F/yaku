@@ -58,7 +58,7 @@ metadata:
 autopilots:
   autopilot1:
     run: echo "Hello Autopilot 1!"
-chapters: 
+chapters:
   '1':
     title: chapter 1
     requirements:

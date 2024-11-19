@@ -43,8 +43,8 @@ describe('Test "parseFilterValues()" from "run.ts"', () => {
   })
 
   it('Should correctly split an "input filter string" and return the array of input values even when newlines and multiple spaces are present', () => {
-    const inputFilterString = `Kubernetes    ,   
-                                    critical   ,      
+    const inputFilterString = `Kubernetes    ,
+                                    critical   ,
                                     latest`
     const result = parseFilterValues(inputFilterString)
     expect(result).toEqual(['Kubernetes', 'critical', 'latest'])
