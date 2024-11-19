@@ -45,7 +45,7 @@ repos:
       - id: debug-statements
       - id: check-toml
       - id: check-yaml
-        exclude: '^(chart|onyx/(pkg|cmd|examples|internal)|.*/testdata|qg-api-service/(qg-api-service/integration-tests/mocks|qg-api-service/src/namespace|localdev))/'
+        exclude: '^(chart/|.*/testdata/|qg-api-service/(qg-api-service/integration-tests/mocks/[0-9]k\.yaml|localdev/))'
       - id: end-of-file-fixer
         exclude: '^(.*/testdata)/'
       - id: trailing-whitespace

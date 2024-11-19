@@ -58,7 +58,7 @@ export class UrlHandler {
 @Injectable()
 export class UrlProtocolConfig {
   constructor(
-    readonly serviceProtocol: string // either 'https', 'http' or 'request'
+    readonly serviceProtocol: string, // either 'https', 'http' or 'request'
   ) {}
 }
 
@@ -66,13 +66,13 @@ export class UrlProtocolConfig {
 export class UrlHandlerFactory {
   constructor(
     @Inject(UrlProtocolConfig)
-    private readonly protocolConfig: UrlProtocolConfig
+    private readonly protocolConfig: UrlProtocolConfig,
   ) {}
 
   getHandler(response: Response): UrlHandler {
     const protocol = this.determineProtocol(
       response.req.protocol,
-      this.protocolConfig.serviceProtocol
+      this.protocolConfig.serviceProtocol,
     )
     return new UrlHandler(response, protocol)
   }
