@@ -16,3 +16,6 @@ Foto from Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahm
 
 ## Development
 Developer docu for the project see [DEVELOPMENT.md](./DEVELOPMENT.md).
+
+## Licenses
+See [LICENSES](./LICENSES) folder for the project's licenses.
