@@ -131,7 +131,7 @@ describe('isSelectionEditable()', () => {
       isSelectionEditable(config, {
         ...state,
         selection: { ...state.selection, selectedColumn: 1 },
-      })
+      }),
     ).toBeTruthy()
   })
   it('url should be editable', () => {
@@ -139,7 +139,7 @@ describe('isSelectionEditable()', () => {
       isSelectionEditable(config, {
         ...state,
         selection: { ...state.selection, selectedColumn: 2 },
-      })
+      }),
     ).toBeTruthy()
   })
   it('namespace should be editable', () => {
@@ -147,7 +147,7 @@ describe('isSelectionEditable()', () => {
       isSelectionEditable(config, {
         ...state,
         selection: { ...state.selection, selectedColumn: 3 },
-      })
+      }),
     ).toBeTruthy()
   })
   it('accessToken should not be editable', () => {
@@ -155,7 +155,7 @@ describe('isSelectionEditable()', () => {
       isSelectionEditable(config, {
         ...state,
         selection: { ...state.selection, selectedColumn: 4 },
-      })
+      }),
     ).toBeFalsy()
   })
   it('refreshToken should not be editable', () => {
@@ -163,7 +163,7 @@ describe('isSelectionEditable()', () => {
       isSelectionEditable(config, {
         ...state,
         selection: { ...state.selection, selectedColumn: 5 },
-      })
+      }),
     ).toBeFalsy()
   })
   it('expiresAt should not be editable', () => {
@@ -171,7 +171,7 @@ describe('isSelectionEditable()', () => {
       isSelectionEditable(config, {
         ...state,
         selection: { ...state.selection, selectedColumn: 6 },
-      })
+      }),
     ).toBeFalsy()
   })
 })
@@ -219,7 +219,7 @@ describe('isSelectionRadio()', () => {
         isSelectionRadio(config, {
           ...state,
           selection: { ...state.selection, selectedColumn: i },
-        })
+        }),
       ).toBeFalsy()
     }
   })
@@ -268,7 +268,7 @@ describe('isSelectionCheckbox()', () => {
         isSelectionCheckbox(config, {
           ...state,
           selection: { ...state.selection, selectedColumn: i },
-        })
+        }),
       ).toBeFalsy()
     }
   })
@@ -515,7 +515,7 @@ describe('adjustStateAfterRowChange()', () => {
       fromFirstVisibleRow,
       fromLastVisibleRow,
       toFirstVisibleRow,
-      toLastVisibleRow
+      toLastVisibleRow,
     ) => {
       const state = {
         mode: {
@@ -548,7 +548,7 @@ describe('adjustStateAfterRowChange()', () => {
       adjustStateAfterRowChange(state)
       expect(state.selection.firstVisibleRow).toBe(toFirstVisibleRow)
       expect(state.selection.lastVisibleRow).toBe(toLastVisibleRow)
-    }
+    },
   )
 })
 
@@ -566,7 +566,7 @@ describe('adjustStateAfterPageChange()', () => {
       fromFirstVisibleRow,
       fromLastVisibleRow,
       toFirstVisibleRow,
-      toLastVisibleRow
+      toLastVisibleRow,
     ) => {
       const state = {
         mode: {
@@ -599,7 +599,7 @@ describe('adjustStateAfterPageChange()', () => {
       adjustStateAfterPageChange(state)
       expect(state.selection.firstVisibleRow).toBe(toFirstVisibleRow)
       expect(state.selection.lastVisibleRow).toBe(toLastVisibleRow)
-    }
+    },
   )
 })
 
@@ -657,7 +657,7 @@ describe('enterEditMode()', () => {
 
     expect(setState).not.toHaveBeenCalled()
     expect(setInfo).toHaveBeenCalledWith(
-      'Use <Space> in order to set as current'
+      'Use <Space> in order to set as current',
     )
   })
   it('should not enter edit mode on a read-only column', () => {
@@ -672,7 +672,7 @@ describe('enterEditMode()', () => {
       },
       setInfo,
       setState,
-      true
+      true,
     )
 
     expect(setState).not.toHaveBeenCalled()
@@ -690,7 +690,7 @@ describe('enterEditMode()', () => {
       },
       setInfo,
       setState,
-      true
+      true,
     )
 
     expect(setState).toHaveBeenCalledWith({
@@ -720,7 +720,7 @@ describe('enterEditMode()', () => {
       },
       setInfo,
       setState,
-      false
+      false,
     )
 
     expect(setState).toHaveBeenCalledWith({
@@ -935,7 +935,7 @@ describe('handleFilterKeypress()', () => {
       { line: character },
       setStateSpy,
       state,
-      config
+      config,
     )
 
     expect(setStateSpy).toHaveBeenCalledWith({
@@ -1012,7 +1012,7 @@ describe('handleEditKeypress()', () => {
         selection: { ...state.selection, selectedColumn: 1 },
         cellInput: { ...state.cellInput, newValue: 'new-value' },
       },
-      config
+      config,
     )
 
     expect(config.rows[state.selection.selectedRow][1]).toBe('new-value')
@@ -1041,7 +1041,7 @@ describe('handleEditKeypress()', () => {
           isValid: false,
         },
       },
-      config
+      config,
     )
 
     expect(config.rows[state.selection.selectedRow][2]).toBe('http://url1.com/')
@@ -1074,7 +1074,7 @@ describe('handleEditKeypress()', () => {
           newValue: 'name1',
         },
       },
-      config
+      config,
     )
 
     expect(config.rows[state.selection.selectedRow][1]).toBe('name1')
@@ -1105,7 +1105,7 @@ describe('handleEditKeypress()', () => {
           newValue: 'name2',
         },
       },
-      config
+      config,
     )
 
     expect(config.rows[state.selection.selectedRow][1]).toBe('name1')
@@ -1138,7 +1138,7 @@ describe('handleEditKeypress()', () => {
           cursorPosition: newValue.length,
         },
       },
-      config
+      config,
     )
 
     expect(setWarningSpy).not.toHaveBeenCalled()
@@ -1167,7 +1167,7 @@ describe('handleEditKeypress()', () => {
           newValue: '',
         },
       },
-      config
+      config,
     )
 
     expect(setWarningSpy).not.toHaveBeenCalled()
@@ -1192,7 +1192,7 @@ describe('handleEditKeypress()', () => {
       character: string,
       selectedColumn: number,
       originalValue: string,
-      updatedValue: string
+      updatedValue: string,
     ) => {
       handleEditKeypress(
         { name: character },
@@ -1211,7 +1211,7 @@ describe('handleEditKeypress()', () => {
             cursorPosition: originalValue.length,
           },
         },
-        config
+        config,
       )
 
       expect(setWarningSpy).not.toHaveBeenCalled()
@@ -1224,7 +1224,7 @@ describe('handleEditKeypress()', () => {
           cursorPosition: updatedValue.length,
         },
       })
-    }
+    },
   )
   it('should edit in the middle of the text', () => {
     handleEditKeypress(
@@ -1244,7 +1244,7 @@ describe('handleEditKeypress()', () => {
           cursorPosition: 2,
         },
       },
-      config
+      config,
     )
 
     expect(setWarningSpy).not.toHaveBeenCalled()
@@ -1272,7 +1272,7 @@ describe('handleEditKeypress()', () => {
       selectedColumn: number,
       originalValue: string,
       cursorPositionFrom: number,
-      cursorPositionTo: number
+      cursorPositionTo: number,
     ) => {
       handleEditKeypress(
         { name: keyName },
@@ -1289,7 +1289,7 @@ describe('handleEditKeypress()', () => {
             cursorPosition: cursorPositionFrom,
           },
         },
-        config
+        config,
       )
 
       expect(setWarningSpy).not.toHaveBeenCalled()
@@ -1302,7 +1302,7 @@ describe('handleEditKeypress()', () => {
           cursorPosition: cursorPositionTo,
         },
       })
-    }
+    },
   )
   it.each([
     ['left', 1, '12345', 0],
@@ -1313,7 +1313,7 @@ describe('handleEditKeypress()', () => {
       keyName: string,
       selectedColumn: number,
       originalValue: string,
-      cursorPositionFrom: number
+      cursorPositionFrom: number,
     ) => {
       handleEditKeypress(
         { name: keyName },
@@ -1330,12 +1330,12 @@ describe('handleEditKeypress()', () => {
             cursorPosition: cursorPositionFrom,
           },
         },
-        config
+        config,
       )
 
       expect(setWarningSpy).not.toHaveBeenCalled()
       expect(setStateSpy).not.toHaveBeenCalled()
-    }
+    },
   )
 })
 
@@ -1411,7 +1411,7 @@ describe('handleNavigationKeypress()', () => {
       state,
       false,
       false,
-      config
+      config,
     )
 
     expect(config.rows[0][0]).toBe(true)
@@ -1435,7 +1435,7 @@ describe('handleNavigationKeypress()', () => {
       { ...state, selection: { ...state.selection, selectedRow: 1 } },
       false,
       false,
-      config
+      config,
     )
 
     expect(config.rows[0][0]).toBe(false)
@@ -1459,7 +1459,7 @@ describe('handleNavigationKeypress()', () => {
       { ...state, selection: { ...state.selection, selectedColumn: 1 } },
       false,
       false,
-      config
+      config,
     )
 
     expect(config.rows[0][0]).toBe(false)
@@ -1486,12 +1486,12 @@ describe('handleNavigationKeypress()', () => {
         state,
         false,
         false,
-        config
+        config,
       )
 
       expect(setInfo).toHaveBeenCalled()
       expect(setState).not.toHaveBeenCalled()
-    }
+    },
   )
   it.each([['insert'], ['delete']])(
     'should not enter edit mode when on read-only column (%s)',
@@ -1508,12 +1508,12 @@ describe('handleNavigationKeypress()', () => {
         { ...state, selection: { ...state.selection, selectedColumn: 6 } },
         false,
         false,
-        config
+        config,
       )
 
       expect(setInfo).toHaveBeenCalled()
       expect(setState).not.toHaveBeenCalled()
-    }
+    },
   )
   it.each([['insert'], ['delete']])(
     'should enter edit mode when on editable column (%s)',
@@ -1530,7 +1530,7 @@ describe('handleNavigationKeypress()', () => {
         { ...state, selection: { ...state.selection, selectedColumn: 1 } },
         false,
         false,
-        config
+        config,
       )
 
       expect(setInfo).not.toHaveBeenCalled()
@@ -1554,7 +1554,7 @@ describe('handleNavigationKeypress()', () => {
               : config.rows[state.selection.selectedRow][1].length,
         },
       })
-    }
+    },
   )
   it('should present saving confirmation message (enter)', () => {
     handleNavigationKeypress(
@@ -1569,7 +1569,7 @@ describe('handleNavigationKeypress()', () => {
       state,
       false,
       false,
-      config
+      config,
     )
 
     expect(setConfirmWithSave).toHaveBeenCalled()
@@ -1588,7 +1588,7 @@ describe('handleNavigationKeypress()', () => {
       state,
       true,
       false,
-      config
+      config,
     )
 
     expect(setConfirmWithSave).not.toHaveBeenCalled()
@@ -1609,7 +1609,7 @@ describe('handleNavigationKeypress()', () => {
       state,
       false,
       false,
-      config
+      config,
     )
 
     expect(setConfirmWithSave).not.toHaveBeenCalled()
@@ -1628,7 +1628,7 @@ describe('handleNavigationKeypress()', () => {
       state,
       false,
       true,
-      config
+      config,
     )
 
     expect(setConfirmWithSave).not.toHaveBeenCalled()
@@ -1682,7 +1682,7 @@ describe('handleNavigationKeypress()', () => {
       toRow,
       toColumn,
       toFirstVisibleRow,
-      toLastVisibleRow
+      toLastVisibleRow,
     ) => {
       handleNavigationKeypress(
         { name: key },
@@ -1706,7 +1706,7 @@ describe('handleNavigationKeypress()', () => {
         },
         false,
         false,
-        config
+        config,
       )
 
       expect(setState).toHaveBeenCalledWith({
@@ -1720,7 +1720,7 @@ describe('handleNavigationKeypress()', () => {
           lastVisibleRow: toLastVisibleRow,
         },
       })
-    }
+    },
   )
   it.each([
     [3, 0, 0, 0, 2, 2, 6, 0, 2], // Shift+Tab at the beginning of first row
@@ -1739,7 +1739,7 @@ describe('handleNavigationKeypress()', () => {
       toRow,
       toColumn,
       toFirstVisibleRow,
-      toLastVisibleRow
+      toLastVisibleRow,
     ) => {
       handleNavigationKeypress(
         { name: 'tab', shift: true },
@@ -1763,7 +1763,7 @@ describe('handleNavigationKeypress()', () => {
         },
         false,
         false,
-        config
+        config,
       )
 
       expect(setState).toHaveBeenCalledWith({
@@ -1777,7 +1777,7 @@ describe('handleNavigationKeypress()', () => {
           lastVisibleRow: toLastVisibleRow,
         },
       })
-    }
+    },
   )
   it('should enter filter mode (Shift+F)', () => {
     handleNavigationKeypress(
@@ -1792,7 +1792,7 @@ describe('handleNavigationKeypress()', () => {
       state,
       false,
       false,
-      config
+      config,
     )
     expect(setState).toHaveBeenCalledWith({
       ...state,
@@ -1818,7 +1818,7 @@ describe('handleNavigationKeypress()', () => {
       },
       false,
       false,
-      config
+      config,
     )
     expect(setState).toHaveBeenCalledWith({
       ...state,
@@ -1849,7 +1849,7 @@ describe('handleNavigationKeypress()', () => {
       },
       false,
       false,
-      config
+      config,
     )
     expect(setState).toHaveBeenCalledWith({
       ...state,
@@ -1873,7 +1873,7 @@ describe('handleNavigationKeypress()', () => {
       state,
       false,
       false,
-      config
+      config,
     )
     expect(setState).not.toHaveBeenCalled()
   })
@@ -1896,7 +1896,7 @@ describe('handleNavigationKeypress()', () => {
       },
       false,
       false,
-      config
+      config,
     )
     expect(setState).toHaveBeenCalledWith({
       ...state,
@@ -1927,7 +1927,7 @@ describe('handleNavigationKeypress()', () => {
       },
       false,
       false,
-      config
+      config,
     )
     expect(setState).toHaveBeenCalledWith({
       ...state,
@@ -1951,7 +1951,7 @@ describe('handleNavigationKeypress()', () => {
       state,
       false,
       false,
-      config
+      config,
     )
     expect(setState).not.toHaveBeenCalled()
   })
@@ -2046,7 +2046,7 @@ describe('handleKeypress()', () => {
       },
       false,
       false,
-      config
+      config,
     )
 
     expect(done).not.toHaveBeenCalled()
@@ -2081,7 +2081,7 @@ describe('handleKeypress()', () => {
       state,
       false,
       false,
-      config
+      config,
     )
 
     expect(done).not.toHaveBeenCalled()
@@ -2111,7 +2111,7 @@ describe('handleKeypress()', () => {
       { ...state, mode: { ...state.mode, inEdit: false } },
       false,
       true,
-      config
+      config,
     )
 
     expect(done).toHaveBeenLastCalledWith(undefined)
@@ -2138,7 +2138,7 @@ describe('handleKeypress()', () => {
       { ...state, mode: { ...state.mode, inEdit: false } },
       false,
       false,
-      config
+      config,
     )
 
     expect(done).not.toHaveBeenCalled()
@@ -2171,7 +2171,7 @@ describe('handleKeypress()', () => {
       },
       false,
       false,
-      config
+      config,
     )
 
     expect(done).not.toHaveBeenCalled()
@@ -2201,7 +2201,7 @@ describe('handleKeypress()', () => {
       },
       false,
       false,
-      config
+      config,
     )
 
     expect(done).not.toHaveBeenCalled()
@@ -2616,10 +2616,10 @@ describe('generateHelpTip()', () => {
     })
     expect(helpTip).toEqual(
       `(Press ${chalk.cyan.bold(
-        '<H>'
+        '<H>',
       )} to toggle navigation help, ${chalk.cyan.bold(
-        '<Enter>'
-      )} to save the changes and ${chalk.cyan.bold('<Esc>')} to discard)`
+        '<Enter>',
+      )} to save the changes and ${chalk.cyan.bold('<Esc>')} to discard)`,
     )
   })
   it('should generate the full help tip for navigation mode', () => {
@@ -2628,32 +2628,32 @@ describe('generateHelpTip()', () => {
     })
     expect(helpTip).toEqual(
       `(Press ${chalk.cyan.bold(
-        '<H>'
+        '<H>',
       )} to toggle navigation help, ${chalk.cyan.bold(
-        '<Enter>'
+        '<Enter>',
       )} to save the changes and ${chalk.cyan.bold(
-        '<Esc>'
+        '<Esc>',
       )} to discard)\n\nIn order to make changes, press ${chalk.cyan.bold(
-        '<Space>'
+        '<Space>',
       )} to set as current, ${chalk.cyan.bold('<Insert>')}/${chalk.cyan.bold(
-        '<Delete>'
+        '<Delete>',
       )} to edit.\nUse ${chalk.cyan.bold('<Arrows>')} or ${chalk.cyan.bold(
-        '<Tab>'
+        '<Tab>',
       )}/${chalk.cyan.bold(
-        '<Shift + Tab>'
+        '<Shift + Tab>',
       )} to move between items.\nFor navigation between pages:\n - ${chalk.cyan.bold(
-        '<PgUp>'
+        '<PgUp>',
       )} goes to previous page, ${chalk.cyan.bold(
-        '<PgDown>'
+        '<PgDown>',
       )} to the next.\n - ${chalk.cyan.bold(
-        '<Home>'
+        '<Home>',
       )} takes you to the first page, ${chalk.cyan.bold(
-        '<End>'
+        '<End>',
       )} to the last.\nSort the elements using ${chalk.cyan.bold(
-        '<Shift + Up>'
+        '<Shift + Up>',
       )}/${chalk.cyan.bold(
-        '<Shift + Down>'
-      )} or filter them using ${chalk.cyan.bold('<Shift + F>')}`
+        '<Shift + Down>',
+      )} or filter them using ${chalk.cyan.bold('<Shift + F>')}`,
     )
   })
   it('should generate the help tip for edit mode', () => {
@@ -2662,8 +2662,8 @@ describe('generateHelpTip()', () => {
     })
     expect(helpTip).toEqual(
       `(Press ${chalk.cyan.bold(
-        '<Enter>'
-      )} to update the value, ${chalk.cyan.bold('<Esc>')} to cancel editing)`
+        '<Enter>',
+      )} to update the value, ${chalk.cyan.bold('<Esc>')} to cancel editing)`,
     )
   })
   it('should generate the help tip for filter mode', () => {
@@ -2676,10 +2676,10 @@ describe('generateHelpTip()', () => {
     })
     expect(helpTip).toEqual(
       `${chalk.yellow('Filter')} (Press ${chalk.cyan.bold(
-        '<Enter>'
+        '<Enter>',
       )} to apply, ${chalk.cyan.bold('<Esc>')} to discard): ${chalk.yellow(
-        filterValue
-      )}`
+        filterValue,
+      )}`,
     )
   })
 })
@@ -2735,17 +2735,17 @@ describe('generateUserMsg()', () => {
       confirmWithoutSaveMsg: string | unknown,
       confirmWithSaveMsg: string | unknown,
       infoMsg: string | unknown,
-      warningMsg: string | unknown
+      warningMsg: string | unknown,
     ) => {
       const result = generateUserMsg(
         errorMsg,
         confirmWithoutSaveMsg,
         confirmWithSaveMsg,
         infoMsg,
-        warningMsg
+        warningMsg,
       )
       expect(result).toBe(expected)
-    }
+    },
   )
 })
 
@@ -2804,7 +2804,7 @@ describe('isValid()', () => {
       { ...state, cellInput: { ...state.cellInput, newValue: 'new-value' } },
       {
         columns: [{ name: '', value: 'text', editable: 'text' }],
-      }
+      },
     )
     expect(result).toBeTruthy()
   })
@@ -2822,7 +2822,7 @@ describe('isValid()', () => {
             },
           },
         ],
-      }
+      },
     )
     expect(result).toBeFalsy()
   })

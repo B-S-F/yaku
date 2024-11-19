@@ -63,7 +63,7 @@ export class CommentEntity {
     (comment) => comment.children,
     {
       nullable: true,
-    }
+    },
   )
   parent: CommentEntity
   @OneToMany(
@@ -71,7 +71,7 @@ export class CommentEntity {
     (comment) => comment.parent,
     {
       nullable: true,
-    }
+    },
   )
   children: CommentEntity[]
 

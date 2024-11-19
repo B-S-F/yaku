@@ -15,11 +15,11 @@ import { ENABLE_TASKS_CONTROLLER } from '../../../config'
 @Injectable()
 export class TaskAuthGuard implements CanActivate {
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     if (ENABLE_TASKS_CONTROLLER !== 'true') {
       throw new UnauthorizedException(
-        'Tasks endpoints are behind a feature flag. Set the env var ENABLE_TASKS_CONTROLLER to true to activate.'
+        'Tasks endpoints are behind a feature flag. Set the env var ENABLE_TASKS_CONTROLLER to true to activate.',
       )
     }
 

@@ -26,7 +26,7 @@ export class ProjectService {
     const projectDto = await getProjectDTO(
       this.env.apiUrl,
       { projectToken },
-      this.auth
+      this.auth,
     )
     const project = ProjectMap.toModel(projectDto)
 
@@ -37,7 +37,7 @@ export class ProjectService {
     const projectVitalsDto = await getProjectVitalsDTO(
       this.env.apiUrl,
       { projectToken },
-      this.auth
+      this.auth,
     )
     const projectVitals = ProjectVitalsMap.toModel(projectVitalsDto)
 

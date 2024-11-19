@@ -17,6 +17,6 @@ export class ProjectVitalsDTO {
     public projectCreationDate: string,
     public pluginName: string,
     public pluginVersion: string,
-    public libraryCount: number
+    public libraryCount: number,
   ) {}
 }

@@ -11,7 +11,7 @@ import { AuthInfoDto, AuthInfoService } from './auth-info.service'
 @ApiTags('Info about authentication and authorization configuration')
 export class AuthInfoController {
   constructor(
-    @Inject(AuthInfoService) private readonly service: AuthInfoService
+    @Inject(AuthInfoService) private readonly service: AuthInfoService,
   ) {}
 
   @Get()

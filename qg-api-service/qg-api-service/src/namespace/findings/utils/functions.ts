@@ -44,7 +44,7 @@ export function extractFindings(yamlContent: string): FindingQgResult[] {
           traverseChecks(
             requirement.checks,
             currentRequirementNumber,
-            chapterNumber
+            chapterNumber,
           )
         }
       }
@@ -53,7 +53,7 @@ export function extractFindings(yamlContent: string): FindingQgResult[] {
     function traverseChecks(
       checks: any,
       requirementNumber: string,
-      chapterNumber: string
+      chapterNumber: string,
     ) {
       for (const checkKey in checks) {
         const check = checks[checkKey]
@@ -91,7 +91,7 @@ export function extractFindings(yamlContent: string): FindingQgResult[] {
 
 export function createFindingDto(
   runData: Run,
-  finding: FindingQgResult
+  finding: FindingQgResult,
 ): CreateFindingDTO {
   const findingDto: CreateFindingDTO = {
     configId: runData.configId,
@@ -115,13 +115,13 @@ export function generateHash(findingDto: HashFields) {
   const input =
     `${findingDto.namespaceId}${findingDto.configId}${findingDto.chapter}${findingDto.requirement}${findingDto.check}${findingDto.criterion}${findingDto.justification}`.replace(
       /\s/g,
-      ''
+      '',
     )
   // Generate the SHA256 hash
   const hash = createHash('sha256').update(input).digest('hex')
   Logger.debug(
     `Input for the SHA256 hash calculation: ${input}, hash: ${hash}`,
-    'generateHash'
+    'generateHash',
   )
   return hash
 }

@@ -17,11 +17,11 @@ const testYakurc = '.yakurc-test'
 const yakuCliExecutable: string = `${__dirname}/../../dist/index.js`
 const cmdManager: CommandFacade = new CommandFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 const envManager: EnvironmentFacade = new EnvironmentFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 
 const testingEnvName = 'env1'
@@ -66,7 +66,7 @@ describe('Integration tests for files commands', async () => {
     'http',
     'localhost',
     String(port),
-    '/api/v1'
+    '/api/v1',
   )
 
   const environment: Environment = {
@@ -96,7 +96,7 @@ describe('Integration tests for files commands', async () => {
     const mockServerOptions = createFilesMockServerResponse(
       testingNamespaceId,
       testingConfigId,
-      port
+      port,
     )
     let mockServer: MockServer | undefined
 
@@ -129,7 +129,7 @@ describe('Integration tests for files commands', async () => {
     const mockServerOptions = createFilesMockServerResponse(
       testingNamespaceId,
       testingConfigId,
-      port
+      port,
     )
     let mockServer: MockServer | undefined
 
@@ -151,7 +151,7 @@ describe('Integration tests for files commands', async () => {
       const receivedRequests: ReceivedRequest[] | undefined =
         await mockServer?.getRequests(
           `/api/v1/namespaces/${testingNamespaceId}/configs/${testingConfigId}/files`,
-          'post'
+          'post',
         )
 
       const expectedStdout = `File ${testingFilename} uploaded\n`
@@ -171,13 +171,13 @@ describe('Integration tests for files commands', async () => {
       expect(result.stdout).toEqual(expectedStdout)
       expect(receivedRequests?.length).toBe(1)
       expect(receivedRequests![0].headers['content-type']).toContain(
-        'multipart/form-data; boundary=----formdata-undici-'
+        'multipart/form-data; boundary=----formdata-undici-',
       )
       expect(receivedRequests![0].headers['content-length']).toEqual(
-        expectedFormData.length.toString()
+        expectedFormData.length.toString(),
       )
       expect(
-        receivedRequests![0].multipartData.replace(undiciRegex, '000000000000')
+        receivedRequests![0].multipartData.replace(undiciRegex, '000000000000'),
       ).toEqual(expectedFormData)
     })
   })
@@ -187,7 +187,7 @@ describe('Integration tests for files commands', async () => {
       testingNamespaceId,
       testingConfigId,
       port,
-      testingFilename
+      testingFilename,
     )
     let mockServer: MockServer | undefined
 
@@ -209,7 +209,7 @@ describe('Integration tests for files commands', async () => {
       const receivedRequests: ReceivedRequest[] | undefined =
         await mockServer?.getRequests(
           `/api/v1/namespaces/${testingNamespaceId}/configs/${testingConfigId}/files/${testingFilename}`,
-          'patch'
+          'patch',
         )
 
       const expectedStdout = `File ${testingFilename} replaced\n`
@@ -226,13 +226,13 @@ describe('Integration tests for files commands', async () => {
       expect(result.stdout).toEqual(expectedStdout)
       expect(receivedRequests?.length).toBe(1)
       expect(receivedRequests![0].headers['content-type']).toContain(
-        'multipart/form-data; boundary=----formdata-undici-'
+        'multipart/form-data; boundary=----formdata-undici-',
       )
       expect(receivedRequests![0].headers['content-length']).toEqual(
-        expectedFormData.length.toString()
+        expectedFormData.length.toString(),
       )
       expect(
-        receivedRequests![0].multipartData.replace(undiciRegex, '000000000000')
+        receivedRequests![0].multipartData.replace(undiciRegex, '000000000000'),
       ).toEqual(expectedFormData)
     })
   })
@@ -242,7 +242,7 @@ describe('Integration tests for files commands', async () => {
       testingNamespaceId,
       testingConfigId,
       port,
-      testingFilename
+      testingFilename,
     )
     let mockServer: MockServer | undefined
 
@@ -268,7 +268,7 @@ describe('Integration tests for files commands', async () => {
       expect(result.stderr).toHaveLength(0)
       expect(result.stdout).toEqual(expectedStdout)
       expect(fs.readFileSync(testingFilename)).toStrictEqual(
-        expectedFileContents
+        expectedFileContents,
       )
       expect(mockServer?.getNumberOfRequests()).toBe(1)
     })
@@ -279,7 +279,7 @@ describe('Integration tests for files commands', async () => {
       testingNamespaceId,
       testingConfigId,
       port,
-      testingFilename
+      testingFilename,
     )
     let mockServer: MockServer | undefined
 
@@ -309,7 +309,7 @@ describe('Integration tests for files commands', async () => {
       testingNamespaceId,
       testingConfigId,
       port,
-      testingFilename
+      testingFilename,
     )
     let mockServer: MockServer | undefined
 
@@ -336,7 +336,7 @@ describe('Integration tests for files commands', async () => {
       expect(result.stdout).toEqual(expectedStdout)
       expect(fs.readdirSync(testingDirectory).length).toBe(1)
       expect(fs.existsSync(path.join(testingDirectory, testingFilename))).toBe(
-        true
+        true,
       )
       expect(mockServer?.getNumberOfRequests()).toBe(2)
     })
@@ -347,7 +347,7 @@ describe('Integration tests for files commands', async () => {
       testingNamespaceId,
       testingConfigId,
       port,
-      testingFilename
+      testingFilename,
     )
     let mockServer: MockServer | undefined
 
@@ -356,7 +356,7 @@ describe('Integration tests for files commands', async () => {
       fs.mkdirSync(testingDirectory)
       fs.writeFileSync(
         path.join(testingDirectory, testingFilename),
-        'dummyContents'
+        'dummyContents',
       )
     })
 
@@ -385,7 +385,7 @@ describe('Integration tests for files commands', async () => {
       testingNamespaceId,
       testingConfigId,
       port,
-      testingFilename
+      testingFilename,
     )
     let mockServer: MockServer | undefined
 
@@ -418,7 +418,7 @@ describe('Integration tests for files commands', async () => {
       expect(result.exitCode).toEqual(0)
       expect(result.stderr).toHaveLength(0)
       expect(result.stdout.replace(uuidV4Regex, '${RANDOM_UUID}')).toEqual(
-        expectedStdout
+        expectedStdout,
       )
       expect(mockServer?.getNumberOfRequests()).toBe(5)
     })

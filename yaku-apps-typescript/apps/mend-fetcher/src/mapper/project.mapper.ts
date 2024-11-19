@@ -12,7 +12,7 @@ export class ProjectMap {
       projectDTO.name,
       projectDTO.path,
       projectDTO.productName,
-      projectDTO.productUuid
+      projectDTO.productUuid,
     )
   }
   public static toDTO(project: Project) {
@@ -21,7 +21,7 @@ export class ProjectMap {
       project.name,
       project.path,
       project.productName,
-      project.productUuid
+      project.productUuid,
     )
   }
 }

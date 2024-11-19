@@ -29,6 +29,6 @@ export class MultipleLicensesAlert implements IAlert {
       name: string
     },
     public numberOfLicenses: number,
-    public licenses: Array<string>
+    public licenses: Array<string>,
   ) {}
 }

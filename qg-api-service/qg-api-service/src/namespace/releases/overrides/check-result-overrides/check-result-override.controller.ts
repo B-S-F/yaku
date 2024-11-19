@@ -57,7 +57,7 @@ export class CheckResultOverridesController {
   constructor(
     @Inject(CheckResultOverridesService)
     private readonly service: CheckResultOverridesService,
-    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   @Post()
@@ -69,7 +69,7 @@ export class CheckResultOverridesController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Body() body: AddCheckResultOverrideDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<CheckResultOverrideDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -87,20 +87,20 @@ export class CheckResultOverridesController {
         body.originalFulfilled,
         body.manualFulfilled,
         body.comment,
-        actor
+        actor,
       )
     } catch (e) {
       if (e.name === QueryFailedError.name) {
         const err = e as QueryFailedError
         if (err.message.includes('violates foreign key constraint')) {
           throw new NotFoundException(
-            `Release not found, namespace: ${namespaceId}, release: ${releaseId}`
+            `Release not found, namespace: ${namespaceId}, release: ${releaseId}`,
           )
         } else if (
           err.message.includes(RESULT_OVERRIDE_UNIQUE_PER_RELEASE_CONTRAINT)
         ) {
           throw new BadRequestException(
-            `Override already present, namespace: ${namespaceId}, release: ${releaseId}, chapter: ${body.reference.chapter}, requirement: ${body.reference.requirement}, check: ${body.reference.check}, hash: ${body.reference.hash}`
+            `Override already present, namespace: ${namespaceId}, release: ${releaseId}, chapter: ${body.reference.chapter}, requirement: ${body.reference.requirement}, check: ${body.reference.check}, hash: ${body.reference.hash}`,
           )
         }
       }
@@ -119,7 +119,7 @@ export class CheckResultOverridesController {
     @Param('releaseId') releaseId: number,
     @Param('overrideId') overrideId: number,
     @Body() body: UpdateCheckResultOverrideDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<CheckResultOverrideDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -134,7 +134,7 @@ export class CheckResultOverridesController {
       body.originalFulfilled,
       body.manualFulfilled,
       body.comment,
-      actor
+      actor,
     )
   }
 
@@ -147,7 +147,7 @@ export class CheckResultOverridesController {
   })
   async getAllOverrides(
     @Param('namespaceId') namespaceId: number,
-    @Param('releaseId') releaseId: number
+    @Param('releaseId') releaseId: number,
   ): Promise<CheckResultOverrideDto[]> {
     return await this.service.getAll(namespaceId, releaseId)
   }
@@ -162,7 +162,7 @@ export class CheckResultOverridesController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Param('overrideId') overrideId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)

@@ -20,20 +20,20 @@ async function run() {
     .description('A scale test for yaku')
     .option(
       '-r, --rounds <number>',
-      'Number of parallel calls, should be an even number, default is 10'
+      'Number of parallel calls, should be an even number, default is 10',
     )
     .parse(process.argv)
 
   const options = program.opts()
   let numberOfRuns = 10
   if (options.rounds) {
-    numberOfRuns = parseInt(options.rounds)
+    numberOfRuns = Number.parseInt(options.rounds)
     if (isNaN(numberOfRuns)) {
       console.error('Option rounds has to be a number')
       process.exit(1)
     }
   }
-  const namespaceId = parseInt(YAKU_NAMESPACE_ID)
+  const namespaceId = Number.parseInt(YAKU_NAMESPACE_ID)
   if (isNaN(namespaceId)) {
     console.error('Environment variable YAKU_NAMESPACE_ID has to be a number')
     process.exit(1)
@@ -52,7 +52,7 @@ async function run() {
   }
 
   console.log(
-    `Start test with base url ${baseUrl} and namespace id ${namespaceId}. Executing ${numberOfRuns} runs`
+    `Start test with base url ${baseUrl} and namespace id ${namespaceId}. Executing ${numberOfRuns} runs`,
   )
 
   executeTest(baseUrl, token, namespaceId, numberOfRuns)

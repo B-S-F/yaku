@@ -17,7 +17,7 @@ import { axiosInstance } from './common.fetcher.js'
 export const getPolicyAlertDTOs = async (
   apiUrl: string,
   config: { projectToken: string; status: string; pageSize?: number },
-  auth: Authenticator
+  auth: Authenticator,
 ): Promise<PolicyAlertDTO[]> => {
   const url = `/api/v2.0/projects/${config.projectToken}/alerts/legal`
   const login: Login = await auth.authenticate()
@@ -63,14 +63,14 @@ export const getPolicyAlertDTOs = async (
               item.component,
               item.alertInfo,
               item.project,
-              item.policyName
-            )
-        )
+              item.policyName,
+            ),
+        ),
       )
       requestConfig.params.page++
     } catch (error: any) {
       logger.error(
-        `Getting Project Policy Alerts from ${requestConfig.baseURL}${url} has failed`
+        `Getting Project Policy Alerts from ${requestConfig.baseURL}${url} has failed`,
       )
       if (axios.isAxiosError(error)) {
         handleAxiosError(error)
@@ -85,7 +85,7 @@ export const getPolicyAlertDTOs = async (
 export const getSecurityAlertDTOs = async (
   apiUrl: string,
   config: { projectToken: string; status: string; pageSize?: number },
-  auth: Authenticator
+  auth: Authenticator,
 ): Promise<SecurityAlertDTO[]> => {
   const url = `/api/v2.0/projects/${config.projectToken}/alerts/security`
   const login: Login = await auth.authenticate()
@@ -134,14 +134,14 @@ export const getSecurityAlertDTOs = async (
               item.product,
               item.vulnerability,
               item.topFix,
-              item.effective
-            )
-        )
+              item.effective,
+            ),
+        ),
       )
       requestConfig.params.page++
     } catch (error: any) {
       logger.error(
-        `Getting Project Security Alerts from ${requestConfig.baseURL}${url} has failed`
+        `Getting Project Security Alerts from ${requestConfig.baseURL}${url} has failed`,
       )
       if (axios.isAxiosError(error)) {
         handleAxiosError(error)
@@ -156,7 +156,7 @@ export const getSecurityAlertDTOs = async (
 export const getNewVersionsAlertDTOs = async (
   apiUrl: string,
   config: { projectToken: string; status: string; pageSize?: number },
-  auth: Authenticator
+  auth: Authenticator,
 ): Promise<NewVersionsAlertDTO[]> => {
   const url = `/api/v2.0/projects/${config.projectToken}/alerts/legal`
   const login: Login = await auth.authenticate()
@@ -203,14 +203,14 @@ export const getNewVersionsAlertDTOs = async (
               item.alertInfo,
               item.project,
               item.availableVersion,
-              item.availableVersionType
-            )
-        )
+              item.availableVersionType,
+            ),
+        ),
       )
       requestConfig.params.page++
     } catch (error: any) {
       logger.error(
-        `Getting Project New Versions Alerts from ${requestConfig.baseURL}${url} has failed`
+        `Getting Project New Versions Alerts from ${requestConfig.baseURL}${url} has failed`,
       )
       if (axios.isAxiosError(error)) {
         handleAxiosError(error)
@@ -225,7 +225,7 @@ export const getNewVersionsAlertDTOs = async (
 export const getMultipleLicensesAlertDTOs = async (
   apiUrl: string,
   config: { projectToken: string; status: string; pageSize?: number },
-  auth: Authenticator
+  auth: Authenticator,
 ): Promise<MultipleLicensesAlertDTO[]> => {
   const url = `/api/v2.0/projects/${config.projectToken}/alerts/legal`
   const login: Login = await auth.authenticate()
@@ -272,14 +272,14 @@ export const getMultipleLicensesAlertDTOs = async (
               item.alertInfo,
               item.project,
               item.numberOfLicenses,
-              item.licenses
-            )
-        )
+              item.licenses,
+            ),
+        ),
       )
       requestConfig.params.page++
     } catch (error: any) {
       logger.error(
-        `Getting Project Multiple Licenses Alerts from ${requestConfig.baseURL}${url} has failed`
+        `Getting Project Multiple Licenses Alerts from ${requestConfig.baseURL}${url} has failed`,
       )
       if (axios.isAxiosError(error)) {
         handleAxiosError(error)
@@ -294,7 +294,7 @@ export const getMultipleLicensesAlertDTOs = async (
 export const getRejectedInUseAlertDTOs = async (
   apiUrl: string,
   config: { projectToken: string; status: string; pageSize?: number },
-  auth: Authenticator
+  auth: Authenticator,
 ): Promise<RejectedInUseAlertDTO[]> => {
   const url = `/api/v2.0/projects/${config.projectToken}/alerts/legal`
   const login: Login = await auth.authenticate()
@@ -340,14 +340,14 @@ export const getRejectedInUseAlertDTOs = async (
               item.component,
               item.alertInfo,
               item.project,
-              item.description
-            )
-        )
+              item.description,
+            ),
+        ),
       )
       requestConfig.params.page++
     } catch (error: any) {
       logger.error(
-        `Getting Project Rejected in Use Alerts from ${requestConfig.baseURL}${url} has failed`
+        `Getting Project Rejected in Use Alerts from ${requestConfig.baseURL}${url} has failed`,
       )
       if (axios.isAxiosError(error)) {
         handleAxiosError(error)

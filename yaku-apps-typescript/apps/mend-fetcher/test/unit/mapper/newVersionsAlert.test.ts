@@ -15,7 +15,7 @@ describe('newVersionsAlert.mapper', () => {
     const expected = newVersionsAlertsModel[0]
 
     const result: NewVersionsAlert = NewVersionsAlertMap.toModel(
-      newVersionsAlertsDTO[0]
+      newVersionsAlertsDTO[0],
     )
 
     expect(result).toStrictEqual(expected)
@@ -25,7 +25,7 @@ describe('newVersionsAlert.mapper', () => {
     const expected = newVersionsAlertsDTO[1]
 
     const result: NewVersionsAlertDTO = NewVersionsAlertMap.toDTO(
-      newVersionsAlertsModel[1]
+      newVersionsAlertsModel[1],
     )
 
     expect(result).toStrictEqual(expected)

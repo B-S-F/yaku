@@ -115,7 +115,7 @@ CBFB253F2D32E0D2378DAE41F97A65A9
     const numBytes = hexString.length / 2
     const byteArray = new Uint8Array(numBytes)
     for (let i = 0; i < numBytes; i++) {
-      byteArray[i] = parseInt(hexString.substring(i * 2, i * 2 + 2), 16)
+      byteArray[i] = Number.parseInt(hexString.substring(i * 2, i * 2 + 2), 16)
     }
     return Buffer.from(byteArray)
   }
@@ -137,6 +137,6 @@ CBFB253F2D32E0D2378DAE41F97A65A9
       const data = hexStringToByteArray(hex.replace(/\s/g, ''))
 
       expect(decodeBufferToUTF8EncodedString(data)).toBeUndefined()
-    }
+    },
   )
 })

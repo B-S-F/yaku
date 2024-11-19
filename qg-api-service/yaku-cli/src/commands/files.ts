@@ -34,7 +34,7 @@ export function createFilesCommand(program: Command): void {
     .description('List the file of a config')
     .argument(
       '<configId>',
-      'The numeric id of the config for which files are managed'
+      'The numeric id of the config for which files are managed',
     )
     .action(async (configId: string) => {
       try {
@@ -50,12 +50,12 @@ export function createFilesCommand(program: Command): void {
     .description('Add a file to a config')
     .argument(
       '<configId>',
-      'The numeric id of the config for which files are managed'
+      'The numeric id of the config for which files are managed',
     )
     .argument('<filepath>', 'A path to the file which should be uploaded')
     .option(
       '-f, --filename <filename>',
-      'Alternative filename for the file to use in the config'
+      'Alternative filename for the file to use in the config',
     )
     .action(async (configId: string, filepath: string, options) => {
       try {
@@ -71,7 +71,7 @@ export function createFilesCommand(program: Command): void {
     .description('Update the file content of a file in a config')
     .argument(
       '<configId>',
-      'The numeric id of the config for which files are managed'
+      'The numeric id of the config for which files are managed',
     )
     .argument('<filepath>', 'A path to the file which should be uploaded')
     .option('-f, --filename <filename>', 'The file in the config to be updated')
@@ -89,7 +89,7 @@ export function createFilesCommand(program: Command): void {
     .description('Download the file content of a config file')
     .argument(
       '<configId>',
-      'The numeric id of the config for which files are managed'
+      'The numeric id of the config for which files are managed',
     )
     .argument('<filename>', 'The file in the config to be downloaded')
     .action(async (configId: string, filename: string) => {
@@ -105,18 +105,18 @@ export function createFilesCommand(program: Command): void {
     .description('Delete files from a config')
     .argument(
       '<configId>',
-      'The numeric id of the config for which files are managed'
+      'The numeric id of the config for which files are managed',
     )
     .argument('[filenames...]', 'The files in the config to be deleted')
     .option(
       '-a, --all',
       'Delete all files. Cannot be used together with a list of filenames.',
-      false
+      false,
     )
     .option(
       '-y, --yes',
       'Skip the confirmation prompt and delete the files immediately.',
-      false
+      false,
     )
     .action(async (configId: string, filenames: string[], options) => {
       try {
@@ -130,26 +130,26 @@ export function createFilesCommand(program: Command): void {
     .command('sync-up')
     .description(
       'Upload all files from a local directory into the config. ' +
-        'Will not recurse into subdirectories. Will overwrite existing files!'
+        'Will not recurse into subdirectories. Will overwrite existing files!',
     )
     .argument(
       '<configId>',
-      'The numeric id of the config into which the files should be uploaded'
+      'The numeric id of the config into which the files should be uploaded',
     )
     .argument('<directory>', 'Path to the local directory')
     .option(
       '--clean',
       'Delete all existing files, before uploading the files',
-      false
+      false,
     )
     .option(
       '-a, --all',
       'Include all files, even those starting with a dot',
-      false
+      false,
     )
     .option(
       '--exclude <excludePattern>',
-      'Regular expression pattern of excluded files'
+      'Regular expression pattern of excluded files',
     )
     .action(async (configId: string, directory: string, options) => {
       try {
@@ -164,13 +164,13 @@ export function createFilesCommand(program: Command): void {
     .description('Download all files from a config into a local directory.')
     .argument(
       '<configId>',
-      'The numeric id of the config from which the files should be downloaded'
+      'The numeric id of the config from which the files should be downloaded',
     )
     .argument('<directory>', 'Path to the local directory')
     .option(
       '-y, --yes',
       'Skip the confirmation prompt and overwrite local files immediately.',
-      false
+      false,
     )
     .action(async (configId: string, directory: string, options) => {
       try {
@@ -184,29 +184,29 @@ export function createFilesCommand(program: Command): void {
     .command('sync')
     .description(
       'Downloads all files from a source config and uploads them into a destination config (can be from the same or different enviroments and/or namespaces). ' +
-        'Does not recurse into subdirectories. Overwrites existing files!'
+        'Does not recurse into subdirectories. Overwrites existing files!',
     )
     .argument(
       '<srcPath>',
-      'Path to the source config (from which the files should be downloaded), in the form of [[<envName>/]<namespaceId>/]<configId>. By default, <envName> and <namespaceId> are provided from the selected environment.'
+      'Path to the source config (from which the files should be downloaded), in the form of [[<envName>/]<namespaceId>/]<configId>. By default, <envName> and <namespaceId> are provided from the selected environment.',
     )
     .argument(
       '<dstPath>',
-      'Path to the destination config (into which the files should be uploaded), in the form of [[<envName>/]<namespaceId>/]<configId>. By default, <envName> and <namespaceId> are provided from the selected environment.'
+      'Path to the destination config (into which the files should be uploaded), in the form of [[<envName>/]<namespaceId>/]<configId>. By default, <envName> and <namespaceId> are provided from the selected environment.',
     )
     .option(
       '--clean',
       'Delete all existing files, before uploading the files',
-      false
+      false,
     )
     .option(
       '-a, --all',
       'Include all files, even those starting with a dot',
-      false
+      false,
     )
     .option(
       '--exclude <excludePattern>',
-      'Regular expression pattern of excluded files'
+      'Regular expression pattern of excluded files',
     )
     .option('-s --skip-secrets', 'Skip secrets checking')
     .action(async (srcPath: string, dstPath: string, options) => {

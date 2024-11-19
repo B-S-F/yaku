@@ -7,7 +7,7 @@ import { RestClient } from './RestClient.js'
 export class DebugClient implements RestClient {
   constructor(
     private readonly baseUrl: string,
-    private readonly basicAuth: string
+    private readonly basicAuth: string,
   ) {}
 
   async post(path: string, body: any, additionalHeaders?: any): Promise<any> {
@@ -20,7 +20,7 @@ export class DebugClient implements RestClient {
   async postFormData(
     path: string,
     body: FormData,
-    additionalHeaders?: any
+    additionalHeaders?: any,
   ): Promise<any> {
     console.log(`POST ${this.baseUrl}/${path}`)
     console.log(`Headers ${JSON.stringify(additionalHeaders)}`)

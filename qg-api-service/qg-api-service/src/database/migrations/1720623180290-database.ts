@@ -10,10 +10,10 @@ export class Database1720623180290 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`ALTER TABLE "user_profile" DROP COLUMN "editor"`)
     await queryRunner.query(
-      `CREATE TYPE "public"."user_profile_editor_enum" AS ENUM('visual', 'code')`
+      `CREATE TYPE "public"."user_profile_editor_enum" AS ENUM('visual', 'code')`,
     )
     await queryRunner.query(
-      `ALTER TABLE "user_profile" ADD "editor" "public"."user_profile_editor_enum" NOT NULL DEFAULT 'visual'`
+      `ALTER TABLE "user_profile" ADD "editor" "public"."user_profile_editor_enum" NOT NULL DEFAULT 'visual'`,
     )
   }
 
@@ -21,7 +21,7 @@ export class Database1720623180290 implements MigrationInterface {
     await queryRunner.query(`ALTER TABLE "user_profile" DROP COLUMN "editor"`)
     await queryRunner.query(`DROP TYPE "public"."user_profile_editor_enum"`)
     await queryRunner.query(
-      `ALTER TABLE "user_profile" ADD "editor" character varying NOT NULL DEFAULT 'visual'`
+      `ALTER TABLE "user_profile" ADD "editor" character varying NOT NULL DEFAULT 'visual'`,
     )
   }
 }

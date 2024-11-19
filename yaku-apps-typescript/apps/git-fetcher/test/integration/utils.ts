@@ -26,7 +26,7 @@ export function verifyPrRequest(
   mockServer: MockServer,
   requestUrl: string,
   authMethod: SupportedAuthMethod,
-  filterState: AllowedFilterStateType = 'ALL'
+  filterState: AllowedFilterStateType = 'ALL',
 ): void {
   const request: ReceivedRequest = mockServer.getRequests(requestUrl, 'get')[0]
   expect(request.query.state).toEqual(filterState)
@@ -37,7 +37,7 @@ export function verifyCommitRequest(
   mockServer: MockServer,
   requestUrl: string,
   authMethod: SupportedAuthMethod,
-  expectedNumberOfRequests = 1
+  expectedNumberOfRequests = 1,
 ) {
   const requests: ReceivedRequest[] = mockServer.getRequests(requestUrl, 'get')
   expect(requests.length).toBe(expectedNumberOfRequests)
@@ -46,7 +46,7 @@ export function verifyCommitRequest(
 
 export function verifyAuthorizationHeader(
   authMethod: SupportedAuthMethod,
-  request: ReceivedRequest
+  request: ReceivedRequest,
 ) {
   if (authMethod === 'token') {
     expect(request.headers.authorization).toEqual('Bearer someToken')
@@ -60,7 +60,7 @@ export function verifyAuthorizationHeader(
 export async function verifyOutputFile(
   evidencePath: string | undefined,
   shouldFileExist: boolean,
-  expectedContent?: string
+  expectedContent?: string,
 ): Promise<void> {
   const outputFilePath = `${evidencePath}/git-fetcher-data.json`
 
@@ -78,7 +78,7 @@ export async function verifyErrorCase(
   gitFetcherExecutable,
   env: NodeJS.ProcessEnv,
   expectedErrorMessage: string | RegExp,
-  kind: 'expected' | 'unexpected'
+  kind: 'expected' | 'unexpected',
 ) {
   const result: RunProcessResult = await run(gitFetcherExecutable, undefined, {
     env: env,

@@ -39,7 +39,7 @@ describe('Label Filter', () => {
   describe('Success Cases', () => {
     const options: MockServerOptions = getGitPullRequestsMockOptions(
       MOCK_SERVER_PORT,
-      200
+      200,
     )
 
     it('should fetch pull requests from GitHub, but should return empty string, when label filter does not match pr-labels', async () => {
@@ -58,7 +58,7 @@ describe('Label Filter', () => {
         undefined,
         {
           env: env,
-        }
+        },
       )
 
       await verifyOutputFile(env.evidence_path, true, JSON.stringify([]))

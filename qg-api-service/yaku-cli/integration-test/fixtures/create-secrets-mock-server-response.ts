@@ -7,13 +7,13 @@ import { MockServerOptions, ServerHost } from '../cli/mockserver'
 export function createSecretsMockServerResponse(
   namespaceId: number,
   port: number,
-  name?: string
+  name?: string,
 ): MockServerOptions {
   const serverHost: ServerHost = new ServerHost(
     'http',
     'localhost',
     String(port),
-    '/api/v1'
+    '/api/v1',
   )
   return {
     port: port,

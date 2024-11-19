@@ -19,13 +19,13 @@ export class PolicyAlertMap {
         policyAlertDTO.project.name,
         policyAlertDTO.project.path,
         policyAlertDTO.project.path,
-        policyAlertDTO.project.productUuid
+        policyAlertDTO.project.productUuid,
       ),
       {
         uuid: policyAlertDTO.project.productUuid,
         name: policyAlertDTO.project.path,
       },
-      policyAlertDTO.policyName
+      policyAlertDTO.policyName,
     )
   }
   public static toDTO(policyAlert: PolicyAlert) {
@@ -41,7 +41,7 @@ export class PolicyAlertMap {
         path: policyAlert.project.path,
         productUuid: policyAlert.project.productUuid,
       },
-      policyAlert.policyName
+      policyAlert.policyName,
     )
   }
 }

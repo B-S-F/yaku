@@ -36,7 +36,7 @@ describe('SubscriptionService', () => {
     subscriptionService =
       moduleRef.get<SubscriptionService>(SubscriptionService)
     subscriptionRepository = moduleRef.get(
-      getRepositoryToken(SubscriptionEntity)
+      getRepositoryToken(SubscriptionEntity),
     )
   })
 
@@ -66,7 +66,7 @@ describe('SubscriptionService', () => {
 
       const result = await subscriptionService.createSubscription(
         userId,
-        releaseId
+        releaseId,
       )
       expect(result).toEqual(true)
     })
@@ -75,7 +75,7 @@ describe('SubscriptionService', () => {
       const releaseId = 1
 
       await expect(
-        subscriptionService.createSubscription(userId, releaseId)
+        subscriptionService.createSubscription(userId, releaseId),
       ).rejects.toThrow(BadRequestException)
     })
     it('should throw an HttpException with CONFLICT status if there is an existing subscription ', async () => {
@@ -95,7 +95,7 @@ describe('SubscriptionService', () => {
       } as any)
 
       await expect(
-        subscriptionService.createSubscription(userId, releaseId)
+        subscriptionService.createSubscription(userId, releaseId),
       ).rejects.toThrow(HttpException)
     })
 
@@ -113,7 +113,7 @@ describe('SubscriptionService', () => {
       jest.spyOn(subscriptionRepository, 'save').mockResolvedValue(undefined)
 
       await expect(
-        subscriptionService.createSubscription(userId, releaseId)
+        subscriptionService.createSubscription(userId, releaseId),
       ).rejects.toThrow(HttpException)
     })
   })
@@ -130,7 +130,7 @@ describe('SubscriptionService', () => {
 
       const result = await subscriptionService.deleteSubscription(
         userId,
-        releaseId
+        releaseId,
       )
       expect(result).toEqual(true)
     })
@@ -145,7 +145,7 @@ describe('SubscriptionService', () => {
         .mockResolvedValue(subscriptionEntity)
 
       await expect(
-        subscriptionService.deleteSubscription(userId, releaseId)
+        subscriptionService.deleteSubscription(userId, releaseId),
       ).rejects.toThrow(HttpException)
     })
   })
@@ -169,7 +169,7 @@ describe('SubscriptionService', () => {
 
       const result = await subscriptionService.getSubscriptionStatus(
         userId,
-        releaseId
+        releaseId,
       )
       expect(result).toEqual(new SubscriptionDto(subscriptionEntity))
     })
@@ -186,7 +186,7 @@ describe('SubscriptionService', () => {
 
       const result = await subscriptionService.getSubscriptionStatus(
         userId,
-        releaseId
+        releaseId,
       )
       expect(result).toEqual(null)
     })

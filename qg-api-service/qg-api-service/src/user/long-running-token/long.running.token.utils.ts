@@ -110,7 +110,7 @@ export class CreateTokenRequestDto {
 
 export function toCreateTokenResponseDto(
   entity: LongRunningTokenEntity,
-  token: string
+  token: string,
 ): CreateTokenResponseDto {
   const dto = new CreateTokenResponseDto()
 
@@ -128,7 +128,7 @@ export function toCreateTokenResponseDto(
 }
 
 export function toGetTokenResponseDto(
-  entity: LongRunningTokenEntity
+  entity: LongRunningTokenEntity,
 ): GetTokenResponseDto {
   const dto = new GetTokenResponseDto()
 

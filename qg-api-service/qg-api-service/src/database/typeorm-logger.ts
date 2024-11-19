@@ -18,7 +18,7 @@ export class TypeOrmToNestLogger implements TypeOrmLogger {
         },
       },
     }),
-    {}
+    {},
   )
 
   private logQueries = false
@@ -35,12 +35,12 @@ export class TypeOrmToNestLogger implements TypeOrmLogger {
     error: string | Error,
     query: string,
     parameters?: any[],
-    queryRunner?: QueryRunner
+    queryRunner?: QueryRunner,
   ) {
     this.logger.warn({
       msg: `Query failed executing DB operation for ${this.createQueryString(
         query,
-        parameters
+        parameters,
       )} with error information ${error}`,
     })
   }
@@ -49,12 +49,12 @@ export class TypeOrmToNestLogger implements TypeOrmLogger {
     time: number,
     query: string,
     parameters?: any[],
-    queryRunner?: QueryRunner
+    queryRunner?: QueryRunner,
   ) {
     this.logger.log({
       msg: `Long running query: Took ${time}ms for ${this.createQueryString(
         query,
-        parameters
+        parameters,
       )}`,
     })
   }

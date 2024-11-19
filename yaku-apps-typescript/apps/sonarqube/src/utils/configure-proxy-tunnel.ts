@@ -8,7 +8,7 @@ import * as tunnel from 'tunnel'
 export function configureProxyTunnel(
   protocol: string,
   httpsProxy: string | undefined,
-  httpProxy: string | undefined
+  httpProxy: string | undefined,
 ) {
   let proxy
 

@@ -38,7 +38,7 @@ describe('Environment', () => {
     it('env variable NODE_TLS_REJECT_UNAUTHORIZED is set to 0', async () => {
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        400
+        400,
       )
 
       const env = {
@@ -57,7 +57,7 @@ describe('Environment', () => {
         gitFetcherExecutable,
         env,
         '{"status":"FAILED","reason":"NODE_TLS_REJECT_UNAUTHORIZED environment variable is set to 0 which is not allowed"}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -65,7 +65,7 @@ describe('Environment', () => {
     it('env variable GIT_FETCHER_SERVER_TYPE is undefined', async () => {
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        400
+        400,
       )
 
       const env = {
@@ -83,7 +83,7 @@ describe('Environment', () => {
         gitFetcherExecutable,
         env,
         '{"status":"FAILED","reason":"GIT_FETCHER_SERVER_TYPE environment variable is not set\\nThe server type \\"undefined\\" is not supported"}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -91,7 +91,7 @@ describe('Environment', () => {
     it('env variable GIT_FETCHER_SERVER_TYPE has unsupported type', async () => {
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        400
+        400,
       )
 
       const env = {
@@ -109,7 +109,7 @@ describe('Environment', () => {
         gitFetcherExecutable,
         env,
         '{"status":"FAILED","reason":"The server type \\"unsupported_server_type\\" is not supported"}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -117,7 +117,7 @@ describe('Environment', () => {
     it('env variable GIT_FETCHER_SERVER_API_URL is undefined', async () => {
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        400
+        400,
       )
 
       const env = {
@@ -137,7 +137,7 @@ describe('Environment', () => {
         env,
         '{"status":"FAILED","reason":"GIT_FETCHER_SERVER_API_URL environment variable is not set.' +
           '\\nGIT_FETCHER_SERVER_API_URL environment variable must use secured connections with https"}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -145,7 +145,7 @@ describe('Environment', () => {
     it('should fail for insecure http connection', async () => {
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        400
+        400,
       )
       const env = {
         ...defaultEnvironment,
@@ -163,7 +163,7 @@ describe('Environment', () => {
         gitFetcherExecutable,
         env,
         '{"status":"FAILED","reason":"GIT_FETCHER_SERVER_API_URL environment variable must use secured connections with https"}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })

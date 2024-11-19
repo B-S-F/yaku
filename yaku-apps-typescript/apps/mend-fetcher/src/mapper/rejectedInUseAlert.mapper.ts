@@ -19,13 +19,13 @@ export class RejectedInUseAlertMap {
         rejectedInUseAlertDTO.project.name,
         rejectedInUseAlertDTO.project.path,
         rejectedInUseAlertDTO.project.path,
-        rejectedInUseAlertDTO.project.productUuid
+        rejectedInUseAlertDTO.project.productUuid,
       ),
       {
         uuid: rejectedInUseAlertDTO.project.productUuid,
         name: rejectedInUseAlertDTO.project.path,
       },
-      rejectedInUseAlertDTO.description
+      rejectedInUseAlertDTO.description,
     )
   }
   public static toDTO(rejectedInUseAlert: RejectedInUseAlert) {
@@ -41,7 +41,7 @@ export class RejectedInUseAlertMap {
         path: rejectedInUseAlert.project.path,
         productUuid: rejectedInUseAlert.project.productUuid,
       },
-      rejectedInUseAlert.description
+      rejectedInUseAlert.description,
     )
   }
 }

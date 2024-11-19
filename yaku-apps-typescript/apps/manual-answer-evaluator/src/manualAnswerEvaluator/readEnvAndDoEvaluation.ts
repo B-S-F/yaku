@@ -25,12 +25,12 @@ class EnvironmentError extends AppError {
 export function readEnvAndDoEvaluation(env: ManualAnswerEvaluatorEnv) {
   if (!env.manual_answer_file) {
     throw new EnvironmentError(
-      'Environment variable manual_answer_file must be set'
+      'Environment variable manual_answer_file must be set',
     )
   }
   if (!env.expiration_time) {
     throw new EnvironmentError(
-      'Environment variable expiration_time must be set'
+      'Environment variable expiration_time must be set',
     )
   }
   const { manual_answer_file, expiration_time, last_modified_date_override } =

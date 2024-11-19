@@ -67,7 +67,7 @@ class ExplanationsDto {
 export class ExplanationsController {
   constructor(
     @Inject(ExplanationsService)
-    readonly explanationsService: ExplanationsService
+    readonly explanationsService: ExplanationsService,
   ) {}
 
   @Get()
@@ -80,7 +80,7 @@ export class ExplanationsController {
   })
   async getExplanation(
     @Param('namespaceId') namespaceId: number,
-    @Query() queryOptions: ExplanationsQueryOptions
+    @Query() queryOptions: ExplanationsQueryOptions,
   ): Promise<ExplanationsDto> {
     validateId(namespaceId)
     validateId(queryOptions.runId)
@@ -90,7 +90,7 @@ export class ExplanationsController {
       queryOptions.runId,
       queryOptions.chapter,
       queryOptions.requirement,
-      queryOptions.check
+      queryOptions.check,
     )
     return { explanation }
   }

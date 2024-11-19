@@ -31,14 +31,14 @@ export function createRunsSubcommands(program: Command): void {
     .argument('[page]', 'The page requested, defaults to page 1')
     .option(
       '-i, --itemCount <value>',
-      'Number of items requested per page, defaults to 20'
+      'Number of items requested per page, defaults to 20',
     )
     .option('-a, --ascending', 'Revert sort order for the items')
     .option('--all', 'Retrieve all runs in one call')
     .option('-s, --sortBy [property]', 'Sort results by the given property')
     .option(
       '-f, --filterBy [property=value1,value2]',
-      'Filter values according to the given property, show only elements which have one of the given value'
+      'Filter values according to the given property, show only elements which have one of the given value',
     )
     .option('-lo, --latestOnly', 'Show for each config only the latest run')
     .action(async (page: string, options) => {
@@ -69,27 +69,27 @@ export function createRunsSubcommands(program: Command): void {
     .description('Start the execution of a run')
     .argument(
       '<configId>',
-      'The numeric id of the config to be used for the run'
+      'The numeric id of the config to be used for the run',
     )
     .option(
       '-w, --wait',
-      'Wait for the run to finish and show result, poll-interval in seconds'
+      'Wait for the run to finish and show result, poll-interval in seconds',
     )
     .option(
       '--poll-interval <value>',
       'Poll interval in seconds, defaults to 10 seconds',
-      '10'
+      '10',
     )
     .option('-d, --details', 'Show debug information of the run as well')
     .option(
       '-e, --environment [values...]',
       'Add/override environment variables in the format "KEY1 VALUE1 KEY2 VALUE2 ...' +
-        'Do NOT provide secrets. They will be ignored anyways." '
+        'Do NOT provide secrets. They will be ignored anyways." ',
     )
     .action(async (configId: string, options) => {
       const environment: { [key: string]: string } = getRunEnvironment(
         program,
-        options
+        options,
       )
       try {
         await createRun(client, namespace, configId, options, environment)

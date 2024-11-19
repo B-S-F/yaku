@@ -21,7 +21,7 @@ export class RequestUser {
     readonly id: string,
     readonly username: string,
     readonly email: string,
-    readonly displayName: string
+    readonly displayName: string,
   ) {}
 }
 
@@ -31,7 +31,7 @@ export const SYSTEM_REQUEST_USER = new RequestUser(
   SYSTEM_REQUEST_USER_ID,
   'SYSTEM_ACTOR',
   'system@actor.invalid',
-  'Sytem actor (machine user)'
+  'Sytem actor (machine user)',
 )
 
 /**
@@ -61,7 +61,7 @@ export function getUserFromRequest(request: Request): RequestUser {
       user.kc_sub,
       user.username,
       user.email,
-      user.displayName
+      user.displayName,
     )
   }
 }

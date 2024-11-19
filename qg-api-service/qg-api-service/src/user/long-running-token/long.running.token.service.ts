@@ -32,12 +32,12 @@ export class LongRunningTokenService {
     @Inject(AuthCache)
     private readonly authCache: AuthCache,
     @Inject(LongRunningTokenAuditService)
-    private readonly auditService: LongRunningTokenAuditService
+    private readonly auditService: LongRunningTokenAuditService,
   ) {}
 
   async list(
     actor: RequestUser,
-    listQueryHandler: ListQueryHandler
+    listQueryHandler: ListQueryHandler,
   ): Promise<{ dtos: GetTokenResponseDto[]; itemCount: number }> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -46,7 +46,7 @@ export class LongRunningTokenService {
       const dtos = await this.listWithTransaction(
         queryRunner,
         actor,
-        listQueryHandler
+        listQueryHandler,
       )
       await queryRunner.commitTransaction()
       return dtos
@@ -61,7 +61,7 @@ export class LongRunningTokenService {
   async listWithTransaction(
     queryRunner: QueryRunner,
     actor: RequestUser,
-    listQueryHandler: ListQueryHandler
+    listQueryHandler: ListQueryHandler,
   ): Promise<{ dtos: GetTokenResponseDto[]; itemCount: number }> {
     const kcuid = this.extractKeycloakUserId(actor)
 
@@ -72,7 +72,7 @@ export class LongRunningTokenService {
 
     listQueryHandler.addToQueryBuilder<LongRunningTokenEntity>(
       queryBuilder,
-      'tokens'
+      'tokens',
     )
 
     const { entities } = await queryBuilder.getRawAndEntities()
@@ -103,14 +103,14 @@ export class LongRunningTokenService {
   async getWithTransaction(
     queryRunner: QueryRunner,
     id: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<GetTokenResponseDto> {
     const kcuid = this.extractKeycloakUserId(actor)
     const tokenEntity = await queryRunner.manager.findOneOrFail(
       LongRunningTokenEntity,
       {
         where: { id: id, kcuid: kcuid },
-      }
+      },
     )
 
     return toGetTokenResponseDto(tokenEntity)
@@ -119,7 +119,7 @@ export class LongRunningTokenService {
   async create(
     description: string,
     try_admin: boolean,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CreateTokenResponseDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -129,7 +129,7 @@ export class LongRunningTokenService {
         queryRunner,
         description,
         try_admin,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
       return token
@@ -145,7 +145,7 @@ export class LongRunningTokenService {
     queryRunner: QueryRunner,
     description: string,
     try_admin: boolean,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CreateTokenResponseDto> {
     const kcuid = this.extractKeycloakUserId(actor)
     const tokenEntity = new LongRunningTokenEntity()
@@ -176,7 +176,7 @@ export class LongRunningTokenService {
       savedTokenEntity,
       AuditActor.convertFrom(actor),
       Action.CREATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     return toCreateTokenResponseDto(savedTokenEntity, token.toString())
@@ -200,14 +200,14 @@ export class LongRunningTokenService {
   async revokeWithTransaction(
     queryRunner: QueryRunner,
     id: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const kcuid = this.extractKeycloakUserId(actor)
     const token = await queryRunner.manager.findOneOrFail(
       LongRunningTokenEntity,
       {
         where: { id: id, kcuid: kcuid },
-      }
+      },
     )
 
     if (token.status === STATUS.REVOKED) return
@@ -230,7 +230,7 @@ export class LongRunningTokenService {
       newToken,
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
   }
 
@@ -239,7 +239,7 @@ export class LongRunningTokenService {
 
     if (!isUUID(kcuid, 4)) {
       throw new Error(
-        `Implementation error: keycloak user id is not a uuid: ${kcuid}`
+        `Implementation error: keycloak user id is not a uuid: ${kcuid}`,
       )
     }
 
@@ -247,7 +247,7 @@ export class LongRunningTokenService {
   }
 
   async retrieveKeyCloakUserId(
-    tokenCandidate: string
+    tokenCandidate: string,
   ): Promise<{ id: string; try_admin: boolean }> {
     try {
       const token = LongRunningToken.parse(tokenCandidate)

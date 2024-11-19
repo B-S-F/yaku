@@ -19,7 +19,7 @@ export class NamespaceAccessGuard implements CanActivate {
     return (
       user.namespaces.filter(
         (ns) =>
-          ns.id === namespaceId && ns.roles.includes(NAMESPACE_ACCESS_ROLE)
+          ns.id === namespaceId && ns.roles.includes(NAMESPACE_ACCESS_ROLE),
       ).length > 0
     )
   }

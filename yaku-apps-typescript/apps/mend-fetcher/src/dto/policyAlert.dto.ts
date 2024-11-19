@@ -28,6 +28,6 @@ export class PolicyAlertDTO implements IAlertDTO {
       path: string
       productUuid: string
     },
-    public policyName: string
+    public policyName: string,
   ) {}
 }

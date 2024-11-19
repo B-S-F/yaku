@@ -18,7 +18,7 @@ describe('Integration tests for envs', async () => {
     'http',
     'localhost',
     String(port),
-    '/api/v1'
+    '/api/v1',
   )
   const testHost = serverHost.getApiEndpoint()
 
@@ -264,7 +264,7 @@ describe('Integration tests for envs', async () => {
 
     it('fails to delete inexistent environment', async () => {
       const result: RunProcessResult = await envManager.runCommand(
-        'delete inexistent-env'
+        'delete inexistent-env',
       )
 
       expect(result.exitCode).toEqual(0)
@@ -292,7 +292,7 @@ describe('Integration tests for envs', async () => {
       await envManager.updateEnvironmentField(
         'env1',
         'url',
-        'http://new-url/api/v1'
+        'http://new-url/api/v1',
       )
 
       const result: RunProcessResult = await envManager.listEnvironments()
@@ -350,19 +350,19 @@ describe('Integration tests for envs', async () => {
       const result = await envManager.updateEnvironmentField(
         'env1',
         'inexistent-field',
-        'newValue'
+        'newValue',
       )
 
       expect(result.exitCode).toEqual(0)
       expect(result.stderr).toContain(
-        `Invalid key 'inexistent-field'. Key must be either 'name', 'url', 'token', or 'namespace'.`
+        `Invalid key 'inexistent-field'. Key must be either 'name', 'url', 'token', or 'namespace'.`,
       )
     })
     it('fails to update inexistent environment', async () => {
       const result = await envManager.updateEnvironmentField(
         'inexistent-env',
         'url',
-        'newValue'
+        'newValue',
       )
 
       expect(result.exitCode).toEqual(0)

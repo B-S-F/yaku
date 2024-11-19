@@ -80,14 +80,14 @@ describe.each([
       const options: MockServerOptions = await getGREENStatusFixture(
         MOCK_SERVER_PORT,
         200,
-        { org: env.MEND_ORG_TOKEN, project: 'project-uuid' }
+        { org: env.MEND_ORG_TOKEN, project: 'project-uuid' },
       )
       mockServer = new MockServer(options)
 
       const result: RunProcessResult = await run(
         mendFetcherExecutable,
         undefined,
-        { env: env }
+        { env: env },
       )
 
       expect(result.exitCode).to.be.equal(0)
@@ -104,12 +104,12 @@ describe.each([
             ', see more details in Mend ' +
             reasonLinkTemplate(1) +
             `;`,
-        })
+        }),
       )
       expect(result.stderr).to.have.length(0)
 
       const noOfRequests = mockServer.getNumberOfRequests()
       expect(noOfRequests).to.equal(testOptions.noOfRequests)
-    }
+    },
   )
 })

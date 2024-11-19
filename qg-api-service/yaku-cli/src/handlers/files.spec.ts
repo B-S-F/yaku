@@ -94,7 +94,7 @@ describe('add()', () => {
       1,
       1,
       'filepath',
-      'filename'
+      'filename',
     )
   })
   it('should call ApiClient.uploadFileToConfig() without options', async () => {
@@ -103,7 +103,7 @@ describe('add()', () => {
       1,
       1,
       'filepath',
-      undefined
+      undefined,
     )
   })
 })
@@ -126,7 +126,7 @@ describe('update()', () => {
       1,
       1,
       'filepath',
-      'filename'
+      'filename',
     )
   })
   it('should call ApiClient.replaceFileInConfig() without options', async () => {
@@ -135,7 +135,7 @@ describe('update()', () => {
       1,
       1,
       'filepath',
-      'filepath'
+      'filepath',
     )
   })
 })
@@ -180,16 +180,16 @@ describe('deleteFiles()', () => {
   })
   it('should throw error when no files provided withput --all option', async () => {
     await expect(
-      deleteFiles(testApiClient, testNamespace, '1', [], {})
+      deleteFiles(testApiClient, testNamespace, '1', [], {}),
     ).rejects.toThrow(Error('You must specify at least one filename!'))
   })
   it('should throw error when files are provided with --all option', async () => {
     await expect(
       deleteFiles(testApiClient, testNamespace, '1', ['filename1'], {
         all: true,
-      })
+      }),
     ).rejects.toThrow(
-      Error('You cannot use --all together with a list of filenames!')
+      Error('You cannot use --all together with a list of filenames!'),
     )
   })
   it('should call ApiClient.getConfig() without --all option', async () => {
@@ -347,12 +347,12 @@ describe('syncDown()', () => {
     ] as fs.Dirent[])
 
     await expect(
-      syncDown(testApiClient, testNamespace, '1', testDirectory, {})
+      syncDown(testApiClient, testNamespace, '1', testDirectory, {}),
     ).rejects.toThrow(
       Error(
         'Error: The target directory contains a directory with the same name as a config file. ' +
-          'Please remove the directory first from the target directory before trying again.'
-      )
+          'Please remove the directory first from the target directory before trying again.',
+      ),
     )
 
     expect(getConfigSpy).toHaveBeenCalled()
@@ -396,9 +396,9 @@ describe('syncUp()', () => {
     jest.spyOn(fs, 'readdirSync').mockReturnValue([] as fs.Dirent[])
 
     await expect(
-      syncUp(testApiClient, testNamespace, '1', testDirectory, {})
+      syncUp(testApiClient, testNamespace, '1', testDirectory, {}),
     ).rejects.toThrow(
-      Error(`Aborting. No files found in directory: ${testDirectory}`)
+      Error(`Aborting. No files found in directory: ${testDirectory}`),
     )
 
     expect(deleteAllFilesFromConfigSpy).not.toHaveBeenCalled()
@@ -510,8 +510,8 @@ describe('parseSyncPathParameter()', () => {
     expect(message).toBe('process.exit: 1')
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       chalk.red(
-        'paramName is not valid, please use [[<envName>/]<namespaceId>/]<configId> format'
-      )
+        'paramName is not valid, please use [[<envName>/]<namespaceId>/]<configId> format',
+      ),
     )
   })
 })
@@ -545,13 +545,13 @@ describe('extractEnvironment()', () => {
       envName: string | undefined,
       namespaceId: number | undefined,
       envs: Environment[],
-      expected: Environment
+      expected: Environment,
     ) => {
       const actual: Environment = extractEnvironment(envName, namespaceId, envs)
 
       expect(actual).toEqual(expected)
       expect(actual.current).toEqual(current)
-    }
+    },
   )
   it.each([
     [
@@ -573,7 +573,7 @@ describe('extractEnvironment()', () => {
       errorMsg: string,
       envName: string | undefined,
       namespaceId: number | undefined,
-      envs: Environment[]
+      envs: Environment[],
     ) => {
       let message: any
 
@@ -587,7 +587,7 @@ describe('extractEnvironment()', () => {
 
       expect(message).toBe('process.exit: 1')
       expect(consoleErrorSpy).toHaveBeenCalledWith(chalk.red(errorMsg))
-    }
+    },
   )
   it('should not modify the source environments list in the process', () => {
     const originalSrcEnvs = [env1, env2]
@@ -595,12 +595,12 @@ describe('extractEnvironment()', () => {
     const result1: Environment = extractEnvironment(
       undefined,
       77,
-      originalSrcEnvs
+      originalSrcEnvs,
     )
     const result2: Environment = extractEnvironment(
       undefined,
       99,
-      originalSrcEnvs
+      originalSrcEnvs,
     )
 
     expect(result1.namespace).toBe(77)
@@ -624,7 +624,7 @@ describe('extractSecretsList()', () => {
     jest
       .spyOn(fs, 'readFileSync')
       .mockReturnValue(
-        '${{secrets.SECRET_1}} ${{ secrets.SECRET_2 }}\n${{  secrets.SECRET_3  }}\n${{   secrets.SECRET_1}}'
+        '${{secrets.SECRET_1}} ${{ secrets.SECRET_2 }}\n${{  secrets.SECRET_3  }}\n${{   secrets.SECRET_1}}',
       )
     const expectedSecrets = ['SECRET_1', 'SECRET_2', 'SECRET_3']
 
@@ -640,7 +640,7 @@ describe('extractSecretsList()', () => {
 
     expect(actualSecrets).toEqual([])
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      chalk.yellow('Source config does not contain qg-config.yaml file')
+      chalk.yellow('Source config does not contain qg-config.yaml file'),
     )
   })
 })
@@ -664,14 +664,14 @@ describe('listMissingSecrets()', () => {
     jest
       .spyOn(fs, 'readFileSync')
       .mockReturnValue(
-        '${{ secrets.SECRET_1 }} ${{ secrets.SECRET_2 }} ${{ secrets.SECRET_3 }}'
+        '${{ secrets.SECRET_1 }} ${{ secrets.SECRET_2 }} ${{ secrets.SECRET_3 }}',
       )
 
     await listMissingSecrets(testApiClient, testNamespace, testDirectory)
 
     expect(listAllSecretsSpy).toHaveBeenCalled()
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      chalk.yellow('The following secrets are missing in the destination:')
+      chalk.yellow('The following secrets are missing in the destination:'),
     )
     expect(consoleWarnSpy).toHaveBeenCalledWith(chalk.yellow(`\t- SECRET_1`))
     expect(consoleWarnSpy).toHaveBeenCalledWith(chalk.yellow(`\t- SECRET_3`))
@@ -738,7 +738,7 @@ describe('sync()', () => {
             | (fs.ObjectEncodingOptions & { flag?: string | undefined })
             | BufferEncoding
             | null
-            | undefined
+            | undefined,
         ) => {
           if (path.toString().indexOf('qg-config.yaml') > -1) {
             return '${{secrets.SECRET_1}}'
@@ -747,7 +747,7 @@ describe('sync()', () => {
           } else {
             return originalReadFileSync(path, options)
           }
-        }
+        },
       )
     jest.spyOn(fs, 'readdirSync').mockReturnValue([
       {
@@ -809,7 +809,7 @@ describe('sync()', () => {
     expect(uploadFileToConfigSpy).toHaveBeenCalled()
     expect(listAllSecretsSpy).toHaveBeenCalled()
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      chalk.yellow('The following secrets are missing in the destination:')
+      chalk.yellow('The following secrets are missing in the destination:'),
     )
     expect(consoleWarnSpy).toHaveBeenCalledWith(chalk.yellow(`\t- SECRET_1`))
   })

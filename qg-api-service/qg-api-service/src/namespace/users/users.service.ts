@@ -46,7 +46,7 @@ export class UsersService {
     @Inject(KeyCloakService)
     private readonly keycloakService: KeyCloakService,
     @Inject(UsersCache)
-    private readonly usersCache: UsersCache
+    private readonly usersCache: UsersCache,
   ) {}
   async list(namespaceId: number): Promise<UserInNamespaceDto[]> {
     const usersOfNamespace =
@@ -60,14 +60,14 @@ export class UsersService {
     items: number,
     sortBy: AllowedSortProperties = 'displayName',
     sortOrder: SortOrder = SortOrder.DESC,
-    search?: string
+    search?: string,
   ): Promise<EntityList<UserInNamespaceDto>> {
     let usersOfNamespace = await this.list(namespaceId)
 
     usersOfNamespace = this.sortUsers(
       usersOfNamespace,
       sortBy as keyof UserInNamespaceDto,
-      sortOrder
+      sortOrder,
     )
 
     // Search reduces the amount of users to be paginated which itemCount has to be returned then?
@@ -84,14 +84,14 @@ export class UsersService {
   }
 
   private async getKeycloakUserById(
-    userId: string
+    userId: string,
   ): Promise<UserInNamespaceDto> {
     const user = await this.keycloakService.getUserById(userId)
     return this.toUserInNamespaceDto(user)
   }
 
   private async getKeycloakUserByUsername(
-    username: string
+    username: string,
   ): Promise<UserInNamespaceDto> {
     const user = await this.keycloakService.getUserByUsername(username)
     return this.toUserInNamespaceDto(user)
@@ -125,7 +125,7 @@ export class UsersService {
       } else {
         // This should never happen, as long as the user handling is consistent in the service
         throw new InternalServerErrorException(
-          'User id is not a valid UUID nor an email'
+          'User id is not a valid UUID nor an email',
         )
       }
     } catch (error) {
@@ -140,14 +140,14 @@ export class UsersService {
   sortUsers(
     users: UserInNamespaceDto[],
     sortBy: AllowedSortProperties,
-    sortOrder: SortOrder
+    sortOrder: SortOrder,
   ) {
     if (users.length === 0) {
       return users
     }
     if (!Object.keys(users[0]).includes(sortBy)) {
       throw new Error(
-        `Property ${sortBy} does not exist in UserInNamespaceEntity`
+        `Property ${sortBy} does not exist in UserInNamespaceEntity`,
       )
     }
 
@@ -167,7 +167,7 @@ export class UsersService {
   paginateUsers(
     users: UserInNamespaceDto[],
     page: number,
-    items: number
+    items: number,
   ): UserInNamespaceDto[] {
     const startIndex = (page - 1) * items
     const endIndex = page * items
@@ -176,14 +176,14 @@ export class UsersService {
 
   searchUsers(
     users: UserInNamespaceDto[],
-    search: string
+    search: string,
   ): UserInNamespaceDto[] {
     return users.filter((user) => user.displayName.includes(search))
   }
 
   toUserInNamespaceDto(user: KeyCloakUserOfRole): UserInNamespaceDto {
     this.logger.debug(
-      `keycloak to user -> kc_id: ${user.kc_id}, username: ${user.username}, email: ${user.email}, displayName: ${user.displayName}, firstName: ${user.firstName}, lastName: ${user.lastName}`
+      `keycloak to user -> kc_id: ${user.kc_id}, username: ${user.username}, email: ${user.email}, displayName: ${user.displayName}, firstName: ${user.firstName}, lastName: ${user.lastName}`,
     )
 
     const dto = new UserInNamespaceDto()

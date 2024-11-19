@@ -40,7 +40,7 @@ describe('WorkItem', () => {
     const spy = vi.spyOn(console, 'warn')
     const result = workItemObject['filterFields'](
       workItemData,
-      neededFieldNames
+      neededFieldNames,
     )
     expect(result).toEqual({
       id: 1,
@@ -52,7 +52,7 @@ describe('WorkItem', () => {
       },
     })
     expect(spy).toHaveBeenCalledWith(
-      "The field 'storyPoints' is not available on work item with id 1"
+      "The field 'storyPoints' is not available on work item with id 1",
     )
   })
 
@@ -78,7 +78,7 @@ describe('WorkItem', () => {
     const neededFieldNames = ['title']
     const result = workItemObject['filterFieldsFromAllLevels'](
       workItems,
-      neededFieldNames
+      neededFieldNames,
     )
 
     expect(result).toEqual([

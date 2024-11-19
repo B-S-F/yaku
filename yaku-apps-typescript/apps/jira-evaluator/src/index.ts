@@ -18,13 +18,13 @@ export const run = async () => {
     //read config file
     const configFilePath = getPathFromEnvVariable(CONFIG_FILE_ENV_VAR)
     const config = await YAML.parse(
-      await readFile(configFilePath, { encoding: 'utf8' })
+      await readFile(configFilePath, { encoding: 'utf8' }),
     )
 
     //read jira tickets data
     const filepath = getPathFromEnvVariable(
       'JIRA_ISSUES_JSON_NAME',
-      'data.json'
+      'data.json',
     )
     const rawData = await readFile(filepath)
     const jiraData = JSON.parse(rawData.toString())

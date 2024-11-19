@@ -20,11 +20,11 @@ export default (): JiraClient => {
     throw new Error('Environment JIRA_PASSWORD is not defined')
   }
   const basicAuth = Buffer.from(`${JIRA_USERNAME}:${JIRA_PASSWORD}`).toString(
-    'base64'
+    'base64',
   )
   const crudClient = new RestClientImpl(
     JIRA_API_URL + `/${JIRA_API_VERSION}`,
-    basicAuth
+    basicAuth,
   )
   return new JiraClient(crudClient)
 }

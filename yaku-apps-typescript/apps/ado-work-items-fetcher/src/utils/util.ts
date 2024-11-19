@@ -9,7 +9,7 @@ export function getEnvVariable(envVariableName: string): string {
   const envVariable: string | undefined = process.env[envVariableName]
   if (envVariable === undefined || envVariable.trim() === '') {
     throw new EnvironmentError(
-      `The environment variable "${envVariableName}" is not set!`
+      `The environment variable "${envVariableName}" is not set!`,
     )
   }
   return envVariable.trim()

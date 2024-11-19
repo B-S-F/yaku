@@ -11,7 +11,7 @@ export const bitbucketDiffEndpoint =
   '/projects/aquatest/repos/bitbucket-fetcher-test-repo/diff/Somefolder/something.py'
 
 export function getGitCommitsMetadataAndDiffMockServerResponse(
-  port: number
+  port: number,
 ): MockServerOptions {
   return {
     port,
@@ -253,7 +253,7 @@ export function getGitCommitsMetadataAndDiffMockServerResponse(
 }
 
 export function getGitCommitsMetadataAndDiffErrorMockServerResponse(
-  port: number
+  port: number,
 ): MockServerOptions {
   return {
     port,

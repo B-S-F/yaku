@@ -63,7 +63,7 @@ describe('readManualAnswer', () => {
 describe('evaluate', () => {
   vi.mock('../../src/manualAnswerEvaluator/manualAnswer', async () => {
     const manualAnswer = (await vi.importActual(
-      '../../src/manualAnswerEvaluator/manualAnswer'
+      '../../src/manualAnswerEvaluator/manualAnswer',
     )) as any
     return {
       ...manualAnswer,
@@ -96,7 +96,7 @@ describe('evaluate', () => {
         status: 'RED',
         reason:
           'answer\n**The manual answer is expired at 2020-01-02T00:00:00.000Z**',
-      })
+      }),
     )
   })
 
@@ -117,7 +117,7 @@ describe('evaluate', () => {
         status: 'RED',
         reason:
           'answer\n**The manual answer is expired at 2020-01-03T00:00:00.000Z**',
-      })
+      }),
     )
   })
 
@@ -132,7 +132,7 @@ describe('evaluate', () => {
         manual_answer_file: 'my-file.md',
         expiration_time: '1d',
         last_modified_date_override: '26.08.2020',
-      })
+      }),
     ).rejects.toThrow(AppError)
   })
 })

@@ -8,7 +8,7 @@ export const bitbucketTagsEndpoint =
   '/projects/aquatest/repos/bitbucket-fetcher-test-repo/tags'
 
 export function getGitTagsSuccessMockServerResponse(
-  port: number
+  port: number,
 ): MockServerOptions {
   return {
     port,
@@ -98,7 +98,7 @@ export function getGitTagsSuccessMockServerResponse(
 }
 
 export function getGitTagsErrorMockServerResponse(
-  port: number
+  port: number,
 ): MockServerOptions {
   return {
     port,

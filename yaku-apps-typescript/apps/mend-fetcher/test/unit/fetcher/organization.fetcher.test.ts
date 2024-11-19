@@ -32,14 +32,14 @@ describe('organization.fetcher', () => {
           additionalData: {},
           retVal: organizationData,
         },
-      })
+      }),
     )
     const expected: OrganizationDTO = organizationDTO
 
     const result: OrganizationDTO = await getOrganizationDTO(
       env.apiUrl,
       { orgToken: env.orgToken },
-      fakeAuth as unknown as Authenticator
+      fakeAuth as unknown as Authenticator,
     )
 
     expect(result).toStrictEqual(expected)
@@ -53,7 +53,7 @@ describe('organization.fetcher', () => {
     const result = getOrganizationDTO(
       env.apiUrl,
       { orgToken: env.orgToken },
-      fakeAuth as unknown as Authenticator
+      fakeAuth as unknown as Authenticator,
     )
 
     await expect(result).rejects.toThrowError('No expected values are returned')
@@ -67,13 +67,13 @@ describe('organization.fetcher', () => {
         isAxiosError: true,
         request: {},
         message: 'Request Error Message',
-      })
+      }),
     )
 
     const result = getOrganizationDTO(
       env.apiUrl,
       { orgToken: env.orgToken },
-      fakeAuth as unknown as Authenticator
+      fakeAuth as unknown as Authenticator,
     )
 
     await expect(result).rejects.toThrowError('Request Error Message')
@@ -92,19 +92,19 @@ describe('organization.fetcher', () => {
             data: {},
             statusText: httpStatus.message,
           },
-        })
+        }),
       )
 
       const result = getOrganizationDTO(
         env.apiUrl,
         { orgToken: env.orgToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError(
-        `Response status code ${httpStatus.code}: ${httpStatus.message}`
+        `Response status code ${httpStatus.code}: ${httpStatus.message}`,
       )
-    }
+    },
   )
 
   it.each(HTTPResponseStatusCodes)(
@@ -123,19 +123,19 @@ describe('organization.fetcher', () => {
             statusText: '',
             status: httpStatus.code,
           },
-        })
+        }),
       )
 
       const result = getOrganizationDTO(
         env.apiUrl,
         { orgToken: env.orgToken },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError(
-        `Response status code ${httpStatus.code}: ${httpStatus.message}`
+        `Response status code ${httpStatus.code}: ${httpStatus.message}`,
       )
-    }
+    },
   )
 
   it('should throw an error when it fails for unexpected reasons', async () => {
@@ -146,7 +146,7 @@ describe('organization.fetcher', () => {
     const result = getOrganizationDTO(
       env.apiUrl,
       { orgToken: env.orgToken },
-      fakeAuth as unknown as Authenticator
+      fakeAuth as unknown as Authenticator,
     )
 
     await expect(result).rejects.toThrowError()

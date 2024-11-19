@@ -24,7 +24,7 @@ export class AuthInfoServiceConfig {
 export class AuthInfoService {
   constructor(
     @Inject(AuthInfoServiceConfig)
-    private readonly config: AuthInfoServiceConfig
+    private readonly config: AuthInfoServiceConfig,
   ) {}
 
   getAuthInfo(): AuthInfoDto {

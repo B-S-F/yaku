@@ -12,7 +12,7 @@ import { verifyNoOutputFileWasWritten } from './common'
 export function verifyError(
   result: RunProcessResult,
   expectedErrorMessage: string,
-  mockServer: MockServer
+  mockServer: MockServer,
 ): void {
   expect(result.exitCode).toEqual(1)
   expect(result.stdout).length(0)

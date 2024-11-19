@@ -49,7 +49,7 @@ describe('Authentication', () => {
     describe('Authentication', () => {
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        200
+        200,
       )
 
       beforeEach(() => {
@@ -75,7 +75,7 @@ describe('Authentication', () => {
             undefined,
             {
               env: env,
-            }
+            },
           )
           expect(mockServer!.getNumberOfRequests()).toEqual(1)
           verifyPrRequest(mockServer!, requestUrlPullRequests, authMethod)
@@ -86,10 +86,10 @@ describe('Authentication', () => {
             JSON.stringify([
               { id: 1, title: 'foo 1' },
               { id: 2, title: 'foo 2' },
-            ])
+            ]),
           )
           expect(result.exitCode).to.equal(0)
-        }
+        },
       )
 
       it.each(supportedAuthMethods)(
@@ -111,7 +111,7 @@ describe('Authentication', () => {
             undefined,
             {
               env: env,
-            }
+            },
           )
 
           await verifyOutputFile(
@@ -131,10 +131,10 @@ describe('Authentication', () => {
                   },
                 ],
               },
-            ])
+            ]),
           )
           expect(result.exitCode).to.equal(0)
-        }
+        },
       )
     })
   })
@@ -161,7 +161,7 @@ describe('Authentication', () => {
         gitFetcherExecutable,
         env,
         '{"status":"FAILED","reason":"GIT_FETCHER_API_TOKEN environment variable is required for \\"token\\" authentication, but is not set or empty."}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -183,10 +183,10 @@ describe('Authentication', () => {
           gitFetcherExecutable,
           env,
           '{"status":"FAILED","reason":"GIT_FETCHER_USERNAME environment variable is required for \\"basic\\" authentication, but is not set or empty."}',
-          'expected'
+          'expected',
         )
         expect(mockServer.getNumberOfRequests()).toEqual(0)
-      }
+      },
     )
 
     it.each([undefined, '   '])(
@@ -206,10 +206,10 @@ describe('Authentication', () => {
           gitFetcherExecutable,
           env,
           '{"status":"FAILED","reason":"GIT_FETCHER_PASSWORD environment variable is required for \\"basic\\" authentication, but is not set or empty."}',
-          'expected'
+          'expected',
         )
         expect(mockServer.getNumberOfRequests()).toEqual(0)
-      }
+      },
     )
 
     it('should throw error if env variable GIT_FETCHER_SERVER_AUTH_METHOD has unsupported value', async () => {
@@ -228,7 +228,7 @@ describe('Authentication', () => {
         gitFetcherExecutable,
         env,
         '{"status":"FAILED","reason":"No valid authentication method provided. Valid authentication methods are: token,basic"}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -248,7 +248,7 @@ describe('Authentication', () => {
         gitFetcherExecutable,
         env,
         '{"status":"FAILED","reason":"GIT_FETCHER_API_TOKEN environment variable is required for \\"token\\" authentication, but is not set or empty."}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })

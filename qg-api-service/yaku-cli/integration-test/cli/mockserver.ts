@@ -12,7 +12,7 @@ export class ServerHost {
     private protocol: string,
     private host: string,
     private port: string,
-    private apiEndpoint: string
+    private apiEndpoint: string,
   ) {} // https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties
 
   public getHost(): string {
@@ -103,7 +103,7 @@ export class MockServer {
   private mockEndpoint(
     endpoint: string,
     method: HttpMethod,
-    mockResponse: MockResponse
+    mockResponse: MockResponse,
   ): void {
     const mockRequestHandler = async (req: Request, res: Response) => {
       this.requests[endpoint] ??= {}
@@ -150,7 +150,7 @@ export class MockServer {
   private start(): void {
     this.app.use(express.json())
     for (const [endpoint, mockResponses] of Object.entries(
-      this.options.responses
+      this.options.responses,
     )) {
       for (const [method, mockResponse] of Object.entries(mockResponses)) {
         this.mockEndpoint(endpoint, method as HttpMethod, mockResponse)

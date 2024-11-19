@@ -60,7 +60,7 @@ import {
 export class ApprovalController {
   constructor(
     @Inject(ApprovalService) private readonly service: ApprovalService,
-    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   @Post('/approvers')
@@ -72,7 +72,7 @@ export class ApprovalController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Body() body: AddApproverDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<ApprovalDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -84,20 +84,20 @@ export class ApprovalController {
         namespaceId,
         releaseId,
         body.user,
-        actor
+        actor,
       )
     } catch (e) {
       if (e.name === QueryFailedError.name) {
         const err = e as QueryFailedError
         if (err.message.includes('violates foreign key constraint')) {
           throw new NotFoundException(
-            `Release not found, namespace: ${namespaceId}, release: ${releaseId}`
+            `Release not found, namespace: ${namespaceId}, release: ${releaseId}`,
           )
         } else if (
           err.message.includes(APPROVER_UNIQUE_PER_RELEASE_CONSTRAINT)
         ) {
           throw new BadRequestException(
-            `Approver already present: ${namespaceId}, release: ${releaseId}, approver: ${body.user}`
+            `Approver already present: ${namespaceId}, release: ${releaseId}, approver: ${body.user}`,
           )
         }
       }
@@ -115,7 +115,7 @@ export class ApprovalController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Body() body: UpdateApprovalDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -126,12 +126,12 @@ export class ApprovalController {
         namespaceId,
         releaseId,
         body.comment,
-        actor
+        actor,
       )
     } catch (e) {
       if (e.name === EntityNotFoundError.name) {
         throw new NotFoundException(
-          `Approver or release do not exist, namespace:${namespaceId}, release: ${releaseId}, approver:${actor.id}`
+          `Approver or release do not exist, namespace:${namespaceId}, release: ${releaseId}, approver:${actor.id}`,
         )
       }
       throw e
@@ -148,7 +148,7 @@ export class ApprovalController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Body() body: UpdateApprovalDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -159,12 +159,12 @@ export class ApprovalController {
         namespaceId,
         releaseId,
         body.comment,
-        actor
+        actor,
       )
     } catch (e) {
       if (e.name === EntityNotFoundError.name) {
         throw new NotFoundException(
-          `Approver or release do not exist, namespace:${namespaceId}, release: ${releaseId}, approver:${actor.id}`
+          `Approver or release do not exist, namespace:${namespaceId}, release: ${releaseId}, approver:${actor.id}`,
         )
       }
       throw e
@@ -179,7 +179,7 @@ export class ApprovalController {
   async getApprover(
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
-    @Param('approverId') approverId: number
+    @Param('approverId') approverId: number,
   ): Promise<ApprovalDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -189,7 +189,7 @@ export class ApprovalController {
     } catch (e) {
       if (e.name === EntityNotFoundError.name) {
         throw new NotFoundException(
-          `Approver not found, namespace: ${namespaceId}, release: ${releaseId}, approver: ${approverId}`
+          `Approver not found, namespace: ${namespaceId}, release: ${releaseId}, approver: ${approverId}`,
         )
       }
       throw e
@@ -208,7 +208,7 @@ export class ApprovalController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Query() queryOptions: PaginationQueryOptions,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<ApprovalListDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -216,21 +216,21 @@ export class ApprovalController {
       queryOptions,
       queryOptionsSchema.strict(),
       allowedSortPropertiesApprovalList,
-      'id'
+      'id',
     )
     const requestUrl = this.urlHandler.getHandler(response)
 
     const releases = await this.service.list(
       namespaceId,
       releaseId,
-      listQueryOptions
+      listQueryOptions,
     )
 
     return createPaginationData<ApprovalDto, ApprovalListDto>(
       listQueryOptions,
       requestUrl,
       releases.itemCount,
-      releases.entities
+      releases.entities,
     )
   }
 
@@ -243,7 +243,7 @@ export class ApprovalController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Param('approverId') approverId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)

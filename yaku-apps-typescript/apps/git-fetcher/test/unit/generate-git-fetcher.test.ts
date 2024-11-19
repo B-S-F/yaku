@@ -44,7 +44,7 @@ describe('Git Fetcher Factory', () => {
     expectFetcherType(
       'bitbucket',
       'branches',
-      GitFetcherBitbucketTagsAndBranches.name
+      GitFetcherBitbucketTagsAndBranches.name,
     )
   })
 
@@ -52,7 +52,7 @@ describe('Git Fetcher Factory', () => {
     expectFetcherType(
       'bitbucket',
       'tags',
-      GitFetcherBitbucketTagsAndBranches.name
+      GitFetcherBitbucketTagsAndBranches.name,
     )
   })
 
@@ -60,14 +60,14 @@ describe('Git Fetcher Factory', () => {
     'should return fetcher for Bitbucket PRs, when passing %s as resource',
     (resource) => {
       expectFetcherType('bitbucket', resource, GitFetcherBitbucketPrs.name)
-    }
+    },
   )
 
   it.each(gitFetcherPullRequests)(
     'should return fetcher for Github PRs, when passing %s as resource',
     (resource) => {
       expectFetcherType('github', resource, GitFetcherGithubPrs.name)
-    }
+    },
   )
 
   it('should throw exception when passing an unknown git server type', () => {
@@ -79,7 +79,7 @@ describe('Git Fetcher Factory', () => {
     } catch (e) {
       console.log(e)
       expect(e.toString()).toContain(
-        'Unsupported git server / git resource combination: ado/prs'
+        'Unsupported git server / git resource combination: ado/prs',
       )
       errorWasThrownAsExpected = true
     }
@@ -105,13 +105,13 @@ describe('Git Fetcher Factory', () => {
   function expectFetcherType(
     gitServerType: SupportedGitServerType,
     gitConfigResource: GitConfigResource,
-    expectedFetcherName: string
+    expectedFetcherName: string,
   ): void {
     gitServerConfig.gitServerType = gitServerType
     configFileData.data.resource = gitConfigResource
     const result: GitFetcher<GitResource> = generateGitFetcher(
       gitServerConfig,
-      configFileData
+      configFileData,
     )
     expect(result.constructor.name).toEqual(expectedFetcherName)
   }

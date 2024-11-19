@@ -33,7 +33,7 @@ describe('Defender Autopilot FAILED status cases', () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
@@ -54,7 +54,7 @@ describe('Defender Autopilot FAILED status cases', () => {
         env: {
           ...env,
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -65,7 +65,7 @@ describe('Defender Autopilot FAILED status cases', () => {
         status: 'FAILED',
         reason:
           'Please provide TENANT_ID in the environmental variables before running the autopilot',
-      })
+      }),
     )
   })
 
@@ -85,7 +85,7 @@ describe('Defender Autopilot FAILED status cases', () => {
         env: {
           ...env,
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -98,7 +98,7 @@ describe('Defender Autopilot FAILED status cases', () => {
           'Please provide ' +
           `${envVariable.name} ` +
           'in the environmental variables before running the autopilot',
-      })
+      }),
     )
   })
 
@@ -120,7 +120,7 @@ describe('Defender Autopilot FAILED status cases', () => {
           env: {
             ...env,
           },
-        }
+        },
       )
 
       expect(result.exitCode).to.be.equal(0)
@@ -133,9 +133,9 @@ describe('Defender Autopilot FAILED status cases', () => {
             'Please provide ' +
             `${envVariable.name} ` +
             'in the environmental variables before running the autopilot',
-        })
+        }),
       )
-    }
+    },
   )
 
   it.each([
@@ -145,7 +145,7 @@ describe('Defender Autopilot FAILED status cases', () => {
   ])('should set status FAILED when $name is not correct', async () => {
     const options: MockServerOptions = await createMockServerOptionsFAILED(
       8080,
-      400
+      400,
     )
     mockServer = new MockServer(options)
 
@@ -158,7 +158,7 @@ describe('Defender Autopilot FAILED status cases', () => {
         env: {
           ...env,
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -168,15 +168,15 @@ describe('Defender Autopilot FAILED status cases', () => {
       JSON.stringify(
         integrationTestResultsFixtureFAILED.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
   it('should set status FAILED when CLIENT_SECRET is not correct', async () => {
     const options: MockServerOptions = await createMockServerOptionsFAILED(
       8080,
-      401
+      401,
     )
     mockServer = new MockServer(options)
 
@@ -189,7 +189,7 @@ describe('Defender Autopilot FAILED status cases', () => {
         env: {
           ...env,
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -199,8 +199,8 @@ describe('Defender Autopilot FAILED status cases', () => {
       JSON.stringify(
         integrationTestResultsFixtureForClientSecretFAILED.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 })

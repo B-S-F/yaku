@@ -143,7 +143,7 @@ describe('OverridesService', () => {
                         title: check`,
       })
       expect(
-        service['getCheckTitle'](1, 1, overideEntity, queryRunner)
+        service['getCheckTitle'](1, 1, overideEntity, queryRunner),
       ).resolves.toEqual('check')
     })
 
@@ -177,7 +177,7 @@ describe('OverridesService', () => {
                             title: check`,
       })
       expect(
-        service['getCheckTitle'](1, 1, overideEntity, queryRunner)
+        service['getCheckTitle'](1, 1, overideEntity, queryRunner),
       ).resolves.toEqual(undefined)
     })
   })
@@ -227,7 +227,7 @@ describe('OverridesService', () => {
         1,
         overideEntity,
         CheckColor.GREEN,
-        user1
+        user1,
       )
 
       expect(notificationService.pushNotification).toBeCalledWith(
@@ -247,7 +247,7 @@ describe('OverridesService', () => {
             requirement_id: 'requirement',
             user_name: 'User',
           },
-        }
+        },
       )
     })
   })

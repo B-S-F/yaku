@@ -20,7 +20,7 @@ import { Config, Dictionary, WorkItemsConfig } from './types.js'
 
 export function initializeInvalidWorkItemsField(
   invalidWorkItems: InvalidIssues,
-  field: string
+  field: string,
 ) {
   if (!invalidWorkItems[field]) {
     invalidWorkItems[field] = {
@@ -40,7 +40,7 @@ export function checkWorkItems(
   fields: Dictionary,
   stateFieldName: string,
   closedStates: string[],
-  dueDateFieldName: string
+  dueDateFieldName: string,
 ): InvalidIssues {
   const invalidWorkItems: InvalidIssues = {}
 
@@ -59,7 +59,7 @@ export function checkWorkItems(
         stateFieldName,
         closedStates,
         dueDateFieldName,
-        closedAfterDate
+        closedAfterDate,
       )
     } else {
       workItemsToCheck = workItems
@@ -82,7 +82,7 @@ export function checkWorkItems(
         fieldName,
         conditionType,
         values,
-        dueDateFieldName
+        dueDateFieldName,
       )
       thisModule.initializeInvalidWorkItemsField(invalidWorkItems, field)
 
@@ -109,7 +109,7 @@ export function checkIfRelationExists(workItems: Issue[]) {
 function expectedIssueToResult(
   field: string,
   expected: string,
-  issue: Issue
+  issue: Issue,
 ): Result {
   return {
     criterion: `The work item [(${issue.id}) ${issue.title}] must have '${expected}' value in field '${field}'`,
@@ -127,7 +127,7 @@ function expectedIssueToResult(
 function illegalIssueToResult(
   field: string,
   illegal: string,
-  issue: Issue
+  issue: Issue,
 ): Result {
   return {
     criterion: `The work item [(${issue.id}) ${issue.title}] must not have '${illegal}' value in field '${field}'`,
@@ -145,7 +145,7 @@ function illegalIssueToResult(
 function existIssueToResult(
   field: string,
   conditions: string[],
-  issue: Issue
+  issue: Issue,
 ): Result {
   return {
     criterion: `The work item [(${issue.id}) ${
@@ -178,7 +178,7 @@ function overdueToResult(dueDateFieldName: string, issue: Issue): Result {
 
 function undefinedDueDateToResult(
   dueDateFieldName: string,
-  issue: Issue
+  issue: Issue,
 ): Result {
   return {
     criterion: `The work item [(${issue.id}) ${issue.title}] must be resolved`,
@@ -195,7 +195,7 @@ function undefinedDueDateToResult(
 
 function invalidResolvedValuesToResults(
   invalidResolvedValues: InvalidResolvedValues,
-  dueDateFieldName: string
+  dueDateFieldName: string,
 ): Result[] {
   const results: Result[] = []
   for (const [key, value] of Object.entries(invalidResolvedValues)) {
@@ -214,7 +214,7 @@ function invalidResolvedValuesToResults(
 
 function invalidWorkItemsToResults(
   invalidWorkItems: InvalidIssues,
-  dueDateFieldName: string
+  dueDateFieldName: string,
 ): Result[] {
   const results: Result[] = []
   for (const [field, value] of Object.entries(invalidWorkItems)) {
@@ -223,8 +223,8 @@ function invalidWorkItemsToResults(
         results.push(
           ...invalidResolvedValuesToResults(
             issues as InvalidResolvedValues,
-            dueDateFieldName
-          )
+            dueDateFieldName,
+          ),
         )
       } else if (condition === Conditions.expected) {
         ;(issues as Issue[]).forEach((issue) => {
@@ -253,7 +253,7 @@ export function checkWorkItemsRecursively(
   dueDateFieldName: string,
   stateFieldName: string,
   closedStates: string[],
-  level = 0
+  level = 0,
 ): Result[] {
   const results: Result[] = []
 
@@ -279,7 +279,7 @@ export function checkWorkItemsRecursively(
       stateFieldName,
       closedStates,
       levelConfig?.evaluate.checks?.cycleInDays,
-      dueDateFieldName
+      dueDateFieldName,
     )
     if (!resultCheckInCycle) {
       results.push({
@@ -320,11 +320,11 @@ export function checkWorkItemsRecursively(
       fields,
       stateFieldName,
       closedStates,
-      dueDateFieldName
+      dueDateFieldName,
     )
     if (Object.keys(invalidWorkItems).length !== 0) {
       results.push(
-        ...invalidWorkItemsToResults(invalidWorkItems, dueDateFieldName)
+        ...invalidWorkItemsToResults(invalidWorkItems, dueDateFieldName),
       )
     } else {
       results.push({
@@ -352,7 +352,7 @@ export function checkWorkItemsRecursively(
       dueDateFieldName,
       stateFieldName,
       closedStates,
-      level + 1
+      level + 1,
     )
     results.push(...recursiveResults)
   }
@@ -371,7 +371,7 @@ function determineClosedState(config: Config) {
 
 export function evaluate(
   adoFetcherResponse: Dictionary,
-  evaluatorFileData: Config
+  evaluatorFileData: Config,
 ): AppOutput {
   const appOutput = new AppOutput()
   const workItems = adoFetcherResponse.workItems
@@ -384,7 +384,7 @@ export function evaluate(
     evaluatorFileData.workItems,
     dueDateFieldName,
     stateFieldName,
-    closedStates
+    closedStates,
   )
   appOutput.setStatus('GREEN')
   appOutput.setReason('All work items are valid')

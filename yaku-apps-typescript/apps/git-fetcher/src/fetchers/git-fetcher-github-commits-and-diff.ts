@@ -16,7 +16,7 @@ export class GitFetcherGithubCommitsAndDiff
 {
   constructor(
     private readonly gitServerConfig: GitServerConfig,
-    private readonly config: ConfigFileData
+    private readonly config: ConfigFileData,
   ) {}
 
   private stripUrl = (url: string) => {
@@ -25,7 +25,9 @@ export class GitFetcherGithubCommitsAndDiff
 
   private incrementSecondsAndReturnIsoFormat = (startDate: string) => {
     const newDate = new Date(
-      new Date(startDate).setUTCSeconds(new Date(startDate).getUTCSeconds() + 1)
+      new Date(startDate).setUTCSeconds(
+        new Date(startDate).getUTCSeconds() + 1,
+      ),
     )
     return (
       newDate.getUTCFullYear() +
@@ -45,7 +47,7 @@ export class GitFetcherGithubCommitsAndDiff
 
   public async fetchResource(): Promise<CommitsMetadataAndDiff> {
     const requestOptions: RequestInit = await getRequestOptions(
-      this.gitServerConfig
+      this.gitServerConfig,
     )
     const result: CommitsMetadataAndDiff = {
       commitsMetadata: [],
@@ -63,12 +65,12 @@ export class GitFetcherGithubCommitsAndDiff
       let endHash = this.config.data.filter?.endHash
       if (!filePath) {
         throw new ConfigurationError(
-          `Please define the 'filePath' parameter in the config and try again`
+          `Please define the 'filePath' parameter in the config and try again`,
         )
       }
       if (!startHash) {
         throw new ConfigurationError(
-          `Please define the 'filter.startHash' parameter in the config and try again`
+          `Please define the 'filter.startHash' parameter in the config and try again`,
         )
       }
       let startDate
@@ -120,7 +122,7 @@ export class GitFetcherGithubCommitsAndDiff
       }
 
       console.log(
-        `Fetched ${result.diff['linesAdded'].length} lines added and ${result.diff['linesRemoved'].length} lines removed`
+        `Fetched ${result.diff['linesAdded'].length} lines added and ${result.diff['linesRemoved'].length} lines removed`,
       )
 
       let currentPage: number | null = 1
@@ -142,7 +144,7 @@ export class GitFetcherGithubCommitsAndDiff
         }
       }
       console.log(
-        `Fetched metadata about ${result.commitsMetadata.length} commits`
+        `Fetched metadata about ${result.commitsMetadata.length} commits`,
       )
     } catch (error: any) {
       throw new Error(error.message)

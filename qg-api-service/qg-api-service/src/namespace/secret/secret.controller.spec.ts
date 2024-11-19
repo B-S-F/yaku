@@ -123,7 +123,7 @@ describe('SecretController', () => {
     expect(retrieved.links.next).toBeUndefined()
     expect(srvSpy).toBeCalledWith(
       1,
-      toListQueryOptions({}, queryOptionsSchema.strict(), [], 'id')
+      toListQueryOptions({}, queryOptionsSchema.strict(), [], 'id'),
     )
   })
 
@@ -145,7 +145,7 @@ describe('SecretController', () => {
     expect(retrieved.links.next).toBeUndefined()
     expect(srvSpy).toBeCalledWith(
       2,
-      toListQueryOptions({}, queryOptionsSchema.strict(), [], 'id')
+      toListQueryOptions({}, queryOptionsSchema.strict(), [], 'id'),
     )
   })
 
@@ -175,7 +175,7 @@ describe('SecretController', () => {
     expect(secret.name).toBe(name14)
     expect(response.header).toBeCalledWith(
       'Location',
-      `https://localhost:3000/api/v1/namespaces/1/secrets/${name14}`
+      `https://localhost:3000/api/v1/namespaces/1/secrets/${name14}`,
     )
     expect(srvSpy).toBeCalledWith(1, name14, desc14, secretValue)
     expect(Object.keys(secret)).toEqual([
@@ -191,10 +191,10 @@ describe('SecretController', () => {
       const newData = { name: current, secret: secretValue }
       const response = createResponse()
       await expect(controller.create(1, newData, response)).rejects.toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(service.addSecret).not.toBeCalled()
-    }
+    },
   )
 
   it.each([undefined, null, '', ' \t\n'])(
@@ -203,17 +203,17 @@ describe('SecretController', () => {
       const newData = { name: name13, secret: current }
       const response = createResponse()
       await expect(controller.create(1, newData, response)).rejects.toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(service.addSecret).not.toBeCalled()
-    }
+    },
   )
 
   it('should throw a BadRequestException if name is not given', async () => {
     const newData = { secret: secretValue } as any
     const response = createResponse()
     await expect(controller.create(1, newData, response)).rejects.toThrow(
-      BadRequestException
+      BadRequestException,
     )
     expect(service.addSecret).not.toBeCalled()
   })
@@ -222,7 +222,7 @@ describe('SecretController', () => {
     const newData = { name: name14 } as any
     const response = createResponse()
     await expect(controller.create(1, newData, response)).rejects.toThrow(
-      BadRequestException
+      BadRequestException,
     )
     expect(service.addSecret).not.toBeCalled()
   })
@@ -258,7 +258,7 @@ describe('SecretController', () => {
       .spyOn(service, 'updateSecret')
       .mockRejectedValue(new NotFoundException())
     await expect(controller.update(1, name12, newData)).rejects.toThrow(
-      NotFoundException
+      NotFoundException,
     )
     expect(srvSpy).toBeCalledWith(1, name12, undefined, secretValue)
   })
@@ -266,7 +266,7 @@ describe('SecretController', () => {
   it('should throw a BadRequestException, if nothing is updated', async () => {
     const newData = {}
     await expect(controller.update(1, name12, newData)).rejects.toThrow(
-      BadRequestException
+      BadRequestException,
     )
     expect(service.updateSecret).not.toBeCalled()
   })

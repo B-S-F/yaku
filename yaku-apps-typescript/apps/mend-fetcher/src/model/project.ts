@@ -8,6 +8,6 @@ export class Project {
     public name: string,
     public path: string,
     public productName: string,
-    public productUuid: string
+    public productUuid: string,
   ) {}
 }

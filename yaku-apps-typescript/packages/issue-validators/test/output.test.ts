@@ -19,7 +19,7 @@ describe('generatePropertyOutput()', () => {
       ` * ${invalidPropertiesOutputList[1]}\n`
     const output = generatePropertyOutput(
       'property',
-      invalidPropertiesOutputList
+      invalidPropertiesOutputList,
     )
     expect(output).toEqual(expectedOutput)
   })
@@ -41,7 +41,7 @@ describe('generateGlobalOutput()', () => {
     const spyConsole = vi.spyOn(console, 'log')
     generateGlobalOutput(outputs)
     expect(spyConsole).toHaveBeenCalledWith(
-      '{"status":"GREEN","reason":"Results from level 1:\\nAll work items are valid"}'
+      '{"status":"GREEN","reason":"Results from level 1:\\nAll work items are valid"}',
     )
   })
 
@@ -50,7 +50,7 @@ describe('generateGlobalOutput()', () => {
     const spyConsole = vi.spyOn(console, 'log')
     generateGlobalOutput(outputs)
     expect(spyConsole).toHaveBeenCalledWith(
-      `{"status":"RED","reason":"Results from level 1:\\nSome work items are invalid"}`
+      `{"status":"RED","reason":"Results from level 1:\\nSome work items are invalid"}`,
     )
   })
 })

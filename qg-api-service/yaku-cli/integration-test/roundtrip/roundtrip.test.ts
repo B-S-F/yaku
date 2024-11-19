@@ -47,7 +47,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
     expect(
       await stat(yakuCliExecutable)
         .then(() => true)
-        .catch(() => false)
+        .catch(() => false),
     ).to.be.true
     await switchToEnvironment(yakuCliExecutable, adminEnv)
   })
@@ -69,7 +69,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
     if (userEnvironment) {
       await deleteEnvironmentAndSwitchToDefault(
         yakuCliExecutable,
-        userEnvironment
+        userEnvironment,
       )
     }
 
@@ -92,13 +92,13 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
       `${username}-env`,
       serverUrl,
       token.token,
-      namespace.id
+      namespace.id,
     )
 
     secret = await checkSecret(
       'TEST_SECRET',
       'A secret for the roundtrip test',
-      'SET'
+      'SET',
     )
     config = await checkConfigs()
     await checkRun(namespace.id, config.id)
@@ -110,7 +110,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
 
     const getParams = ['users', 'list']
     const createdUser = (await executeCall(getParams, true)).filter(
-      (user: User) => user.username === username
+      (user: User) => user.username === username,
     )
 
     return createdUser[0]
@@ -123,8 +123,8 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
     const getParams = ['tokens', 'list']
     expect(
       (await executeCall(getParams, true)).filter(
-        (token: TokenMetadata) => token.id === createdToken.id
-      ).length
+        (token: TokenMetadata) => token.id === createdToken.id,
+      ).length,
     ).toBe(1)
 
     return createdToken
@@ -138,7 +138,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
 
   async function checkNamespace(
     name: string,
-    username: string
+    username: string,
   ): Promise<Namespace> {
     const createParams = [
       'namespaces',
@@ -186,8 +186,8 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
     const listParams = ['namespaces', 'list']
     expect(
       (await executeCall(listParams, true)).filter(
-        (namespace: Namespace) => namespace.id === createdNamespace.id
-      ).length
+        (namespace: Namespace) => namespace.id === createdNamespace.id,
+      ).length,
     ).toBe(1)
 
     const showParams = ['namespaces', 'show', String(createdNamespace.id)]
@@ -199,7 +199,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
   async function checkSecret(
     name: string,
     description: string,
-    value: string
+    value: string,
   ): Promise<SecretMetadata> {
     const createParams = ['secrets', 'create', name, value]
     const createdSecret: SecretMetadata = await executeCall(createParams, true)
@@ -212,8 +212,8 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
     const listParams = ['secrets', 'list']
     expect(
       (await executeCall(listParams, true)).filter(
-        (data: SecretMetadata) => data.name === name
-      ).length
+        (data: SecretMetadata) => data.name === name,
+      ).length,
     ).toBe(1)
 
     return updatedSecret
@@ -271,7 +271,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
 
   async function checkRun(
     namespaceId: number,
-    configId: number
+    configId: number,
   ): Promise<void> {
     const createParams = [
       'runs',
@@ -289,7 +289,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
       status: 'completed',
       config: `${serverUrl.replace(
         'http',
-        'https'
+        'https',
       )}/namespaces/${namespaceId}/configs/${configId}`,
       overallResult: 'GREEN',
       creationTime: expect.anything(),
@@ -308,7 +308,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
     expect(
       await stat('qg-result.yaml')
         .then(() => true)
-        .catch(() => false)
+        .catch(() => false),
     ).to.be.true
     resultFile = 'qg-result.yaml'
 
@@ -317,7 +317,7 @@ describe('Roundtrip test applying many functions of the cli on a local backend s
     expect(
       await stat('evidences.zip')
         .then(() => true)
-        .catch(() => false)
+        .catch(() => false),
     ).to.be.true
     evidenceFile = 'evidences.zip'
 

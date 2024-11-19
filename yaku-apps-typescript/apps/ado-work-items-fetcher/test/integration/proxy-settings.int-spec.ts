@@ -50,7 +50,7 @@ describe('Ado Fetcher Proxy Settings', () => {
     verifyError(
       result,
       'ReferenceError: The environment variable "PROXY_HOST" is not set!',
-      mockServer
+      mockServer,
     )
   })
 
@@ -64,7 +64,7 @@ describe('Ado Fetcher Proxy Settings', () => {
     verifyError(
       result,
       'ReferenceError: The environment variable PROXY_PORT" is not set!',
-      mockServer
+      mockServer,
     )
   })
 
@@ -79,7 +79,7 @@ describe('Ado Fetcher Proxy Settings', () => {
     verifyError(
       result,
       'Error: environment variable PROXY_PORT does not represent an integer value in the range 0 < PROXY_PORT < 65535',
-      mockServer
+      mockServer,
     )
   })
 
@@ -94,7 +94,7 @@ describe('Ado Fetcher Proxy Settings', () => {
     verifyError(
       result,
       'Error: environment variable PROXY_PORT does not represent an integer value in the range 0 < PROXY_PORT < 65535',
-      mockServer
+      mockServer,
     )
   })
 
@@ -109,7 +109,7 @@ describe('Ado Fetcher Proxy Settings', () => {
     verifyError(
       result,
       'Error: environment variable PROXY_PORT must contain digits only',
-      mockServer
+      mockServer,
     )
   })
 
@@ -124,7 +124,7 @@ describe('Ado Fetcher Proxy Settings', () => {
     verifyError(
       result,
       'Error: environment variable PROXY_PORT must contain digits only',
-      mockServer
+      mockServer,
     )
   })
 
@@ -149,10 +149,10 @@ describe('Ado Fetcher Proxy Settings', () => {
          * If the fetcher failed for any other reason, the following expect will make the test fail.
          */
         expect(
-          result.stderr[0].match(/(ECONNREFUSED|ENOTFOUND)/g).length
+          result.stderr[0].match(/(ECONNREFUSED|ENOTFOUND)/g).length,
         ).toBeGreaterThan(0)
       }
-    }
+    },
   )
 
   it.each([

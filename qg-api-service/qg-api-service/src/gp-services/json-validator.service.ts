@@ -12,7 +12,7 @@ export class JsonValidatorService {
       JSON.parse(fileString)
     } catch {
       throw new BadRequestException(
-        `Incorrect file type or format of file: ${filename}. Json was expected.`
+        `Incorrect file type or format of file: ${filename}. Json was expected.`,
       )
     }
   }

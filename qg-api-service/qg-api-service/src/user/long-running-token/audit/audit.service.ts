@@ -48,7 +48,7 @@ export class AuditService<T extends AuditEntity> {
     modified: object,
     actor: AuditActor,
     action: Action,
-    entityManager: EntityManager
+    entityManager: EntityManager,
   ) {
     const audit = new this.entityType()
 

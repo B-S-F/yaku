@@ -48,8 +48,8 @@ function validateEnvironmentVariables() {
   if (process.env.NODE_TLS_REJECT_UNAUTHORIZED == '0') {
     appErrors.push(
       new EnvironmentError(
-        'NODE_TLS_REJECT_UNAUTHORIZED environment variable is set to 0 which is not allowed'
-      )
+        'NODE_TLS_REJECT_UNAUTHORIZED environment variable is set to 0 which is not allowed',
+      ),
     )
   }
 
@@ -58,24 +58,24 @@ function validateEnvironmentVariables() {
   if (!gitFetcherServerType) {
     appErrors.push(
       new EnvironmentError(
-        'GIT_FETCHER_SERVER_TYPE environment variable is not set'
-      )
+        'GIT_FETCHER_SERVER_TYPE environment variable is not set',
+      ),
     )
   }
 
   if (!supportedGitServerTypes.includes(gitFetcherServerType as any)) {
     appErrors.push(
       new ConfigurationError(
-        `The server type "${process.env.GIT_FETCHER_SERVER_TYPE}" is not supported`
-      )
+        `The server type "${process.env.GIT_FETCHER_SERVER_TYPE}" is not supported`,
+      ),
     )
   }
 
   if (!process.env.GIT_FETCHER_SERVER_API_URL) {
     appErrors.push(
       new EnvironmentError(
-        'GIT_FETCHER_SERVER_API_URL environment variable is not set.'
-      )
+        'GIT_FETCHER_SERVER_API_URL environment variable is not set.',
+      ),
     )
   }
 
@@ -83,8 +83,8 @@ function validateEnvironmentVariables() {
   if (!process.env.GIT_FETCHER_SERVER_API_URL?.match(httpsRegex)) {
     appErrors.push(
       new ConfigurationError(
-        'GIT_FETCHER_SERVER_API_URL environment variable must use secured connections with https'
-      )
+        'GIT_FETCHER_SERVER_API_URL environment variable must use secured connections with https',
+      ),
     )
   }
 
@@ -96,21 +96,21 @@ function validateEnvironmentVariables() {
   ) {
     appErrors.push(
       new EnvironmentError(
-        'GIT_FETCHER_API_TOKEN environment variable is required for "token" authentication, but is not set or empty.'
-      )
+        'GIT_FETCHER_API_TOKEN environment variable is required for "token" authentication, but is not set or empty.',
+      ),
     )
   }
 
   if (
     gitFetcherAuthMethod !== undefined &&
     !(supportedAuthMethods as unknown as string[]).includes(
-      gitFetcherAuthMethod
+      gitFetcherAuthMethod,
     )
   ) {
     appErrors.push(
       new ConfigurationError(
-        `No valid authentication method provided. Valid authentication methods are: ${supportedAuthMethods}`
-      )
+        `No valid authentication method provided. Valid authentication methods are: ${supportedAuthMethods}`,
+      ),
     )
   }
 
@@ -120,8 +120,8 @@ function validateEnvironmentVariables() {
   ) {
     appErrors.push(
       new EnvironmentError(
-        'GIT_FETCHER_USERNAME environment variable is required for "basic" authentication, but is not set or empty.'
-      )
+        'GIT_FETCHER_USERNAME environment variable is required for "basic" authentication, but is not set or empty.',
+      ),
     )
   }
 
@@ -131,8 +131,8 @@ function validateEnvironmentVariables() {
   ) {
     appErrors.push(
       new EnvironmentError(
-        'GIT_FETCHER_PASSWORD environment variable is required for "basic" authentication, but is not set or empty.'
-      )
+        'GIT_FETCHER_PASSWORD environment variable is required for "basic" authentication, but is not set or empty.',
+      ),
     )
   }
 
@@ -148,7 +148,7 @@ export const run = async (output: AppOutput) => {
   const env: GitServerConfig = setupGitServerConfig()
 
   const fetcherConfigFileData: GitFetcherConfig = await validateFetcherConfig(
-    env.gitFetcherConfigFilePath
+    env.gitFetcherConfigFilePath,
   )
   const config: ConfigFileData = new ConfigFileData(fetcherConfigFileData)
   const fetcher: GitFetcher<GitResource> = generateGitFetcher(env, config)
@@ -157,7 +157,7 @@ export const run = async (output: AppOutput) => {
     const outputFilePath = env.gitFetcherOutputFilePath || 'data.json'
     exportJsonToEvidenceDirectory(
       fetchedResources,
-      env.gitFetcherOutputFilePath || ''
+      env.gitFetcherOutputFilePath || '',
     )
     output.addOutput({
       'git-fetcher-result': outputFilePath,
@@ -165,7 +165,7 @@ export const run = async (output: AppOutput) => {
     console.log(
       `Fetch from ${
         env.gitServerApiUrl
-      } was successful with config ${JSON.stringify(config.data)}`
+      } was successful with config ${JSON.stringify(config.data)}`,
     )
   }
 }

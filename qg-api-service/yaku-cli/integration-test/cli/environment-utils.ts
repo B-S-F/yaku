@@ -18,7 +18,7 @@ export async function createEnvironmentAndSwitch(
   environmentName: string,
   yakuBaseUrl: string,
   token: string,
-  namespaceId: number
+  namespaceId: number,
 ): Promise<void> {
   const createEnvironmentCommand: string[] = [
     'envs',
@@ -49,7 +49,7 @@ export class EnvironmentFacade extends CommandFacade {
   }
 
   public async createEnvironment(
-    environment: Environment
+    environment: Environment,
   ): Promise<RunProcessResult> {
     const createEnvironmentCommand: string[] = [
       'envs',
@@ -68,7 +68,7 @@ export class EnvironmentFacade extends CommandFacade {
   }
 
   public async switchToEnvironment(
-    environmentName: string
+    environmentName: string,
   ): Promise<RunProcessResult> {
     return run(this.executablePath, ['envs', 'switch', environmentName], {
       env: { RUNTIME_CONFIG: this.runtimeConfig },
@@ -76,12 +76,12 @@ export class EnvironmentFacade extends CommandFacade {
   }
 
   public async deleteEnvironment(
-    environmentNameToDelete: string
+    environmentNameToDelete: string,
   ): Promise<RunProcessResult> {
     return run(
       this.executablePath,
       ['envs', 'delete', environmentNameToDelete],
-      { env: { RUNTIME_CONFIG: this.runtimeConfig } }
+      { env: { RUNTIME_CONFIG: this.runtimeConfig } },
     )
   }
 
@@ -96,7 +96,7 @@ export class EnvironmentFacade extends CommandFacade {
   public async updateEnvironmentField(
     environmentName: string,
     key: string,
-    value: string
+    value: string,
   ): Promise<RunProcessResult> {
     const commandArgs = ['envs', 'update', environmentName, key, value]
 

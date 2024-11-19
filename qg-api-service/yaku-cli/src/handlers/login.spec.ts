@@ -78,8 +78,8 @@ describe('login()', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       chalk.red(
-        `Failed to parse '${testEnvHome}/.yakurc' as JSON: SyntaxError: Unexpected token ! in JSON at position 0`
-      )
+        `Failed to parse '${testEnvHome}/.yakurc' as JSON: SyntaxError: Unexpected token ! in JSON at position 0`,
+      ),
     )
     expect(consoleErrorSpy).toHaveBeenCalledWith(chalk.red('process.exit: 1'))
   })
@@ -95,7 +95,7 @@ describe('login()', () => {
     })
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      chalk.red('An unknown error occurred while getting the environment URL.')
+      chalk.red('An unknown error occurred while getting the environment URL.'),
     )
   })
   it('should fail to login due to login method', async () => {
@@ -149,7 +149,7 @@ describe('login()', () => {
     })
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      chalk.red('Failed to get namespaces!')
+      chalk.red('Failed to get namespaces!'),
     )
     expect(consoleErrorSpy).toHaveBeenCalledWith(chalk.red('process.exit: 1'))
   })
@@ -174,13 +174,13 @@ describe('login()', () => {
 
     expect(writeFileSyncSpy).toHaveBeenCalled()
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Login information have been saved to environment '${testName}'.`
+      `Login information have been saved to environment '${testName}'.`,
     )
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Environment '${testName}' is now activated.`
+      `Environment '${testName}' is now activated.`,
     )
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Updated 'namespace' to '1' for environment '${testName}'.`
+      `Updated 'namespace' to '1' for environment '${testName}'.`,
     )
   })
 })
@@ -229,7 +229,7 @@ describe('getEnvironment()', () => {
     jest.spyOn(yp, 'input').mockResolvedValue(testName)
 
     await expect(getEnvironment('')).rejects.toThrow(
-      Error(`Environment with name '${testName}' already exists!`)
+      Error(`Environment with name '${testName}' already exists!`),
     )
   })
   it('should fail with empty list of environments error', async () => {
@@ -237,7 +237,9 @@ describe('getEnvironment()', () => {
     jest.spyOn(yp, 'confirm').mockResolvedValue(false)
 
     await expect(getEnvironment('')).rejects.toThrow(
-      Error('No environments available for selection, please create one first!')
+      Error(
+        'No environments available for selection, please create one first!',
+      ),
     )
   })
 })
@@ -270,7 +272,7 @@ describe('getLoginMethod()', () => {
         web: false,
         admin: true,
         token: false,
-      })
+      }),
     ).resolves.toEqual('oauth-admin')
   })
   it('should resolve to oauth', async () => {
@@ -279,7 +281,7 @@ describe('getLoginMethod()', () => {
         web: true,
         admin: false,
         token: false,
-      })
+      }),
     ).resolves.toEqual('oauth')
   })
   it('should resolve to token', async () => {
@@ -288,7 +290,7 @@ describe('getLoginMethod()', () => {
         web: false,
         admin: false,
         token: 'token',
-      })
+      }),
     ).resolves.toEqual('token')
   })
   it('should resolve to token-prompt', async () => {
@@ -297,7 +299,7 @@ describe('getLoginMethod()', () => {
         web: false,
         admin: false,
         token: true,
-      })
+      }),
     ).resolves.toEqual('token-prompt')
   })
   it('should resolve to oauth (after prompt)', async () => {
@@ -308,7 +310,7 @@ describe('getLoginMethod()', () => {
         web: false,
         admin: false,
         token: false,
-      })
+      }),
     ).resolves.toEqual('oauth')
     expect(selectSpy).toHaveBeenCalled()
   })
@@ -320,7 +322,7 @@ describe('getLoginMethod()', () => {
         web: false,
         admin: false,
         token: false,
-      })
+      }),
     ).resolves.toEqual('token-prompt')
     expect(selectSpy).toHaveBeenCalled()
   })
@@ -362,9 +364,9 @@ describe('loginAndCreateEnv()', () => {
       .mockRejectedValue(Error(errorMsg))
 
     await expect(
-      loginAndCreateEnv('oauth', testName, testUrl, false)
+      loginAndCreateEnv('oauth', testName, testUrl, false),
     ).rejects.toThrow(
-      Error(`OAuth login failed! Please try again.\nError was: ${errorMsg}`)
+      Error(`OAuth login failed! Please try again.\nError was: ${errorMsg}`),
     )
     expect(writeFileSyncSpy).not.toHaveBeenCalled()
   })
@@ -381,7 +383,7 @@ describe('loginAndCreateEnv()', () => {
       .mockRejectedValue(Error(errorMsg))
 
     await expect(
-      loginAndCreateEnv('oauth-admin', testName, testUrl, false)
+      loginAndCreateEnv('oauth-admin', testName, testUrl, false),
     ).rejects.toThrow(Error(oauthErrorMsg))
     expect(writeFileSyncSpy).not.toHaveBeenCalled()
   })
@@ -400,9 +402,9 @@ describe('loginAndCreateEnv()', () => {
       .mockRejectedValue(Error(errorMsg))
 
     await expect(
-      loginAndCreateEnv('token-prompt', testName, testUrl, false)
+      loginAndCreateEnv('token-prompt', testName, testUrl, false),
     ).rejects.toThrow(
-      Error(`Token login failed! Please try again.\nError was: ${errorMsg}`)
+      Error(`Token login failed! Please try again.\nError was: ${errorMsg}`),
     )
     expect(inputSpy).toHaveBeenCalled()
     expect(writeFileSyncSpy).toHaveBeenCalled()
@@ -445,7 +447,7 @@ describe('selectNamespaceAndUpdateEnv()', () => {
 
     expect(getNamespacesSpy).toHaveBeenCalled()
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Updated 'namespace' to '1' for environment '${testName}'.`
+      `Updated 'namespace' to '1' for environment '${testName}'.`,
     )
   })
   it('should fail to update environment when provided namespace does not exist', async () => {
@@ -454,7 +456,7 @@ describe('selectNamespaceAndUpdateEnv()', () => {
       .mockResolvedValue([{ id: 2 }] as Namespace[])
 
     await expect(
-      selectNamespaceAndUpdateEnv(testName, { namespace: 1 })
+      selectNamespaceAndUpdateEnv(testName, { namespace: 1 }),
     ).rejects.toThrow(Error('Namespace does not exist!'))
   })
   it('should update environment with selected namespace', async () => {
@@ -468,7 +470,7 @@ describe('selectNamespaceAndUpdateEnv()', () => {
     expect(getNamespacesSpy).toHaveBeenCalled()
     expect(searchSpy).toHaveBeenCalled()
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Updated 'namespace' to '2' for environment '${testName}'.`
+      `Updated 'namespace' to '2' for environment '${testName}'.`,
     )
   })
   it('should fail to update environment when namespaces cannot be fetched', async () => {
@@ -477,11 +479,11 @@ describe('selectNamespaceAndUpdateEnv()', () => {
       .mockRejectedValue(Error(errorMsg))
 
     await expect(
-      selectNamespaceAndUpdateEnv(testName, { namespace: 1 })
+      selectNamespaceAndUpdateEnv(testName, { namespace: 1 }),
     ).rejects.toThrow(Error('process.exit: 1'))
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      chalk.red('Failed to get namespaces!')
+      chalk.red('Failed to get namespaces!'),
     )
   })
 })

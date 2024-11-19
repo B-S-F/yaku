@@ -107,24 +107,24 @@ export class RunAuditService extends AuditService<RunAuditEntity> {
     timestamp: Date | undefined,
     amount: number,
     direction: 'before' | 'after',
-    entityManager: EntityManager
+    entityManager: EntityManager,
   ): Promise<RunAuditEntity[]> {
     const query = entityManager
       .createQueryBuilder(RunAuditEntity, 'run_audit')
       .where('run_audit.namespaceId = :namespaceId', { namespaceId })
       .andWhere(
         `((run_audit.original->'config'->'id')::numeric = :id OR (run_audit.modified->'config'->'id')::numeric = :id)`,
-        { id: configId }
+        { id: configId },
       )
       .andWhere(
         'run_audit.modificationTime ' +
           (direction === 'before' ? '<' : '>') +
           ' :timestamp',
-        { timestamp }
+        { timestamp },
       )
       .orderBy(
         'run_audit.modificationTime',
-        direction === 'before' ? 'DESC' : 'ASC'
+        direction === 'before' ? 'DESC' : 'ASC',
       )
       .limit(amount)
     return await query.getMany()

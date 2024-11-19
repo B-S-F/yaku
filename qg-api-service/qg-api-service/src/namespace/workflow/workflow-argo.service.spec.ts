@@ -72,7 +72,7 @@ describe('WorkflowManager', () => {
             true,
             'http://localhost:3128',
             'bosch.com',
-            ''
+            '',
           ),
         },
         {
@@ -80,7 +80,7 @@ describe('WorkflowManager', () => {
           useValue: new WorkflowImageConfig(
             'workflow-image',
             { v1: 'latest', v2: 'latest' },
-            'Never'
+            'Never',
           ),
         },
         {
@@ -305,7 +305,7 @@ describe('WorkflowManager', () => {
       jest
         .spyOn(
           moduleRef.get<ConfigsService>(ConfigsService),
-          'getContentOfMultipleFiles'
+          'getContentOfMultipleFiles',
         )
         .mockResolvedValue({ ...configFiles })
 
@@ -345,7 +345,7 @@ describe('WorkflowManager', () => {
     function checkUploadConfig(
       path: string,
       configs: { [filename: string]: string },
-      expected: { [filename: string]: any }
+      expected: { [filename: string]: any },
     ): void {
       expect(path).toBe(storagePath)
       const files = Object.keys(configs)
@@ -357,10 +357,10 @@ describe('WorkflowManager', () => {
       expect(files).toContain('.vars')
       expect(configs['qg-config.yaml']).toEqual(expected['qg-config.yaml'])
       expect(configs['additional-config.yaml']).toEqual(
-        expected['additional-config.yaml']
+        expected['additional-config.yaml'],
       )
       expect(JSON.parse(configs['environment-variables.json'])).toEqual(
-        expected['environment-variables.json']
+        expected['environment-variables.json'],
       )
       expect(JSON.parse(configs['.secrets'])).toEqual(expected['.secrets'])
       expect(JSON.parse(configs['.vars'])).toEqual(expected['.vars'])
@@ -383,7 +383,7 @@ describe('WorkflowManager', () => {
       })
 
       expect(argoService.startWorkflow).toBeCalledWith(
-        JSON.stringify(expectedWorkflow)
+        JSON.stringify(expectedWorkflow),
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -424,7 +424,7 @@ describe('WorkflowManager', () => {
       })
 
       expect(argoService.startWorkflow).toBeCalledWith(
-        JSON.stringify(expectedWorkflow)
+        JSON.stringify(expectedWorkflow),
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -460,7 +460,7 @@ describe('WorkflowManager', () => {
       })
 
       expect(argoService.startWorkflow).toBeCalledWith(
-        JSON.stringify(expectedWorkflow)
+        JSON.stringify(expectedWorkflow),
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -506,7 +506,7 @@ describe('WorkflowManager', () => {
       const changedExpected = { ...expectedWorkflow }
       changedExpected.Workflow.spec.templates[0].script.source += ' -c 1_1_1'
       expect(argoService.startWorkflow).toBeCalledWith(
-        JSON.stringify(changedExpected)
+        JSON.stringify(changedExpected),
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -548,7 +548,7 @@ describe('WorkflowManager', () => {
       jest
         .spyOn(
           moduleRef.get<ConfigsService>(ConfigsService),
-          'getContentOfMultipleFiles'
+          'getContentOfMultipleFiles',
         )
         .mockResolvedValue({})
 
@@ -602,7 +602,7 @@ describe('WorkflowManager', () => {
 
       const returnValue = await workflowManager.downloadResult(
         storagePath,
-        filename
+        filename,
       )
 
       expect(blobStore.downloadResult).toBeCalledWith(storagePath, filename)
@@ -623,7 +623,7 @@ describe('WorkflowManager', () => {
 
     beforeEach(() => {
       finishedService = moduleRef.get<WorkflowFinishedService>(
-        WorkflowFinishedService
+        WorkflowFinishedService,
       )
 
       currentRun = new Run()
@@ -658,7 +658,7 @@ describe('WorkflowManager', () => {
       expect(finishedService.checkWorkflowHasFinished).toBeCalledWith(
         argoId,
         argoName,
-        argoNamespace
+        argoNamespace,
       )
       expect(finishedService.updateWorkflowData).toBeCalled()
       expect(returnValue.status).toBe(RunStatus.Completed)
@@ -674,7 +674,7 @@ describe('WorkflowManager', () => {
       expect(finishedService.checkWorkflowHasFinished).toBeCalledWith(
         argoId,
         argoName,
-        argoNamespace
+        argoNamespace,
       )
       expect(finishedService.updateWorkflowData).not.toBeCalled()
       expect(returnValue.status).toBe(RunStatus.Running)

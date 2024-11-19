@@ -104,7 +104,7 @@ describe('State Filter', () => {
                 ...env,
                 GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/state-filter/git-fetcher-config-bitbucket-${state}.yml`,
               },
-            }
+            },
           )
 
           expect(mockServer.getNumberOfRequests()).toEqual(1)
@@ -112,10 +112,10 @@ describe('State Filter', () => {
           await verifyOutputFile(
             env.evidence_path,
             true,
-            JSON.stringify(responses[state])
+            JSON.stringify(responses[state]),
           )
           expect(result.exitCode).to.equal(0)
-        }
+        },
       )
 
       it('should filter pull requests if state filter with date filter is used in combination ', async () => {
@@ -157,7 +157,7 @@ describe('State Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-valid-state-and-date.yml`,
             },
-          }
+          },
         )
 
         expect(mockServer.getNumberOfRequests()).toEqual(1)
@@ -165,12 +165,12 @@ describe('State Filter', () => {
           mockServer,
           requestUrlPullRequests,
           authMethod,
-          filterState
+          filterState,
         )
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify([responses[1], responses[2]])
+          JSON.stringify([responses[1], responses[2]]),
         )
         expect(result.exitCode).to.equal(0)
       })
@@ -227,7 +227,7 @@ describe('State Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/hash-filter/git-fetcher-config-valid-state-and-hash.yml`,
             },
-          }
+          },
         )
 
         expect(mockServer.getNumberOfRequests()).toEqual(3)
@@ -235,22 +235,22 @@ describe('State Filter', () => {
           mockServer,
           requestUrlPullRequests,
           authMethod,
-          filterState
+          filterState,
         )
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[0].id),
-          authMethod
+          authMethod,
         )
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[1].id),
-          authMethod
+          authMethod,
         )
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify([pullRequestResponses[2], pullRequestResponses[3]])
+          JSON.stringify([pullRequestResponses[2], pullRequestResponses[3]]),
         )
         expect(result.exitCode).to.equal(0)
       })
@@ -285,7 +285,7 @@ describe('State Filter', () => {
         gitFetcherExecutable,
         env,
         '{"status":"FAILED","reason":"Validation error: Invalid enum value. Expected \'DECLINED\' | \'MERGED\' | \'OPEN\' | \'ALL\', received \'INVALID_STATE\' at \\"filter.state\\""}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })

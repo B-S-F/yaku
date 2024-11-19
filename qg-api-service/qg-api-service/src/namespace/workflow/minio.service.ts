@@ -17,7 +17,7 @@ export class BlobStoreConfig {
 export abstract class BlobStore {
   abstract downloadResult(
     storagePath: string,
-    filename: string
+    filename: string,
   ): Promise<Readable>
 
   abstract fileExists(storagePath: string, filename: string): Promise<boolean>
@@ -26,7 +26,7 @@ export abstract class BlobStore {
 
   abstract uploadConfig(
     storagePath: string,
-    configData: { [name: string]: string }
+    configData: { [name: string]: string },
   ): Promise<void>
 
   abstract removePath(subpath: string): Promise<void>
@@ -51,7 +51,7 @@ export class MinIOStoreImpl extends BlobStore {
 
   constructor(
     @Inject(Minio.Client) private readonly minioClient: Minio.Client,
-    @Inject(BlobStoreConfig) minioConfig: BlobStoreConfig
+    @Inject(BlobStoreConfig) minioConfig: BlobStoreConfig,
   ) {
     super()
     this.bucket = minioConfig.bucket
@@ -73,7 +73,7 @@ export class MinIOStoreImpl extends BlobStore {
 
   async downloadResult(
     storagePath: string,
-    filename: string
+    filename: string,
   ): Promise<Readable> {
     const file = await this.getBlobObjectMetadata(storagePath, filename)
     if (!file) {
@@ -97,7 +97,7 @@ export class MinIOStoreImpl extends BlobStore {
 
   async uploadConfig(
     storagePath: string,
-    configData: { [filename: string]: string }
+    configData: { [filename: string]: string },
   ): Promise<void> {
     if (!storagePath?.trim()) {
       throw new Error('Upload needs a subfolder')
@@ -106,7 +106,7 @@ export class MinIOStoreImpl extends BlobStore {
       return this.minioClient.putObject(
         this.bucket,
         path.join(storagePath, key),
-        configData[key]
+        configData[key],
       )
     })
     await Promise.all(promises)
@@ -130,7 +130,7 @@ export class MinIOStoreImpl extends BlobStore {
 
   private async getBlobObjectMetadata(
     folder: string,
-    filename: string
+    filename: string,
   ): Promise<Minio.BucketItem> {
     if (!folder?.trim()) {
       throw new Error('MinIO path of object is not defined')
@@ -142,20 +142,20 @@ export class MinIOStoreImpl extends BlobStore {
     const files = await this.listItems(folder, true)
     return (
       files.filter((file: Minio.BucketItem) =>
-        file.name.endsWith(filename)
+        file.name.endsWith(filename),
       )[0] ?? null
     )
   }
 
   private async listItems(
     path: string,
-    recursive: boolean
+    recursive: boolean,
   ): Promise<Minio.BucketItem[]> {
     const stream = this.minioClient.listObjectsV2(
       this.bucket,
       path,
       recursive,
-      ''
+      '',
     )
     if (!stream) {
       throw new Error('Unexpected return of a null stream')

@@ -14,7 +14,7 @@ export class SimpleSecretStorage extends SecretStorage {
   constructor(
     @InjectRepository(EncryptedSecret)
     readonly repository: Repository<EncryptedSecret>,
-    @Inject(EncryptionService) readonly encryption: EncryptionService
+    @Inject(EncryptionService) readonly encryption: EncryptionService,
   ) {
     super()
   }
@@ -32,7 +32,7 @@ export class SimpleSecretStorage extends SecretStorage {
   async storeSecret(
     namespaceId: number,
     name: string,
-    secretValue: string
+    secretValue: string,
   ): Promise<void> {
     if (!name || !name.trim()) {
       throw new BadRequestException('Parameter name must contain valid data')

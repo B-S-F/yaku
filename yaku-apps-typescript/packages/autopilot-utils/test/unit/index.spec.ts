@@ -21,7 +21,7 @@ describe('app-interface', () => {
     expect(consoleSpy).toHaveBeenCalledWith(
       JSON.stringify({
         reason: 'The app did not set a status.',
-      })
+      }),
     )
   })
 
@@ -33,7 +33,7 @@ describe('app-interface', () => {
     expect(consoleSpy).toHaveBeenCalledWith(
       JSON.stringify({
         status: 'GREEN',
-      })
+      }),
     )
   })
 
@@ -50,7 +50,7 @@ describe('app-interface', () => {
     })
     appInterface.write()
     expect(consoleSpy).toHaveBeenCalledWith(
-      JSON.stringify({ output: { foo: 'bar' } })
+      JSON.stringify({ output: { foo: 'bar' } }),
     )
     expect(consoleSpy).toHaveBeenCalledWith(
       JSON.stringify({
@@ -59,10 +59,10 @@ describe('app-interface', () => {
           justification: 'bar',
           fulfilled: true,
         },
-      })
+      }),
     )
     expect(consoleSpy).toHaveBeenCalledWith(
-      JSON.stringify({ status: 'GREEN', reason: 'Everything is fine.' })
+      JSON.stringify({ status: 'GREEN', reason: 'Everything is fine.' }),
     )
   })
 
@@ -92,7 +92,7 @@ describe('app-interface', () => {
           justification: 'bar',
           fulfilled: true,
         },
-      })
+      }),
     )
     expect(consoleSpy).toHaveBeenCalledWith(
       JSON.stringify({
@@ -101,7 +101,7 @@ describe('app-interface', () => {
           justification: 'bar2',
           fulfilled: false,
         },
-      })
+      }),
     )
     expect(consoleSpy).toHaveBeenCalledWith(
       JSON.stringify({
@@ -110,7 +110,7 @@ describe('app-interface', () => {
           justification: 'bar3',
           fulfilled: true,
         },
-      })
+      }),
     )
   })
 
@@ -122,13 +122,13 @@ describe('app-interface', () => {
     appInterface.addOutput({ foo3: 'bar3' })
     appInterface.write()
     expect(consoleSpy).toHaveBeenCalledWith(
-      JSON.stringify({ output: { foo: 'bar' } })
+      JSON.stringify({ output: { foo: 'bar' } }),
     )
     expect(consoleSpy).toHaveBeenCalledWith(
-      JSON.stringify({ output: { foo2: 'bar2' } })
+      JSON.stringify({ output: { foo2: 'bar2' } }),
     )
     expect(consoleSpy).toHaveBeenCalledWith(
-      JSON.stringify({ output: { foo3: 'bar3' } })
+      JSON.stringify({ output: { foo3: 'bar3' } }),
     )
   })
 })

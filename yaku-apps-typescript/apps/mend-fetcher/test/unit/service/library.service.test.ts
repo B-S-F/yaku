@@ -35,7 +35,7 @@ describe('library.service', () => {
 
     const libraryService: LibraryService = new LibraryService(env)
     const result: Library[] = await libraryService.getAllLibrariesById(
-      env.projectToken
+      env.projectToken,
     )
 
     expect(result).toStrictEqual(expected)

@@ -55,7 +55,7 @@ export default class Formatter {
     const endingSubjectString = `(.*?\\$.+)`
 
     const conditionSplitMatch = new RegExp(
-      `^\\s*${subjectString}\\s*(${operators})\\s*${receiverString}\\s*$|^\\s*${receiverString}\\s*(${operators})\\s*${endingSubjectString}\\s*`
+      `^\\s*${subjectString}\\s*(${operators})\\s*${receiverString}\\s*$|^\\s*${receiverString}\\s*(${operators})\\s*${endingSubjectString}\\s*`,
     )
 
     const match = condition.match(conditionSplitMatch)
@@ -82,7 +82,7 @@ export default class Formatter {
 
   static getConditionParticipants = (
     condition: string | undefined,
-    quantity?: string
+    quantity?: string,
   ) => {
     // Condition: all(ref, "$.category === 'fiction'")
     const isolatedCondition = quantity
@@ -109,7 +109,7 @@ export default class Formatter {
 
   static getJustificationMessage = (
     quantity: string | undefined,
-    reasons: string
+    reasons: string,
   ) => {
     if (!quantity) {
       if (!reasons) {
@@ -142,7 +142,7 @@ export default class Formatter {
 
   static getReasonMessage = (
     reasons: string,
-    context: { property: string | undefined; value: string | undefined }
+    context: { property: string | undefined; value: string | undefined },
   ) => {
     const contextPrefix = ', '
     if (context.value) {
@@ -154,7 +154,7 @@ export default class Formatter {
     if (!context.value && context.property) {
       const logger = GetLogger()
       logger.warn(
-        'Warning: log value not found for property: ' + context.property
+        'Warning: log value not found for property: ' + context.property,
       )
     }
     return reasons
@@ -167,7 +167,7 @@ export default class Formatter {
     >,
     options?: {
       logProperty: string | undefined
-    }
+    },
   ) => {
     const underscoreRegex = /_+/g
 
@@ -187,7 +187,7 @@ export default class Formatter {
       {
         property: options?.logProperty,
         value: reasonPackage.context,
-      }
+      },
     )
 
     const justification =
@@ -200,7 +200,7 @@ export default class Formatter {
       subject,
       reference,
       operation,
-      receiver
+      receiver,
     )
 
     const finalResult: Result = {
@@ -217,7 +217,7 @@ export default class Formatter {
   static formatReasonPackage(
     check: Check,
     checkResults: CheckResults,
-    reasonPackage: ReasonPackage
+    reasonPackage: ReasonPackage,
   ) {
     try {
       const buffer = {
@@ -234,7 +234,7 @@ export default class Formatter {
       return result
     } catch (error) {
       console.log(
-        `Something went wrong while formatting check: ${check.name} result. Non-formatted result: ${reasonPackage.reasons}, ${reasonPackage.context}. Error: ${error}`
+        `Something went wrong while formatting check: ${check.name} result. Non-formatted result: ${reasonPackage.reasons}, ${reasonPackage.context}. Error: ${error}`,
       )
     }
   }

@@ -38,7 +38,7 @@ export class JiraClient {
     return this.client.postFormData(
       '/issue/' + issueId + '/attachments',
       form,
-      additionalHeaders
+      additionalHeaders,
     )
   }
 
@@ -47,7 +47,7 @@ export class JiraClient {
   async updateCustomField(
     issueIds: string[],
     fieldId: string,
-    value: string | number | Date
+    value: string | number | Date,
   ): Promise<any> {
     const body = {
       updates: {

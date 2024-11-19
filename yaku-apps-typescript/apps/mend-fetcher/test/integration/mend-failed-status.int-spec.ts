@@ -42,7 +42,7 @@ describe('FAILED status scenarios', () => {
     const result: RunProcessResult = await run(
       mendFetcherExecutable,
       undefined,
-      { env: env }
+      { env: env },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -52,7 +52,7 @@ describe('FAILED status scenarios', () => {
         status: 'FAILED',
         reason:
           'Environment validation failed: MEND_API_URL Required, MEND_SERVER_URL Required, MEND_ORG_TOKEN Required, MEND_PROJECT_TOKEN Required, MEND_USER_EMAIL Required, MEND_USER_KEY Required',
-      })
+      }),
     )
     expect(result.stderr).to.not.have.length(0)
   })
@@ -117,7 +117,7 @@ describe('FAILED status scenarios', () => {
       const result: RunProcessResult = await run(
         mendFetcherExecutable,
         undefined,
-        { env: env }
+        { env: env },
       )
 
       expect(result.exitCode).to.be.equal(0)
@@ -129,10 +129,10 @@ describe('FAILED status scenarios', () => {
             `Environment validation failed:` +
             ` ${envVariable.name}` +
             ` ${envVariable.errorMessage}`,
-        })
+        }),
       )
       expect(result.stderr).to.not.have.length(0)
-    }
+    },
   )
 
   it('should set status to FAILED when login fails', async () => {
@@ -144,7 +144,7 @@ describe('FAILED status scenarios', () => {
     const result: RunProcessResult = await run(
       mendFetcherExecutable,
       undefined,
-      { env: env }
+      { env: env },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -153,7 +153,7 @@ describe('FAILED status scenarios', () => {
       JSON.stringify({
         status: 'FAILED',
         reason: 'Response status code 401: Login failed',
-      })
+      }),
     )
     expect(result.stderr).to.not.have.length(0)
   })
@@ -162,14 +162,14 @@ describe('FAILED status scenarios', () => {
     const env = { ...defaultEnvironment }
     const options: MockServerOptions = await getFAILEDProjectFixture(
       MOCK_SERVER_PORT,
-      { org: env.MEND_ORG_TOKEN, project: env.MEND_PROJECT_TOKEN }
+      { org: env.MEND_ORG_TOKEN, project: env.MEND_PROJECT_TOKEN },
     )
     mockServer = new MockServer(options)
 
     const result: RunProcessResult = await run(
       mendFetcherExecutable,
       undefined,
-      { env: env }
+      { env: env },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -178,7 +178,7 @@ describe('FAILED status scenarios', () => {
       JSON.stringify({
         status: 'FAILED',
         reason: 'Response status code 404: Entity not found',
-      })
+      }),
     )
     expect(result.stderr).to.not.have.length(0)
   })
@@ -191,14 +191,14 @@ describe('FAILED status scenarios', () => {
       MOCK_SERVER_PORT,
       successResponseStatus,
       failedResponseStatus,
-      { org: env.MEND_ORG_TOKEN, project: env.MEND_PROJECT_TOKEN }
+      { org: env.MEND_ORG_TOKEN, project: env.MEND_PROJECT_TOKEN },
     )
     mockServer = new MockServer(options)
 
     const result: RunProcessResult = await run(
       mendFetcherExecutable,
       undefined,
-      { env: env }
+      { env: env },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -207,7 +207,7 @@ describe('FAILED status scenarios', () => {
       JSON.stringify({
         status: 'FAILED',
         reason: `Response status code ${failedResponseStatus}: Response Error Message`,
-      })
+      }),
     )
     expect(result.stderr).to.not.have.length(0)
   })

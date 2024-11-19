@@ -200,7 +200,7 @@ describe('ReleasesService', () => {
 
       const result = await service.list(1, listQueryHandler)
       expect(result).toEqual(
-        await service.toEntityList(entityList, approvalList)
+        await service.toEntityList(entityList, approvalList),
       )
     })
 
@@ -228,7 +228,7 @@ describe('ReleasesService', () => {
 
       const result = await service.list(1, listQueryHandler)
       expect(result).toEqual(
-        await service.toEntityList(entityList, approvalList)
+        await service.toEntityList(entityList, approvalList),
       )
     })
   })
@@ -237,7 +237,7 @@ describe('ReleasesService', () => {
     function mockQueryBuilder(
       itemCount: number,
       entities: ReleaseEntity[],
-      approvals: ApprovalEntity[]
+      approvals: ApprovalEntity[],
     ) {
       return jest.spyOn(queryRunner.manager, 'getRepository').mockReturnValue({
         createQueryBuilder() {
@@ -286,7 +286,7 @@ describe('ReleasesService', () => {
       const result = await service.listWithTransaction(
         queryRunner,
         1,
-        listQueryHandler
+        listQueryHandler,
       )
       expect(result).toEqual({
         releases: entityList,
@@ -314,7 +314,7 @@ describe('ReleasesService', () => {
       const result = await service.listWithTransaction(
         queryRunner,
         1,
-        listQueryHandler
+        listQueryHandler,
       )
       expect(result).toEqual({
         releases: entityList,
@@ -330,21 +330,21 @@ describe('ReleasesService', () => {
       getWithTransactionSpy.mockResolvedValue(release)
       const getApprovalStateWithTransactionSpy = jest.spyOn(
         service,
-        'getApprovalStateWithTransaction'
+        'getApprovalStateWithTransaction',
       )
       getApprovalStateWithTransactionSpy.mockResolvedValue(
-        approval.approvalState
+        approval.approvalState,
       )
 
       const result = await service.get(1, 1)
 
       expect(result).toEqual(
-        await service.toReleaseDto(release, ApprovalState.PENDING)
+        await service.toReleaseDto(release, ApprovalState.PENDING),
       )
       expect(getWithTransactionSpy).toHaveBeenCalledWith(
         expect.anything(),
         1,
-        1
+        1,
       )
       verifySuccessfullTransaction(queryRunner)
     })
@@ -354,17 +354,17 @@ describe('ReleasesService', () => {
       getWithTransactionSpy.mockRejectedValue(new Error('some error'))
       const getApprovalStateWithTransactionSpy = jest.spyOn(
         service,
-        'getApprovalStateWithTransaction'
+        'getApprovalStateWithTransaction',
       )
       getApprovalStateWithTransactionSpy.mockResolvedValue(
-        approval.approvalState
+        approval.approvalState,
       )
 
       await expect(service.get(1, 1)).rejects.toThrowError()
       expect(getWithTransactionSpy).toHaveBeenCalledWith(
         expect.anything(),
         1,
-        1
+        1,
       )
       verifyFailedTransaction(queryRunner)
     })
@@ -389,7 +389,7 @@ describe('ReleasesService', () => {
         .mockRejectedValue(new Error('some error'))
 
       await expect(
-        service.getWithTransaction(queryRunner, 1, 1)
+        service.getWithTransaction(queryRunner, 1, 1),
       ).rejects.toThrowError()
       verifyTransactionNotCalled(queryRunner)
     })
@@ -399,15 +399,15 @@ describe('ReleasesService', () => {
     it('should create a release', async () => {
       const createWithTransactionSpy = jest.spyOn(
         service,
-        'createWithTransaction'
+        'createWithTransaction',
       )
       createWithTransactionSpy.mockResolvedValue(release)
       const getApprovalStateWithTransactionSpy = jest.spyOn(
         service,
-        'getApprovalStateWithTransaction'
+        'getApprovalStateWithTransaction',
       )
       getApprovalStateWithTransactionSpy.mockResolvedValue(
-        approval.approvalState
+        approval.approvalState,
       )
 
       const result = await service.create(
@@ -416,7 +416,7 @@ describe('ReleasesService', () => {
         'one',
         1,
         new Date(),
-        user1
+        user1,
       )
 
       expect(createWithTransactionSpy).toHaveBeenCalledWith(
@@ -426,11 +426,11 @@ describe('ReleasesService', () => {
         'one',
         1,
         expect.any(Date),
-        expect.any(Object)
+        expect.any(Object),
       )
       const releaseDto = await service.toReleaseDto(
         release,
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
       expect(result).toEqual(releaseDto)
       verifySuccessfullTransaction(queryRunner)
@@ -439,12 +439,12 @@ describe('ReleasesService', () => {
     it('should throw an error if the release creation fails', async () => {
       const createWithTransactionSpy = jest.spyOn(
         service,
-        'createWithTransaction'
+        'createWithTransaction',
       )
       createWithTransactionSpy.mockRejectedValue(new Error('some error'))
 
       await expect(
-        service.create(1, 'name', 'one', 1, new Date(), user1)
+        service.create(1, 'name', 'one', 1, new Date(), user1),
       ).rejects.toThrowError()
     })
   })
@@ -468,7 +468,7 @@ describe('ReleasesService', () => {
         release.approvalMode,
         release.config.id,
         release.plannedDate,
-        user1
+        user1,
       )
 
       expect(saveSpy).toHaveBeenCalledWith({
@@ -481,7 +481,7 @@ describe('ReleasesService', () => {
         release,
         user1,
         'create',
-        expect.anything()
+        expect.anything(),
       )
       expect(result).toEqual(release)
       verifyTransactionNotCalled(queryRunner)
@@ -499,8 +499,8 @@ describe('ReleasesService', () => {
           'one',
           1,
           new Date(),
-          user1
-        )
+          user1,
+        ),
       ).rejects.toThrowError()
     })
 
@@ -519,8 +519,8 @@ describe('ReleasesService', () => {
           'one',
           1,
           new Date(),
-          user1
-        )
+          user1,
+        ),
       ).rejects.toThrowError()
     })
   })
@@ -530,15 +530,15 @@ describe('ReleasesService', () => {
       const nowDate = new Date()
       const updateWithTransactionSpy = jest.spyOn(
         service,
-        'updateWithTransaction'
+        'updateWithTransaction',
       )
       updateWithTransactionSpy.mockResolvedValue(release)
       const getApprovalStateWithTransactionSpy = jest.spyOn(
         service,
-        'getApprovalStateWithTransaction'
+        'getApprovalStateWithTransaction',
       )
       getApprovalStateWithTransactionSpy.mockResolvedValue(
-        approval.approvalState
+        approval.approvalState,
       )
 
       const result = await service.update(1, 1, user1, 'name', 'one', nowDate)
@@ -550,11 +550,11 @@ describe('ReleasesService', () => {
         user1,
         'name',
         'one',
-        nowDate
+        nowDate,
       )
       const releaseDto = await service.toReleaseDto(
         release,
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
       expect(result).toEqual(releaseDto)
       verifySuccessfullTransaction(queryRunner)
@@ -563,12 +563,12 @@ describe('ReleasesService', () => {
     it('should throw an error if the release update fails', async () => {
       const updateWithTransactionSpy = jest.spyOn(
         service,
-        'updateWithTransaction'
+        'updateWithTransaction',
       )
       updateWithTransactionSpy.mockRejectedValue(new Error('some error'))
 
       await expect(
-        service.update(1, 1, user1, 'name', 'one', new Date())
+        service.update(1, 1, user1, 'name', 'one', new Date()),
       ).rejects.toThrowError()
     })
   })
@@ -601,7 +601,7 @@ describe('ReleasesService', () => {
         user2,
         'name2',
         'all',
-        new Date()
+        new Date(),
       )
 
       expect(getWithTransactionSpy).toHaveBeenCalledWith(queryRunner, 1, 1)
@@ -614,7 +614,7 @@ describe('ReleasesService', () => {
         updatedRelease,
         user2,
         'update',
-        expect.anything()
+        expect.anything(),
       )
       expect(result).toEqual(currentRelease)
       verifyTransactionNotCalled(queryRunner)
@@ -632,8 +632,8 @@ describe('ReleasesService', () => {
           user1,
           'name',
           'one',
-          new Date()
-        )
+          new Date(),
+        ),
       ).rejects.toThrowError()
     })
 
@@ -652,8 +652,8 @@ describe('ReleasesService', () => {
           user1,
           'name',
           'one',
-          new Date()
-        )
+          new Date(),
+        ),
       ).rejects.toThrowError()
     })
   })
@@ -662,7 +662,7 @@ describe('ReleasesService', () => {
     it('should delete a release', async () => {
       const deleteWithTransactionSpy = jest.spyOn(
         service,
-        'removeWithTransaction'
+        'removeWithTransaction',
       )
       deleteWithTransactionSpy.mockResolvedValue()
 
@@ -672,7 +672,7 @@ describe('ReleasesService', () => {
         expect.anything(),
         1,
         1,
-        user1
+        user1,
       )
       verifySuccessfullTransaction(queryRunner)
     })
@@ -680,7 +680,7 @@ describe('ReleasesService', () => {
     it('should throw an error if the release deletion fails', async () => {
       const deleteWithTransactionSpy = jest.spyOn(
         service,
-        'removeWithTransaction'
+        'removeWithTransaction',
       )
       deleteWithTransactionSpy.mockRejectedValue(new Error('some error'))
 
@@ -713,7 +713,7 @@ describe('ReleasesService', () => {
         {},
         user2,
         'delete',
-        expect.anything()
+        expect.anything(),
       )
       verifyTransactionNotCalled(queryRunner)
     })
@@ -723,7 +723,7 @@ describe('ReleasesService', () => {
       deleteSpy.mockRejectedValue(new Error('some error'))
 
       await expect(
-        service.removeWithTransaction(queryRunner, 1, 1, user1)
+        service.removeWithTransaction(queryRunner, 1, 1, user1),
       ).rejects.toThrowError()
     })
 
@@ -735,7 +735,7 @@ describe('ReleasesService', () => {
       auditServiceSpy.mockRejectedValue(new Error('some error'))
 
       await expect(
-        service.removeWithTransaction(queryRunner, 1, 1, user1)
+        service.removeWithTransaction(queryRunner, 1, 1, user1),
       ).rejects.toThrowError()
     })
 
@@ -744,7 +744,7 @@ describe('ReleasesService', () => {
       getWithTransactionSpy.mockRejectedValue(new Error('some error'))
 
       await expect(
-        service.removeWithTransaction(queryRunner, 1, 1, user1)
+        service.removeWithTransaction(queryRunner, 1, 1, user1),
       ).rejects.toThrowError()
     })
   })
@@ -753,7 +753,7 @@ describe('ReleasesService', () => {
     it('should convert a release entity to a release dto', async () => {
       const releaseDto = await service.toReleaseDto(
         release,
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
       expect({ ...releaseDto }).toEqual({
         id: release.id,
@@ -774,7 +774,7 @@ describe('ReleasesService', () => {
       release.closed = true
       const releaseDto = await service.toReleaseDto(
         release,
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
       expect({ ...releaseDto }).toEqual({
         id: release.id,
@@ -805,7 +805,7 @@ describe('ReleasesService', () => {
       }
       const releaseDtoList = await service.toEntityList(
         entityList,
-        approvalList
+        approvalList,
       )
       expect(releaseDtoList).toEqual({
         itemCount: 1,

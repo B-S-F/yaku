@@ -6,7 +6,7 @@ import { GithubLabel } from '../model/github-label'
 
 export function compareLabels(
   requiredLabels: string[] | undefined,
-  fetchedLabels: GithubLabel[]
+  fetchedLabels: GithubLabel[],
 ): boolean {
   let result = false
   if (requiredLabels && requiredLabels.length != 0) {
@@ -17,7 +17,7 @@ export function compareLabels(
       })
     }
     const filteredLabels = requiredLabels.filter((item) =>
-      fetchedLabelsNames.includes(item)
+      fetchedLabelsNames.includes(item),
     )
     if (filteredLabels.length != 0) {
       result = true

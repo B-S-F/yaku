@@ -15,7 +15,7 @@ import { CheckGeneralResult, InvalidResolvedValues, Issue } from './types.js'
 export function checkExpectedValues(
   issues: Issue[],
   fieldName: string,
-  acceptedValues: string[]
+  acceptedValues: string[],
 ) {
   return issues.filter((issue) => {
     const field = issue[fieldName]
@@ -42,7 +42,7 @@ export function checkExpectedValues(
 export function checkExpectedValuesExist(
   issues: Issue[],
   fieldName: string,
-  acceptedValues: string[]
+  acceptedValues: string[],
 ) {
   return issues.filter((issue) => {
     const field = issue[fieldName]
@@ -108,7 +108,7 @@ export function checkResolvedValues(
   issues: Issue[],
   fieldName: string,
   acceptedValues: string[],
-  dueDateFieldName: string
+  dueDateFieldName: string,
 ): InvalidResolvedValues {
   const invalidissues: InvalidResolvedValues = {
     [CheckGeneralResult.undefinedDueDate]: [],
@@ -118,7 +118,7 @@ export function checkResolvedValues(
   const issuesWithoutExpectedValue = checkExpectedValues(
     issues,
     fieldName,
-    acceptedValues
+    acceptedValues,
   )
   issuesWithoutExpectedValue.forEach((issue: Issue) => {
     const response = checkDueDate(issue, dueDateFieldName)

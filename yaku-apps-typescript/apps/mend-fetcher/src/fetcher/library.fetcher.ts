@@ -13,7 +13,7 @@ import { handleAxiosError, UnexpectedDataError } from './errors.fetcher.js'
 export const getLibraryDTOs = async (
   apiUrl: string,
   config: { projectToken: string; pageSize?: number },
-  auth: Authenticator
+  auth: Authenticator,
 ): Promise<LibraryDTO[]> => {
   const url = `/api/v2.0/projects/${config.projectToken}/libraries`
   const login: Login = await auth.authenticate()
@@ -63,15 +63,15 @@ export const getLibraryDTOs = async (
               item.directDependency,
               item.licenses,
               item.copyrightReferences,
-              item.locations
-            )
-        )
+              item.locations,
+            ),
+        ),
       )
 
       requestConfig.params.page++
     } catch (error: any) {
       logger.error(
-        `Getting the list of libraries from ${requestConfig.baseURL}${url} has failed`
+        `Getting the list of libraries from ${requestConfig.baseURL}${url} has failed`,
       )
       if (axios.isAxiosError(error)) {
         handleAxiosError(error)

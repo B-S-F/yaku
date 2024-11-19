@@ -29,6 +29,6 @@ export class NewVersionsAlert implements IAlert {
       name: string
     },
     public availableVersion: string,
-    public availableVersionType: string
+    public availableVersionType: string,
   ) {}
 }

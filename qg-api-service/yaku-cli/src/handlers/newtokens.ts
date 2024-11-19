@@ -25,6 +25,6 @@ export async function revokeNewToken(client: ApiClient, id: string) {
   const tokenId = parseIntParameter(id, 'id')
   await logSuccess(
     client.revokeNewToken(tokenId),
-    `Token with id ${id} has been revoked. The change will be effective in at most 60 seconds.`
+    `Token with id ${id} has been revoked. The change will be effective in at most 60 seconds.`,
   )
 }

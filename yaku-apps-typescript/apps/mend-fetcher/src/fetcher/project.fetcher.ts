@@ -14,7 +14,7 @@ import { handleAxiosError, UnexpectedDataError } from './errors.fetcher.js'
 export const getProjectDTO = async (
   apiUrl: string,
   config: { projectToken: string },
-  auth: Authenticator
+  auth: Authenticator,
 ): Promise<ProjectDTO> => {
   const url = `/api/v2.0/projects/${config.projectToken}`
   const login: Login = await auth.authenticate()
@@ -42,13 +42,13 @@ export const getProjectDTO = async (
       response.data.retVal.name,
       response.data.retVal.path,
       response.data.retVal.productName,
-      response.data.retVal.productUuid
+      response.data.retVal.productUuid,
     )
 
     return projectDTO
   } catch (error: any) {
     logger.error(
-      `Getting Project information from ${requestConfig.baseURL}${url} has failed`
+      `Getting Project information from ${requestConfig.baseURL}${url} has failed`,
     )
     if (axios.isAxiosError(error)) {
       handleAxiosError(error)
@@ -60,7 +60,7 @@ export const getProjectDTO = async (
 export const getProjectVitalsDTO = async (
   apiUrl: string,
   config: { projectToken: string },
-  auth: Authenticator
+  auth: Authenticator,
 ): Promise<ProjectVitalsDTO> => {
   const url = `/api/v2.0/projects/${config.projectToken}/vitals`
   const login: Login = await auth.authenticate()
@@ -92,13 +92,13 @@ export const getProjectVitalsDTO = async (
       response.data.retVal.projectCreationDate,
       response.data.retVal.pluginName,
       response.data.retVal.pluginVersion,
-      response.data.retVal.libraryCount
+      response.data.retVal.libraryCount,
     )
 
     return projectVitalsDTO
   } catch (error: any) {
     logger.error(
-      `Getting Project Vitals information from ${requestConfig.baseURL}${url} has failed`
+      `Getting Project Vitals information from ${requestConfig.baseURL}${url} has failed`,
     )
     if (axios.isAxiosError(error)) {
       handleAxiosError(error)

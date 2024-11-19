@@ -14,7 +14,7 @@ export const adoFetcherExecutable: string = path.join(
   '..',
   '..',
   'dist',
-  'index.js'
+  'index.js',
 )
 
 export const mockServerPort = 8080

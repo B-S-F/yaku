@@ -57,7 +57,7 @@ describe('Git Fetcher Metadata And Diff', () => {
     fetchMock = vi.spyOn(global, 'fetch')
     gitFetcherBitbucketCommitsAndDiff = new GitFetcherBitbucketCommitsAndDiff(
       gitServerConfigDefault,
-      configDefault
+      configDefault,
     )
   })
 
@@ -188,6 +188,6 @@ describe('Git Fetcher Metadata And Diff', () => {
       expect(errorWasThrown).toBe(true)
       expect(responseStatusHandlerSpy).toHaveBeenCalledOnce()
       expect(responseStatusHandlerSpy).toHaveBeenCalledWith(responseCode)
-    }
+    },
   )
 })

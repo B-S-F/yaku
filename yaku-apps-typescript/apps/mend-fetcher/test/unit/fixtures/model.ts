@@ -35,7 +35,7 @@ import {
 
 export const organizationModel = new Organization(
   organizationData.uuid,
-  organizationData.name
+  organizationData.name,
 )
 
 export const projectModel = new Project(
@@ -43,7 +43,7 @@ export const projectModel = new Project(
   projectData.name,
   projectData.path,
   projectData.productName,
-  projectData.productUuid
+  projectData.productUuid,
 )
 
 export const projectVitalsModel = new ProjectVitals(
@@ -55,7 +55,7 @@ export const projectVitalsModel = new ProjectVitals(
   projectVitalsData.projectCreationDate,
   projectVitalsData.pluginName,
   projectVitalsData.pluginVersion,
-  projectVitalsData.libraryCount
+  projectVitalsData.libraryCount,
 )
 
 export const policyAlertsModel = [
@@ -70,13 +70,13 @@ export const policyAlertsModel = [
       policyAlertsData[0].project.name,
       policyAlertsData[0].project.path,
       policyAlertsData[0].project.path,
-      policyAlertsData[0].project.productUuid
+      policyAlertsData[0].project.productUuid,
     ),
     {
       uuid: policyAlertsData[0].project.productUuid,
       name: policyAlertsData[0].project.path,
     },
-    policyAlertsData[0].policyName
+    policyAlertsData[0].policyName,
   ),
   new PolicyAlert(
     policyAlertsData[1].uuid,
@@ -89,13 +89,13 @@ export const policyAlertsModel = [
       policyAlertsData[1].project.name,
       policyAlertsData[1].project.path,
       policyAlertsData[1].project.path,
-      policyAlertsData[1].project.productUuid
+      policyAlertsData[1].project.productUuid,
     ),
     {
       uuid: policyAlertsData[1].project.productUuid,
       name: policyAlertsData[1].project.path,
     },
-    policyAlertsData[1].policyName
+    policyAlertsData[1].policyName,
   ),
 ]
 
@@ -111,14 +111,14 @@ export const multipleLicensesAlertsModel = [
       multipleLicensesAlertsData[0].project.name,
       multipleLicensesAlertsData[0].project.path,
       multipleLicensesAlertsData[0].project.path,
-      multipleLicensesAlertsData[0].project.productUuid
+      multipleLicensesAlertsData[0].project.productUuid,
     ),
     {
       uuid: multipleLicensesAlertsData[0].project.productUuid,
       name: multipleLicensesAlertsData[0].project.path,
     },
     multipleLicensesAlertsData[0].numberOfLicenses,
-    multipleLicensesAlertsData[0].licenses
+    multipleLicensesAlertsData[0].licenses,
   ),
   new MultipleLicensesAlert(
     multipleLicensesAlertsData[1].uuid,
@@ -131,14 +131,14 @@ export const multipleLicensesAlertsModel = [
       multipleLicensesAlertsData[1].project.name,
       multipleLicensesAlertsData[1].project.path,
       multipleLicensesAlertsData[1].project.path,
-      multipleLicensesAlertsData[1].project.productUuid
+      multipleLicensesAlertsData[1].project.productUuid,
     ),
     {
       uuid: multipleLicensesAlertsData[1].project.productUuid,
       name: multipleLicensesAlertsData[1].project.path,
     },
     multipleLicensesAlertsData[1].numberOfLicenses,
-    multipleLicensesAlertsData[1].licenses
+    multipleLicensesAlertsData[1].licenses,
   ),
 ]
 
@@ -154,14 +154,14 @@ export const newVersionsAlertsModel = [
       newVersionsAlertsData[0].project.name,
       newVersionsAlertsData[0].project.path,
       newVersionsAlertsData[0].project.path,
-      newVersionsAlertsData[0].project.productUuid
+      newVersionsAlertsData[0].project.productUuid,
     ),
     {
       uuid: newVersionsAlertsData[0].project.productUuid,
       name: newVersionsAlertsData[0].project.path,
     },
     newVersionsAlertsData[0].availableVersion,
-    newVersionsAlertsData[0].availableVersionType
+    newVersionsAlertsData[0].availableVersionType,
   ),
   new NewVersionsAlert(
     newVersionsAlertsData[1].uuid,
@@ -174,14 +174,14 @@ export const newVersionsAlertsModel = [
       newVersionsAlertsData[1].project.name,
       newVersionsAlertsData[1].project.path,
       newVersionsAlertsData[1].project.path,
-      newVersionsAlertsData[1].project.productUuid
+      newVersionsAlertsData[1].project.productUuid,
     ),
     {
       uuid: newVersionsAlertsData[1].project.productUuid,
       name: newVersionsAlertsData[1].project.path,
     },
     newVersionsAlertsData[1].availableVersion,
-    newVersionsAlertsData[1].availableVersionType
+    newVersionsAlertsData[1].availableVersionType,
   ),
 ]
 
@@ -197,13 +197,13 @@ export const rejectedInUseAlertsModel = [
       rejectedInUseAlertsData[0].project.name,
       rejectedInUseAlertsData[0].project.path,
       rejectedInUseAlertsData[0].project.path,
-      rejectedInUseAlertsData[0].project.productUuid
+      rejectedInUseAlertsData[0].project.productUuid,
     ),
     {
       uuid: rejectedInUseAlertsData[0].project.productUuid,
       name: rejectedInUseAlertsData[0].project.path,
     },
-    rejectedInUseAlertsData[0].description
+    rejectedInUseAlertsData[0].description,
   ),
   new RejectedInUseAlert(
     rejectedInUseAlertsData[1].uuid,
@@ -216,13 +216,13 @@ export const rejectedInUseAlertsModel = [
       rejectedInUseAlertsData[1].project.name,
       rejectedInUseAlertsData[1].project.path,
       rejectedInUseAlertsData[1].project.path,
-      rejectedInUseAlertsData[1].project.productUuid
+      rejectedInUseAlertsData[1].project.productUuid,
     ),
     {
       uuid: rejectedInUseAlertsData[1].project.productUuid,
       name: rejectedInUseAlertsData[1].project.path,
     },
-    rejectedInUseAlertsData[1].description
+    rejectedInUseAlertsData[1].description,
   ),
 ]
 
@@ -238,7 +238,7 @@ export const securityAlertsModel = [
       securityAlertsData[0].project.name,
       securityAlertsData[0].project.path,
       securityAlertsData[0].project.path,
-      securityAlertsData[0].project.productUuid
+      securityAlertsData[0].project.productUuid,
     ),
     securityAlertsData[0].product,
     new Vulnerability(
@@ -250,7 +250,7 @@ export const securityAlertsModel = [
       securityAlertsData[0].vulnerability.publishDate,
       securityAlertsData[0].vulnerability.modifiedDate,
       securityAlertsData[0].vulnerability.vulnerabilityScoring,
-      []
+      [],
     ),
     new VulnerabilityFix(
       securityAlertsData[0].topFix.id,
@@ -261,9 +261,9 @@ export const securityAlertsModel = [
       securityAlertsData[0].topFix.fixResolution,
       securityAlertsData[0].topFix.date,
       securityAlertsData[0].topFix.message,
-      securityAlertsData[0].topFix.extraData
+      securityAlertsData[0].topFix.extraData,
     ),
-    securityAlertsData[0].effective
+    securityAlertsData[0].effective,
   ),
   new SecurityAlert(
     securityAlertsData[1].uuid,
@@ -276,7 +276,7 @@ export const securityAlertsModel = [
       securityAlertsData[1].project.name,
       securityAlertsData[1].project.path,
       securityAlertsData[1].project.path,
-      securityAlertsData[1].project.productUuid
+      securityAlertsData[1].project.productUuid,
     ),
     securityAlertsData[1].product,
     new Vulnerability(
@@ -288,7 +288,7 @@ export const securityAlertsModel = [
       securityAlertsData[1].vulnerability.publishDate,
       securityAlertsData[1].vulnerability.modifiedDate,
       securityAlertsData[1].vulnerability.vulnerabilityScoring,
-      []
+      [],
     ),
     new VulnerabilityFix(
       securityAlertsData[1].topFix.id,
@@ -299,9 +299,9 @@ export const securityAlertsModel = [
       securityAlertsData[1].topFix.fixResolution,
       securityAlertsData[1].topFix.date,
       securityAlertsData[1].topFix.message,
-      securityAlertsData[1].topFix.extraData
+      securityAlertsData[1].topFix.extraData,
     ),
-    securityAlertsData[1].effective
+    securityAlertsData[1].effective,
   ),
 ]
 
@@ -329,9 +329,9 @@ export const librariesModel = [
             ref.uuid,
             ref.type,
             ref.liabilityReference,
-            ref.information
+            ref.information,
           )
-        })
+        }),
       )
     }),
     librariesData[0].copyrightReferences.map(
@@ -342,11 +342,11 @@ export const librariesModel = [
           copyrightRef.author,
           copyrightRef.referenceInfo,
           copyrightRef.startYear,
-          copyrightRef.endYear
+          copyrightRef.endYear,
         )
-      }
+      },
     ),
-    librariesData[0].locations
+    librariesData[0].locations,
   ),
   new Library(
     librariesData[1].uuid,
@@ -371,9 +371,9 @@ export const librariesModel = [
             ref.uuid,
             ref.type,
             ref.liabilityReference,
-            ref.information
+            ref.information,
           )
-        })
+        }),
       )
     }),
     librariesData[1].copyrightReferences.map(
@@ -384,11 +384,11 @@ export const librariesModel = [
           copyrightRef.author,
           copyrightRef.referenceInfo,
           copyrightRef.startYear,
-          copyrightRef.endYear
+          copyrightRef.endYear,
         )
-      }
+      },
     ),
-    librariesData[1].locations
+    librariesData[1].locations,
   ),
 ]
 
@@ -410,9 +410,9 @@ export const vulnerabilitiesModel = [
           ref.url,
           ref.signature,
           ref.advisory,
-          ref.patch
-        )
-    )
+          ref.patch,
+        ),
+    ),
   ),
   new Vulnerability(
     vulnerabilitiesData[1].name,
@@ -431,9 +431,9 @@ export const vulnerabilitiesModel = [
           ref.url,
           ref.signature,
           ref.advisory,
-          ref.patch
-        )
-    )
+          ref.patch,
+        ),
+    ),
   ),
 ]
 
@@ -448,7 +448,7 @@ export const vulnerabilityFixSummaryModel = new VulnerabilityFixSummary(
     vulnerabilitiesFixSummaryData.topRankedFix.fixResolution,
     vulnerabilitiesFixSummaryData.topRankedFix.date,
     vulnerabilitiesFixSummaryData.topRankedFix.message,
-    vulnerabilitiesFixSummaryData.topRankedFix.extraData
+    vulnerabilitiesFixSummaryData.topRankedFix.extraData,
   ),
   vulnerabilitiesFixSummaryData.allFixes.map(
     (fix: VulnerabilityFix) =>
@@ -461,9 +461,9 @@ export const vulnerabilityFixSummaryModel = new VulnerabilityFixSummary(
         fix.fixResolution,
         fix.date,
         fix.message,
-        fix.extraData
-      )
+        fix.extraData,
+      ),
   ),
   vulnerabilitiesFixSummaryData.totalUpVotes,
-  vulnerabilitiesFixSummaryData.totalDownVotes
+  vulnerabilitiesFixSummaryData.totalDownVotes,
 )

@@ -20,7 +20,7 @@ export class OpenAIServiceConfig {
     readonly baseUrl: string,
     readonly apiVersion: string,
     readonly apiKey: string,
-    readonly model: string
+    readonly model: string,
   ) {}
 }
 
@@ -41,7 +41,7 @@ export class OpenAIService {
 
   constructor(
     @Inject(OpenAIServiceConfig)
-    private readonly openaiConfig: OpenAIServiceConfig
+    private readonly openaiConfig: OpenAIServiceConfig,
   ) {
     // Azure OpenAI requires a custom baseURL, api-version query param, and api-key header.
     const baseConfig = {
@@ -76,7 +76,7 @@ export class OpenAIService {
       frequency_penalty: 0.7,
       presence_penalty: 0,
       stop: 'None',
-    }
+    },
   ) {
     if (!this.openai) {
       throw new OpenAIInitializationError('OpenAI not initialized')

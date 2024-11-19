@@ -16,7 +16,7 @@ export class CleanTestDataConfig {
   constructor(
     readonly executeTestDataCleanup: boolean,
     readonly testdataNamespaceString: string,
-    readonly retentionPeriodInDays: string
+    readonly retentionPeriodInDays: string,
   ) {
     const logger = new Logger(CleanTestDataConfig.name)
   }
@@ -39,10 +39,10 @@ export class CleanTestDataTask {
   constructor(
     @Inject(RunService) private readonly runService: RunService,
     @Inject(ConfigsService) private readonly configService: ConfigsService,
-    @Inject(CleanTestDataConfig) private readonly config: CleanTestDataConfig
+    @Inject(CleanTestDataConfig) private readonly config: CleanTestDataConfig,
   ) {
     this.retentionPeriod =
-      parseInt(this.config.retentionPeriodInDays) * MILLISECONDS_PER_DAY
+      Number.parseInt(this.config.retentionPeriodInDays) * MILLISECONDS_PER_DAY
   }
 
   @Timeout(15000)
@@ -51,7 +51,7 @@ export class CleanTestDataTask {
       if (this.config.executeTestDataCleanup) {
         this.logger.log('Execute clean up of testdata')
         const deleteableObjects = await this.identifyDeleteableObjects(
-          this.parseNamespaceString()
+          this.parseNamespaceString(),
         )
         await this.deleteObjects(deleteableObjects)
         this.logger.debug('Finished clean up of testdata')
@@ -64,12 +64,12 @@ export class CleanTestDataTask {
   private parseNamespaceString(): number[] {
     return this.config.testdataNamespaceString
       .split(',')
-      .map((part) => parseInt(part))
+      .map((part) => Number.parseInt(part))
       .filter((part) => Number.isInteger(part))
   }
 
   private async identifyDeleteableObjects(
-    namespaces: number[]
+    namespaces: number[],
   ): Promise<DeleteableObjects> {
     let deleteableConfigs: DeleteableObjectRef[] = []
     let deleteableRuns: DeleteableObjectRef[] = []
@@ -85,7 +85,7 @@ export class CleanTestDataTask {
   }
 
   private async identifyDeleteableObjectsForNamespace(
-    namespaceId: number
+    namespaceId: number,
   ): Promise<DeleteableObjects> {
     const runs = await this.retrieveAllRuns(namespaceId)
     const deleteableRuns: DeleteableObjectRef[] = []
@@ -145,11 +145,11 @@ export class CleanTestDataTask {
         await this.runService.delete(
           run.namespaceId,
           run.id,
-          SYSTEM_REQUEST_USER
+          SYSTEM_REQUEST_USER,
         )
       } catch (err) {
         this.logger.error(
-          `Cannot delete run ${run.namespaceId}:${run.id}, error was: ${err}`
+          `Cannot delete run ${run.namespaceId}:${run.id}, error was: ${err}`,
         )
       }
     }
@@ -160,7 +160,7 @@ export class CleanTestDataTask {
         await this.configService.delete(config.namespaceId, config.id)
       } catch (err) {
         this.logger.error(
-          `Cannot delete config ${config.namespaceId}:${config.id}, error was: ${err}`
+          `Cannot delete config ${config.namespaceId}:${config.id}, error was: ${err}`,
         )
       }
     }

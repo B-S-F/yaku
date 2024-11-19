@@ -61,7 +61,7 @@ export class SMTPConfiguration extends MailingConfiguration {
     username: string,
     password: string,
     secure?: boolean,
-    verify?: boolean
+    verify?: boolean,
   ) {
     super(sender)
     this.host = host
@@ -85,7 +85,7 @@ export class MailjetConfiguration extends MailingConfiguration {
     apiUrl: string,
     apiKey: string,
     apiSecret: string,
-    useProxy?: boolean
+    useProxy?: boolean,
   ) {
     super(sender)
     this.apiUrl = apiUrl

@@ -285,7 +285,7 @@ describe('UsersService', () => {
 
     it('should throw an error if the sortBy property does not exist', () => {
       expect(() =>
-        service.sortUsers(users, 'name' as any, SortOrder.ASC)
+        service.sortUsers(users, 'name' as any, SortOrder.ASC),
       ).toThrow('Property name does not exist in UserInNamespaceEntity')
     })
 
@@ -444,7 +444,7 @@ describe('UsersService', () => {
       keycloakService.getUserById = jest.fn().mockResolvedValue(mockUser)
 
       const result = await service.getUser(
-        '4e9a269e-dd69-4faf-9e96-a680fcfbf3a7'
+        '4e9a269e-dd69-4faf-9e96-a680fcfbf3a7',
       )
       expect(result).toEqual({
         id: '4e9a269e-dd69-4faf-9e96-a680fcfbf3a7',
@@ -476,7 +476,7 @@ describe('UsersService', () => {
         .mockRejectedValue(new MissingUserError('User not found'))
 
       const result = await service.getUser(
-        '4e9a269e-dd69-4faf-9e96-a680fcfbf3a7'
+        '4e9a269e-dd69-4faf-9e96-a680fcfbf3a7',
       )
       expect(result).toEqual(DELETED_USER)
     })
@@ -485,7 +485,7 @@ describe('UsersService', () => {
       keycloakService.getUserById = jest.fn().mockRejectedValue(new Error())
 
       await expect(
-        service.getUser('4e9a269e-dd69-4faf-9e96-a680fcfbf3a7')
+        service.getUser('4e9a269e-dd69-4faf-9e96-a680fcfbf3a7'),
       ).rejects.toThrow()
     })
   })

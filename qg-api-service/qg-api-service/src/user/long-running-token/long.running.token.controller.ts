@@ -56,7 +56,7 @@ import {
 export class LongRunningTokenController {
   constructor(
     @Inject(LongRunningTokenService) readonly service: LongRunningTokenService,
-    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   @Get()
@@ -72,7 +72,7 @@ export class LongRunningTokenController {
   async list(
     @Req() request: Request,
     @Query() queryOptions: PaginationQueryOptions,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<TokenListDto> {
     const user = getUserFromRequest(request)
 
@@ -80,7 +80,7 @@ export class LongRunningTokenController {
       queryOptions,
       queryOptionsSchema.strict(),
       allowedSortProperties,
-      'id'
+      'id',
     )
 
     const requestUrl = this.urlHandler.getHandler(response)
@@ -90,7 +90,7 @@ export class LongRunningTokenController {
       listQueryOptions,
       requestUrl,
       dtosWithCount.itemCount,
-      dtosWithCount.dtos
+      dtosWithCount.dtos,
     )
   }
 
@@ -106,7 +106,7 @@ export class LongRunningTokenController {
   @HttpCode(200)
   async get(
     @Param('id') id: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<GetTokenResponseDto> {
     validateId(id)
     const user = getUserFromRequest(request)
@@ -131,7 +131,7 @@ export class LongRunningTokenController {
   @UseGuards(InteractiveLoginGuard)
   async create(
     @Body() body: CreateTokenRequestDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<CreateTokenResponseDto> {
     validateBody(body, createTokenRequestDtoSchema)
     const user = getUserFromRequest(request)
@@ -148,7 +148,7 @@ export class LongRunningTokenController {
   @HttpCode(200)
   async revoke(
     @Param('id') id: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(id)
     const user = getUserFromRequest(request)

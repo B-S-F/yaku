@@ -12,36 +12,36 @@ def`
 const textblock__quoted = `> abc
 > def`
 
-describe('blockquote', function () {
-  it('replaces the first character of a string with a quote', function () {
+describe('blockquote', () => {
+  it('replaces the first character of a string with a quote', () => {
     expect(markdown.blockquote('test')).toEqual('> test')
   })
-  it('replaces the first character of each line with a quote', function () {
+  it('replaces the first character of each line with a quote', () => {
     expect(markdown.blockquote(textblock)).toEqual(textblock__quoted)
   })
-  it('does not quote an empty string', function () {
+  it('does not quote an empty string', () => {
     expect(markdown.blockquote('')).toEqual('')
   })
-  it('increases quotation level', function () {
+  it('increases quotation level', () => {
     expect(markdown.blockquote('> test')).toEqual('> > test')
   })
 })
 
-describe('buildOptionalLink', function () {
-  it('returns the text if no url is provided', function () {
+describe('buildOptionalLink', () => {
+  it('returns the text if no url is provided', () => {
     expect(markdown.buildOptionalLink('test', '')).toEqual('test')
   })
-  it('returns a valid markdown link if url is provided', function () {
+  it('returns a valid markdown link if url is provided', () => {
     expect(markdown.buildOptionalLink('test', 'https://test.com')).toEqual(
-      '[test](https://test.com)'
+      '[test](https://test.com)',
     )
   })
-  it('returns the text as is if no url is provided', function () {
+  it('returns the text as is if no url is provided', () => {
     expect(markdown.buildOptionalLink(3, null)).toEqual(3)
   })
-  it('converts a number to a string and returns valid markdown link if url is provided', function () {
+  it('converts a number to a string and returns valid markdown link if url is provided', () => {
     expect(markdown.buildOptionalLink(3, 'https://test.com')).toEqual(
-      '[3](https://test.com)'
+      '[3](https://test.com)',
     )
   })
 })
@@ -76,45 +76,45 @@ const textWithSourceBlock__typography = `“Hello, it’s ‘me’!”
 \tbaz: 'qux'
 `
 
-describe('smartquotes', function () {
-  it('converts double quotes to typography quotes', function () {
+describe('smartquotes', () => {
+  it('converts double quotes to typography quotes', () => {
     expect(markdown.smartquotes('"test"')).toEqual('“test”')
   })
-  it('converts single quotes to typography quotes', function () {
+  it('converts single quotes to typography quotes', () => {
     expect(markdown.smartquotes("'test'")).toEqual('‘test’')
   })
-  it('converts apostrophies quotes to typography apostrophies', function () {
+  it('converts apostrophies quotes to typography apostrophies', () => {
     expect(markdown.smartquotes('"Hello, it\'s me')).toEqual('“Hello, it’s me')
   })
-  it('ignores quotes in source code', function () {
+  it('ignores quotes in source code', () => {
     expect(markdown.smartquotes('"Hello" `"world"`')).toEqual(
-      '“Hello” `"world"`'
+      '“Hello” `"world"`',
     )
   })
-  it('ignores quotes in code blocks', function () {
+  it('ignores quotes in code blocks', () => {
     expect(markdown.smartquotes(textWithSourceBlock)).toEqual(
-      textWithSourceBlock__typography
+      textWithSourceBlock__typography,
     )
   })
-  it('can handle null', function () {
+  it('can handle null', () => {
     expect(markdown.smartquotes(null)).toEqual('')
   })
-  it('converts a number', function () {
+  it('converts a number', () => {
     expect(markdown.smartquotes(123)).toEqual('123')
   })
 })
 
-describe('titleCase', function () {
-  it('converts a string to title case', function () {
+describe('titleCase', () => {
+  it('converts a string to title case', () => {
     expect(markdown.titleCase('test test')).toEqual('Test Test')
   })
-  it('converts umlauts to title case', function () {
+  it('converts umlauts to title case', () => {
     expect(markdown.titleCase('über test')).toEqual('Über Test')
   })
-  it('does not convert articles and some small prepositions', function () {
+  it('does not convert articles and some small prepositions', () => {
     expect(markdown.titleCase('test in a world')).toEqual('Test in a World')
   })
-  it('converts articles as the first letter', function () {
+  it('converts articles as the first letter', () => {
     expect(markdown.titleCase('in a world')).toEqual('In a World')
   })
 })
@@ -145,24 +145,24 @@ baz: 'qux'
 <p><code>'foo2bar'</code></p>
 `
 
-describe('render', function () {
-  it('renders markdown format', function () {
+describe('render', () => {
+  it('renders markdown format', () => {
     expect(markdown.render('**test**')).toEqual(
-      '<p><strong>test</strong></p>\n'
+      '<p><strong>test</strong></p>\n',
     )
   })
-  it('renders markdown block and uses typographic quotes outside of code', function () {
+  it('renders markdown block and uses typographic quotes outside of code', () => {
     expect(markdown.render(markdownBlock)).toEqual(markdownBlock__rendered)
   })
 })
 
-describe('renderInline', function () {
-  it('renders markdown format and uses typographic quotes', function () {
+describe('renderInline', () => {
+  it('renders markdown format and uses typographic quotes', () => {
     expect(markdown.renderInline('**"Test"**')).toEqual(
-      '<strong>“Test”</strong>'
+      '<strong>“Test”</strong>',
     )
   })
-  it('converts a number to a string', function () {
+  it('converts a number to a string', () => {
     expect(markdown.renderInline(3)).toEqual('3')
   })
 })

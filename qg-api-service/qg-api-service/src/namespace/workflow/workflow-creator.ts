@@ -144,7 +144,7 @@ export class WorkflowCreator {
     inPrivateCloud: boolean,
     proxy?: string,
     noProxyOn?: string,
-    pullSecretName?: string
+    pullSecretName?: string,
   ): this {
     if (inPrivateCloud) {
       this.workflow.Workflow.spec.imagePullSecrets.push({
@@ -181,7 +181,7 @@ export class WorkflowCreator {
   addExecutionInformation(
     image: string,
     versions: { [_key in SupportedVersion]: string },
-    pullPolicy = 'Always'
+    pullPolicy = 'Always',
   ): this {
     const execCall = this.format.execCall
     this.workflow.Workflow.spec.templates[0].script = {
@@ -224,7 +224,7 @@ export class WorkflowCreator {
     this.configs['environment-variables.json'] = JSON.stringify(
       this.documentedEnvs,
       null,
-      2
+      2,
     )
     return this
   }

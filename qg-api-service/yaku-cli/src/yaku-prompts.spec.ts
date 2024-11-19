@@ -82,10 +82,10 @@ describe('openFileInEditor()', () => {
         (
           command: string,
           args: readonly string[],
-          options: cp.SpawnOptions
+          options: cp.SpawnOptions,
         ) => {
           return new ChildProcess()
-        }
+        },
       )
 
     await yp.openFileInEditor(testFilename, testEditor)

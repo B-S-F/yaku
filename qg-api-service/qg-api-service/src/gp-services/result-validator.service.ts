@@ -13,7 +13,7 @@ import { fromZodError } from 'zod-validation-error'
 export class ResultValidatorService {
   constructor(
     @Inject(YamlValidatorService)
-    private readonly yamlValidator: YamlValidatorService
+    private readonly yamlValidator: YamlValidatorService,
   ) {}
 
   /**
@@ -23,7 +23,7 @@ export class ResultValidatorService {
    */
   async validate(
     file: Express.Multer.File | string,
-    filename = 'qg-result'
+    filename = 'qg-result',
   ): Promise<void> {
     let fileData
     if (typeof file == 'string') {
@@ -39,7 +39,7 @@ export class ResultValidatorService {
     const version = fileData.metadata?.version
     if (!version) {
       throw new Error(
-        `Could not find version for ${filename}. Valid versions: v1 or v2.`
+        `Could not find version for ${filename}. Valid versions: v1 or v2.`,
       )
     }
 
@@ -53,7 +53,7 @@ export class ResultValidatorService {
         break
       default:
         throw new Error(
-          `Invalid version for ${filename}. Valid versions: v1 or v2.`
+          `Invalid version for ${filename}. Valid versions: v1 or v2.`,
         )
     }
 
@@ -62,7 +62,7 @@ export class ResultValidatorService {
     } catch (err) {
       if (err instanceof z.ZodError) {
         throw new Error(
-          `Validation failed for ${filename}. ${fromZodError(err).message}.`
+          `Validation failed for ${filename}. ${fromZodError(err).message}.`,
         )
       }
     }

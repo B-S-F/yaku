@@ -5,7 +5,7 @@
 import { GitServerConfig } from '../../model/git-server-config'
 
 export async function getRequestOptions(
-  gitServerConfig: GitServerConfig
+  gitServerConfig: GitServerConfig,
 ): Promise<RequestInit> {
   const options: RequestInit = {
     method: 'GET',
@@ -13,7 +13,7 @@ export async function getRequestOptions(
 
   if (gitServerConfig.gitServerAuthMethod === 'basic') {
     const encodedCredentials: string = Buffer.from(
-      `${gitServerConfig.gitServerUsername}:${gitServerConfig.gitServerPassword}`
+      `${gitServerConfig.gitServerUsername}:${gitServerConfig.gitServerPassword}`,
     ).toString('base64')
 
     options.headers = {

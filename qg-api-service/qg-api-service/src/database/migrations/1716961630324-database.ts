@@ -15,7 +15,7 @@ export class Database1716961630324 implements MigrationInterface {
       ALTER TABLE "run_audit" ADD "actor" jsonb NOT NULL DEFAULT '{}'::jsonb;
       UPDATE "run_audit" SET "actor" = jsonb_build_object('username', "temp_audit"."actor") FROM "temp_audit" WHERE "run_audit"."id" = "temp_audit"."id";
       DROP TABLE "temp_audit";
-      `
+      `,
     )
 
     await queryRunner.query(
@@ -25,7 +25,7 @@ export class Database1716961630324 implements MigrationInterface {
       ALTER TABLE "release_audit" ADD "actor" jsonb NOT NULL DEFAULT '{}'::jsonb;
       UPDATE "release_audit" SET "actor" = jsonb_build_object('username', "temp_audit"."actor") FROM "temp_audit" WHERE "release_audit"."id" = "temp_audit"."id";
       DROP TABLE "temp_audit";
-      `
+      `,
     )
 
     await queryRunner.query(
@@ -35,7 +35,7 @@ export class Database1716961630324 implements MigrationInterface {
       ALTER TABLE "comment_audit" ADD "actor" jsonb NOT NULL DEFAULT '{}'::jsonb;
       UPDATE "comment_audit" SET "actor" = jsonb_build_object('username', "temp_audit"."actor") FROM "temp_audit" WHERE "comment_audit"."id" = "temp_audit"."id";
       DROP TABLE "temp_audit";
-      `
+      `,
     )
 
     await queryRunner.query(
@@ -45,7 +45,7 @@ export class Database1716961630324 implements MigrationInterface {
       ALTER TABLE "approval_audit" ADD "actor" jsonb NOT NULL DEFAULT '{}'::jsonb;
       UPDATE "approval_audit" SET "actor" = jsonb_build_object('username', "temp_audit"."actor") FROM "temp_audit" WHERE "approval_audit"."id" = "temp_audit"."id";
       DROP TABLE "temp_audit";
-      `
+      `,
     )
   }
 
@@ -57,7 +57,7 @@ export class Database1716961630324 implements MigrationInterface {
       ALTER TABLE "run_audit" ADD "actor" character varying NOT NULL DEFAULT '';
       UPDATE "run_audit" SET "actor" = "temp_audit"."actor"->>'username' FROM "temp_audit" WHERE "run_audit"."id" = "temp_audit"."id";
       DROP TABLE "temp_audit";
-      `
+      `,
     )
 
     await queryRunner.query(
@@ -67,7 +67,7 @@ export class Database1716961630324 implements MigrationInterface {
       ALTER TABLE "release_audit" ADD "actor" character varying NOT NULL DEFAULT '';
       UPDATE "release_audit" SET "actor" = "temp_audit"."actor"->>'username' FROM "temp_audit" WHERE "release_audit"."id" = "temp_audit"."id";
       DROP TABLE "temp_audit";
-      `
+      `,
     )
 
     await queryRunner.query(
@@ -77,7 +77,7 @@ export class Database1716961630324 implements MigrationInterface {
       ALTER TABLE "comment_audit" ADD "actor" character varying NOT NULL DEFAULT '';
       UPDATE "comment_audit" SET "actor" = "temp_audit"."actor"->>'username' FROM "temp_audit" WHERE "comment_audit"."id" = "temp_audit"."id";
       DROP TABLE "temp_audit";
-      `
+      `,
     )
 
     await queryRunner.query(
@@ -87,7 +87,7 @@ export class Database1716961630324 implements MigrationInterface {
       ALTER TABLE "approval_audit" ADD "actor" character varying NOT NULL DEFAULT '';
       UPDATE "approval_audit" SET "actor" = "temp_audit"."actor"->>'username' FROM "temp_audit" WHERE "approval_audit"."id" = "temp_audit"."id";
       DROP TABLE "temp_audit";
-      `
+      `,
     )
   }
 }

@@ -61,7 +61,7 @@ describe('MetricController', () => {
       const queryOptions = {}
       const response = createMockResponse(
         `${baseUrl}/metrics/findings`,
-        testUser
+        testUser,
       )
       const links = {
         first: `https://localhost:3000/api/v1/namespaces/${namespaceId}/metrics/findings?page=1&items=20`,
@@ -82,7 +82,7 @@ describe('MetricController', () => {
       const result = await controller.getFindings(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result).toStrictEqual(expected)
@@ -94,7 +94,7 @@ describe('MetricController', () => {
       const queryOptions = { configId: 2 }
       const response = createMockResponse(
         `${baseUrl}/metrics/findings`,
-        testUser
+        testUser,
       )
       const links = {
         first: `https://localhost:3000/api/v1/namespaces/${namespaceId}/metrics/findings?page=1&items=20`,
@@ -115,7 +115,7 @@ describe('MetricController', () => {
       const result = await controller.getFindings(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result).toStrictEqual(expected)
@@ -126,7 +126,7 @@ describe('MetricController', () => {
       const queryOptions = { sortBy: 'invalidProperty' }
       const response = createMockResponse(
         `${baseUrl}/metrics/findings`,
-        testUser
+        testUser,
       )
 
       const result = controller.getFindings(namespaceId, queryOptions, response)
@@ -144,7 +144,7 @@ describe('MetricController', () => {
       }
       const response = createMockResponse(
         `${baseUrl}/metrics/findingsInRange`,
-        testUser
+        testUser,
       )
       const links = {
         first: `https://localhost:3000/api/v1/namespaces/${namespaceId}/metrics/findingsInRange?page=1&items=20`,
@@ -165,7 +165,7 @@ describe('MetricController', () => {
       const result = await controller.getFindingsInRange(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result).toStrictEqual(expected)
@@ -181,7 +181,7 @@ describe('MetricController', () => {
       }
       const response = createMockResponse(
         `${baseUrl}/metrics/findingsInRange`,
-        testUser
+        testUser,
       )
       const links = {
         first: `https://localhost:3000/api/v1/namespaces/${namespaceId}/metrics/findingsInRange?page=1&items=20`,
@@ -204,7 +204,7 @@ describe('MetricController', () => {
       const result = await controller.getFindingsInRange(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result).toStrictEqual(expected)
@@ -218,13 +218,13 @@ describe('MetricController', () => {
       }
       const response = createMockResponse(
         `${baseUrl}/metrics/findingsInRange`,
-        testUser
+        testUser,
       )
 
       const result = controller.getFindingsInRange(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       await expect(result).rejects.toThrow()
@@ -241,7 +241,7 @@ describe('MetricController', () => {
       const queryOptions = {}
       const response = createMockResponse(
         `${baseUrl}/metrics/latestRunFindings`,
-        testUser
+        testUser,
       )
       const links = {
         first: `https://localhost:3000/api/v1/namespaces/${namespaceId}/metrics/latestRunFindings?page=1&items=20`,
@@ -262,7 +262,7 @@ describe('MetricController', () => {
       const result = await controller.getLatestRunFindings(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result).toStrictEqual(expected)
@@ -277,13 +277,13 @@ describe('MetricController', () => {
       }
       const response = createMockResponse(
         `${baseUrl}/metrics/latestRunFindings`,
-        testUser
+        testUser,
       )
 
       const result = controller.getLatestRunFindings(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       await expect(result).rejects.toThrow()
@@ -303,7 +303,7 @@ describe('MetricController', () => {
       }
       const response = createMockResponse(
         `${baseUrl}/metrics/latestRunFindingsInRange`,
-        testUser
+        testUser,
       )
       const links = {
         first: `https://localhost:3000/api/v1/namespaces/${namespaceId}/metrics/latestRunFindingsInRange?page=1&items=20`,
@@ -326,7 +326,7 @@ describe('MetricController', () => {
       const result = await controller.getLatestRunFindingsInRange(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result).toStrictEqual(expected)
@@ -340,13 +340,13 @@ describe('MetricController', () => {
       }
       const response = createMockResponse(
         `${baseUrl}/metrics/latestRunFindingsInRange`,
-        testUser
+        testUser,
       )
 
       const result = controller.getLatestRunFindingsInRange(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       await expect(result).rejects.toThrow()

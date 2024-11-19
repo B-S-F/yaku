@@ -53,7 +53,7 @@ describe('authCmd', async () => {
 
     // Assert
     expect(console.log).toHaveBeenCalledWith(
-      '{"output":{"GITHUB_TOKEN":"token"}}'
+      '{"output":{"GITHUB_TOKEN":"token"}}',
     )
   })
   it('should only print a gh app installation token', async () => {
@@ -97,7 +97,7 @@ describe('ghAppAuth', async () => {
 
     // Assert
     expect(logger.error).toHaveBeenCalledWith(
-      expect.stringContaining('No app installation found')
+      expect.stringContaining('No app installation found'),
     )
     expect(process.exit).toHaveBeenCalledWith(1)
   })
@@ -113,7 +113,7 @@ describe('ghAppAuth', async () => {
 
     // Assert
     expect(logger.error).toHaveBeenCalledWith(
-      expect.stringContaining('No access token received')
+      expect.stringContaining('No access token received'),
     )
     expect(process.exit).toHaveBeenCalledWith(1)
   })
@@ -131,7 +131,7 @@ describe('ghAppAuth', async () => {
     // Assert
     expect(result).toEqual('token')
     expect(logger.info).toHaveBeenCalledWith(
-      expect.stringContaining('Logged in as')
+      expect.stringContaining('Logged in as'),
     )
   })
 })

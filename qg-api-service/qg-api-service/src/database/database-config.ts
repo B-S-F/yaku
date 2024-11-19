@@ -15,7 +15,7 @@ export function databaseConfig(
   database: string,
   useSSL: string,
   migrationsRun: string,
-  dataFolder: string
+  dataFolder: string,
 ): DatabaseConfig {
   switch (type) {
     case 'postgres':
@@ -68,11 +68,11 @@ function hostData(
   port: string,
   database: string,
   username: string,
-  password: string
+  password: string,
 ): hostinfo {
   return {
     host,
-    port: parseInt(port),
+    port: Number.parseInt(port),
     database,
     username: username.trim(),
     password: password.trim(),

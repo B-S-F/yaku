@@ -32,7 +32,7 @@ export function createConfigsCommand(program: Command): void {
     .argument('[page]', 'The page requested, defaults to page 1')
     .option(
       '-i, --itemCount <value>',
-      'Number of items requested per page, defaults to 20'
+      'Number of items requested per page, defaults to 20',
     )
     .option('-a, --ascending', 'Revert sort order for the items')
     .option('--all', 'Retrieve all configs in one call')
@@ -65,7 +65,7 @@ export function createConfigsCommand(program: Command): void {
     .argument('<name>', 'The name of the new config')
     .argument(
       '[description]',
-      'An optional description to specify the purpose of the config'
+      'An optional description to specify the purpose of the config',
     )
     .action(async (name: string, description: string) => {
       try {
@@ -83,7 +83,7 @@ export function createConfigsCommand(program: Command): void {
     .argument('<name>', 'The new name of the config')
     .argument(
       '[description]',
-      'The new description to specify the purpose of the config'
+      'The new description to specify the purpose of the config',
     )
     .action(async (configId: string, name: string, description: string) => {
       try {
@@ -99,11 +99,11 @@ export function createConfigsCommand(program: Command): void {
     .argument('<configId>', 'The numeric id of the config to be deleted')
     .option(
       '--force',
-      'Force the deletion of the config by deleting all connected runs first'
+      'Force the deletion of the config by deleting all connected runs first',
     )
     .option(
       '-y --yes',
-      'Skip the confirmation prompt and delete the config immediately. Use with caution!'
+      'Skip the confirmation prompt and delete the config immediately. Use with caution!',
     )
     .action(async (configId: string, options) => {
       try {
@@ -111,7 +111,7 @@ export function createConfigsCommand(program: Command): void {
       } catch (err: any) {
         if (err.status == 400) {
           console.error(
-            'Use the --force option to force the deletion of the config by deleting all connected runs first'
+            'Use the --force option to force the deletion of the config by deleting all connected runs first',
           )
         }
         handleRestApiError(err)
@@ -122,15 +122,15 @@ export function createConfigsCommand(program: Command): void {
     .command('make-config')
     .alias('mc')
     .description(
-      'Create an initial qg-config file from uniform questionnaire data'
+      'Create an initial qg-config file from uniform questionnaire data',
     )
     .argument(
       '<configId>',
-      'The numeric id of the config for which the initial config should be created'
+      'The numeric id of the config for which the initial config should be created',
     )
     .argument(
       '<questionnaireFilepath>',
-      'Path to the questionnaire data file which describes the relevant questions for the config'
+      'Path to the questionnaire data file which describes the relevant questions for the config',
     )
     .action(async (configId: string, questionnaireFilepath: string) => {
       try {
@@ -146,21 +146,21 @@ export function createConfigsCommand(program: Command): void {
     .description('Create a config from an excel sheet')
     .argument(
       '<configId>',
-      'The numeric id of the config for which the initial config should be created'
+      'The numeric id of the config for which the initial config should be created',
     )
     .argument(
       '<xlsxFilepath>',
-      'Path to the excel sheet which contains the information to create the config'
+      'Path to the excel sheet which contains the information to create the config',
     )
     .argument(
       '<configFilepath>',
-      'Path to the config file which maps the excel sheet columns to relevant information categories'
+      'Path to the config file which maps the excel sheet columns to relevant information categories',
     )
     .action(
       async (
         configId: string,
         xlsxFilepath: string,
-        configFilepath: string
+        configFilepath: string,
       ) => {
         try {
           await excelConfig(
@@ -168,11 +168,11 @@ export function createConfigsCommand(program: Command): void {
             namespace,
             configId,
             xlsxFilepath,
-            configFilepath
+            configFilepath,
           )
         } catch (err) {
           handleRestApiError(err)
         }
-      }
+      },
     )
 }

@@ -146,7 +146,7 @@ describe('executeRestCall()', () => {
     const fetchSpy = jest
       .spyOn(global, 'fetch')
       .mockImplementation(
-        jest.fn(() => Promise.resolve(normalResponse)) as jest.Mock
+        jest.fn(() => Promise.resolve(normalResponse)) as jest.Mock,
       )
       .mockResolvedValue(normalResponse)
       .mockResolvedValueOnce(rateLimitErrorResponse)
@@ -168,7 +168,7 @@ describe('executeRestCall()', () => {
     for (let n = 1; n < 5; n++) {
       expect(utils.wait).toHaveBeenNthCalledWith(
         n,
-        Math.pow(DEFAULT_EXPONENTIAL_BASE_FOR_RETRIES, n - 1)
+        Math.pow(DEFAULT_EXPONENTIAL_BASE_FOR_RETRIES, n - 1),
       )
     }
     expect(utils.wait).toBeCalledTimes(4)
@@ -192,7 +192,7 @@ describe('executeRestCall()', () => {
     const fetchSpy = jest
       .spyOn(global, 'fetch')
       .mockImplementation(
-        jest.fn(() => Promise.resolve(rateLimitErrorResponse)) as jest.Mock
+        jest.fn(() => Promise.resolve(rateLimitErrorResponse)) as jest.Mock,
       )
 
     const config = {
@@ -206,7 +206,7 @@ describe('executeRestCall()', () => {
     } catch (err) {
       if (err instanceof Error) {
         expect(err.message).toBe(
-          'Rate limit reached! Waited for 113s but server still responds with 429 Rate Limit reached.'
+          'Rate limit reached! Waited for 113s but server still responds with 429 Rate Limit reached.',
         )
       } else {
         throw err
@@ -214,7 +214,7 @@ describe('executeRestCall()', () => {
     }
 
     expect(utils.wait).toBeCalledTimes(
-      DEFAULT_MAXIMUM_RETRY_COUNT_FOR_RATE_LIMIT_RETRIES
+      DEFAULT_MAXIMUM_RETRY_COUNT_FOR_RATE_LIMIT_RETRIES,
     )
   })
 
@@ -245,7 +245,7 @@ describe('executeRestCall()', () => {
     const fetchSpy = jest
       .spyOn(global, 'fetch')
       .mockImplementation(
-        jest.fn(() => Promise.resolve(normalResponse)) as jest.Mock
+        jest.fn(() => Promise.resolve(normalResponse)) as jest.Mock,
       )
       .mockResolvedValueOnce(rateLimitErrorResponse)
 
@@ -275,7 +275,7 @@ describe('executeRestCall()', () => {
     const fetchSpy = jest
       .spyOn(global, 'fetch')
       .mockImplementation(
-        jest.fn(() => Promise.reject(new Error('fetch failed'))) as jest.Mock
+        jest.fn(() => Promise.reject(new Error('fetch failed'))) as jest.Mock,
       )
 
     try {
@@ -321,7 +321,7 @@ describe('executeRestCall()', () => {
     } catch (err) {
       if (err instanceof Error) {
         expect(err.message).toBe(
-          `Could not decode HTTP error response (${response.status} ${response.statusText}) into a JSON object: ${response.body}.`
+          `Could not decode HTTP error response (${response.status} ${response.statusText}) into a JSON object: ${response.body}.`,
         )
       } else {
         throw err
@@ -339,7 +339,7 @@ describe('retryLimitReached()', () => {
         currentRetryCount: 42,
         exponentialBase: 2,
         passedTime: 42,
-      })
+      }),
     ).toBe(false)
   })
 
@@ -351,7 +351,7 @@ describe('retryLimitReached()', () => {
         currentRetryCount: 5,
         exponentialBase: 2,
         passedTime: 42,
-      })
+      }),
     ).toBe(true)
 
     expect(
@@ -361,7 +361,7 @@ describe('retryLimitReached()', () => {
         currentRetryCount: 6,
         exponentialBase: 2,
         passedTime: 42,
-      })
+      }),
     ).toBe(true)
   })
 
@@ -373,7 +373,7 @@ describe('retryLimitReached()', () => {
         currentRetryCount: 42,
         exponentialBase: 2,
         passedTime: 1,
-      })
+      }),
     ).toBe(true)
 
     expect(
@@ -383,7 +383,7 @@ describe('retryLimitReached()', () => {
         currentRetryCount: 42,
         exponentialBase: 2,
         passedTime: 2,
-      })
+      }),
     ).toBe(true)
   })
 })
@@ -400,7 +400,7 @@ describe('calculateWaitingTime()', () => {
         maxWaitingTime: 0,
         passedTime: 0,
         retryLimit: 0,
-      })
+      }),
     ).toEqual(37)
   })
   it('should use exponentially growing waiting time if no header is set', () => {
@@ -415,7 +415,7 @@ describe('calculateWaitingTime()', () => {
           maxWaitingTime: 0,
           passedTime: 0,
           retryLimit: 0,
-        })
+        }),
       ).toEqual(Math.pow(base, counter))
     }
   })
@@ -429,7 +429,7 @@ describe('calculateWaitingTime()', () => {
         maxWaitingTime: 1000, // 2^10 would be 1024 and larger than 1000
         passedTime: 0,
         retryLimit: 0,
-      })
+      }),
     ).toEqual(1000)
   })
 })

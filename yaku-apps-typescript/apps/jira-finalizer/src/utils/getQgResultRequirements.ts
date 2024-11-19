@@ -12,7 +12,7 @@ export default function (qgResult: QgResult): Requirements {
   const requirements: Requirements = {}
   for (const [_, allocation] of Object.entries(qgResult.allocations)) {
     for (const [rquirementId, requirement] of Object.entries(
-      allocation.requirements
+      allocation.requirements,
     )) {
       requirements[rquirementId] = requirement
     }

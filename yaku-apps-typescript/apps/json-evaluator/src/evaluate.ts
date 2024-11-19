@@ -14,7 +14,7 @@ import Formatter from './formatter'
 
 export const evaluate = async (
   jsonFile: string,
-  config: Config
+  config: Config,
 ): Promise<AppOutput> => {
   const results: Result[] = []
   const data = await readJson(jsonFile)
@@ -29,7 +29,7 @@ export const evaluate = async (
 
     checkResults.reasonPackages
       ?.map((reasonPackage) =>
-        Formatter.formatReasonPackage(check, checkResults, reasonPackage)
+        Formatter.formatReasonPackage(check, checkResults, reasonPackage),
       )
       .forEach((result) => result && results.push(result))
 
@@ -52,7 +52,7 @@ export const evaluate = async (
 
   const { condition: concatCondition, status } = evalConcatenation(
     concatenation.condition,
-    checksResult
+    checksResult,
   )
 
   if (config.concatenation) {
@@ -69,7 +69,7 @@ export const evaluate = async (
   appOutput.setReason(
     status === 'GREEN'
       ? 'All fields have valid values'
-      : 'Some fields do not have valid values'
+      : 'Some fields do not have valid values',
   )
   for (const result of results) {
     appOutput.addResult(result)

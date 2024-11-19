@@ -38,6 +38,6 @@ export class LibraryDTO {
     public locations: {
       localPath: string
       dependencyFile: string
-    }[]
+    }[],
   ) {}
 }

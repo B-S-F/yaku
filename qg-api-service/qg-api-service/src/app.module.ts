@@ -81,8 +81,8 @@ export class MultiStream {
         DB_NAME,
         DB_USE_SSL,
         DB_MIGRATIONS_RUN,
-        DATA_DIR
-      )
+        DATA_DIR,
+      ),
     ),
     LocalKeyCloakModule,
     LongRunningTokenModule,

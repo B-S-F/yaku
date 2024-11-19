@@ -94,14 +94,14 @@ describe('Date Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-valid-start-01-02-2020.yml`,
             },
-          }
+          },
         )
         expect(mockServer.getNumberOfRequests()).toEqual(1)
         verifyPrRequest(mockServer, requestUrlPullRequests, authMethod)
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify(pullRequests)
+          JSON.stringify(pullRequests),
         )
         expect(result.exitCode).to.equal(0)
       })
@@ -115,14 +115,14 @@ describe('Date Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-valid-start-01-06-2020.yml`,
             },
-          }
+          },
         )
         expect(mockServer.getNumberOfRequests()).toEqual(1)
         verifyPrRequest(mockServer, requestUrlPullRequests, authMethod)
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify([pullRequests[1], pullRequests[2]])
+          JSON.stringify([pullRequests[1], pullRequests[2]]),
         )
         expect(result.exitCode).to.equal(0)
       })
@@ -136,14 +136,14 @@ describe('Date Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-valid-start-01-06-2020-end-31-12-2022.yml`,
             },
-          }
+          },
         )
         expect(mockServer.getNumberOfRequests()).toEqual(1)
         verifyPrRequest(mockServer, requestUrlPullRequests, authMethod)
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify([pullRequests[1]])
+          JSON.stringify([pullRequests[1]]),
         )
         expect(result.exitCode).to.equal(0)
       })
@@ -157,14 +157,14 @@ describe('Date Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-valid-start-01-06-2020-end-31-12-2023.yml`,
             },
-          }
+          },
         )
         expect(mockServer.getNumberOfRequests()).toEqual(1)
         verifyPrRequest(mockServer, requestUrlPullRequests, authMethod)
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify([pullRequests[1], pullRequests[2]])
+          JSON.stringify([pullRequests[1], pullRequests[2]]),
         )
         expect(result.exitCode).to.equal(0)
       })
@@ -178,7 +178,7 @@ describe('Date Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-valid-start-01-01-2019-end-31-12-2019.yml`,
             },
-          }
+          },
         )
         expect(mockServer.getNumberOfRequests()).toEqual(1)
         verifyPrRequest(mockServer, requestUrlPullRequests, authMethod)
@@ -195,7 +195,7 @@ describe('Date Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-valid-start-01-01-2024-end-31-12-2024.yml`,
             },
-          }
+          },
         )
         expect(mockServer.getNumberOfRequests()).toEqual(1)
         verifyPrRequest(mockServer, requestUrlPullRequests, authMethod)
@@ -239,7 +239,7 @@ describe('Date Filter', () => {
           GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-invalid-start-date.yml`,
         },
         '{"status":"FAILED","reason":"Validation error: date must match the format dd-mm-yyyy at \\"filter.startDate\\""}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -253,7 +253,7 @@ describe('Date Filter', () => {
           GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-invalid-end-date.yml`,
         },
         '{"status":"FAILED","reason":"Validation error: date must match the format dd-mm-yyyy at \\"filter.endDate\\""}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -274,7 +274,7 @@ describe('Date Filter', () => {
           GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-invalid-start-date-after-end-date.yml`,
         },
         '{"status":"FAILED","reason":"Validation error: filter.endDate must be after or equal filter.startDate at \\"filter\\""}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -288,7 +288,7 @@ describe('Date Filter', () => {
           GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/date-filter/git-fetcher-config-invalid-start-date-missing.yml`,
         },
         '{"status":"FAILED","reason":"Validation error: Specify filter.startDate if filter.endDate is provided at \\"filter\\""}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })

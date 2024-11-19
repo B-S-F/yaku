@@ -25,12 +25,12 @@ export class CheckResultOverridesService {
     @Inject(CheckResultOverrideAuditService)
     private readonly auditService: OverrideAuditService,
     @Inject(UsersService)
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
   ) {}
 
   async getAll(
     namespaceId: number,
-    releaseId: number
+    releaseId: number,
   ): Promise<CheckResultOverrideDto[]> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -39,7 +39,7 @@ export class CheckResultOverridesService {
       const entities = await this.getAllWithTransaction(
         queryRunner,
         namespaceId,
-        releaseId
+        releaseId,
       )
       const dtos = entities.map((e) => this.toOverrideDto(e))
       await queryRunner.commitTransaction()
@@ -55,7 +55,7 @@ export class CheckResultOverridesService {
   async getAllWithTransaction(
     queryRunner: QueryRunner,
     namespaceId: number,
-    releaseId: number
+    releaseId: number,
   ): Promise<CheckResultOverrideEntity[]> {
     const entities = await queryRunner.manager.find(CheckResultOverrideEntity, {
       where: {
@@ -78,7 +78,7 @@ export class CheckResultOverridesService {
     originalFulfilled: boolean,
     manualFulfilled: boolean,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CheckResultOverrideDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -95,7 +95,7 @@ export class CheckResultOverridesService {
         originalFulfilled,
         manualFulfilled,
         comment,
-        actor
+        actor,
       )
       const dto = this.toOverrideDto(entity)
       await queryRunner.commitTransaction()
@@ -119,7 +119,7 @@ export class CheckResultOverridesService {
     originalFulfilled: boolean,
     manualFulfilled: boolean,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CheckResultOverrideEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -150,7 +150,7 @@ export class CheckResultOverridesService {
       override.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.CREATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     return override
@@ -163,7 +163,7 @@ export class CheckResultOverridesService {
     originalFulfilled: boolean,
     manualFulfilled: boolean,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CheckResultOverrideDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -177,7 +177,7 @@ export class CheckResultOverridesService {
         originalFulfilled,
         manualFulfilled,
         comment,
-        actor
+        actor,
       )
       const dto = this.toOverrideDto(entity)
       await queryRunner.commitTransaction()
@@ -198,7 +198,7 @@ export class CheckResultOverridesService {
     originalFulfilled: boolean,
     manualFulfilled: boolean,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CheckResultOverrideEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -209,7 +209,7 @@ export class CheckResultOverridesService {
       queryRunner,
       namespaceId,
       releaseId,
-      overrideId
+      overrideId,
     )
 
     const newOverride = originalOverride.DeepCopy()
@@ -229,7 +229,7 @@ export class CheckResultOverridesService {
       newOverride.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     return newOverride
@@ -261,7 +261,7 @@ export class CheckResultOverridesService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    overrideId: number
+    overrideId: number,
   ): Promise<CheckResultOverrideEntity> {
     const override = await queryRunner.manager.findOneOrFail(
       CheckResultOverrideEntity,
@@ -272,7 +272,7 @@ export class CheckResultOverridesService {
           namespace: { id: namespaceId },
         },
         relations: ['namespace', 'release'],
-      }
+      },
     )
 
     return override
@@ -282,7 +282,7 @@ export class CheckResultOverridesService {
     namespaceId: number,
     releaseId: number,
     overrideId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -293,7 +293,7 @@ export class CheckResultOverridesService {
         namespaceId,
         releaseId,
         overrideId,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
     } catch (error) {
@@ -309,7 +309,7 @@ export class CheckResultOverridesService {
     namespaceId: number,
     releaseId: number,
     overrideId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -318,7 +318,7 @@ export class CheckResultOverridesService {
       queryRunner,
       namespaceId,
       releaseId,
-      overrideId
+      overrideId,
     )
 
     await queryRunner.manager.remove(override)
@@ -329,7 +329,7 @@ export class CheckResultOverridesService {
       {},
       AuditActor.convertFrom(actor),
       Action.DELETE,
-      queryRunner.manager
+      queryRunner.manager,
     )
   }
 
@@ -337,7 +337,7 @@ export class CheckResultOverridesService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const overrides = await queryRunner.manager.find(
       CheckResultOverrideEntity,
@@ -347,7 +347,7 @@ export class CheckResultOverridesService {
           namespace: { id: namespaceId },
         },
         relations: ['namespace', 'release'],
-      }
+      },
     )
 
     /*
@@ -362,7 +362,7 @@ export class CheckResultOverridesService {
         {},
         AuditActor.convertFrom(actor),
         Action.DELETE,
-        queryRunner.manager
+        queryRunner.manager,
       )
 
       await queryRunner.manager.remove(override)

@@ -65,13 +65,13 @@ describe('Check secrets endpoints', () => {
     await checkSecretInDatabase(
       (value: string) => cryptedSecret === value,
       body.name,
-      patchDescBody.description
+      patchDescBody.description,
     )
     await checkSecretByGet(body.name, patchDescBody.description)
     await checkDatabaseEntries(1)
 
     console.log(
-      '===== Step 3: Patch the secret value and unset description again'
+      '===== Step 3: Patch the secret value and unset description again',
     )
 
     const patchSecretBody = {
@@ -81,7 +81,7 @@ describe('Check secrets endpoints', () => {
     await patchSecret(body.name, patchSecretBody)
     await checkSecretInDatabase(
       (value: string) => cryptedSecret !== value,
-      body.name
+      body.name,
     )
     await checkSecretByGet(body.name)
     await checkDatabaseEntries(1)
@@ -97,48 +97,48 @@ describe('Check secrets endpoints', () => {
 
     expect(
       (await secretRepo.find()).length,
-      `Secret repo does not contain the expected ${count} elements`
+      `Secret repo does not contain the expected ${count} elements`,
     ).toBe(count)
     expect(
       (await cryptoRepo.find()).length,
-      `Encrypted secret repo does not contain the expected ${count} elements`
+      `Encrypted secret repo does not contain the expected ${count} elements`,
     ).toBe(count)
   }
 
   async function checkSecretInDatabase(
     checkSecretValue: (value: string) => boolean,
     name: string,
-    description?: string
+    description?: string,
   ): Promise<void> {
     console.log('========== Check secret in database')
 
     const secret = await secretRepo.findOneOrFail({ where: { name: name } })
     expect(
       secret.name,
-      `Secret name in database should be "${name}", but is "${secret.name}"`
+      `Secret name in database should be "${name}", but is "${secret.name}"`,
     ).toBe(name)
     expect(
       secret.description,
-      `Secret description in database should be "${description}", but is "${secret.description}"`
+      `Secret description in database should be "${description}", but is "${secret.description}"`,
     ).toBe(description ?? null)
     expect(
       secret.creationTime,
-      `Secret creation time in database is not defined`
+      `Secret creation time in database is not defined`,
     ).toBeDefined()
     expect(
       secret.lastModificationTime,
-      `Secret last modification time in database is not defined`
+      `Secret last modification time in database is not defined`,
     ).toBeDefined()
     const crypted = await cryptoRepo.findOneOrFail({ where: { name: name } })
     expect(
       checkSecretValue(crypted.value),
-      `Encrypted secret has not the expected value`
+      `Encrypted secret has not the expected value`,
     ).toBeTruthy()
   }
 
   async function checkSecretByGet(
     name: string,
-    description?: string
+    description?: string,
   ): Promise<void> {
     console.log('========== Check secret by GET')
 
@@ -150,23 +150,23 @@ describe('Check secrets endpoints', () => {
 
     expect(
       response.body.pagination.totalCount,
-      `Expected 1 element in database, got ${response.body.pagination.totalCount}`
+      `Expected 1 element in database, got ${response.body.pagination.totalCount}`,
     ).toBe(1)
     expect(
       response.body.data[0].name,
-      `Secret name from GET should be "${name}", but is "${response.body.data[0].name}"`
+      `Secret name from GET should be "${name}", but is "${response.body.data[0].name}"`,
     ).toBe(name)
     expect(
       response.body.data[0].description,
-      `Secret description from GET should be "${description}", but is "${response.body.data[0].description}"`
+      `Secret description from GET should be "${description}", but is "${response.body.data[0].description}"`,
     ).toBe(description ?? undefined)
     expect(
       response.body.data[0].creationTime,
-      `Secret creation time from GET is not defined`
+      `Secret creation time from GET is not defined`,
     ).toBeDefined()
     expect(
       response.body.data[0].lastModificationTime,
-      `Secret last modification time from GET is not defined`
+      `Secret last modification time from GET is not defined`,
     ).toBeDefined()
   }
 
@@ -181,19 +181,19 @@ describe('Check secrets endpoints', () => {
 
     expect(
       response.body.name,
-      `Secret name from POST should be "${secretData.name}", but is "${response.body.name}"`
+      `Secret name from POST should be "${secretData.name}", but is "${response.body.name}"`,
     ).toBe(secretData.name)
     expect(
       response.body.description,
-      `Secret description from POST should be "${secretData.description}", but is "${response.body.description}"`
+      `Secret description from POST should be "${secretData.description}", but is "${response.body.description}"`,
     ).toBe(secretData.description ?? undefined)
     expect(
       response.body.creationTime,
-      `Secret creation time from POST is not defined`
+      `Secret creation time from POST is not defined`,
     ).toBeDefined()
     expect(
       response.body.lastModificationTime,
-      `Secret last modification time from POST is not defined`
+      `Secret last modification time from POST is not defined`,
     ).toBeDefined()
   }
 
@@ -208,19 +208,19 @@ describe('Check secrets endpoints', () => {
 
     expect(
       response.body.name,
-      `Secret name from PATCH should be "${secretData.name}", but is "${response.body.name}"`
+      `Secret name from PATCH should be "${secretData.name}", but is "${response.body.name}"`,
     ).toBe(name)
     expect(
       response.body.description,
-      `Secret description from PATCH should be "${secretData.description}", but is "${response.body.description}"`
+      `Secret description from PATCH should be "${secretData.description}", but is "${response.body.description}"`,
     ).toBe(secretData.description ?? undefined)
     expect(
       response.body.creationTime,
-      `Secret creation time from PATCH is not defined`
+      `Secret creation time from PATCH is not defined`,
     ).toBeDefined()
     expect(
       response.body.lastModificationTime,
-      `Secret last modification time from PATCH is not defined`
+      `Secret last modification time from PATCH is not defined`,
     ).toBeDefined()
   }
 
@@ -228,7 +228,7 @@ describe('Check secrets endpoints', () => {
     await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .delete(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/secrets/${name}`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/secrets/${name}`,
       )
       .set('Authorization', `Bearer ${apiToken}`)
       .expect(HttpStatus.OK)

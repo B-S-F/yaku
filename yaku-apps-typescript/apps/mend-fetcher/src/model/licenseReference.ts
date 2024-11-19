@@ -7,6 +7,6 @@ export class LicenseReference {
     public uuid: string,
     public type: string,
     public liabilityReference: string,
-    public information: string
+    public information: string,
   ) {}
 }

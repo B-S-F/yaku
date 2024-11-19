@@ -25,12 +25,12 @@ const yakuCliExecutable: string = `${__dirname}/../../dist/index.js`
 
 const cmdManager: CommandFacade = new CommandFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 
 const envManager: EnvironmentFacade = new EnvironmentFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 
 describe('Integration tests for releases', async () => {
@@ -39,7 +39,7 @@ describe('Integration tests for releases', async () => {
     'http',
     'localhost',
     String(port),
-    '/api/v1'
+    '/api/v1',
   )
 
   const environment: Environment = {

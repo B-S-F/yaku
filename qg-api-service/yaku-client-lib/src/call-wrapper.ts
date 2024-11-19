@@ -48,7 +48,7 @@ export type RetryConfig = {
 }
 
 function getRetryOptionsWithDefaults(
-  retryConfig?: Partial<RetryConfig>
+  retryConfig?: Partial<RetryConfig>,
 ): RetryConfig {
   retryConfig = retryConfig || {}
   // retryLimit might be 0, so we have to explicitly check for undefined here!
@@ -78,12 +78,12 @@ export function retryLimitReached(options: RetryConfig): boolean {
 
 export function calculateWaitingTime(
   response: Response,
-  options: RetryConfig
+  options: RetryConfig,
 ): number {
   let waitingTime
   if (response.headers && response.headers.get('ratelimit-reset')) {
     waitingTime = Number.parseInt(
-      response.headers.get('ratelimit-reset') || '0'
+      response.headers.get('ratelimit-reset') || '0',
     )
   } else {
     waitingTime = Math.pow(options.exponentialBase, options.currentRetryCount)
@@ -96,7 +96,7 @@ export function calculateWaitingTime(
 }
 
 export function getRateLimitFromResponse(
-  response: Response
+  response: Response,
 ): number | undefined {
   if (response.headers && response.headers.get('ratelimit-limit')) {
     return Number.parseInt(response.headers.get('ratelimit-limit') || '0')
@@ -106,7 +106,7 @@ export function getRateLimitFromResponse(
 export const executeRestCall = async (
   url: string,
   config: RequestConfig,
-  retryOptions?: Partial<RetryConfig>
+  retryOptions?: Partial<RetryConfig>,
 ): Promise<any> => {
   const yakuClientConfig = ClientConfig.getConfig()
   if (!yakuClientConfig) {
@@ -137,7 +137,7 @@ export const executeRestCall = async (
       r = await response.json()
     } catch (error) {
       throw new Error(
-        `Could not decode HTTP error response (${response.status} ${response.statusText}) into a JSON object: ${response.body}.`
+        `Could not decode HTTP error response (${response.status} ${response.statusText}) into a JSON object: ${response.body}.`,
       )
     }
     throw new RestApiRequestError({
@@ -157,17 +157,17 @@ async function retryOnRateLimitError(
   url: string,
   config: RequestConfig,
   retryOptions: Partial<RetryConfig> | undefined,
-  response: Response
+  response: Response,
 ) {
   const fullRetryOptions = getRetryOptionsWithDefaults(retryOptions)
 
   if (retryLimitReached(fullRetryOptions)) {
     throw new Error(
       `Rate limit reached! Waited for ${Math.round(
-        fullRetryOptions.passedTime
+        fullRetryOptions.passedTime,
       )}s but server still responds with ${response.status} ${
         response.statusText
-      }.`
+      }.`,
     )
   }
 
@@ -176,12 +176,12 @@ async function retryOnRateLimitError(
   if (rateLimit !== undefined) {
     console.warn(
       `Rate limit reached (${rateLimit}/s). Retrying in ${waitingTime.toFixed(
-        2
-      )} seconds.`
+        2,
+      )} seconds.`,
     )
   } else {
     console.warn(
-      `Rate limit reached. Retrying in ${waitingTime.toFixed(2)} seconds.`
+      `Rate limit reached. Retrying in ${waitingTime.toFixed(2)} seconds.`,
     )
   }
   await wait(waitingTime)

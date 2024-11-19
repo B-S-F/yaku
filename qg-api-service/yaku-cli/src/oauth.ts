@@ -50,7 +50,7 @@ export class OAuthClient {
       issuer = await Issuer.discover(`${wellKnownUrl}`)
     } catch (err) {
       throw new Error(
-        `Failed to discover OAuth issuer from well-known config URL: ${err}`
+        `Failed to discover OAuth issuer from well-known config URL: ${err}`,
       )
     }
 
@@ -67,7 +67,7 @@ export class OAuthClient {
     }
     const verifier = generateCodeVerifier()
     const challenge = base64URLEncode(
-      createHash('sha256').update(verifier).digest()
+      createHash('sha256').update(verifier).digest(),
     )
     const handle = await this.client.deviceAuthorization(
       {
@@ -75,11 +75,11 @@ export class OAuthClient {
         code_challenge_method: 'S256',
         code_challenge: challenge,
       },
-      { exchangeBody: { code_verifier: verifier } }
+      { exchangeBody: { code_verifier: verifier } },
     )
     console.log(`Copy this code '${handle.user_code}'.`)
     console.log(
-      `Then visit the following URL '${handle.verification_uri}' and enter the code to authorize the application.`
+      `Then visit the following URL '${handle.verification_uri}' and enter the code to authorize the application.`,
     )
     try {
       open(handle.verification_uri)
@@ -147,7 +147,7 @@ const base64URLEncode = (buffer: Buffer) => {
 export async function loginOAuth(
   envName: string,
   url: string,
-  additionalScopes: string[] = []
+  additionalScopes: string[] = [],
 ): Promise<Environment> {
   const oAuth2Config: OAuth2Config = {
     ...config.oAuth2Config,

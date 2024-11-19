@@ -15,7 +15,7 @@ describe('multipleLicensesAlert.mapper', () => {
     const expected = multipleLicensesAlertsModel[0]
 
     const result: MultipleLicensesAlert = MultipleLicensesAlertMap.toModel(
-      multipleLicensesAlertsDTO[0]
+      multipleLicensesAlertsDTO[0],
     )
 
     expect(result).toStrictEqual(expected)
@@ -25,7 +25,7 @@ describe('multipleLicensesAlert.mapper', () => {
     const expected = multipleLicensesAlertsDTO[1]
 
     const result: MultipleLicensesAlertDTO = MultipleLicensesAlertMap.toDTO(
-      multipleLicensesAlertsModel[1]
+      multipleLicensesAlertsModel[1],
     )
 
     expect(result).toStrictEqual(expected)

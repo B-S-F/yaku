@@ -39,7 +39,7 @@ describe('YamlValidatorService', () => {
       }
 
       await yamlValidator.validate(multerFile as Express.Multer.File, file)
-    }
+    },
   )
 
   test.each(invalidFiles)(
@@ -51,10 +51,10 @@ describe('YamlValidatorService', () => {
       }
 
       await expect(
-        yamlValidator.validate(multerFile as Express.Multer.File, file)
+        yamlValidator.validate(multerFile as Express.Multer.File, file),
       ).rejects.toEqual(
-        new BadRequestException(`No valid yaml content for file ${file}`)
+        new BadRequestException(`No valid yaml content for file ${file}`),
       )
-    }
+    },
   )
 })

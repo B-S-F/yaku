@@ -12,7 +12,7 @@ export type FileData = {
 export async function createResource<T>(
   url: string,
   body: any,
-  token: string
+  token: string,
 ): Promise<T> {
   try {
     const response: Response = await executeRestCall(url, {
@@ -35,7 +35,7 @@ export async function uploadData(
   url: string,
   body: FormData,
   token: string,
-  replace = false
+  replace = false,
 ): Promise<void> {
   await executeRestCall(url, {
     method: replace ? 'PATCH' : 'POST',
@@ -47,7 +47,7 @@ export async function uploadData(
 export async function updateResource<T>(
   url: string,
   body: any,
-  token: string
+  token: string,
 ): Promise<T> {
   const response = await executeRestCall(url, {
     method: 'PATCH',
@@ -64,7 +64,7 @@ export async function updateResource<T>(
 export async function transformData(
   url: string,
   body: any,
-  token: string
+  token: string,
 ): Promise<FileData> {
   const response = await executeRestCall(url, {
     method: 'PATCH',
@@ -90,7 +90,7 @@ export async function getResource<T>(url: string, token: string): Promise<T> {
 
 export async function listAllResources<T>(
   url: string,
-  token: string
+  token: string,
 ): Promise<T[]> {
   let next = url
   const items: T[] = []
@@ -116,7 +116,7 @@ export async function listAllResources<T>(
 
 export async function getResourceBinaryData(
   url: string,
-  token: string
+  token: string,
 ): Promise<FileData> {
   const response = await executeRestCall(url, {
     method: 'GET',
@@ -128,7 +128,7 @@ export async function getResourceBinaryData(
 
 export async function deleteResource(
   url: string,
-  token: string
+  token: string,
 ): Promise<void> {
   await executeRestCall(url, {
     method: 'DELETE',

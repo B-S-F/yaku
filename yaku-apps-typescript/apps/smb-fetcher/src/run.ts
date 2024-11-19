@@ -30,7 +30,7 @@ class FetchError extends AppError {
 
 const validateFetcherConfig = async (filePath: string) => {
   const config = await YAML.parse(
-    await fs.readFile(filePath, { encoding: 'utf-8' })
+    await fs.readFile(filePath, { encoding: 'utf-8' }),
   )
 
   return configSchema().parse(config)
@@ -57,11 +57,11 @@ const configSchema = () => {
 }
 
 export const retry = async <T>(
-  fn: { (smbPath: string, smbClient: SMB2): Promise<T> },
+  fn: (smbPath: string, smbClient: SMB2) => Promise<T>,
   smbPath: string,
   smbClient: SMB2,
   retries = 5,
-  delay = 100
+  delay = 100,
 ): Promise<T> => {
   const logger = GetLogger()
   try {
@@ -85,7 +85,7 @@ const outputs: Output[] = []
 const fetchFile = async (
   destPath: string,
   smbPath: string,
-  smbClient: SMB2
+  smbClient: SMB2,
 ) => {
   const logger = GetLogger()
 
@@ -110,7 +110,7 @@ const fetchFile = async (
 const traversePath = async (
   destPath: string,
   smbPath: string,
-  smbClient: SMB2
+  smbClient: SMB2,
 ) => {
   const smbstats: IStats = await smbClient.stat(smbPath)
   if (smbstats.isDirectory()) {
@@ -127,13 +127,13 @@ const traversePath = async (
         const newsmbPath = `${smbPath}\\${item.name}`
 
         await traversePath(newDestPath, newsmbPath, smbClient)
-      })
+      }),
     )
   } else {
     await retry(
       async () => fetchFile(destPath, smbPath, smbClient),
       smbPath,
-      smbClient
+      smbClient,
     ).catch((error: any) => {
       throw error
     })

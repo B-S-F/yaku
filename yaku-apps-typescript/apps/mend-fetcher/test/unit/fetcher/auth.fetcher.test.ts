@@ -43,7 +43,7 @@ describe('auth.fetcher', () => {
             sessionStartTime: now,
           },
         },
-      })
+      }),
     )
     const expected = new Login(
       `${env.email.split('@')[0]}-userUuid`,
@@ -54,14 +54,14 @@ describe('auth.fetcher', () => {
       1800000,
       organizationData.name,
       organizationData.uuid,
-      now
+      now,
     )
 
     const result: Login = await auth(
       env.apiUrl,
       env.email,
       env.orgToken,
-      env.userKey
+      env.userKey,
     )
 
     expect(result).toStrictEqual(expected)
@@ -82,7 +82,7 @@ describe('auth.fetcher', () => {
         request: 'Request data',
         message: 'Request error',
         isAxiosError: true,
-      } as AxiosError)
+      } as AxiosError),
     )
 
     const result = auth(env.apiUrl, env.email, env.orgToken, env.userKey)
@@ -100,14 +100,14 @@ describe('auth.fetcher', () => {
             data: { error: httpStatus.message },
           },
           isAxiosError: true,
-        } as AxiosError)
+        } as AxiosError),
       )
 
       const result = auth(env.apiUrl, env.email, env.orgToken, env.userKey)
       await expect(result).rejects.toThrowError(
-        `Response status code ${httpStatus.code}: ${httpStatus.message}`
+        `Response status code ${httpStatus.code}: ${httpStatus.message}`,
       )
-    }
+    },
   )
 
   it.each(HTTPResponseStatusCodes)(
@@ -121,13 +121,13 @@ describe('auth.fetcher', () => {
             data: { retVal: httpStatus.message, supportToken: 'boo!' },
           },
           isAxiosError: true,
-        } as AxiosError)
+        } as AxiosError),
       )
 
       const result = auth(env.apiUrl, env.email, env.orgToken, env.userKey)
       await expect(result).rejects.toThrowError(
-        `Response status code ${httpStatus.code}: ${httpStatus.message}`
+        `Response status code ${httpStatus.code}: ${httpStatus.message}`,
       )
-    }
+    },
   )
 })

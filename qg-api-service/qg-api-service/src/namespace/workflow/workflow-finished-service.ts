@@ -50,7 +50,7 @@ Injectable()
 export class WorkflowFinishConfig {
   constructor(
     readonly resultDelay: number,
-    private readonly skipCheckArgoArchive: boolean
+    private readonly skipCheckArgoArchive: boolean,
   ) {}
 
   shouldSkipCheckArgoArchive(): boolean {
@@ -79,13 +79,13 @@ export class WorkflowFinishedService {
     @Inject(FindingService) private readonly findingsService: FindingService,
     @Inject(WorkflowFinishConfig) private readonly config: WorkflowFinishConfig,
     @InjectRepository(Run) private readonly runRepository: Repository<Run>,
-    @Inject(RunAuditService) private readonly runAuditService: RunAuditService
+    @Inject(RunAuditService) private readonly runAuditService: RunAuditService,
   ) {}
 
   async checkWorkflowHasFinished(
     workflowId: string,
     workflowName: string,
-    workflowNamespace: string
+    workflowNamespace: string,
   ): Promise<WorkflowStatus> {
     if (!workflowId || !workflowName || !workflowNamespace) {
       throw new Error('Workflow reference is not complete')
@@ -95,10 +95,10 @@ export class WorkflowFinishedService {
       const requestStartTime = Date.now()
       const status = await this.argoService.getWorkflowStatus(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
       this.logger.debug(
-        `Runtime for getWorkflowStatus: ${Date.now() - requestStartTime}ms`
+        `Runtime for getWorkflowStatus: ${Date.now() - requestStartTime}ms`,
       )
       if (status) {
         if (
@@ -120,7 +120,7 @@ export class WorkflowFinishedService {
 
     if (this.config.shouldSkipCheckArgoArchive()) {
       this.logger.warn(
-        `Argo workflow not present in k8s - potential bug, workflow: ${workflowNamespace}:${workflowName}, id: ${workflowId}`
+        `Argo workflow not present in k8s - potential bug, workflow: ${workflowNamespace}:${workflowName}, id: ${workflowId}`,
       )
       return { hasFinished: false }
     }
@@ -132,7 +132,7 @@ export class WorkflowFinishedService {
       this.logger.debug(
         `Runtime for getArchivedWorkflowStatus: ${
           Date.now() - requestStartTime
-        }ms`
+        }ms`,
       )
       if (status) {
         return {
@@ -145,14 +145,14 @@ export class WorkflowFinishedService {
     }
 
     this.logger.debug(
-      `No workflow information for workflow ${workflowNamespace}:${workflowName}`
+      `No workflow information for workflow ${workflowNamespace}:${workflowName}`,
     )
     return { hasFinished: false }
   }
 
   async updateWorkflowData(
     workflowStatus: WorkflowStatus,
-    run: Run
+    run: Run,
   ): Promise<Run> {
     if (this.processedRunList.includes(run.globalId)) {
       this.logger.debug(`Run ${run.namespace.id}:${run.id} is processed`)
@@ -185,13 +185,13 @@ export class WorkflowFinishedService {
       result = await this.provideResult(run.storagePath)
       if (!result) {
         this.logger.debug(
-          `Results for run ${run.namespace.id}:${run.id} not found in second try, wait and retrieve again`
+          `Results for run ${run.namespace.id}:${run.id} not found in second try, wait and retrieve again`,
         )
         await setTimeout(3 * this.config.resultDelay)
         result = await this.provideResult(run.storagePath)
         if (!result) {
           this.logger.debug(
-            `Results for run ${run.namespace.id}:${run.id} not found in third and last try as well`
+            `Results for run ${run.namespace.id}:${run.id} not found in third and last try as well`,
           )
         }
       }
@@ -210,7 +210,7 @@ export class WorkflowFinishedService {
       if (log.main.length > 0) {
         run.log = this.hideSecrets(
           log.main.map((line) => line.message),
-          await this.secretStorage.getSecrets(run.namespace.id)
+          await this.secretStorage.getSecrets(run.namespace.id),
         )
       } else {
         run.log = ['Logs not available, but result exists']
@@ -221,11 +221,11 @@ export class WorkflowFinishedService {
           const runData: FindingsRun = JSON.parse(messageFormat.run)
           await this.findingsService.processFindings(
             runData,
-            messageFormat.result
+            messageFormat.result,
           )
         } catch (error) {
           this.logger.error(
-            `Findings of the run: ${run.id} will not be propagated due to ${error.message}`
+            `Findings of the run: ${run.id} will not be propagated due to ${error.message}`,
           )
         }
       }
@@ -260,7 +260,7 @@ export class WorkflowFinishedService {
         run,
         AuditActor.convertFrom(SYSTEM_REQUEST_USER),
         Action.UPDATE,
-        queryRunner.manager
+        queryRunner.manager,
       )
       await queryRunner.commitTransaction()
       await queryRunner.release()
@@ -297,14 +297,14 @@ export class WorkflowFinishedService {
         overallResult: run.overallResult,
       },
       null,
-      2
+      2,
     )
     return { run: runData, result: result }
   }
 
   private async retrieveLogs(
     workflowName: string,
-    workflowNamespace: string
+    workflowNamespace: string,
   ): Promise<PodLogs> {
     const argoLogs = await this.getArgoLogs(workflowName, workflowNamespace)
     if (argoLogs.main.length > 0) {
@@ -338,12 +338,12 @@ export class WorkflowFinishedService {
 
     errorMessages.push('==========')
     errorMessages.push(
-      'Errors identified during initialization or shutdown of workflow pod:'
+      'Errors identified during initialization or shutdown of workflow pod:',
     )
 
     const identifyKnownError = (message: string) => {
       const knownKey = Object.keys(knownErrors).filter((known) =>
-        message.includes(known)
+        message.includes(known),
       )
       return knownErrors[knownKey[0]] ?? undefined
     }
@@ -371,22 +371,22 @@ export class WorkflowFinishedService {
 
   private async getArgoLogs(
     workflowName: string,
-    workflowNamespace: string
+    workflowNamespace: string,
   ): Promise<PodLogs> {
     const main = await this.getArgoLogData(
       workflowName,
       workflowNamespace,
-      'main'
+      'main',
     )
     const init = await this.getArgoLogData(
       workflowName,
       workflowNamespace,
-      'init'
+      'init',
     )
     const wait = await this.getArgoLogData(
       workflowName,
       workflowNamespace,
-      'wait'
+      'wait',
     )
     return { init, main, wait }
   }
@@ -394,16 +394,16 @@ export class WorkflowFinishedService {
   private async getArgoLogData(
     workflowName: string,
     workflowNamespace: string,
-    container: any
+    container: any,
   ): Promise<LogEntry[]> {
     const requestStartTime = Date.now()
     const logData = await this.argoService.getWorkflowLogs(
       workflowName,
       workflowNamespace,
-      container
+      container,
     )
     this.logger.debug(
-      `Runtime for getWorkflowLogs: ${Date.now() - requestStartTime}ms`
+      `Runtime for getWorkflowLogs: ${Date.now() - requestStartTime}ms`,
     )
 
     if (!logData || logData.length === 0) {
@@ -414,7 +414,7 @@ export class WorkflowFinishedService {
       .split('\n')
       .filter(
         (line) =>
-          line.startsWith('{"result":{"content":') && line.includes('podName')
+          line.startsWith('{"result":{"content":') && line.includes('podName'),
       )
       .map((line) => {
         const indexOfEnd = line.indexOf('podName') - 3
@@ -433,16 +433,16 @@ export class WorkflowFinishedService {
   }
 
   private async provideResult(
-    storagePath: string
+    storagePath: string,
   ): Promise<string | undefined> {
     const evidenceExists = await this.blobStore.fileExists(
       storagePath,
-      EVIDENCEFILE
+      EVIDENCEFILE,
     )
     if (evidenceExists) {
       try {
         const result = streamToString(
-          await this.blobStore.downloadResult(storagePath, RESULTFILE)
+          await this.blobStore.downloadResult(storagePath, RESULTFILE),
         )
         return result
       } catch (err) {

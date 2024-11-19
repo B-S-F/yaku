@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export const getDefenderForCloudAlerts = async (
   token: string,
-  subscriptionId: string
+  subscriptionId: string,
 ) => {
   const baseUrl =
     process.env.IS_INTEGRATION_TEST === 'true'
@@ -42,7 +42,7 @@ export const getDefenderForCloudAlerts = async (
     console.log('Error response: ')
     console.log(error.response.data)
     throw new Error(
-      `Request for Azure alerts does not have status code 200. Status code: ${error.response.status}`
+      `Request for Azure alerts does not have status code 200. Status code: ${error.response.status}`,
     )
   }
   return alerts

@@ -11,7 +11,7 @@ import {
 import { projectVitalsData } from './data'
 
 export const getFAILEDEmptyFixture = async (
-  port: number
+  port: number,
 ): Promise<MockServerOptions> => {
   return {
     port: port,
@@ -27,7 +27,7 @@ export const getFAILEDEmptyFixture = async (
 }
 
 export const getFAILEDLoginFixture = async (
-  port: number
+  port: number,
 ): Promise<MockServerOptions> => {
   return {
     port: port,
@@ -52,7 +52,7 @@ export const getFAILEDProjectFixture = async (
   options: {
     org: string
     project: string
-  }
+  },
 ): Promise<MockServerOptions> => {
   return {
     port: port,
@@ -100,7 +100,7 @@ export const getFAILEDRandomApiFailureFixture = async (
   port: number,
   successResponseStatus: number,
   failedResponseStatus: number,
-  options: { org: string; project: string }
+  options: { org: string; project: string },
 ) => {
   const responses = {
     ['/api/v2.0/login']: {

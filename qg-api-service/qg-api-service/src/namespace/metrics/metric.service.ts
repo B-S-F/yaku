@@ -32,12 +32,12 @@ export class MetricService {
         },
       },
     }),
-    {}
+    {},
   )
 
   constructor(
     @InjectRepository(Metric)
-    private repository: Repository<Metric>
+    private repository: Repository<Metric>,
   ) {}
 
   async create(metricDTO: CreateMetricDTO): Promise<GetMetricDTO> {
@@ -51,7 +51,7 @@ export class MetricService {
   async getNrOfFindings(
     namespaceId: number,
     status: StatusType,
-    paginateQueryOptions?: ListQueryHandler
+    paginateQueryOptions?: ListQueryHandler,
   ) {
     const rawQuery = `WITH cte_findings AS (
       SELECT
@@ -92,7 +92,7 @@ export class MetricService {
         status,
         (paginateQueryOptions.page - 1) * paginateQueryOptions.items,
         paginateQueryOptions.items,
-      ]
+      ],
     )
     const itemCount: number = (
       await this.repository.query(rawQuery, [
@@ -109,7 +109,7 @@ export class MetricService {
     namespaceId: number,
     status: StatusType,
     configId: number,
-    paginateQueryOptions?: ListQueryHandler
+    paginateQueryOptions?: ListQueryHandler,
   ) {
     const rawQuery = `WITH cte_findings AS (
       SELECT
@@ -152,7 +152,7 @@ export class MetricService {
         configId,
         (paginateQueryOptions.page - 1) * paginateQueryOptions.items,
         paginateQueryOptions.items,
-      ]
+      ],
     )
     const itemCount: number = (
       await this.repository.query(rawQuery, [
@@ -169,7 +169,7 @@ export class MetricService {
   async getLatestRunNrOfFindings(
     namespaceId: number,
     status: StatusType,
-    paginateQueryOptions?: ListQueryHandler
+    paginateQueryOptions?: ListQueryHandler,
   ) {
     const rawQuery = `WITH cte_findings AS (
       SELECT
@@ -215,7 +215,7 @@ export class MetricService {
         status,
         (paginateQueryOptions.page - 1) * paginateQueryOptions.items,
         paginateQueryOptions.items,
-      ]
+      ],
     )
     const itemCount: number = (
       await this.repository.query(rawQuery, [
@@ -233,7 +233,7 @@ export class MetricService {
     status: StatusType,
     startRange: string,
     endRange: string,
-    paginateQueryOptions?: ListQueryHandler
+    paginateQueryOptions?: ListQueryHandler,
   ) {
     let startRangeDate: string
     let endRangeDate: string
@@ -286,7 +286,7 @@ export class MetricService {
         endRangeDate,
         (paginateQueryOptions.page - 1) * paginateQueryOptions.items,
         paginateQueryOptions.items,
-      ]
+      ],
     )
     const itemCount: number = (
       await this.repository.query(rawQuery, [
@@ -307,7 +307,7 @@ export class MetricService {
     startRange: string,
     endRange: string,
     configId: number,
-    paginateQueryOptions?: ListQueryHandler
+    paginateQueryOptions?: ListQueryHandler,
   ) {
     let startRangeDate: string
     let endRangeDate: string
@@ -362,7 +362,7 @@ export class MetricService {
         endRangeDate,
         (paginateQueryOptions.page - 1) * paginateQueryOptions.items,
         paginateQueryOptions.items,
-      ]
+      ],
     )
     const itemCount: number = (
       await this.repository.query(rawQuery, [
@@ -383,7 +383,7 @@ export class MetricService {
     status: StatusType,
     startRange: string,
     endRange: string,
-    paginateQueryOptions?: ListQueryHandler
+    paginateQueryOptions?: ListQueryHandler,
   ) {
     let startRangeDate: string
     let endRangeDate: string
@@ -449,7 +449,7 @@ export class MetricService {
         endRangeDate,
         (paginateQueryOptions.page - 1) * paginateQueryOptions.items,
         paginateQueryOptions.items,
-      ]
+      ],
     )
     const itemCount: number = (
       await this.repository.query(rawQuery, [
@@ -467,7 +467,7 @@ export class MetricService {
   async updateFindingMetric(
     namespaceId: number,
     findingId: string,
-    updateFindingMetricDTO: UpdateFindingDTO
+    updateFindingMetricDTO: UpdateFindingDTO,
   ) {
     const metric: Metric = new Metric()
     metric.metric = {
@@ -501,7 +501,7 @@ export class MetricService {
     if (!updateFindingMetric.affected) {
       this.logger.debug(`Update of metric failed`, Metric)
       throw new NotFoundException(
-        `Metric of Finding with id: ${findingId} not found in run ${updateFindingMetricDTO.runId}`
+        `Metric of Finding with id: ${findingId} not found in run ${updateFindingMetricDTO.runId}`,
       )
     }
 

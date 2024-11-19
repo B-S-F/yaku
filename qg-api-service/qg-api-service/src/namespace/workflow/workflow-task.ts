@@ -27,14 +27,14 @@ export class FinishedWorkflowDetectionTask {
         },
       },
     }),
-    {}
+    {},
   )
   private isRunning = false
 
   constructor(
     @Inject(WorkflowFinishedService)
     private readonly workflowService: WorkflowFinishedService,
-    @InjectRepository(Run) private readonly repository: Repository<Run>
+    @InjectRepository(Run) private readonly repository: Repository<Run>,
   ) {}
 
   @Interval('finish_workflow', (60 / CHECKS_PER_MINUTE) * 1000)
@@ -84,7 +84,7 @@ export class FinishedWorkflowDetectionTask {
           await this.workflowService.checkWorkflowHasFinished(
             run.argoId,
             run.argoName,
-            run.argoNamespace
+            run.argoNamespace,
           )
         if (workflowInfo?.hasFinished) {
           await this.workflowService.updateWorkflowData(workflowInfo, run)

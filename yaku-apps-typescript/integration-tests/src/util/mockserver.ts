@@ -92,7 +92,7 @@ export class MockServer {
   private mockEndpoint(
     endpoint: string,
     method: HttpMethod,
-    mockResponse: MockResponse
+    mockResponse: MockResponse,
   ): void {
     const mockRequestHandler = async (req: Request, res: Response) => {
       this.requests[endpoint] ??= {}
@@ -109,7 +109,7 @@ export class MockServer {
           mockResponse[numOfReceivedRequests - 1]
         if (this.options.delay) {
           await new Promise((resolve) =>
-            setTimeout(resolve, this.options.delay)
+            setTimeout(resolve, this.options.delay),
           )
         }
         res.status(currentRequest.responseStatus)
@@ -118,7 +118,7 @@ export class MockServer {
       } else {
         if (this.options.delay) {
           await new Promise((resolve) =>
-            setTimeout(resolve, this.options.delay)
+            setTimeout(resolve, this.options.delay),
           )
         }
         res.status(mockResponse.responseStatus)
@@ -132,7 +132,7 @@ export class MockServer {
   private start(): void {
     this.app.use(express.json())
     for (const [endpoint, mockResponses] of Object.entries(
-      this.options.responses
+      this.options.responses,
     )) {
       for (const [method, mockResponse] of Object.entries(mockResponses)) {
         this.mockEndpoint(endpoint, method as HttpMethod, mockResponse)
@@ -146,7 +146,7 @@ export class MockServer {
             key: fs.readFileSync(path.join(__dirname, 'key.pem')),
             cert: fs.readFileSync(MOCK_SERVER_CERT_PATH),
           },
-          this.app
+          this.app,
         )
         .listen(this.options.port ?? 8080)
     } else {

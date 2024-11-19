@@ -43,7 +43,7 @@ export async function renderHtmlFiles(fileList?: string[]) {
   const result = await YAML.parse(
     await readFile(path.join(resultPath, 'qg-result.yaml'), {
       encoding: 'utf8',
-    })
+    }),
   )
   const resultWithUtils = { ...result, utils }
   const renderFile = FileRenderer(resultWithUtils, resultPath)

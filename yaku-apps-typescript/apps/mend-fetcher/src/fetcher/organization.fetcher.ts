@@ -13,7 +13,7 @@ import { handleAxiosError, UnexpectedDataError } from './errors.fetcher.js'
 export const getOrganizationDTO = async (
   apiUrl: string,
   config: { orgToken: string },
-  auth: Authenticator
+  auth: Authenticator,
 ): Promise<OrganizationDTO> => {
   const url = `/api/v2.0/orgs/${config.orgToken}`
   const login: Login = await auth.authenticate()
@@ -38,13 +38,13 @@ export const getOrganizationDTO = async (
     }
     const organizationDTO = new OrganizationDTO(
       response.data.retVal.uuid,
-      response.data.retVal.name
+      response.data.retVal.name,
     )
 
     return organizationDTO
   } catch (error: any) {
     logger.error(
-      `Getting Organization information from ${requestConfig.baseURL}${url} has failed`
+      `Getting Organization information from ${requestConfig.baseURL}${url} has failed`,
     )
     if (axios.isAxiosError(error)) {
       handleAxiosError(error)

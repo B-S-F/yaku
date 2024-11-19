@@ -28,7 +28,7 @@ describe('errors.fetcher', () => {
         resolve(handleAxiosError(responseError as unknown as AxiosError))
       })
       await expect(result).rejects.toThrowError(
-        `Response status code ${responseError.response.status}: ${responseError.response?.message}`
+        `Response status code ${responseError.response.status}: ${responseError.response?.message}`,
       )
     })
 
@@ -44,7 +44,7 @@ describe('errors.fetcher', () => {
       })
 
       await expect(result).rejects.toThrowError(
-        `RequestError: ${responseError.message}`
+        `RequestError: ${responseError.message}`,
       )
     })
 
@@ -59,7 +59,7 @@ describe('errors.fetcher', () => {
       })
 
       await expect(result).rejects.toThrowError(
-        `Error ${unexpectedError.message}`
+        `Error ${unexpectedError.message}`,
       )
     })
   })
@@ -82,7 +82,7 @@ describe('errors.fetcher', () => {
       })
 
       await expect(result).rejects.toThrowError(
-        `Response status code ${responseError.status}: ${responseError.message}`
+        `Response status code ${responseError.status}: ${responseError.message}`,
       )
     })
 
@@ -99,7 +99,7 @@ describe('errors.fetcher', () => {
       })
 
       await expect(result).rejects.toThrowError(
-        `Response status code ${responseError.response?.status}: ${responseError.response?.statusText}`
+        `Response status code ${responseError.response?.status}: ${responseError.response?.statusText}`,
       )
     })
 
@@ -118,7 +118,7 @@ describe('errors.fetcher', () => {
       })
 
       await expect(result).rejects.toThrowError(
-        `Response status code ${responseError.response.status}: ${responseError.response.data.error}`
+        `Response status code ${responseError.response.status}: ${responseError.response.data.error}`,
       )
     })
 
@@ -137,7 +137,7 @@ describe('errors.fetcher', () => {
       })
 
       await expect(result).rejects.toThrowError(
-        `Response status code ${responseError.response.status}: ${responseError.response.data.retVal}`
+        `Response status code ${responseError.response.status}: ${responseError.response.data.retVal}`,
       )
     })
 
@@ -159,7 +159,7 @@ describe('errors.fetcher', () => {
       })
 
       await expect(result).rejects.toThrowError(
-        `Response status code ${responseError.response.status}: ${responseError.response.data.retVal.errorMessage}`
+        `Response status code ${responseError.response.status}: ${responseError.response.data.retVal.errorMessage}`,
       )
     })
   })

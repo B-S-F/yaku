@@ -20,7 +20,7 @@ describe('readJson', () => {
   })
   it('should read and parse a JSON file', async () => {
     vi.mocked(readFile).mockResolvedValueOnce(
-      '{ "name": "John Doe", "age": 30 }'
+      '{ "name": "John Doe", "age": 30 }',
     )
 
     const data = await readJson('./example.json')
@@ -30,7 +30,7 @@ describe('readJson', () => {
 
   it('should replace white spaces in keys with underscores', async () => {
     vi.mocked(readFile).mockResolvedValueOnce(
-      '{ "first name": "John", "last name": "Doe", "age": 30 }'
+      '{ "first name": "John", "last name": "Doe", "age": 30 }',
     )
 
     const data = await readJson('./example_with_spaces.json')
@@ -42,7 +42,7 @@ describe('readJson', () => {
     vi.mocked(readFile).mockResolvedValueOnce('invalid json')
 
     await expect(readJson('./invalid.json')).rejects.toThrow(
-      'File ./invalid.json could not be parsed, failed with error: SyntaxError: Unexpected token i in JSON at position 0'
+      'File ./invalid.json could not be parsed, failed with error: SyntaxError: Unexpected token i in JSON at position 0',
     )
   })
 
@@ -51,7 +51,7 @@ describe('readJson', () => {
     vi.mocked(readFile).mockRejectedValueOnce(error)
 
     await expect(readJson('./non_existing_file.json')).rejects.toThrow(
-      'File ./non_existing_file.json does not exist'
+      'File ./non_existing_file.json does not exist',
     )
   })
 })

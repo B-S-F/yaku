@@ -73,20 +73,20 @@ describe('Fetch Commits Metadata from Github', () => {
     expect(result.exitCode).toEqual(0)
     expect(result.stdout).toHaveLength(6)
     expect(result.stdout[0]).toEqual(
-      'Fetched metadata about starting commit at 2023-03-06T14:11:29Z'
+      'Fetched metadata about starting commit at 2023-03-06T14:11:29Z',
     )
     expect(result.stdout[1]).toEqual(
-      'Fetched metadata about ending commit at 2023-07-12T10:46:50Z'
+      'Fetched metadata about ending commit at 2023-07-12T10:46:50Z',
     )
     expect(result.stdout[2]).toEqual(
-      'Fetched 2 lines added and 98 lines removed'
+      'Fetched 2 lines added and 98 lines removed',
     )
     expect(result.stdout[3]).toEqual('Fetched metadata about 5 commits')
     expect(result.stdout[4]).toEqual(
-      'Fetch from https://localhost:8080 was successful with config {"org":"aquatest","repo":"github-fetcher-test-repo","resource":"metadata-and-diff","filter":{"startHash":"afeaebf412c6d0b865a36cfdec37fdb46c0fab63","endHash":"8036cf75f4b7365efea76cbd716ef12d352d7d29"},"filePath":"apps/git-fetcher/src/fetchers/git-fetcher.ts"}'
+      'Fetch from https://localhost:8080 was successful with config {"org":"aquatest","repo":"github-fetcher-test-repo","resource":"metadata-and-diff","filter":{"startHash":"afeaebf412c6d0b865a36cfdec37fdb46c0fab63","endHash":"8036cf75f4b7365efea76cbd716ef12d352d7d29"},"filePath":"apps/git-fetcher/src/fetchers/git-fetcher.ts"}',
     )
     expect(result.stdout[5]).toEqual(
-      '{"output":{"git-fetcher-result":"git-fetcher-data.json"}}'
+      '{"output":{"git-fetcher-result":"git-fetcher-data.json"}}',
     )
     expect(result.stderr).toHaveLength(0)
 
@@ -95,7 +95,7 @@ describe('Fetch Commits Metadata from Github', () => {
 
     let requests: ReceivedRequest[] = mockServer.getRequests(
       githubStartCommitEndpoint,
-      'get'
+      'get',
     )
     expect(requests).toHaveLength(1)
     verifyHeaders(requests[0].headers)
@@ -261,7 +261,7 @@ describe('Fetch Commits Metadata from Github', () => {
     // gitfetcher should throw error
     expect(result.exitCode).toEqual(1)
     expect(result.stderr).toContain(
-      'Error: Repository not found. Status code: 404'
+      'Error: Repository not found. Status code: 404',
     )
 
     // gitfetcher should not write an output file

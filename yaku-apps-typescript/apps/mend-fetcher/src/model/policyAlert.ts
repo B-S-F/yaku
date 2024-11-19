@@ -28,6 +28,6 @@ export class PolicyAlert implements IAlert {
       uuid: string
       name: string
     },
-    public policyName: string
+    public policyName: string,
   ) {}
 }

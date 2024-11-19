@@ -31,7 +31,7 @@ describe('VersionService', () => {
             new WorkflowImageConfig(
               'image',
               { v1: '1.0.0', v2: '1.2.0' },
-              'always'
+              'always',
             ),
         },
       ],

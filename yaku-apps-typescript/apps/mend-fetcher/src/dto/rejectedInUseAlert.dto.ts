@@ -28,6 +28,6 @@ export class RejectedInUseAlertDTO implements IAlertDTO {
       path: string
       productUuid: string
     },
-    public description: string
+    public description: string,
   ) {}
 }

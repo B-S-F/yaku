@@ -57,7 +57,7 @@ describe('WorkItem', () => {
       headers,
       axios,
       configData,
-      apiDetails
+      apiDetails,
     )
     const result = await workItemObject.queryReferences()
     expect(mockedAxiosPost).toHaveBeenCalledWith(
@@ -71,7 +71,7 @@ describe('WorkItem', () => {
           'Content-Type': 'application/json',
           Authorization: 'Basic OlRlc3Q=',
         },
-      }
+      },
     )
     expect(result).toEqual([
       { id: 1, url: 'https://dev.azure.com/ORG/PROJECT/_apis/wit/workitems/1' },
@@ -99,7 +99,7 @@ describe('WorkItem', () => {
       headers,
       axios,
       configData,
-      apiDetails
+      apiDetails,
     )
     const result = await workItemObject.queryReferences()
     expect(result).toEqual([])
@@ -126,11 +126,11 @@ describe('WorkItem', () => {
       headers,
       axios,
       configData,
-      apiDetails
+      apiDetails,
     )
 
     await expect(workItemObject.queryReferences()).rejects.toThrowError(
-      'Server returned status 203 and some HTML code instead of JSON. It could be that your API token is wrong!'
+      'Server returned status 203 and some HTML code instead of JSON. It could be that your API token is wrong!',
     )
   })
 
@@ -153,11 +153,11 @@ describe('WorkItem', () => {
       headers,
       axios,
       configData,
-      apiDetails
+      apiDetails,
     )
 
     await expect(workItemObject.queryReferences()).rejects.toThrowError(
-      'Request failed with status code 400 Bad request. Please check your WIQL query for errors.'
+      'Request failed with status code 400 Bad request. Please check your WIQL query for errors.',
     )
   })
 
@@ -180,11 +180,11 @@ describe('WorkItem', () => {
       headers,
       axios,
       configData,
-      apiDetails
+      apiDetails,
     )
 
     await expect(workItemObject.queryReferences()).rejects.toThrowError(
-      'Request failed with status code 404 Not found'
+      'Request failed with status code 404 Not found',
     )
   })
 
@@ -207,11 +207,11 @@ describe('WorkItem', () => {
       headers,
       axios,
       configData,
-      apiDetails
+      apiDetails,
     )
 
     await expect(workItemObject.queryReferences()).rejects.toThrowError(
-      customError
+      customError,
     )
   })
 })

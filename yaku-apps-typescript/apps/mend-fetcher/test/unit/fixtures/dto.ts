@@ -31,7 +31,7 @@ import { VulnerabilityFix } from '../../../src/model/vulnerabilityFix'
 
 export const organizationDTO = new OrganizationDTO(
   organizationData.uuid,
-  organizationData.name
+  organizationData.name,
 )
 
 export const projectDTO = new ProjectDTO(
@@ -39,7 +39,7 @@ export const projectDTO = new ProjectDTO(
   projectData.name,
   projectData.path,
   projectData.productName,
-  projectData.productUuid
+  projectData.productUuid,
 )
 
 export const projectVitalsDTO = new ProjectVitalsDTO(
@@ -51,7 +51,7 @@ export const projectVitalsDTO = new ProjectVitalsDTO(
   projectVitalsData.projectCreationDate,
   projectVitalsData.pluginName,
   projectVitalsData.pluginVersion,
-  projectVitalsData.libraryCount
+  projectVitalsData.libraryCount,
 )
 
 export const policyAlertsDTO = [
@@ -62,7 +62,7 @@ export const policyAlertsDTO = [
     policyAlertsData[0].component,
     policyAlertsData[0].alertInfo,
     policyAlertsData[0].project,
-    policyAlertsData[0].policyName
+    policyAlertsData[0].policyName,
   ),
   new PolicyAlertDTO(
     policyAlertsData[1].uuid,
@@ -71,7 +71,7 @@ export const policyAlertsDTO = [
     policyAlertsData[1].component,
     policyAlertsData[1].alertInfo,
     policyAlertsData[1].project,
-    policyAlertsData[1].policyName
+    policyAlertsData[1].policyName,
   ),
 ]
 
@@ -84,7 +84,7 @@ export const newVersionsAlertsDTO = [
     newVersionsAlertsData[0].alertInfo,
     newVersionsAlertsData[0].project,
     newVersionsAlertsData[0].availableVersion,
-    newVersionsAlertsData[0].availableVersionType
+    newVersionsAlertsData[0].availableVersionType,
   ),
   new NewVersionsAlertDTO(
     newVersionsAlertsData[1].uuid,
@@ -94,7 +94,7 @@ export const newVersionsAlertsDTO = [
     newVersionsAlertsData[1].alertInfo,
     newVersionsAlertsData[1].project,
     newVersionsAlertsData[1].availableVersion,
-    newVersionsAlertsData[1].availableVersionType
+    newVersionsAlertsData[1].availableVersionType,
   ),
 ]
 
@@ -107,7 +107,7 @@ export const multipleLicensesAlertsDTO = [
     multipleLicensesAlertsData[0].alertInfo,
     multipleLicensesAlertsData[0].project,
     multipleLicensesAlertsData[0].numberOfLicenses,
-    multipleLicensesAlertsData[0].licenses
+    multipleLicensesAlertsData[0].licenses,
   ),
   new MultipleLicensesAlertDTO(
     multipleLicensesAlertsData[1].uuid,
@@ -117,7 +117,7 @@ export const multipleLicensesAlertsDTO = [
     multipleLicensesAlertsData[1].alertInfo,
     multipleLicensesAlertsData[1].project,
     multipleLicensesAlertsData[1].numberOfLicenses,
-    multipleLicensesAlertsData[1].licenses
+    multipleLicensesAlertsData[1].licenses,
   ),
 ]
 
@@ -129,7 +129,7 @@ export const rejectedInUseAlertsDTO = [
     rejectedInUseAlertsData[0].component,
     rejectedInUseAlertsData[0].alertInfo,
     rejectedInUseAlertsData[0].project,
-    rejectedInUseAlertsData[0].description
+    rejectedInUseAlertsData[0].description,
   ),
   new RejectedInUseAlertDTO(
     rejectedInUseAlertsData[1].uuid,
@@ -138,7 +138,7 @@ export const rejectedInUseAlertsDTO = [
     rejectedInUseAlertsData[1].component,
     rejectedInUseAlertsData[1].alertInfo,
     rejectedInUseAlertsData[1].project,
-    rejectedInUseAlertsData[1].description
+    rejectedInUseAlertsData[1].description,
   ),
 ]
 
@@ -153,7 +153,7 @@ export const securityAlertsDTO = [
     securityAlertsData[0].product,
     securityAlertsData[0].vulnerability,
     securityAlertsData[0].topFix,
-    securityAlertsData[0].effective
+    securityAlertsData[0].effective,
   ),
   new SecurityAlertDTO(
     securityAlertsData[1].uuid,
@@ -165,7 +165,7 @@ export const securityAlertsDTO = [
     securityAlertsData[1].product,
     securityAlertsData[1].vulnerability,
     securityAlertsData[1].topFix,
-    securityAlertsData[1].effective
+    securityAlertsData[1].effective,
   ),
 ]
 
@@ -185,7 +185,7 @@ export const librariesDTO = [
     librariesData[0].directDependency,
     librariesData[0].licenses,
     librariesData[0].copyrightReferences,
-    librariesData[0].locations
+    librariesData[0].locations,
   ),
   new LibraryDTO(
     librariesData[1].uuid,
@@ -202,7 +202,7 @@ export const librariesDTO = [
     librariesData[1].directDependency,
     librariesData[1].licenses,
     librariesData[1].copyrightReferences,
-    librariesData[1].locations
+    librariesData[1].locations,
   ),
 ]
 
@@ -216,7 +216,7 @@ export const vulnerabilitiesDTO = [
     vulnerabilitiesData[0].publishDate,
     vulnerabilitiesData[0].modifiedDate,
     vulnerabilitiesData[0].vulnerabilityScoring,
-    vulnerabilitiesData[0].references
+    vulnerabilitiesData[0].references,
   ),
   new VulnerabilityDTO(
     vulnerabilitiesData[1].name,
@@ -227,7 +227,7 @@ export const vulnerabilitiesDTO = [
     vulnerabilitiesData[1].publishDate,
     vulnerabilitiesData[1].modifiedDate,
     vulnerabilitiesData[1].vulnerabilityScoring,
-    vulnerabilitiesData[1].references
+    vulnerabilitiesData[1].references,
   ),
 ]
 
@@ -242,9 +242,9 @@ export const vulnerabilitiesFixSummaryDTO = new VulnerabilityFixSummaryDTO(
     vulnerabilitiesFixSummaryData.topRankedFix.fixResolution,
     vulnerabilitiesFixSummaryData.topRankedFix.date,
     vulnerabilitiesFixSummaryData.topRankedFix.message,
-    vulnerabilitiesFixSummaryData.topRankedFix.extraData
+    vulnerabilitiesFixSummaryData.topRankedFix.extraData,
   ),
   vulnerabilitiesFixSummaryData.allFixes,
   vulnerabilitiesFixSummaryData.totalUpVotes,
-  vulnerabilitiesFixSummaryData.totalDownVotes
+  vulnerabilitiesFixSummaryData.totalDownVotes,
 )

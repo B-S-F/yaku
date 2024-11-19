@@ -24,7 +24,7 @@ describe('readYamlData', async () => {
     const errorMsg = 'Error parsing YAML file'
     vi.mocked(readFile).mockRejectedValueOnce(new Error(errorMsg))
     await expect(readYamlData(filePath)).rejects.toThrow(
-      `File ${filePath} could not be read, failed with error: Error: ${errorMsg}`
+      `File ${filePath} could not be read, failed with error: Error: ${errorMsg}`,
     )
   })
 })
@@ -73,7 +73,7 @@ concatenation:
     const filePath = 'test.yaml'
     vi.mocked(readFile).mockResolvedValueOnce('invalid_yaml')
     await expect(parseConfig(filePath)).rejects.toThrow(
-      'Code: invalid_type ~ Path:  ~ Message: Expected object, received string'
+      'Code: invalid_type ~ Path:  ~ Message: Expected object, received string',
     )
   })
 
@@ -88,7 +88,7 @@ checks:
     const filePath = 'test.yaml'
     vi.mocked(readFile).mockResolvedValueOnce(yamlContent)
     await expect(parseConfig(filePath)).rejects.toThrow(
-      "Code: invalid_type ~ Path: checks[0].name ~ Message: Required | Code: invalid_string ~ Path: checks[0].ref ~ Message: Invalid input: must start with \"$\" | Code: unrecognized_keys ~ Path: checks[0] ~ Message: Unrecognized key(s) in object: 'names', 'test'"
+      "Code: invalid_type ~ Path: checks[0].name ~ Message: Required | Code: invalid_string ~ Path: checks[0].ref ~ Message: Invalid input: must start with \"$\" | Code: unrecognized_keys ~ Path: checks[0] ~ Message: Unrecognized key(s) in object: 'names', 'test'",
     )
   })
 })

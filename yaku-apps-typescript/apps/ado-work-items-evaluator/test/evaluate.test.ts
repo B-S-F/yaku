@@ -80,7 +80,7 @@ describe('checkWorkItems()', () => {
       fields,
       stateFieldName,
       closedStates,
-      dueDateFieldName
+      dueDateFieldName,
     )
     const expectedResult = {
       state: {
@@ -131,7 +131,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(2)
     expect(results[0]).toEqual({
@@ -154,7 +154,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(2)
     expect(results[0]).toEqual({
@@ -177,7 +177,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(2)
     expect(results[0]).toEqual({
@@ -200,7 +200,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(2)
     expect(results[0]).toEqual({
@@ -223,7 +223,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(2)
     expect(results[0]).toEqual({
@@ -248,7 +248,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(2)
     expect(results[0]).toEqual({
@@ -293,7 +293,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(1)
     expect(results[0]).toEqual({
@@ -346,7 +346,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(1)
     expect(results[0]).toEqual({
@@ -399,7 +399,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(0)
   })
@@ -439,7 +439,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(1)
     expect(results[0]).toEqual({
@@ -492,7 +492,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(0)
   })
@@ -542,7 +542,7 @@ describe('checkWorkItemsRecursively()', () => {
       workItemsConfig,
       'dueDate',
       'state',
-      ['Closed']
+      ['Closed'],
     )
     expect(results.length).toEqual(2)
     expect(results[1]).toEqual({

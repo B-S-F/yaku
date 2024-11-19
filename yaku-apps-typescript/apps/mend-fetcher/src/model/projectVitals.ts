@@ -17,6 +17,6 @@ export class ProjectVitals {
     public projectCreationDate: string,
     public pluginName: string,
     public pluginVersion: string,
-    public libraryCount: number
+    public libraryCount: number,
   ) {}
 }

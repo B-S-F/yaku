@@ -25,7 +25,7 @@ export function createEnvsSubcommands(program: Command): void {
     .argument('<envName>', 'Name of the environment')
     .argument(
       '<key>',
-      `Key of the environment property, either 'name', 'url', 'token', or 'namespace'`
+      `Key of the environment property, either 'name', 'url', 'token', or 'namespace'`,
     )
     .argument('<value>', 'Value for the specified key')
     .addHelpText(
@@ -33,7 +33,7 @@ export function createEnvsSubcommands(program: Command): void {
       `
   Aliases:
     update | upd | set | u
-        `
+        `,
     )
     .action(async (envName: string, key: keyof Environment, value: string) => {
       await updateEnvironmentByKey(envName, key, value)
@@ -46,8 +46,8 @@ export function createEnvsSubcommands(program: Command): void {
     .addOption(
       new Option(
         '-p, --page-size <pageSize>',
-        'Number of elements per page in the table'
-      ).conflicts('json')
+        'Number of elements per page in the table',
+      ).conflicts('json'),
     )
     .action((options) => {
       const envs = loadEnvironments()
@@ -94,16 +94,16 @@ export function createEnvsSubcommands(program: Command): void {
     .argument('<envName>', 'Name of the Yaku CLI environment')
     .addOption(new Option('-u, --url <url>', 'URL of the Yaku instance'))
     .addOption(
-      new Option('-n, --namespace <namespace>', 'Yaku namespace to use')
+      new Option('-n, --namespace <namespace>', 'Yaku namespace to use'),
     )
     .addOption(
-      new Option('-w, --web', 'Login via web browser').conflicts('token')
+      new Option('-w, --web', 'Login via web browser').conflicts('token'),
     )
     .addOption(
       new Option(
         '-t, --token [token]',
-        'Access token for the Yaku instance'
-      ).conflicts('web')
+        'Access token for the Yaku instance',
+      ).conflicts('web'),
     )
     .action(async (envName: string, options: any) => {
       await login(envName, options)

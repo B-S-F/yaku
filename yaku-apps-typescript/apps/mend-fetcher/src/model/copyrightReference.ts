@@ -9,6 +9,6 @@ export class CopyrightReference {
     public author: string,
     public referenceInfo: string,
     public startYear?: string,
-    public endYear?: string
+    public endYear?: string,
   ) {}
 }

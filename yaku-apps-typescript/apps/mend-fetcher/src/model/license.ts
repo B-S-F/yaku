@@ -9,6 +9,6 @@ export class License {
     public uuid: string,
     public name: string,
     public assignedByUser: boolean,
-    public licenseReferences: LicenseReference[]
+    public licenseReferences: LicenseReference[],
   ) {}
 }

@@ -29,7 +29,7 @@ describe('test_single_data.json', async () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
@@ -48,7 +48,7 @@ describe('test_single_data.json', async () => {
     })
     const results = result.stdout.reduce(
       (count, str) => count + (str.includes('result') ? 1 : 0),
-      0
+      0,
     )
 
     for (const issue of baseIssues) {

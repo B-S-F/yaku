@@ -5,7 +5,7 @@
 import { z } from 'zod'
 export const relationTypes = ['Related', 'Child', 'Parent'] as const
 const RelationTypesLiterals = relationTypes.map((relationType) =>
-  z.literal(relationType)
+  z.literal(relationType),
 )
 const [first, second, ...others] = RelationTypesLiterals
 export const RelationTypeSchema = z.union([first, second, ...others])
@@ -23,5 +23,5 @@ export type Relations = z.infer<typeof BaseRelationsSchema> & {
 export const RelationsSchema: z.ZodType<Relations> = BaseRelationsSchema.extend(
   {
     relations: z.lazy(() => RelationsSchema.optional()),
-  }
+  },
 )

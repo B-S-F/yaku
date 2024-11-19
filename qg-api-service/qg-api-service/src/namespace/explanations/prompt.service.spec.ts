@@ -136,12 +136,8 @@ describe('GeneratePrompt', () => {
       expect(result[1].content).toContain(content)
     })
     //expect the correct amount of files
-    expect(
-      [...result[1].content.matchAll(new RegExp(`1k.yaml`, `gi`))].length
-    ).toEqual(3)
-    expect(
-      [...result[1].content.matchAll(new RegExp(`4k.yaml`, `gi`))].length
-    ).toEqual(0)
+    expect([...result[1].content.matchAll(/1k.yaml/gi)].length).toEqual(3)
+    expect([...result[1].content.matchAll(/4k.yaml/gi)].length).toEqual(0)
   })
 
   it('should throw error when user prompt exceeds the token limit even after file trimming', async () => {
@@ -168,7 +164,7 @@ describe('GeneratePrompt', () => {
       FourKYaml,
     ]
     await expect(generatePrompt(files)).rejects.toThrowError(
-      'Information exceeds token limit'
+      'Information exceeds token limit',
     )
   })
 })

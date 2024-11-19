@@ -58,12 +58,12 @@ export class ReleasesService {
     @InjectRepository(Run)
     private readonly runRepository: Repository<Run>,
     @Inject(UsersService)
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
   ) {}
 
   async list(
     namespaceId: number,
-    listQueryHandler: ListQueryHandler
+    listQueryHandler: ListQueryHandler,
   ): Promise<EntityList<ReleaseDto>> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -72,7 +72,7 @@ export class ReleasesService {
       const { releases, approvals } = await this.listWithTransaction(
         queryRunner,
         namespaceId,
-        listQueryHandler
+        listQueryHandler,
       )
       const entityList = await this.toEntityList(releases, approvals)
       await queryRunner.commitTransaction()
@@ -88,7 +88,7 @@ export class ReleasesService {
   async listWithTransaction(
     queryRunner: QueryRunner,
     namespaceId: number,
-    listQueryHandler: ListQueryHandler
+    listQueryHandler: ListQueryHandler,
   ): Promise<{
     releases: EntityList<ReleaseEntity>
     approvals: EntityList<ApprovalEntity>
@@ -113,7 +113,7 @@ export class ReleasesService {
         .map((unknown) => unknown.property)
       if (unknowns.length > 0) {
         throw new BadRequestException(
-          `Filtering for properties [${unknowns}] not supported`
+          `Filtering for properties [${unknowns}] not supported`,
         )
       }
       for (const option of filters) {
@@ -160,12 +160,12 @@ export class ReleasesService {
       const release = await this.getWithTransaction(
         querryRunner,
         namespaceId,
-        releaseId
+        releaseId,
       )
       const approvalState = await this.getApprovalStateWithTransaction(
         querryRunner,
         namespaceId,
-        releaseId
+        releaseId,
       )
       const releaseDto = await this.toReleaseDto(release, approvalState)
       await querryRunner.commitTransaction()
@@ -181,7 +181,7 @@ export class ReleasesService {
   async getWithTransaction(
     queryRunner: QueryRunner,
     namespaceId: number,
-    releaseId: number
+    releaseId: number,
   ): Promise<ReleaseEntity> {
     return queryRunner.manager.findOneOrFail(ReleaseEntity, {
       where: { id: releaseId, namespace: { id: namespaceId } },
@@ -195,7 +195,7 @@ export class ReleasesService {
     approvalMode: ApprovalMode,
     qgConfigId: number,
     plannedDate: Date,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<ReleaseDto> {
     const querryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -208,12 +208,12 @@ export class ReleasesService {
         approvalMode,
         qgConfigId,
         plannedDate,
-        actor
+        actor,
       )
       const approvalState = await this.getApprovalStateWithTransaction(
         querryRunner,
         namespaceId,
-        release.id
+        release.id,
       )
       const releaseDto = await this.toReleaseDto(release, approvalState)
       await querryRunner.commitTransaction()
@@ -233,7 +233,7 @@ export class ReleasesService {
     approvalMode: ApprovalMode,
     qgConfigId: number,
     plannedDate: Date,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<ReleaseEntity> {
     const config = await this.getConfig(queryRunner, namespaceId, qgConfigId)
     const nowDate = new Date()
@@ -257,7 +257,7 @@ export class ReleasesService {
       release,
       AuditActor.convertFrom(actor),
       Action.CREATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
     return release
   }
@@ -266,7 +266,7 @@ export class ReleasesService {
   private async getConfig(
     queryRunner: QueryRunner,
     namespaceId: number,
-    qgConfigId: number
+    qgConfigId: number,
   ): Promise<ConfigEntity> {
     const config = await queryRunner.manager.findOne(ConfigEntity, {
       where: { id: qgConfigId, namespace: { id: namespaceId } },
@@ -274,7 +274,7 @@ export class ReleasesService {
 
     if (!config) {
       throw new NotFoundException(
-        `Config not found, namespaceId: ${namespaceId}, qgConfigId: ${qgConfigId}`
+        `Config not found, namespaceId: ${namespaceId}, qgConfigId: ${qgConfigId}`,
       )
     }
 
@@ -287,7 +287,7 @@ export class ReleasesService {
     actor: RequestUser,
     name?: string,
     approvalMode?: ApprovalMode,
-    plannedDate?: Date
+    plannedDate?: Date,
   ): Promise<ReleaseDto> {
     const querryRunner = this.repository.manager.connection.createQueryRunner()
     await querryRunner.connect()
@@ -300,12 +300,12 @@ export class ReleasesService {
         actor,
         name,
         approvalMode,
-        plannedDate
+        plannedDate,
       )
       const approvalState = await this.getApprovalStateWithTransaction(
         querryRunner,
         namespaceId,
-        releaseId
+        releaseId,
       )
       const releaseDto = await this.toReleaseDto(release, approvalState)
       await querryRunner.commitTransaction()
@@ -325,12 +325,12 @@ export class ReleasesService {
     actor: RequestUser,
     name?: string,
     approvalMode?: ApprovalMode,
-    plannedDate?: Date
+    plannedDate?: Date,
   ): Promise<ReleaseEntity> {
     const currentRelease = await this.getWithTransaction(
       queryRunner,
       namespaceId,
-      releaseId
+      releaseId,
     )
 
     checkForClosed(currentRelease)
@@ -363,7 +363,7 @@ export class ReleasesService {
 
         const approvalState = this.approvalService.computeAggregateApproval(
           approvalMode,
-          approvals
+          approvals,
         )
 
         currentRelease.approvalState = approvalState
@@ -385,7 +385,7 @@ export class ReleasesService {
       release,
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
     return release
   }
@@ -393,7 +393,7 @@ export class ReleasesService {
   async remove(
     namespaceId: number,
     releaseId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const querryRunner = this.repository.manager.connection.createQueryRunner()
     await querryRunner.connect()
@@ -403,7 +403,7 @@ export class ReleasesService {
         querryRunner,
         namespaceId,
         releaseId,
-        actor
+        actor,
       )
       await querryRunner.commitTransaction()
     } catch (e) {
@@ -418,12 +418,12 @@ export class ReleasesService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const original = await this.getWithTransaction(
       queryRunner,
       namespaceId,
-      releaseId
+      releaseId,
     )
 
     if (!original) {
@@ -434,35 +434,35 @@ export class ReleasesService {
       queryRunner,
       namespaceId,
       releaseId,
-      actor
+      actor,
     )
 
     await this.overridesService.removeAllWithTransaction(
       queryRunner,
       namespaceId,
       releaseId,
-      actor
+      actor,
     )
 
     await this.checkResultOverridesService.removeAllWithTransaction(
       queryRunner,
       namespaceId,
       releaseId,
-      actor
+      actor,
     )
 
     await this.commentsService.removeAllWithTransaction(
       queryRunner,
       namespaceId,
       releaseId,
-      actor
+      actor,
     )
 
     await this.taskService.removeAllWithTransaction(
       queryRunner,
       namespaceId,
       releaseId,
-      actor
+      actor,
     )
 
     await queryRunner.manager.delete(ReleaseEntity, {
@@ -477,13 +477,13 @@ export class ReleasesService {
       {},
       AuditActor.convertFrom(actor),
       Action.DELETE,
-      queryRunner.manager
+      queryRunner.manager,
     )
   }
 
   async getApprovalState(
     namespaceId: number,
-    releaseId: number
+    releaseId: number,
   ): Promise<AggregateApprovalDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -492,14 +492,14 @@ export class ReleasesService {
       const release = await this.getWithTransaction(
         queryRunner,
         namespaceId,
-        releaseId
+        releaseId,
       )
 
       const state = await this.approvalService.getApprovalStateWithTransaction(
         queryRunner,
         namespaceId,
         releaseId,
-        release.approvalMode
+        release.approvalMode,
       )
 
       const dto = this.toAggregateApprovalDto(state)
@@ -516,7 +516,7 @@ export class ReleasesService {
   async getApprovalStateWithTransaction(
     queryRunner: QueryRunner,
     namespaceId: number,
-    releaseId: number
+    releaseId: number,
   ): Promise<ApprovalState> {
     const approvals = await queryRunner.manager.find(ApprovalEntity, {
       where: {
@@ -529,19 +529,19 @@ export class ReleasesService {
     const release = await this.getWithTransaction(
       queryRunner,
       namespaceId,
-      releaseId
+      releaseId,
     )
 
     return this.approvalService.computeAggregateApproval(
       release.approvalMode,
-      approvals
+      approvals,
     )
   }
 
   async close(
     namespaceId: number,
     releaseId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -551,7 +551,7 @@ export class ReleasesService {
         queryRunner,
         namespaceId,
         releaseId,
-        actor
+        actor,
       )
       return await queryRunner.commitTransaction()
     } catch (e) {
@@ -566,12 +566,12 @@ export class ReleasesService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const currentRelease = await this.getWithTransaction(
       queryRunner,
       namespaceId,
-      releaseId
+      releaseId,
     )
 
     if (!currentRelease) {
@@ -600,7 +600,7 @@ export class ReleasesService {
       release,
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
   }
 
@@ -608,11 +608,11 @@ export class ReleasesService {
     switch (approvalMode) {
       case 'all':
         return approvals.every(
-          (approval) => approval.approvalState == 'approved'
+          (approval) => approval.approvalState == 'approved',
         )
       case 'one':
         return approvals.some(
-          (approval) => approval.approvalState == 'approved'
+          (approval) => approval.approvalState == 'approved',
         )
       default:
         throw new Error('Implementation bug')
@@ -629,7 +629,7 @@ export class ReleasesService {
     namespaceId: number,
     configId: number,
     lastModificationTime: Date,
-    releaseClosed: boolean
+    releaseClosed: boolean,
   ): Promise<number | null> {
     let runs = []
     if (releaseClosed) {
@@ -657,7 +657,7 @@ export class ReleasesService {
 
   async toReleaseDto(
     release: ReleaseEntity,
-    approvalState: ApprovalState
+    approvalState: ApprovalState,
   ): Promise<ReleaseDto> {
     const dto = new ReleaseDto()
     dto.id = release.id
@@ -675,14 +675,14 @@ export class ReleasesService {
       release.namespace.id,
       release.config.id,
       release.lastModificationTime,
-      release.closed
+      release.closed,
     )
     return dto
   }
 
   async toEntityList(
     releases: EntityList<ReleaseEntity>,
-    approvals: EntityList<ApprovalEntity>
+    approvals: EntityList<ApprovalEntity>,
   ): Promise<EntityList<ReleaseDto>> {
     const releaseDtos = await Promise.all(
       releases.entities.map(async (release) => {
@@ -690,11 +690,11 @@ export class ReleasesService {
           this.approvalService.computeAggregateApproval(
             release.approvalMode,
             approvals.entities.filter(
-              (approval) => approval.release.id === release.id
-            )
+              (approval) => approval.release.id === release.id,
+            ),
           )
         return await this.toReleaseDto(release, aggregateApprovalState)
-      })
+      }),
     )
     return {
       entities: releaseDtos,

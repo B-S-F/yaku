@@ -37,7 +37,7 @@ export class SMTPWorker implements OnModuleInit, MailingWorker {
   private isProcessing = false
   constructor(
     @Inject(MailingConfiguration)
-    private readonly configuration: SMTPConfiguration
+    private readonly configuration: SMTPConfiguration,
   ) {
     this.queue = []
     this.transporter = nodemailer.createTransport({
@@ -59,7 +59,7 @@ export class SMTPWorker implements OnModuleInit, MailingWorker {
     const verified = await this.transporter.verify()
     if (!verified) {
       throw new InternalServerErrorException(
-        'Could not verify the connection to the SMTP server'
+        'Could not verify the connection to the SMTP server',
       )
     }
   }

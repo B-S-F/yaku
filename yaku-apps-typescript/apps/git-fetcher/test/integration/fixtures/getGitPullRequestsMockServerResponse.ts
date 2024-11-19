@@ -6,7 +6,7 @@ import { MockServerOptions } from '../../../../../integration-tests/src/util'
 
 export function getGitPullRequestsMockOptions(
   port: number,
-  responseStatus: number
+  responseStatus: number,
 ): MockServerOptions {
   return {
     port: port,

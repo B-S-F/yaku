@@ -15,7 +15,7 @@ export async function listFindings(
   namespace: number | undefined,
   configIds: string,
   page: string,
-  options: any
+  options: any,
 ) {
   handleStandardParams(client, namespace)
   const pg = page ? parseIntParameter(page, 'page') : 1
@@ -42,7 +42,7 @@ export async function listFindings(
     filterProperty,
     filterValues,
     options.sortBy,
-    options.ascending
+    options.ascending,
   )
 
   await logResultAsJson(client.listFindings(namespace!, queryOptions))
@@ -52,7 +52,7 @@ export async function resolveFinding(
   client: ApiClient,
   namespace: number | undefined,
   id: string,
-  options: any
+  options: any,
 ) {
   handleStandardParams(client, namespace)
   await logResultAsJson(client!.resolveFinding(namespace!, id, options))
@@ -61,7 +61,7 @@ export async function resolveFinding(
 export async function reopenFinding(
   client: ApiClient,
   namespace: number | undefined,
-  id: string
+  id: string,
 ) {
   handleStandardParams(client, namespace)
   await logResultAsJson(client!.reopenFinding(namespace!, id))

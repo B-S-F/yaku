@@ -32,7 +32,7 @@ describe('SubscriptionController', () => {
     }).compile()
 
     subscriptionController = moduleRef.get<SubscriptionController>(
-      SubscriptionController
+      SubscriptionController,
     )
     subscriptionService =
       moduleRef.get<SubscriptionService>(SubscriptionService)
@@ -63,7 +63,7 @@ describe('SubscriptionController', () => {
 
       const result = await subscriptionController.manageSubscription(
         body,
-        request as any
+        request as any,
       )
       expect(result).toEqual(true)
       expect(subscriptionService.createSubscription).toBeCalled()
@@ -94,7 +94,7 @@ describe('SubscriptionController', () => {
 
       const result = await subscriptionController.manageSubscription(
         body,
-        request as any
+        request as any,
       )
       expect(result).toEqual(true)
       expect(subscriptionService.deleteSubscription).toBeCalled()
@@ -117,7 +117,7 @@ describe('SubscriptionController', () => {
 
       const result = await subscriptionController.getSubscriptionStatus(
         userId,
-        releaseId
+        releaseId,
       )
       expect(result).toEqual(subscriptionEntity)
     })

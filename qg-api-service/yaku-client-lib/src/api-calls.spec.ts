@@ -65,7 +65,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response)) as jest.Mock
+          jest.fn(() => Promise.resolve(response)) as jest.Mock,
         )
 
       const result = await getResource(testurl, token)
@@ -100,7 +100,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response)) as jest.Mock
+          jest.fn(() => Promise.resolve(response)) as jest.Mock,
         )
 
       const result = await createResource(testurl, body, token)
@@ -133,7 +133,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response)) as jest.Mock
+          jest.fn(() => Promise.resolve(response)) as jest.Mock,
         )
 
       const result = await updateResource(testurl, body, token)
@@ -163,7 +163,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response)) as jest.Mock
+          jest.fn(() => Promise.resolve(response)) as jest.Mock,
         )
 
       await deleteResource(testurl, token)
@@ -195,7 +195,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response)) as jest.Mock
+          jest.fn(() => Promise.resolve(response)) as jest.Mock,
         )
 
       const result = await getResourceBinaryData(testurl, token)
@@ -226,7 +226,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response)) as jest.Mock
+          jest.fn(() => Promise.resolve(response)) as jest.Mock,
         )
 
       await uploadData(testurl, formBodyData, token)
@@ -254,7 +254,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response)) as jest.Mock
+          jest.fn(() => Promise.resolve(response)) as jest.Mock,
         )
 
       await uploadData(testurl, formBodyData, token, true)
@@ -287,7 +287,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response)) as jest.Mock
+          jest.fn(() => Promise.resolve(response)) as jest.Mock,
         )
 
       const result = await transformData(testurl, body, token)
@@ -320,7 +320,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response)) as jest.Mock
+          jest.fn(() => Promise.resolve(response)) as jest.Mock,
         )
 
       await callViaPost(testurl, token)
@@ -399,7 +399,7 @@ describe('Standard rest api calls', () => {
       const fetchSpy = jest
         .spyOn(global, 'fetch')
         .mockImplementation(
-          jest.fn(() => Promise.resolve(response1)) as jest.Mock
+          jest.fn(() => Promise.resolve(response1)) as jest.Mock,
         )
         .mockResolvedValueOnce(response2)
 
@@ -502,7 +502,7 @@ describe('Standard rest api calls', () => {
         const fetchSpy = jest
           .spyOn(global, 'fetch')
           .mockImplementation(
-            jest.fn(() => Promise.resolve(response)) as jest.Mock
+            jest.fn(() => Promise.resolve(response)) as jest.Mock,
           )
 
         try {
@@ -527,7 +527,7 @@ describe('Standard rest api calls', () => {
         const fetchSpy = jest
           .spyOn(global, 'fetch')
           .mockImplementation(
-            jest.fn(() => Promise.reject(new Error(errorMessage))) as jest.Mock
+            jest.fn(() => Promise.reject(new Error(errorMessage))) as jest.Mock,
           )
 
         try {
@@ -536,7 +536,7 @@ describe('Standard rest api calls', () => {
         } catch (err) {
           if (err instanceof Error) {
             expect(err.message).toBe(
-              `Cannot access ${testurl}\n${errorMessage}`
+              `Cannot access ${testurl}\n${errorMessage}`,
             )
           } else {
             throw err
@@ -545,6 +545,6 @@ describe('Standard rest api calls', () => {
 
         expect(fetchSpy).toBeCalledWith(testurl, callParam)
       })
-    }
+    },
   )
 })

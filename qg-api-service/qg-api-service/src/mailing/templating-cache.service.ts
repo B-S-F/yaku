@@ -52,13 +52,13 @@ export class TemplatingCache implements OnApplicationBootstrap {
       withFileTypes: true,
     })
     const mjmlFiles = files.filter(
-      (file) => file.isFile() && file.name.endsWith('.mjml')
+      (file) => file.isFile() && file.name.endsWith('.mjml'),
     )
 
     for (const file of mjmlFiles) {
       if (!availableTemplates.includes(file.name as NotificationType)) {
         this.logger.warn(
-          `Template ${file.name} is not in the list of supported templates, ignoring. Supported templates: ${availableTemplates}`
+          `Template ${file.name} is not in the list of supported templates, ignoring. Supported templates: ${availableTemplates}`,
         )
         continue
       }
@@ -75,7 +75,7 @@ export class TemplatingCache implements OnApplicationBootstrap {
     for (const template of availableTemplates) {
       if (!this.templates.has(template)) {
         throw new Error(
-          `Template for ${template} not found in ${this.templatePath}`
+          `Template for ${template} not found in ${this.templatePath}`,
         )
       }
     }

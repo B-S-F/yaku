@@ -10,7 +10,7 @@ export class ServiceConfig {
     readonly servicePort: number,
     readonly pathPrefix: string,
     readonly serviceVersion: string,
-    readonly imageVersion: string
+    readonly imageVersion: string,
   ) {}
 }
 

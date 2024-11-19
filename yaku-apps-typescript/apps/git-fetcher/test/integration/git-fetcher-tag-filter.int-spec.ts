@@ -72,11 +72,11 @@ describe('Tag Filter', () => {
        */
       function startBitbucketMockServer(
         firstCommitDate: Date,
-        secondCommitDate: Date
+        secondCommitDate: Date,
       ): void {
         commitResponses = createBitbucketCommits(
           firstCommitDate,
-          secondCommitDate
+          secondCommitDate,
         )
         tagResponses = createBitbucketTags(commitResponses)
         const options: MockServerOptions = getBitbucketResponseOptions({
@@ -98,22 +98,22 @@ describe('Tag Filter', () => {
        */
       function verifyBitbucketRequests(
         filterByEndTag = true,
-        expectedStateFilter = 'ALL'
+        expectedStateFilter = 'ALL',
       ): void {
         const expectedNumberOfRequests: number = filterByEndTag ? 5 : 3
         expect(mockServer.getNumberOfRequests()).toEqual(
-          expectedNumberOfRequests
+          expectedNumberOfRequests,
         )
 
         // verify requests for GET pull requests
         let requests: ReceivedRequest[] = mockServer.getRequests(
           PULL_REQUESTS_ENDPOINT,
-          'get'
+          'get',
         )
         expect(requests).length(1)
         verifyAuthorizationHeader(
           env.GIT_FETCHER_SERVER_AUTH_METHOD,
-          requests[0]
+          requests[0],
         )
         expect(requests[0].query.state).toEqual(expectedStateFilter)
         expect(requests[0].query.start).toEqual('0')
@@ -121,48 +121,48 @@ describe('Tag Filter', () => {
         // verify request for first tag
         requests = mockServer.getRequests(
           requestUrlTag(tagResponses[0].displayId),
-          'get'
+          'get',
         )
         expect(requests).length(1)
         verifyAuthorizationHeader(
           env.GIT_FETCHER_SERVER_AUTH_METHOD,
-          requests[0]
+          requests[0],
         )
 
         // verify request for second tag, if an endTag filter was provided
         if (filterByEndTag) {
           requests = mockServer.getRequests(
             requestUrlTag(tagResponses[1].displayId),
-            'get'
+            'get',
           )
           expect(requests).length(1)
           verifyAuthorizationHeader(
             env.GIT_FETCHER_SERVER_AUTH_METHOD,
-            requests[0]
+            requests[0],
           )
         }
 
         // verify request for first commit
         requests = mockServer.getRequests(
           requestUrlCommit(commitResponses[0].id),
-          'get'
+          'get',
         )
         expect(requests).length(1)
         verifyAuthorizationHeader(
           env.GIT_FETCHER_SERVER_AUTH_METHOD,
-          requests[0]
+          requests[0],
         )
 
         // verify request for second commit, if an endTag filter was provided
         if (filterByEndTag) {
           requests = mockServer.getRequests(
             requestUrlCommit(commitResponses[1].id),
-            'get'
+            'get',
           )
           expect(requests).length(1)
           verifyAuthorizationHeader(
             env.GIT_FETCHER_SERVER_AUTH_METHOD,
-            requests[0]
+            requests[0],
           )
         }
       }
@@ -170,7 +170,7 @@ describe('Tag Filter', () => {
       it('should filter pull requests by startTag and endTag - fetches and writes all PRs', async () => {
         startBitbucketMockServer(
           new Date('2020-02-01'),
-          new Date('22023-03-15')
+          new Date('22023-03-15'),
         )
         const result: RunProcessResult = await run(
           gitFetcherExecutable,
@@ -180,7 +180,7 @@ describe('Tag Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/tag-filter/git-fetcher-config-valid-start-and-end-tag.yml`,
             },
-          }
+          },
         )
 
         // verify result
@@ -192,7 +192,7 @@ describe('Tag Filter', () => {
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify(bitBucketPrs)
+          JSON.stringify(bitBucketPrs),
         )
 
         // verify requests
@@ -209,7 +209,7 @@ describe('Tag Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/tag-filter/git-fetcher-config-valid-start-and-end-tag.yml`,
             },
-          }
+          },
         )
 
         // verify result
@@ -234,7 +234,7 @@ describe('Tag Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/tag-filter/git-fetcher-config-valid-start-and-end-tag.yml`,
             },
-          }
+          },
         )
 
         // verify result
@@ -260,7 +260,7 @@ describe('Tag Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/tag-filter/git-fetcher-config-valid-start-tag.yml`,
             },
-          }
+          },
         )
 
         // verify result
@@ -272,7 +272,7 @@ describe('Tag Filter', () => {
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify(bitBucketPrs)
+          JSON.stringify(bitBucketPrs),
         )
 
         // verify requests
@@ -289,7 +289,7 @@ describe('Tag Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/tag-filter/git-fetcher-config-valid-start-and-end-tag.yml`,
             },
-          }
+          },
         )
 
         // verify result
@@ -301,7 +301,7 @@ describe('Tag Filter', () => {
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify([bitBucketPrs[1], bitBucketPrs[2]])
+          JSON.stringify([bitBucketPrs[1], bitBucketPrs[2]]),
         )
 
         // verify requests
@@ -320,7 +320,7 @@ describe('Tag Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/tag-filter/git-fetcher-config-valid-state-and-tag.yml`,
             },
-          }
+          },
         )
 
         // verify result
@@ -332,7 +332,7 @@ describe('Tag Filter', () => {
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify([bitBucketPrs[2]])
+          JSON.stringify([bitBucketPrs[2]]),
         )
 
         // verify requests - checking on filter state 'OPEN' proves that tag and state filtering work together
@@ -353,7 +353,7 @@ describe('Tag Filter', () => {
       it('should fail if tag could not be found', async () => {
         const commitResponses = createBitbucketCommits(
           new Date('2020-01-01'),
-          new Date('2023-05-31')
+          new Date('2023-05-31'),
         )
         const options: MockServerOptions = getBitbucketResponseOptions({
           port: MOCK_SERVER_PORT,
@@ -382,13 +382,13 @@ describe('Tag Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/tag-filter/git-fetcher-config-valid-start-and-end-tag.yml`,
             },
-          }
+          },
         )
 
         // verify result
         expect(result.exitCode).toEqual(0)
         expect(result.stdout).toContain(
-          '{"status":"FAILED","reason":"Could not retrieve the tag tag1"}'
+          '{"status":"FAILED","reason":"Could not retrieve the tag tag1"}',
         )
 
         // should not write an output file
@@ -400,12 +400,12 @@ describe('Tag Filter', () => {
         // verify request for PRs
         let requests: ReceivedRequest[] = mockServer.getRequests(
           PULL_REQUESTS_ENDPOINT,
-          'get'
+          'get',
         )
         expect(requests).length(1)
         verifyAuthorizationHeader(
           env.GIT_FETCHER_SERVER_AUTH_METHOD,
-          requests[0]
+          requests[0],
         )
         expect(requests[0].query.state).toEqual('ALL')
         expect(requests[0].query.start).toEqual('0')
@@ -415,7 +415,7 @@ describe('Tag Filter', () => {
         expect(requests).length(1)
         verifyAuthorizationHeader(
           env.GIT_FETCHER_SERVER_AUTH_METHOD,
-          requests[0]
+          requests[0],
         )
       })
     })

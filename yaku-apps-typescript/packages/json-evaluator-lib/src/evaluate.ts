@@ -37,7 +37,7 @@ export const evalCheck = (
     false?: Status
     return_if_empty?: Status
     return_if_not_found?: Status
-  }
+  },
 ): CheckResults => {
   const ref = jp.query(data, reference)
 
@@ -54,7 +54,7 @@ export const evalCheck = (
       const logger = GetLogger()
       logger.warn(
         'Warning: no JSON data was found. Could be ok, but if in doubt, ' +
-          `double-check your JSONPath reference expression (\`${reference}\`).`
+          `double-check your JSONPath reference expression (\`${reference}\`).`,
       )
     } else {
       result.status = options.return_if_not_found || 'RED'
@@ -155,7 +155,7 @@ export const evalCheck = (
 
 export const evalConcatenation = (
   condition: string,
-  checks: Record<string, CheckResults>
+  checks: Record<string, CheckResults>,
 ) => {
   const splitExpression = condition.split(/(&&|\|\|)/g).map((str) => str.trim())
   const concatExpression = splitExpression
@@ -167,7 +167,7 @@ export const evalConcatenation = (
         return checks[str].status
       } catch (error) {
         throw new Error(
-          'Error in concatenation condition. Please check the concatenation condition.'
+          'Error in concatenation condition. Please check the concatenation condition.',
         )
       }
     })

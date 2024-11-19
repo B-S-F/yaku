@@ -73,7 +73,7 @@ describe('MetricService', () => {
         1,
         20,
         SortOrder.ASC,
-        'configId'
+        'configId',
       )
 
       jest
@@ -83,7 +83,7 @@ describe('MetricService', () => {
       const result = await metricService.getNrOfFindings(
         namespaceId,
         StatusType.UNRESOLVED,
-        queryOptions
+        queryOptions,
       )
 
       expect(result.entities).toStrictEqual(getFindingsDTOFixtures)
@@ -102,7 +102,7 @@ describe('MetricService', () => {
         1,
         20,
         SortOrder.ASC,
-        'configId'
+        'configId',
       )
       const data = [getFindingsDTOFixtures[2], getFindingsDTOFixtures[5]]
 
@@ -111,7 +111,7 @@ describe('MetricService', () => {
       const result = await metricService.getLatestRunNrOfFindings(
         namespaceId,
         StatusType.UNRESOLVED,
-        queryOptions
+        queryOptions,
       )
 
       expect(result.entities).toStrictEqual(data)
@@ -125,13 +125,13 @@ describe('MetricService', () => {
       const namespaceId = 1
       const configId = 1
       const dataFixture = getFindingsDTOFixtures.filter(
-        (item) => item.configId === configId
+        (item) => item.configId === configId,
       )
       const queryOptions = new ListQueryHandler(
         1,
         20,
         SortOrder.ASC,
-        'configId'
+        'configId',
       )
 
       jest.spyOn(metricRepository, 'query').mockResolvedValue(dataFixture)
@@ -140,7 +140,7 @@ describe('MetricService', () => {
         namespaceId,
         StatusType.UNRESOLVED,
         configId,
-        queryOptions
+        queryOptions,
       )
 
       expect(result.entities).toStrictEqual(dataFixture)
@@ -159,7 +159,7 @@ describe('MetricService', () => {
         1,
         20,
         SortOrder.ASC,
-        'configId'
+        'configId',
       )
       const startRange = '2023'
       const endRange = '2023'
@@ -173,7 +173,7 @@ describe('MetricService', () => {
         StatusType.UNRESOLVED,
         startRange,
         endRange,
-        queryOptions
+        queryOptions,
       )
 
       expect(result.entities).toStrictEqual(getFindingsDTOFixtures)
@@ -190,7 +190,7 @@ describe('MetricService', () => {
         1,
         20,
         SortOrder.ASC,
-        'configId'
+        'configId',
       )
       const startRange = ''
       const endRange = '2023'
@@ -204,7 +204,7 @@ describe('MetricService', () => {
         StatusType.UNRESOLVED,
         startRange,
         endRange,
-        queryOptions
+        queryOptions,
       )
 
       await expect(result).rejects.toThrow(new BadRequestException())
@@ -217,13 +217,13 @@ describe('MetricService', () => {
       const namespaceId = 1
       const configId = 1
       const dataFixture = getFindingsDTOFixtures.filter(
-        (item) => item.configId === configId
+        (item) => item.configId === configId,
       )
       const queryOptions = new ListQueryHandler(
         1,
         20,
         SortOrder.ASC,
-        'configId'
+        'configId',
       )
       const startRange = '2023'
       const endRange = '2023'
@@ -236,7 +236,7 @@ describe('MetricService', () => {
         startRange,
         endRange,
         configId,
-        queryOptions
+        queryOptions,
       )
 
       expect(result.entities).toStrictEqual(dataFixture)
@@ -251,13 +251,13 @@ describe('MetricService', () => {
       const namespaceId = 1
       const configId = 1
       const dataFixture = getFindingsDTOFixtures.filter(
-        (item) => item.configId === configId
+        (item) => item.configId === configId,
       )
       const queryOptions = new ListQueryHandler(
         1,
         20,
         SortOrder.ASC,
-        'configId'
+        'configId',
       )
       const startRange = ''
       const endRange = '2023'
@@ -272,7 +272,7 @@ describe('MetricService', () => {
         startRange,
         endRange,
         configId,
-        queryOptions
+        queryOptions,
       )
 
       await expect(result).rejects.toThrow(new BadRequestException())
@@ -287,7 +287,7 @@ describe('MetricService', () => {
         1,
         20,
         SortOrder.ASC,
-        'configId'
+        'configId',
       )
       const data = [getFindingsDTOFixtures[2], getFindingsDTOFixtures[5]]
       const startRange = '2023'
@@ -300,7 +300,7 @@ describe('MetricService', () => {
         StatusType.UNRESOLVED,
         startRange,
         endRange,
-        queryOptions
+        queryOptions,
       )
 
       expect(result.entities).toStrictEqual(data)
@@ -317,7 +317,7 @@ describe('MetricService', () => {
         1,
         20,
         SortOrder.ASC,
-        'configId'
+        'configId',
       )
       const startRange = ''
       const endRange = '2023'
@@ -331,7 +331,7 @@ describe('MetricService', () => {
         StatusType.UNRESOLVED,
         startRange,
         endRange,
-        queryOptions
+        queryOptions,
       )
 
       await expect(result).rejects.toThrow(new BadRequestException())
@@ -377,7 +377,7 @@ describe('MetricService', () => {
       const result = await metricService.updateFindingMetric(
         namespaceId,
         findingId,
-        updateFindingDTO
+        updateFindingDTO,
       )
       expect(result).toStrictEqual(expected)
       expect(repositorySpy).toHaveBeenCalled()
@@ -418,13 +418,13 @@ describe('MetricService', () => {
       const result = metricService.updateFindingMetric(
         namespaceId,
         findingId,
-        updateFindingDTO
+        updateFindingDTO,
       )
 
       await expect(result).rejects.toThrow(
         new NotFoundException(
-          `Metric of Finding with id: ${findingId} not found in run ${updateFindingDTO.runId}`
-        )
+          `Metric of Finding with id: ${findingId} not found in run ${updateFindingDTO.runId}`,
+        ),
       )
       expect(repositorySpy).toHaveBeenCalled
     })

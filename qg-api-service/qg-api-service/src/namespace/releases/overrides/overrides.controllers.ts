@@ -56,7 +56,7 @@ import {
 export class OverridesController {
   constructor(
     @Inject(OverridesService) private readonly service: OverridesService,
-    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   @Post()
@@ -68,7 +68,7 @@ export class OverridesController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Body() body: AddOverrideDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<OverrideDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -85,20 +85,20 @@ export class OverridesController {
         body.originalColor,
         body.manualColor,
         body.comment,
-        actor
+        actor,
       )
     } catch (e) {
       if (e.name === QueryFailedError.name) {
         const err = e as QueryFailedError
         if (err.message.includes('violates foreign key constraint')) {
           throw new NotFoundException(
-            `Release not found, namespace: ${namespaceId}, release: ${releaseId}`
+            `Release not found, namespace: ${namespaceId}, release: ${releaseId}`,
           )
         } else if (
           err.message.includes(OVERRIDE_UNIQUE_PER_RELEASE_CONSTRAINT)
         ) {
           throw new BadRequestException(
-            `Override already present, namespace: ${namespaceId}, release: ${releaseId}, chapter: ${body.reference.chapter}, requirement: ${body.reference.requirement}, check: ${body.reference.check}`
+            `Override already present, namespace: ${namespaceId}, release: ${releaseId}, chapter: ${body.reference.chapter}, requirement: ${body.reference.requirement}, check: ${body.reference.check}`,
           )
         }
       }
@@ -117,7 +117,7 @@ export class OverridesController {
     @Param('releaseId') releaseId: number,
     @Param('overrideId') overrideId: number,
     @Body() body: UpdateOverrideDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<OverrideDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -132,7 +132,7 @@ export class OverridesController {
       body.originalColor,
       body.manualColor,
       body.comment,
-      actor
+      actor,
     )
   }
 
@@ -145,7 +145,7 @@ export class OverridesController {
   })
   async getAllOverrides(
     @Param('namespaceId') namespaceId: number,
-    @Param('releaseId') releaseId: number
+    @Param('releaseId') releaseId: number,
   ): Promise<OverrideDto[]> {
     return await this.service.getAll(namespaceId, releaseId)
   }
@@ -160,7 +160,7 @@ export class OverridesController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Param('overrideId') overrideId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)

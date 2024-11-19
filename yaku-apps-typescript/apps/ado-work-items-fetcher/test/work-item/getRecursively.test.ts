@@ -86,7 +86,7 @@ describe('WorkItem', () => {
 
     const result = await workItemObject['getRecursively'](
       'https://parent/url',
-      0
+      0,
     )
     expect(result).toEqual(mockValueParent.data)
   })
@@ -105,7 +105,7 @@ describe('WorkItem', () => {
 
     const result = await workItemObject['getRecursively'](
       'https://parent/url',
-      1
+      1,
     )
 
     expect(result).toEqual(expected.data)
@@ -125,7 +125,7 @@ describe('WorkItem', () => {
 
     const result = await workItemObject['getRecursively'](
       'https://parent/url',
-      1
+      1,
     )
     expect(result).toEqual(expected.data)
   })
@@ -134,7 +134,7 @@ describe('WorkItem', () => {
     mockedAxiosGet.mockRejectedValueOnce(new Error('Test'))
     const result = await workItemObject['getRecursively'](
       'https://parent/url',
-      0
+      0,
     )
     expect(result).toEqual({})
   })

@@ -31,7 +31,7 @@ const app = new AutopilotApp(
         }
         authCmd(options)
       }),
-  ]
+  ],
 )
 
 app.run()

@@ -197,7 +197,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(true)
   })
@@ -213,7 +213,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(false)
   })
@@ -229,7 +229,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(true)
   })
@@ -245,7 +245,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(false)
   })
@@ -266,7 +266,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(true)
   })
@@ -287,7 +287,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(false)
   })
@@ -306,7 +306,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
 
     expect(result).toEqual(true)
@@ -326,7 +326,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
 
     expect(result).toEqual(true)
@@ -350,7 +350,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
 
     expect(result).toEqual(false)
@@ -367,7 +367,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(true)
   })
@@ -383,7 +383,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(false)
   })
@@ -399,7 +399,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(true)
   })
@@ -415,7 +415,7 @@ describe('Test "prefixMatchRecommendations()" from "run.ts"', () => {
     const result = prefixMatchRecommendations(
       recommendation,
       filterValues,
-      filterType
+      filterType,
     )
     expect(result).toEqual(false)
   })
@@ -430,7 +430,7 @@ describe('Test "validateRequiredEnvVariables()" from "run.ts"', () => {
   it('Should throw an error if DATA_TYPE is not equal to "alerts" or "recommendations"', () => {
     process.env.DATA_TYPE = 'recommendation'
     expect(() => validateRequiredEnvVariables()).toThrowError(
-      `Invalid value for DATA_TYPE environment variable! DATA_TYPE should be either 'alerts' or 'recommendations' and in this case is 'recommendation'`
+      `Invalid value for DATA_TYPE environment variable! DATA_TYPE should be either 'alerts' or 'recommendations' and in this case is 'recommendation'`,
     )
   })
 
@@ -449,7 +449,7 @@ describe('Test "validateRequiredEnvVariables()" from "run.ts"', () => {
   it('Should throw an error if TENANT_ID is undefined', () => {
     delete process.env.TENANT_ID
     expect(() => validateRequiredEnvVariables()).toThrowError(
-      'Please provide TENANT_ID in the environmental variables before running the autopilot'
+      'Please provide TENANT_ID in the environmental variables before running the autopilot',
     )
   })
 
@@ -457,7 +457,7 @@ describe('Test "validateRequiredEnvVariables()" from "run.ts"', () => {
     process.env.TENANT_ID = 'mockedTenantId'
     process.env.CLIENT_ID = ''
     expect(() => validateRequiredEnvVariables()).toThrowError(
-      'Please provide CLIENT_ID in the environmental variables before running the autopilot'
+      'Please provide CLIENT_ID in the environmental variables before running the autopilot',
     )
   })
 
@@ -465,7 +465,7 @@ describe('Test "validateRequiredEnvVariables()" from "run.ts"', () => {
     process.env.CLIENT_ID = 'mockedClientId'
     delete process.env.CLIENT_SECRET
     expect(() => validateRequiredEnvVariables()).toThrowError(
-      'Please provide CLIENT_SECRET in the environmental variables before running the autopilot'
+      'Please provide CLIENT_SECRET in the environmental variables before running the autopilot',
     )
   })
 
@@ -473,7 +473,7 @@ describe('Test "validateRequiredEnvVariables()" from "run.ts"', () => {
     process.env.CLIENT_SECRET = 'mockedClientSecret'
     process.env.SUBSCRIPTION_ID = ''
     expect(() => validateRequiredEnvVariables()).toThrowError(
-      'Please provide SUBSCRIPTION_ID in the environmental variables before running the autopilot'
+      'Please provide SUBSCRIPTION_ID in the environmental variables before running the autopilot',
     )
   })
 })
@@ -489,7 +489,7 @@ describe('Test "getSecurityAlertsOnASubscription()" from "run.ts"', async () => 
 
     const mockedSecurityAlertsSpy = vi.spyOn(
       alertsRetriever,
-      'getDefenderForCloudAlerts'
+      'getDefenderForCloudAlerts',
     )
     const mockedSecurityAlerts = mockedAlertsUnitTestsFirstSet
     mockedSecurityAlertsSpy.mockResolvedValueOnce(mockedSecurityAlerts)
@@ -503,12 +503,12 @@ describe('Test "getSecurityAlertsOnASubscription()" from "run.ts"', async () => 
     const mockedTokenSpy = vi.spyOn(auth, 'generateAzureAccessToken')
     mockedTokenSpy.mockRejectedValueOnce(
       new Error(
-        'Request for Azure access token does not have status code 200. Status code: 400'
-      )
+        'Request for Azure access token does not have status code 200. Status code: 400',
+      ),
     )
 
     expect(getSecurityAlertsOnASubscription()).rejects.toThrow(
-      'Request for Azure access token does not have status code 200. Status code: 400'
+      'Request for Azure access token does not have status code 200. Status code: 400',
     )
   })
 
@@ -519,16 +519,16 @@ describe('Test "getSecurityAlertsOnASubscription()" from "run.ts"', async () => 
 
     const mockedSecurityAlertsSpy = vi.spyOn(
       alertsRetriever,
-      'getDefenderForCloudAlerts'
+      'getDefenderForCloudAlerts',
     )
     mockedSecurityAlertsSpy.mockRejectedValueOnce(
       new Error(
-        'Request for Azure alerts does not have status code 200. Status code: 400'
-      )
+        'Request for Azure alerts does not have status code 200. Status code: 400',
+      ),
     )
 
     expect(getSecurityAlertsOnASubscription()).rejects.toThrow(
-      'Request for Azure alerts does not have status code 200. Status code: 400'
+      'Request for Azure alerts does not have status code 200. Status code: 400',
     )
   })
 })
@@ -544,7 +544,7 @@ describe('Test "getRecommendationsOnASubscription()" from "run.ts"', async () =>
 
     const mockedRecommendationsSpy = vi.spyOn(
       recommendationsRetriever,
-      'getDefenderForCloudRecommendations'
+      'getDefenderForCloudRecommendations',
     )
     const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
     mockedRecommendationsSpy.mockResolvedValueOnce(mockedRecommendations)
@@ -558,12 +558,12 @@ describe('Test "getRecommendationsOnASubscription()" from "run.ts"', async () =>
     const mockedTokenSpy = vi.spyOn(auth, 'generateAzureAccessToken')
     mockedTokenSpy.mockRejectedValueOnce(
       new Error(
-        'Request for Azure access token does not have status code 200. Status code: 400'
-      )
+        'Request for Azure access token does not have status code 200. Status code: 400',
+      ),
     )
 
     expect(getRecommendationsOnASubscription()).rejects.toThrow(
-      'Request for Azure access token does not have status code 200. Status code: 400'
+      'Request for Azure access token does not have status code 200. Status code: 400',
     )
   })
 
@@ -574,16 +574,16 @@ describe('Test "getRecommendationsOnASubscription()" from "run.ts"', async () =>
 
     const mockedRecommendationsSpy = vi.spyOn(
       recommendationsRetriever,
-      'getDefenderForCloudRecommendations'
+      'getDefenderForCloudRecommendations',
     )
     mockedRecommendationsSpy.mockRejectedValueOnce(
       new Error(
-        'Request for Azure recommendations does not have status code 200. Status code: 400'
-      )
+        'Request for Azure recommendations does not have status code 200. Status code: 400',
+      ),
     )
 
     expect(getRecommendationsOnASubscription()).rejects.toThrow(
-      'Request for Azure recommendations does not have status code 200. Status code: 400'
+      'Request for Azure recommendations does not have status code 200. Status code: 400',
     )
   })
 })
@@ -599,7 +599,7 @@ describe('Test "getRecommendationsMetadataOnASubscription()" from "run.ts"', asy
 
     const mockedRecommendationsMetadataSpy = vi.spyOn(
       recommendationsRetriever,
-      'getDefenderForCloudRecommendationsMetadata'
+      'getDefenderForCloudRecommendationsMetadata',
     )
     const mockedMetadata = mockedRecommendationsMetadataUnitTestsFirstSet
     mockedRecommendationsMetadataSpy.mockResolvedValueOnce(mockedMetadata)
@@ -613,12 +613,12 @@ describe('Test "getRecommendationsMetadataOnASubscription()" from "run.ts"', asy
     const mockedTokenSpy = vi.spyOn(auth, 'generateAzureAccessToken')
     mockedTokenSpy.mockRejectedValueOnce(
       new Error(
-        'Request for Azure access token does not have status code 200. Status code: 400'
-      )
+        'Request for Azure access token does not have status code 200. Status code: 400',
+      ),
     )
 
     expect(getRecommendationsMetadataOnASubscription()).rejects.toThrow(
-      'Request for Azure access token does not have status code 200. Status code: 400'
+      'Request for Azure access token does not have status code 200. Status code: 400',
     )
   })
 
@@ -629,16 +629,16 @@ describe('Test "getRecommendationsMetadataOnASubscription()" from "run.ts"', asy
 
     const mockedRecommendationsMetadataSpy = vi.spyOn(
       recommendationsRetriever,
-      'getDefenderForCloudRecommendationsMetadata'
+      'getDefenderForCloudRecommendationsMetadata',
     )
     mockedRecommendationsMetadataSpy.mockRejectedValueOnce(
       new Error(
-        'Request for Azure recommendations metadata does not have status code 200. Status code: 400'
-      )
+        'Request for Azure recommendations metadata does not have status code 200. Status code: 400',
+      ),
     )
 
     expect(getRecommendationsMetadataOnASubscription()).rejects.toThrow(
-      'Request for Azure recommendations metadata does not have status code 200. Status code: 400'
+      'Request for Azure recommendations metadata does not have status code 200. Status code: 400',
     )
   })
 })
@@ -675,33 +675,33 @@ describe('Test "getUnhealthyRecommendations()" from "run.ts"', () => {
 describe('Test "combineRecommendationAndMetadata()" from "run.ts"', () => {
   it('Should return a list of merged recommendations if the metadata input includes items matching the name of any input recommendations', () => {
     const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(
-      JSON.stringify(mockedRecommendationsUnitTestsFirstSet)
+      JSON.stringify(mockedRecommendationsUnitTestsFirstSet),
     )
     const result = combineRecommendationAndMetadata(
       copyMockedRecommendationsUnitTestsFirstSet,
-      mockedRecommendationsMetadataUnitTestsFirstSet
+      mockedRecommendationsMetadataUnitTestsFirstSet,
     )
     expect(result).toEqual(mockedCombinedRecommendationsFirstSet)
   })
 
   it('Should return a list of unchanged recommendations if the metadata input does not include items matching the name of any input recommendations', () => {
     const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(
-      JSON.stringify(mockedRecommendationsUnitTestsFirstSet)
+      JSON.stringify(mockedRecommendationsUnitTestsFirstSet),
     )
     const result = combineRecommendationAndMetadata(
       copyMockedRecommendationsUnitTestsFirstSet,
-      mockedRecommendationsMetadataUnitTestsSecondSet
+      mockedRecommendationsMetadataUnitTestsSecondSet,
     )
     expect(result).toEqual(mockedRecommendationsUnitTestsFirstSet)
   })
 
   it('Should return a list of unchanged recommendations if the metadata input is empty', () => {
     const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(
-      JSON.stringify(mockedRecommendationsUnitTestsFirstSet)
+      JSON.stringify(mockedRecommendationsUnitTestsFirstSet),
     )
     const result = combineRecommendationAndMetadata(
       copyMockedRecommendationsUnitTestsFirstSet,
-      []
+      [],
     )
     expect(result).toEqual(mockedRecommendationsUnitTestsFirstSet)
   })
@@ -709,18 +709,18 @@ describe('Test "combineRecommendationAndMetadata()" from "run.ts"', () => {
   it('Should return an empty list if the input recommendations list is empty and the metadata input is non-empty', () => {
     const result = combineRecommendationAndMetadata(
       [],
-      mockedRecommendationsMetadataUnitTestsFirstSet
+      mockedRecommendationsMetadataUnitTestsFirstSet,
     )
     expect(result).toEqual([])
   })
 
   it('Should return recommendations with an empty properties field if the property is absent from the metadata properties', () => {
     const copyMockedRecommendationsUnitTestsFirstSet = JSON.parse(
-      JSON.stringify(mockedRecommendationsUnitTestsFirstSet)
+      JSON.stringify(mockedRecommendationsUnitTestsFirstSet),
     )
     const result = combineRecommendationAndMetadata(
       copyMockedRecommendationsUnitTestsFirstSet,
-      mockedRecommendationsMetadataMissingFields
+      mockedRecommendationsMetadataMissingFields,
     )
     expect(result).toEqual(mockedCombinedRecommendationsWithEmptyFields)
   })
@@ -766,11 +766,11 @@ describe('Test "run()" from "run.ts"', async () => {
           delete process.env[`${envVariable.name}`]
           const spyStatus = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setStatus'
+            'setStatus',
           )
           const spyReason = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setReason'
+            'setReason',
           )
 
           await run()
@@ -779,9 +779,9 @@ describe('Test "run()" from "run.ts"', async () => {
           expect(spyReason).toHaveBeenCalledWith(
             'Please provide ' +
               `${envVariable.name} ` +
-              'in the environmental variables before running the autopilot'
+              'in the environmental variables before running the autopilot',
           )
-        }
+        },
       )
       it('Should set status FAILED when no required environment variables are set', async () => {
         delete process.env.TENANT_ID
@@ -790,18 +790,18 @@ describe('Test "run()" from "run.ts"', async () => {
         delete process.env.SUBSCRIPTION_ID
         const spyStatus = vi.spyOn(
           autopilotUtils.AppOutput.prototype,
-          'setStatus'
+          'setStatus',
         )
         const spyReason = vi.spyOn(
           autopilotUtils.AppOutput.prototype,
-          'setReason'
+          'setReason',
         )
 
         await run()
 
         expect(spyStatus).toHaveBeenCalledWith('FAILED')
         expect(spyReason).toHaveBeenCalledWith(
-          'Please provide TENANT_ID in the environmental variables before running the autopilot'
+          'Please provide TENANT_ID in the environmental variables before running the autopilot',
         )
       })
     })
@@ -843,11 +843,11 @@ describe('Test "run()" from "run.ts"', async () => {
           vi.stubEnv(`${envVariable.name}`, envVariable.value)
           const spyStatus = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setStatus'
+            'setStatus',
           )
           const spyReason = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setReason'
+            'setReason',
           )
 
           await run()
@@ -856,9 +856,9 @@ describe('Test "run()" from "run.ts"', async () => {
           expect(spyReason).toHaveBeenCalledWith(
             'Please provide ' +
               `${envVariable.name} ` +
-              'in the environmental variables before running the autopilot'
+              'in the environmental variables before running the autopilot',
           )
-        }
+        },
       )
     })
   })
@@ -887,32 +887,32 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudAlertsSpy = vi.spyOn(
         alertsRetriever,
-        'getDefenderForCloudAlerts'
+        'getDefenderForCloudAlerts',
       )
       const mockedSecurityAlerts = mockedAlertsUnitTestsFirstSet
       getDefenderForCloudAlertsSpy.mockResolvedValueOnce(mockedSecurityAlerts)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 2 alerts based on given filters'
+        'Retrieved 2 alerts based on given filters',
       )
     })
 
@@ -922,32 +922,32 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudAlertsSpy = vi.spyOn(
         alertsRetriever,
-        'getDefenderForCloudAlerts'
+        'getDefenderForCloudAlerts',
       )
       const mockedSecurityAlerts = mockedAlertsUnitTestsFirstSet
       getDefenderForCloudAlertsSpy.mockResolvedValueOnce(mockedSecurityAlerts)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 1 alerts based on given filters'
+        'Retrieved 1 alerts based on given filters',
       )
     })
 
@@ -957,32 +957,32 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudAlertsSpy = vi.spyOn(
         alertsRetriever,
-        'getDefenderForCloudAlerts'
+        'getDefenderForCloudAlerts',
       )
       const mockedSecurityAlerts = mockedAlertsUnitTestsFirstSet
       getDefenderForCloudAlertsSpy.mockResolvedValueOnce(mockedSecurityAlerts)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 2 alerts based on given filters'
+        'Retrieved 2 alerts based on given filters',
       )
     })
 
@@ -992,32 +992,32 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudAlertsSpy = vi.spyOn(
         alertsRetriever,
-        'getDefenderForCloudAlerts'
+        'getDefenderForCloudAlerts',
       )
       const mockedSecurityAlerts = mockedAlertsUnitTestsFirstSet
       getDefenderForCloudAlertsSpy.mockResolvedValueOnce(mockedSecurityAlerts)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 1 alerts based on given filters'
+        'Retrieved 1 alerts based on given filters',
       )
     })
 
@@ -1026,64 +1026,64 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudAlertsSpy = vi.spyOn(
         alertsRetriever,
-        'getDefenderForCloudAlerts'
+        'getDefenderForCloudAlerts',
       )
       const mockedSecurityAlerts = mockedAlertsUnitTestsFirstSet
       getDefenderForCloudAlertsSpy.mockResolvedValueOnce(mockedSecurityAlerts)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 1 alerts based on given filters'
+        'Retrieved 1 alerts based on given filters',
       )
     })
 
     it('Should return status GREEN with 0 retrieved alerts when there are all the filters', async () => {
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudAlertsSpy = vi.spyOn(
         alertsRetriever,
-        'getDefenderForCloudAlerts'
+        'getDefenderForCloudAlerts',
       )
       const mockedSecurityAlerts = mockedAlertsUnitTestsFirstSet
       getDefenderForCloudAlertsSpy.mockResolvedValueOnce(mockedSecurityAlerts)
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('GREEN')
       expect(spyReason).toHaveBeenCalledWith(
-        'No alerts found based on given filters'
+        'No alerts found based on given filters',
       )
     })
   })
@@ -1099,7 +1099,7 @@ describe('Test "run()" from "run.ts"', async () => {
       vi.stubEnv('CATEGORIES_FILTER', 'Networking')
       vi.stubEnv(
         'THREATS_FILTER',
-        'ThreatResistance, DenialOfService, DataSpillage'
+        'ThreatResistance, DenialOfService, DataSpillage',
       )
       vi.stubEnv('USER_IMPACT_FILTER', 'Moderate')
       vi.stubEnv('IMPLEMENTATION_EFFORT_FILTER', 'Moderate')
@@ -1121,46 +1121,46 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudRecommendationsSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendations'
+        'getDefenderForCloudRecommendations',
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
       getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
+        mockedRecommendations,
       )
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendationsMetadata'
+        'getDefenderForCloudRecommendationsMetadata',
       )
 
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata =
         mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
+        mockedRecommendationsMetadata,
       )
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 2 security recommendations based on given filters'
+        'Retrieved 2 security recommendations based on given filters',
       )
     })
 
@@ -1173,46 +1173,46 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudRecommendationsSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendations'
+        'getDefenderForCloudRecommendations',
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
       getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
+        mockedRecommendations,
       )
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendationsMetadata'
+        'getDefenderForCloudRecommendationsMetadata',
       )
 
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata =
         mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
+        mockedRecommendationsMetadata,
       )
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 1 security recommendations based on given filters'
+        'Retrieved 1 security recommendations based on given filters',
       )
     })
 
@@ -1225,46 +1225,46 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudRecommendationsSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendations'
+        'getDefenderForCloudRecommendations',
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
       getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
+        mockedRecommendations,
       )
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendationsMetadata'
+        'getDefenderForCloudRecommendationsMetadata',
       )
 
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata =
         mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
+        mockedRecommendationsMetadata,
       )
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 1 security recommendations based on given filters'
+        'Retrieved 1 security recommendations based on given filters',
       )
     })
 
@@ -1277,46 +1277,46 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudRecommendationsSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendations'
+        'getDefenderForCloudRecommendations',
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
       getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
+        mockedRecommendations,
       )
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendationsMetadata'
+        'getDefenderForCloudRecommendationsMetadata',
       )
 
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata =
         mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
+        mockedRecommendationsMetadata,
       )
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 1 security recommendations based on given filters'
+        'Retrieved 1 security recommendations based on given filters',
       )
     })
 
@@ -1329,46 +1329,46 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudRecommendationsSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendations'
+        'getDefenderForCloudRecommendations',
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
       getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
+        mockedRecommendations,
       )
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendationsMetadata'
+        'getDefenderForCloudRecommendationsMetadata',
       )
 
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata =
         mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
+        mockedRecommendationsMetadata,
       )
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 2 security recommendations based on given filters'
+        'Retrieved 2 security recommendations based on given filters',
       )
     })
 
@@ -1381,46 +1381,46 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudRecommendationsSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendations'
+        'getDefenderForCloudRecommendations',
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
       getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
+        mockedRecommendations,
       )
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendationsMetadata'
+        'getDefenderForCloudRecommendationsMetadata',
       )
 
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata =
         mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
+        mockedRecommendationsMetadata,
       )
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 1 security recommendations based on given filters'
+        'Retrieved 1 security recommendations based on given filters',
       )
     })
 
@@ -1433,92 +1433,92 @@ describe('Test "run()" from "run.ts"', async () => {
 
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudRecommendationsSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendations'
+        'getDefenderForCloudRecommendations',
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
       getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
+        mockedRecommendations,
       )
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendationsMetadata'
+        'getDefenderForCloudRecommendationsMetadata',
       )
 
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata =
         mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
+        mockedRecommendationsMetadata,
       )
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('RED')
       expect(spyReason).toHaveBeenCalledWith(
-        'Retrieved 2 security recommendations based on given filters'
+        'Retrieved 2 security recommendations based on given filters',
       )
     })
 
     it('Should return status GREEN with 0 retrieved unhealthy recommendations when all the filter are present', async () => {
       const generateAzureAccessTokenSpy = vi.spyOn(
         auth,
-        'generateAzureAccessToken'
+        'generateAzureAccessToken',
       )
       const mockedToken = 'mockedToken'
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
 
       const getDefenderForCloudRecommendationsSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendations'
+        'getDefenderForCloudRecommendations',
       )
       const mockedRecommendations = mockedRecommendationsUnitTestsFirstSet
       getDefenderForCloudRecommendationsSpy.mockResolvedValueOnce(
-        mockedRecommendations
+        mockedRecommendations,
       )
 
       const getDefenderForCloudRecommendationsMetadataSpy = vi.spyOn(
         recommendationsRetriever,
-        'getDefenderForCloudRecommendationsMetadata'
+        'getDefenderForCloudRecommendationsMetadata',
       )
 
       generateAzureAccessTokenSpy.mockResolvedValueOnce(mockedToken)
       const mockedRecommendationsMetadata =
         mockedRecommendationsMetadataUnitTestsFirstSet
       getDefenderForCloudRecommendationsMetadataSpy.mockResolvedValueOnce(
-        mockedRecommendationsMetadata
+        mockedRecommendationsMetadata,
       )
 
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
 
       await run()
 
       expect(spyStatus).toHaveBeenCalledWith('GREEN')
       expect(spyReason).toHaveBeenCalledWith(
-        'No security recommendations found based on given filters'
+        'No security recommendations found based on given filters',
       )
     })
   })

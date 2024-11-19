@@ -7,7 +7,7 @@ export abstract class SecretStorage {
   abstract storeSecret(
     namespaceId: number,
     name: string,
-    secretValue: string
+    secretValue: string,
   ): Promise<void>
   abstract deleteSecret(namespaceId: number, name: string): Promise<void>
 }

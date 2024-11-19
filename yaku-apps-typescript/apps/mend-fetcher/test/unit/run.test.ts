@@ -119,11 +119,11 @@ describe('run', () => {
           delete process.env[`${envVariable.name}`]
           const spyStatus = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setStatus'
+            'setStatus',
           )
           const spyReason = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setReason'
+            'setReason',
           )
 
           expect.assertions(2)
@@ -133,9 +133,9 @@ describe('run', () => {
           expect(spyReason).toHaveBeenCalledWith(
             'Environment validation failed: ' +
               `${envVariable.name} ` +
-              'Required'
+              'Required',
           )
-        }
+        },
       )
 
       it('should set status FAILED when no required env variables are set', async () => {
@@ -147,11 +147,11 @@ describe('run', () => {
         delete process.env.MEND_USER_KEY
         const spyStatus = vi.spyOn(
           autopilotUtils.AppOutput.prototype,
-          'setStatus'
+          'setStatus',
         )
         const spyReason = vi.spyOn(
           autopilotUtils.AppOutput.prototype,
-          'setReason'
+          'setReason',
         )
 
         expect.assertions(2)
@@ -165,7 +165,7 @@ describe('run', () => {
             ` MEND_ORG_TOKEN Required,` +
             ` MEND_PROJECT_TOKEN Required,` +
             ` MEND_USER_EMAIL Required,` +
-            ` MEND_USER_KEY Required`
+            ` MEND_USER_KEY Required`,
         )
       })
     })
@@ -214,11 +214,11 @@ describe('run', () => {
           vi.stubEnv(`${envVariable.name}`, envVariable.value)
           const spyStatus = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setStatus'
+            'setStatus',
           )
           const spyReason = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setReason'
+            'setReason',
           )
 
           expect.assertions(2)
@@ -228,9 +228,9 @@ describe('run', () => {
           expect(spyReason).toHaveBeenCalledWith(
             `Environment validation failed:` +
               ` ${envVariable.name}` +
-              ` ${envVariable.errorMessage}`
+              ` ${envVariable.errorMessage}`,
           )
-        }
+        },
       )
     })
 
@@ -242,7 +242,7 @@ describe('run', () => {
         vi.stubEnv('MEND_PROJECT_ID', '123321,,125521')
         vi.stubEnv(
           'MEND_PROJECT_TOKEN',
-          'dummy3-token,dummy2-token,dummy1-token'
+          'dummy3-token,dummy2-token,dummy1-token',
         )
         vi.stubEnv('MEND_USER_EMAIL', 'dummy1@some.gTLD')
         vi.stubEnv('MEND_USER_KEY', 'dummy1-userkey')
@@ -336,11 +336,11 @@ describe('run', () => {
           vi.stubEnv(`${envVariable.name}`, envVariable.value)
           const spyStatus = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setStatus'
+            'setStatus',
           )
           const spyReason = vi.spyOn(
             autopilotUtils.AppOutput.prototype,
-            'setReason'
+            'setReason',
           )
 
           expect.assertions(2)
@@ -348,9 +348,9 @@ describe('run', () => {
 
           expect(spyStatus).toHaveBeenCalledWith('FAILED')
           expect(spyReason).toHaveBeenCalledWith(
-            `Environment validation failed:` + ` ${envVariable.errorMessage}`
+            `Environment validation failed:` + ` ${envVariable.errorMessage}`,
           )
-        }
+        },
       )
     })
   })
@@ -374,18 +374,18 @@ describe('run', () => {
     it('should set status FAILED when an UnexpectedDataError is thrown', async () => {
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
       const spyOrg = vi.spyOn(
         OrganizationService.prototype,
-        'getOrganizationById'
+        'getOrganizationById',
       )
       spyOrg.mockRejectedValueOnce(
-        new UnexpectedDataError('UnexpectedDataError was thrown')
+        new UnexpectedDataError('UnexpectedDataError was thrown'),
       )
 
       expect.assertions(2)
@@ -398,15 +398,15 @@ describe('run', () => {
     it('should set status FAILED when a RequestError is thrown', async () => {
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
       const spyOrg = vi.spyOn(
         OrganizationService.prototype,
-        'getOrganizationById'
+        'getOrganizationById',
       )
       spyOrg.mockRejectedValueOnce(new RequestError('Error message'))
 
@@ -420,18 +420,18 @@ describe('run', () => {
     it('should set status FAILED when a ResponseError is thrown', async () => {
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
       const spyOrg = vi.spyOn(
         OrganizationService.prototype,
-        'getOrganizationById'
+        'getOrganizationById',
       )
       spyOrg.mockRejectedValueOnce(
-        new ResponseError('ResponseError was thrown')
+        new ResponseError('ResponseError was thrown'),
       )
 
       expect.assertions(2)
@@ -469,67 +469,67 @@ describe('run', () => {
       }
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
       const spyResult = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'addResult'
+        'addResult',
       )
       const spyOrganizationService = vi.spyOn(
         OrganizationService.prototype,
-        'getOrganizationById'
+        'getOrganizationById',
       )
       spyOrganizationService.mockReturnValueOnce(
-        Promise.resolve(organizationModel)
+        Promise.resolve(organizationModel),
       )
       const spyProjectService = vi.spyOn(
         ProjectService.prototype,
-        'getProjectByToken'
+        'getProjectByToken',
       )
       spyProjectService.mockReturnValueOnce(Promise.resolve(projectModel))
       const spyVitalsProjectService = vi.spyOn(
         ProjectService.prototype,
-        'getProjectVitals'
+        'getProjectVitals',
       )
       spyVitalsProjectService.mockReturnValueOnce(
-        Promise.resolve(projectVitalsModel)
+        Promise.resolve(projectVitalsModel),
       )
       const spyLibraryService = vi.spyOn(
         LibraryService.prototype,
-        'getAllLibrariesById'
+        'getAllLibrariesById',
       )
       spyLibraryService.mockReturnValueOnce(Promise.resolve(librariesModel))
       const spyVulnerabilityService = vi.spyOn(
         VulnerabilityService.prototype,
-        'getAllVulnerabilitiesById'
+        'getAllVulnerabilitiesById',
       )
 
       const spyVulnerabilityServiceFix = vi.spyOn(
         VulnerabilityService.prototype,
-        'getAllVulnerabilitiesFixSummaryById'
+        'getAllVulnerabilitiesFixSummaryById',
       )
 
       spyVulnerabilityService.mockReturnValueOnce(
-        Promise.resolve([vulnerabilitiesModel[0], vulnerabilitiesModel[1]])
+        Promise.resolve([vulnerabilitiesModel[0], vulnerabilitiesModel[1]]),
       )
       spyVulnerabilityService.mockReturnValueOnce(
-        Promise.resolve([vulnerabilitiesModel[1], vulnerabilitiesModel[0]])
+        Promise.resolve([vulnerabilitiesModel[1], vulnerabilitiesModel[0]]),
       )
       spyVulnerabilityServiceFix.mockReturnValueOnce(
-        Promise.resolve(vulnerabilityFixSummaryModel)
+        Promise.resolve(vulnerabilityFixSummaryModel),
       )
       spyVulnerabilityServiceFix.mockReturnValueOnce(
-        Promise.resolve(vulnerabilityFixSummaryModel)
+        Promise.resolve(vulnerabilityFixSummaryModel),
       )
       spyVulnerabilityServiceFix.mockReturnValueOnce(
-        Promise.resolve(vulnerabilityFixSummaryModel)
+        Promise.resolve(vulnerabilityFixSummaryModel),
       )
       spyVulnerabilityServiceFix.mockReturnValueOnce(
-        Promise.resolve(vulnerabilityFixSummaryModel)
+        Promise.resolve(vulnerabilityFixSummaryModel),
       )
       const reasonLinkTemplate =
         envVariable.value !== undefined
@@ -630,7 +630,7 @@ describe('run', () => {
               ? ' in project ' + projectModel.name + ';'
               : ''
           }` +
-          `;`
+          `;`,
       )
     })
 
@@ -638,69 +638,69 @@ describe('run', () => {
       vi.stubEnv('MEND_REPORT_TYPE', 'alerts')
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
       const spyResult = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'addResult'
+        'addResult',
       )
       const spyOrganizationService = vi.spyOn(
         OrganizationService.prototype,
-        'getOrganizationById'
+        'getOrganizationById',
       )
       spyOrganizationService.mockReturnValueOnce(
-        Promise.resolve(organizationModel)
+        Promise.resolve(organizationModel),
       )
       const spyProjectService = vi.spyOn(
         ProjectService.prototype,
-        'getProjectByToken'
+        'getProjectByToken',
       )
       spyProjectService.mockReturnValueOnce(Promise.resolve(projectModel))
       const spyVitalsProjectService = vi.spyOn(
         ProjectService.prototype,
-        'getProjectVitals'
+        'getProjectVitals',
       )
       spyVitalsProjectService.mockReturnValueOnce(
-        Promise.resolve(projectVitalsModel)
+        Promise.resolve(projectVitalsModel),
       )
       const spyPolicyAlertService = vi.spyOn(
         AlertService.prototype,
-        'getPolicyAlertsById'
+        'getPolicyAlertsById',
       )
       spyPolicyAlertService.mockReturnValueOnce(
-        Promise.resolve(policyAlertsModel)
+        Promise.resolve(policyAlertsModel),
       )
       const spyNewVersionAlertService = vi.spyOn(
         AlertService.prototype,
-        'getNewVersionsAlertsById'
+        'getNewVersionsAlertsById',
       )
       spyNewVersionAlertService.mockReturnValueOnce(
-        Promise.resolve(newVersionsAlertsModel)
+        Promise.resolve(newVersionsAlertsModel),
       )
       const spyMultipleLicensesAlertService = vi.spyOn(
         AlertService.prototype,
-        'getMultipleLicensesAlertsById'
+        'getMultipleLicensesAlertsById',
       )
       spyMultipleLicensesAlertService.mockReturnValueOnce(
-        Promise.resolve(multipleLicensesAlertsModel)
+        Promise.resolve(multipleLicensesAlertsModel),
       )
       const spyRejectedInUseAlertService = vi.spyOn(
         AlertService.prototype,
-        'getRejectedInUseAlertsById'
+        'getRejectedInUseAlertsById',
       )
       spyRejectedInUseAlertService.mockReturnValueOnce(
-        Promise.resolve(rejectedInUseAlertsModel)
+        Promise.resolve(rejectedInUseAlertsModel),
       )
       const spySecurityAlertService = vi.spyOn(
         AlertService.prototype,
-        'getSecurityAlertsById'
+        'getSecurityAlertsById',
       )
       spySecurityAlertService.mockReturnValueOnce(
-        Promise.resolve(securityAlertsModel)
+        Promise.resolve(securityAlertsModel),
       )
       const reasonLinkTemplate =
         envVariable.value !== undefined
@@ -720,7 +720,7 @@ describe('run', () => {
           newVersionsAlertsModel.length +
           multipleLicensesAlertsModel.length +
           rejectedInUseAlertsModel.length +
-          2
+          2,
       )
       await run()
 
@@ -912,7 +912,7 @@ describe('run', () => {
               ? ` in project ` + projectModel.name
               : ``
           }` +
-          `;`
+          `;`,
       )
     })
   })
@@ -944,43 +944,43 @@ describe('run', () => {
       }
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
       const spyResult = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'addResult'
+        'addResult',
       )
       const spyOrganizationService = vi.spyOn(
         OrganizationService.prototype,
-        'getOrganizationById'
+        'getOrganizationById',
       )
       spyOrganizationService.mockReturnValueOnce(
-        Promise.resolve(organizationModel)
+        Promise.resolve(organizationModel),
       )
       const spyProjectService = vi.spyOn(
         ProjectService.prototype,
-        'getProjectByToken'
+        'getProjectByToken',
       )
       spyProjectService.mockReturnValueOnce(Promise.resolve(projectModel))
       const spyVitalsProjectService = vi.spyOn(
         ProjectService.prototype,
-        'getProjectVitals'
+        'getProjectVitals',
       )
       spyVitalsProjectService.mockReturnValueOnce(
-        Promise.resolve(projectVitalsModel)
+        Promise.resolve(projectVitalsModel),
       )
       const spyLibraryService = vi.spyOn(
         LibraryService.prototype,
-        'getAllLibrariesById'
+        'getAllLibrariesById',
       )
       spyLibraryService.mockReturnValueOnce(Promise.resolve(librariesModel))
       const spyVulnerabilityService = vi.spyOn(
         VulnerabilityService.prototype,
-        'getAllVulnerabilitiesById'
+        'getAllVulnerabilitiesById',
       )
 
       spyVulnerabilityService.mockReturnValueOnce(Promise.resolve([]))
@@ -1010,7 +1010,7 @@ describe('run', () => {
           ',' +
           ' see more details in Mend ' +
           reasonLinkTemplate +
-          ';'
+          ';',
       )
     })
 
@@ -1021,50 +1021,50 @@ describe('run', () => {
       vi.stubEnv('MEND_REPORT_TYPE', 'alerts')
       const spyStatus = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setStatus'
+        'setStatus',
       )
       const spyReason = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'setReason'
+        'setReason',
       )
       const spyResult = vi.spyOn(
         autopilotUtils.AppOutput.prototype,
-        'addResult'
+        'addResult',
       )
       const spyOrganizationService = vi.spyOn(
         OrganizationService.prototype,
-        'getOrganizationById'
+        'getOrganizationById',
       )
       spyOrganizationService.mockReturnValueOnce(
-        Promise.resolve(organizationModel)
+        Promise.resolve(organizationModel),
       )
       const spyProjectService = vi.spyOn(
         ProjectService.prototype,
-        'getProjectByToken'
+        'getProjectByToken',
       )
       spyProjectService.mockReturnValueOnce(Promise.resolve(projectModel))
       const spyPolicyAlertService = vi.spyOn(
         AlertService.prototype,
-        'getPolicyAlertsById'
+        'getPolicyAlertsById',
       )
       const spyNewVersionAlertService = vi.spyOn(
         AlertService.prototype,
-        'getNewVersionsAlertsById'
+        'getNewVersionsAlertsById',
       )
       const spyMultipleLicensesAlertService = vi.spyOn(
         AlertService.prototype,
-        'getMultipleLicensesAlertsById'
+        'getMultipleLicensesAlertsById',
       )
       const spyRejectedInUseAlertService = vi.spyOn(
         AlertService.prototype,
-        'getRejectedInUseAlertsById'
+        'getRejectedInUseAlertsById',
       )
       const spyVitalsProjectService = vi.spyOn(
         ProjectService.prototype,
-        'getProjectVitals'
+        'getProjectVitals',
       )
       spyVitalsProjectService.mockReturnValueOnce(
-        Promise.resolve(projectVitalsModel)
+        Promise.resolve(projectVitalsModel),
       )
       spyPolicyAlertService.mockReturnValueOnce(Promise.resolve([]))
       spyNewVersionAlertService.mockReturnValueOnce(Promise.resolve([]))
@@ -1072,7 +1072,7 @@ describe('run', () => {
       spyRejectedInUseAlertService.mockReturnValueOnce(Promise.resolve([]))
       const spySecurityAlertService = vi.spyOn(
         AlertService.prototype,
-        'getSecurityAlertsById'
+        'getSecurityAlertsById',
       )
       spySecurityAlertService.mockReturnValueOnce(Promise.resolve([]))
       const reasonLinkTemplate =
@@ -1100,7 +1100,7 @@ describe('run', () => {
           `,` +
           ` see more details in Mend ` +
           reasonLinkTemplate +
-          `;`
+          `;`,
       )
     })
   })
@@ -1124,7 +1124,7 @@ describe('run', () => {
     it('should throw an error when unexpected ', async () => {
       const spyOrg = vi.spyOn(
         OrganizationService.prototype,
-        'getOrganizationById'
+        'getOrganizationById',
       )
       spyOrg.mockRejectedValueOnce(new Error())
 

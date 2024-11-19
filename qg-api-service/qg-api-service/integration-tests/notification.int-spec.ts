@@ -68,17 +68,17 @@ describe('Notifications', () => {
 
     vi.spyOn(
       nestTestingApp.testingModule.get<SecretStorage>(SecretStorage),
-      'getSecrets'
+      'getSecrets',
     ).mockImplementation(() => Promise.resolve({}))
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'uploadConfig'
+      'uploadConfig',
     ).mockImplementation(() => {
       return Promise.resolve()
     })
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'fileExists'
+      'fileExists',
     ).mockImplementation(() => Promise.resolve(true))
   })
 
@@ -93,16 +93,16 @@ describe('Notifications', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -145,7 +145,7 @@ describe('Notifications', () => {
       const addCommentResponse = await addComment(releaseId, createCommentDto)
       expect(addCommentResponse.status).toBe(HttpStatus.CREATED)
       expect(addCommentResponse.body.content).toBe(
-        '@user1@bosch.com @user2@bosch.com @DELETED_USER @does@not.exist'
+        '@user1@bosch.com @user2@bosch.com @DELETED_USER @does@not.exist',
       )
     })
   })
@@ -236,16 +236,16 @@ describe('Notifications', () => {
         const configFile = path.join(
           __dirname,
           'mocks',
-          'qg-config-10-findings-red-status.yaml'
+          'qg-config-10-findings-red-status.yaml',
         )
         const resultFile = path.join(
           __dirname,
           'mocks',
-          'qg-result-10-findings-red-status.yaml'
+          'qg-result-10-findings-red-status.yaml',
         )
         vi.spyOn(
           nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-          'downloadResult'
+          'downloadResult',
         ).mockImplementation(async (): Promise<Readable> => {
           const buffer = await readFile(resultFile)
           const readableStream = new Readable({
@@ -261,7 +261,7 @@ describe('Notifications', () => {
         // turn off email notifications for users
         for (const userId of input.noEmailNotificationsId) {
           apiToken = await nestTestingApp.utils.getUserToken(
-            testNamespace.users[userId]
+            testNamespace.users[userId],
           )
           await updateUserPofile({
             emailNotifications: false,
@@ -271,7 +271,7 @@ describe('Notifications', () => {
 
         // set acting user
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[input.actingUserId]
+          testNamespace.users[input.actingUserId],
         )
 
         // create config + run
@@ -297,7 +297,7 @@ describe('Notifications', () => {
         // subscribe users to release
         for (const userId of input.subscribersId) {
           apiToken = await nestTestingApp.utils.getUserToken(
-            testNamespace.users[userId]
+            testNamespace.users[userId],
           )
           await subscribeToRelease({
             releaseId,
@@ -307,13 +307,13 @@ describe('Notifications', () => {
 
         // change back to acting user
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[input.actingUserId]
+          testNamespace.users[input.actingUserId],
         )
 
         // set spy
         const mailSpy = vi.spyOn(
           nestTestingApp.testingModule.get<MailingServiceMock>(MailingService),
-          'pushNotification'
+          'pushNotification',
         )
 
         // create comment
@@ -329,10 +329,10 @@ describe('Notifications', () => {
           expect(mailSpy.mock.calls[i][1]).toEqual(input.expectedCalls[i][1])
           // notification type
           expect(mailSpy.mock.calls[i][2]).toEqual(
-            expect.objectContaining(input.expectedCalls[i][2])
+            expect.objectContaining(input.expectedCalls[i][2]),
           )
         }
-      }
+      },
     )
 
     it.each([
@@ -401,16 +401,16 @@ describe('Notifications', () => {
         const configFile = path.join(
           __dirname,
           'mocks',
-          'qg-config-10-findings-red-status.yaml'
+          'qg-config-10-findings-red-status.yaml',
         )
         const resultFile = path.join(
           __dirname,
           'mocks',
-          'qg-result-10-findings-red-status.yaml'
+          'qg-result-10-findings-red-status.yaml',
         )
         vi.spyOn(
           nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-          'downloadResult'
+          'downloadResult',
         ).mockImplementation(async (): Promise<Readable> => {
           const buffer = await readFile(resultFile)
           const readableStream = new Readable({
@@ -426,7 +426,7 @@ describe('Notifications', () => {
         // turn off email notifications for users
         for (const userId of input.noEmailNotificationsId) {
           apiToken = await nestTestingApp.utils.getUserToken(
-            testNamespace.users[userId]
+            testNamespace.users[userId],
           )
           await updateUserPofile({
             emailNotifications: false,
@@ -436,7 +436,7 @@ describe('Notifications', () => {
 
         // set acting user
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[input.actingUserId]
+          testNamespace.users[input.actingUserId],
         )
 
         // create config + run
@@ -462,7 +462,7 @@ describe('Notifications', () => {
         // subscribe users to release
         for (const userId of input.subscribersId) {
           apiToken = await nestTestingApp.utils.getUserToken(
-            testNamespace.users[userId]
+            testNamespace.users[userId],
           )
           await subscribeToRelease({
             releaseId,
@@ -472,27 +472,27 @@ describe('Notifications', () => {
 
         // change back to acting user
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[input.actingUserId]
+          testNamespace.users[input.actingUserId],
         )
 
         // create initial comment
         const addCommentResponse = await addComment(
           releaseId,
-          input.createComment
+          input.createComment,
         )
         expect(addCommentResponse.status).toBe(HttpStatus.CREATED)
 
         // set spy
         const mailSpy = vi.spyOn(
           nestTestingApp.testingModule.get<MailingServiceMock>(MailingService),
-          'pushNotification'
+          'pushNotification',
         )
 
         // edit comment
         const updateCommentResponse = await updateComment(
           releaseId,
           addCommentResponse.body.id,
-          input.updateComment
+          input.updateComment,
         )
         expect(updateCommentResponse.status).toBe(HttpStatus.OK)
 
@@ -505,10 +505,10 @@ describe('Notifications', () => {
           expect(mailSpy.mock.calls[i][1]).toEqual(input.expectedCalls[i][1])
           // notification type
           expect(mailSpy.mock.calls[i][2]).toEqual(
-            expect.objectContaining(input.expectedCalls[i][2])
+            expect.objectContaining(input.expectedCalls[i][2]),
           )
         }
-      }
+      },
     )
 
     it.each([
@@ -687,16 +687,16 @@ describe('Notifications', () => {
         const configFile = path.join(
           __dirname,
           'mocks',
-          'qg-config-10-findings-red-status.yaml'
+          'qg-config-10-findings-red-status.yaml',
         )
         const resultFile = path.join(
           __dirname,
           'mocks',
-          'qg-result-10-findings-red-status.yaml'
+          'qg-result-10-findings-red-status.yaml',
         )
         vi.spyOn(
           nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-          'downloadResult'
+          'downloadResult',
         ).mockImplementation(async (): Promise<Readable> => {
           const buffer = await readFile(resultFile)
           const readableStream = new Readable({
@@ -712,7 +712,7 @@ describe('Notifications', () => {
         // turn off email notifications for users
         for (const userId of input.noEmailNotificationsId) {
           apiToken = await nestTestingApp.utils.getUserToken(
-            testNamespace.users[userId]
+            testNamespace.users[userId],
           )
           await updateUserPofile({
             emailNotifications: false,
@@ -722,7 +722,7 @@ describe('Notifications', () => {
 
         // set initial acting user
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[input.actingUserId[0]]
+          testNamespace.users[input.actingUserId[0]],
         )
 
         // create config + run
@@ -748,7 +748,7 @@ describe('Notifications', () => {
         // subscribe users to release
         for (const userId of input.subscribersId) {
           apiToken = await nestTestingApp.utils.getUserToken(
-            testNamespace.users[userId]
+            testNamespace.users[userId],
           )
           await subscribeToRelease({
             releaseId,
@@ -758,25 +758,25 @@ describe('Notifications', () => {
 
         // change back to inital acting user
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[input.actingUserId[0]]
+          testNamespace.users[input.actingUserId[0]],
         )
 
         // create initial comment
         const addCommentResponse = await addComment(
           releaseId,
-          input.createComment
+          input.createComment,
         )
         expect(addCommentResponse.status).toBe(HttpStatus.CREATED)
 
         // set spy
         const mailSpy = vi.spyOn(
           nestTestingApp.testingModule.get<MailingServiceMock>(MailingService),
-          'pushNotification'
+          'pushNotification',
         )
 
         // set acting user for first reply comment
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[input.actingUserId[1]]
+          testNamespace.users[input.actingUserId[1]],
         )
 
         // first reply to comment
@@ -791,7 +791,7 @@ describe('Notifications', () => {
 
         // set acting user for second reply comment
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[input.actingUserId[2]]
+          testNamespace.users[input.actingUserId[2]],
         )
 
         // second reply to comment
@@ -813,10 +813,10 @@ describe('Notifications', () => {
           expect(mailSpy.mock.calls[i][1]).toEqual(input.expectedCalls[i][1])
           // notification type
           expect(mailSpy.mock.calls[i][2]).toEqual(
-            expect.objectContaining(input.expectedCalls[i][2])
+            expect.objectContaining(input.expectedCalls[i][2]),
           )
         }
-      }
+      },
     )
     it.skipIf(ENABLE_TASKS_CONTROLLER != 'true')(
       'should notify assignees recurring when a task is assigned to them',
@@ -824,16 +824,16 @@ describe('Notifications', () => {
         const configFile = path.join(
           __dirname,
           'mocks',
-          'qg-config-10-findings-red-status.yaml'
+          'qg-config-10-findings-red-status.yaml',
         )
         const resultFile = path.join(
           __dirname,
           'mocks',
-          'qg-result-10-findings-red-status.yaml'
+          'qg-result-10-findings-red-status.yaml',
         )
         vi.spyOn(
           nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-          'downloadResult'
+          'downloadResult',
         ).mockImplementation(async (): Promise<Readable> => {
           const buffer = await readFile(resultFile)
           const readableStream = new Readable({
@@ -848,7 +848,7 @@ describe('Notifications', () => {
 
         // set initial acting user
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[0]
+          testNamespace.users[0],
         )
         // create config + run
         const body = {
@@ -873,7 +873,7 @@ describe('Notifications', () => {
         // set spy
         const mailSpy = vi.spyOn(
           nestTestingApp.testingModule.get<MailingServiceMock>(MailingService),
-          'pushNotification'
+          'pushNotification',
         )
 
         // create task
@@ -893,7 +893,7 @@ describe('Notifications', () => {
           createTaskResponse.body.id,
           {
             assignees: [assignee.id],
-          }
+          },
         )
         expect(assignToTaskResponse.status).toBe(HttpStatus.OK)
 
@@ -907,7 +907,7 @@ describe('Notifications', () => {
         expect(mailSpy.mock.calls[0][2]).toEqual(
           expect.objectContaining({
             type: NotificationType.TaskAssigned,
-          })
+          }),
         )
 
         /* Additional manual test steps executed:
@@ -916,7 +916,7 @@ describe('Notifications', () => {
          * 7. close the task
          * 8. Check if the user received a notification -> should not
          */
-      }
+      },
     )
   })
 
@@ -968,16 +968,16 @@ describe('Notifications', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -993,7 +993,7 @@ describe('Notifications', () => {
       // turn off email notifications for users
       for (const userId of noEmailNotificationsId) {
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[userId]
+          testNamespace.users[userId],
         )
         await updateUserPofile({
           emailNotifications: false,
@@ -1003,7 +1003,7 @@ describe('Notifications', () => {
 
       // set acting user
       apiToken = await nestTestingApp.utils.getUserToken(
-        testNamespace.users[actingUserId]
+        testNamespace.users[actingUserId],
       )
 
       // create config + run
@@ -1029,7 +1029,7 @@ describe('Notifications', () => {
       // subscribe users to release
       for (const userId of subscribersId) {
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[userId]
+          testNamespace.users[userId],
         )
         await subscribeToRelease({
           releaseId,
@@ -1039,7 +1039,7 @@ describe('Notifications', () => {
 
       // change back to acting user
       apiToken = await nestTestingApp.utils.getUserToken(
-        testNamespace.users[actingUserId]
+        testNamespace.users[actingUserId],
       )
 
       // add approvers
@@ -1052,13 +1052,13 @@ describe('Notifications', () => {
       // set spy
       const mailSpy = vi.spyOn(
         nestTestingApp.testingModule.get<MailingServiceMock>(MailingService),
-        'pushNotification'
+        'pushNotification',
       )
 
       // approve release
       for (const userId of approversId) {
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[userId]
+          testNamespace.users[userId],
         )
         await approveRelease(releaseId, {
           comment: 'All open conversations have been resolved',
@@ -1068,7 +1068,7 @@ describe('Notifications', () => {
       // reset release approval
       for (const userId of approversId) {
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[userId]
+          testNamespace.users[userId],
         )
         await resetApprovalRelease(releaseId, {
           comment: 'New issues have been found',
@@ -1083,7 +1083,7 @@ describe('Notifications', () => {
         expect(mailSpy.mock.calls[i][1]).toEqual(expectedCalls[i][1])
         // notification type
         expect(mailSpy.mock.calls[i][2]).toEqual(
-          expect.objectContaining(expectedCalls[i][2])
+          expect.objectContaining(expectedCalls[i][2]),
         )
       }
     })
@@ -1107,16 +1107,16 @@ describe('Notifications', () => {
       const configFile = path.join(
         __dirname,
         'mocks',
-        'qg-config-10-findings-red-status.yaml'
+        'qg-config-10-findings-red-status.yaml',
       )
       const resultFile = path.join(
         __dirname,
         'mocks',
-        'qg-result-10-findings-red-status.yaml'
+        'qg-result-10-findings-red-status.yaml',
       )
       vi.spyOn(
         nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-        'downloadResult'
+        'downloadResult',
       ).mockImplementation(async (): Promise<Readable> => {
         const buffer = await readFile(resultFile)
         const readableStream = new Readable({
@@ -1132,7 +1132,7 @@ describe('Notifications', () => {
       // turn off email notifications for users
       for (const userId of noEmailNotificationsId) {
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[userId]
+          testNamespace.users[userId],
         )
         await updateUserPofile({
           emailNotifications: false,
@@ -1142,7 +1142,7 @@ describe('Notifications', () => {
 
       // set acting user
       apiToken = await nestTestingApp.utils.getUserToken(
-        testNamespace.users[actingUserId]
+        testNamespace.users[actingUserId],
       )
 
       // create config + run
@@ -1168,7 +1168,7 @@ describe('Notifications', () => {
       // subscribe users to release
       for (const userId of subscribersId) {
         apiToken = await nestTestingApp.utils.getUserToken(
-          testNamespace.users[userId]
+          testNamespace.users[userId],
         )
         await subscribeToRelease({
           releaseId,
@@ -1178,13 +1178,13 @@ describe('Notifications', () => {
 
       // change back to acting user
       apiToken = await nestTestingApp.utils.getUserToken(
-        testNamespace.users[actingUserId]
+        testNamespace.users[actingUserId],
       )
 
       // set spy
       const mailSpy = vi.spyOn(
         nestTestingApp.testingModule.get<MailingServiceMock>(MailingService),
-        'pushNotification'
+        'pushNotification',
       )
       // add approvers
       for (const userId of approversId) {
@@ -1201,7 +1201,7 @@ describe('Notifications', () => {
         expect(mailSpy.mock.calls[i][1]).toEqual(expectedCalls[i][1])
         // notification type
         expect(mailSpy.mock.calls[i][2]).toEqual(
-          expect.objectContaining(expectedCalls[i][2])
+          expect.objectContaining(expectedCalls[i][2]),
         )
       }
     })
@@ -1209,12 +1209,12 @@ describe('Notifications', () => {
 
   async function addComment(
     releaseId: string,
-    comment: AddCommentDto
+    comment: AddCommentDto,
   ): Promise<supertest.Test> {
     return await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments`,
       )
       .send(comment)
       .set('Authorization', `Bearer ${apiToken}`)
@@ -1224,12 +1224,12 @@ describe('Notifications', () => {
   async function updateComment(
     releaseId: string,
     commentId: string,
-    comment: UpdateCommentDto
+    comment: UpdateCommentDto,
   ): Promise<supertest.Test> {
     return await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .patch(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments/${commentId}`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments/${commentId}`,
       )
       .send(comment)
       .set('Authorization', `Bearer ${apiToken}`)
@@ -1237,7 +1237,7 @@ describe('Notifications', () => {
   }
 
   async function updateUserPofile(
-    userProfile: UpdateUserProfileDto
+    userProfile: UpdateUserProfileDto,
   ): Promise<supertest.Test> {
     return supertest
       .agent(nestTestingApp.app.getHttpServer())
@@ -1248,7 +1248,7 @@ describe('Notifications', () => {
   }
 
   async function createRelease(
-    createReleaseResponse: AddReleaseDto
+    createReleaseResponse: AddReleaseDto,
   ): Promise<supertest.Test> {
     return supertest
       .agent(nestTestingApp.app.getHttpServer())
@@ -1259,7 +1259,7 @@ describe('Notifications', () => {
   }
 
   async function subscribeToRelease(
-    subscribeToRelease: SubscriptionPostDto
+    subscribeToRelease: SubscriptionPostDto,
   ): Promise<supertest.Test> {
     return supertest
       .agent(nestTestingApp.app.getHttpServer())
@@ -1271,12 +1271,12 @@ describe('Notifications', () => {
 
   async function createTask(
     releaseId: string,
-    task: AddTaskDto
+    task: AddTaskDto,
   ): Promise<supertest.Test> {
     return supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks`,
       )
       .send(task)
       .set('Authorization', `Bearer ${apiToken}`)
@@ -1286,12 +1286,12 @@ describe('Notifications', () => {
   async function addAssignees(
     releaseId: number,
     taskId: number,
-    dto: AddRemoveAssigneesDto
+    dto: AddRemoveAssigneesDto,
   ): Promise<supertest.Test> {
     return await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/assignees`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/assignees`,
       )
       .send(dto)
       .set('Authorization', `Bearer ${apiToken}`)
@@ -1299,24 +1299,24 @@ describe('Notifications', () => {
 
   async function deleteTask(
     releaseId: string,
-    taskId: string
+    taskId: string,
   ): Promise<supertest.Test> {
     return supertest
       .agent(nestTestingApp.app.getHttpServer())
       .delete(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}`,
       )
       .set('Authorization', `Bearer ${apiToken}`)
   }
 
   async function addApproverToRelease(
     releaseId: string,
-    addApproverResponse: AddApproverDto
+    addApproverResponse: AddApproverDto,
   ): Promise<supertest.Test> {
     return supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approvers`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approvers`,
       )
       .send(addApproverResponse)
       .set('Authorization', `Bearer ${apiToken}`)
@@ -1325,12 +1325,12 @@ describe('Notifications', () => {
 
   async function approveRelease(
     releaseId: string,
-    updateApprovalResponse: UpdateApprovalDto
+    updateApprovalResponse: UpdateApprovalDto,
   ) {
     return supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approve`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approve`,
       )
       .send(updateApprovalResponse)
       .set('Authorization', `Bearer ${apiToken}`)
@@ -1339,12 +1339,12 @@ describe('Notifications', () => {
 
   async function resetApprovalRelease(
     releaseId: string,
-    updateApprovalResponse: UpdateApprovalDto
+    updateApprovalResponse: UpdateApprovalDto,
   ) {
     return supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/reset`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/reset`,
       )
       .send(updateApprovalResponse)
       .set('Authorization', `Bearer ${apiToken}`)
@@ -1364,7 +1364,7 @@ describe('Notifications', () => {
     await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
       )
       .field('filename', 'qg-config.yaml')
       .attach('content', await readFile(filepath), {
@@ -1388,7 +1388,7 @@ describe('Notifications', () => {
     ])
     expect(
       runEntity.storagePath.length,
-      `Run in database does not have a storage path`
+      `Run in database does not have a storage path`,
     ).toBeDefined()
   }
 
@@ -1404,19 +1404,19 @@ describe('Notifications', () => {
 
     expect(
       response.body.id,
-      `The id of created run does not exist`
+      `The id of created run does not exist`,
     ).toBeDefined()
     expect(
       response.headers.location.endsWith(`${response.body.id}`),
-      `The location header of created run is not as expected`
+      `The location header of created run is not as expected`,
     ).toBeTruthy()
     expect(
       response.body.status,
-      `The status of created run is not as expected, it is ${response.body.status}`
+      `The status of created run is not as expected, it is ${response.body.status}`,
     ).oneOf([RunStatus.Running, RunStatus.Pending])
     expect(
       response.body.config,
-      `The config ref of created run is not as expected, it is ${response.body.config}`
+      `The config ref of created run is not as expected, it is ${response.body.config}`,
     ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
 
     return response.body.id

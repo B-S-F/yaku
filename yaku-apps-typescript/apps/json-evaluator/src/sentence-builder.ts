@@ -21,7 +21,7 @@ export default class SentenceBuilder {
     subject: string,
     reference: string,
     operation: string,
-    receiver: string
+    receiver: string,
   ): string {
     const operationsList = []
 

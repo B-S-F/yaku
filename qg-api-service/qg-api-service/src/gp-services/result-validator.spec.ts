@@ -24,10 +24,10 @@ describe('ResultValidatorService', () => {
   ]
 
   const validFileV1 = fs.readFileSync(
-    `${__dirname}/fixtures/qg-result-v1-valid-all-fields.yaml`
+    `${__dirname}/fixtures/qg-result-v1-valid-all-fields.yaml`,
   )
   const validFileV2 = fs.readFileSync(
-    `${__dirname}/fixtures/qg-result-v2-valid-all-fields.yaml`
+    `${__dirname}/fixtures/qg-result-v2-valid-all-fields.yaml`,
   )
 
   beforeEach(async () => {
@@ -36,7 +36,7 @@ describe('ResultValidatorService', () => {
     }).compile()
 
     resultValidator = moduleRef.get<ResultValidatorService>(
-      ResultValidatorService
+      ResultValidatorService,
     )
 
     qg_result_v1 = YAML.parse(validFileV1.toString('utf8'))
@@ -56,9 +56,9 @@ describe('ResultValidatorService', () => {
     }
 
     expect(() =>
-      resultValidator.validate(multerFile as Express.Multer.File, filename)
+      resultValidator.validate(multerFile as Express.Multer.File, filename),
     ).rejects.toEqual(
-      new BadRequestException(`No valid yaml content for file ${filename}`)
+      new BadRequestException(`No valid yaml content for file ${filename}`),
     )
   })
 
@@ -72,9 +72,9 @@ describe('ResultValidatorService', () => {
     }
 
     await expect(
-      resultValidator.validate(multerFile as Express.Multer.File, filename)
+      resultValidator.validate(multerFile as Express.Multer.File, filename),
     ).rejects.toEqual(
-      new Error(`Invalid version for ${filename}. Valid versions: v1 or v2.`)
+      new Error(`Invalid version for ${filename}. Valid versions: v1 or v2.`),
     )
   })
 
@@ -89,8 +89,8 @@ describe('ResultValidatorService', () => {
     expect(
       resultValidator.validate(
         multerFile as Express.Multer.File,
-        'missing_metadata'
-      )
+        'missing_metadata',
+      ),
     ).rejects.toThrow()
   })
 
@@ -105,8 +105,8 @@ describe('ResultValidatorService', () => {
     expect(
       resultValidator.validate(
         multerFile as Express.Multer.File,
-        'missing_header'
-      )
+        'missing_header',
+      ),
     ).rejects.toThrow()
   })
 
@@ -121,8 +121,8 @@ describe('ResultValidatorService', () => {
     expect(
       resultValidator.validate(
         multerFile as Express.Multer.File,
-        'missing_overallStatus'
-      )
+        'missing_overallStatus',
+      ),
     ).rejects.toThrow()
   })
 
@@ -137,8 +137,8 @@ describe('ResultValidatorService', () => {
     expect(
       resultValidator.validate(
         multerFile as Express.Multer.File,
-        'missing_statistics'
-      )
+        'missing_statistics',
+      ),
     ).rejects.toThrow()
   })
 
@@ -153,8 +153,8 @@ describe('ResultValidatorService', () => {
     expect(
       resultValidator.validate(
         multerFile as Express.Multer.File,
-        'missing_chapters'
-      )
+        'missing_chapters',
+      ),
     ).rejects.toThrow()
   })
 
@@ -167,7 +167,7 @@ describe('ResultValidatorService', () => {
       }
 
       await resultValidator.validate(multerFile as Express.Multer.File, file)
-    }
+    },
   )
 
   it.each(validFilesV1)(
@@ -175,10 +175,10 @@ describe('ResultValidatorService', () => {
     async (file) => {
       const qg_result_string = fs.readFileSync(
         `${__dirname}/fixtures/${file}`,
-        { encoding: 'utf-8' }
+        { encoding: 'utf-8' },
       )
       await resultValidator.validate(qg_result_string)
-    }
+    },
   )
 
   it.each(validFilesV2)(
@@ -190,7 +190,7 @@ describe('ResultValidatorService', () => {
       }
 
       await resultValidator.validate(multerFile as Express.Multer.File, file)
-    }
+    },
   )
 
   it.each(validFilesV2)(
@@ -198,10 +198,10 @@ describe('ResultValidatorService', () => {
     async (file) => {
       const qg_result_string = fs.readFileSync(
         `${__dirname}/fixtures/${file}`,
-        { encoding: 'utf-8' }
+        { encoding: 'utf-8' },
       )
       await resultValidator.validate(qg_result_string)
-    }
+    },
   )
 
   it.each([
@@ -213,7 +213,7 @@ describe('ResultValidatorService', () => {
     'run qg-config validator with incorrectly formatted qg-result string; expect to throw error',
     async (qg_result_string) => {
       expect(resultValidator.validate(qg_result_string)).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -234,10 +234,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_metadata'
-        )
+          'invalid_metadata',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -278,10 +278,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_header'
-        )
+          'invalid_header',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each(['abc', 'PURPLE', 1, true])(
@@ -297,10 +297,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_overallStatus'
-        )
+          'invalid_overallStatus',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -389,10 +389,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_header'
-        )
+          'invalid_header',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -426,10 +426,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_chapter'
-        )
+          'invalid_chapter',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -465,10 +465,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_requirements'
-        )
+          'invalid_requirements',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -505,10 +505,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_checks'
-        )
+          'invalid_checks',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -554,10 +554,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_evaluation'
-        )
+          'invalid_evaluation',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -604,10 +604,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_result'
-        )
+          'invalid_result',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -646,10 +646,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_result'
-        )
+          'invalid_result',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -777,10 +777,10 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_steps'
-        )
+          'invalid_steps',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -822,9 +822,9 @@ describe('ResultValidatorService', () => {
       expect(
         resultValidator.validate(
           multerFile as Express.Multer.File,
-          'invalid_finalize'
-        )
+          'invalid_finalize',
+        ),
       ).rejects.toThrow()
-    }
+    },
   )
 })

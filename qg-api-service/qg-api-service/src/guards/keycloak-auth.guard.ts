@@ -23,7 +23,7 @@ export class KeyCloakAuthGuard extends AuthGuard(KEYCLOAK_STRATEGY_NAME) {
   }
 
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const isPublic: boolean = this.reflector.getAllAndOverride(IsPublicAPI, [
       context.getHandler(),
@@ -37,7 +37,7 @@ export class KeyCloakAuthGuard extends AuthGuard(KEYCLOAK_STRATEGY_NAME) {
   }
 
   private checkTokenStrategies(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     return super.canActivate(context)
   }

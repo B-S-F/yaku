@@ -23,7 +23,7 @@ function smartquotesNoCode(markdown: any) {
     .map((t) =>
       t.startsWith('`') || t.startsWith('\t') || t.startsWith('    ')
         ? t
-        : smartquotes(t)
+        : smartquotes(t),
     )
     .join('')
 }

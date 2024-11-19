@@ -122,27 +122,27 @@ describe('ConfigsControllerFiles', () => {
         .mockResolvedValue(Buffer.from(qgConfigFileContent.content, 'utf-8'))
       const response = createMockResponse(
         `${baseUrl}/configs/${configWithFiles.id}/files/${qgConfigFile.filename}`,
-        testUser
+        testUser,
       )
 
       const content = await controller.getFileContent(
         testingNamespaceId,
         configWithFiles.id,
         qgConfigFile.filename,
-        response
+        response,
       )
 
       expect(await streamToString(content.getStream())).toBe(
-        qgConfigFileContent.content
+        qgConfigFileContent.content,
       )
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
         configWithFiles.id,
-        qgConfigFile.filename
+        qgConfigFile.filename,
       )
       expect(response.header).toBeCalledWith(
         'Content-Disposition',
-        `attachment; filename="${qgConfigFile.filename}"; filename*="${qgConfigFile.filename}"`
+        `attachment; filename="${qgConfigFile.filename}"; filename*="${qgConfigFile.filename}"`,
       )
     })
 
@@ -150,31 +150,31 @@ describe('ConfigsControllerFiles', () => {
       const srvSpy = jest
         .spyOn(service, 'getFileContent')
         .mockResolvedValue(
-          Buffer.from(additionalConfigFileContent.content, 'utf-8')
+          Buffer.from(additionalConfigFileContent.content, 'utf-8'),
         )
       const response = createMockResponse(
         `${baseUrl}/configs/${configWithFiles.id}/files/${additionalConfigFile.filename}`,
-        testUser
+        testUser,
       )
 
       const content = await controller.getFileContent(
         testingNamespaceId,
         configWithFiles.id,
         additionalConfigFile.filename,
-        response
+        response,
       )
 
       expect(await streamToString(content.getStream())).toBe(
-        additionalConfigFileContent.content
+        additionalConfigFileContent.content,
       )
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
         configWithFiles.id,
-        additionalConfigFile.filename
+        additionalConfigFile.filename,
       )
       expect(response.header).toBeCalledWith(
         'Content-Disposition',
-        `attachment; filename="${additionalConfigFile.filename}"; filename*="${additionalConfigFile.filename}"`
+        `attachment; filename="${additionalConfigFile.filename}"; filename*="${additionalConfigFile.filename}"`,
       )
     })
 
@@ -188,21 +188,21 @@ describe('ConfigsControllerFiles', () => {
         .mockResolvedValue(Buffer.from(fileContent, 'utf-8'))
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}/files/${encodedFilename}`,
-        testUser
+        testUser,
       )
 
       const content = await controller.getFileContent(
         testingNamespaceId,
         configId,
         encodedFilename,
-        response
+        response,
       )
 
       expect(await streamToString(content.getStream())).toBe(fileContent)
       expect(srvSpy).toBeCalledWith(testingNamespaceId, configId, filename)
       expect(response.header).toBeCalledWith(
         'Content-Disposition',
-        `attachment; filename="${filename}"; filename*="${encodedFilename}"`
+        `attachment; filename="${filename}"; filename*="${encodedFilename}"`,
       )
     })
 
@@ -212,7 +212,7 @@ describe('ConfigsControllerFiles', () => {
         .mockRejectedValue(new NotFoundException())
       const response = createMockResponse(
         `${baseUrl}/configs/3/files/${additionalConfigFile.filename}`,
-        testUser
+        testUser,
       )
 
       await expect(
@@ -220,13 +220,13 @@ describe('ConfigsControllerFiles', () => {
           testingNamespaceId,
           3,
           additionalConfigFile.filename,
-          response
-        )
+          response,
+        ),
       ).rejects.toThrow(NotFoundException)
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
         3,
-        additionalConfigFile.filename
+        additionalConfigFile.filename,
       )
       expect(response.header).not.toBeCalled()
     })
@@ -237,20 +237,20 @@ describe('ConfigsControllerFiles', () => {
         .mockRejectedValue(new NotFoundException())
       const response = createMockResponse(
         `${baseUrl}/configs/1/files/${additionalConfigFile.filename}`,
-        testUser
+        testUser,
       )
       await expect(
         controller.getFileContent(
           testingNamespaceId,
           configNoFiles.id,
           additionalConfigFile.filename,
-          response
-        )
+          response,
+        ),
       ).rejects.toThrow(NotFoundException)
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
         configNoFiles.id,
-        additionalConfigFile.filename
+        additionalConfigFile.filename,
       )
       expect(response.header).not.toBeCalled()
     })
@@ -260,7 +260,7 @@ describe('ConfigsControllerFiles', () => {
     it('should add file content to a config', async () => {
       const response = createMockResponse(
         `${baseUrl}/configs/${configNoFiles.id}/files`,
-        testUser
+        testUser,
       )
 
       await controller.addFileToConfig(
@@ -268,25 +268,25 @@ describe('ConfigsControllerFiles', () => {
         configNoFiles.id,
         { filename: fileUploadName },
         { content: fileUploadContent },
-        response
+        response,
       )
 
       expect(service.createFile).toBeCalledWith(
         testingNamespaceId,
         configNoFiles.id,
         fileUploadName,
-        fileUploadContent[0].buffer
+        fileUploadContent[0].buffer,
       )
       expect(response.header).toBeCalledWith(
         'Location',
-        `${mockConfigUrl}/${fileUploadName}`
+        `${mockConfigUrl}/${fileUploadName}`,
       )
     })
 
     it('should decode the filename correctly', async () => {
       const response = createMockResponse(
         `${baseUrl}/configs/${configNoFiles.id}/files`,
-        testUser
+        testUser,
       )
       const filename = 'encoded fileö.text'
       const encodedFilename = encodeURIComponent(filename)
@@ -295,25 +295,25 @@ describe('ConfigsControllerFiles', () => {
         configNoFiles.id,
         { filename: filename },
         { content: fileUploadContent },
-        response
+        response,
       )
 
       expect(service.createFile).toBeCalledWith(
         testingNamespaceId,
         configNoFiles.id,
         filename,
-        fileUploadContent[0].buffer
+        fileUploadContent[0].buffer,
       )
       expect(response.header).toBeCalledWith(
         'Location',
-        `${mockConfigUrl}/${encodedFilename}`
+        `${mockConfigUrl}/${encodedFilename}`,
       )
     })
 
     it('should return a BadRequestException, if the filename is not valid', async () => {
       const response = createMockResponse(
         `${baseUrl}/configs/${configNoFiles.id}/files`,
-        testUser
+        testUser,
       )
       const filename = 'file with reserved characters <>?..txt'
       await expect(
@@ -322,8 +322,8 @@ describe('ConfigsControllerFiles', () => {
           configNoFiles.id,
           { filename },
           { content: fileUploadContent },
-          response
-        )
+          response,
+        ),
       ).rejects.toThrow(BadRequestException)
 
       expect(service.createFile).not.toBeCalled()
@@ -333,7 +333,7 @@ describe('ConfigsControllerFiles', () => {
     it('should return a BadRequestException, if the filename conatains characters to avoid', async () => {
       const response = createMockResponse(
         `${baseUrl}/configs/${configNoFiles.id}/files`,
-        testUser
+        testUser,
       )
       const filename = 'file with characters to avoid \\{^}%25`]">[~<#|..txt'
       await expect(
@@ -342,8 +342,8 @@ describe('ConfigsControllerFiles', () => {
           configNoFiles.id,
           { filename },
           { content: fileUploadContent },
-          response
-        )
+          response,
+        ),
       ).rejects.toThrow(BadRequestException)
 
       expect(service.createFile).not.toBeCalled()
@@ -356,7 +356,7 @@ describe('ConfigsControllerFiles', () => {
         .mockRejectedValue(new BadRequestException())
       const response = createMockResponse(
         `${baseUrl}/configs/${configWithFiles.id}/files/${additionalConfigFile.filename}`,
-        testUser
+        testUser,
       )
 
       await expect(
@@ -365,15 +365,15 @@ describe('ConfigsControllerFiles', () => {
           configWithFiles.id,
           { filename: fileUploadName },
           { content: fileUploadContent },
-          response
-        )
+          response,
+        ),
       ).rejects.toThrow(BadRequestException)
 
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
         configWithFiles.id,
         fileUploadName,
-        fileUploadContent[0].buffer
+        fileUploadContent[0].buffer,
       )
       expect(response.header).not.toBeCalled()
     })
@@ -388,7 +388,7 @@ describe('ConfigsControllerFiles', () => {
       async (test: string, originalname: string, filename: string) => {
         const response = createMockResponse(
           `${baseUrl}/configs/${configWithFiles.id}/files/${filename}`,
-          testUser
+          testUser,
         )
         const content = [
           {
@@ -402,19 +402,19 @@ describe('ConfigsControllerFiles', () => {
             configWithFiles.id,
             { filename },
             { content },
-            response
-          )
+            response,
+          ),
         ).rejects.toThrow(BadRequestException)
 
         expect(service.createFile).not.toBeCalled()
         expect(response.header).not.toBeCalled()
-      }
+      },
     )
 
     it('should allow to upload any file content for non yaml or json files', async () => {
       const response = createMockResponse(
         `${baseUrl}/configs/${configNoFiles.id}/files`,
-        testUser
+        testUser,
       )
 
       const filename = 'file.txt'
@@ -429,18 +429,18 @@ describe('ConfigsControllerFiles', () => {
         configNoFiles.id,
         { filename: filename },
         { content },
-        response
+        response,
       )
 
       expect(service.createFile).toBeCalledWith(
         testingNamespaceId,
         configNoFiles.id,
         filename,
-        content[0].buffer
+        content[0].buffer,
       )
       expect(response.header).toBeCalledWith(
         'Location',
-        `${mockConfigUrl}/${filename}`
+        `${mockConfigUrl}/${filename}`,
       )
     })
   })
@@ -451,14 +451,14 @@ describe('ConfigsControllerFiles', () => {
         testingNamespaceId,
         configWithFiles.id,
         qgConfigFile.filename,
-        { content: configUploadContent }
+        { content: configUploadContent },
       )
 
       expect(service.updateFile).toBeCalledWith(
         testingNamespaceId,
         configWithFiles.id,
         qgConfigFile.filename,
-        configUploadContent[0].buffer
+        configUploadContent[0].buffer,
       )
     })
 
@@ -469,14 +469,14 @@ describe('ConfigsControllerFiles', () => {
         testingNamespaceId,
         configWithFiles.id,
         encodedFilename,
-        { content: configUploadContent }
+        { content: configUploadContent },
       )
 
       expect(service.updateFile).toBeCalledWith(
         testingNamespaceId,
         configWithFiles.id,
         filename,
-        configUploadContent[0].buffer
+        configUploadContent[0].buffer,
       )
     })
 
@@ -489,14 +489,14 @@ describe('ConfigsControllerFiles', () => {
           testingNamespaceId,
           configWithFiles.id,
           fileUploadName,
-          { content: fileUploadContent }
-        )
+          { content: fileUploadContent },
+        ),
       ).rejects.toThrow(NotFoundException)
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
         configWithFiles.id,
         fileUploadName,
-        fileUploadContent[0].buffer
+        fileUploadContent[0].buffer,
       )
     })
 
@@ -519,12 +519,12 @@ describe('ConfigsControllerFiles', () => {
             testingNamespaceId,
             configWithFiles.id,
             filename,
-            { content }
-          )
+            { content },
+          ),
         ).rejects.toThrow(BadRequestException)
 
         expect(service.updateFile).not.toBeCalled()
-      }
+      },
     )
 
     it('should allow to upload any file content for non yaml or json files', async () => {
@@ -539,14 +539,14 @@ describe('ConfigsControllerFiles', () => {
         testingNamespaceId,
         configNoFiles.id,
         filename,
-        { content }
+        { content },
       )
 
       expect(service.updateFile).toBeCalledWith(
         testingNamespaceId,
         configNoFiles.id,
         filename,
-        content[0].buffer
+        content[0].buffer,
       )
     })
   })
@@ -556,13 +556,13 @@ describe('ConfigsControllerFiles', () => {
       await controller.deleteFile(
         testingNamespaceId,
         configWithFiles.id,
-        additionalConfigFile.filename
+        additionalConfigFile.filename,
       )
 
       expect(service.deleteFile).toBeCalledWith(
         testingNamespaceId,
         configWithFiles.id,
-        additionalConfigFile.filename
+        additionalConfigFile.filename,
       )
     })
 
@@ -572,13 +572,13 @@ describe('ConfigsControllerFiles', () => {
       await controller.deleteFile(
         testingNamespaceId,
         configWithFiles.id,
-        encodedFilename
+        encodedFilename,
       )
 
       expect(service.deleteFile).toBeCalledWith(
         testingNamespaceId,
         configWithFiles.id,
-        filename
+        filename,
       )
     })
   })
@@ -586,7 +586,7 @@ describe('ConfigsControllerFiles', () => {
 
 describe('ContentSizeValidator', () => {
   let validator: ContentSizeValidator
-  const maxFileSizeMB = parseInt(MAX_FILE_SIZE_MB)
+  const maxFileSizeMB = Number.parseInt(MAX_FILE_SIZE_MB)
 
   beforeEach(() => {
     validator = new ContentSizeValidator({ maxSizeMB: 2 })
@@ -608,18 +608,18 @@ describe('ContentSizeValidator', () => {
       }
       expect(validator.isValid(excelFileDto)).toBe(expected)
       expect(validator.isValid(contentFileDto)).toBe(expected)
-    }
+    },
   )
 
   it('should build error message correctly', () => {
     expect(validator.buildErrorMessage()).toBe(
-      'The file size exceeds the maximum allowed limit of 2 MB.'
+      'The file size exceeds the maximum allowed limit of 2 MB.',
     )
   })
 })
 
 describe('FileSizeCheck', () => {
-  const maxFileSize = parseInt(MAX_FILE_SIZE_MB) * 1024 * 1024
+  const maxFileSize = Number.parseInt(MAX_FILE_SIZE_MB) * 1024 * 1024
   it('should throw an error with status code 413 if the file size exceeds the maximum allowed size', async () => {
     const size = maxFileSize + 1
     const contentFileDto: FilePatchSchema = {
@@ -630,7 +630,7 @@ describe('FileSizeCheck', () => {
     } catch (error) {
       expect(error.status).toBe(413)
       expect(error.message).toBe(
-        'The file size exceeds the maximum allowed limit of 2 MB.'
+        'The file size exceeds the maximum allowed limit of 2 MB.',
       )
       expect(error.name).toBe('PayloadTooLargeException')
     }
@@ -685,7 +685,7 @@ describe('FileSizeCheck', () => {
         }
         expect(validator.isValid(contentFileDto)).toBe(expected)
         expect(validator.isValid(excelFileDto)).toBe(true)
-      }
+      },
     )
   })
 })

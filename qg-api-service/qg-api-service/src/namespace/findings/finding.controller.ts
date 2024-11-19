@@ -72,7 +72,7 @@ export const allowedSortProperties = [
 export class FindingsQueryOptions extends PaginationQueryOptions {
   @ApiPropertyOptional({
     description: `Sort findings by the given property, allowed properties are ${allowedSortProperties.join(
-      ', '
+      ', ',
     )}`,
     type: 'string',
     example: 'id',
@@ -99,7 +99,7 @@ export class FindingController {
 
   constructor(
     private readonly findingService: FindingService,
-    @Inject(UrlHandlerFactory) readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   @Get()
@@ -117,7 +117,7 @@ export class FindingController {
   async getAllFindingsInNamespace(
     @Param('namespaceId') namespaceId: number,
     @Res({ passthrough: true }) res,
-    @Query() queryOptions: FindingsQueryOptions
+    @Query() queryOptions: FindingsQueryOptions,
   ): Promise<GetListFindingsDTO> {
     validateId(namespaceId)
     if (queryOptions.sortBy !== undefined) {
@@ -131,7 +131,7 @@ export class FindingController {
         queryOptions,
         queryOptionsSchema,
         allowedSortProperties,
-        'updatedAt'
+        'updatedAt',
       )
 
       const filtering = parseFilter(queryOptions.filter)
@@ -142,14 +142,14 @@ export class FindingController {
       const requestUrl = this.urlHandler.getHandler(res)
       const rawData = await this.findingService.getAllFindings(
         namespaceId,
-        paginateQueryOptions
+        paginateQueryOptions,
       )
 
       return createPaginationData<GetFindingDTO, GetListFindingsDTO>(
         paginateQueryOptions,
         requestUrl,
         rawData.itemCount,
-        rawData.entities
+        rawData.entities,
       )
     } catch (error) {
       this.logger.error(`Error in getAllFindingsInNamespace: ${error.message}`)
@@ -168,7 +168,7 @@ export class FindingController {
   })
   async getFindingById(
     @Param('namespaceId') namespaceId: number,
-    @Param('findingId', new ParseUUIDPipe()) findingId: string
+    @Param('findingId', new ParseUUIDPipe()) findingId: string,
   ): Promise<GetFindingDTO> {
     validateId(namespaceId)
     try {
@@ -192,14 +192,14 @@ export class FindingController {
   async updateFinding(
     @Param('namespaceId') namespaceId: number,
     @Param('findingId', new ParseUUIDPipe()) findingId: string,
-    @Body() updateFindingDto: UpdateFindingDTO
+    @Body() updateFindingDto: UpdateFindingDTO,
   ): Promise<GetFindingDTO> {
     validateId(namespaceId)
     try {
       return this.findingService.updateFinding(
         namespaceId,
         findingId,
-        updateFindingDto
+        updateFindingDto,
       )
     } catch (error) {
       this.logger.error(`Error in updateFinding: ${error.message}`)
@@ -214,7 +214,7 @@ export class FindingController {
   @ApiOperation({ summary: 'Delete a finding' })
   async deleteFinding(
     @Param('namespaceId') namespaceId: number,
-    @Param('findingId', new ParseUUIDPipe()) findingId: string
+    @Param('findingId', new ParseUUIDPipe()) findingId: string,
   ) {
     validateId(namespaceId)
     try {

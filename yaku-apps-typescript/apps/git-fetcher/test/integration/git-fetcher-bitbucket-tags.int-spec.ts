@@ -67,10 +67,10 @@ describe('Fetch Tags from Bitbucket', () => {
     expect(result.stdout).toHaveLength(3)
     expect(result.stdout[0]).toEqual('Fetched 5 tags')
     expect(result.stdout[1]).toEqual(
-      'Fetch from https://localhost:8080 was successful with config {"org":"aquatest","repo":"bitbucket-fetcher-test-repo","resource":"tags"}'
+      'Fetch from https://localhost:8080 was successful with config {"org":"aquatest","repo":"bitbucket-fetcher-test-repo","resource":"tags"}',
     )
     expect(result.stdout[2]).toEqual(
-      '{"output":{"git-fetcher-result":"git-fetcher-data.json"}}'
+      '{"output":{"git-fetcher-result":"git-fetcher-data.json"}}',
     )
 
     expect(result.stderr).toHaveLength(0)
@@ -79,7 +79,7 @@ describe('Fetch Tags from Bitbucket', () => {
     expect(mockServer.getNumberOfRequests()).toEqual(3)
     const requests: ReceivedRequest[] = mockServer.getRequests(
       getTagsEndpoint,
-      'get'
+      'get',
     )
     expect(requests).toHaveLength(3)
 
@@ -129,7 +129,7 @@ describe('Fetch Tags from Bitbucket', () => {
     // gitfetcher should throw error
     expect(result.exitCode).toEqual(0)
     expect(result.stdout).toContain(
-      '{"status":"FAILED","reason":"Repository not found. Status code: 404"}'
+      '{"status":"FAILED","reason":"Repository not found. Status code: 404"}',
     )
 
     // gitfetcher should not write an output file

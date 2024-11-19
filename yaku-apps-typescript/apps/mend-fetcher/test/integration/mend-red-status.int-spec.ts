@@ -76,14 +76,14 @@ describe.each([
         project: env.MEND_PROJECT_TOKEN,
         vulnerabilityId: env.VULNERABILITY_ID,
         vulnerabilityId2: env.VULNERABILITY_ID2,
-      }
+      },
     )
     mockServer = new MockServer(options)
 
     const result: RunProcessResult = await run(
       mendFetcherExecutable,
       undefined,
-      { env: env }
+      { env: env },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -96,7 +96,7 @@ describe.each([
           ' see more details in Mend ' +
           reasonLinkTemplate +
           `;`,
-      })
+      }),
     )
     expect(result.stderr).to.have.length(0)
 

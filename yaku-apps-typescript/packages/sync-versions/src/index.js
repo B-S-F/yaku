@@ -17,7 +17,7 @@ async function run() {
 
   const regex = new RegExp(
     `(?<="dependencies":\\s*\\{[^\}]*"${scope}\\/[^"]+": ")[^"]*(?=")`,
-    'gs'
+    'gs',
   )
 
   try {

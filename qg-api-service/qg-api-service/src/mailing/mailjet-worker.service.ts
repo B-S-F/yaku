@@ -49,12 +49,12 @@ export class MailjetWorker implements OnModuleInit, MailingWorker {
   private readonly proxyAgent = new ProxyAgent()
   constructor(
     @Inject(MailingConfiguration)
-    private readonly configuration: MailjetConfiguration
+    private readonly configuration: MailjetConfiguration,
   ) {
     this.queue = []
     this.sendUrl = `${configuration.apiUrl}/v3.1/send`
     this.basicAuth = Buffer.from(
-      `${configuration.apiKey}:${configuration.apiSecret}`
+      `${configuration.apiKey}:${configuration.apiSecret}`,
     ).toString('base64')
   }
 
@@ -132,7 +132,7 @@ export class MailjetWorker implements OnModuleInit, MailingWorker {
       throw new Error(
         `Failed to send emails with status ${
           response.status
-        }: ${await response.text()}`
+        }: ${await response.text()}`,
       )
     }
 

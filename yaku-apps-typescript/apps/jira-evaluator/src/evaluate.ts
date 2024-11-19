@@ -8,7 +8,7 @@ import { Dictionary, InvalidIssues } from './types'
 
 function initializeInvalidIssuesField(
   invalidIssues: InvalidIssues,
-  field: string
+  field: string,
 ) {
   if (!invalidIssues[field])
     invalidIssues[field] = {
@@ -38,7 +38,7 @@ export const checkIssues = (issues: Issue[], config: Dictionary) => {
           issues,
           fieldName,
           conditionType as Conditions,
-          conditions[conditionType]
+          conditions[conditionType],
         )
         invalidIssues[field][conditionType] = result
       })
@@ -64,7 +64,7 @@ export const checkIssues = (issues: Issue[], config: Dictionary) => {
             issues,
             fieldName,
             conditionType as Conditions,
-            conditions[conditionType]
+            conditions[conditionType],
           )
           invalidIssues[field][conditionType] = result
         })
@@ -75,7 +75,7 @@ export const checkIssues = (issues: Issue[], config: Dictionary) => {
             issues,
             fieldName,
             conditionType as Conditions,
-            conditions[conditionType]
+            conditions[conditionType],
           )
           firstFieldResult = [...firstFieldResult, ...result]
         })
@@ -88,7 +88,7 @@ export const checkIssues = (issues: Issue[], config: Dictionary) => {
             newIssues,
             fieldName,
             conditionType as Conditions,
-            conditions[conditionType]
+            conditions[conditionType],
           )
           invalidIssues[field][conditionType] = result
         })
@@ -101,7 +101,7 @@ export const checkIssues = (issues: Issue[], config: Dictionary) => {
             newIssues,
             fieldName,
             conditionType as Conditions,
-            conditions[conditionType]
+            conditions[conditionType],
           )
 
           const invalidResult = checkProperty(
@@ -110,7 +110,7 @@ export const checkIssues = (issues: Issue[], config: Dictionary) => {
             fieldName,
             conditionType as Conditions,
             conditions[conditionType],
-            dueDatefieldName
+            dueDatefieldName,
           )
 
           firstFieldResult = [...firstFieldResult, ...result]
@@ -126,7 +126,7 @@ export const checkIssues = (issues: Issue[], config: Dictionary) => {
     }
   } else {
     throw new AppError(
-      `Required logic: ${config.evaluate.logic} not supported!`
+      `Required logic: ${config.evaluate.logic} not supported!`,
     )
   }
 
@@ -136,7 +136,7 @@ export const checkIssues = (issues: Issue[], config: Dictionary) => {
 function expectedIssueToResult(
   field: string,
   expected: string,
-  issue: Issue
+  issue: Issue,
 ): Result {
   return {
     criterion: `Issue: [${issue.summary}] with ID: [${issue.id}] must have expected value in field '${field}'`,
@@ -154,7 +154,7 @@ function expectedIssueToResult(
 function illegalIssueToResult(
   field: string,
   illegal: string,
-  issue: Issue
+  issue: Issue,
 ): Result {
   return {
     criterion: `Issue: [${issue.summary}] with ID: [${issue.id}] must not have an illegal value in field '${field}'`,

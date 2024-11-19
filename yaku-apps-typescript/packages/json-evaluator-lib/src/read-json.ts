@@ -17,7 +17,7 @@ export const readJson = async (filePath: string): Promise<any> => {
       throw new Error(`File ${filePath} does not exist`)
     }
     throw new Error(
-      `File ${filePath} could not be parsed, failed with error: ${error}`
+      `File ${filePath} could not be parsed, failed with error: ${error}`,
     )
   }
 }

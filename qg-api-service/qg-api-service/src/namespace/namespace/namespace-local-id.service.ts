@@ -19,7 +19,7 @@ export class NamespaceLocalIdService {
   constructor(
     @Inject(NamespaceSequenceConfig) readonly config: NamespaceSequenceConfig,
     @InjectRepository(NamespaceMemberSequence)
-    private readonly idRepository: Repository<NamespaceMemberSequence>
+    private readonly idRepository: Repository<NamespaceMemberSequence>,
   ) {}
 
   async nextId(entityName: string, namespaceId: number): Promise<number> {
@@ -27,7 +27,7 @@ export class NamespaceLocalIdService {
       if (this.config.databaseType === 'postgres') {
         const newIdResult = await this.idRepository.query(
           'update namespace_member_sequence set "lastId" = "lastId" + 1 where "namespaceId" = $1 and "entityName" = $2 returning "lastId"',
-          [namespaceId, entityName]
+          [namespaceId, entityName],
         )
         // newIdResult is an array, which contains two elements, an array of return values and the number of items in the return value arrays
         // We can expect always to get exactly one element or the database is corrupt, which motivates a 500 return value.
@@ -50,7 +50,7 @@ export class NamespaceLocalIdService {
 
   async initializeIdCreation(
     entityName: string,
-    namespaceId: number
+    namespaceId: number,
   ): Promise<void> {
     const sequence = {
       namespace: { id: namespaceId },
@@ -68,7 +68,7 @@ export class NamespaceLocalIdService {
    */
   private async queueTask(
     queueName: string,
-    f: () => Promise<number>
+    f: () => Promise<number>,
   ): Promise<number> {
     return new Promise((resolve, reject) => {
       if (!this.queues[queueName]) {

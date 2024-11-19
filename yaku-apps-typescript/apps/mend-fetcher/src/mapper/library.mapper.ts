@@ -22,10 +22,10 @@ export class LibraryMap {
                 ref.uuid,
                 ref.type,
                 ref.liabilityReference,
-                ref.information
-              )
-          )
-        )
+                ref.information,
+              ),
+          ),
+        ),
     )
     const copyrightReferences: CopyrightReference[] =
       libraryDTO.copyrightReferences.map(
@@ -36,8 +36,8 @@ export class LibraryMap {
             ref.author,
             ref.referenceInfo,
             ref.startYear,
-            ref.endYear
-          )
+            ref.endYear,
+          ),
       )
     const locations: { localPath: string; dependencyFile: string }[] =
       libraryDTO.locations !== undefined && libraryDTO.locations.length > 0
@@ -63,7 +63,7 @@ export class LibraryMap {
       libraryDTO.directDependency,
       licenses,
       copyrightReferences,
-      locations
+      locations,
     )
   }
   public static toDTO(library: Library) {
@@ -98,7 +98,7 @@ export class LibraryMap {
                 liabilityReference: ref.liabilityReference,
                 information: ref.information,
               }
-            }
+            },
           ),
         }
       }),
@@ -112,7 +112,7 @@ export class LibraryMap {
           endYear: copyrightRef.endYear,
         }
       }),
-      library.locations
+      library.locations,
     )
   }
 }

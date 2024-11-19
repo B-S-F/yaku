@@ -62,7 +62,7 @@ describe('ReleasesController', () => {
     user1.kc_sub,
     user1.username,
     user1.email,
-    user1.displayName
+    user1.displayName,
   )
 
   const releaseDto1: ReleaseDto = {
@@ -150,7 +150,7 @@ describe('ReleasesController', () => {
       const result = await controller.getReleases(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result).toEqual({
@@ -181,7 +181,7 @@ describe('ReleasesController', () => {
       const result = await controller.getReleases(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result.data).toEqual([releaseDto1, releaseDto2])
@@ -203,7 +203,7 @@ describe('ReleasesController', () => {
       const result = await controller.getReleases(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result.data).toEqual([releaseDto2, releaseDto1])
@@ -224,7 +224,7 @@ describe('ReleasesController', () => {
       const result = await controller.getReleases(
         namespaceId,
         queryOptions,
-        response
+        response,
       )
 
       expect(result.data).toEqual([releaseDto1])
@@ -252,7 +252,7 @@ describe('ReleasesController', () => {
       })
 
       await expect(
-        controller.getRelease(namespaceId, releaseId)
+        controller.getRelease(namespaceId, releaseId),
       ).rejects.toThrow('Release not found, id: 1')
     })
   })
@@ -278,7 +278,7 @@ describe('ReleasesController', () => {
         releaseDto.approvalMode,
         releaseDto.qgConfigId,
         releaseDto.plannedDate,
-        requestUser
+        requestUser,
       )
     })
 
@@ -310,9 +310,9 @@ describe('ReleasesController', () => {
         jest.spyOn(service, 'create').mockResolvedValue(releaseDto1)
 
         await expect(
-          controller.create(namespaceId, dto as any, request)
+          controller.create(namespaceId, dto as any, request),
         ).rejects.toThrow(BadRequestException)
-      }
+      },
     )
   })
 
@@ -332,7 +332,7 @@ describe('ReleasesController', () => {
         namespaceId,
         releaseId,
         releaseDto,
-        request
+        request,
       )
 
       expect(result).toEqual(releaseDto1)
@@ -342,7 +342,7 @@ describe('ReleasesController', () => {
         requestUser,
         releaseDto.name,
         releaseDto.approvalMode,
-        releaseDto.plannedDate
+        releaseDto.plannedDate,
       )
     })
 
@@ -369,7 +369,7 @@ describe('ReleasesController', () => {
           namespaceId,
           releaseId,
           usedDto,
-          request
+          request,
         )
 
         expect(result).toEqual(releaseDto1)
@@ -379,9 +379,9 @@ describe('ReleasesController', () => {
           requestUser,
           usedDto.name,
           usedDto.approvalMode,
-          usedDto.plannedDate
+          usedDto.plannedDate,
         )
-      }
+      },
     )
 
     it.each([
@@ -411,9 +411,9 @@ describe('ReleasesController', () => {
         jest.spyOn(service, 'update').mockResolvedValue(releaseDto1)
 
         await expect(
-          controller.update(namespaceId, releaseId, dto as any, request)
+          controller.update(namespaceId, releaseId, dto as any, request),
         ).rejects.toThrow(BadRequestException)
-      }
+      },
     )
   })
 
@@ -429,7 +429,7 @@ describe('ReleasesController', () => {
       expect(deleteSpy).toHaveBeenCalledWith(
         namespaceId,
         releaseId,
-        requestUser
+        requestUser,
       )
     })
   })
@@ -444,7 +444,7 @@ describe('ReleasesController', () => {
       const request = {}
 
       expect(() => getUserFromRequest(request as any)).toThrow(
-        InternalServerErrorException
+        InternalServerErrorException,
       )
     })
 
@@ -452,7 +452,7 @@ describe('ReleasesController', () => {
       const request = { user: {} }
 
       expect(() => getUserFromRequest(request as any)).toThrow(
-        InternalServerErrorException
+        InternalServerErrorException,
       )
     })
   })

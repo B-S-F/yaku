@@ -5,7 +5,7 @@
 
 export function generatePropertyOutput(
   property: string,
-  invalidPropertiesOutput: string[]
+  invalidPropertiesOutput: string[],
 ) {
   if (!invalidPropertiesOutput.length) return ''
 

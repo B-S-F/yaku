@@ -28,7 +28,7 @@ describe('Test "exportJson()" from "utils.ts"', () => {
     expect(fs_sync.mkdirSync).toHaveBeenCalled()
     expect(fs.writeFile).toHaveBeenCalledWith(
       '/tmp/results.json',
-      JSON.stringify(fileContent)
+      JSON.stringify(fileContent),
     )
   })
 
@@ -43,7 +43,7 @@ describe('Test "exportJson()" from "utils.ts"', () => {
 
     expect(fs.writeFile).toHaveBeenCalledWith(
       '/tmp/results.json',
-      JSON.stringify(fileContent)
+      JSON.stringify(fileContent),
     )
   })
 })

@@ -8,7 +8,7 @@ export const bitbucketBranchesEndpoint =
   '/projects/aquatest/repos/bitbucket-fetcher-test-repo/branches'
 
 export function getGitBranchesMockServerResponse(
-  port: number
+  port: number,
 ): MockServerOptions {
   return {
     port,
@@ -98,7 +98,7 @@ export function getGitBranchesMockServerResponse(
 }
 
 export function getGitBranchesErrorMockServerResponse(
-  port: number
+  port: number,
 ): MockServerOptions {
   return {
     port,

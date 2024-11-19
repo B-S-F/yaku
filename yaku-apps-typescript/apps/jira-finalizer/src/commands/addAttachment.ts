@@ -6,7 +6,7 @@ import getClient from '../utils/getClient.js'
 
 export default async function (
   issueId: string,
-  filePath: string
+  filePath: string,
 ): Promise<void> {
   const client = getClient()
   const res = await client.addAttachment(issueId, filePath)

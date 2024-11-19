@@ -60,7 +60,7 @@ export class TemplatingService {
   constructor(
     @Inject(TemplatingConfiguration)
     private readonly configuration: TemplatingConfiguration,
-    @Inject(TemplatingCache) private readonly cache: TemplatingCache
+    @Inject(TemplatingCache) private readonly cache: TemplatingCache,
   ) {}
 
   public Template(notification: Notification): string {

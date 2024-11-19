@@ -87,7 +87,7 @@ describe('showRun()', () => {
 
 describe('getRunEnvironment()', () => {
   const testCommand = {
-    error: function (errorMsg: string) {
+    error: (errorMsg: string) => {
       throw Error(errorMsg)
     },
   } as Command
@@ -108,15 +108,15 @@ describe('getRunEnvironment()', () => {
       getRunEnvironment(testCommand, { environment: ['key1'] })
     }).toThrow(
       Error(
-        'Error: You provided additional environment variables but in the wrong format. Correct: KEY1 VALUE1 KEY2 VALUE2 ...'
-      )
+        'Error: You provided additional environment variables but in the wrong format. Correct: KEY1 VALUE1 KEY2 VALUE2 ...',
+      ),
     )
   })
   it('should fail to complete when provided key is empty', () => {
     expect(() => {
       getRunEnvironment(testCommand, { environment: ['', ''] })
     }).toThrow(
-      Error('Error: You provided an environment variable with an empty key')
+      Error('Error: You provided an environment variable with an empty key'),
     )
   })
 })
@@ -146,7 +146,7 @@ describe('createRun()', () => {
       testNamespaceId,
       '1',
       { wait: true, pollInterval: '5' },
-      {}
+      {},
     )
 
     expect(startAndAwaitRunSpy).toHaveBeenCalled()

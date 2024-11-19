@@ -152,11 +152,11 @@ describe('ExcelTransformerService', () => {
         cfg.columns[column] = '123'
 
         expect(() =>
-          service['extractRelevantInformation'](testData, cfg)
+          service['extractRelevantInformation'](testData, cfg),
         ).toThrow(
-          'Chapter column, requirement id column and requirement title column have to be defined in config file'
+          'Chapter column, requirement id column and requirement title column have to be defined in config file',
         )
-      }
+      },
     )
   })
 
@@ -386,7 +386,7 @@ describe('ExcelTransformerService', () => {
       }
 
       expect(service['createHierarchicalStructure'](testdata, project)).toEqual(
-        expected
+        expected,
       )
     })
 
@@ -419,7 +419,7 @@ describe('ExcelTransformerService', () => {
       }
 
       expect(service['createHierarchicalStructure'](testdata, project)).toEqual(
-        expected
+        expected,
       )
     })
   })
@@ -465,38 +465,38 @@ describe('ExcelTransformerService', () => {
       'should convert the excel column letters to a zero based index for %s',
       (letters: string, result: number) => {
         expect(service['getIndexOfExcelColumn'](letters)).toBe(result)
-      }
+      },
     )
 
     it.each([undefined, null, '', '1', '$', '&', 'A34'])(
       'should return -1 for incorrect column indices',
       (input) => {
         expect(service['getIndexOfExcelColumn'](input)).toBe(-1)
-      }
+      },
     )
   })
 
   describe('Read Excel File', () => {
     it('should read an excel file and return the right sheet', async () => {
       const excelFile = await readFile(
-        `${__dirname}/testdata/SampleProject.xlsx`
+        `${__dirname}/testdata/SampleProject.xlsx`,
       )
 
       expect(
-        service['readExcelFile'](excelFile, 'Sample Criteria')
+        service['readExcelFile'](excelFile, 'Sample Criteria'),
       ).toBeDefined()
     })
 
     it('should throw an exception if sheet not to be found', async () => {
       const excelFile = await readFile(
-        `${__dirname}/testdata/SampleProject.xlsx`
+        `${__dirname}/testdata/SampleProject.xlsx`,
       )
 
       expect(() =>
-        service['readExcelFile'](excelFile, 'SampleProject2')
+        service['readExcelFile'](excelFile, 'SampleProject2'),
       ).toThrow(BadRequestException)
       expect(() =>
-        service['readExcelFile'](excelFile, 'SampleProject2')
+        service['readExcelFile'](excelFile, 'SampleProject2'),
       ).toThrow('Excel file does not contain sheet SampleProject2')
     })
 
@@ -508,7 +508,7 @@ describe('ExcelTransformerService', () => {
       readFileSync(`${__dirname}/testdata/SampleProject.xlsx.config`),
     ])('should throw an exception if excel file is corrupt', (input) => {
       expect(() => service['readExcelFile'](input, 'SampleProject')).toThrow(
-        BadRequestException
+        BadRequestException,
       )
     })
   })
@@ -737,7 +737,7 @@ describe('ExcelTransformerService', () => {
 
         expect(() => service['readConfig'](input)).toThrow(BadRequestException)
         expect(() => service['readConfig'](input)).toThrow(message)
-      }
+      },
     )
 
     it('should indicate non yaml format with an exception', () => {
@@ -749,7 +749,7 @@ startRow 2
 
       expect(() => service['readConfig'](input)).toThrow(BadRequestException)
       expect(() => service['readConfig'](input)).toThrow(
-        'Could not parse config data, error was Implicit keys need to be on a single line'
+        'Could not parse config data, error was Implicit keys need to be on a single line',
       )
     })
 
@@ -757,17 +757,17 @@ startRow 2
       'should catch empty input',
       (input) => {
         expect(() => service['readConfig'](input)).toThrow(BadRequestException)
-      }
+      },
     )
   })
 
   describe('Whole service test', () => {
     it('should process an excel file with filtered input', async () => {
       const excelFile = await readFile(
-        `${__dirname}/testdata/SampleProject.xlsx`
+        `${__dirname}/testdata/SampleProject.xlsx`,
       )
       const configFile = await readFile(
-        `${__dirname}/testdata/SampleProject.xlsx_filtered.config`
+        `${__dirname}/testdata/SampleProject.xlsx_filtered.config`,
       )
 
       const expectedFiltered: Questionnaire = {
@@ -816,17 +816,17 @@ startRow 2
         service.transformExcelToQuestionnaireData(
           'SampleProject',
           excelFile,
-          configFile
-        )
+          configFile,
+        ),
       ).toEqual(expectedFiltered)
     })
 
     it('should process an excel file with unfiltered input', async () => {
       const excelFile = await readFile(
-        `${__dirname}/testdata/SampleProject.xlsx`
+        `${__dirname}/testdata/SampleProject.xlsx`,
       )
       const configFile = await readFile(
-        `${__dirname}/testdata/SampleProject.xlsx.config`
+        `${__dirname}/testdata/SampleProject.xlsx.config`,
       )
 
       const expectedFiltered: Questionnaire = {
@@ -883,23 +883,23 @@ startRow 2
         service.transformExcelToQuestionnaireData(
           'SampleProject',
           excelFile,
-          configFile
-        )
+          configFile,
+        ),
       ).toEqual(expectedFiltered)
     })
 
     it('should process a customer file', async () => {
       const excelFile = await readFile(
-        `${__dirname}/testdata/QG-Checklist-SW-Component_1.4.xlsx`
+        `${__dirname}/testdata/QG-Checklist-SW-Component_1.4.xlsx`,
       )
       const configFile = await readFile(
-        `${__dirname}/testdata/QG-Checklist-SW-Component_1.4.xlsxconfig.yaml`
+        `${__dirname}/testdata/QG-Checklist-SW-Component_1.4.xlsxconfig.yaml`,
       )
 
       const result = service.transformExcelToQuestionnaireData(
         'BCI',
         excelFile,
-        configFile
+        configFile,
       )
 
       expect(Object.keys(result.chapters).length).toBe(10)

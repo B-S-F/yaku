@@ -66,7 +66,7 @@ import {
 export class CommentsController {
   constructor(
     @Inject(CommentsService) private readonly service: CommentsService,
-    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   // TODO: This will be replaced by the History Endpoint, remove it after UI is updated
@@ -82,7 +82,7 @@ export class CommentsController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Query() queryOptions: CommentsQueryOptions,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<CommentByReferenceListDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -91,14 +91,14 @@ export class CommentsController {
       queryOptions,
       queryOptionsSchema.strict(),
       allowedSortProperties,
-      'id'
+      'id',
     )
     const requestUrl = this.urlHandler.getHandler(response)
 
     const comments = await this.service.list(
       namespaceId,
       releaseId,
-      listQueryOptions
+      listQueryOptions,
     )
 
     return createPaginationData<
@@ -115,7 +115,7 @@ export class CommentsController {
   async getComment(
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
-    @Param('commentId') commentId: number
+    @Param('commentId') commentId: number,
   ): Promise<CommentDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -133,7 +133,7 @@ export class CommentsController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Body() body: AddCommentDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<CommentDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -146,7 +146,7 @@ export class CommentsController {
       body.reference,
       body.content,
       body.todo,
-      user
+      user,
     )
   }
 
@@ -186,7 +186,7 @@ export class CommentsController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Query() queryOptions: CommentsByReferenceQueryOptions,
-    @Body() body: Reference
+    @Body() body: Reference,
   ): Promise<CommentsByReferenceDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -196,7 +196,7 @@ export class CommentsController {
       namespaceId,
       releaseId,
       body,
-      queryOptions.sortOrder as SortOrder
+      queryOptions.sortOrder as SortOrder,
     )
   }
 
@@ -210,7 +210,7 @@ export class CommentsController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Param('commentId') commentId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -230,7 +230,7 @@ export class CommentsController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Param('commentId') commentId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -250,7 +250,7 @@ export class CommentsController {
     @Param('releaseId') releaseId: number,
     @Param('commentId') commentId: number,
     @Body() body: UpdateCommentDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<CommentDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -263,7 +263,7 @@ export class CommentsController {
       releaseId,
       commentId,
       body.content,
-      user
+      user,
     )
   }
 
@@ -276,7 +276,7 @@ export class CommentsController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Param('commentId') commentId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)

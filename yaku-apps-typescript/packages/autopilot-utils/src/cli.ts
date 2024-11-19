@@ -45,7 +45,7 @@ export class AutopilotApp {
     name: string,
     version: string,
     description: string,
-    commands: Command[]
+    commands: Command[],
   ) {
     program.name(name).version(version).description(description)
     commands.forEach((command) => {

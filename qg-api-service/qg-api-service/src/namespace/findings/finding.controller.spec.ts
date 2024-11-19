@@ -70,7 +70,7 @@ describe('FindingController', () => {
         .mockReturnValueOnce({ deleted: true } as any)
       const result = await findingController.deleteFinding(
         namespaceId,
-        findingId
+        findingId,
       )
       expect(result).toEqual({ deleted: true })
     })
@@ -88,7 +88,7 @@ describe('FindingController', () => {
       const result = await findingController.updateFinding(
         namespaceId,
         findingId,
-        {}
+        {},
       )
       expect(result).toEqual({})
     })
@@ -109,7 +109,7 @@ describe('FindingController', () => {
         .mockReturnValueOnce({} as any)
       const result = await findingController.getFindingById(
         namespaceId,
-        findingId
+        findingId,
       )
       expect(result).toEqual({})
     })

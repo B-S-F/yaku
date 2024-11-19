@@ -18,7 +18,7 @@ export type RunProcessResult = {
 function createProcess(
   executable: string,
   args: string[] = [],
-  options: SpawnOptionsWithoutStdio = {}
+  options: SpawnOptionsWithoutStdio = {},
 ): ChildProcessWithoutNullStreams {
   const nodeArgs: string[] = [executable, ...args]
   options.env ??= {}
@@ -38,12 +38,12 @@ function createProcess(
 export async function run(
   executable: string,
   args: string[] = [],
-  options?: SpawnOptionsWithoutStdio
+  options?: SpawnOptionsWithoutStdio,
 ): Promise<RunProcessResult> {
   const childProcess: ChildProcessWithoutNullStreams = createProcess(
     executable,
     args,
-    options
+    options,
   )
   childProcess.stdin.setDefaultEncoding('utf-8')
 
@@ -69,7 +69,7 @@ export async function run(
           .split(EOL)
           .filter((s) => s.length > 0),
         exitCode: exitCode ?? 1,
-      })
+      }),
     )
   })
 }

@@ -36,7 +36,7 @@ describe('project.service', () => {
 
     const projectService = new ProjectService(env)
     const result: Project = await projectService.getProjectByToken(
-      env.projectToken
+      env.projectToken,
     )
 
     expect(result).toStrictEqual(expected)
@@ -49,7 +49,7 @@ describe('project.service', () => {
 
     const projectService = new ProjectService(env)
     const result: ProjectVitals = await projectService.getProjectVitals(
-      env.projectToken
+      env.projectToken,
     )
 
     expect(result).toStrictEqual(expected)

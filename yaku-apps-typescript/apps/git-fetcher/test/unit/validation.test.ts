@@ -26,7 +26,7 @@ describe('ValidateFetcherConfig', async () => {
     })
 
     await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-      'ENOENT: no such file or directory'
+      'ENOENT: no such file or directory',
     )
   })
 
@@ -34,14 +34,14 @@ describe('ValidateFetcherConfig', async () => {
     vi.mocked(readFileSync).mockReturnValue('foo: bar, foo: bar')
 
     await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-      'Nested mappings are not allowed'
+      'Nested mappings are not allowed',
     )
   })
 
   it('throws an error with the corresponding error message, when the config has an invalid structure', async () => {
     vi.mocked(readFileSync).mockReturnValue('foo: bar')
     await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-      'Validation error: Required at "org"; Required at "repo"; Required at "resource"'
+      'Validation error: Required at "org"; Required at "repo"; Required at "resource"',
     )
   })
 
@@ -70,12 +70,12 @@ describe('ValidateFetcherConfig', async () => {
             filter: { state: stateFilter },
           }
           vi.mocked(readFileSync).mockReturnValue(
-            JSON.stringify(gitFetcherConfig)
+            JSON.stringify(gitFetcherConfig),
           )
 
           const result = await validateFetcherConfig(testPath)
           expect(result).toEqual(gitFetcherConfig)
-        }
+        },
       )
     })
 
@@ -90,10 +90,10 @@ describe('ValidateFetcherConfig', async () => {
           filter: { state: invalidRequestStatus as any },
         }
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          `Validation error: Invalid enum value. Expected 'DECLINED' | 'MERGED' | 'OPEN' | 'ALL', received '${invalidRequestStatus}' at "filter.state"`
+          `Validation error: Invalid enum value. Expected 'DECLINED' | 'MERGED' | 'OPEN' | 'ALL', received '${invalidRequestStatus}' at "filter.state"`,
         )
       })
     })
@@ -115,7 +115,7 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         const result = await validateFetcherConfig(testPath)
@@ -140,7 +140,7 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         const result = await validateFetcherConfig(testPath)
@@ -164,7 +164,7 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         const result = await validateFetcherConfig(testPath)
@@ -187,10 +187,10 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          'Validation error: Specify filter.startDate if filter.endDate is provided at "filter"'
+          'Validation error: Specify filter.startDate if filter.endDate is provided at "filter"',
         )
       })
 
@@ -206,10 +206,10 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          'Validation error: filter.endDate must be after or equal filter.startDate at "filter"'
+          'Validation error: filter.endDate must be after or equal filter.startDate at "filter"',
         )
       })
 
@@ -222,10 +222,10 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          'Validation error: date must match the format dd-mm-yyyy at "filter.startDate"'
+          'Validation error: date must match the format dd-mm-yyyy at "filter.startDate"',
         )
       })
 
@@ -241,10 +241,10 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          'Validation error: date must match the format dd-mm-yyyy at "filter.endDate"'
+          'Validation error: date must match the format dd-mm-yyyy at "filter.endDate"',
         )
       })
 
@@ -260,10 +260,10 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          'Validation error: date must match the format dd-mm-yyyy at "filter.startDate"'
+          'Validation error: date must match the format dd-mm-yyyy at "filter.startDate"',
         )
       })
 
@@ -279,10 +279,10 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          'Validation error: date must match the format dd-mm-yyyy at "filter.endDate"'
+          'Validation error: date must match the format dd-mm-yyyy at "filter.endDate"',
         )
       })
     })
@@ -301,7 +301,7 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         const result = await validateFetcherConfig(testPath)
@@ -320,7 +320,7 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         const result = await validateFetcherConfig(testPath)
@@ -340,7 +340,7 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         const result = await validateFetcherConfig(testPath)
@@ -363,12 +363,12 @@ describe('ValidateFetcherConfig', async () => {
           }
 
           vi.mocked(readFileSync).mockReturnValue(
-            JSON.stringify(gitFetcherConfig)
+            JSON.stringify(gitFetcherConfig),
           )
           await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-            `Validation error: String must contain at least 1 character(s) at "filter.${hash}"`
+            `Validation error: String must contain at least 1 character(s) at "filter.${hash}"`,
           )
-        }
+        },
       )
 
       it('throws an error, when endHash is used without startHash', async () => {
@@ -380,10 +380,10 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          'Validation error: Specify filter.startHash if filter.endHash is provided at "filter"'
+          'Validation error: Specify filter.startHash if filter.endHash is provided at "filter"',
         )
       })
     })
@@ -401,7 +401,7 @@ describe('ValidateFetcherConfig', async () => {
           },
         }
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         const result = await validateFetcherConfig(testPath)
         expect(result).toEqual(gitFetcherConfig)
@@ -419,7 +419,7 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         const result = await validateFetcherConfig(testPath)
@@ -438,7 +438,7 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         const result = await validateFetcherConfig(testPath)
@@ -458,7 +458,7 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         const result = await validateFetcherConfig(testPath)
@@ -481,12 +481,12 @@ describe('ValidateFetcherConfig', async () => {
           }
 
           vi.mocked(readFileSync).mockReturnValue(
-            JSON.stringify(gitFetcherConfig)
+            JSON.stringify(gitFetcherConfig),
           )
           await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-            `Validation error: String must contain at least 1 character(s) at "filter.${tag}`
+            `Validation error: String must contain at least 1 character(s) at "filter.${tag}`,
           )
-        }
+        },
       )
       it('throws an error, when endTag is used without startTag', async () => {
         const gitFetcherConfig: GitFetcherConfig = {
@@ -499,17 +499,17 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
 
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          'Validation error: Specify filter.startTag if filter.endTag is provided at "filter"'
+          'Validation error: Specify filter.startTag if filter.endTag is provided at "filter"',
         )
       })
     })
   })
 
-  describe('Filter Invalid Combinations', function () {
+  describe('Filter Invalid Combinations', () => {
     it.each([
       // date + hash filter
       ['startDate', 'startHash', undefined],
@@ -556,12 +556,12 @@ describe('ValidateFetcherConfig', async () => {
         }
 
         vi.mocked(readFileSync).mockReturnValue(
-          JSON.stringify(gitFetcherConfig)
+          JSON.stringify(gitFetcherConfig),
         )
         await expect(validateFetcherConfig(testPath)).rejects.toThrowError(
-          'Validation error: Combining the date, hash and/or tag filter is not possible at "filter"'
+          'Validation error: Combining the date, hash and/or tag filter is not possible at "filter"',
         )
-      }
+      },
     )
   })
 })
