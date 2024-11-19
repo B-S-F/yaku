@@ -208,8 +208,8 @@ repositories:
         auth:
             token: token
 
-autopilots: 
-    autopilot1: 
+autopilots:
+    autopilot1:
         run: |
             echo "$VAR_1"
             echo "$VAR_2"
@@ -242,7 +242,7 @@ finalize:
     run: |
         html-finalizer
         zip-finalizer
-chapters: 
+chapters:
     '1':
         title: chapter 1
         requirements:
@@ -250,7 +250,7 @@ chapters:
                 title: requirement 1
                 text: requirement text 1
                 checks:
-                    '1': 
+                    '1':
                         title: check 1
                         automation:
                             autopilot: autopilot1
@@ -654,7 +654,7 @@ chapters:
 			"1":
 				title: Test
 				checks:
-					"1":  
+					"1":
 						title: Test
 						automation:
 							autopilot: missing-autopilot`
@@ -733,7 +733,7 @@ finalize:
     run: |
         html-finalizer
         zip-finalizer
-chapters: 
+chapters:
     '1':
         title: chapter 1
         requirements:

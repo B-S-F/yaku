@@ -21,7 +21,7 @@ workItems:
         assignees:
           fieldName: "AssignedTo"
           conditions:
-            expected: 
+            expected:
               - "Name"
         bugType:
           fieldName: "BugType"

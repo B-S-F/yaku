@@ -31,14 +31,14 @@ workItems:
             fieldName: "AssignedTo"
             closedAfterDate: '2022.01.01'
             conditions:
-              expected: 
+              expected:
                 - 'Name'
 
           reviewers:
-            fieldName: "Reviewer" 
+            fieldName: "Reviewer"
             closedAfterDate: '2022.01.01'
             conditions:
-              expected: 
+              expected:
                 - 'Name'
     children:
       get: true

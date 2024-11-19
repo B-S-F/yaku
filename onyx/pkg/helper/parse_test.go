@@ -17,7 +17,7 @@ import (
 func TestParseJsonMap(t *testing.T) {
 	t.Run("should return a map of variables", func(t *testing.T) {
 		content := []byte(`
-{ 
+{
 	"VAR1": "value1",
   "VAR2": "value2",
 	"VAR3": "file://testdata/configuration/variables.txt"
@@ -82,7 +82,7 @@ func TestParseJsonMap(t *testing.T) {
 				content: []byte(`
 {
 	"VAR1": "value1",
-	"VAR2: { 
+	"VAR2: {
 		"VAR3": "value3"
 	}
 }
@@ -94,7 +94,7 @@ func TestParseJsonMap(t *testing.T) {
 {
 	"VAR1": "value1",
 	"VAR2: [
-		{ 
+		{
 			"VAR3": "value3"
 		}
 	]

@@ -48,8 +48,8 @@ autopilots:
       set -ex
       docupedia-fetcher
     env:
-      DOCUPEDIA_SCHEME_ID: 
-      DOCUPEDIA_USER: 
+      DOCUPEDIA_SCHEME_ID:
+      DOCUPEDIA_USER:
   sharepoint-pdf-signature-check:
     run: |
       set -ex

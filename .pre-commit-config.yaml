@@ -45,11 +45,11 @@ repos:
       - id: debug-statements
       - id: check-toml
       - id: check-yaml
-        exclude: '^(chart|qg-api-service/qg-api-service/integration-tests/mocks|qg-api-service/qg-api-service/src/namespace|qg-api-service/localdev|onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|user-documentation|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
+        exclude: '^(chart|onyx/(pkg|cmd|examples|internal)|.*/testdata|qg-api-service/(qg-api-service/integration-tests/mocks|qg-api-service/src/namespace|localdev))/'
       - id: end-of-file-fixer
-        exclude: '^(onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
+        exclude: '^(.*/testdata)/'
       - id: trailing-whitespace
-        exclude: '^(qg-api-service/qg-api-service/src/namespace|onyx/pkg|onyx/cmd|onyx/examples|onyx/internal|yaku-apps-typescript|qg-api-service/api-commons-lib/src/testdata)/'
+        exclude: '^(.*/testdata)/'
   #  ####
   #  ## Commit lint
   #  ####
