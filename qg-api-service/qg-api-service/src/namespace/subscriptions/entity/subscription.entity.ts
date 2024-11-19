@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ReleaseEntity } from '../../releases/release.entity'
 import {
   CreateDateColumn,

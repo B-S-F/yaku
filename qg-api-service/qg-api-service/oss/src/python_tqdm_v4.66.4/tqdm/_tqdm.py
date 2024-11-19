@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from warnings import warn
 
 from .std import *  # NOQA

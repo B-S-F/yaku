@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 """Test `tqdm.__version__`."""
 import re
 from ast import literal_eval

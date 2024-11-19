@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { jest } from '@jest/globals'
 import { listFindings, resolveFinding, reopenFinding } from './findings'
 import { ApiClient, FindingsPaginated } from '@B-S-F/yaku-client-lib'

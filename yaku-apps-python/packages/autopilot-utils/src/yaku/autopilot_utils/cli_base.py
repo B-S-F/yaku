@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 """
 A utility module for writing Python apps.
 

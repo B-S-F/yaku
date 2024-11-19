@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { streamToString } from '@B-S-F/api-commons-lib'
 import { NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'

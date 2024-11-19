@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { readFile } from 'fs/promises'
 import * as path from 'path'

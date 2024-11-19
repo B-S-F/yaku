@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { describe, expect, it } from 'vitest'
 import * as evaluator from '../src/evaluate'
 import { AppError } from '@B-S-F/autopilot-utils'

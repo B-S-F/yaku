@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Command } from 'commander'
 import { handleRestApiError } from '../common.js'
 import { ApiClient } from '@B-S-F/yaku-client-lib'

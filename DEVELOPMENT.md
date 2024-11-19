@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 Developer documentation for the project.
 
 # Pre-commit hooks

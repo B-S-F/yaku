@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { jest } from '@jest/globals'
 import { createConfigsCommand } from './configs'
 import { Command } from 'commander'

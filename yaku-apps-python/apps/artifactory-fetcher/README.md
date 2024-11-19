@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # artifactory-fetcher
 
 This autopilot is used for fetching a single file or directory from a JFrog Artifactory.

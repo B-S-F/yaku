@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Known Issues
 
 Below we list all issues that you might face when deploying Yaku on you infrastructure and how to solve them.

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 // Package scanner implements a scanner for HCL (HashiCorp Configuration
 // Language) source text.
 package scanner

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { MockServerOptions } from '../../../../../integration-tests/src/util'
 import { BitbucketCommit } from '../../../src/model/bitbucket-commit'
 import { BitbucketPr } from '../../../src/model/bitbucket-pr'

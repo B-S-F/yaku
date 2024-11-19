@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Architecture of the initial config creation
 
 See below architecture document for the involved components and their relationship.

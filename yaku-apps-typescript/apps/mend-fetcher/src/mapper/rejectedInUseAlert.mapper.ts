@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { RejectedInUseAlertDTO } from '../dto/rejectedInUseAlert.dto.js'
 import { RejectedInUseAlert } from '../model/rejectedInUseAlert.js'
 import { Project } from '../model/project.js'

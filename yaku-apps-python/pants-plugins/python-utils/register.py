@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from pants.backend.python.target_types import PythonDistribution
 from pants.backend.python.util_rules.package_dists import SetupKwargs, SetupKwargsRequest
 from pants.engine.fs import DigestContents, GlobMatchErrorBehavior, PathGlobs

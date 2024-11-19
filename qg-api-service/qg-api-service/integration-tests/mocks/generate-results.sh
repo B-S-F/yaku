@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 export NODE_NO_WARNINGS=1
 # show created resources
 RED='\033[0;31m'

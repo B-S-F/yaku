@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import stream from 'stream'
 
 type Chunk = string | Buffer | Uint8Array

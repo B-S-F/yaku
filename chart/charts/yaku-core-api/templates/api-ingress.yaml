@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 {{- if and (not (eq (toString .Values.ingress.enabled) "false")) .Values.ingress.enabled }}
 {{- $componentName :=  include "yaku.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}

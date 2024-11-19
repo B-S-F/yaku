@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # jira-finalizer
 
 The Jira finalizer is currently a POC.

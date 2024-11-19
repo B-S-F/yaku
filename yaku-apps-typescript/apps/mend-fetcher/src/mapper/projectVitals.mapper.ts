@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ProjectVitals } from '../model/projectVitals.js'
 import { ProjectVitalsDTO } from '../dto/projectVitals.dto.js'
 

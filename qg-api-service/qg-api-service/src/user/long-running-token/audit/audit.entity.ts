@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { AuditActor } from '../../../namespace/audit/audit.entity'
 import { Column, PrimaryGeneratedColumn } from 'typeorm'
 

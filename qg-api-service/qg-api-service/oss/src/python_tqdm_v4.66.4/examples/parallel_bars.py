@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 from multiprocessing import Pool, RLock, freeze_support

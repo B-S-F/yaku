@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Yaku
 [![Build](https://github.com/B-S-F/yaku/actions/workflows/build.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build.yml)
 

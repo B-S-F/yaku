@@ -1,6 +1,8 @@
-/**
- * Copyright (c) 2023 by grow platform GmbH
- */
+// SPDX-FileCopyrightText: 2023 by grow platform GmbH
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   AppError,
   AppOutput,

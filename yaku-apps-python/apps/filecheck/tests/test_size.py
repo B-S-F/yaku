@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import mock
 from yaku.autopilot_utils.results import RESULTS, protect_results
 from yaku.filecheck.commands.size import verify_size_of_file

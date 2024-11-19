@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from pyhanko.sign.ades.report import AdESIndeterminate
 
 ERROR_MESSAGES = {

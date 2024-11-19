@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Readable } from 'stream'
 import { decodeBufferToUTF8EncodedString, streamToString } from './stream-utils'
 

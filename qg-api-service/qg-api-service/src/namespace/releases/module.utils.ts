@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { QueryRunner } from 'typeorm'
 import { parse } from 'yaml'

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import {
   MockServer,

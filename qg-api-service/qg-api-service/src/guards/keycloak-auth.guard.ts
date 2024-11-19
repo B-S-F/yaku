@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { KEYCLOAK_STRATEGY_NAME } from '@B-S-F/api-keycloak-auth-lib'
 import {
   ExecutionContext,

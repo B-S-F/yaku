@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ListQueryHandler, SortOrder } from '@B-S-F/api-commons-lib'
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import { Timeout } from '@nestjs/schedule'

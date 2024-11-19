@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 """
 Customisable progressbar decorator for iterators.
 Includes a default `range` iterator printing to `stderr`.

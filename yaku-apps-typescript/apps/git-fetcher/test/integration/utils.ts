@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { SupportedAuthMethod } from '../../src/model/git-server-config'
 import { AllowedFilterStateType } from '../../src/model/config-file-data'
 import { expect } from 'vitest'

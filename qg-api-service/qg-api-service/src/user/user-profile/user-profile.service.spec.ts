@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { EntityManager, EntityTarget, QueryRunner, SaveOptions } from 'typeorm'
 import { UserProfile } from './user-profile.entity'
 import { UserProfileService } from './user-profile.service'

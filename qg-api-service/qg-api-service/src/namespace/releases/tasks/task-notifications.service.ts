@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject } from '@nestjs/common'
 import { Interval } from '@nestjs/schedule'
 import { InjectRepository } from '@nestjs/typeorm'

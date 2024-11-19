@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from typing import Any, Dict, List, Tuple
 from urllib.parse import quote, urlparse
 

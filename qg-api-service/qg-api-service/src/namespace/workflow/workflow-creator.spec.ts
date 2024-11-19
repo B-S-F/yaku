@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import * as path from 'path'
 import { ConfigEntity, FileEntity } from '../configs/config.entity'
 import { CheckIdentifier, newWorkflow } from './workflow-creator'

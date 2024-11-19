@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { GithubSingleCommitResponse } from '../../../src/model/github-single-commit-response'
 import { GithubDiffResponse } from '../../../src/model/github-diff-response'
 import { GithubMultipleCommitsResponse } from '../../../src/model/github-multiple-commits-response'

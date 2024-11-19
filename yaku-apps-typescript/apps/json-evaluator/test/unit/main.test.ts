@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { afterEach, describe, it, expect, vi, beforeEach } from 'vitest'
 import * as autopilotUtils from '@B-S-F/autopilot-utils'
 import { checkEnvironmentVariables, main } from '../../src/main'

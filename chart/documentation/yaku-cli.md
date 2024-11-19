@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Yaku-cli
 
 Yaku-cli is a command line tool to use Yaku service.

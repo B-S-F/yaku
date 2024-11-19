@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import pytest
 from yaku.sharepoint_fetcher.config import Settings
 from yaku.sharepoint_fetcher.sharepoint_factory import SharePointFetcherFactory

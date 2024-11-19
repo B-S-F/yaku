@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 """
 Note: most testing for the `cli_base.py` module is done via the app templates
 in the `tests/app*/` directories.

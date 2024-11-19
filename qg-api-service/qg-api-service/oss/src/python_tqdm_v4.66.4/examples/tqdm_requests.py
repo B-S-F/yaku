@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 """An example of wrapping manual tqdm updates for `requests.get`.
 See also: tqdm_wget.py.
 

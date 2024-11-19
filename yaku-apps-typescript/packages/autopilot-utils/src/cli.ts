@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Command, program } from 'commander'
 import { exit } from 'process'
 import { AppError } from './app-error.js'

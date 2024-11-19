@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 /** @type import('jest').Config */
 const config = {
   moduleNameMapper: {

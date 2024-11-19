@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 env: ${{ env.ADDITIONAL_CONFIG_ENV }}
 var: ${{ vars.ADDITIONAL_CONFIG_VAR }}
 secret: ${{ secrets.ADDITIONAL_CONFIG_SECRET }}

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { HttpStatus } from '@nestjs/common'
 import { ENABLE_TASKS_CONTROLLER } from 'src/config'
 import { SubscriptionEntity } from 'src/namespace/subscriptions/entity/subscription.entity'

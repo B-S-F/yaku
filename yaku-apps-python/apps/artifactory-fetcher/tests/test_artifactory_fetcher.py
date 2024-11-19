@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from collections import namedtuple
 from pathlib import Path
 from urllib.error import URLError

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { Environment, EnvironmentFacade } from '../cli/environment-utils'
 import { RunProcessResult } from '../cli/process'

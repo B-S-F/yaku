@@ -1,6 +1,7 @@
-/**
- * Copyright (c) 2022, 2023 by grow platform GmbH
- */
+// SPDX-FileCopyrightText: 2022 2023 by grow platform GmbH
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import * as evaluator from '../src/evaluate'

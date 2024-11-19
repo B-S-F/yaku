@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiClient, QueryOptions, Release } from '@B-S-F/yaku-client-lib'
 import {
   getResourceDeletionConfirmation,

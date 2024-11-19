@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { KeyCloakConfig, KeyCloakService } from '@B-S-F/api-keycloak-auth-lib'
 import { Module } from '@nestjs/common'
 import { LoggerModule } from 'nestjs-pino'

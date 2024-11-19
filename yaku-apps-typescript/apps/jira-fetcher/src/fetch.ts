@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import fetch from 'node-fetch'
 import { ProxyAgent } from 'proxy-agent'
 import { AppError } from '@B-S-F/autopilot-utils'

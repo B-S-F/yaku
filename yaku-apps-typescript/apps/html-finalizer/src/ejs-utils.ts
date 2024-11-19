@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import markdown from '@B-S-F/markdown-utils'
 
 const statusIconMap: { [status: string]: string } = {
