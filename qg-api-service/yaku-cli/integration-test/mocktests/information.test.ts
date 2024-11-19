@@ -20,11 +20,11 @@ const testYakurc = '.yakurc-test'
 const yakuCliExecutable: string = `${__dirname}/../../dist/index.js`
 const cmdManager: CommandFacade = new CommandFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 const envManager: EnvironmentFacade = new EnvironmentFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 
 describe('Integration tests for about', async () => {
@@ -52,7 +52,7 @@ describe('Integration tests for info', async () => {
     'http',
     'localhost',
     String(port),
-    '/api/v1'
+    '/api/v1',
   )
   const mockServerOptions = createInfoMockServerResponse(port)
   const mockServerEnvironmentOptions = loginMockServerResponse(port)

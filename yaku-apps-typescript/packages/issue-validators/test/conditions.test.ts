@@ -35,7 +35,7 @@ describe('validators', () => {
     const result = conditions.checkExpectedValues(
       issues,
       fieldName,
-      acceptedValues
+      acceptedValues,
     )
     expect(result).toEqual(expectedOutput)
   })
@@ -45,7 +45,7 @@ describe('validators', () => {
     const result = conditions.checkExpectedValuesExist(
       issues,
       fieldName,
-      acceptedValues
+      acceptedValues,
     )
     expect(result).toEqual(expectedOutput)
   })
@@ -54,7 +54,7 @@ describe('validators', () => {
     const result = conditions.checkIllegalValuesExist(
       issues,
       fieldName,
-      unacceptedValues
+      unacceptedValues,
     )
     const expectedOutput = [issues[2]]
     expect(result).toEqual(expectedOutput)
@@ -64,7 +64,7 @@ describe('validators', () => {
     const result = conditions.checkIllegalValues(
       issues,
       fieldName,
-      unacceptedValues
+      unacceptedValues,
     )
     const expectedOutput = [issues[0], issues[1]]
     expect(result).toEqual(expectedOutput)
@@ -112,7 +112,7 @@ describe('validators', () => {
       issuesResolved,
       fieldName,
       acceptedValues,
-      dueDateFieldName
+      dueDateFieldName,
     )
     expect(result).toEqual(expectedResult)
   })

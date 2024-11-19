@@ -31,7 +31,7 @@ describe('checkInCycle()', () => {
       fieldName,
       acceptedValues,
       days,
-      dueDateFieldName
+      dueDateFieldName,
     )
     expect(result).toBeFalsy()
   })
@@ -45,7 +45,7 @@ describe('checkInCycle()', () => {
       fieldName,
       acceptedValues,
       days,
-      dueDateFieldName
+      dueDateFieldName,
     )
     expect(result).toBeFalsy()
     vi.useRealTimers()
@@ -60,7 +60,7 @@ describe('checkInCycle()', () => {
       fieldName,
       acceptedValues,
       days,
-      dueDateFieldName
+      dueDateFieldName,
     )
     expect(result).toBeTruthy()
     vi.useRealTimers()
@@ -93,7 +93,7 @@ describe('checkClosedIssuesAfterDate()', () => {
       issues,
       fieldName,
       acceptedValues,
-      dueDateFieldName
+      dueDateFieldName,
     )
     expect(result).toEqual(issues)
   })
@@ -104,7 +104,7 @@ describe('checkClosedIssuesAfterDate()', () => {
       fieldName,
       acceptedValues,
       dueDateFieldName,
-      afterDate
+      afterDate,
     )
     expect(result).toEqual(issues.slice(0, 3))
   })
@@ -119,11 +119,11 @@ describe('checkProperty()', () => {
       [],
       fieldName,
       conditionType,
-      acceptedValues
+      acceptedValues,
     )
     expect(result).toEqual([])
     expect(mockedConsole).toHaveBeenCalledWith(
-      'Condition condition1 is not implemented!'
+      'Condition condition1 is not implemented!',
     )
   })
   it('should return issues with undefined fields', () => {
@@ -139,7 +139,7 @@ describe('checkProperty()', () => {
       issues,
       fieldName,
       conditionType,
-      acceptedValues
+      acceptedValues,
     )
     expect(result).toEqual(expectedResult)
   })
@@ -157,7 +157,7 @@ describe('checkProperty()', () => {
       issues,
       fieldName,
       conditionType,
-      acceptedValues
+      acceptedValues,
     )
     expect(result).toEqual(expectedResult)
   })
@@ -175,7 +175,7 @@ describe('checkProperty()', () => {
       issues,
       fieldName,
       conditionType,
-      acceptedValues
+      acceptedValues,
     )
     expect(result).toEqual(expectedResult)
   })
@@ -193,7 +193,7 @@ describe('checkProperty()', () => {
       issues,
       fieldName,
       conditionType,
-      acceptedValues
+      acceptedValues,
     )
     expect(result).toEqual(expectedResult)
   })
@@ -211,7 +211,7 @@ describe('checkProperty()', () => {
       issues,
       fieldName,
       conditionType,
-      acceptedValues
+      acceptedValues,
     )
     expect(result).toEqual(expectedResult)
   })
@@ -232,7 +232,7 @@ describe('checkProperty()', () => {
       issues,
       fieldName,
       conditionType,
-      acceptedValues
+      acceptedValues,
     )
     expect(result).toEqual(expectedResult)
   })

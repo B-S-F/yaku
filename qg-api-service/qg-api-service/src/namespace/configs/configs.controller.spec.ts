@@ -118,7 +118,7 @@ describe('ConfigsController', () => {
   function createFromData(
     namespaceId: number,
     name: string,
-    description?: string
+    description?: string,
   ): ConfigEntity {
     const config = new ConfigEntity()
     config.globalId = 0
@@ -183,14 +183,14 @@ describe('ConfigsController', () => {
         .spyOn(service, 'create')
         .mockImplementation(
           async (nsid: number, name: string, description: string) =>
-            Promise.resolve(createFromData(nsid, name, description))
+            Promise.resolve(createFromData(nsid, name, description)),
         )
       const response = createMockResponse(`${baseUrl}/configs`, testUser)
 
       const created = await controller.createConfig(
         testingNamespaceId,
         { name: configName, description: configDescription },
-        response
+        response,
       )
 
       expect(created.id).toBe(configId)
@@ -204,7 +204,7 @@ describe('ConfigsController', () => {
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
         configName,
-        configDescription
+        configDescription,
       )
       expect(response.header).toBeCalledWith('Location', `${mockConfigsUrlId}`)
       jest.useRealTimers()
@@ -216,13 +216,13 @@ describe('ConfigsController', () => {
         .spyOn(service, 'create')
         .mockImplementation(
           async (nsid: number, name: string, description: string) =>
-            Promise.resolve(createFromData(nsid, name, description))
+            Promise.resolve(createFromData(nsid, name, description)),
         )
       const response = createMockResponse(`${baseUrl}/configs`, testUser)
       const created = await controller.createConfig(
         testingNamespaceId,
         { name: configName },
-        response
+        response,
       )
 
       expect(created.id).toBe(configId)
@@ -241,7 +241,7 @@ describe('ConfigsController', () => {
       const response = createMockResponse(`${baseUrl}/configs`, testUser)
 
       await expect(
-        controller.createConfig(testingNamespaceId, { name: '' }, response)
+        controller.createConfig(testingNamespaceId, { name: '' }, response),
       ).rejects.toThrow(BadRequestException)
 
       expect(service.create).not.toBeCalled()
@@ -256,13 +256,13 @@ describe('ConfigsController', () => {
         .mockResolvedValue(createStandardObject())
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}`,
-        testUser
+        testUser,
       )
 
       const retrieved = await controller.getConfig(
         testingNamespaceId,
         configId,
-        response
+        response,
       )
 
       expect(retrieved).not.toBeInstanceOf(ConfigEntity)
@@ -272,16 +272,16 @@ describe('ConfigsController', () => {
       expect(retrieved.creationTime).toEqual(new Date(0))
       expect(retrieved.lastModificationTime).toEqual(new Date(0))
       expect(retrieved.files.qgConfig).toBe(
-        `${mockConfigsUrlId}/files/qg-config.yaml`
+        `${mockConfigsUrlId}/files/qg-config.yaml`,
       )
       expect(retrieved.files.additionalConfigs).toContain(
-        `${mockConfigsUrlId}/files/qg-config1.yaml`
+        `${mockConfigsUrlId}/files/qg-config1.yaml`,
       )
       expect(retrieved.files.additionalConfigs).toContain(
-        `${mockConfigsUrlId}/files/another-config.yaml`
+        `${mockConfigsUrlId}/files/another-config.yaml`,
       )
       expect(retrieved.files.additionalConfigs).toContain(
-        `${mockConfigsUrlId}/files/yet%20%C3%A4n%C3%B6ther%20config%CE%A9.yaml`
+        `${mockConfigsUrlId}/files/yet%20%C3%A4n%C3%B6ther%20config%CE%A9.yaml`,
       )
       expect(retrieved.files.additionalConfigs.length).toBe(3)
 
@@ -294,13 +294,13 @@ describe('ConfigsController', () => {
         .mockResolvedValue(createSimpleStandardObject())
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}`,
-        testUser
+        testUser,
       )
 
       const retrieved = await controller.getConfig(
         testingNamespaceId,
         configAltId,
-        response
+        response,
       )
 
       expect(retrieved).not.toBeInstanceOf(ConfigEntity)
@@ -310,7 +310,7 @@ describe('ConfigsController', () => {
       expect(retrieved.creationTime).toEqual(new Date(0))
       expect(retrieved.lastModificationTime).toEqual(new Date(0))
       expect(retrieved.files.qgConfig).toBe(
-        `${mockConfigsUrlId}/files/qg-config.yaml`
+        `${mockConfigsUrlId}/files/qg-config.yaml`,
       )
       expect(retrieved.files.additionalConfigs).toBeFalsy()
 
@@ -323,11 +323,11 @@ describe('ConfigsController', () => {
         .mockRejectedValue(new NotFoundException())
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}`,
-        testUser
+        testUser,
       )
 
       await expect(
-        controller.getConfig(testingNamespaceId, configNotId, response)
+        controller.getConfig(testingNamespaceId, configNotId, response),
       ).rejects.toThrow(NotFoundException)
 
       expect(srvSpy).toBeCalledWith(testingNamespaceId, configNotId)
@@ -343,24 +343,24 @@ describe('ConfigsController', () => {
             namespaceId: number,
             configId: number,
             name: string,
-            description: string
+            description: string,
           ) => {
             const config = createStandardObject()
             config.name = name
             config.description = description
             return config
-          }
+          },
         )
 
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}`,
-        testUser
+        testUser,
       )
       const retrieved = await controller.updateConfig(
         testingNamespaceId,
         configId,
         { name: configUpdName, description: null },
-        response
+        response,
       )
 
       expect(retrieved.name).toBe(configUpdName)
@@ -369,16 +369,16 @@ describe('ConfigsController', () => {
       expect(retrieved.creationTime).toEqual(new Date(0))
       expect(retrieved.lastModificationTime).toEqual(new Date(0))
       expect(retrieved.files.qgConfig).toBe(
-        `${mockConfigsUrlId}/files/qg-config.yaml`
+        `${mockConfigsUrlId}/files/qg-config.yaml`,
       )
       expect(retrieved.files.additionalConfigs).toContain(
-        `${mockConfigsUrlId}/files/qg-config1.yaml`
+        `${mockConfigsUrlId}/files/qg-config1.yaml`,
       )
       expect(retrieved.files.additionalConfigs).toContain(
-        `${mockConfigsUrlId}/files/another-config.yaml`
+        `${mockConfigsUrlId}/files/another-config.yaml`,
       )
       expect(retrieved.files.additionalConfigs).toContain(
-        `${mockConfigsUrlId}/files/yet%20%C3%A4n%C3%B6ther%20config%CE%A9.yaml`
+        `${mockConfigsUrlId}/files/yet%20%C3%A4n%C3%B6ther%20config%CE%A9.yaml`,
       )
       expect(retrieved.files.additionalConfigs.length).toBe(3)
 
@@ -386,7 +386,7 @@ describe('ConfigsController', () => {
         testingNamespaceId,
         configId,
         configUpdName,
-        null
+        null,
       )
     })
 
@@ -398,25 +398,25 @@ describe('ConfigsController', () => {
             namespaceId: number,
             configId: number,
             name: string,
-            description: string
+            description: string,
           ) => {
             const config = createSimpleStandardObject()
             config.name = name
             config.description = description
             return config
-          }
+          },
         )
 
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}`,
-        testUser
+        testUser,
       )
 
       const retrieved = await controller.updateConfig(
         testingNamespaceId,
         configAltId,
         { name: configUpdName, description: configDescription },
-        response
+        response,
       )
 
       expect(retrieved.name).toBe(configUpdName)
@@ -425,7 +425,7 @@ describe('ConfigsController', () => {
       expect(retrieved.creationTime).toEqual(new Date(0))
       expect(retrieved.lastModificationTime).toEqual(new Date(0))
       expect(retrieved.files.qgConfig).toBe(
-        `${mockConfigsUrlId}/files/qg-config.yaml`
+        `${mockConfigsUrlId}/files/qg-config.yaml`,
       )
       expect(retrieved.files.additionalConfigs).toBeFalsy()
 
@@ -433,18 +433,18 @@ describe('ConfigsController', () => {
         testingNamespaceId,
         configAltId,
         configUpdName,
-        configDescription
+        configDescription,
       )
     })
 
     it('should throw a BadRequestException, if data does not fulfil constraints', async () => {
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}`,
-        testUser
+        testUser,
       )
 
       await expect(
-        controller.updateConfig(testingNamespaceId, configAltId, {}, response)
+        controller.updateConfig(testingNamespaceId, configAltId, {}, response),
       ).rejects.toThrow(BadRequestException)
 
       expect(service.update).not.toBeCalled()
@@ -456,7 +456,7 @@ describe('ConfigsController', () => {
         .mockRejectedValue(new NotFoundException())
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}`,
-        testUser
+        testUser,
       )
 
       await expect(
@@ -464,15 +464,15 @@ describe('ConfigsController', () => {
           testingNamespaceId,
           configNotId,
           { name: configUpdName },
-          response
-        )
+          response,
+        ),
       ).rejects.toThrow(NotFoundException)
 
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
         configNotId,
         configUpdName,
-        undefined
+        undefined,
       )
     })
   })
@@ -496,7 +496,7 @@ describe('ConfigsController', () => {
       const retrieved = await controller.getConfigs(
         testingNamespaceId,
         { page: 2, items: 10, sortOrder: SortOrder.ASC },
-        response
+        response,
       )
 
       expect(retrieved.pagination.pageNumber).toBe(2)
@@ -507,16 +507,16 @@ describe('ConfigsController', () => {
       expect(retrieved.data[0].name).toBeDefined()
       expect(retrieved.data[0].files).toBeDefined()
       expect(retrieved.links.first).toBe(
-        `${mockConfigsUrl}?page=1&items=10&sortOrder=ASC`
+        `${mockConfigsUrl}?page=1&items=10&sortOrder=ASC`,
       )
       expect(retrieved.links.last).toBe(
-        `${mockConfigsUrl}?page=5&items=10&sortOrder=ASC`
+        `${mockConfigsUrl}?page=5&items=10&sortOrder=ASC`,
       )
       expect(retrieved.links.prev).toBe(
-        `${mockConfigsUrl}?page=1&items=10&sortOrder=ASC`
+        `${mockConfigsUrl}?page=1&items=10&sortOrder=ASC`,
       )
       expect(retrieved.links.next).toBe(
-        `${mockConfigsUrl}?page=3&items=10&sortOrder=ASC`
+        `${mockConfigsUrl}?page=3&items=10&sortOrder=ASC`,
       )
 
       expect(srvSpy).toBeCalledWith(
@@ -525,8 +525,8 @@ describe('ConfigsController', () => {
           { page: 2, items: 10, sortOrder: SortOrder.ASC },
           queryOptionsSchema.strict(),
           [],
-          'id'
-        )
+          'id',
+        ),
       )
     })
 
@@ -540,7 +540,7 @@ describe('ConfigsController', () => {
       const retrieved = await controller.getConfigs(
         testingNamespaceId,
         { items: 10 } as PaginationQueryOptions,
-        response
+        response,
       )
 
       expect(retrieved.pagination.pageNumber).toBe(1)
@@ -561,8 +561,8 @@ describe('ConfigsController', () => {
           { items: 10 } as PaginationQueryOptions,
           queryOptionsSchema.strict(),
           [],
-          'id'
-        )
+          'id',
+        ),
       )
     })
 
@@ -575,7 +575,7 @@ describe('ConfigsController', () => {
       const retrieved = await controller.getConfigs(
         testingNamespaceId,
         { items: 10 } as PaginationQueryOptions,
-        response
+        response,
       )
 
       expect(retrieved.pagination.pageNumber).toBe(1)
@@ -593,8 +593,8 @@ describe('ConfigsController', () => {
           { items: 10 } as PaginationQueryOptions,
           queryOptionsSchema.strict(),
           [],
-          'id'
-        )
+          'id',
+        ),
       )
     })
 
@@ -606,10 +606,10 @@ describe('ConfigsController', () => {
           controller.getConfigs(
             testingNamespaceId,
             { sortBy: property } as PaginationQueryOptions,
-            response
-          )
+            response,
+          ),
         ).rejects.toThrow(BadRequestException)
-      }
+      },
     )
   })
 
@@ -621,13 +621,13 @@ describe('ConfigsController', () => {
       })
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}/validate`,
-        testUser
+        testUser,
       )
 
       const validationResult = await controller.validateConfig(
         testingNamespaceId,
         configId,
-        response
+        response,
       )
 
       expect(validationResult.status).toBe(validateState)
@@ -645,34 +645,34 @@ describe('ConfigsController', () => {
         })
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}/initial-config`,
-        testUser
+        testUser,
       )
 
       const configFile = await controller.createInitialConfig(
         testingNamespaceId,
         configId,
         { content: questionnaire },
-        response
+        response,
       )
 
       expect(response.header).toBeCalledTimes(3)
       expect(response.header).toBeCalledWith(
         'Content-Type',
-        'application/octet-stream'
+        'application/octet-stream',
       )
       expect(response.header).toBeCalledWith(
         'Content-Disposition',
-        `attachment; filename="${initialFilename}"`
+        `attachment; filename="${initialFilename}"`,
       )
       expect(response.header).toBeCalledWith(
         'Location',
-        `${mockConfigsUrlId}/files/${initialFilename}`
+        `${mockConfigsUrlId}/files/${initialFilename}`,
       )
       expect(await streamToString(configFile.getStream())).toBe(initialConfig)
       expect(srvSpy).toBeCalledWith(
         testingNamespaceId,
         configId,
-        questionnaire[0].buffer
+        questionnaire[0].buffer,
       )
     })
 
@@ -685,28 +685,28 @@ describe('ConfigsController', () => {
         })
       const response = createMockResponse(
         `${baseUrl}/configs/${configId}/initial-config`,
-        testUser
+        testUser,
       )
 
       const configFile = await controller.createInitialConfigFromExcel(
         testingNamespaceId,
         configId,
         { xlsx: excelQuestionnaire, config: excelColumnConfig },
-        response
+        response,
       )
 
       expect(response.header).toBeCalledTimes(3)
       expect(response.header).toBeCalledWith(
         'Content-Type',
-        'application/octet-stream'
+        'application/octet-stream',
       )
       expect(response.header).toBeCalledWith(
         'Content-Disposition',
-        `attachment; filename="${initialFilename}"`
+        `attachment; filename="${initialFilename}"`,
       )
       expect(response.header).toBeCalledWith(
         'Location',
-        `${mockConfigsUrlId}/files/${initialFilename}`
+        `${mockConfigsUrlId}/files/${initialFilename}`,
       )
       expect(await streamToString(configFile.getStream())).toBe(initialConfig)
       expect(srvSpy).toBeCalledWith(
@@ -714,7 +714,7 @@ describe('ConfigsController', () => {
         configId,
         excelQuestionnaire[0].originalname,
         excelQuestionnaire[0].buffer,
-        excelColumnConfig[0].buffer
+        excelColumnConfig[0].buffer,
       )
     })
   })

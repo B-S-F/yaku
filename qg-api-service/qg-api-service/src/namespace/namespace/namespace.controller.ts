@@ -1,8 +1,5 @@
 import { validateBody, validateId } from '@B-S-F/api-commons-lib'
-import {
-  KeyCloakNamespace,
-  KeyCloakUser,
-} from '@B-S-F/api-keycloak-auth-lib'
+import { KeyCloakNamespace, KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
 import {
   BadRequestException,
   Body,
@@ -113,7 +110,7 @@ export class NamespaceController {
   async getList(@Req() request: Request): Promise<NamespaceDto[]> {
     const requestUser = request.user as KeyCloakUser
     return (await this.namespaceService.getList(requestUser)).map(
-      (namespace: Namespace | KeyCloakNamespace) => toOutputDto(namespace)
+      (namespace: Namespace | KeyCloakNamespace) => toOutputDto(namespace),
     )
   }
 
@@ -134,13 +131,13 @@ export class NamespaceController {
   @ApiBadRequestResponse({ description: 'Given name or users have issues' })
   @Roles(ADMIN_ROLE)
   async create(
-    @Body() namespace: NamespacePostPatchDto
+    @Body() namespace: NamespacePostPatchDto,
   ): Promise<NamespaceDto> {
     validateBody(namespace, postSchema)
 
     if (!namespace.name || !namespace.name.trim()) {
       throw new BadRequestException(
-        'A new namespace needs a name, currently undefined'
+        'A new namespace needs a name, currently undefined',
       )
     }
     return toOutputDto(await this.namespaceService.create(namespace.name))
@@ -153,7 +150,7 @@ export class NamespaceController {
   @Roles(ADMIN_ROLE)
   async update(
     @Param('id') id: number,
-    @Body() namespace: NamespacePostPatchDto
+    @Body() namespace: NamespacePostPatchDto,
   ): Promise<NamespaceDto> {
     validateId(id)
     validateBody(namespace, patchSchema)
@@ -162,7 +159,7 @@ export class NamespaceController {
   }
 
   private createUserList(
-    userList: { username: string }[] | null | undefined
+    userList: { username: string }[] | null | undefined,
   ): string[] {
     return (userList ?? []).map((user) => user.username)
   }

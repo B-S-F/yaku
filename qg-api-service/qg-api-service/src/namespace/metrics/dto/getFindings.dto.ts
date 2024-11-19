@@ -6,7 +6,7 @@ export class GetFindingsDTO {
     runId: number,
     count: number,
     diff: number,
-    datetime: Date
+    datetime: Date,
   ) {
     this.configId = configId
     this.runId = runId

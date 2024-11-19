@@ -16,18 +16,18 @@ export class GitFetcherBitbucketTagsAndBranches
   constructor(
     private readonly gitServerConfig: GitServerConfig,
     private readonly config: ConfigFileData,
-    private readonly resourceType: 'tags' | 'branches'
+    private readonly resourceType: 'tags' | 'branches',
   ) {
     const strippedApiUrl: string = gitServerConfig.gitServerApiUrl.replace(
       /\/*$/,
-      ''
+      '',
     )
     this.url = `${strippedApiUrl}/projects/${this.config.data.org}/repos/${this.config.data.repo}/${resourceType}`
   }
 
   public async fetchResource(): Promise<(BitbucketTag | BitbucketBranch)[]> {
     const requestOptions: RequestInit = await getRequestOptions(
-      this.gitServerConfig
+      this.gitServerConfig,
     )
     const fetchedResources: (BitbucketTag | BitbucketBranch)[] = []
 
@@ -60,7 +60,7 @@ export class GitFetcherBitbucketTagsAndBranches
     console.log(
       `Fetched ${fetchedResources.length} ${resource}${
         fetchedResources.length === 1 ? '' : postfix
-      }`
+      }`,
     )
     return fetchedResources
   }

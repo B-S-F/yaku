@@ -59,7 +59,7 @@ export async function ghAppAuth() {
   const installation = await getAppInstallation(
     octokit,
     GH_APP_ORG!,
-    GH_APP_REPO
+    GH_APP_REPO,
   )
   if (!installation || !installation!.data.id) {
     logger.error(`No app installation found in ${target}!`)
@@ -68,18 +68,18 @@ export async function ghAppAuth() {
   const installationId = installation.data.id
   const appSlug = installation.data.app_slug
   logger.debug(
-    `Found installation with id ${installationId} in ${target} for app ${appSlug}`
+    `Found installation with id ${installationId} in ${target} for app ${appSlug}`,
   )
   logger.debug(`Requesting access token for installation ${installationId}`)
   const access = await getAppAccess(octokit, installationId)
   if (!access || !access.data.token) {
     logger.error(
-      `No access token received for app installation ${installationId} in ${target}!`
+      `No access token received for app installation ${installationId} in ${target}!`,
     )
     process.exit(1)
   }
   logger.info(
-    `Logged in as '${appSlug}'. Please store the token in the environment variable 'GH_TOKEN'.`
+    `Logged in as '${appSlug}'. Please store the token in the environment variable 'GH_TOKEN'.`,
   )
   return access.data.token
 }

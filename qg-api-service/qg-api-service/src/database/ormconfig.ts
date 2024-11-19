@@ -22,7 +22,7 @@ const config: Omit<DatabaseConfig, 'type'> & { type?: any } = databaseConfig(
   DB_NAME,
   DB_USE_SSL,
   DB_MIGRATIONS_RUN,
-  DATA_DIR
+  DATA_DIR,
 )
 export const configSource = new DataSource({
   type: config.type,

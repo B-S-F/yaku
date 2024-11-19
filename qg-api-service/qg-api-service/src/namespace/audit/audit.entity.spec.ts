@@ -7,7 +7,7 @@ describe('Audit Entity', () => {
       '7341a294-7a51-4fdc-90c6-af58e6bea690',
       'username',
       'email',
-      'displayName'
+      'displayName',
     )
     const actor = AuditActor.convertFrom(user)
     expect(actor.id).toBe('7341a294-7a51-4fdc-90c6-af58e6bea690')
@@ -25,7 +25,7 @@ describe('Audit Entity', () => {
       '7341a294-7a51-4fdc-90c6-af58e6bea690',
       'username',
       'email',
-      'displayName'
+      'displayName',
     )
     const actor = AuditActor.convertFrom(user)
     expect(actor.id).toBe('7341a294-7a51-4fdc-90c6-af58e6bea690')
@@ -33,7 +33,7 @@ describe('Audit Entity', () => {
     expect(actor.email).toBe('email')
     expect(actor.displayName).toBe('displayName')
     expect(JSON.stringify(actor)).toBe(
-      '{"id":"7341a294-7a51-4fdc-90c6-af58e6bea690","username":"username","email":"email","displayName":"displayName"}'
+      '{"id":"7341a294-7a51-4fdc-90c6-af58e6bea690","username":"username","email":"email","displayName":"displayName"}',
     )
   })
 
@@ -47,7 +47,7 @@ describe('Audit Entity', () => {
       '7341a294-7a51-4fdc-90c6-af58e6bea690',
       '',
       'email',
-      'displayName'
+      'displayName',
     )
     expect(() => AuditActor.convertFrom(user)).toThrow('username')
   })
@@ -57,7 +57,7 @@ describe('Audit Entity', () => {
       '7341a294-7a51-4fdc-90c6-af58e6bea690',
       'username',
       '',
-      'displayName'
+      'displayName',
     )
     expect(() => AuditActor.convertFrom(user)).toThrow('email')
   })
@@ -67,7 +67,7 @@ describe('Audit Entity', () => {
       '7341a294-7a51-4fdc-90c6-af58e6bea690',
       'username',
       'email',
-      ''
+      '',
     )
     expect(() => AuditActor.convertFrom(user)).toThrow('displayName')
   })
@@ -82,7 +82,7 @@ describe('Audit Entity', () => {
       '00000000-0000-0000-0000-000000000000',
       'username',
       'email',
-      'displayName'
+      'displayName',
     )
     const actor = AuditActor.convertFrom(user)
     expect(actor.id).toBe('00000000-0000-0000-0000-000000000000')

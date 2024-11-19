@@ -167,7 +167,7 @@ describe('excelConfig()', () => {
       testNamespace,
       '1',
       'xlsxFilepath',
-      'configFilepath'
+      'configFilepath',
     )
     expect(createConfigFromExcelSpy).toHaveBeenCalled()
   })

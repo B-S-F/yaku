@@ -34,7 +34,7 @@ describe('sonarqube', async () => {
     expect(stderr).toHaveLength(0)
     expect(stdout).toContain('Usage: sonarqube fetch [options] [command]')
     expect(stdout).toContain(
-      '  project-status [options]  Fetch project status from Sonarqube.'
+      '  project-status [options]  Fetch project status from Sonarqube.',
     )
   })
   it('should show help for fetch project-status', async () => {
@@ -55,7 +55,7 @@ describe('sonarqube', async () => {
     ])
     expect(exitCode).toEqual(0)
     expect(stdout).toContain(
-      '{"status":"FAILED","reason":"hostname is not set\\naccess token is not set"}'
+      '{"status":"FAILED","reason":"hostname is not set\\naccess token is not set"}',
     )
     const { stdout: stdout2, exitCode: exitCode2 } = await run(
       `${executable}`,
@@ -68,11 +68,11 @@ describe('sonarqube', async () => {
           SONARQUBE_PROJECT_KEY: 'projectKey',
           SONARQUBE_OUTPUT_PATH: 'outputPath',
         },
-      }
+      },
     )
     expect(exitCode2).toEqual(0)
     expect(stdout2).toContain(
-      '{"status":"FAILED","reason":"access token is not set"}'
+      '{"status":"FAILED","reason":"access token is not set"}',
     )
   })
 })

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const getDefenderForCloudRecommendations = async (
   token: string,
-  subscriptionId: string
+  subscriptionId: string,
 ) => {
   const baseUrl =
     process.env.IS_INTEGRATION_TEST === 'true'
@@ -38,7 +38,7 @@ export const getDefenderForCloudRecommendations = async (
     console.log('Error response: ')
     console.log(error.response.data)
     throw new Error(
-      `Request for Azure recommendations does not have status code 200. Status code: ${error.response.status}`
+      `Request for Azure recommendations does not have status code 200. Status code: ${error.response.status}`,
     )
   }
 
@@ -46,7 +46,7 @@ export const getDefenderForCloudRecommendations = async (
 }
 
 export const getDefenderForCloudRecommendationsMetadata = async (
-  token: string
+  token: string,
 ) => {
   const baseUrl =
     process.env.IS_INTEGRATION_TEST === 'true'
@@ -70,7 +70,7 @@ export const getDefenderForCloudRecommendationsMetadata = async (
       const response = await axios.get(URL, config)
       if (response.status === 200) {
         recommendationsMetadata = recommendationsMetadata.concat(
-          response.data.value
+          response.data.value,
         )
         if (response.data.nextLink) {
           URL = response.data.nextLink
@@ -84,7 +84,7 @@ export const getDefenderForCloudRecommendationsMetadata = async (
     console.log('Error response: ')
     console.log(error.response.data)
     throw new Error(
-      `Request for Azure recommendations metadata does not have status code 200. Status code: ${error.response.status}`
+      `Request for Azure recommendations metadata does not have status code 200. Status code: ${error.response.status}`,
     )
   }
 

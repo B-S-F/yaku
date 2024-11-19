@@ -37,13 +37,13 @@ export class TaskService {
     @Inject(NotificationService)
     private readonly notificationService: NotificationService,
     @Inject(TaskNotificationsService)
-    private readonly taskNotificationService: TaskNotificationsService
+    private readonly taskNotificationService: TaskNotificationsService,
   ) {}
 
   async get(
     namespaceId: number,
     releaseId: number,
-    taskId: number
+    taskId: number,
   ): Promise<TaskDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -53,7 +53,7 @@ export class TaskService {
         queryRunner,
         namespaceId,
         releaseId,
-        taskId
+        taskId,
       )
       const dto = await this.toTaskDto(res)
       await queryRunner.commitTransaction()
@@ -70,7 +70,7 @@ export class TaskService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    taskId: number
+    taskId: number,
   ): Promise<TaskEntity> {
     return await queryRunner.manager.findOneOrFail(TaskEntity, {
       where: {
@@ -87,7 +87,7 @@ export class TaskService {
     releaseId: number,
     listQueryHandler: ListQueryHandler,
     taskStateFilter?: TaskState,
-    assigneesFilter?: string[]
+    assigneesFilter?: string[],
   ): Promise<EntityList<TaskDto>> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -99,7 +99,7 @@ export class TaskService {
         releaseId,
         listQueryHandler,
         taskStateFilter,
-        assigneesFilter
+        assigneesFilter,
       )
       const dto = await this.toEntityList(res)
       await queryRunner.commitTransaction()
@@ -118,7 +118,7 @@ export class TaskService {
     releaseId: number,
     listQueryHandler: ListQueryHandler,
     taskStateFilter?: TaskState,
-    assigneesFilter?: string[]
+    assigneesFilter?: string[],
   ): Promise<EntityList<TaskEntity>> {
     const queryBuilder = queryRunner.manager
       .getRepository(TaskEntity)
@@ -157,7 +157,7 @@ export class TaskService {
     dueDate: Date,
     reminder: ReminderMode,
     description: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<TaskDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -171,7 +171,7 @@ export class TaskService {
         dueDate,
         reminder,
         description,
-        actor
+        actor,
       )
       const dto = await this.toTaskDto(res)
       await queryRunner.commitTransaction()
@@ -192,7 +192,7 @@ export class TaskService {
     dueDate: Date,
     reminder: ReminderMode,
     description: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<TaskEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -218,7 +218,7 @@ export class TaskService {
       task.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.CREATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
     return task
   }
@@ -229,7 +229,7 @@ export class TaskService {
     reference: Reference,
     dueDate: Date,
     reminder: ReminderMode,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<TaskDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -242,7 +242,7 @@ export class TaskService {
         reference,
         dueDate,
         reminder,
-        actor
+        actor,
       )
       const dto = await this.toTaskDto(res)
       await queryRunner.commitTransaction()
@@ -262,7 +262,7 @@ export class TaskService {
     reference: Reference,
     dueDate: Date,
     reminder: ReminderMode,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<TaskEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -270,7 +270,7 @@ export class TaskService {
       queryRunner,
       namespaceId,
       releaseId,
-      reference
+      reference,
     )
 
     const newTask = new TaskEntity()
@@ -297,7 +297,7 @@ export class TaskService {
       task.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.CREATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
     return task
   }
@@ -315,12 +315,12 @@ export class TaskService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    reference: Reference
+    reference: Reference,
   ): Promise<{ title: string; description: string }> {
     const qgConfigData = await getQgConfigFileContent(
       queryRunner,
       namespaceId,
-      releaseId
+      releaseId,
     )
 
     try {
@@ -358,8 +358,8 @@ export class TaskService {
     } catch (e) {
       throw new NotFoundException(
         `Reference not found, namespace: ${namespaceId}, release: ${releaseId}, reference: ${JSON.stringify(
-          reference
-        )}`
+          reference,
+        )}`,
       )
     }
   }
@@ -372,7 +372,7 @@ export class TaskService {
     dueDate: Date,
     reminder: ReminderMode,
     description: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<TaskDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -387,7 +387,7 @@ export class TaskService {
         dueDate,
         reminder,
         description,
-        actor
+        actor,
       )
       const dto = await this.toTaskDto(res)
       await queryRunner.commitTransaction()
@@ -409,7 +409,7 @@ export class TaskService {
     dueDate: Date,
     reminder: ReminderMode,
     description: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<TaskEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -418,7 +418,7 @@ export class TaskService {
       queryRunner,
       namespaceId,
       releaseId,
-      taskId
+      taskId,
     )
 
     if (!currentTask) {
@@ -443,7 +443,7 @@ export class TaskService {
       task.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
     return task
   }
@@ -452,7 +452,7 @@ export class TaskService {
     namespaceId: number,
     releaseId: number,
     taskId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -464,7 +464,7 @@ export class TaskService {
         releaseId,
         taskId,
         TaskState.CLOSED,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
     } catch (e) {
@@ -479,7 +479,7 @@ export class TaskService {
     namespaceId: number,
     releaseId: number,
     taskId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -491,7 +491,7 @@ export class TaskService {
         releaseId,
         taskId,
         TaskState.OPEN,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
     } catch (e) {
@@ -508,7 +508,7 @@ export class TaskService {
     releaseId: number,
     taskId: number,
     newState: TaskState,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -517,7 +517,7 @@ export class TaskService {
       queryRunner,
       namespaceId,
       releaseId,
-      taskId
+      taskId,
     )
 
     if (!currentTask) {
@@ -550,7 +550,7 @@ export class TaskService {
       task.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
   }
 
@@ -558,7 +558,7 @@ export class TaskService {
     namespaceId: number,
     releaseId: number,
     taskId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -569,7 +569,7 @@ export class TaskService {
         namespaceId,
         releaseId,
         taskId,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
     } catch (e) {
@@ -585,7 +585,7 @@ export class TaskService {
     namespaceId: number,
     releaseId: number,
     taskId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     // TODO: cleanup
     const release = await getRelease(queryRunner, namespaceId, releaseId)
@@ -606,7 +606,7 @@ export class TaskService {
 
     await this.taskNotificationService.removeTaskNotifications(
       queryRunner.manager,
-      [task.id]
+      [task.id],
     )
 
     await queryRunner.manager.remove(task)
@@ -617,7 +617,7 @@ export class TaskService {
       {},
       AuditActor.convertFrom(actor),
       Action.DELETE,
-      queryRunner.manager
+      queryRunner.manager,
     )
   }
 
@@ -625,7 +625,7 @@ export class TaskService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const tasks = await queryRunner.manager.find(TaskEntity, {
       where: {
@@ -641,7 +641,7 @@ export class TaskService {
     for (const task of tasks) {
       await this.taskNotificationService.removeTaskNotifications(
         queryRunner.manager,
-        [task.id]
+        [task.id],
       )
 
       await this.taskAuditService.append(
@@ -651,7 +651,7 @@ export class TaskService {
         {},
         AuditActor.convertFrom(actor),
         Action.DELETE,
-        queryRunner.manager
+        queryRunner.manager,
       )
 
       await queryRunner.manager.remove(task)
@@ -661,7 +661,7 @@ export class TaskService {
   async listAssignees(
     namespaceId: number,
     releaseId: number,
-    taskId: number
+    taskId: number,
   ): Promise<string[]> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -671,7 +671,7 @@ export class TaskService {
         queryRunner,
         namespaceId,
         releaseId,
-        taskId
+        taskId,
       )
       await queryRunner.commitTransaction()
       return res
@@ -687,13 +687,13 @@ export class TaskService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    taskId: number
+    taskId: number,
   ): Promise<string[]> {
     const task = await this.getWithTransaction(
       queryRunner,
       namespaceId,
       releaseId,
-      taskId
+      taskId,
     )
     return task.assignees
   }
@@ -703,7 +703,7 @@ export class TaskService {
     releaseId: number,
     taskId: number,
     assignees: string[],
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<AssigneesDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -715,7 +715,7 @@ export class TaskService {
         releaseId,
         taskId,
         assignees,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
       return res
@@ -733,7 +733,7 @@ export class TaskService {
     releaseId: number,
     taskId: number,
     assignees: string[],
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<AssigneesDto> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -742,7 +742,7 @@ export class TaskService {
       queryRunner,
       namespaceId,
       releaseId,
-      taskId
+      taskId,
     )
     this.checkForClosed(currentTask)
 
@@ -764,11 +764,11 @@ export class TaskService {
       task.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     const newAssignees = assignees.filter(
-      (assignee) => !originalTask.assignees.includes(assignee)
+      (assignee) => !originalTask.assignees.includes(assignee),
     )
     for (const assignee of newAssignees) {
       await this.pushAssignedNotification(assignee, currentTask)
@@ -784,7 +784,7 @@ export class TaskService {
     releaseId: number,
     taskId: number,
     assignees: string[],
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<AssigneesDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -796,7 +796,7 @@ export class TaskService {
         releaseId,
         taskId,
         assignees,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
       return res
@@ -814,7 +814,7 @@ export class TaskService {
     releaseId: number,
     taskId: number,
     assignees: string[],
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<AssigneesDto> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -823,7 +823,7 @@ export class TaskService {
       queryRunner,
       namespaceId,
       releaseId,
-      taskId
+      taskId,
     )
     this.checkForClosed(currentTask)
 
@@ -832,7 +832,7 @@ export class TaskService {
     await this.checkAssignees(namespaceId, assignees)
 
     currentTask.assignees = currentTask.assignees.filter(
-      (a) => !assignees.includes(a)
+      (a) => !assignees.includes(a),
     )
     currentTask.lastModifiedBy = actor.id
     currentTask.lastModificationTime = new Date()
@@ -845,7 +845,7 @@ export class TaskService {
       task.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     return {
@@ -855,13 +855,13 @@ export class TaskService {
 
   async checkAssignees(
     nammespaceId: number,
-    assignees: string[]
+    assignees: string[],
   ): Promise<void> {
     const namespaceUsers = await this.usersService.list(nammespaceId)
     for (const assignee of assignees) {
       if (!namespaceUsers.find((user) => user.id === assignee)) {
         throw new NotFoundException(
-          `User ${assignee} not found in namespace ${nammespaceId}`
+          `User ${assignee} not found in namespace ${nammespaceId}`,
         )
       }
     }
@@ -869,17 +869,17 @@ export class TaskService {
 
   async assigneesToUser(assignees: string[]): Promise<UserInNamespaceDto[]> {
     return await Promise.all(
-      assignees.map((assignee) => this.usersService.getUser(assignee))
+      assignees.map((assignee) => this.usersService.getUser(assignee)),
     )
   }
 
   async pushAssignedNotification(
     assigneeId: string,
-    task: TaskEntity
+    task: TaskEntity,
   ): Promise<void> {
     if (!task.release || !task.namespace) {
       throw new Error(
-        'Unexpected state when pushing notification, missing relational data in task'
+        'Unexpected state when pushing notification, missing relational data in task',
       )
     }
     const assignee = await this.usersService.getUser(assigneeId)
@@ -897,14 +897,14 @@ export class TaskService {
       {
         type: NotificationType.TaskAssigned,
         data,
-      }
+      },
     )
   }
 
   checkForClosed(task: TaskEntity): void {
     if (task.closed) {
       throw new BadRequestException(
-        `Task has been closed, namespace: ${task.namespace.id}, release: ${task.release.id}, task: ${task.id}`
+        `Task has been closed, namespace: ${task.namespace.id}, release: ${task.release.id}, task: ${task.id}`,
       )
     }
   }
@@ -933,11 +933,11 @@ export class TaskService {
   }
 
   async toEntityList(
-    tasks: EntityList<TaskEntity>
+    tasks: EntityList<TaskEntity>,
   ): Promise<EntityList<TaskDto>> {
     return {
       entities: await Promise.all(
-        tasks.entities.map((task) => this.toTaskDto(task))
+        tasks.entities.map((task) => this.toTaskDto(task)),
       ),
       itemCount: tasks.itemCount,
     }

@@ -29,11 +29,11 @@ const getFilters = (configData: any) => {
 export const getAuthorization = (
   pat: string | undefined,
   username: string | undefined,
-  password: string | undefined
+  password: string | undefined,
 ): string => {
   if (!pat && !(username && password)) {
     throw new AppError(
-      'No authentication data was provided, either pass JIRA_PAT or JIRA_USERNAME and JIRA_USER_PORTAL_PASSWORD'
+      'No authentication data was provided, either pass JIRA_PAT or JIRA_USERNAME and JIRA_USER_PORTAL_PASSWORD',
     )
   }
   if (pat?.trim()) {
@@ -48,7 +48,7 @@ export const getAuthorization = (
 const getHeaders = (
   pat: string | undefined,
   username: string | undefined,
-  password: string | undefined
+  password: string | undefined,
 ) => {
   return {
     Authorization: getAuthorization(pat, username, password),
@@ -61,7 +61,7 @@ export const fetchData = async (
   pat: string | undefined,
   username: string | undefined,
   password: string | undefined,
-  configData: Dictionary
+  configData: Dictionary,
 ) => {
   const headers = getHeaders(pat, username, password)
   const apiUrl = new URL(url + '/' + SEARCH_PATH)
@@ -80,7 +80,7 @@ export const fetchData = async (
     if (response.status !== 200) {
       const msg = await response.text()
       throw new AppError(
-        `Something went wrong while requesting data from Jira! ${response.status} ${msg}`
+        `Something went wrong while requesting data from Jira! ${response.status} ${msg}`,
       )
     }
     const responseText = await response.text()
@@ -96,7 +96,7 @@ export const fetchData = async (
         throw new AppError(`${message}. Status code: ${response.status}`)
       } else {
         throw new AppError(
-          `Something went wrong while requesting data from Jira! Status code: ${response.status}`
+          `Something went wrong while requesting data from Jira! Status code: ${response.status}`,
         )
       }
     }

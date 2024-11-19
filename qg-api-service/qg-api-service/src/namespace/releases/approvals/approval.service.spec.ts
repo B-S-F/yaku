@@ -148,13 +148,13 @@ describe('ApprovalService', () => {
   describe('Approval state computation with empty approvals', () => {
     it('Empty approvals result in "pending" for "all" mode', async () => {
       expect(service.computeAggregateApproval('all', [])).toEqual(
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
     })
 
     it('Empty approvals result in "pending" for "one" mode', async () => {
       expect(service.computeAggregateApproval('one', [])).toEqual(
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
     })
   })
@@ -165,13 +165,13 @@ describe('ApprovalService', () => {
 
     it('Single pending approval results in "pending" for "all" mode', async () => {
       expect(service.computeAggregateApproval('all', [approval])).toEqual(
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
     })
 
     it('Single pending approval results in "pending" for "one" mode', async () => {
       expect(service.computeAggregateApproval('one', [approval])).toEqual(
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
     })
   })
@@ -182,13 +182,13 @@ describe('ApprovalService', () => {
 
     it('Single approved approval results in "approved" for "all" mode', async () => {
       expect(service.computeAggregateApproval('all', [approval])).toEqual(
-        ApprovalState.APPROVED
+        ApprovalState.APPROVED,
       )
     })
 
     it('Single approved approval results in "approved" for "one" mode', async () => {
       expect(service.computeAggregateApproval('one', [approval])).toEqual(
-        ApprovalState.APPROVED
+        ApprovalState.APPROVED,
       )
     })
   })
@@ -202,13 +202,13 @@ describe('ApprovalService', () => {
 
     it('Mixed approvals result in "pending" for "all" mode', async () => {
       expect(
-        service.computeAggregateApproval('all', [approved, pending])
+        service.computeAggregateApproval('all', [approved, pending]),
       ).toEqual(ApprovalState.PENDING)
     })
 
     it('Mixed approvals result in "approved" for "one" mode', async () => {
       expect(
-        service.computeAggregateApproval('one', [approved, pending])
+        service.computeAggregateApproval('one', [approved, pending]),
       ).toEqual(ApprovalState.APPROVED)
     })
   })
@@ -223,13 +223,13 @@ describe('ApprovalService', () => {
 
     it('Many approved approvals result in "approved" for "all" mode', async () => {
       expect(service.computeAggregateApproval('all', approvals)).toEqual(
-        ApprovalState.APPROVED
+        ApprovalState.APPROVED,
       )
     })
 
     it('Many approved approvals result in "approved" for "one" mode', async () => {
       expect(service.computeAggregateApproval('one', approvals)).toEqual(
-        ApprovalState.APPROVED
+        ApprovalState.APPROVED,
       )
     })
   })
@@ -244,13 +244,13 @@ describe('ApprovalService', () => {
 
     it('Many pending approvals result in "pending" for "all" mode', async () => {
       expect(service.computeAggregateApproval('all', approvals)).toEqual(
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
     })
 
     it('Many pending approvals result in "pending" for "one" mode', async () => {
       expect(service.computeAggregateApproval('one', approvals)).toEqual(
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
     })
   })
@@ -269,13 +269,13 @@ describe('ApprovalService', () => {
 
     it('Many approved approvals with one pending result in "pending" for "all" mode', async () => {
       expect(service.computeAggregateApproval('all', approvals)).toEqual(
-        ApprovalState.PENDING
+        ApprovalState.PENDING,
       )
     })
 
     it('Many approved approvals with one pending result in "approved" for "one" mode', async () => {
       expect(service.computeAggregateApproval('one', approvals)).toEqual(
-        ApprovalState.APPROVED
+        ApprovalState.APPROVED,
       )
     })
   })
@@ -317,14 +317,14 @@ describe('ApprovalService', () => {
         release.id,
         release,
         approvedState,
-        user1
+        user1,
       )
 
       expect(notificationServiceSpy).toHaveBeenCalledTimes(
-        expectedNotificationCalls.length
+        expectedNotificationCalls.length,
       )
       expect(notificationServiceSpy.mock.calls).toEqual(
-        expect.arrayContaining(expectedNotificationCalls)
+        expect.arrayContaining(expectedNotificationCalls),
       )
     })
   })
@@ -370,14 +370,14 @@ describe('ApprovalService', () => {
         release.id,
         approval.id,
         user2,
-        queryRunner
+        queryRunner,
       )
 
       expect(notificationServiceSpy).toHaveBeenCalledTimes(
-        expectedNotificationCalls.length
+        expectedNotificationCalls.length,
       )
       expect(notificationServiceSpy.mock.calls).toEqual(
-        expect.arrayContaining(expectedNotificationCalls)
+        expect.arrayContaining(expectedNotificationCalls),
       )
     })
   })

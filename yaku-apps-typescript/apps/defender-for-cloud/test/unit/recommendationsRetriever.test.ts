@@ -35,7 +35,7 @@ describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriev
 
     const result = await getDefenderForCloudRecommendations(
       'mockedToken',
-      'mockTenantId'
+      'mockTenantId',
     )
     expect(result).toEqual(mockedRecommendationsUnitTestsFirstSet)
   })
@@ -66,12 +66,12 @@ describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriev
 
     const result = await getDefenderForCloudRecommendations(
       'mockedToken',
-      'mockTenantId'
+      'mockTenantId',
     )
     expect(result).toEqual(
       mockedRecommendationsUnitTestsFirstSet
         .concat(mockedRecommendationsUnitTestsSecondSet)
-        .concat(mockedRecommendationsUnitTestsThirdSet)
+        .concat(mockedRecommendationsUnitTestsThirdSet),
     )
   })
 
@@ -83,9 +83,9 @@ describe('Test "getDefenderForCloudRecommendations" from "recommendationsRetriev
     })
 
     await expect(
-      getDefenderForCloudRecommendations('mockedToken', 'mockTenantId')
+      getDefenderForCloudRecommendations('mockedToken', 'mockTenantId'),
     ).rejects.toThrowError(
-      'Request for Azure recommendations does not have status code 200. Status code: 400'
+      'Request for Azure recommendations does not have status code 200. Status code: 400',
     )
   })
 })
@@ -136,7 +136,7 @@ describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendation
     expect(result).toEqual(
       mockedRecommendationsMetadataUnitTestsFirstSet
         .concat(mockedRecommendationsMetadataUnitTestsSecondSet)
-        .concat(mockedRecommendationsMetadataUnitTestsThirdSet)
+        .concat(mockedRecommendationsMetadataUnitTestsThirdSet),
     )
   })
 
@@ -148,9 +148,9 @@ describe('Test "getDefenderForCloudRecommendationsMetadata" from "recommendation
     })
 
     await expect(
-      getDefenderForCloudRecommendationsMetadata('mockedToken')
+      getDefenderForCloudRecommendationsMetadata('mockedToken'),
     ).rejects.toThrowError(
-      'Request for Azure recommendations metadata does not have status code 200. Status code: 400'
+      'Request for Azure recommendations metadata does not have status code 200. Status code: 400',
     )
   })
 })

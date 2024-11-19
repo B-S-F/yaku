@@ -101,7 +101,7 @@ describe('Explanations', () => {
 
     vi.spyOn(
       nestTestingApp.testingModule.get<OpenAIService>(OpenAIService),
-      'sendMessages'
+      'sendMessages',
     ).mockImplementation(async (prompt: Prompt[]): Promise<ChatCompletion> => {
       const tokenLength = await getTokenLength(prompt[0].content)
 
@@ -116,11 +116,11 @@ describe('Explanations', () => {
     const resultFile = path.join(
       __dirname,
       'mocks',
-      'qg-result-10-findings-red-status.yaml'
+      'qg-result-10-findings-red-status.yaml',
     )
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'downloadResult'
+      'downloadResult',
     ).mockImplementation(async (): Promise<Readable> => {
       const buffer = await readFile(resultFile)
       const readableStream = new Readable({
@@ -135,7 +135,7 @@ describe('Explanations', () => {
 
     vi.spyOn(
       nestTestingApp.testingModule.get(getRepositoryToken(FileContentEntity)),
-      'findOneBy'
+      'findOneBy',
     ).mockImplementation(
       async (obj: {
         file: {
@@ -151,29 +151,29 @@ describe('Explanations', () => {
           content: await readFile(file.filepath),
           configId: 1,
         } as unknown as FileContentEntity)
-      }
+      },
     )
 
     vi.spyOn(
       nestTestingApp.testingModule.get<SecretStorage>(SecretStorage),
-      'getSecrets'
+      'getSecrets',
     ).mockImplementation(() => Promise.resolve({}))
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'uploadConfig'
+      'uploadConfig',
     ).mockImplementation(() => {
       return Promise.resolve()
     })
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'fileExists'
+      'fileExists',
     ).mockImplementation(() => Promise.resolve(true))
 
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'downloadLogs'
+      'downloadLogs',
     ).mockImplementation(() =>
-      Promise.resolve('Cool logs\nOverall result: GREEN')
+      Promise.resolve('Cool logs\nOverall result: GREEN'),
     )
   })
 
@@ -187,7 +187,7 @@ describe('Explanations', () => {
     files: {
       filepath: string
       filename: string
-    }[]
+    }[],
   ): Promise<void> {
     const httpServer = await nestTestingApp.app.getHttpServer()
 
@@ -205,7 +205,7 @@ describe('Explanations', () => {
       await supertest
         .agent(httpServer)
         .post(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
         )
         .field('filename', file.filename)
         .attach('content', fileContent, {
@@ -229,19 +229,19 @@ describe('Explanations', () => {
       .expect(HttpStatus.ACCEPTED)
     expect(
       response.body.id,
-      `The id of created run does not exist`
+      `The id of created run does not exist`,
     ).toBeDefined()
     expect(
       response.headers.location.endsWith(`${response.body.id}`),
-      `The location header of created run is not as expected`
+      `The location header of created run is not as expected`,
     ).toBeTruthy()
     expect(
       response.body.status,
-      `The status of created run is not as expected, it is ${response.body.status}`
+      `The status of created run is not as expected, it is ${response.body.status}`,
     ).oneOf([RunStatus.Running, RunStatus.Pending])
     expect(
       response.body.config,
-      `The config ref of created run is not as expected, it is ${response.body.config}`
+      `The config ref of created run is not as expected, it is ${response.body.config}`,
     ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
 
     return response.body.id
@@ -295,7 +295,7 @@ describe('Explanations', () => {
         const result = await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`,
           )
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
@@ -309,14 +309,14 @@ describe('Explanations', () => {
 
         vi.spyOn(
           nestTestingApp.testingModule.get<RunService>(RunService),
-          'getResult'
+          'getResult',
         ).mockRejectedValue(new Error('Run not found'))
 
         const httpServer = nestTestingApp.app.getHttpServer()
         const result = await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`,
           )
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
@@ -338,7 +338,7 @@ describe('Explanations', () => {
 
         vi.spyOn(
           nestTestingApp.testingModule.get<RunService>(RunService),
-          'getResult'
+          'getResult',
         ).mockImplementationOnce(() => {
           return Promise.resolve(Readable.from(['Some invalid data']))
         })
@@ -347,7 +347,7 @@ describe('Explanations', () => {
         const result = await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`,
           )
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
@@ -368,7 +368,7 @@ describe('Explanations', () => {
         const result = await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`,
           )
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
@@ -389,7 +389,7 @@ describe('Explanations', () => {
         const result = await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`,
           )
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
@@ -410,7 +410,7 @@ describe('Explanations', () => {
         const result = await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`,
           )
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
@@ -438,7 +438,7 @@ describe('Explanations', () => {
         const result = await supertest
           .agent(httpServer)
           .get(
-            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`
+            `/api/v1/namespaces/${testNamespace.namespace.id}/explainer?runId=${runId}&chapter=${chapter}&requirement=${requirement}&check=${check}`,
           )
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
@@ -449,6 +449,6 @@ describe('Explanations', () => {
     },
     {
       timeout: 30000,
-    }
+    },
   )
 })

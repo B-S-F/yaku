@@ -112,7 +112,7 @@ export class TestUtils {
       .get<KeyCloakServiceMock>(KeyCloakService)
       .mapTokenToMockUser(
         token.token,
-        kc_users.find((kc_user) => kc_user.kc_sub == user.id)
+        kc_users.find((kc_user) => kc_user.kc_sub == user.id),
       )
   }
 
@@ -243,7 +243,7 @@ export class NestUtil {
               3000,
               PATH_PREFIX,
               getServiceVersion(),
-              IMAGE_VERSION
+              IMAGE_VERSION,
             ),
         },
         {
@@ -293,7 +293,7 @@ export class NestUtil {
       configRepository: testingModule.get(getRepositoryToken(ConfigEntity)),
       fileRepository: testingModule.get(getRepositoryToken(FileEntity)),
       fileContentRepository: testingModule.get(
-        getRepositoryToken(FileContentEntity)
+        getRepositoryToken(FileContentEntity),
       ),
       findingRepository: testingModule.get(getRepositoryToken(Finding)),
       metricRepository: testingModule.get(getRepositoryToken(Metric)),
@@ -301,27 +301,27 @@ export class NestUtil {
       runAuditRepository: testingModule.get(getRepositoryToken(RunAuditEntity)),
       secretRepository: testingModule.get(getRepositoryToken(Secret)),
       secretStoreRepository: testingModule.get(
-        getRepositoryToken(EncryptedSecret)
+        getRepositoryToken(EncryptedSecret),
       ),
       releaseRepository: testingModule.get(getRepositoryToken(ReleaseEntity)),
       releaseAuditRepository: testingModule.get(
-        getRepositoryToken(ReleaseAuditEntity)
+        getRepositoryToken(ReleaseAuditEntity),
       ),
       approvalRepository: testingModule.get(getRepositoryToken(ApprovalEntity)),
       approvalAuditRepository: testingModule.get(
-        getRepositoryToken(ApprovalAuditEntity)
+        getRepositoryToken(ApprovalAuditEntity),
       ),
       commentRepository: testingModule.get(getRepositoryToken(CommentEntity)),
       commentAuditRepository: testingModule.get(
-        getRepositoryToken(CommentAuditEntity)
+        getRepositoryToken(CommentAuditEntity),
       ),
       subscriptionRepository: testingModule.get(
-        getRepositoryToken(SubscriptionEntity)
+        getRepositoryToken(SubscriptionEntity),
       ),
       userProfileRepository: testingModule.get(getRepositoryToken(UserProfile)),
       taskRepository: testingModule.get(getRepositoryToken(TaskEntity)),
       taskAuditRepository: testingModule.get(
-        getRepositoryToken(TaskAuditEntity)
+        getRepositoryToken(TaskAuditEntity),
       ),
     }
 
@@ -352,7 +352,7 @@ export class NestUtil {
     const testingModule = this.appData.testingModule
 
     const nmsRepo = testingModule.get(
-      getRepositoryToken(NamespaceMemberSequence)
+      getRepositoryToken(NamespaceMemberSequence),
     )
     await nmsRepo.remove(await nmsRepo.find())
 
@@ -387,17 +387,17 @@ export class NestUtil {
     await releaseRepo.remove(await releaseRepo.find())
 
     const subscriptionRepo = testingModule.get(
-      getRepositoryToken(SubscriptionEntity)
+      getRepositoryToken(SubscriptionEntity),
     )
     await subscriptionRepo.remove(await subscriptionRepo.find())
 
     const approvalAuditRepo = testingModule.get(
-      getRepositoryToken(ApprovalAuditEntity)
+      getRepositoryToken(ApprovalAuditEntity),
     )
     await approvalAuditRepo.remove(await approvalAuditRepo.find())
 
     const releaseAuditRepo = testingModule.get(
-      getRepositoryToken(ReleaseAuditEntity)
+      getRepositoryToken(ReleaseAuditEntity),
     )
     await releaseAuditRepo.remove(await releaseAuditRepo.find())
 
@@ -412,7 +412,7 @@ export class NestUtil {
   }
 
   private async createNamespace(
-    name: string
+    name: string,
   ): Promise<NamespaceTestEnvironment> {
     const testingModule = this.appData.testingModule
     const kc = testingModule.get<KeyCloakServiceMock>(KeyCloakService)
@@ -425,7 +425,7 @@ export class NestUtil {
             user.kc_sub,
             user.username,
             user.email,
-            user.displayName
+            user.displayName,
           ),
           roles: user.roles,
         }

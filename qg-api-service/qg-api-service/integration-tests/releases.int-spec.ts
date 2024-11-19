@@ -191,7 +191,7 @@ chapters:
     expect(possibleApprovers.body.data).toHaveLength(7)
 
     const usersInApprovers = possibleApprovers.body.data.filter((approver) =>
-      testNamespace.users.some((user) => approver.id === user.id)
+      testNamespace.users.some((user) => approver.id === user.id),
     )
 
     expect(usersInApprovers).toHaveLength(7)
@@ -208,7 +208,7 @@ chapters:
         reference: { type: ReferenceType.RELEASE },
         content: 'This is comment 1',
         todo: false,
-      }
+      },
     )
     expectStatus(releaseCommentResponse, HttpStatus.CREATED, 'addComment')
     expect(releaseCommentResponse.body).toHaveProperty('id')
@@ -224,7 +224,7 @@ chapters:
         },
         content: 'This is comment 2',
         todo: true,
-      }
+      },
     )
 
     expectStatus(commentCommentResponse, HttpStatus.CREATED, 'addComment')
@@ -242,7 +242,7 @@ chapters:
         },
         content: 'This is comment 3',
         todo: false,
-      }
+      },
     )
 
     expectStatus(checkCommentResponse, HttpStatus.CREATED, 'addComment')
@@ -251,7 +251,7 @@ chapters:
 
     console.log('=== get all comments')
     const getAllCommentsResponse = await getComments(
-      createReleaseResponse.body.id
+      createReleaseResponse.body.id,
     )
     expectStatus(getAllCommentsResponse, HttpStatus.OK, 'getComments')
     expect(getAllCommentsResponse.body.data).toHaveLength(2)
@@ -259,7 +259,7 @@ chapters:
     console.log('=== resolve comment')
     const resolveCommentResponse = await resolveComment(
       createReleaseResponse.body.id,
-      releaseCommentResponse.body.id
+      releaseCommentResponse.body.id,
     )
     expectStatus(resolveCommentResponse, HttpStatus.OK, 'resolveComment')
     await checkDatabaseEntries(3, commentRepo)
@@ -270,7 +270,7 @@ chapters:
       createReleaseResponse.body.id,
       {
         type: ReferenceType.RELEASE,
-      }
+      },
     )
     expectStatus(getByReferenceResponse, HttpStatus.OK, 'getByReference')
     expect(getByReferenceResponse.body.comments).toHaveLength(1)
@@ -290,7 +290,7 @@ chapters:
     const approvalResponse = await approve(
       createReleaseResponse.body.id,
       'This is a comment',
-      apiToken
+      apiToken,
     )
     expectStatus(approvalResponse, HttpStatus.OK, 'approve')
     const approversResponse = await listApprovers(createReleaseResponse.body.id)
@@ -311,26 +311,26 @@ chapters:
 
     console.log('=== get all comments after approve')
     const getAllCommentsResponseAfterApprove = await getComments(
-      createReleaseResponse.body.id
+      createReleaseResponse.body.id,
     )
     expectStatus(
       getAllCommentsResponseAfterApprove,
       HttpStatus.OK,
-      'getComments'
+      'getComments',
     )
     expect(getAllCommentsResponseAfterApprove.body.data).toHaveLength(3)
 
     console.log('=== Get release history')
     const releaseHistory = await getReleaseHistory(
-      createReleaseResponse.body.id
+      createReleaseResponse.body.id,
     )
     expectStatus(releaseHistory, HttpStatus.OK, 'getReleaseHistory')
     expect(releaseHistory.body.data).toHaveLength(5)
     expect(
-      releaseHistory.body.data.filter((entry) => entry.type === 'comment')
+      releaseHistory.body.data.filter((entry) => entry.type === 'comment'),
     ).toHaveLength(2)
     expect(
-      releaseHistory.body.data.filter((entry) => entry.type === 'event')
+      releaseHistory.body.data.filter((entry) => entry.type === 'event'),
     ).toHaveLength(3)
 
     await checkDatabaseEntries(1, subscriptionRepo)
@@ -338,7 +338,7 @@ chapters:
     console.log('=== Unsubscribe to release')
     const subscriptionResponse2 = await manageSubscription(
       createReleaseResponse.body.id,
-      'unsubscribe'
+      'unsubscribe',
     )
     expectStatus(subscriptionResponse2, HttpStatus.OK, 'unsubscribe')
 
@@ -347,19 +347,19 @@ chapters:
     console.log('=== Subscribe to release')
     const subscriptionResponse = await manageSubscription(
       createReleaseResponse.body.id,
-      'subscribe'
+      'subscribe',
     )
     expectStatus(subscriptionResponse, HttpStatus.OK, 'subscribe')
 
     console.log('=== Check subscription status')
     const subscriptionStatusResponse = await getSubscriptionStatus(
       createReleaseResponse.body.id,
-      testNamespace.users[0].id
+      testNamespace.users[0].id,
     )
     expectStatus(
       subscriptionStatusResponse,
       HttpStatus.OK,
-      'check subscription status'
+      'check subscription status',
     )
 
     await checkDatabaseEntries(1, subscriptionRepo)
@@ -373,7 +373,7 @@ chapters:
 
       const addTaskResponse = await addTask(
         createReleaseResponse.body.id,
-        addTaskDto
+        addTaskDto,
       )
       expectStatus(addTaskResponse, HttpStatus.CREATED, 'addTask')
 
@@ -387,7 +387,7 @@ chapters:
       const updateTaskResponse = await updateTask(
         createReleaseResponse.body.id,
         addTaskResponse.body.id,
-        updateTaskDto
+        updateTaskDto,
       )
       expectStatus(updateTaskResponse, HttpStatus.OK, 'updateTask')
 
@@ -399,7 +399,7 @@ chapters:
       const addAssigneesResponse = await addAssignees(
         createReleaseResponse.body.id,
         addTaskResponse.body.id,
-        addAssigneesDto
+        addAssigneesDto,
       )
       expectStatus(addAssigneesResponse, HttpStatus.OK, 'addAssignees')
 
@@ -409,7 +409,7 @@ chapters:
       expect(tasksResponse.body.data).toHaveLength(1)
       expect(tasksResponse.body.data[0].assignees).toHaveLength(1)
       expect(tasksResponse.body.data[0].assignees[0].id).toBe(
-        testNamespace.users[0].id
+        testNamespace.users[0].id,
       )
 
       console.log('=== Remove assignees from the task')
@@ -420,14 +420,14 @@ chapters:
       const removeAssigneesResponse = await removeAssignees(
         createReleaseResponse.body.id,
         addTaskResponse.body.id,
-        removeAssigneesDto
+        removeAssigneesDto,
       )
       expectStatus(removeAssigneesResponse, HttpStatus.OK, 'removeAssignees')
 
       console.log('=== Close the task')
       const closeTaskResponse = await closeTask(
         createReleaseResponse.body.id,
-        addTaskResponse.body.id
+        addTaskResponse.body.id,
       )
       expectStatus(closeTaskResponse, HttpStatus.OK, 'closeTask')
 
@@ -439,7 +439,7 @@ chapters:
       const updateTaskResponse2 = await updateTask(
         createReleaseResponse.body.id,
         addTaskResponse.body.id,
-        updateTaskDto2
+        updateTaskDto2,
       )
       expectStatus(updateTaskResponse2, HttpStatus.BAD_REQUEST, 'updateTask')
 
@@ -451,18 +451,18 @@ chapters:
       const addAssigneesResponse2 = await addAssignees(
         createReleaseResponse.body.id,
         addTaskResponse.body.id,
-        addAssigneesDto2
+        addAssigneesDto2,
       )
       expectStatus(
         addAssigneesResponse2,
         HttpStatus.BAD_REQUEST,
-        'addAssignees'
+        'addAssignees',
       )
 
       console.log('=== Reopen the task')
       const reopenTaskResponse = await reopenTask(
         createReleaseResponse.body.id,
-        addTaskResponse.body.id
+        addTaskResponse.body.id,
       )
 
       expectStatus(reopenTaskResponse, HttpStatus.OK, 'reopenTask')
@@ -470,7 +470,7 @@ chapters:
       console.log('=== Delete the task')
       const deleteTaskResponse = await deleteTask(
         createReleaseResponse.body.id,
-        addTaskResponse.body.id
+        addTaskResponse.body.id,
       )
       expectStatus(deleteTaskResponse, HttpStatus.OK, 'deleteTask')
 
@@ -501,7 +501,7 @@ chapters:
     console.log('=== Add approver')
     const addApproverResponse = await addApprover(
       createReleaseResponse.body.id,
-      testNamespace.users[0].id
+      testNamespace.users[0].id,
     )
     expectStatus(addApproverResponse, HttpStatus.CREATED, 'addApprover')
 
@@ -509,7 +509,7 @@ chapters:
     const approvalResponse = await approve(
       createReleaseResponse.body.id,
       'This is a comment',
-      apiToken
+      apiToken,
     )
     expectStatus(approvalResponse, HttpStatus.OK, 'approve')
 
@@ -517,12 +517,12 @@ chapters:
     const resetResponse = await reset(
       createReleaseResponse.body.id,
       'This is a comment',
-      apiToken
+      apiToken,
     )
     expectStatus(resetResponse, HttpStatus.OK, 'reset')
 
     const releaseAfterRejection = await getRelease(
-      createReleaseResponse.body.id
+      createReleaseResponse.body.id,
     )
     expectStatus(releaseAfterRejection, HttpStatus.OK, 'getRelease')
     expect(releaseAfterRejection.body.approvalState).toBe('pending')
@@ -549,7 +549,7 @@ chapters:
 
     console.log('=== Close release')
     const closeReleaseResponse = await closeRelease(
-      createReleaseResponse.body.id
+      createReleaseResponse.body.id,
     )
     expectStatus(closeReleaseResponse, HttpStatus.OK, 'closeRelease')
 
@@ -559,12 +559,12 @@ chapters:
     } as UpdateReleaseDto
     const updateReleaseResponse = await updateRelease(
       createReleaseResponse.body.id,
-      updateReleaseDto
+      updateReleaseDto,
     )
     expectStatus(updateReleaseResponse, HttpStatus.BAD_REQUEST, 'updateRelease')
     expect(updateReleaseResponse.body).toHaveProperty('message')
     expect(updateReleaseResponse.body.message).toContain(
-      'Release has been closed'
+      'Release has been closed',
     )
 
     console.log('=== Try to add comment')
@@ -576,7 +576,7 @@ chapters:
 
     const addCommentResponse = await addComment(
       createReleaseResponse.body.id,
-      commentDto
+      commentDto,
     )
     expectStatus(addCommentResponse, HttpStatus.BAD_REQUEST, 'addComment')
     expect(addCommentResponse.body).toHaveProperty('message')
@@ -585,34 +585,34 @@ chapters:
     console.log('=== Try to resolve comment')
     const resolveCommentResponse = await resolveComment(
       createReleaseResponse.body.id,
-      '1'
+      '1',
     )
     expectStatus(
       resolveCommentResponse,
       HttpStatus.BAD_REQUEST,
-      'resolveComment'
+      'resolveComment',
     )
     expect(resolveCommentResponse.body).toHaveProperty('message')
     expect(resolveCommentResponse.body.message).toContain(
-      'Release has been closed'
+      'Release has been closed',
     )
 
     console.log('=== Try to add approver')
     const addApproverResponse = await addApprover(
       createReleaseResponse.body.id,
-      testNamespace.users[0].id
+      testNamespace.users[0].id,
     )
     expectStatus(addApproverResponse, HttpStatus.BAD_REQUEST, 'addApprover')
     expect(addApproverResponse.body).toHaveProperty('message')
     expect(addApproverResponse.body.message).toContain(
-      'Release has been closed'
+      'Release has been closed',
     )
 
     console.log('=== Try to approve')
     const approveResponse = await approve(
       createReleaseResponse.body.id,
       'This is a comment',
-      apiToken
+      apiToken,
     )
     expectStatus(approveResponse, HttpStatus.BAD_REQUEST, 'approve')
     expect(approveResponse.body).toHaveProperty('message')
@@ -627,7 +627,7 @@ chapters:
 
       const addTaskResponse = await addTask(
         createReleaseResponse.body.id,
-        addTaskDto
+        addTaskDto,
       )
       expectStatus(addTaskResponse, HttpStatus.BAD_REQUEST, 'addTask')
       expect(addTaskResponse.body).toHaveProperty('message')
@@ -641,11 +641,11 @@ chapters:
       const updateTaskResponse = await updateTask(
         createReleaseResponse.body.id,
         1,
-        updateTaskDto
+        updateTaskDto,
       )
       expectStatus(updateTaskResponse, HttpStatus.BAD_REQUEST, 'updateTask')
       expect(updateTaskResponse.body.message).toContain(
-        'Release has been closed'
+        'Release has been closed',
       )
 
       console.log('=== Add assignees to the task')
@@ -656,12 +656,12 @@ chapters:
       const addAssigneesResponse = await addAssignees(
         createReleaseResponse.body.id,
         1,
-        addAssigneesDto
+        addAssigneesDto,
       )
       expectStatus(addAssigneesResponse, HttpStatus.BAD_REQUEST, 'addAssignees')
       expect(addAssigneesResponse.body).toHaveProperty('message')
       expect(addAssigneesResponse.body.message).toContain(
-        'Release has been closed'
+        'Release has been closed',
       )
     }
   })
@@ -688,14 +688,14 @@ chapters:
     console.log('=== Add approver')
     const addApproverResponse = await addApprover(
       createReleaseResponse.body.id,
-      testNamespace.users[0].id
+      testNamespace.users[0].id,
     )
     expectStatus(addApproverResponse, HttpStatus.CREATED, 'addApprover')
 
     console.log('=== Update release without any fields')
     let updateReleaseResponse = await updateRelease(
       createReleaseResponse.body.id,
-      {}
+      {},
     )
     expectStatus(updateReleaseResponse, HttpStatus.BAD_REQUEST, 'updateRelease')
     expect(updateReleaseResponse.body).toHaveProperty('message')
@@ -724,19 +724,19 @@ chapters:
     expectStatus(updateReleaseResponse, HttpStatus.OK, 'updateRelease')
     expect(updateReleaseResponse.body).toHaveProperty('plannedDate')
     expect(updateReleaseResponse.body.plannedDate).toBe(
-      '2025-03-25T13:32:07.749Z'
+      '2025-03-25T13:32:07.749Z',
     )
   })
 })
 
 async function checkDatabaseEntries(
   count: number,
-  repo: Repository<any>
+  repo: Repository<any>,
 ): Promise<void> {
   console.log('========== Check database entries')
   expect(
     (await repo.find()).length,
-    `Repo ${repo.constructor.name} does not contain the expected ${count} elements`
+    `Repo ${repo.constructor.name} does not contain the expected ${count} elements`,
   ).toBe(count)
 }
 
@@ -751,12 +751,12 @@ async function createConfig(configDto: any): Promise<supertest.Test> {
 
 async function addQgConfig(
   configId: string,
-  config: string
+  config: string,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
     )
     .field('filename', 'qg-config.yaml')
     .attach('content', Buffer.from(config), {
@@ -768,18 +768,18 @@ async function addQgConfig(
 
 async function getQgConfig(
   configId: string,
-  fileName = 'qg-config.yaml'
+  fileName = 'qg-config.yaml',
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .get(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files/${fileName}`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files/${fileName}`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
 
 async function createRelease(
-  createReleaseResponse: AddReleaseDto
+  createReleaseResponse: AddReleaseDto,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
@@ -793,7 +793,7 @@ async function getRelease(releaseId: string): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .get(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
@@ -802,19 +802,19 @@ async function closeRelease(releaseId: string): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/close`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/close`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
 
 async function updateRelease(
   releaseId: string,
-  updateReleaseRequest: UpdateReleaseDto
+  updateReleaseRequest: UpdateReleaseDto,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .patch(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}`,
     )
     .send(updateReleaseRequest)
     .set('Authorization', `Bearer ${apiToken}`)
@@ -825,7 +825,7 @@ async function deleteRelease(releaseId: string): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .delete(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
@@ -840,12 +840,12 @@ async function listUsersOfNamespace(): Promise<supertest.Test> {
 
 async function addApprover(
   releaseId: string,
-  id: string
+  id: string,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approvers`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approvers`,
     )
     .send({ user: id })
     .set('Authorization', `Bearer ${apiToken}`)
@@ -856,7 +856,7 @@ async function listApprovers(releaseId: string): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .get(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approvers`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approvers`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
@@ -864,12 +864,12 @@ async function listApprovers(releaseId: string): Promise<supertest.Test> {
 async function approve(
   releaseId: string,
   comment: string,
-  tokenOfUser
+  tokenOfUser,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approve`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/approve`,
     )
     .send({ comment })
     .set('Authorization', `Bearer ${tokenOfUser}`)
@@ -878,12 +878,12 @@ async function approve(
 async function reset(
   releaseId: string,
   comment: string,
-  tokenOfUser
+  tokenOfUser,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/reset`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/reset`,
     )
     .send({ comment })
     .set('Authorization', `Bearer ${tokenOfUser}`)
@@ -891,12 +891,12 @@ async function reset(
 
 async function addComment(
   releaseId: string,
-  comment: AddCommentDto
+  comment: AddCommentDto,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments`,
     )
     .send(comment)
     .set('Authorization', `Bearer ${apiToken}`)
@@ -905,24 +905,24 @@ async function addComment(
 
 async function resolveComment(
   releaseId: string,
-  commentId: string
+  commentId: string,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments/${commentId}/resolve`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments/${commentId}/resolve`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
 
 async function getByReference(
   releaseId: string,
-  reference: Reference
+  reference: Reference,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments/get-by-reference`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments/get-by-reference`,
     )
     .send(reference)
     .set('Authorization', `Bearer ${apiToken}`)
@@ -932,7 +932,7 @@ async function getComments(releaseId: string): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .get(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/comments`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
@@ -941,14 +941,14 @@ async function getReleaseHistory(releaseId: string): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .get(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/history`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/history`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
 
 async function manageSubscription(
   releaseId: number,
-  operation: string
+  operation: string,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
@@ -959,7 +959,7 @@ async function manageSubscription(
 
 async function getSubscriptionStatus(
   releaseId: number,
-  userId: string
+  userId: string,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
@@ -970,13 +970,13 @@ async function getSubscriptionStatus(
 function expectStatus(
   response: supertest.Response,
   status: number,
-  context: string
+  context: string,
 ): void {
   if (response.status !== status) {
     throw new Error(
       `Expected status ${status} but received ${
         response.status
-      } for ${context}: ${JSON.stringify(response.body)}`
+      } for ${context}: ${JSON.stringify(response.body)}`,
     )
   }
 }
@@ -985,31 +985,31 @@ async function listTasks(releaseId: number): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .get(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
 
 async function getTask(
   releaseId: number,
-  taskId: number
+  taskId: number,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .get(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
 
 async function addTask(
   releaseId: number,
-  task: AddTaskDto
+  task: AddTaskDto,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks`,
     )
     .send(task)
     .set('Authorization', `Bearer ${apiToken}`)
@@ -1018,12 +1018,12 @@ async function addTask(
 async function updateTask(
   releaseId: number,
   taskId: number,
-  task: UpdateTaskDto
+  task: UpdateTaskDto,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .patch(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}`,
     )
     .send(task)
     .set('Authorization', `Bearer ${apiToken}`)
@@ -1031,36 +1031,36 @@ async function updateTask(
 
 async function deleteTask(
   releaseId: number,
-  taskId: number
+  taskId: number,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .delete(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
 
 async function closeTask(
   releaseId: number,
-  taskId: number
+  taskId: number,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/close`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/close`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
 
 async function reopenTask(
   releaseId: number,
-  taskId: number
+  taskId: number,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/reopen`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/reopen`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }
@@ -1068,12 +1068,12 @@ async function reopenTask(
 async function addAssignees(
   releaseId: number,
   taskId: number,
-  dto: AddRemoveAssigneesDto
+  dto: AddRemoveAssigneesDto,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .post(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/assignees`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/assignees`,
     )
     .send(dto)
     .set('Authorization', `Bearer ${apiToken}`)
@@ -1082,12 +1082,12 @@ async function addAssignees(
 async function removeAssignees(
   releaseId: number,
   taskId: number,
-  dto: AddRemoveAssigneesDto
+  dto: AddRemoveAssigneesDto,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .delete(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/assignees`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/assignees`,
     )
     .send(dto)
     .set('Authorization', `Bearer ${apiToken}`)
@@ -1095,12 +1095,12 @@ async function removeAssignees(
 
 async function getAssignees(
   releaseId: number,
-  taskId: number
+  taskId: number,
 ): Promise<supertest.Test> {
   return await supertest
     .agent(nestTestingApp.app.getHttpServer())
     .get(
-      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/assignees`
+      `/api/v1/namespaces/${testNamespace.namespace.id}/releases/${releaseId}/tasks/${taskId}/assignees`,
     )
     .set('Authorization', `Bearer ${apiToken}`)
 }

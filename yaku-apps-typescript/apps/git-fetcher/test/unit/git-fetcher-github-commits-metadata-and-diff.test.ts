@@ -57,7 +57,7 @@ describe('Git Fetcher Metadata And Diff', () => {
     fetchMock = vi.spyOn(global, 'fetch')
     gitFetcherGithubCommitsAndDiff = new GitFetcherGithubCommitsAndDiff(
       gitServerConfigDefault,
-      configDefault
+      configDefault,
     )
   })
 
@@ -88,13 +88,13 @@ describe('Git Fetcher Metadata And Diff', () => {
       (await gitFetcherGithubCommitsAndDiff.fetchResource()) as CommitsMetadataAndDiff
     expect(fetchMock).toBeCalledTimes(4)
     expect(consoleSpy).toHaveBeenCalledWith(
-      'Fetched metadata about starting commit at 2023-03-06T14:11:29Z'
+      'Fetched metadata about starting commit at 2023-03-06T14:11:29Z',
     )
     expect(consoleSpy).toHaveBeenCalledWith(
-      'Fetched metadata about ending commit at 2023-03-06T14:11:29Z'
+      'Fetched metadata about ending commit at 2023-03-06T14:11:29Z',
     )
     expect(consoleSpy).toHaveBeenCalledWith(
-      'Fetched 0 lines added and 0 lines removed'
+      'Fetched 0 lines added and 0 lines removed',
     )
     expect(consoleSpy).toHaveBeenCalledWith('Fetched metadata about 0 commits')
     expect(result.commitsMetadata).toHaveLength(0)
@@ -145,13 +145,13 @@ describe('Git Fetcher Metadata And Diff', () => {
       (await gitFetcherGithubCommitsAndDiff.fetchResource()) as CommitsMetadataAndDiff
     expect(fetchMock).toBeCalledTimes(5)
     expect(consoleSpy).toHaveBeenCalledWith(
-      'Fetched metadata about starting commit at 2023-03-06T14:11:29Z'
+      'Fetched metadata about starting commit at 2023-03-06T14:11:29Z',
     )
     expect(consoleSpy).toHaveBeenCalledWith(
-      'Fetched metadata about ending commit at 2023-07-12T10:46:50Z'
+      'Fetched metadata about ending commit at 2023-07-12T10:46:50Z',
     )
     expect(consoleSpy).toHaveBeenCalledWith(
-      'Fetched 2 lines added and 98 lines removed'
+      'Fetched 2 lines added and 98 lines removed',
     )
     expect(consoleSpy).toHaveBeenCalledWith('Fetched metadata about 5 commits')
     expect(result.commitsMetadata).toHaveLength(5)
@@ -221,13 +221,13 @@ describe('Git Fetcher Metadata And Diff', () => {
 
     expect(fetchMock).toBeCalledTimes(7)
     expect(consoleSpy).toHaveBeenCalledWith(
-      'Fetched metadata about starting commit at 2023-03-06T14:11:29Z'
+      'Fetched metadata about starting commit at 2023-03-06T14:11:29Z',
     )
     expect(consoleSpy).toHaveBeenCalledWith(
-      'Fetched metadata about ending commit at 2023-07-12T10:46:50Z'
+      'Fetched metadata about ending commit at 2023-07-12T10:46:50Z',
     )
     expect(consoleSpy).toHaveBeenCalledWith(
-      'Fetched 2 lines added and 98 lines removed'
+      'Fetched 2 lines added and 98 lines removed',
     )
     expect(consoleSpy).toHaveBeenCalledWith('Fetched metadata about 5 commits')
     expect(queriedFirstPage).toBe(true)
@@ -266,6 +266,6 @@ describe('Git Fetcher Metadata And Diff', () => {
       expect(errorWasThrown).toBe(true)
       expect(responseStatusHandlerSpy).toHaveBeenCalledOnce()
       expect(responseStatusHandlerSpy).toHaveBeenCalledWith(responseCode)
-    }
+    },
   )
 })

@@ -197,12 +197,12 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getWorkflowStatus).toBeCalledWith(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
       expect(received.hasFinished).toBeFalsy()
       expect(received.status).toBeUndefined()
@@ -216,12 +216,12 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getWorkflowStatus).toBeCalledWith(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
       expect(received.hasFinished).toBeFalsy()
       expect(received.status).toBeUndefined()
@@ -236,12 +236,12 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getWorkflowStatus).toBeCalledWith(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
       expect(received.hasFinished).toBeTruthy()
       expect(received.status).toBe(succeededStatus)
@@ -255,12 +255,12 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getWorkflowStatus).toBeCalledWith(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
       expect(received.hasFinished).toBeTruthy()
       expect(received.status).toBe(succeededStatus)
@@ -275,7 +275,7 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getArchivedWorkflowStatus).toBeCalledWith(workflowId)
@@ -292,12 +292,12 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getWorkflowStatus).toBeCalledWith(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
       expect(argoService.getArchivedWorkflowStatus).toBeCalledWith(workflowId)
       expect(received.hasFinished).toBeTruthy()
@@ -313,12 +313,12 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getWorkflowStatus).toBeCalledWith(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
       expect(argoService.getArchivedWorkflowStatus).toBeCalledWith(workflowId)
       expect(received.hasFinished).toBeTruthy()
@@ -336,12 +336,12 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getWorkflowStatus).toBeCalledWith(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
       expect(argoService.getArchivedWorkflowStatus).toBeCalled()
       expect(received.hasFinished).toBeFalsy()
@@ -357,12 +357,12 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getWorkflowStatus).toBeCalledWith(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
       expect(argoService.getArchivedWorkflowStatus).toBeCalledWith(workflowId)
       expect(received.hasFinished).toBeFalsy()
@@ -373,9 +373,9 @@ describe('WorkflowFinishedService', () => {
       'should throw an error when called with undefined values',
       async (undefValue: any) => {
         await expect(() =>
-          testee.checkWorkflowHasFinished(undefValue, undefValue, undefValue)
+          testee.checkWorkflowHasFinished(undefValue, undefValue, undefValue),
         ).rejects.toThrow()
-      }
+      },
     )
   })
 
@@ -416,7 +416,7 @@ describe('WorkflowFinishedService', () => {
               return loggedArgoNotMain
             }
             throw new Error()
-          }
+          },
         )
       jest.spyOn(blobStore, 'fileExists').mockResolvedValue(true)
       jest
@@ -428,30 +428,30 @@ describe('WorkflowFinishedService', () => {
           status: succeededStatus,
           hasFinished: true,
         },
-        currentRun
+        currentRun,
       )
 
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'main'
+        'main',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'init'
+        'init',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'wait'
+        'wait',
       )
       expect(blobStore.downloadLogs).not.toBeCalled()
       expect(blobStore.fileExists).toBeCalledTimes(1)
       expect(blobStore.downloadResult).toBeCalledTimes(2)
       expect(blobStore.downloadResult).toBeCalledWith(
         currentRun.storagePath,
-        RESULTFILE
+        RESULTFILE,
       )
       expect(queryRunner.manager.update).toBeCalled()
       expect(queryRunner.manager.save).toBeCalled()
@@ -459,7 +459,7 @@ describe('WorkflowFinishedService', () => {
       expect(savedRun.id).toBe(currentRun.id)
       expect(savedRun.namespace).toBe(currentRun.namespace)
       expect(savedRun.completionTime.toUTCString()).toBe(
-        new Date(succeededStatus.finishedAt).toUTCString()
+        new Date(succeededStatus.finishedAt).toUTCString(),
       )
       expect(savedRun.status).toBe(RunStatus.Completed)
       expect(savedRun.log.join('\n')).toBe(loggedRun)
@@ -481,7 +481,7 @@ describe('WorkflowFinishedService', () => {
               return loggedArgoNotMain
             }
             throw new Error()
-          }
+          },
         )
       jest
         .spyOn(blobStore, 'downloadResult')
@@ -490,16 +490,16 @@ describe('WorkflowFinishedService', () => {
 
       const result = await testee.updateWorkflowData(
         { status: failedStatus, hasFinished: true },
-        currentRun
+        currentRun,
       )
       expect(blobStore.downloadResult).toBeCalledTimes(2)
       expect(blobStore.downloadResult).toBeCalledWith(
         currentRun.storagePath,
-        RESULTFILE
+        RESULTFILE,
       )
       expect(blobStore.fileExists).toBeCalledWith(
         currentRun.storagePath,
-        EVIDENCEFILE
+        EVIDENCEFILE,
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -508,13 +508,13 @@ describe('WorkflowFinishedService', () => {
       expect(savedRun.id).toBe(currentRun.id)
       expect(savedRun.namespace).toBe(currentRun.namespace)
       expect(savedRun.completionTime.toUTCString()).toBe(
-        new Date(failedStatus.finishedAt).toUTCString()
+        new Date(failedStatus.finishedAt).toUTCString(),
       )
       expect(savedRun.status).toBe(RunStatus.Completed)
       expect(savedRun.log).toContain('Logs not available, but result exists')
       expect(savedRun.log).not.toContain('==========')
       expect(savedRun.log).not.toContain(
-        'Errors identified during initialization or shutdown of workflow pod:'
+        'Errors identified during initialization or shutdown of workflow pod:',
       )
       expect(savedRun.overallResult).toBe(RunResult.Yellow)
       expect(result).toBe(savedRun)
@@ -533,7 +533,7 @@ describe('WorkflowFinishedService', () => {
               return loggedArgoNotMain
             }
             throw new Error()
-          }
+          },
         )
       jest.spyOn(blobStore, 'fileExists').mockResolvedValueOnce(false)
       jest.spyOn(blobStore, 'fileExists').mockResolvedValueOnce(true)
@@ -546,23 +546,23 @@ describe('WorkflowFinishedService', () => {
           status: succeededStatus,
           hasFinished: true,
         },
-        currentRun
+        currentRun,
       )
 
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'main'
+        'main',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'init'
+        'init',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'wait'
+        'wait',
       )
       expect(blobStore.downloadLogs).not.toBeCalled()
       expect(blobStore.fileExists).toBeCalledTimes(2)
@@ -574,7 +574,7 @@ describe('WorkflowFinishedService', () => {
       expect(savedRun.id).toBe(currentRun.id)
       expect(savedRun.namespace).toBe(currentRun.namespace)
       expect(savedRun.completionTime.toUTCString()).toBe(
-        new Date(succeededStatus.finishedAt).toUTCString()
+        new Date(succeededStatus.finishedAt).toUTCString(),
       )
       expect(savedRun.status).toBe(RunStatus.Completed)
       expect(savedRun.log.join('\n')).toBe(loggedRun)
@@ -591,14 +591,14 @@ describe('WorkflowFinishedService', () => {
 
       const result = await testee.updateWorkflowData(
         { status: errorStatus, hasFinished: true },
-        currentRun
+        currentRun,
       )
 
       expect(blobStore.downloadResult).not.toBeCalled()
       expect(blobStore.fileExists).toBeCalledTimes(3)
       expect(blobStore.fileExists).toBeCalledWith(
         currentRun.storagePath,
-        EVIDENCEFILE
+        EVIDENCEFILE,
       )
       expect(blobStore.downloadResult).not.toBeCalled()
       expect(queryRunner.manager.save).toBeCalled()
@@ -608,11 +608,11 @@ describe('WorkflowFinishedService', () => {
       expect(savedRun.id).toBe(currentRun.id)
       expect(savedRun.namespace).toBe(currentRun.namespace)
       expect(savedRun.completionTime.toUTCString()).toBe(
-        new Date().toUTCString()
+        new Date().toUTCString(),
       )
       expect(savedRun.status).toBe(RunStatus.Failed)
       expect(savedRun.log.join('\n')).toBe(
-        'Workflow has not finished properly, no result found or result corrupted'
+        'Workflow has not finished properly, no result found or result corrupted',
       )
       expect(savedRun.overallResult).toBeFalsy()
       expect(result).toBe(savedRun)
@@ -631,7 +631,7 @@ describe('WorkflowFinishedService', () => {
               return loggedArgoNotMain
             }
             throw new Error()
-          }
+          },
         )
       jest.spyOn(blobStore, 'fileExists').mockResolvedValue(true)
       jest.spyOn(blobStore, 'downloadResult').mockRejectedValue(new Error())
@@ -641,23 +641,23 @@ describe('WorkflowFinishedService', () => {
           status: succeededStatus,
           hasFinished: true,
         },
-        currentRun
+        currentRun,
       )
 
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'main'
+        'main',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'init'
+        'init',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'wait'
+        'wait',
       )
       expect(blobStore.downloadLogs).not.toBeCalled()
       expect(blobStore.fileExists).toBeCalledTimes(3)
@@ -668,7 +668,7 @@ describe('WorkflowFinishedService', () => {
       expect(savedRun.id).toBe(currentRun.id)
       expect(savedRun.namespace).toBe(currentRun.namespace)
       expect(savedRun.completionTime.toUTCString()).toBe(
-        new Date(succeededStatus.finishedAt).toUTCString()
+        new Date(succeededStatus.finishedAt).toUTCString(),
       )
       expect(savedRun.status).toBe(RunStatus.Failed)
       expect(savedRun.log).toEqual([
@@ -693,17 +693,17 @@ describe('WorkflowFinishedService', () => {
 
       const result = await testee.updateWorkflowData(
         { status: errorStatus, hasFinished: true },
-        currentRun
+        currentRun,
       )
 
       expect(blobStore.downloadResult).toBeCalledTimes(1)
       expect(blobStore.downloadResult).toBeCalledWith(
         currentRun.storagePath,
-        RESULTFILE
+        RESULTFILE,
       )
       expect(blobStore.fileExists).toBeCalledWith(
         currentRun.storagePath,
-        EVIDENCEFILE
+        EVIDENCEFILE,
       )
       expect(queryRunner.manager.update).toBeCalled()
       expect(queryRunner.manager.save).toBeCalled()
@@ -711,11 +711,11 @@ describe('WorkflowFinishedService', () => {
       expect(savedRun.id).toBe(currentRun.id)
       expect(savedRun.namespace).toBe(currentRun.namespace)
       expect(savedRun.completionTime.toUTCString()).toBe(
-        new Date().toUTCString()
+        new Date().toUTCString(),
       )
       expect(savedRun.status).toBe(RunStatus.Failed)
       expect(savedRun.log.join('\n')).toBe(
-        'Workflow has not finished properly, no result found or result corrupted'
+        'Workflow has not finished properly, no result found or result corrupted',
       )
       expect(savedRun.overallResult).toBeFalsy()
       expect(result).toBe(savedRun)
@@ -730,12 +730,12 @@ describe('WorkflowFinishedService', () => {
           status: succeededStatus,
           hasFinished: true,
         },
-        currentRun
+        currentRun,
       )
 
       expect(result).toBe(currentRun)
       expect(testee['logger']['debug']).toBeCalledWith(
-        `Run ${currentRun.namespace.id}:${currentRun.id} is processed`
+        `Run ${currentRun.namespace.id}:${currentRun.id} is processed`,
       )
     })
 
@@ -757,7 +757,7 @@ describe('WorkflowFinishedService', () => {
           status: succeededStatus,
           hasFinished: true,
         },
-        currentRun
+        currentRun,
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -767,7 +767,7 @@ describe('WorkflowFinishedService', () => {
       expect(savedRun.id).toBe(currentRun.id)
       expect(savedRun.namespace).toBe(currentRun.namespace)
       expect(savedRun.completionTime.toUTCString()).toBe(
-        new Date(succeededStatus.finishedAt).toUTCString()
+        new Date(succeededStatus.finishedAt).toUTCString(),
       )
       expect(savedRun.status).toBe(RunStatus.Completed)
       expect(savedRun.log.join('\n')).toBe(loggedRunWithSecretsHidden)
@@ -788,7 +788,7 @@ describe('WorkflowFinishedService', () => {
               return loggedArgoNotMainError
             }
             throw new Error()
-          }
+          },
         )
       jest.spyOn(blobStore, 'fileExists').mockResolvedValue(true)
       jest
@@ -800,23 +800,23 @@ describe('WorkflowFinishedService', () => {
           status: errorStatus,
           hasFinished: true,
         },
-        currentRun
+        currentRun,
       )
       const logAsString = result.log.join('\n')
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'main'
+        'main',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'init'
+        'init',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'wait'
+        'wait',
       )
       expect(blobStore.downloadLogs).not.toBeCalled()
       expect(savedRun.globalId).toBe(currentRun.globalId)
@@ -826,10 +826,10 @@ describe('WorkflowFinishedService', () => {
 
       expect(logAsString).toContain(loggedRun)
       expect(logAsString).toContain(
-        '==========\nErrors identified during initialization or shutdown of workflow pod:'
+        '==========\nErrors identified during initialization or shutdown of workflow pod:',
       )
       expect(logAsString).toContain(
-        'Workflow failed, due to the environment variable section of the workflow exceeds the maximum size'
+        'Workflow failed, due to the environment variable section of the workflow exceeds the maximum size',
       )
     })
 
@@ -846,7 +846,7 @@ describe('WorkflowFinishedService', () => {
               return loggedArgoNotMainError
             }
             throw new Error()
-          }
+          },
         )
       jest.spyOn(blobStore, 'fileExists').mockResolvedValue(true)
       jest
@@ -859,23 +859,23 @@ describe('WorkflowFinishedService', () => {
           status: errorStatus,
           hasFinished: true,
         },
-        currentRun
+        currentRun,
       )
       const logAsString = result.log.join('\n')
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'main'
+        'main',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'init'
+        'init',
       )
       expect(argoService.getWorkflowLogs).toBeCalledWith(
         currentRun.argoName,
         currentRun.argoNamespace,
-        'wait'
+        'wait',
       )
       expect(blobStore.downloadLogs).toBeCalledWith(currentRun.argoName)
       expect(savedRun.globalId).toBe(currentRun.globalId)
@@ -885,10 +885,10 @@ describe('WorkflowFinishedService', () => {
 
       expect(logAsString).toContain(loggedRun)
       expect(logAsString).toContain(
-        '==========\nErrors identified during initialization or shutdown of workflow pod:'
+        '==========\nErrors identified during initialization or shutdown of workflow pod:',
       )
       expect(logAsString).toContain(
-        'Workflow failed, due to the environment variable section of the workflow exceeds the maximum size'
+        'Workflow failed, due to the environment variable section of the workflow exceeds the maximum size',
       )
     })
   })
@@ -995,7 +995,7 @@ describe('WorkflowFinishedService', () => {
       const received = await testee.checkWorkflowHasFinished(
         workflowId,
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(argoService.getArchivedWorkflowStatus).not.toHaveBeenCalled()

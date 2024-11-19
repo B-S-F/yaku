@@ -15,7 +15,7 @@ type UserProfileDto =
 export class UserProfileService {
   constructor(
     @InjectRepository(UserProfile)
-    private readonly repository: Repository<UserProfile>
+    private readonly repository: Repository<UserProfile>,
   ) {}
 
   async get(kc_id: string): Promise<GetUserProfileDto> {
@@ -47,7 +47,7 @@ export class UserProfileService {
 
   async create(
     kc_id: string,
-    createUserProfileDto?: CreateUserProfileDto
+    createUserProfileDto?: CreateUserProfileDto,
   ): Promise<GetUserProfileDto> {
     const queryRunner: QueryRunner =
       this.repository.manager.connection.createQueryRunner()
@@ -72,7 +72,7 @@ export class UserProfileService {
 
   async update(
     kc_id: string,
-    updateUserProfileDto: UpdateUserProfileDto
+    updateUserProfileDto: UpdateUserProfileDto,
   ): Promise<GetUserProfileDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -83,7 +83,7 @@ export class UserProfileService {
         UserProfile,
         {
           where: { id: kc_id },
-        }
+        },
       )
 
       let newUserProfile: UserProfile = null

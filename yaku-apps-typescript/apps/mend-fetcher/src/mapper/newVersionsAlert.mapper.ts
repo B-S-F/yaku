@@ -15,14 +15,14 @@ export class NewVersionsAlertMap {
         newVersionsAlertDTO.project.name,
         newVersionsAlertDTO.project.path,
         newVersionsAlertDTO.project.path,
-        newVersionsAlertDTO.project.productUuid
+        newVersionsAlertDTO.project.productUuid,
       ),
       {
         uuid: newVersionsAlertDTO.project.productUuid,
         name: newVersionsAlertDTO.project.path,
       },
       newVersionsAlertDTO.availableVersion,
-      newVersionsAlertDTO.availableVersionType
+      newVersionsAlertDTO.availableVersionType,
     )
   }
   public static toDTO(newVersionsAlert: NewVersionsAlert) {
@@ -39,7 +39,7 @@ export class NewVersionsAlertMap {
         productUuid: newVersionsAlert.project.productUuid,
       },
       newVersionsAlert.availableVersion,
-      newVersionsAlert.availableVersionType
+      newVersionsAlert.availableVersionType,
     )
   }
 }

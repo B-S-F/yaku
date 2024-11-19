@@ -25,6 +25,6 @@ export class MultipleLicensesAlertDTO implements IAlertDTO {
       productUuid: string
     },
     public numberOfLicenses: number,
-    public licenses: Array<string>
+    public licenses: Array<string>,
   ) {}
 }

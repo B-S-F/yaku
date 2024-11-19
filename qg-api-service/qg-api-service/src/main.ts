@@ -30,7 +30,7 @@ async function bootstrap() {
           },
         },
       }),
-      {}
+      {},
     ),
   })
 
@@ -56,7 +56,7 @@ async function bootstrap() {
 
     if (!kcServer || !kcRealm) {
       throw new Error(
-        'Keycloak server and realm must be set if Keycloak is enabled'
+        'Keycloak server and realm must be set if Keycloak is enabled',
       )
     }
 
@@ -83,7 +83,7 @@ async function bootstrap() {
 
     if (!swaggerClientId) {
       throw new Error(
-        'Swagger Oauth2 Client ID and Client Secret must be set if Keycloak is enabled'
+        'Swagger Oauth2 Client ID and Client Secret must be set if Keycloak is enabled',
       )
     }
     swaggerOptions.swaggerOptions = {

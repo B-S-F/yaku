@@ -1,8 +1,4 @@
-import {
-  EntityList,
-  ListQueryHandler,
-  SortOrder,
-} from '@B-S-F/api-commons-lib'
+import { EntityList, ListQueryHandler, SortOrder } from '@B-S-F/api-commons-lib'
 import {
   Inject,
   Injectable,
@@ -82,14 +78,14 @@ export class CommentsService {
     @Inject(NotificationService)
     private readonly notificationService: NotificationService,
     @Inject(SubscriptionService)
-    private readonly subscriptionService: SubscriptionService
+    private readonly subscriptionService: SubscriptionService,
   ) {}
 
   // TODO: This will be not used anymore if the History Endpoint is in place, remove it after UI is updated
   async list(
     namespaceId: number,
     releaseId: number,
-    listQueryOptions: any
+    listQueryOptions: any,
   ): Promise<EntityList<CommentWithRepliesAndReferenceDto>> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -99,12 +95,11 @@ export class CommentsService {
         queryRunner,
         namespaceId,
         releaseId,
-        listQueryOptions
+        listQueryOptions,
       )
 
-      const commentsWithRepliesAndReferenceDto = await this.toEntityList(
-        comments
-      )
+      const commentsWithRepliesAndReferenceDto =
+        await this.toEntityList(comments)
 
       await queryRunner.commitTransaction()
       return commentsWithRepliesAndReferenceDto
@@ -121,7 +116,7 @@ export class CommentsService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    listQueryHandler: ListQueryHandler
+    listQueryHandler: ListQueryHandler,
   ): Promise<EntityList<CommentEntity>> {
     const queryBuilder = queryRunner.manager
       .getRepository(CommentEntity)
@@ -145,7 +140,7 @@ export class CommentsService {
     releaseId: number,
     timestamp: Date,
     amount: number,
-    direction: 'before' | 'after'
+    direction: 'before' | 'after',
   ): Promise<CommentEntity[]> {
     const queryBuilder = queryRunner.manager
       .getRepository(CommentEntity)
@@ -157,7 +152,7 @@ export class CommentsService {
       .andWhere('comment.parentId IS NULL')
       .andWhere(
         `comment.creationTime ${direction === 'before' ? '<' : '>'} :timestamp`,
-        { timestamp }
+        { timestamp },
       )
       .orderBy('comment.creationTime', direction === 'before' ? 'DESC' : 'ASC')
       .limit(amount)
@@ -172,7 +167,7 @@ export class CommentsService {
     status: CommentStatus,
     timestamp: Date,
     amount: number,
-    direction: 'before' | 'after'
+    direction: 'before' | 'after',
   ): Promise<CommentEntity[]> {
     const queryBuilder = queryRunner.manager
       .getRepository(CommentEntity)
@@ -185,7 +180,7 @@ export class CommentsService {
       .andWhere('comment.status = :status', { status })
       .andWhere(
         `comment.creationTime ${direction === 'before' ? '<' : '>'} :timestamp`,
-        { timestamp }
+        { timestamp },
       )
       .orderBy('comment.creationTime', direction === 'before' ? 'DESC' : 'ASC')
       .limit(amount)
@@ -200,7 +195,7 @@ export class CommentsService {
     referenceType: ReferenceType,
     timestamp: Date,
     amount: number,
-    direction: 'before' | 'after'
+    direction: 'before' | 'after',
   ): Promise<CommentEntity[]> {
     const queryBuilder = queryRunner.manager
       .getRepository(CommentEntity)
@@ -212,7 +207,7 @@ export class CommentsService {
       .andWhere('comment.parentId IS NULL')
       .andWhere(
         `comment.creationTime ${direction === 'before' ? '<' : '>'} :timestamp`,
-        { timestamp }
+        { timestamp },
       )
       .andWhere('comment.referenceType = :referenceType', { referenceType })
       .orderBy('comment.creationTime', direction === 'before' ? 'DESC' : 'ASC')
@@ -224,7 +219,7 @@ export class CommentsService {
   async get(
     namespaceId: number,
     releaseId,
-    commentId: number
+    commentId: number,
   ): Promise<CommentDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -234,7 +229,7 @@ export class CommentsService {
         queryRunner,
         namespaceId,
         releaseId,
-        commentId
+        commentId,
       )
       const commentDto = await this.toCommentDto(comment)
       await queryRunner.commitTransaction()
@@ -251,7 +246,7 @@ export class CommentsService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    commentId: number
+    commentId: number,
   ): Promise<CommentEntity> {
     try {
       return await queryRunner.manager.findOneOrFail(CommentEntity, {
@@ -265,7 +260,7 @@ export class CommentsService {
     } catch (e) {
       if (e.name === EntityNotFoundError.name) {
         throw new NotFoundException(
-          `Comment or Release not found, namespace: ${namespaceId}, release: ${releaseId}, comment: ${commentId}`
+          `Comment or Release not found, namespace: ${namespaceId}, release: ${releaseId}, comment: ${commentId}`,
         )
       }
     }
@@ -277,7 +272,7 @@ export class CommentsService {
     reference: Reference,
     content: string,
     todo: boolean,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CommentDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
 
@@ -291,7 +286,7 @@ export class CommentsService {
         reference,
         content,
         todo,
-        actor
+        actor,
       )
       const commentDto = await this.toCommentDto(comment)
       await queryRunner.commitTransaction()
@@ -302,7 +297,7 @@ export class CommentsService {
         releaseId,
         commentDto.id,
         actor,
-        queryRunner
+        queryRunner,
       )
       await queryRunner.commitTransaction()
       return commentDto
@@ -321,7 +316,7 @@ export class CommentsService {
     reference: Reference,
     content: string,
     todo: boolean,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CommentEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -346,7 +341,7 @@ export class CommentsService {
         queryRunner,
         namespaceId,
         releaseId,
-        reference.id
+        reference.id,
       )
       newComment.parent = parentComment
     }
@@ -356,7 +351,7 @@ export class CommentsService {
         queryRunner,
         namespaceId,
         releaseId,
-        reference
+        reference,
       )
       newComment.reference = {
         chapter: reference.chapter,
@@ -373,7 +368,7 @@ export class CommentsService {
         comment,
         AuditActor.convertFrom(actor),
         Action.CREATE,
-        queryRunner.manager
+        queryRunner.manager,
       )
 
       return comment
@@ -381,7 +376,7 @@ export class CommentsService {
       if (e.name === QueryFailedError.name) {
         if (e.message.includes('violates foreign key constraint')) {
           throw new NotFoundException(
-            `Release not found, namespace: ${namespaceId}, release: ${releaseId}`
+            `Release not found, namespace: ${namespaceId}, release: ${releaseId}`,
           )
         }
       }
@@ -393,7 +388,7 @@ export class CommentsService {
     namespaceId: number,
     releaseId: number,
     reference: Reference,
-    sortOrder: SortOrder = SortOrder.ASC
+    sortOrder: SortOrder = SortOrder.ASC,
   ): Promise<CommentsByReferenceDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -404,11 +399,11 @@ export class CommentsService {
         namespaceId,
         releaseId,
         reference,
-        sortOrder
+        sortOrder,
       )
       const commentsByReferenceDto = await this.toCommentsByReferenceDto(
         comments,
-        reference
+        reference,
       )
       await queryRunner.commitTransaction()
       return commentsByReferenceDto
@@ -425,11 +420,11 @@ export class CommentsService {
     namespaceId: number,
     releaseId: number,
     reference: Reference,
-    sortOrder: SortOrder = SortOrder.ASC
+    sortOrder: SortOrder = SortOrder.ASC,
   ): Promise<CommentEntity[]> {
     const queryBuilder = queryRunner.manager.createQueryBuilder(
       CommentEntity,
-      'comment'
+      'comment',
     )
 
     queryBuilder.select()
@@ -449,7 +444,7 @@ export class CommentsService {
           queryRunner,
           namespaceId,
           releaseId,
-          reference
+          reference,
         )
         queryBuilder.andWhere(`comment.reference->>'chapter' = :chapter`, {
           chapter: reference.chapter,
@@ -458,7 +453,7 @@ export class CommentsService {
           `comment.reference->>'requirement' = :requirement`,
           {
             requirement: reference.requirement,
-          }
+          },
         )
         queryBuilder.andWhere(`comment.reference->>'check' = :check`, {
           check: reference.check,
@@ -492,7 +487,7 @@ export class CommentsService {
     namespaceId: number,
     releaseId: number,
     commentId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -504,7 +499,7 @@ export class CommentsService {
         releaseId,
         commentId,
         CommentStatus.RESOLVED,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
     } catch (e) {
@@ -519,7 +514,7 @@ export class CommentsService {
     namespaceId: number,
     releaseId: number,
     commentId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -531,7 +526,7 @@ export class CommentsService {
         releaseId,
         commentId,
         CommentStatus.CREATED,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
     } catch (e) {
@@ -548,7 +543,7 @@ export class CommentsService {
     releaseId: number,
     commentId: number,
     status: CommentStatus,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CommentEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -557,7 +552,7 @@ export class CommentsService {
       queryRunner,
       namespaceId,
       releaseId,
-      commentId
+      commentId,
     )
 
     if (currentComment.status === status) {
@@ -578,7 +573,7 @@ export class CommentsService {
       resolvedComment,
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
     return resolvedComment
   }
@@ -588,7 +583,7 @@ export class CommentsService {
     releaseId: number,
     commentId: number,
     content: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CommentDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -601,7 +596,7 @@ export class CommentsService {
         releaseId,
         commentId,
         content,
-        actor
+        actor,
       )
       const commentDto = await this.toCommentDto(comment)
       await queryRunner.commitTransaction()
@@ -612,7 +607,7 @@ export class CommentsService {
         commentDto.id,
         oldComment.content,
         actor,
-        queryRunner
+        queryRunner,
       )
 
       return commentDto
@@ -630,7 +625,7 @@ export class CommentsService {
     releaseId: number,
     commentId: number,
     content: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<CommentEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -642,7 +637,7 @@ export class CommentsService {
       queryRunner,
       namespaceId,
       releaseId,
-      commentId
+      commentId,
     )
 
     const original = currentComment.DeepCopy()
@@ -659,7 +654,7 @@ export class CommentsService {
       newComment,
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     return newComment
@@ -669,7 +664,7 @@ export class CommentsService {
     namespaceId: number,
     releaseId: number,
     commentId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -680,7 +675,7 @@ export class CommentsService {
         namespaceId,
         releaseId,
         commentId,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
     } catch (e) {
@@ -696,7 +691,7 @@ export class CommentsService {
     namespaceId: number,
     releaseId: number,
     commentId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const currentComment = await queryRunner.manager.findOne(CommentEntity, {
       where: {
@@ -714,13 +709,13 @@ export class CommentsService {
       {},
       AuditActor.convertFrom(actor),
       Action.DELETE,
-      queryRunner.manager
+      queryRunner.manager,
     )
     await this.removeAllChildrenWithTransaction(
       queryRunner,
       namespaceId,
       currentComment,
-      actor
+      actor,
     )
     await queryRunner.manager.remove(currentComment)
   }
@@ -729,7 +724,7 @@ export class CommentsService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const comments = await queryRunner.manager.find(CommentEntity, {
       where: { namespace: { id: namespaceId }, release: { id: releaseId } },
@@ -744,14 +739,14 @@ export class CommentsService {
         {},
         AuditActor.convertFrom(actor),
         Action.DELETE,
-        queryRunner.manager
+        queryRunner.manager,
       )
       if (comment.children.length > 0) {
         await this.removeAllChildrenWithTransaction(
           queryRunner,
           namespaceId,
           comment,
-          actor
+          actor,
         )
       }
 
@@ -763,7 +758,7 @@ export class CommentsService {
     queryRunner: QueryRunner,
     namespaceId: number,
     comment: CommentEntity,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     for (const child of comment.children) {
       await this.auditService.append(
@@ -773,14 +768,14 @@ export class CommentsService {
         {},
         AuditActor.convertFrom(actor),
         Action.DELETE,
-        queryRunner.manager
+        queryRunner.manager,
       )
       if (child.children?.length > 0) {
         await this.removeAllChildrenWithTransaction(
           queryRunner,
           namespaceId,
           child,
-          actor
+          actor,
         )
       }
 
@@ -793,13 +788,13 @@ export class CommentsService {
     releaseId: number,
     commentId: number,
     actor: RequestUser,
-    queryRunner: QueryRunner
+    queryRunner: QueryRunner,
   ): Promise<void> {
     const comment = await this.getWithTransaction(
       queryRunner,
       namespaceId,
       releaseId,
-      commentId
+      commentId,
     )
     const namespace = comment.namespace
     const release = comment.release
@@ -807,12 +802,12 @@ export class CommentsService {
 
     const mentions = await this.getMentionsInNamespace(
       namespace.id,
-      comment.content
+      comment.content,
     )
     const processedContent = this.replaceMentions(comment.content, mentions)
     const subscribers = await this.subscriptionService.getSubscribers(
       release.id,
-      [...mentions, await this.usersService.getUser(actor.id)]
+      [...mentions, await this.usersService.getUser(actor.id)],
     )
     let participants = new Set([...subscribers])
     if (
@@ -822,7 +817,7 @@ export class CommentsService {
       const commentParticipants = await this.getParticipants(
         queryRunner,
         comment.parent.id,
-        [actor.id, ...mentions.map((mention) => mention.id)]
+        [actor.id, ...mentions.map((mention) => mention.id)],
       )
       participants = new Set([...commentParticipants, ...subscribers])
     }
@@ -844,7 +839,7 @@ export class CommentsService {
           commentParentId,
           rootReference as CheckReference,
           actor.displayName,
-          processedContent
+          processedContent,
         )
         await this.sendMentionsPushNotification(
           mentions.filter((mention) => mention.id !== actor.id),
@@ -855,7 +850,7 @@ export class CommentsService {
           commentParentId,
           rootReference as CheckReference,
           actor.displayName,
-          processedContent
+          processedContent,
         )
         break
       case ReferenceType.RELEASE:
@@ -869,7 +864,7 @@ export class CommentsService {
           commentId,
           commentParentId,
           actor.displayName,
-          processedContent
+          processedContent,
         )
         await this.sendApprovalReleaseMentionsPushNotification(
           mentions.filter((mention) => mention.id !== actor.id),
@@ -879,12 +874,12 @@ export class CommentsService {
           commentId,
           commentParentId,
           actor.displayName,
-          processedContent
+          processedContent,
         )
         break
       case ReferenceType.COMMENT:
         throw new InternalServerErrorException(
-          `Implementation error: Did not expect the root of the discussion tree to be COMMENT aka a reply`
+          `Implementation error: Did not expect the root of the discussion tree to be COMMENT aka a reply`,
         )
       default:
         this.shouldBeUnreachable(rootReference.type)
@@ -897,13 +892,13 @@ export class CommentsService {
     commentId: number,
     oldContent: string,
     actor: RequestUser,
-    queryRunner: QueryRunner
+    queryRunner: QueryRunner,
   ): Promise<void> {
     const newComment = await this.getWithTransaction(
       queryRunner,
       namespaceId,
       releaseId,
-      commentId
+      commentId,
     )
     const namespace = newComment.namespace
     const release = newComment.release
@@ -911,17 +906,17 @@ export class CommentsService {
 
     const currentMentions = await this.getMentionsInNamespace(
       namespace.id,
-      newComment.content
+      newComment.content,
     )
     const newMentions = await this.getNewMentionsInNamespace(
       namespace.id,
       oldContent,
-      newComment.content
+      newComment.content,
     )
 
     const processedContent = this.replaceMentions(
       newComment.content,
-      currentMentions
+      currentMentions,
     )
 
     const commentParentId = newComment.parent
@@ -943,7 +938,7 @@ export class CommentsService {
           commentParentId,
           rootReference as CheckReference,
           actor.displayName,
-          processedContent
+          processedContent,
         )
         break
       case ReferenceType.RELEASE:
@@ -957,12 +952,12 @@ export class CommentsService {
           commentId,
           commentParentId,
           actor.displayName,
-          processedContent
+          processedContent,
         )
         break
       case ReferenceType.COMMENT:
         throw new InternalServerErrorException(
-          `Implementation error: Did not expect the root of the discussion tree to be COMMENT aka a reply`
+          `Implementation error: Did not expect the root of the discussion tree to be COMMENT aka a reply`,
         )
       default:
         this.shouldBeUnreachable(rootReference.type)
@@ -978,7 +973,7 @@ export class CommentsService {
     parentCommentId: number,
     checkReference: CheckReference,
     displayName: string,
-    content: string
+    content: string,
   ) {
     for (const participant of participants) {
       const commentData: CommentData = {
@@ -1003,7 +998,7 @@ export class CommentsService {
         {
           type: NotificationType.Comment,
           data: commentData,
-        }
+        },
       )
     }
   }
@@ -1016,7 +1011,7 @@ export class CommentsService {
     commentId: number,
     parentCommentId: number,
     displayName: string,
-    content: string
+    content: string,
   ) {
     for (const participant of participants) {
       const commentApprovalReleaseData: CommentApprovalReleaseData = {
@@ -1038,7 +1033,7 @@ export class CommentsService {
         {
           type: NotificationType.CommentApprovalRelease,
           data: commentApprovalReleaseData,
-        }
+        },
       )
     }
   }
@@ -1052,7 +1047,7 @@ export class CommentsService {
     parentCommentId: number,
     checkReference: CheckReference,
     displayName: string,
-    content: string
+    content: string,
   ) {
     for (const mention of mentions) {
       const mentionData: MentionData = {
@@ -1072,7 +1067,7 @@ export class CommentsService {
       await this.notificationService.pushNotification(
         mention.id,
         'You have been mentioned in a comment related to a check',
-        { type: NotificationType.Mention, data: mentionData }
+        { type: NotificationType.Mention, data: mentionData },
       )
     }
   }
@@ -1085,7 +1080,7 @@ export class CommentsService {
     commentId: number,
     parentCommentId: number,
     displayName: string,
-    content: string
+    content: string,
   ) {
     for (const mention of mentions) {
       const mentionApprovalReleaseData: MentionApprovalReleaseData = {
@@ -1105,7 +1100,7 @@ export class CommentsService {
         {
           type: NotificationType.MentionApprovalRelease,
           data: mentionApprovalReleaseData,
-        }
+        },
       )
     }
   }
@@ -1113,7 +1108,7 @@ export class CommentsService {
   private async getParticipants(
     queryRunner: QueryRunner,
     threadId: number,
-    ignore: string[] = []
+    ignore: string[] = [],
   ): Promise<UserInNamespaceDto[]> {
     const participants = new Map<string, UserInNamespaceDto>()
     const comments = await queryRunner.manager.find(CommentEntity, {
@@ -1124,11 +1119,11 @@ export class CommentsService {
     for (const comment of comments) {
       participants.set(
         comment.createdBy,
-        await this.usersService.getUser(comment.createdBy)
+        await this.usersService.getUser(comment.createdBy),
       )
       participants.set(
         comment.lastModifiedBy,
-        await this.usersService.getUser(comment.lastModifiedBy)
+        await this.usersService.getUser(comment.lastModifiedBy),
       )
     }
 
@@ -1142,7 +1137,7 @@ export class CommentsService {
   private async getMentionsInNamespace(
     namespaceId: number,
     content: string,
-    ignore: UserInNamespaceDto[] = []
+    ignore: UserInNamespaceDto[] = [],
   ) {
     const usersInNamespace = await this.usersService.list(namespaceId)
     const mentions = new Map<string, UserInNamespaceDto>()
@@ -1156,7 +1151,7 @@ export class CommentsService {
       if (match.length && match.length >= 2) {
         const username = match[1]
         const user = usersInNamespace.filter(
-          (item) => item.username === username
+          (item) => item.username === username,
         )[0]
         if (user) {
           mentions.set(username, user)
@@ -1190,7 +1185,7 @@ export class CommentsService {
 
   private replaceMentions(
     content: string,
-    mentions: UserInNamespaceDto[]
+    mentions: UserInNamespaceDto[],
   ): string {
     let newContent = content
     const validTagMap = new Map<string, UserInNamespaceDto>()
@@ -1204,7 +1199,7 @@ export class CommentsService {
       const tagRegex = new RegExp(`${tag}`, 'gm')
       newContent = newContent.replace(
         tagRegex,
-        `@${validTagMap.get(tag).displayName}`
+        `@${validTagMap.get(tag).displayName}`,
       )
     }
 
@@ -1214,20 +1209,20 @@ export class CommentsService {
   private async getNewMentionsInNamespace(
     namespaceId: number,
     originalContent: string,
-    newContent: string
+    newContent: string,
   ) {
     const originalMentions = await this.getMentionsInNamespace(
       namespaceId,
-      originalContent
+      originalContent,
     )
     const currentMentions = await this.getMentionsInNamespace(
       namespaceId,
-      newContent
+      newContent,
     )
 
     // mentions of every new user in comment
     const newMentions = currentMentions.filter(
-      (item2) => !originalMentions.some((item1) => item1.id === item2.id)
+      (item2) => !originalMentions.some((item1) => item1.id === item2.id),
     )
     return newMentions
   }
@@ -1237,7 +1232,7 @@ export class CommentsService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    reference: Reference
+    reference: Reference,
   ) {
     if (reference.type !== ReferenceType.CHECK) {
       return
@@ -1246,7 +1241,7 @@ export class CommentsService {
     const qgConfigData = await getQgConfigFileContent(
       queryRunner,
       namespaceId,
-      releaseId
+      releaseId,
     )
 
     try {
@@ -1259,8 +1254,8 @@ export class CommentsService {
     } catch (e) {
       throw new NotFoundException(
         `Check not found, namespace: ${namespaceId}, release: ${releaseId}, reference: ${JSON.stringify(
-          reference
-        )}`
+          reference,
+        )}`,
       )
     }
   }
@@ -1283,7 +1278,7 @@ export class CommentsService {
       idMentionsDelimiter,
       (match, id, offset, string, groups) => {
         return '@' + mentions.get(id)
-      }
+      },
     )
   }
 
@@ -1307,7 +1302,7 @@ export class CommentsService {
       mentionsDelimiter,
       (match, username, offset, string, groups) => {
         return '@' + mentions.get(username)
-      }
+      },
     )
   }
 
@@ -1315,7 +1310,7 @@ export class CommentsService {
     const dto = new CommentDto()
     dto.id = comment.id
     dto.content = await this.replaceIdMentionsWithUsernameMentions(
-      comment.content
+      comment.content,
     )
     dto.todo = comment.todo
     dto.status = comment.status
@@ -1372,12 +1367,12 @@ export class CommentsService {
   }
 
   async toCommentWithRepliesDto(
-    comment: CommentEntity
+    comment: CommentEntity,
   ): Promise<CommentWithRepliesDto> {
     const dto = new CommentWithRepliesDto()
     dto.id = comment.id
     dto.content = await this.replaceIdMentionsWithUsernameMentions(
-      comment.content
+      comment.content,
     )
     dto.todo = comment.todo
     dto.status = comment.status
@@ -1387,7 +1382,7 @@ export class CommentsService {
     dto.lastModificationTime = comment.lastModificationTime
     if (comment.children) {
       dto.replies = await Promise.all(
-        comment.children.map(async (reply) => await this.toCommentDto(reply))
+        comment.children.map(async (reply) => await this.toCommentDto(reply)),
       )
     } else {
       dto.replies = []
@@ -1396,12 +1391,12 @@ export class CommentsService {
   }
 
   async toCommentWithRepliesAndReferenceDto(
-    comment: CommentEntity
+    comment: CommentEntity,
   ): Promise<CommentWithRepliesAndReferenceDto> {
     const dto = new CommentWithRepliesAndReferenceDto()
     dto.id = comment.id
     dto.content = await this.replaceIdMentionsWithUsernameMentions(
-      comment.content
+      comment.content,
     )
     dto.todo = comment.todo
     dto.status = comment.status
@@ -1411,7 +1406,7 @@ export class CommentsService {
     dto.lastModificationTime = comment.lastModificationTime
     if (comment.children) {
       dto.replies = await Promise.all(
-        comment.children.map(async (reply) => await this.toCommentDto(reply))
+        comment.children.map(async (reply) => await this.toCommentDto(reply)),
       )
     } else {
       dto.replies = []
@@ -1421,27 +1416,27 @@ export class CommentsService {
   }
 
   async toEntityList(
-    comments: EntityList<CommentEntity>
+    comments: EntityList<CommentEntity>,
   ): Promise<EntityList<CommentWithRepliesAndReferenceDto>> {
     const commentsWithReplies = await Promise.all(
       comments.entities.map(
         async (comment) =>
-          await this.toCommentWithRepliesAndReferenceDto(comment)
-      )
+          await this.toCommentWithRepliesAndReferenceDto(comment),
+      ),
     )
     return { entities: commentsWithReplies, itemCount: comments.itemCount }
   }
 
   async toCommentsByReferenceDto(
     comments: CommentEntity[],
-    reference: Reference
+    reference: Reference,
   ): Promise<CommentsByReferenceDto> {
     const dto = new CommentsByReferenceDto()
     dto.root = reference
     dto.comments = await Promise.all(
       comments.map(
-        async (comment) => await this.toCommentWithRepliesDto(comment)
-      )
+        async (comment) => await this.toCommentWithRepliesDto(comment),
+      ),
     )
     return dto
   }

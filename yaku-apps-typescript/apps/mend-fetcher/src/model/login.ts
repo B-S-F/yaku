@@ -8,6 +8,6 @@ export class Login {
     public jwtTTL: number,
     public orgName: string,
     public orgUuid: string,
-    public sessionStartTime: number
+    public sessionStartTime: number,
   ) {}
 }

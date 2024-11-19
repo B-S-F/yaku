@@ -30,7 +30,7 @@ describe('getAppAccess', () => {
 
     // Assert
     expect(octokitMock.request).toHaveBeenCalledWith(
-      `POST /app/installations/${installationId}/access_tokens`
+      `POST /app/installations/${installationId}/access_tokens`,
     )
   })
 
@@ -42,12 +42,12 @@ describe('getAppAccess', () => {
 
     // Act
     await expect(() =>
-      getAppAccess(octokitMock, installationId)
+      getAppAccess(octokitMock, installationId),
     ).rejects.toThrow('process exit')
 
     // Assert
     expect(logger.error).toHaveBeenCalledWith(
-      `Error requesting access token for app installation ${installationId}: ${error.message}`
+      `Error requesting access token for app installation ${installationId}: ${error.message}`,
     )
     expect(process.exit).toHaveBeenCalledWith(1)
   })

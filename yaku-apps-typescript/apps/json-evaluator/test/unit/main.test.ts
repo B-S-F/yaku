@@ -31,14 +31,14 @@ describe('checkEnvironmentVariables', () => {
   it('should throw an error if env variable "JSON_INPUT_FILE" is not provided', () => {
     vi.stubEnv('JSON_INPUT_FILE', '')
     expect(() => checkEnvironmentVariables()).toThrowError(
-      'Env variable "JSON_INPUT_FILE" is not provided'
+      'Env variable "JSON_INPUT_FILE" is not provided',
     )
   })
 
   it('should throw an error if env variable "JSON_CONFIG_FILE" is not provided', () => {
     vi.stubEnv('JSON_CONFIG_FILE', '')
     expect(() => checkEnvironmentVariables()).toThrowError(
-      'Env variable "JSON_CONFIG_FILE" is not provided'
+      'Env variable "JSON_CONFIG_FILE" is not provided',
     )
   })
 })
@@ -65,7 +65,7 @@ describe('main', () => {
 
     expect(spyStatus).toHaveBeenCalledWith('FAILED')
     expect(spyReason).toHaveBeenCalledWith(
-      'Env variable "JSON_INPUT_FILE" is not provided'
+      'Env variable "JSON_INPUT_FILE" is not provided',
     )
   })
 
@@ -78,7 +78,7 @@ describe('main', () => {
 
     expect(spyStatus).toHaveBeenCalledWith('FAILED')
     expect(spyReason).toHaveBeenCalledWith(
-      'Env variable "JSON_CONFIG_FILE" is not provided'
+      'Env variable "JSON_CONFIG_FILE" is not provided',
     )
   })
 

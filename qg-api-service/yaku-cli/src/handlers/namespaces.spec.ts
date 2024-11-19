@@ -42,12 +42,12 @@ describe('selectNamespace()', () => {
   it('should fail to select a namespace from an empty list', async () => {
     expect(selectNamespace([])).resolves.toBe(undefined)
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      chalk.red('No namespaces available!')
+      chalk.red('No namespaces available!'),
     )
   })
   it('should select the provided namespace', async () => {
     expect(
-      selectNamespace([{ id: Number(testNamespaceId) }] as Namespace[])
+      selectNamespace([{ id: Number(testNamespaceId) }] as Namespace[]),
     ).resolves.toBe(testNamespaceId)
   })
 })
@@ -102,11 +102,11 @@ describe('switchNamespace()', () => {
       .mockRejectedValue(Error(errorMsg))
 
     await expect(
-      switchNamespace(testApiClient, testNamespaceId)
+      switchNamespace(testApiClient, testNamespaceId),
     ).rejects.toThrow(Error('process.exit: 1'))
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Error:\n  Message:       ${errorMsg}`
+      `Error:\n  Message:       ${errorMsg}`,
     )
   })
   it('should fail to switch due to missing namespace', async () => {
@@ -120,8 +120,8 @@ describe('switchNamespace()', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       chalk.red(
-        `Namespace with id ${missingNamespace} not found. Use 'namespaces list' to see available namespaces.`
-      )
+        `Namespace with id ${missingNamespace} not found. Use 'namespaces list' to see available namespaces.`,
+      ),
     )
   })
   it('should switch to the new namespace', async () => {
@@ -133,10 +133,10 @@ describe('switchNamespace()', () => {
     await switchNamespace(testApiClient, testNamespaceId)
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Updated 'namespace' to '${testNamespaceId}' for environment '${testEnvs[0].name}'.`
+      `Updated 'namespace' to '${testNamespaceId}' for environment '${testEnvs[0].name}'.`,
     )
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Switched to namespace with id ${testNamespaceId}`
+      `Switched to namespace with id ${testNamespaceId}`,
     )
     expect(writeFileSyncSpy).toHaveBeenCalled()
   })

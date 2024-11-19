@@ -41,7 +41,7 @@ describe('Basic', () => {
   describe('Success Cases', () => {
     const options: MockServerOptions = getGitPullRequestsMockOptions(
       MOCK_SERVER_PORT,
-      200
+      200,
     )
 
     it('should fetch file from github but should return empty string, when label filter does not match pr-labels', async () => {
@@ -60,7 +60,7 @@ describe('Basic', () => {
         undefined,
         {
           env: env,
-        }
+        },
       )
 
       await verifyOutputFile(env.evidence_path, true, JSON.stringify([]))
@@ -72,7 +72,7 @@ describe('Basic', () => {
     it('git fetch response with status code 404', async () => {
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        404
+        404,
       )
 
       const authMethod: SupportedAuthMethod = 'token'
@@ -91,14 +91,14 @@ describe('Basic', () => {
         undefined,
         {
           env: env,
-        }
+        },
       )
 
       expect(mockServer.getNumberOfRequests()).toEqual(1)
       verifyPrRequest(mockServer, requestUrlPullRequests, authMethod)
       await verifyOutputFile(env.evidence_path, false)
       expect(result.stdout).contain(
-        '{"status":"FAILED","reason":"Repository not found. Status code: 404"}'
+        '{"status":"FAILED","reason":"Repository not found. Status code: 404"}',
       )
       expect(result.exitCode).to.equal(0)
     })
@@ -116,7 +116,7 @@ describe('Basic', () => {
         }
         const options: MockServerOptions = getGitPullRequestsMockOptions(
           MOCK_SERVER_PORT,
-          statusCode
+          statusCode,
         )
         mockServer = new MockServer(options)
 
@@ -125,17 +125,17 @@ describe('Basic', () => {
           undefined,
           {
             env: env,
-          }
+          },
         )
 
         expect(mockServer.getNumberOfRequests()).toEqual(1)
         verifyPrRequest(mockServer, requestUrlPullRequests, authMethod)
         await verifyOutputFile(env.evidence_path, false)
         expect(result.stdout).contain(
-          `{"status":"FAILED","reason":"Could not access the required repository. Status code: ${statusCode}"}`
+          `{"status":"FAILED","reason":"Could not access the required repository. Status code: ${statusCode}"}`,
         )
         expect(result.exitCode).to.equal(0)
-      }
+      },
     )
 
     it(`git fetch response with status code 500 (other than 2xx and 4xx)`, async () => {
@@ -149,7 +149,7 @@ describe('Basic', () => {
       }
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        500
+        500,
       )
       mockServer = new MockServer(options)
 
@@ -158,14 +158,14 @@ describe('Basic', () => {
         undefined,
         {
           env: env,
-        }
+        },
       )
 
       expect(mockServer.getNumberOfRequests()).toEqual(1)
       verifyPrRequest(mockServer, requestUrlPullRequests, authMethod)
       await verifyOutputFile(env.evidence_path, false)
       expect(result.stderr).contain(
-        'Error: Could not fetch data from git repository. Status code: 500'
+        'Error: Could not fetch data from git repository. Status code: 500',
       )
       expect(result.exitCode).to.equal(1)
     })
@@ -173,7 +173,7 @@ describe('Basic', () => {
     it('git fetcher config yaml has invalid structure', async () => {
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        400
+        400,
       )
 
       const env = {
@@ -191,7 +191,7 @@ describe('Basic', () => {
         gitFetcherExecutable,
         env,
         '{"status":"FAILED","reason":"Validation error: Required at \\"resource\\""}',
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })
@@ -199,7 +199,7 @@ describe('Basic', () => {
     it('git fetcher config yaml has invalid values', async () => {
       const options: MockServerOptions = getGitPullRequestsMockOptions(
         MOCK_SERVER_PORT,
-        400
+        400,
       )
 
       const env = {
@@ -217,7 +217,7 @@ describe('Basic', () => {
         gitFetcherExecutable,
         env,
         "{\"status\":\"FAILED\",\"reason\":\"Validation error: String must contain at least 1 character(s) at \\\"repo\\\"; Invalid enum value. Expected 'pull-request' | 'pull-requests' | 'pr' | 'prs' | 'pullrequest' | 'pullrequests' | 'pull' | 'pulls' | 'branches' | 'tags' | 'metadata-and-diff', received '  ' at \\\"resource\\\"\"}",
-        'expected'
+        'expected',
       )
       expect(mockServer.getNumberOfRequests()).toEqual(0)
     })

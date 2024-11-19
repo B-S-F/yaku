@@ -32,8 +32,8 @@ describe('info()', () => {
           serviceVersion: '1.0',
         },
         null,
-        2
-      )
+        2,
+      ),
     )
   })
   it('should call ApiClient.getServiceInfo() and present the value of the only specified field', async () => {

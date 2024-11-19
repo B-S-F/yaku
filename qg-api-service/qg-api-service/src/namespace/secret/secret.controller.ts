@@ -115,7 +115,7 @@ const patchSchema = z
     (value) => Boolean(value.description?.trim() || value.secret?.trim()),
     {
       message: `At least one of the properties 'description' or 'secret' must be set.`,
-    }
+    },
   )
 
 class SecretListDto extends PaginatedData {
@@ -148,7 +148,7 @@ class SecretsQueryOptions extends PaginationQueryOptions {
 export class SecretController {
   constructor(
     @Inject(SecretService) readonly service: SecretService,
-    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   @Get()
@@ -164,7 +164,7 @@ export class SecretController {
   async getSecrets(
     @Param('namespaceId') namespaceId: number,
     @Query() queryOptions: SecretsQueryOptions,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<SecretListDto> {
     validateId(namespaceId)
 
@@ -172,7 +172,7 @@ export class SecretController {
       queryOptions,
       queryOptionsSchema.strict(),
       allowedSortProperties,
-      'id'
+      'id',
     )
     const requestUrl = this.urlHandler.getHandler(response)
 
@@ -183,7 +183,7 @@ export class SecretController {
       listQueryOptions,
       requestUrl,
       rawData.itemCount,
-      data
+      data,
     )
   }
 
@@ -201,7 +201,7 @@ export class SecretController {
   async create(
     @Param('namespaceId') namespaceId: number,
     @Body() secretDto: SecretPostDto,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
   ): Promise<SecretMetadataDto> {
     validateBody(secretDto, postSchema)
     validateId(namespaceId)
@@ -210,11 +210,11 @@ export class SecretController {
       namespaceId,
       secretDto.name.trim(),
       secretDto.description?.trim(),
-      secretDto.secret.trim()
+      secretDto.secret.trim(),
     )
     res.header(
       'Location',
-      `${res.req.protocol}://${res.req.headers.host}${res.req.url}/${newSecret.name}`
+      `${res.req.protocol}://${res.req.headers.host}${res.req.url}/${newSecret.name}`,
     )
     return toOutputDto(newSecret)
   }
@@ -236,7 +236,7 @@ export class SecretController {
   async update(
     @Param('namespaceId') namespaceId: number,
     @Param('name') name: string,
-    @Body() secretDto: SecretPatchDto
+    @Body() secretDto: SecretPatchDto,
   ): Promise<SecretMetadataDto> {
     validateName(name)
     validateBody(secretDto, patchSchema)
@@ -247,8 +247,8 @@ export class SecretController {
         namespaceId,
         name,
         secretDto.description,
-        secretDto.secret?.trim()
-      )
+        secretDto.secret?.trim(),
+      ),
     )
   }
 
@@ -263,7 +263,7 @@ export class SecretController {
   @ApiOkResponse({ description: 'Secret deleted' })
   async delete(
     @Param('namespaceId') namespaceId: number,
-    @Param('name') name: string
+    @Param('name') name: string,
   ): Promise<void> {
     validateName(name)
     validateId(namespaceId)

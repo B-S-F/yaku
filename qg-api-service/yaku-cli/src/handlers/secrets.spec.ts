@@ -80,7 +80,7 @@ describe('createSecret()', () => {
       testNamespaceId,
       testSecretName,
       'description',
-      'secret'
+      'secret',
     )
 
     expect(createSecretSpy).toHaveBeenCalled()
@@ -101,7 +101,7 @@ describe('updateSecret()', () => {
       testNamespaceId,
       testSecretName,
       'description',
-      'secret'
+      'secret',
     )
 
     expect(updateSecretSpy).toHaveBeenCalled()
@@ -153,7 +153,7 @@ describe('deleteSecret()', () => {
       .mockResolvedValue([])
 
     await expect(
-      deleteSecret(testApiClient, testNamespaceId, testSecretName, {})
+      deleteSecret(testApiClient, testNamespaceId, testSecretName, {}),
     ).rejects.toThrow(Error(`Secret ${testSecretName} does not exist`))
 
     expect(deleteSecretSpy).not.toHaveBeenCalled()

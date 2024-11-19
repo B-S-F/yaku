@@ -12,7 +12,7 @@ export const getGREENStatusFixture = async (
   options: {
     org: string
     project: string
-  }
+  },
 ): Promise<MockServerOptions> => {
   return {
     port: port,

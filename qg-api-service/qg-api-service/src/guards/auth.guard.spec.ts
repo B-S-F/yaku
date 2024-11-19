@@ -57,7 +57,7 @@ describe('CoreAuthGuard', () => {
     keyCloakAuthGuard =
       module.get<Mutable<KeyCloakAuthGuard>>(KeyCloakAuthGuard)
     longRunningTokenAuthGuard = module.get<Mutable<LongRunningTokenAuthGuard>>(
-      LongRunningTokenAuthGuard
+      LongRunningTokenAuthGuard,
     )
   })
 
@@ -107,7 +107,7 @@ describe('CoreAuthGuard', () => {
       .mockRejectedValue(new Error('test'))
 
     await expect(coreGuard.canActivate(context)).rejects.toThrowError(
-      'Unauthorized'
+      'Unauthorized',
     )
 
     expect(keyCloakAuthGuardSpy).toHaveBeenCalledWith(context)
@@ -119,7 +119,7 @@ describe('CoreAuthGuard', () => {
       .mockRejectedValue(new Error('test'))
 
     await expect(coreGuard.canActivate(context)).rejects.toThrowError(
-      'Unauthorized'
+      'Unauthorized',
     )
 
     expect(longRunningTokenAuthGuardSpy).toHaveBeenCalledWith(context)

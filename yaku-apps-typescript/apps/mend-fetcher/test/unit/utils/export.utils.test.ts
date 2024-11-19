@@ -27,7 +27,7 @@ describe('export.utils', () => {
     expect(fs_sync.mkdirSync).toHaveBeenCalled()
     expect(fs.writeFile).toHaveBeenCalledWith(
       '/tmp/content.json',
-      JSON.stringify(content)
+      JSON.stringify(content),
     )
   })
 
@@ -41,7 +41,7 @@ describe('export.utils', () => {
 
     expect(fs.writeFile).toHaveBeenCalledWith(
       '/tmp/content.json',
-      JSON.stringify(content)
+      JSON.stringify(content),
     )
   })
 })

@@ -60,7 +60,7 @@ describe('Ado Fetcher', () => {
         expect(mockServer.getNumberOfRequests()).toEqual(0)
         verifyNoOutputFileWasWritten()
       }
-    }
+    },
   )
 
   it('should fail when no work items were returned by ADO', async () => {
@@ -88,7 +88,7 @@ describe('Ado Fetcher', () => {
     expect(result.stdout).length(0)
     expect(result.stderr.length).toBeGreaterThan(0)
     expect(result.stderr[0]).toEqual(
-      'AppError [WorkItemsNotFoundError]: No work items found!'
+      'AppError [WorkItemsNotFoundError]: No work items found!',
     )
     expect(mockServer.getNumberOfRequests()).toEqual(1)
     verifyNoOutputFileWasWritten()
@@ -127,7 +127,7 @@ describe('Ado Fetcher', () => {
         ADO_CONFIG_FILE_PATH: path.join(
           __dirname,
           'fixtures',
-          'config-wiql.yaml'
+          'config-wiql.yaml',
         ),
       },
     })
@@ -140,7 +140,7 @@ describe('Ado Fetcher', () => {
     // only verify WIQL request
     const requests: ReceivedRequest[] = mockServer.getRequests(
       '/adoApiOrg/adoApiProject/_apis/wit/wiql',
-      'post'
+      'post',
     )
     expect(requests).length(1)
     expect(requests[0].headers.authorization).toEqual('Basic OnBhdA==')
@@ -164,13 +164,13 @@ describe('Ado Fetcher', () => {
     function verifyRequests(receivedRequests: ReceivedRequest[]): void {
       expect(receivedRequests).length(1)
       expect(receivedRequests[0].headers.authorization).toEqual(
-        'Basic OnBhdA=='
+        'Basic OnBhdA==',
       )
       expect(receivedRequests[0].query['api-version']).toEqual('6.0')
     }
     let requests: ReceivedRequest[] = mockServer.getRequests(
       '/adoApiOrg/adoApiProject/_apis/wit/wiql',
-      'post'
+      'post',
     )
     verifyRequests(requests)
     expect(requests[0].body).toEqual({})
@@ -180,7 +180,7 @@ describe('Ado Fetcher', () => {
     workItemIds.forEach((workItemId) => {
       requests = mockServer.getRequests(
         `/adoApiOrg/adoApiProject/_apis/wit/workitems/${workItemId}`,
-        'get'
+        'get',
       )
       verifyRequests(requests)
       expect(requests[0].query['$expand']).toEqual('relations')
@@ -189,7 +189,7 @@ describe('Ado Fetcher', () => {
     // work item 3 is requested twice
     requests = mockServer.getRequests(
       '/adoApiOrg/adoApiProject/_apis/wit/workitems/3',
-      'get'
+      'get',
     )
     expect(requests).length(2)
     expect(requests[0]).toEqual(requests[1])
@@ -206,7 +206,7 @@ describe('Ado Fetcher', () => {
       encoding: 'utf-8',
     })
     const outputFileContentAsJson: unknown = JSON.parse(
-      outputFileContentAsString
+      outputFileContentAsString,
     )
 
     expect(outputFileContentAsJson).toEqual({

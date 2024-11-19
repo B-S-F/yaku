@@ -11,11 +11,11 @@ import { ENABLE_RESULT_OVERRIDE_CONTROLLER } from '../../../../config'
 @Injectable()
 export class CheckResultOverrideAuthGuard implements CanActivate {
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     if (ENABLE_RESULT_OVERRIDE_CONTROLLER !== 'true') {
       throw new UnauthorizedException(
-        'Override endpoints are behind a feature flag. Set the env var ENABLE_RESULT_OVERRIDE_CONTROLLER to true to activate.'
+        'Override endpoints are behind a feature flag. Set the env var ENABLE_RESULT_OVERRIDE_CONTROLLER to true to activate.',
       )
     }
 

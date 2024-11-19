@@ -36,7 +36,7 @@ describe('I/O Configuration', () => {
   it('should fail if evidence_path does not exist', async () => {
     const evidencePath: string = path.join(
       defaultAdoEnvironment.evidence_path,
-      'other'
+      'other',
     )
     const result: RunProcessResult = await run(adoFetcherExecutable, [], {
       env: {
@@ -47,7 +47,7 @@ describe('I/O Configuration', () => {
     verifyError(
       result,
       `Error: evidence_path points to non-existing path ${evidencePath}`,
-      mockServer
+      mockServer,
     )
   })
 
@@ -59,7 +59,7 @@ describe('I/O Configuration', () => {
     verifyError(
       result,
       `AppError [EnvironmentError]: ${evidencePath} is not writable!`,
-      mockServer
+      mockServer,
     )
     fs.chmodSync(evidencePath, 0o777) // grant all access rights for cleanup
   })
@@ -74,7 +74,7 @@ describe('I/O Configuration', () => {
     verifyError(
       result,
       'AppError [EnvironmentError]: evidence_path does not point to a directory!',
-      mockServer
+      mockServer,
     )
   })
 
@@ -82,7 +82,7 @@ describe('I/O Configuration', () => {
     const configPath: string = path.join(
       __dirname,
       'fixtures',
-      'non-existent.yaml'
+      'non-existent.yaml',
     )
     const result: RunProcessResult = await run(adoFetcherExecutable, [], {
       env: {
@@ -93,7 +93,7 @@ describe('I/O Configuration', () => {
     verifyError(
       result,
       `Error: ADO_CONFIG_FILE_PATH points to non-existing path ${configPath}`,
-      mockServer
+      mockServer,
     )
   })
 
@@ -101,7 +101,7 @@ describe('I/O Configuration', () => {
     const configPath: string = path.join(
       __dirname,
       'fixtures',
-      'other-config.yaml'
+      'other-config.yaml',
     )
     fs.copyFileSync(defaultAdoEnvironment.ADO_CONFIG_FILE_PATH, configPath)
     fs.chmodSync(configPath, 0o222) // change access to write-only
@@ -114,7 +114,7 @@ describe('I/O Configuration', () => {
     verifyError(
       result,
       `AppError [EnvironmentError]: ${configPath} is not readable!`,
-      mockServer
+      mockServer,
     )
     fs.rmSync(configPath) // cleanup
   })
@@ -129,7 +129,7 @@ describe('I/O Configuration', () => {
     verifyError(
       result,
       'AppError [EnvironmentError]: ADO_CONFIG_FILE_PATH does not point to a file!',
-      mockServer
+      mockServer,
     )
   })
 
@@ -137,7 +137,7 @@ describe('I/O Configuration', () => {
     const outputFileName = 'output.json'
     const outputFilePath: string = path.join(
       defaultAdoEnvironment.evidence_path,
-      outputFileName
+      outputFileName,
     )
     fs.writeFileSync(outputFilePath, 'some data')
     expect(fs.existsSync(outputFilePath)).toEqual(true) // check precondition: output file created
@@ -150,7 +150,7 @@ describe('I/O Configuration', () => {
     verifyError(
       result,
       `AppError [EnvironmentError]: File ${outputFilePath} exists already, can't write evidence!`,
-      mockServer
+      mockServer,
     )
     fs.rmSync(outputFilePath) // cleanup
   })
@@ -170,7 +170,7 @@ describe('I/O Configuration', () => {
     verifyError(
       result,
       'Error: ADO fetcher can only establish https-secured connections',
-      mockServer
+      mockServer,
     )
   })
 
@@ -184,7 +184,7 @@ describe('I/O Configuration', () => {
     verifyError(
       result,
       'AppError [EnvironmentError]: Environment variable NODE_TLS_REJECT_UNAUTHORIZED must not be set to 0 for security reasons',
-      mockServer
+      mockServer,
     )
   })
 })

@@ -169,7 +169,7 @@ describe('Set config', () => {
     config.files = []
 
     expect(() =>
-      newWorkflow().setConfigFiles({ 'otherConfig.yaml': 'bla' })
+      newWorkflow().setConfigFiles({ 'otherConfig.yaml': 'bla' }),
     ).toThrow()
   })
 
@@ -178,7 +178,7 @@ describe('Set config', () => {
       newWorkflow().setConfigFiles({
         'qg-config.yaml':
           'header:\n  name: Test\n  version: "1.1"\nmetadata:\n  version: "1.0"\n',
-      })
+      }),
     ).toThrow()
   })
 })
@@ -203,12 +203,12 @@ describe('Set cloud type', () => {
       true,
       proxy,
       noProxy,
-      'secretName'
+      'secretName',
     )
 
     expect(creator['workflow']).not.toEqual(baseWorkflow)
     expect(creator['workflow'].Workflow.spec.imagePullSecrets[0].name).toBe(
-      'secretName'
+      'secretName',
     )
     expect(creator['environments']).toEqual({ ...standardEnvs })
     expect(creator['documentedEnvs']).toEqual({ ...standardEnvs })
@@ -291,7 +291,7 @@ describe('Set external environment variables', () => {
       } else {
         expect(creator['configs']['.vars']).toBeUndefined()
       }
-    }
+    },
   )
 
   it('should handle multiline variable content right', () => {
@@ -328,7 +328,7 @@ describe('Add some version dependent stuff', () => {
       const creator = prepareWorkflow(singleCheck).addExecutionInformation(
         'workflow-image',
         { v1: 'latest', v2: 'latest' },
-        'Never'
+        'Never',
       )
 
       const workflow = creator['workflow']
@@ -340,7 +340,7 @@ describe('Add some version dependent stuff', () => {
         source: execCall,
       }
       expect(workflow.Workflow.spec.templates[0].script).toEqual(expected)
-    }
+    },
   )
 
   it.each([
@@ -369,12 +369,12 @@ describe('Add some version dependent stuff', () => {
         },
       }
       expect(
-        workflow.Workflow.spec.templates[0].outputs.artifacts
+        workflow.Workflow.spec.templates[0].outputs.artifacts,
       ).toContainEqual(expectedEv)
       expect(
-        workflow.Workflow.spec.templates[0].outputs.artifacts
+        workflow.Workflow.spec.templates[0].outputs.artifacts,
       ).toContainEqual(expectedRes)
-    }
+    },
   )
 })
 
@@ -400,9 +400,9 @@ describe('Add created envs and inputs', () => {
         expect(elem.value).toEqual(expEnv[key])
       }
       expect(
-        JSON.parse(creator['configs']['environment-variables.json'])
+        JSON.parse(creator['configs']['environment-variables.json']),
       ).toEqual(expFile)
-    }
+    },
   )
 
   it.each([
@@ -433,7 +433,7 @@ describe('Add created envs and inputs', () => {
         expect(entry.s3.key).toEqual(path.join(storagePath, name))
         expect(entry.name).toBeTruthy()
       }
-    }
+    },
   )
 })
 

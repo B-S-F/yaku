@@ -34,7 +34,7 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 
 const operationEnum = Object.values(SubscriptionOperation) as [
   string,
-  ...string[]
+  ...string[],
 ]
 
 const postSchema = z
@@ -64,7 +64,7 @@ export class SubscriptionController {
 
   constructor(
     @Inject(SubscriptionService)
-    private readonly subscriptionService: SubscriptionService
+    private readonly subscriptionService: SubscriptionService,
   ) {}
 
   @Post('/manage')
@@ -78,7 +78,7 @@ export class SubscriptionController {
   @ApiBody({ type: SubscriptionPostDto })
   async manageSubscription(
     @Body() body: SubscriptionPostDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<boolean> {
     const user: KeyCloakUser = request.user as KeyCloakUser
     const userKeyCloakSub = user.kc_sub
@@ -89,13 +89,13 @@ export class SubscriptionController {
       if (body.operation === SubscriptionOperation.subscribe) {
         return await this.subscriptionService.createSubscription(
           userKeyCloakSub,
-          body.releaseId
+          body.releaseId,
         )
       }
       if (body.operation === SubscriptionOperation.unsubscribe) {
         return await this.subscriptionService.deleteSubscription(
           userKeyCloakSub,
-          body.releaseId
+          body.releaseId,
         )
       }
 
@@ -103,7 +103,7 @@ export class SubscriptionController {
     } catch (err) {
       const keyword = body.operation == 'subscribe' ? 'to' : 'from'
       this.logger.error(
-        `Could not ${body.operation} the user with id: ${userKeyCloakSub} ${keyword} the release with id: ${body.releaseId} due to ${err}`
+        `Could not ${body.operation} the user with id: ${userKeyCloakSub} ${keyword} the release with id: ${body.releaseId} due to ${err}`,
       )
       throw err
     }
@@ -114,13 +114,13 @@ export class SubscriptionController {
   @ApiParam({ name: 'releaseId', description: 'releaseId' })
   async getSubscriptionStatus(
     @Param('userId') userId: string,
-    @Param('releaseId') releaseId: number
+    @Param('releaseId') releaseId: number,
   ): Promise<SubscriptionDto> {
     try {
       return this.subscriptionService.getSubscriptionStatus(userId, releaseId)
     } catch (err) {
       this.logger.error(
-        `Coult not get subscription of the user with id: ${userId} to the release with id: ${releaseId} due to ${err}`
+        `Coult not get subscription of the user with id: ${userId} to the release with id: ${releaseId} due to ${err}`,
       )
       throw err
     }

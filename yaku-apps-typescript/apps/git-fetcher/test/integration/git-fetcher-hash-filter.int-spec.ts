@@ -57,7 +57,7 @@ describe('Hash Filter', () => {
       it('should filter pull requests by startHash and endHash - outputs all pull requests', async () => {
         const commitResponses = createBitbucketCommits(
           new Date('2020-02-01'),
-          new Date('2023-03-15')
+          new Date('2023-03-15'),
         )
         const options: MockServerOptions = getBitbucketResponseOptions({
           port: MOCK_SERVER_PORT,
@@ -74,7 +74,7 @@ describe('Hash Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/hash-filter/git-fetcher-config-valid-start-and-end-hash.yml`,
             },
-          }
+          },
         )
 
         expect(mockServer.getNumberOfRequests()).toEqual(3)
@@ -82,17 +82,17 @@ describe('Hash Filter', () => {
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[0].id),
-          authMethod
+          authMethod,
         )
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[1].id),
-          authMethod
+          authMethod,
         )
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify(bitBucketPrs)
+          JSON.stringify(bitBucketPrs),
         )
         expect(result.exitCode).to.equal(0)
       })
@@ -100,7 +100,7 @@ describe('Hash Filter', () => {
       it('should filter pull requests by startHash and endHash - outputs some pull requests', async () => {
         const commitResponses = createBitbucketCommits(
           new Date('2020-12-01'),
-          new Date('2022-05-31')
+          new Date('2022-05-31'),
         )
         const options: MockServerOptions = getBitbucketResponseOptions({
           port: MOCK_SERVER_PORT,
@@ -117,7 +117,7 @@ describe('Hash Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/hash-filter/git-fetcher-config-valid-start-and-end-hash.yml`,
             },
-          }
+          },
         )
 
         expect(mockServer.getNumberOfRequests()).toEqual(3)
@@ -125,17 +125,17 @@ describe('Hash Filter', () => {
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[0].id),
-          authMethod
+          authMethod,
         )
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[1].id),
-          authMethod
+          authMethod,
         )
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify([bitBucketPrs[1], bitBucketPrs[2]])
+          JSON.stringify([bitBucketPrs[1], bitBucketPrs[2]]),
         )
         expect(result.exitCode).to.equal(0)
       })
@@ -143,7 +143,7 @@ describe('Hash Filter', () => {
       it('should filter pull requests by startHash and endHash - outputs no pull requests because endHash is earlier than the oldest pull request', async () => {
         const commitResponses = createBitbucketCommits(
           new Date('2018-12-01'),
-          new Date('2019-05-31')
+          new Date('2019-05-31'),
         )
         const options: MockServerOptions = getBitbucketResponseOptions({
           port: MOCK_SERVER_PORT,
@@ -160,7 +160,7 @@ describe('Hash Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/hash-filter/git-fetcher-config-valid-start-and-end-hash.yml`,
             },
-          }
+          },
         )
 
         expect(mockServer.getNumberOfRequests()).toEqual(3)
@@ -168,12 +168,12 @@ describe('Hash Filter', () => {
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[0].id),
-          authMethod
+          authMethod,
         )
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[1].id),
-          authMethod
+          authMethod,
         )
         await verifyOutputFile(env.evidence_path, true, JSON.stringify([]))
         expect(result.exitCode).to.equal(0)
@@ -182,7 +182,7 @@ describe('Hash Filter', () => {
       it('should filter pull requests by startHash and endHash - outputs no pull requests because startHash is after the latest pull request', async () => {
         const commitResponses = createBitbucketCommits(
           new Date('2023-04-01'),
-          new Date('2023-05-31')
+          new Date('2023-05-31'),
         )
         const options: MockServerOptions = getBitbucketResponseOptions({
           port: MOCK_SERVER_PORT,
@@ -199,7 +199,7 @@ describe('Hash Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/hash-filter/git-fetcher-config-valid-start-and-end-hash.yml`,
             },
-          }
+          },
         )
 
         expect(mockServer.getNumberOfRequests()).toEqual(3)
@@ -207,12 +207,12 @@ describe('Hash Filter', () => {
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[0].id),
-          authMethod
+          authMethod,
         )
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponses[1].id),
-          authMethod
+          authMethod,
         )
         await verifyOutputFile(env.evidence_path, true, JSON.stringify([]))
         expect(result.exitCode).to.equal(0)
@@ -221,7 +221,7 @@ describe('Hash Filter', () => {
       it('should filter pull requests by startHash - outputs all pull requests', async () => {
         const commitResponse: BitbucketCommit = createBitbucketCommits(
           new Date('2020-01-01'),
-          new Date()
+          new Date(),
         )[0]
         const options: MockServerOptions = getBitbucketResponseOptions({
           port: MOCK_SERVER_PORT,
@@ -238,7 +238,7 @@ describe('Hash Filter', () => {
               ...env,
               GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/hash-filter/git-fetcher-config-valid-start-hash.yml`,
             },
-          }
+          },
         )
 
         expect(mockServer.getNumberOfRequests()).toEqual(2)
@@ -246,12 +246,12 @@ describe('Hash Filter', () => {
         verifyCommitRequest(
           mockServer,
           requestUrlCommit(commitResponse.id),
-          authMethod
+          authMethod,
         )
         await verifyOutputFile(
           env.evidence_path,
           true,
-          JSON.stringify(bitBucketPrs)
+          JSON.stringify(bitBucketPrs),
         )
         expect(result.exitCode).to.equal(0)
       })
@@ -298,14 +298,14 @@ describe('Hash Filter', () => {
             GIT_FETCHER_CONFIG_FILE_PATH: `${__dirname}/configs/hash-filter/git-fetcher-config-valid-state-and-hash.yml`,
           },
           '{"status":"FAILED","reason":"Could not retrieve the commit hash c11631a0ddccb9579feae43b949b53c369528f43 (status 404)"}',
-          'expected'
+          'expected',
         )
         expect(mockServer.getNumberOfRequests()).toEqual(2)
         await verifyPrRequest(
           mockServer,
           PULL_REQUESTS_ENDPOINT,
           authMethod,
-          'MERGED'
+          'MERGED',
         )
       })
     })

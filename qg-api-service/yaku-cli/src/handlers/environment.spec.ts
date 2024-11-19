@@ -60,8 +60,8 @@ describe('loadEnvironments()', () => {
     // the warning message must be specific to automatic creation
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       chalk.yellow(
-        `Creating the initial environment configuration file '${testEnvFilePath}'..`
-      )
+        `Creating the initial environment configuration file '${testEnvFilePath}'..`,
+      ),
     )
     expect(envs.length).toBe(0)
     expect(existsSyncSpy).toHaveBeenCalledWith(testEnvFilePath)
@@ -100,8 +100,8 @@ describe('loadEnvironments()', () => {
     // the error message must be specific to permissions
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       chalk.red(
-        `Failed to access '${testEnvFilePath}': Error: EACCES: permission denied, open '${testEnvFilePath}'`
-      )
+        `Failed to access '${testEnvFilePath}': Error: EACCES: permission denied, open '${testEnvFilePath}'`,
+      ),
     )
     expect(existsSyncSpy).toHaveBeenCalledWith(testEnvFilePath)
     expect(readFileSyncSpy).toHaveBeenCalled()
@@ -127,8 +127,8 @@ describe('loadEnvironments()', () => {
     // the error message must be specific to permissions
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       chalk.red(
-        `Failed to parse '${testEnvFilePath}' as JSON: SyntaxError: Unexpected token ! in JSON at position 0`
-      )
+        `Failed to parse '${testEnvFilePath}' as JSON: SyntaxError: Unexpected token ! in JSON at position 0`,
+      ),
     )
     expect(existsSyncSpy).toHaveBeenCalledWith(testEnvFilePath)
     expect(readFileSyncSpy).toHaveBeenCalled()
@@ -176,7 +176,7 @@ describe('createEnvironment()', () => {
       JSON.stringify([newEnv], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
   })
 
@@ -202,7 +202,7 @@ describe('createEnvironment()', () => {
       JSON.stringify([newEnv], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
   })
 
@@ -238,7 +238,7 @@ describe('createEnvironment()', () => {
       JSON.stringify([existingEnv, newEnv], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
   })
 })
@@ -281,7 +281,7 @@ describe('updateEnvironment()', () => {
 
     // the error message must be specific to update
     expect(consoleSpy).toHaveBeenCalledWith(
-      chalk.red(`Environment '${toUpdate.name}' not found!`)
+      chalk.red(`Environment '${toUpdate.name}' not found!`),
     )
 
     expect(readFileSyncSpy).toHaveBeenCalled()
@@ -321,7 +321,7 @@ describe('updateEnvironment()', () => {
       JSON.stringify([toUpdate], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
   })
 })
@@ -379,7 +379,7 @@ describe('loadCurrentEnvironment()', () => {
     }
 
     expect(message).toBe(
-      'No current environment found. Please login with "yaku login" or switch to an existing environment with "yaku environments switch <envName>"'
+      'No current environment found. Please login with "yaku login" or switch to an existing environment with "yaku environments switch <envName>"',
     )
     expect(existsSyncSpy).toHaveBeenCalledWith(testEnvFilePath)
     expect(readFileSyncSpy).toHaveBeenCalled()
@@ -409,7 +409,7 @@ describe('loadCurrentEnvironment()', () => {
       }
     }
     expect(message).toBe(
-      `Environment '${existing.name}' is incomplete. Please login again with "yaku login ${existing.name} or create a new environment with "yaku environments create"`
+      `Environment '${existing.name}' is incomplete. Please login again with "yaku login ${existing.name} or create a new environment with "yaku environments create"`,
     )
     expect(existsSyncSpy).toHaveBeenCalledWith(testEnvFilePath)
     expect(readFileSyncSpy).toHaveBeenCalled()
@@ -427,13 +427,13 @@ describe('updateEnvironmentByKey()', () => {
       options?:
         | { encoding?: null | undefined; flag?: string | undefined }
         | null
-        | undefined
+        | undefined,
     ): Buffer
     (
       path: fs.PathOrFileDescriptor,
       options:
         | BufferEncoding
-        | { encoding: BufferEncoding; flag?: string | undefined }
+        | { encoding: BufferEncoding; flag?: string | undefined },
     ): string
     (
       path: fs.PathOrFileDescriptor,
@@ -441,7 +441,7 @@ describe('updateEnvironmentByKey()', () => {
         | BufferEncoding
         | (fs.ObjectEncodingOptions & { flag?: string | undefined })
         | null
-        | undefined
+        | undefined,
     ): string | Buffer
   }>
   let existing: Environment
@@ -483,8 +483,8 @@ describe('updateEnvironmentByKey()', () => {
     // the error message must be specific to update
     expect(consoleSpy).toHaveBeenCalledWith(
       chalk.red(
-        `Invalid key 'expiresAt'. Key must be either 'name', 'url', 'token', or 'namespace'.`
-      )
+        `Invalid key 'expiresAt'. Key must be either 'name', 'url', 'token', or 'namespace'.`,
+      ),
     )
 
     expect(existsSyncSpy).not.toHaveBeenCalled()
@@ -496,7 +496,7 @@ describe('updateEnvironmentByKey()', () => {
 
     // the error message must be specific to update
     expect(consoleSpy).toHaveBeenCalledWith(
-      chalk.red(`Environment 'dummy2' not found!`)
+      chalk.red(`Environment 'dummy2' not found!`),
     )
 
     expect(existsSyncSpy).toHaveBeenCalled()
@@ -514,7 +514,7 @@ describe('updateEnvironmentByKey()', () => {
       JSON.stringify([existing], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
   })
 
@@ -527,7 +527,7 @@ describe('updateEnvironmentByKey()', () => {
       JSON.stringify([existing], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
   })
 
@@ -540,7 +540,7 @@ describe('updateEnvironmentByKey()', () => {
       JSON.stringify([existing], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
   })
 
@@ -553,7 +553,7 @@ describe('updateEnvironmentByKey()', () => {
       JSON.stringify([existing], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
   })
 
@@ -569,7 +569,7 @@ describe('updateEnvironmentByKey()', () => {
       JSON.stringify([existing], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
 
     fun.mockReset()
@@ -587,7 +587,7 @@ describe('updateEnvironmentByKey()', () => {
       JSON.stringify([existing], undefined, 2),
       {
         mode: 0o600,
-      }
+      },
     )
 
     fun.mockReset()
@@ -651,11 +651,11 @@ describe('selectEnvironment()', () => {
     })
 
     await expect(selectEnvironment([])).rejects.toThrow(
-      Error('process.exit: 1')
+      Error('process.exit: 1'),
     )
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      chalk.red('No environments available')
+      chalk.red('No environments available'),
     )
   })
 })
@@ -715,17 +715,17 @@ describe('deleteEnvironment()', () => {
 
     expect(consoleErrorSpy).not.toHaveBeenCalled()
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `The current environment was changed from '${existing.name}' to 'default'.`
+      `The current environment was changed from '${existing.name}' to 'default'.`,
     )
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Environment '${existing.name}' was deleted.`
+      `Environment '${existing.name}' was deleted.`,
     )
   })
   it('should not delete the default envronment', async () => {
     await deleteEnvironment('default')
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      chalk.red('The default environment cannot be deleted.')
+      chalk.red('The default environment cannot be deleted.'),
     )
   })
   it('should not delete the envronment that cannot be found', async () => {
@@ -736,7 +736,7 @@ describe('deleteEnvironment()', () => {
     await deleteEnvironment('')
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      chalk.red(`Environment '${missingEnvName}' not found!`)
+      chalk.red(`Environment '${missingEnvName}' not found!`),
     )
   })
 })
@@ -778,8 +778,8 @@ describe('getEnvironmentsFilePath()', () => {
       getEnvironmentsFilePath()
     }).toThrow(
       Error(
-        '$HOME is not set, cannot find the environment definitions, please ensure the variable to point to your users home folder'
-      )
+        '$HOME is not set, cannot find the environment definitions, please ensure the variable to point to your users home folder',
+      ),
     )
   })
 })
@@ -860,7 +860,7 @@ describe('showEnvironmentsTable()', () => {
 
     expect(writeFileSyncSpy).toHaveBeenCalled()
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      chalk.yellow('Environments updated successfully')
+      chalk.yellow('Environments updated successfully'),
     )
   })
   it('should not save the changes in the table', async () => {
@@ -874,12 +874,12 @@ describe('showEnvironmentsTable()', () => {
   })
   it('should fail to present an empty table', async () => {
     await expect(showEnvironmentsTable([])).rejects.toThrow(
-      Error('process.exit: 1')
+      Error('process.exit: 1'),
     )
 
     expect(writeFileSyncSpy).not.toHaveBeenCalled()
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      chalk.red('No environments available')
+      chalk.red('No environments available'),
     )
   })
 })
@@ -910,11 +910,11 @@ describe('editEnvironments()', () => {
     await editEnvironments()
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Opening '${testEnvHome}/.yakurc' in ${process.env.EDITOR} external editor..`
+      `Opening '${testEnvHome}/.yakurc' in ${process.env.EDITOR} external editor..`,
     )
     expect(spawnSpy).toHaveBeenCalledWith(
       `${testEnvHome}/.yakurc`,
-      process.env.EDITOR
+      process.env.EDITOR,
     )
   })
   it('should open file in default editor', async () => {
@@ -928,7 +928,7 @@ describe('editEnvironments()', () => {
     await editEnvironments()
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `$EDITOR environment variable is not set, opening '${testEnvHome}/.yakurc' in default external editor..`
+      `$EDITOR environment variable is not set, opening '${testEnvHome}/.yakurc' in default external editor..`,
     )
     expect(spawnSpy).toHaveBeenCalledWith(`${testEnvHome}/.yakurc`, undefined)
   })

@@ -38,7 +38,7 @@ import {
         KEYCLOAK_CLIENT_SECRET.trim(),
         KEYCLOAK_ADMIN_URL.trim(),
         KEYCLOAK_WELL_KNOWN_CONFIG.trim(),
-        KEYCLOAK_ENABLE_PROXY_TUNNEL.trim() === 'true'
+        KEYCLOAK_ENABLE_PROXY_TUNNEL.trim() === 'true',
       ),
     },
     KeyCloakService,

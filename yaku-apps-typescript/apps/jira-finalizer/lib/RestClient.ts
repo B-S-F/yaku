@@ -6,7 +6,7 @@ export interface RestClient {
   postFormData(
     path: string,
     body: FormData,
-    additionalHeaders?: any
+    additionalHeaders?: any,
   ): Promise<any>
   get(path: string): Promise<any>
   put(path: string, body: any): Promise<any>
@@ -16,7 +16,7 @@ export interface RestClient {
 export class RestClientImpl implements RestClient {
   constructor(
     private readonly baseUrl: string,
-    private readonly basicAuth: string
+    private readonly basicAuth: string,
   ) {}
 
   async post(path: string, body: any, additionalHeaders?: any): Promise<any> {
@@ -34,7 +34,7 @@ export class RestClientImpl implements RestClient {
       throw new Error(
         `Failed to create ${
           this.baseUrl
-        }/${path} with response ${JSON.stringify(res, null, 2)}`
+        }/${path} with response ${JSON.stringify(res, null, 2)}`,
       )
     }
     return response.json()
@@ -43,7 +43,7 @@ export class RestClientImpl implements RestClient {
   async postFormData(
     path: string,
     body: FormData,
-    additionalHeaders?: any
+    additionalHeaders?: any,
   ): Promise<any> {
     const response = await fetch(`${this.baseUrl}/${path}`, {
       method: 'POST',
@@ -58,7 +58,7 @@ export class RestClientImpl implements RestClient {
       throw new Error(
         `Failed to create ${
           this.baseUrl
-        }/${path} with response ${JSON.stringify(res, null, 2)}`
+        }/${path} with response ${JSON.stringify(res, null, 2)}`,
       )
     }
     return response.json()
@@ -79,8 +79,8 @@ export class RestClientImpl implements RestClient {
         `Failed to get ${requestUrl} with response ${JSON.stringify(
           res,
           null,
-          2
-        )}`
+          2,
+        )}`,
       )
     }
     return response.json()
@@ -100,7 +100,7 @@ export class RestClientImpl implements RestClient {
       throw new Error(
         `Failed to update ${
           this.baseUrl
-        }/${path} with response ${JSON.stringify(res)}`
+        }/${path} with response ${JSON.stringify(res)}`,
       )
     }
     return response.json()
@@ -117,7 +117,7 @@ export class RestClientImpl implements RestClient {
     if (!response.ok) {
       const res = await response.json()
       throw new Error(
-        `Failed to delete ${path} with response ${JSON.stringify(res, null, 2)}`
+        `Failed to delete ${path} with response ${JSON.stringify(res, null, 2)}`,
       )
     }
     return response.json()

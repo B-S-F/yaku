@@ -29,7 +29,7 @@ const ConfigSchema = z
           value.comment === undefined ||
           value.text === undefined ||
           value.comment === value.text,
-        { message: 'Use only one of the properties "text" or "comment"' }
+        { message: 'Use only one of the properties "text" or "comment"' },
       ),
   })
   .refine(checker, {
@@ -51,7 +51,7 @@ export class ExcelTransformerService {
   public transformExcelToQuestionnaireData(
     projectName: string,
     excelFile: Buffer,
-    configFile: Buffer
+    configFile: Buffer,
   ): Questionnaire {
     const config = this.readConfig(configFile)
     const excelData = this.readExcelFile(excelFile, config.sheet)
@@ -62,7 +62,7 @@ export class ExcelTransformerService {
 
   private createHierarchicalStructure(
     data: QuestionnaireItem[],
-    project: string
+    project: string,
   ): Questionnaire {
     const chapters: { [id: string]: Chapter } = {}
     for (const item of data) {
@@ -86,7 +86,7 @@ export class ExcelTransformerService {
   }
 
   private validateAndCompleteData(
-    data: QuestionnaireItem[]
+    data: QuestionnaireItem[],
   ): QuestionnaireItem[] {
     const chapterIdTitleCache: { [id: string]: string } = {}
     const chapterIdLastRequirementIdCache: { [id: string]: number } = {}
@@ -107,7 +107,7 @@ export class ExcelTransformerService {
           chapterIdTitleCache[item.chapterTitle] = item.chapterId
         }
       } else {
-        const chapterId = parseInt(item.chapterId)
+        const chapterId = Number.parseInt(item.chapterId)
         if (chapterId > currentMaxChapterId) {
           currentMaxChapterId = chapterId
         }
@@ -115,7 +115,7 @@ export class ExcelTransformerService {
       if (!item.requirementId) {
         if (item.chapterId in chapterIdLastRequirementIdCache) {
           item.requirementId = String(
-            chapterIdLastRequirementIdCache[item.chapterId] + 1
+            chapterIdLastRequirementIdCache[item.chapterId] + 1,
           )
           chapterIdLastRequirementIdCache[item.chapterId]++
         } else {
@@ -129,19 +129,19 @@ export class ExcelTransformerService {
 
   private extractRelevantInformation(
     data: any[][],
-    config: Config
+    config: Config,
   ): QuestionnaireItem[] {
     const chapterColumn = this.getIndexOfExcelColumn(config.columns.chapter)
     const idColumn = this.getIndexOfExcelColumn(config.columns.id)
     const titleColumn = this.getIndexOfExcelColumn(config.columns.title)
     const commentColumn = this.getIndexOfExcelColumn(
-      config.columns.comment ?? config.columns.text
+      config.columns.comment ?? config.columns.text,
     )
     const filterColumn = this.getIndexOfExcelColumn(config.columns.filter)
 
     if (chapterColumn < 0 || idColumn < 0 || titleColumn < 0) {
       throw new BadRequestException(
-        'Chapter column, requirement id column and requirement title column have to be defined in config file'
+        'Chapter column, requirement id column and requirement title column have to be defined in config file',
       )
     }
 
@@ -153,7 +153,7 @@ export class ExcelTransformerService {
       const row = data[rowId]
       if (filterColumn < 0 || row[filterColumn]?.toString().trim()) {
         const { chapterId, chapterTitle } = this.extractChapterInformation(
-          row[chapterColumn]
+          row[chapterColumn],
         )
         const requirementId = this.cleanString(row[idColumn])
         const requirementTitle = this.cleanString(row[titleColumn])
@@ -230,11 +230,11 @@ export class ExcelTransformerService {
       }
     } catch (err) {
       throw new BadRequestException(
-        `Error during excel file parsing: ${err.message}`
+        `Error during excel file parsing: ${err.message}`,
       )
     }
     throw new BadRequestException(
-      `Excel file does not contain sheet ${sheetName}`
+      `Excel file does not contain sheet ${sheetName}`,
     )
   }
 
@@ -246,7 +246,7 @@ export class ExcelTransformerService {
       const errorMessage =
         err instanceof ZodError ? fromZodError(err) : err.message
       throw new BadRequestException(
-        `Could not parse config data, error was ${errorMessage}`
+        `Could not parse config data, error was ${errorMessage}`,
       )
     }
   }
