@@ -34,7 +34,7 @@
           "level": "off"
         },
         "noThisInStatic": {
-          "level": "off"
+          "level": "error"
         },
         "noUselessCatch": {
           "level": "off"
