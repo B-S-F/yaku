@@ -8,7 +8,15 @@ export default defineConfig({
     reporters: ['junit', 'default'],
     outputFile: 'results/integration-test-results.xml',
     maxConcurrency: 1,
-    maxThreads: 1,
-    minThreads: 1,
+    // maxThreads: 1,
+    // minThreads: 1,
+    // threads: true,
+    pool: 'threads',
+    poolOptions: {
+      threads: {
+        maxThreads: 1,
+        minThreads: 1,
+      },
+    },
   },
 })
