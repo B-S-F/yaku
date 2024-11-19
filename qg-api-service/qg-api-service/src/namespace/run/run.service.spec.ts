@@ -117,6 +117,7 @@ describe('RunService', () => {
           provide: getRepositoryToken(Run),
           useValue: {
             createQueryBuilder: jest.fn(),
+            findOne: jest.fn(),
             manager: {
               connection: {
                 createQueryRunner: jest.fn(() => queryRunner),
@@ -364,14 +365,12 @@ describe('RunService', () => {
 
   describe('Get single run', () => {
     it('should return a completed run', async () => {
-      const repoSpy = jest
-        .spyOn(queryRunner.manager, 'findOne')
-        .mockResolvedValue(run)
+      const repoSpy = jest.spyOn(repository, 'findOne').mockResolvedValue(run)
 
       const retrieved = await service.get(testingNamespaceId, run.id)
 
       expect(retrieved).toEqual(run)
-      expect(repoSpy).toHaveBeenCalledWith(Run, {
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: run.id },
         relations: ['config', 'namespace'],
       })
@@ -379,15 +378,13 @@ describe('RunService', () => {
     })
 
     it('should throw NotFound if run is not available', async () => {
-      const repoSpy = jest
-        .spyOn(queryRunner.manager, 'findOne')
-        .mockResolvedValue(null)
+      const repoSpy = jest.spyOn(repository, 'findOne').mockResolvedValue(null)
 
       await expect(service.get(testingNamespaceId, 666)).rejects.toThrow(
         NotFoundException,
       )
 
-      expect(repoSpy).toHaveBeenCalledWith(Run, {
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: 666 },
         relations: ['config', 'namespace'],
       })
@@ -395,9 +392,7 @@ describe('RunService', () => {
     })
 
     it('should check for run if the run is still running', async () => {
-      const repoSpy = jest
-        .spyOn(queryRunner.manager, 'findOne')
-        .mockResolvedValue(run2)
+      const repoSpy = jest.spyOn(repository, 'findOne').mockResolvedValue(run2)
       const mgrSpy = jest
         .spyOn(workflowManager, 'updateRunIfFinished')
         .mockResolvedValue(run2)
@@ -405,7 +400,7 @@ describe('RunService', () => {
       const retrieved = await service.get(testingNamespaceId, run2.id)
 
       expect(retrieved).toEqual(run2)
-      expect(repoSpy).toHaveBeenCalledWith(Run, {
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: run2.id },
         relations: ['config', 'namespace'],
       })
@@ -413,9 +408,7 @@ describe('RunService', () => {
     })
 
     it('should handle an error in checking a running run by returning the retrieved database object', async () => {
-      const repoSpy = jest
-        .spyOn(queryRunner.manager, 'findOne')
-        .mockResolvedValue(run2)
+      const repoSpy = jest.spyOn(repository, 'findOne').mockResolvedValue(run2)
       const mgrSpy = jest
         .spyOn(workflowManager, 'updateRunIfFinished')
         .mockRejectedValue(new Error('Sad but failed'))
@@ -423,7 +416,7 @@ describe('RunService', () => {
       const retrieved = await service.get(testingNamespaceId, run2.id)
 
       expect(retrieved).toEqual(run2)
-      expect(repoSpy).toHaveBeenCalledWith(Run, {
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: run2.id },
         relations: ['config', 'namespace'],
       })
@@ -431,9 +424,7 @@ describe('RunService', () => {
     })
 
     it('should return after 2 seconds when updateRunIfFinished takes to long without update', async () => {
-      const repoSpy = jest
-        .spyOn(queryRunner.manager, 'findOne')
-        .mockResolvedValue(run2)
+      const repoSpy = jest.spyOn(repository, 'findOne').mockResolvedValue(run2)
 
       let timeout: any
       const workPromise: (run: Run) => Promise<Run> = (run2: Run) =>
@@ -451,7 +442,7 @@ describe('RunService', () => {
       const retrieved = await service.get(testingNamespaceId, run2.id)
 
       expect(retrieved).toEqual(run2)
-      expect(repoSpy).toHaveBeenCalledWith(Run, {
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: run2.id },
         relations: ['config', 'namespace'],
       })

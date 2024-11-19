@@ -128,33 +128,40 @@ export class RunService {
   }
 
   async get(namespaceId: number, runId: number): Promise<Run> {
-    const queryRunner = this.repository.manager.connection.createQueryRunner()
-    await queryRunner.connect()
-    await queryRunner.startTransaction('READ COMMITTED')
-    try {
-      let run = await this.getWithTransaction(queryRunner, namespaceId, runId)
-
-      if (!run) {
-        throw new NotFoundException(`Run with id ${runId} not found`)
-      }
-      if (run.status === RunStatus.Running) {
-        this.logger.trace({
-          msg: `Start check whether run ${namespaceId}:${runId} has been finished`,
-        })
-        run = await this.checkAndUpdateRun(run)
-        this.logger.trace({
-          msg: `End check whether run ${namespaceId}:${runId} has been finished`,
-        })
-      }
-      await queryRunner.commitTransaction()
-
-      return run
-    } catch (e) {
-      await queryRunner.rollbackTransaction()
-      throw e
-    } finally {
-      await queryRunner.release()
+    let run = await this.repository.findOne({
+      where: {
+        namespace: { id: namespaceId },
+        id: runId,
+      },
+      relations: ['config', 'namespace'],
+    })
+    if (!run) {
+      throw new NotFoundException(`Run with id ${runId} not found`)
     }
+
+    if (run.status === RunStatus.Running) {
+      const originalRun = structuredClone(run)
+      this.logger.trace({
+        msg: `Start check whether run ${namespaceId}:${runId} has been finished`,
+      })
+      try {
+        if (run.argoId && run.argoName && run.argoNamespace) {
+          run = await promiseOnTime(
+            this.workflowDispatcher.updateRunIfFinished(run),
+            2000
+          )
+        }
+      } catch (err) {
+        run = originalRun
+        this.logger.warn(
+          `Could not check workflow state for run ${run.globalId} (${run.namespace.id}:${run.id}), error was ${err}`
+        )
+      }
+      this.logger.trace({
+        msg: `End check whether run ${namespaceId}:${runId} has been finished`,
+      })
+    }
+    return run
   }
 
   async create(
