@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { GetLogger } from '@B-S-F/autopilot-utils'
 
 export const { GH_APP_ID, GH_APP_PRIVATE_KEY, GH_APP_ORG, GH_APP_REPO } =

@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 _tqdm(){
   local cur prv
   cur="${COMP_WORDS[COMP_CWORD]}"

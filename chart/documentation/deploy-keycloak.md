@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # A Guide to Deploying Keycloak Identity and Access Management Solution
 
 Yaku depends on Keycloak for the management of user authentication and authorization. Keycloak is a an open-source Identity and Access Management (IAM) solution that supports various protocols such as OpenID Connect, OAuth 2.0, and SAML. Official documentation for Keycloak can be found [here](https://www.keycloak.org/documentation.html).

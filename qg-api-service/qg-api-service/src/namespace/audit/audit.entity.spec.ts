@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { RequestUser } from '../module.utils'
 import { AuditActor } from './audit.entity'
 

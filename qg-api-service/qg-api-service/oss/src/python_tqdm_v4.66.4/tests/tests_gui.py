@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 """Test `tqdm.gui`."""
 from .tests_tqdm import importorskip
 

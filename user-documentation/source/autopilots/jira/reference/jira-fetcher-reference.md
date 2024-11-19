@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Fetcher Background Information
 
 A fetcher to get issues from Jira Tracker via the Jira Rest API. It can be configured by a [configuration file](#the-fetchers-config-file) that contains a query and other filtering criteria.

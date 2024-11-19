@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ConfigEntity } from '../configs/config.entity'
 import { ApprovalState } from './approvals/approvals.util'
 import { ReleaseEntity } from './release.entity'

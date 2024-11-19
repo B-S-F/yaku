@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import fs from 'fs'
 import { EnvironmentError } from './custom-errors.js'
 

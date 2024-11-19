@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { CreateFindingDTO } from '../dto/create-finding.dto'
 import { Run, FindingQgResult } from './interfaces/qgRunMessageInterfaces'
 import { RunOverallStatusType } from './enums/runOverallStatusType.enum'

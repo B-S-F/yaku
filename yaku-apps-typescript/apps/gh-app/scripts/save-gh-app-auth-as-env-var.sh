@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # This is an example script how to save the GitHub App authentication token as an environment variable
 # before using the GH CLI
 # Needed environment variables:

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # More commands
 
 If you want more information about the cli or any commands, you can use the `-h` or `--help` flag.

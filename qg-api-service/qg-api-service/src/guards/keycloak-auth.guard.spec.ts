@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { IsPublicAPI } from '@B-S-F/api-commons-lib'
 import { Controller, ExecutionContext } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'

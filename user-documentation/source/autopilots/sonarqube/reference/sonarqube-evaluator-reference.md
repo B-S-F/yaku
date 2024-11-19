@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Evaluator Background Information
 
 The evaluator checks the quality gate status fetched by the fetcher and returns RED if any of the gate checks doesn't have an OK status.

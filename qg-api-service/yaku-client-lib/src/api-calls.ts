@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { RestApiRequestError, executeRestCall } from './call-wrapper.js'
 
 export type FileData = {

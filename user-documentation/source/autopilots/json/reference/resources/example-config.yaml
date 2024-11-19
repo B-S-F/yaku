@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 checks:
   - name: has_category_check # Name of the check (can be any name the user wants)
     ref: $.store.book[*] # Reference to the object inside the json file (line 3 in the example json file below)

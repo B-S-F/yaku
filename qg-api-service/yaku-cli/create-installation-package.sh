@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 if [ -z "$1" ]
 then
 	echo "Please specify either a version or ask to upgrade major, minor or patch version for the created package"

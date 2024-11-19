@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Manage environments
 
 Environments have their own subset of operations, as presented with `yaku envs -h`.

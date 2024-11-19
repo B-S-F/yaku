@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { GetLogger } from '@B-S-F/autopilot-utils'
 import { Login } from '../model/login.js'

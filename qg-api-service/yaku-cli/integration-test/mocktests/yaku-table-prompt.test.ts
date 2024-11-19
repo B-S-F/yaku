@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { describe, beforeEach, it, expect } from 'vitest'
 import yakuTablePrompt from '../../src//extensions/yaku-table-prompt.js'
 import { TableColumn } from '../../src/yaku-prompts.js'

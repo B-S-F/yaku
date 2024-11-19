@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # CLI
 
 Instead of using the web interface, the {{ PNAME }} service can also be accessed from a command line application.

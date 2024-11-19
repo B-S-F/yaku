@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export async function promiseOnTime(
   promise: Promise<any>,
   timeout: number,

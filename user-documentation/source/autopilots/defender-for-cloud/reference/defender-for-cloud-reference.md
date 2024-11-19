@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Autopilot Background Information
 
 An autopilot which returns the security data from Microsoft Defender for Cloud, along with their metadata. Currently supported are alerts and security (unhealthy) recommendations.

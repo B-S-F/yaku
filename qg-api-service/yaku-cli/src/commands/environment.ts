@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Command, Option } from 'commander'
 import { login } from '../handlers/login.js'
 import { consoleErrorRed } from '../common.js'

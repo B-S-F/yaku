@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { validateId } from '@B-S-F/api-commons-lib'
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { ADMIN_ROLE, NAMESPACE_ACCESS_ROLE } from '../../guards/roles.guard'

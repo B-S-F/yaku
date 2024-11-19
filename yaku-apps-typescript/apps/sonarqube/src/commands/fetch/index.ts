@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { InitLogger } from '@B-S-F/autopilot-utils'
 import { Command } from 'commander'
 import { ConfigurationError } from './errors.js'

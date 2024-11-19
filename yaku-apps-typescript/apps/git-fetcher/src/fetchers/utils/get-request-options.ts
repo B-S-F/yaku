@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { GitServerConfig } from '../../model/git-server-config'
 
 export async function getRequestOptions(

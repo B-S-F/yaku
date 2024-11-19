@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # This script updates the qg-result.yaml files for th html-finalizer app
 
 HTML_FINALIZER_PATH=$(dirname $0)

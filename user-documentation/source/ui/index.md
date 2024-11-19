@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Web UI
 
 The Web UI is a graphical interface to {{ PNAME }} and provides a clear and

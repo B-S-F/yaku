@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Checking single properties
 
 Given the sample data set below, we want to check if the `price` of the book with the title `The Lord of the Rings` is greater than `10`.

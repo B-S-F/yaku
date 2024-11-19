@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Module } from '@nestjs/common'
 import { UserProfileController } from './user-profile.controller'
 import { LocalKeyCloakModule } from '../../keycloak/local.keycloak.module'

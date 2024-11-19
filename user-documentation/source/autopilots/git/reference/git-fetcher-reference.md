@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Fetcher Background Information
 
 A fetcher that fetches git resources data from a git server and stores it in the evidence path.

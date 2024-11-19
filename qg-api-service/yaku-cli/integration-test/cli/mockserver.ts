@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 // @ts-ignore
 import express, { Express, Request, Response } from 'express'
 import { IncomingHttpHeaders, Server } from 'http'

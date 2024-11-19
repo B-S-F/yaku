@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Controller, Get, Param, Res, StreamableFile } from '@nestjs/common'
 import {
   ApiNotFoundResponse,
@@ -15,7 +19,7 @@ import { Public } from './public-decorator'
 function completeResponseData(
   response: Response,
   filename: string,
-  content: Buffer,
+  content: Buffer
 ): StreamableFile {
   response.header('Content-Disposition', `attachment; filename="${filename}"`)
   return new StreamableFile(content)
@@ -37,13 +41,13 @@ export class OSSComplianceController {
   })
   @ApiProduces('application/octet-stream')
   async getOSSComplianceInfo(
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: Response
   ): Promise<StreamableFile> {
     const fileBuffer = await this.service.getSBOM()
     return completeResponseData(
       response,
       this.service.getSBOMFilename(),
-      fileBuffer,
+      fileBuffer
     )
   }
 }
@@ -100,14 +104,14 @@ export class OSSSourceController extends OSSComplianceController {
   @ApiProduces('application/octet-stream')
   async getSourceOfOSSComponent(
     @Param('name') name: string,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: Response
   ): Promise<StreamableFile> {
     validateName(name)
     const sourcefile = await this.service.getSourceForComponent(name)
     return completeResponseData(
       response,
       sourcefile.filename,
-      sourcefile.content,
+      sourcefile.content
     )
   }
 }

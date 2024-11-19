@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Builtin libraries
 
 PAPSR comes with a list of built-in libraries which can be used in your

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from tqdm import tqdm
 
 from .tests_tqdm import StringIO, closing, importorskip, mark, skip

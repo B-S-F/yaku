@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { searchOnFail } from '../src/util'
 import { describe, it, expect, vi } from 'vitest'
 

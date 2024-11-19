@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import * as fs from 'fs'
 import * as path from 'path'
 import { beforeAll, describe, expect, it } from 'vitest'

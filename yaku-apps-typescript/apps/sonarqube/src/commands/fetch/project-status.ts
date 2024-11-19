@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { AppOutput, GetLogger } from '@B-S-F/autopilot-utils'
 import { writeFile } from 'fs/promises'
 import { Agent as HttpAgent } from 'http'

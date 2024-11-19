@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { AppOutput, AppError } from '@B-S-F/autopilot-utils'
 import { parseConfig } from './parse-config'
 import { Logger } from './logger'

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 resource "aws_eip" "EIP1" { a { a { a { a { a {
             count = "1"
 

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Octokit } from 'octokit'
 import { getAppInstallation } from '../../../src/octokit/get-app-installation'

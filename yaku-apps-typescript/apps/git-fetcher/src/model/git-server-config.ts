@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export const supportedGitServerTypes = ['github', 'bitbucket'] as const
 export type SupportedGitServerType = (typeof supportedGitServerTypes)[number]
 

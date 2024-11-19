@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 package result
 
 import "github.com/B-S-F/yaku/onyx/pkg/result/common"

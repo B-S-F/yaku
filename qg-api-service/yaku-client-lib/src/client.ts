@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import assert from 'assert'
 import { access, readFile, writeFile } from 'fs/promises'
 import * as path from 'path'

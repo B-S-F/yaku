@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 // Package ast declares the types used to represent syntax trees for HCL
 // (HashiCorp Configuration Language)
 package ast

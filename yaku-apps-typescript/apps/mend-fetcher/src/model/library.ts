@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { CopyrightReference } from './copyrightReference.js'
 import { License } from './license.js'
 

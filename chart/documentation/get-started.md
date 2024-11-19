@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Yaku On-premise Deployment Guide
 
 This document provides an overview of Yaku's components and guides you through the steps required to deploy your Yaku instance.

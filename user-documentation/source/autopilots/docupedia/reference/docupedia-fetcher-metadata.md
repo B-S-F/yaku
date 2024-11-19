@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Docupedia Fetcher Page Metadata
 
 The fetcher will retrieve a Docupedia page content along with the metadata and stores it in the evidence folder as a JSON file named after {envvar}`OUTPUT_NAME`.

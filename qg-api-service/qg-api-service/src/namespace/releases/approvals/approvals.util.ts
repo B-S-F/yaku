@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { PaginatedData } from '@B-S-F/api-commons-lib'
 import { ApiProperty } from '@nestjs/swagger'
 import { UserInNamespaceDto } from '../../../namespace/users/users.utils'

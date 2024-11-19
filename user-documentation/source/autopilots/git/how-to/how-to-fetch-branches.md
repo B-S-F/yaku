@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # How to fetch branches
 
 In order to fetch branches, you need to provide a configuration file to the

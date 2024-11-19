@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Evaluator Background Information
 
 An evaluator to evaluate generic JSON files. It can be used to evaluate the output of any fetcher that stores JSON formatted data.

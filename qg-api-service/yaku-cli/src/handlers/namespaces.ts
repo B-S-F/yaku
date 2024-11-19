@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiClient, Namespace } from '@B-S-F/yaku-client-lib'
 import {
   consoleErrorRed,

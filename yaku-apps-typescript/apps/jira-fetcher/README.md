@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # jira-fetcher
 
 **_NOTE:_** The jira-fetcher cannot run on an internet client, it needs a BCN environment to execute properly!

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 {{- if and (not (eq (toString .Values.enabled) "false")) .Values.enabled (not (eq (toString .Values.route.enabled) "false")) .Values.route.enabled }}
 {{- $svcPort := .Values.service.targetPort -}}
 {{- $componentName :=  .Chart.Name }}

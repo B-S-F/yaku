@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import yp from './yaku-prompts.js'
 import { jest } from '@jest/globals'
 import cp, { ChildProcess } from 'child_process'

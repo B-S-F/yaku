@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import swc from 'rollup-plugin-swc'
 import { VitePluginNode } from 'vite-plugin-node'
 import { defineConfig } from 'vitest/config'

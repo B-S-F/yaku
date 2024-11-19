@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Sharepoint Uploader
 
 The `sharepoint` cli can be used to upload files or folders to an on-premise Sharepoint instance.

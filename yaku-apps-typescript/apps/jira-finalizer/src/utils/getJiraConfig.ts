@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { readFile } from 'fs/promises'
 import path from 'path'
 import { parse } from 'yaml'

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import click
 from loguru import logger
 from yaku.autopilot_utils.results import RESULTS, Result

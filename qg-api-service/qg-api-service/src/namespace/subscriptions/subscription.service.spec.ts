@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Repository } from 'typeorm'
 import { SubscriptionService } from './subscription.service'
 import { Test, TestingModule } from '@nestjs/testing'

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 version: "build-{branch}-{build}"
 image: Visual Studio 2015
 clone_folder: c:\gopath\src\github.com\hashicorp\hcl
