@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Tuple
 from urllib.parse import quote, urlparse
 
 import requests
-from requests.exceptions import HTTPError
 from yaku.autopilot_utils.errors import (
     AutopilotConfigurationError,
     AutopilotError,
@@ -51,24 +50,17 @@ class Connect:
         It requires the credential for the App Registration in Azure ( the client id,
         the tenant id and the client secret ).
         """
-        try:
-            token_api = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
-            payload = f"grant_type={GRANT_TYPE}&client_id={client_id}&client_secret={client_secret}&resource={RESOURCE}"
-            access_token_response = requests.request(
-                "POST", token_api, data=payload, verify=True
-            )
-            access_token_response.raise_for_status()
-            response_data = access_token_response.json()
-            access_token = response_data["access_token"]
+        token_api = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
+        payload = f"grant_type={GRANT_TYPE}&client_id={client_id}&client_secret={client_secret}&resource={RESOURCE}"
+        access_token_response = requests.request("POST", token_api, data=payload, verify=True)
+        access_token_response.raise_for_status()
+        response_data = access_token_response.json()
+        access_token = response_data["access_token"]
 
-            headers = {
-                "Authorization": f"Bearer {access_token}",
-            }
-            return headers
-        except HTTPError as http_err:
-            print(f"HTTP error occured: {http_err}")
-        except Exception as err:
-            print(f"Error occurred: {err}")
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+        }
+        return headers
 
     def _exchange_url_by_domain_and_site_name(self, sharepoint_site: str) -> Tuple[str, str]:
         """
