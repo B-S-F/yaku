@@ -10,9 +10,13 @@ on:
     branches:
       - "main"
       - "build-core-image"
+    paths-ignore:
+      - '**/*.md'            # Ignore all markdown files
   pull_request:
     branches:
       - "main"
+    paths-ignore:
+      - '**/*.md'            # Ignore all markdown files
   schedule:
     # Run every 2 hours
     - cron: "0 */4 * * *"

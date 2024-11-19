@@ -21,8 +21,8 @@ See also [.pre-commit-config.yaml](./.pre-commit-config.yaml) for the configurat
 To add a license and copyright header to your files using the REUSE tool, use the following command:
 
 ```
-pipx run reuse annotate --license MIT <file / folder name> --recursive --skip-unrecognised --copyright="grow platform GmbH" --merge-cop
-yrights
+pipx run reuse annotate --license MIT <file / folder name> --recursive \
+--skip-unrecognised --copyright="grow platform GmbH" --merge-copyrights
 ```
 - **Install REUSE**: Ensure the REUSE tool is installed via `pipx`.
 - **Select License**: Choose a license and place its text in the `LICENSES/` directory.
