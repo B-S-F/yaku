@@ -69,10 +69,6 @@ function toComponentList(components: string[]): ComponentList {
 }
 
 export class OSSSourceController extends OSSComplianceController {
-  constructor(service: OSSComplianceService) {
-    super(service)
-  }
-
   @Public()
   @Get('sources')
   @ApiOperation({

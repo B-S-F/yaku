@@ -40,7 +40,7 @@
           "level": "error"
         },
         "noUselessConstructor": {
-          "level": "off"
+          "level": "error"
         },
         "noUselessTernary": {
           "level": "error"
