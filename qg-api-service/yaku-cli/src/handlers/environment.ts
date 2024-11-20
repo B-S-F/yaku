@@ -326,7 +326,7 @@ export async function showEnvironmentsTable(
   ]
 
   const rows = envs.map((env) => [
-    env.current ? true : false,
+    !!env.current,
     env.name,
     env.url,
     env.namespace ?? '',
