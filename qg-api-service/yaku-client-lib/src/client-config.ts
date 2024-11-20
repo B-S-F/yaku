@@ -8,13 +8,13 @@ export default class ClientConfig {
   static config: YakuClientConfig
 
   public static getConfig(): YakuClientConfig | null {
-    if (!this.config) {
+    if (!ClientConfig.config) {
       return null
     }
-    return this.config
+    return ClientConfig.config
   }
 
   public static setConfig(config: YakuClientConfig): void {
-    this.config = config
+    ClientConfig.config = config
   }
 }
