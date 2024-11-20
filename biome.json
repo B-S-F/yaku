@@ -37,7 +37,7 @@
           "level": "error"
         },
         "noUselessCatch": {
-          "level": "off"
+          "level": "error"
         },
         "noUselessConstructor": {
           "level": "off"
