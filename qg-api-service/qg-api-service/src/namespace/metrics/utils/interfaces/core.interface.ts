@@ -2,4 +2,4 @@
 //
 // SPDX-License-Identifier: MIT
 
-export type Core = Record<string, any>
+export type Core = object
