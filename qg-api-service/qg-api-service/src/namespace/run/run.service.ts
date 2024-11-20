@@ -113,20 +113,6 @@ export class RunService {
     return { itemCount, entities }
   }
 
-  async getWithTransaction(
-    queryRunner: QueryRunner,
-    namespaceId: number,
-    runId: number
-  ): Promise<Run> {
-    return await queryRunner.manager.findOne(Run, {
-      where: {
-        namespace: { id: namespaceId },
-        id: runId,
-      },
-      relations: ['config', 'namespace'],
-    })
-  }
-
   async get(namespaceId: number, runId: number): Promise<Run> {
     let run = await this.repository.findOne({
       where: {
@@ -148,13 +134,13 @@ export class RunService {
         if (run.argoId && run.argoName && run.argoNamespace) {
           run = await promiseOnTime(
             this.workflowDispatcher.updateRunIfFinished(run),
-            2000
+            2000,
           )
         }
       } catch (err) {
         run = originalRun
         this.logger.warn(
-          `Could not check workflow state for run ${run.globalId} (${run.namespace.id}:${run.id}), error was ${err}`
+          `Could not check workflow state for run ${run.globalId} (${run.namespace.id}:${run.id}), error was ${err}`,
         )
       }
       this.logger.trace({
@@ -176,12 +162,30 @@ export class RunService {
     try {
       await queryRunner.connect()
       await queryRunner.startTransaction('READ UNCOMMITTED')
+      const config = await this.configService.getConfig(namespaceId, configId)
 
-      const run = await this.createWithTransaction(
-        queryRunner,
+      const storagePath = randomUUID()
+      const runData: DeepPartial<Run> = {
+        config,
+        namespace: { id: namespaceId },
+        storagePath,
+        status: RunStatus.Pending,
+        synthetic: false,
+        creationTime: new Date(),
+        id: await this.idService.nextId(Run.name, namespaceId),
+      }
+
+      const createdRun = await queryRunner.manager.create(Run, runData)
+      const run = await queryRunner.manager.save(Run, createdRun)
+
+      await this.auditService.append(
         namespaceId,
-        configId,
-        actor
+        run.id,
+        {},
+        run,
+        AuditActor.convertFrom(actor),
+        Action.CREATE,
+        queryRunner.manager,
       )
       await queryRunner.commitTransaction()
       await queryRunner.release()
@@ -206,38 +210,47 @@ export class RunService {
   async createSynthetic(
     namespaceId: number,
     configId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ) {
     const createRunStartTime = Date.now()
     const queryRunner = this.repository.manager.connection.createQueryRunner()
-    await queryRunner.connect()
-    await queryRunner.startTransaction('READ UNCOMMITTED')
 
     try {
-      let run = await this.createWithTransaction(
-        queryRunner,
-        namespaceId,
-        configId,
-        actor
-      )
+      const storagePath = randomUUID()
 
       // TODO: Upload data here
 
-      // mark the run as synthetic and completed
-      run = await this.updateWithTransaction(
-        queryRunner,
+      await queryRunner.connect()
+      await queryRunner.startTransaction('READ UNCOMMITTED')
+
+      const config = await this.configService.getConfig(namespaceId, configId)
+
+      const runData: DeepPartial<Run> = {
+        config,
+        namespace: { id: namespaceId },
+        storagePath,
+        status: RunStatus.Completed,
+        creationTime: new Date(),
+        completionTime: new Date(),
+        overallResult: RunResult.Failed, // TODO: Set the value from qg-result.yaml content
+        synthetic: true,
+        id: await this.idService.nextId(Run.name, namespaceId),
+      }
+
+      const createdRun = queryRunner.manager.create(Run, runData)
+      const run = await queryRunner.manager.save(Run, createdRun)
+
+      await this.auditService.append(
         namespaceId,
         run.id,
-        {
-          completionTime: new Date(),
-          overallResult: RunResult.Failed, // TODO: Set the value from qg-result.yaml content
-          status: RunStatus.Completed,
-          synthetic: true,
-        },
-        actor
+        {},
+        run,
+        AuditActor.convertFrom(actor),
+        Action.CREATE,
+        queryRunner.manager,
       )
-
       await queryRunner.commitTransaction()
+      await queryRunner.release()
 
       return run
     } catch (err) {
@@ -245,83 +258,15 @@ export class RunService {
         msg: `Error while creating synthetic run: ${err}`,
       })
       await queryRunner.rollbackTransaction()
+      await queryRunner.release()
       throw err
     } finally {
       this.logger.debug(
         `POST /runs: Store initial run took: ${
           Date.now() - createRunStartTime
-        }ms`
+        }ms`,
       )
-      await queryRunner.release()
     }
-  }
-
-  async createWithTransaction(
-    queryRunner: QueryRunner,
-    namespaceId: number,
-    configId: number,
-    actor: RequestUser
-  ): Promise<Run> {
-    const config = await this.configService.getConfig(namespaceId, configId)
-
-    const storagePath = randomUUID()
-    const runData: DeepPartial<Run> = {
-      config,
-      namespace: { id: namespaceId },
-      storagePath,
-      status: RunStatus.Pending,
-      creationTime: new Date(),
-      synthetic: false,
-      id: await this.idService.nextId(Run.name, namespaceId),
-    }
-
-    const createdRun = queryRunner.manager.create(Run, runData)
-    const run = await queryRunner.manager.save(Run, createdRun)
-
-    await this.auditService.append(
-      namespaceId,
-      run.id,
-      {},
-      run,
-      AuditActor.convertFrom(actor),
-      Action.CREATE,
-      queryRunner.manager
-    )
-
-    return run
-  }
-
-  async updateWithTransaction(
-    queryRunner: QueryRunner,
-    namespaceId: number,
-    runId: number,
-    runData: DeepPartial<Run>,
-    actor: RequestUser
-  ): Promise<Run> {
-    const currentRun = await this.getWithTransaction(
-      queryRunner,
-      namespaceId,
-      runId
-    )
-
-    const original = currentRun.DeepCopy()
-
-    const updatedRun = await queryRunner.manager.save(
-      Run,
-      Object.assign(currentRun, runData)
-    )
-
-    await this.auditService.append(
-      namespaceId,
-      runId,
-      original,
-      updatedRun,
-      AuditActor.convertFrom(actor),
-      Action.UPDATE,
-      queryRunner.manager
-    )
-
-    return updatedRun
   }
 
   async getResult(namespaceId: number, runId: number): Promise<Readable> {
@@ -405,23 +350,5 @@ export class RunService {
   getNamespaceCreatedCallback(): NamespaceCreated {
     return (namespaceId: number) =>
       this.idService.initializeIdCreation(Run.name, namespaceId)
-  }
-
-  async checkAndUpdateRun(run: Run): Promise<Run> {
-    const originalRun = structuredClone(run)
-    try {
-      if (run.argoId && run.argoName && run.argoNamespace) {
-        run = await promiseOnTime(
-          this.workflowDispatcher.updateRunIfFinished(run),
-          2000
-        )
-      }
-    } catch (err) {
-      run = originalRun
-      this.logger.warn(
-        `Could not check workflow state for run ${run.globalId} (${run.namespace.id}:${run.id}), error was ${err}`
-      )
-    }
-    return run
   }
 }
