@@ -30,5 +30,8 @@
     "workitem",
     "workitems",
     "yaku"
-  ]
+  ],
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
 }
