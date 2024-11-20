@@ -234,14 +234,14 @@ export class ConfigsService {
       return name
     } else {
       let counter = 1
-      do {
+      while (true) {
         name = `qg-config-${counter}.yaml`
         if (!findInFiles(name)) {
           await this.createFile(namespaceId, configId, name, content)
           return name
         }
         counter++
-      } while (true)
+      }
     }
   }
 

@@ -54,10 +54,10 @@
       },
       "correctness": {
         "noUnnecessaryContinue": {
-          "level": "off"
+          "level": "error"
         },
         "noConstantCondition": {
-          "level": "off"
+          "level": "error"
         },
         "noUnreachable": {
           "level": "off"
