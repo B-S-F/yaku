@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test, TestingModule } from '@nestjs/testing'
 import { FindingController } from './finding.controller'
 import { FindingService } from './finding.service'

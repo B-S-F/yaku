@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { readFile } from 'fs/promises'
 
 export const readJson = async (filePath: string): Promise<any> => {

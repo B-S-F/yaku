@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Test Space for Autopilots
 
 In some cases, the run of a full configuration can take several minutes. This can be especially cumbersome if you are working on a specific check within the configuration and only want to test if it works as expected.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # pylint: disable=missing-module-docstring, missing-class-docstring
 # pylint: disable=missing-function-docstring, no-self-use
 import logging

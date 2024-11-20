@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Using secrets
 
 After you have [created a secret in the service](./how-to-add-secrets) you can

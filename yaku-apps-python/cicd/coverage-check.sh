@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 COVERAGE_XML_FILE=dist/coverage/python/coverage.xml
 COVERAGE_TMP_BASE_DIR=dist/coverage
 COVERAGE_TMP_DIR=$(mktemp -d -p ${COVERAGE_TMP_BASE_DIR})

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { createMockResponse, testingNamespaceId } from './test-services'
 import { UrlHandler, UrlHandlerFactory, UrlProtocolConfig } from './url-handler'
 

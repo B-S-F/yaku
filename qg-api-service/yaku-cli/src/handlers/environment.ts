@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import fs from 'fs'
 import path from 'path'
 import { z } from 'zod'
@@ -322,7 +326,7 @@ export async function showEnvironmentsTable(
   ]
 
   const rows = envs.map((env) => [
-    env.current ? true : false,
+    !!env.current,
     env.name,
     env.url,
     env.namespace ?? '',

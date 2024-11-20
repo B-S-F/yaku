@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 FROM nginx:1.24.0
 
 COPY ./docker-image/nginx-files/nginx.conf /etc/nginx/nginx.conf

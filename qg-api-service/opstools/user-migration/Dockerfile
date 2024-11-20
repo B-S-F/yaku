@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 ARG BASE_IMAGE_NODEJS_NAME
 
 FROM ${BASE_IMAGE_NODEJS_NAME}

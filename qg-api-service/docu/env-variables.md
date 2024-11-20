@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Environment Variables
 
 Upon starting a new qg run using the `POST /namespaces/{namespaceId}/runs` endpoint, the QG API Service composes

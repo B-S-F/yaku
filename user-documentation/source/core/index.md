@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # {{ PNAME }} Core
 
 The {{ PNAME }} service consists of several layers:

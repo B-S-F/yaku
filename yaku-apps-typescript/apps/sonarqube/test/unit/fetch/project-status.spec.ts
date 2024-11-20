@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { writeFile } from 'fs/promises'
 import fetch, { Response } from 'node-fetch'
 import { beforeEach, describe, expect, it, vi } from 'vitest'

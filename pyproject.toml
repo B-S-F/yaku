@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 [tool.ruff]
 extend = "yaku-apps-python/pyproject.toml"
 exclude = ["qg-api-service/*"]

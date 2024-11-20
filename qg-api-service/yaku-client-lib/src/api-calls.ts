@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { RestApiRequestError, executeRestCall } from './call-wrapper.js'
 
 export type FileData = {
@@ -10,21 +14,17 @@ export async function createResource<T>(
   body: any,
   token: string,
 ): Promise<T> {
-  try {
-    const response: Response = await executeRestCall(url, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    })
+  const response: Response = await executeRestCall(url, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  })
 
-    const data = (await response.json()) as T
-    return data
-  } catch (err) {
-    throw err
-  }
+  const data = (await response.json()) as T
+  return data
 }
 
 export async function uploadData(
@@ -71,17 +71,13 @@ export async function transformData(
 }
 
 export async function getResource<T>(url: string, token: string): Promise<T> {
-  try {
-    const response: Response = await executeRestCall(url, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    })
+  const response: Response = await executeRestCall(url, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  })
 
-    const data = (await response.json()) as T
-    return data
-  } catch (err) {
-    throw err
-  }
+  const data = (await response.json()) as T
+  return data
 }
 
 export async function listAllResources<T>(
@@ -91,20 +87,16 @@ export async function listAllResources<T>(
   let next = url
   const items: T[] = []
   while (next !== undefined) {
-    try {
-      const response: Response = await executeRestCall(next, {
-        method: 'GET',
-        headers: { Authorization: `Bearer ${token}` },
-      })
+    const response: Response = await executeRestCall(next, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    })
 
-      const raw = await response.json()
+    const raw = await response.json()
 
-      next = raw?.links?.next
+    next = raw?.links?.next
 
-      items.push(...raw.data)
-    } catch (err) {
-      throw err
-    }
+    items.push(...raw.data)
   }
 
   return items

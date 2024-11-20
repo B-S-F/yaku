@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from .tests_tqdm import importorskip, mark
 
 pytestmark = mark.slow

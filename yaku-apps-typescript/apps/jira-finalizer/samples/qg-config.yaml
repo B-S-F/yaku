@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # This is an example config for:
 # RAM/ROM Splunk fetcher
 # RAM/ROM Splunk evaluator

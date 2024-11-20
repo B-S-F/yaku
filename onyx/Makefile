@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 .PHONY: help
 help:
 	@echo "Please use 'make <target>' where <target> is one of"

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import * as path from 'path'
 import { databaseConfig } from './database-config'
 import { TypeOrmToNestLogger } from './typeorm-logger'

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { LongRunningTokenEntity, STATUS } from './long.running.token.entity'
 import { PaginatedData } from '@B-S-F/api-commons-lib'

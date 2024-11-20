@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import ejs, { Data } from 'ejs'
 import resolve from './resolve.js'
 import markdown from '@B-S-F/markdown-utils'

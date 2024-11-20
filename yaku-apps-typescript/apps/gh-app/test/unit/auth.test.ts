@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { authCmd, ghAppAuth } from '../../src/auth.js'
 import { GetLogger } from '@B-S-F/autopilot-utils'

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export const alertProperties1 = {
   compromisedEntity: 'runner-aks-dev',
   alertType: 'K8S_PrivilegedContainer',

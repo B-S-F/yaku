@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Module } from '@nestjs/common'
 import { NotificationService } from './notification.service'
 import { MailingModule } from '../mailing/mailing.module'

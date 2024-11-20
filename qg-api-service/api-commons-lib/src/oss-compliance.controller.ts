@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Controller, Get, Param, Res, StreamableFile } from '@nestjs/common'
 import {
   ApiNotFoundResponse,
@@ -65,10 +69,6 @@ function toComponentList(components: string[]): ComponentList {
 }
 
 export class OSSSourceController extends OSSComplianceController {
-  constructor(service: OSSComplianceService) {
-    super(service)
-  }
-
   @Public()
   @Get('sources')
   @ApiOperation({

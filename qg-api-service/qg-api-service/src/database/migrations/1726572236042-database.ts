@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class Database1726572236042 implements MigrationInterface {

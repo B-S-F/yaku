@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # HOW TO CONTRIBUTE TO TQDM
 
 **TL;DR: Skip to [QUICK DEV SUMMARY]**

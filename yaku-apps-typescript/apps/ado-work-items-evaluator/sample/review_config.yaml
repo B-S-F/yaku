@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 workItems:
   query: "SELECT [System.Id], [System.State] FROM WorkItems WHERE ([System.TeamProject] = @project AND [System.WorkItemType] == 'Epic' AND Id = 229047)"
   neededFields:
@@ -27,14 +31,14 @@ workItems:
             fieldName: "AssignedTo"
             closedAfterDate: '2022.01.01'
             conditions:
-              expected: 
+              expected:
                 - 'Name'
 
           reviewers:
-            fieldName: "Reviewer" 
+            fieldName: "Reviewer"
             closedAfterDate: '2022.01.01'
             conditions:
-              expected: 
+              expected:
                 - 'Name'
     children:
       get: true

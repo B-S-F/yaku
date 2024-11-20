@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Using custom apps
 
 To add {term}`custom apps <custom app>` to your {{ PNAME }} configuration, you need to perform

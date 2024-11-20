@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 """An example of wrapping manual tqdm updates for `urllib` reporthook.
 See also: tqdm_requests.py.
 

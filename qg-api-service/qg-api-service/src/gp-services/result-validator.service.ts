@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import * as YAML from 'yaml'
 import { YamlValidatorService } from './yaml-validator.service'

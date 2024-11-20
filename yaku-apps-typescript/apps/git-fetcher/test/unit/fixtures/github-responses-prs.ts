@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { GithubLabel } from '../../../src/model/github-label'
 import { GithubPr } from '../../../src/model/github-pr'
 

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # based on 2-data-migration.py write a script that evaluates the data migration (checking wether all actors have been migrated, and if the data is consistent)
 
 

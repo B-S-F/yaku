@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Variable types and their usage
 
 Variable replacement is a powerful feature in {{ PNAME }} configuration files

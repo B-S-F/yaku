@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import { RunProcessResult } from '../cli/process'
 import { EOL } from 'os'

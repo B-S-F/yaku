@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Octokit } from 'octokit'
 import { ProxyAgent, fetch as undiciFetch } from 'undici'
 import githubAppJwt from 'universal-github-app-jwt'

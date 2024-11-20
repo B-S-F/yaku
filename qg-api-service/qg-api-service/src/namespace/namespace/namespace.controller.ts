@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { validateBody, validateId } from '@B-S-F/api-commons-lib'
 import { KeyCloakNamespace, KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
 import {

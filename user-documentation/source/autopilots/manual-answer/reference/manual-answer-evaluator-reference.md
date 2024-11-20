@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Evaluator Background Information
 
 An evaluator that checks if a given manual answer has passed it's expiration time.

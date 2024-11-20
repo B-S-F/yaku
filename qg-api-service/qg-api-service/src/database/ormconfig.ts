@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { DataSource } from 'typeorm'
 import { DatabaseConfig, databaseConfig } from './database-config'
 import {

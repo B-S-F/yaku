@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { DynamicModule, Module } from '@nestjs/common'
 import {
   ENABLE_MAIL_NOTIFICATIONS_FEATURE,

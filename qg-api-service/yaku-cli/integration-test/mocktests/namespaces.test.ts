@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Environment, EnvironmentFacade } from '../cli/environment-utils'
 import { MockServer, ServerHost } from '../cli/mockserver'
 import { CommandFacade } from '../cli/utils'

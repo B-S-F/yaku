@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { stat } from 'fs/promises'
 import { RestClient } from './RestClient.js'
 import { Comment } from './types/comment.js'

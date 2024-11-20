@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { beforeEach, describe, expect, it, vi, SpyInstanceFn } from 'vitest'
 
 import { evaluate } from '../../src/manualAnswerEvaluator/manualAnswer'

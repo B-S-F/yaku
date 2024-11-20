@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Defining Checks
 
 This page is an introduction to performing checks on a JSON data set. It provides information on various types of checks that can be performed and how to define conditions for those checks. The examples on this page utilize a sample data set, which is provided in the following snippet:

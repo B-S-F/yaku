@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Implicit Global Environment Variables
 
 Whenever a QG run is executed, a set of implicit environment variables is

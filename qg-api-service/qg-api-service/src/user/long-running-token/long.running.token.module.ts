@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { LongRunningTokenController } from './long.running.token.controller'
 import {

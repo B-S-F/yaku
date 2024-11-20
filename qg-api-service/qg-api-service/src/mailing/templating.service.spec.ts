@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { REQUEST } from '@nestjs/core'
 import { Test } from '@nestjs/testing'
 import { TemplateFunction } from 'ejs'

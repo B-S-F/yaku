@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test, TestingModule } from '@nestjs/testing'
 import { randomUUID } from 'crypto'
 import { ArgoConfig, ArgoService } from './argo.service'

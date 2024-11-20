@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Mend
 
 If you need to check your code repositories or container images for vulnerabilities then the Mend autopilot is the right tool for that!

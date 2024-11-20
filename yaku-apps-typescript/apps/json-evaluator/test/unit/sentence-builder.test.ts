@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { describe, it, expect } from 'vitest'
 
 import SentenceBuilder from '../../src/sentence-builder'

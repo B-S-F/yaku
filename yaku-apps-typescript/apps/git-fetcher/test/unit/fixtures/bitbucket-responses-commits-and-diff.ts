@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BitbucketResponse } from '../../../src/model/bitbucket-response'
 import { BitbucketCommit } from '../../../src/model/bitbucket-commit'
 import { BitbucketDiffResponse } from '../../../src/model/bitbucket-diff-response'

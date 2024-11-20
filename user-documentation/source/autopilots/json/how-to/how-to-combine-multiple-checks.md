@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Combining multiple checks
 
 Given the sample data set below, we want to check if each book has a at least one tag and if there is no book with the category `fantasy`.

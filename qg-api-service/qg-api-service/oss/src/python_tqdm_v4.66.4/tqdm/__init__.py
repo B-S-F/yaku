@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from ._monitor import TMonitor, TqdmSynchronisationWarning
 from ._tqdm_pandas import tqdm_pandas
 from .cli import main  # TODO: remove in v5.0.0

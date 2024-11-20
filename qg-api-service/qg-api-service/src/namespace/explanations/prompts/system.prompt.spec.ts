@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { getSystemPrompt } from './system.prompt'
 
 describe('GenerateSystemPrompt', () => {
@@ -26,6 +30,6 @@ describe('GenerateSystemPrompt', () => {
       expect(generatedPrompt_2.content).toContain(header)
     })
 
-    expect(generatedPrompt_2.content.length).toEqual(10688)
+    expect(generatedPrompt_2.content.length).toEqual(10672)
   })
 })

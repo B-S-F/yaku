@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # How to map issues and requirements
 
 The configuration of the finalizer has to be specified in a configuration file which has to be available at runtime.

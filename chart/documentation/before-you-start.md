@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Before You Start
 
 As you are reading this document, this means you have already downloaded the Helm chart zip file from the Yaku registry and are ready to deploy it on your Kubernetes cluster.

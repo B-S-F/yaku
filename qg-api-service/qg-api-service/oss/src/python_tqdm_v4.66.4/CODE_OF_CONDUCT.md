@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 International law supersedes all codes of conduct, including this one.
 Authors of codes of conduct presuming the authority to create new laws
 should be brought to justice.

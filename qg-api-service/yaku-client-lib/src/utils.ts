@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export function getFilenameFromUrl(url: string): string {
   const pathParts = new URL(url).pathname.split('/')
   let filename: string | undefined = ''

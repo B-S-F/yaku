@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Config Management Ideas
 
 The data structures are defined in the [plant uml description](config-mgmt-ds.puml).

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import * as path from 'path'
 import { TypeOrmToNestLogger } from './typeorm-logger'

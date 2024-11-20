@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 workItems:
   query: 'SELECT [System.Id], [System.State] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.Id] IN (33, 34)'
   neededFields:

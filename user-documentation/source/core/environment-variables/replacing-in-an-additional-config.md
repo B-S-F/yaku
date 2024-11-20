@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # How to use environment variables in extra config files
 
 In the QG config file and all referenced config files, you can use environment

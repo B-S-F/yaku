@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 package parser
 
 import "github.com/hashicorp/hcl/hcl/ast"

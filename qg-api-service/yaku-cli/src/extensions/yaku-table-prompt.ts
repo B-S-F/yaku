@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   KeypressEvent,
   Status,
@@ -929,7 +933,6 @@ function filterTableData(config: TableConfig, state: TableState) {
           String(row[idx + 1]).indexOf(state.filterInput.filterValue) > -1
         ) {
           result = true
-          continue
         }
       }
       return result

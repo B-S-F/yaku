@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { decodeBufferToUTF8EncodedString } from '@B-S-F/api-commons-lib'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import * as YAML from 'yaml'

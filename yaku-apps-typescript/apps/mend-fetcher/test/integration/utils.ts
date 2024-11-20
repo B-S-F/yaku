@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export const mendFetcherExecutable = `${__dirname}/../../dist/index.js`
 export const MOCK_SERVER_PORT = 8080
 export const defaultEnvironment = {

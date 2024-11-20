@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Fetcher Background information
 
 Work items are fetched from Azure Devops via the Work Item Tracking API. It can be configured by a [configuration file](#the-fetchers-config-file) that contains a Wiql (WorkItems Query Language) query and other filtering criteria.

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import pytest
 from freezegun import freeze_time
 from yaku.autopilot_utils.checks import check

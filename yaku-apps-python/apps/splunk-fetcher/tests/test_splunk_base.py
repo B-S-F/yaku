@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from unittest.mock import MagicMock, Mock, PropertyMock, patch
 
 import pytest

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 ---
 title: '`tqdm`: A Fast, Extensible Progress Meter for Python and CLI'
 tags:

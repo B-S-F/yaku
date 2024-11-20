@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 name: Build
 
 on:
@@ -6,9 +10,13 @@ on:
     branches:
       - "main"
       - "build-core-image"
+    paths-ignore:
+      - '**/*.md'            # Ignore all markdown files
   pull_request:
     branches:
       - "main"
+    paths-ignore:
+      - '**/*.md'            # Ignore all markdown files
   schedule:
     # Run every 2 hours
     - cron: "0 */4 * * *"
@@ -42,13 +50,13 @@ jobs:
     secrets: inherit
 
   build-backend-docker-image:
-    # if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
       - build-backend
     uses: ./.github/workflows/build-backend-docker-image.yml
 
   build-core-docker-image:
-    # if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
       - build-onyx
       - build-typescript-apps

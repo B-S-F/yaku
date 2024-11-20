@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { readFileSync } from 'fs'
@@ -23,7 +27,7 @@ chapters:
           Time schedule was coordinated with all parties involved.
           The target dates are up to date and can be realized.
           Interactions with schedules for the system or components are taken into account.
-          
+
           Customer milestones were considered.
         checks:
           '1':
@@ -88,7 +92,7 @@ chapters:
           Time schedule was coordinated with all parties involved. The target
           dates are up to date and can be realized. Interactions with schedules
           for the system or components are taken into account.
-          
+
           Customer milestones were considered.
         checks:
           '1':

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from yaku.autopilot_utils.cli_base import make_autopilot_app, read_version_from_package
 
 from .commands import find_deps, get_wheels, license_info

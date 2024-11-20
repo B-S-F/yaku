@@ -25,7 +25,7 @@
     "rules": {
       "complexity": {
         "noBannedTypes": {
-          "level": "off"
+          "level": "error"
         },
         "noForEach": {
           "level": "off"
@@ -34,16 +34,16 @@
           "level": "off"
         },
         "noThisInStatic": {
-          "level": "off"
+          "level": "error"
         },
         "noUselessCatch": {
-          "level": "off"
+          "level": "error"
         },
         "noUselessConstructor": {
-          "level": "off"
+          "level": "error"
         },
         "noUselessTernary": {
-          "level": "off"
+          "level": "error"
         },
         "useLiteralKeys": {
           "level": "off"
@@ -54,10 +54,10 @@
       },
       "correctness": {
         "noUnnecessaryContinue": {
-          "level": "off"
+          "level": "error"
         },
         "noConstantCondition": {
-          "level": "off"
+          "level": "error"
         },
         "noUnreachable": {
           "level": "off"

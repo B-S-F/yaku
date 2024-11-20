@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import * as inquirer from '@inquirer/prompts'
 import yakuTablePrompt from './extensions/yaku-table-prompt.js'
 import open from 'open'

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Jira Finalizer
 
 The Jira finalizer allows you to add comments or attachments to Jira issues.

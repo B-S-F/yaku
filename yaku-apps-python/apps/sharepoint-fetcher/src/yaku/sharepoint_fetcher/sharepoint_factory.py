@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from yaku.sharepoint_fetcher.config import Settings
 
 from .cloud.sharepoint_fetcher_cloud import SharepointFetcherCloud
