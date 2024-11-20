@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class Database1731486466435 implements MigrationInterface {
@@ -5,7 +9,7 @@ export class Database1731486466435 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "run" ADD "synthetic" boolean NOT NULL DEFAULT false`
+      `ALTER TABLE "run" ADD "synthetic" boolean NOT NULL DEFAULT false`,
     )
   }
 
