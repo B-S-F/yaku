@@ -60,7 +60,7 @@
           "level": "error"
         },
         "noUnreachable": {
-          "level": "off"
+          "level": "error"
         }
       },
       "performance": {
