@@ -43,7 +43,7 @@
           "level": "off"
         },
         "noUselessTernary": {
-          "level": "off"
+          "level": "error"
         },
         "useLiteralKeys": {
           "level": "off"
