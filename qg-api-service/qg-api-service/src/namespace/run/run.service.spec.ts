@@ -25,14 +25,14 @@ import { RequestUser } from '../module.utils'
 import { NamespaceLocalIdService } from '../namespace/namespace-local-id.service'
 import { Namespace } from '../namespace/namespace.entity'
 import { WorkflowManager } from '../workflow/workflow-argo.service'
+import { BlobStore } from '../workflow/minio.service'
 import { Run, RunAuditService, RunResult, RunStatus } from './run.entity'
-import { RunService } from './run.service'
-import { AuditActor } from '../audit/audit.entity'
+import { EVIDENCEFILE, RESULTFILE, RunService } from './run.service'
 
 describe('RunService', () => {
   let service: RunService
-  let auditService: RunAuditService
   let workflowManager: WorkflowManager
+  let blobstore: BlobStore
   let repository: Repository<Run>
   let queryRunner: QueryRunner
 
@@ -114,6 +114,14 @@ describe('RunService', () => {
           },
         },
         {
+          provide: BlobStore,
+          useValue: {
+            uploadPayload: jest.fn(),
+            downloadResult: jest.fn(),
+            removePath: jest.fn(),
+          },
+        },
+        {
           provide: getRepositoryToken(Run),
           useValue: {
             findOne: jest.fn(),
@@ -139,8 +147,8 @@ describe('RunService', () => {
     }).compile()
 
     service = module.get<RunService>(RunService)
-    auditService = module.get<RunAuditService>(RunAuditService)
     workflowManager = module.get<WorkflowManager>(WorkflowManager)
+    blobstore = module.get<BlobStore>(BlobStore)
     repository = module.get(getRepositoryToken(Run))
 
     queryRunner = {
@@ -590,6 +598,11 @@ describe('RunService', () => {
     let configsService: ConfigsService
     let idService: NamespaceLocalIdService
 
+    const data = {}
+    data[RESULTFILE] = `overallStatus: RED
+    `
+    data[EVIDENCEFILE] = Buffer.from('some data that represents evidences')
+
     beforeEach(() => {
       jest.useFakeTimers()
       configsService = module.get<ConfigsService>(ConfigsService)
@@ -605,10 +618,12 @@ describe('RunService', () => {
         .spyOn(configsService, 'getConfig')
         .mockResolvedValue(config())
       const idMock = jest.spyOn(idService, 'nextId').mockResolvedValue(66)
+      const blobstoreSpy = jest.spyOn(blobstore, 'uploadPayload')
 
       const retrieved = await service.createSynthetic(
-        testingNamespaceId,
-        1,
+        namespace.id,
+        config().id,
+        data,
         actor,
       )
 
@@ -620,13 +635,19 @@ describe('RunService', () => {
       expect(retrieved.creationTime).toEqual(new Date())
       expect(retrieved.id).toBe(66)
       expect(retrieved.globalId).toBe(4711)
-      expect(retrieved.overallResult).toEqual(RunResult.Failed)
+      expect(retrieved.overallResult).toEqual(RunResult.Red)
       expect(retrieved.argoNamespace).toBeUndefined()
       expect(retrieved.argoName).toBeUndefined()
       expect(retrieved.argoId).toBeUndefined()
       expect(retrieved.log).toBeUndefined()
       expect(retrieved.completionTime).toEqual(new Date())
 
+      expect(blobstoreSpy).toHaveBeenNthCalledWith(1, expect.anything(), {
+        'qg-result.yaml': data[RESULTFILE],
+      })
+      expect(blobstoreSpy).toHaveBeenNthCalledWith(2, expect.anything(), {
+        'evidences.zip': data[EVIDENCEFILE],
+      })
       expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
       expect(idMock).toHaveBeenCalled()
       expect(queryRunner.manager.create).toHaveBeenCalled()
