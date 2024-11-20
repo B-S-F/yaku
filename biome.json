@@ -25,7 +25,7 @@
     "rules": {
       "complexity": {
         "noBannedTypes": {
-          "level": "off"
+          "level": "error"
         },
         "noForEach": {
           "level": "off"
