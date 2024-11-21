@@ -18,6 +18,7 @@ import { randomUUID } from 'crypto'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 import { Readable } from 'stream'
 import { DeepPartial, QueryRunner, Repository } from 'typeorm'
+import { parse } from 'yaml'
 import { promiseOnTime } from '../../gp-services/promise-utils'
 import { Action, AuditActor } from '../audit/audit.entity'
 import { ConfigsService } from '../configs/configs.service'
@@ -28,7 +29,8 @@ import {
   WorkflowManager,
   WorkflowOptions,
 } from '../workflow/workflow-argo.service'
-import { Run, RunAuditService, RunStatus } from './run.entity'
+import { BlobStore } from '../workflow/minio.service'
+import { Run, RunAuditService, RunResult, RunStatus } from './run.entity'
 
 export const RESULTFILE = 'qg-result.yaml'
 export const EVIDENCEFILE = 'evidences.zip'
@@ -52,6 +54,7 @@ export class RunService {
     @InjectRepository(Run) private readonly repository: Repository<Run>,
     @Inject(WorkflowManager)
     private readonly workflowDispatcher: WorkflowManager,
+    @Inject(BlobStore) private readonly blobStore: BlobStore,
     @Inject(ConfigsService) private readonly configService: ConfigsService,
     @Inject(NamespaceLocalIdService)
     private readonly idService: NamespaceLocalIdService,
@@ -158,6 +161,7 @@ export class RunService {
   ): Promise<Run> {
     const createRunStartTime = Date.now()
     const queryRunner = this.repository.manager.connection.createQueryRunner()
+
     try {
       await queryRunner.connect()
       await queryRunner.startTransaction('READ UNCOMMITTED')
@@ -169,6 +173,7 @@ export class RunService {
         namespace: { id: namespaceId },
         storagePath,
         status: RunStatus.Pending,
+        synthetic: false,
         creationTime: new Date(),
         id: await this.idService.nextId(Run.name, namespaceId),
       }
@@ -199,6 +204,77 @@ export class RunService {
     } finally {
       this.logger.debug(
         `POST /runs: Store initial run took: ${
+          Date.now() - createRunStartTime
+        }ms`,
+      )
+    }
+  }
+
+  async createSynthetic(
+    namespaceId: number,
+    configId: number,
+    data: { [filename: string]: string | Buffer },
+    actor: RequestUser,
+  ) {
+    const createRunStartTime = Date.now()
+    const queryRunner = this.repository.manager.connection.createQueryRunner()
+
+    try {
+      let overallResult: any
+      const storagePath = randomUUID()
+
+      if (typeof data[RESULTFILE] === 'string') {
+        const resultData = data[RESULTFILE]
+        await this.uploadResult(storagePath, resultData)
+        overallResult = this.retrieveOverallResult(resultData)
+      }
+      if (Buffer.isBuffer(data[EVIDENCEFILE])) {
+        await this.uploadEvidence(storagePath, data[EVIDENCEFILE])
+      }
+
+      await queryRunner.connect()
+      await queryRunner.startTransaction('READ UNCOMMITTED')
+
+      const config = await this.configService.getConfig(namespaceId, configId)
+
+      const runData: DeepPartial<Run> = {
+        config,
+        namespace: { id: namespaceId },
+        storagePath,
+        status: RunStatus.Completed,
+        creationTime: new Date(),
+        completionTime: new Date(),
+        overallResult,
+        synthetic: true,
+        id: await this.idService.nextId(Run.name, namespaceId),
+      }
+
+      const createdRun = queryRunner.manager.create(Run, runData)
+      const run = await queryRunner.manager.save(Run, createdRun)
+
+      await this.auditService.append(
+        namespaceId,
+        run.id,
+        {},
+        run,
+        AuditActor.convertFrom(actor),
+        Action.CREATE,
+        queryRunner.manager,
+      )
+      await queryRunner.commitTransaction()
+      await queryRunner.release()
+
+      return run
+    } catch (err) {
+      this.logger.error({
+        msg: `Error while creating synthetic run: ${err}`,
+      })
+      await queryRunner.rollbackTransaction()
+      await queryRunner.release()
+      throw err
+    } finally {
+      this.logger.debug(
+        `POST /runs/synthetic: Store initial synthetic run took: ${
           Date.now() - createRunStartTime
         }ms`,
       )
@@ -286,5 +362,33 @@ export class RunService {
   getNamespaceCreatedCallback(): NamespaceCreated {
     return (namespaceId: number) =>
       this.idService.initializeIdCreation(Run.name, namespaceId)
+  }
+
+  private async uploadResult(
+    storagePath: string,
+    content: string,
+  ): Promise<void> {
+    const resultData = {}
+    resultData[`${RESULTFILE}`] = content
+    await this.blobStore.uploadPayload(storagePath, resultData)
+  }
+
+  private async uploadEvidence(
+    storagePath: string,
+    content: Buffer,
+  ): Promise<void> {
+    const evidenceData = {}
+    evidenceData[`${EVIDENCEFILE}`] = content
+    await this.blobStore.uploadPayload(storagePath, evidenceData)
+  }
+
+  private retrieveOverallResult(resultData: string): RunResult {
+    try {
+      const result = parse(resultData)
+      return result.overallStatus as RunResult
+    } catch (err) {
+      this.logger.error(`Error happened during extraction of result: ${err}`)
+      return undefined
+    }
   }
 }

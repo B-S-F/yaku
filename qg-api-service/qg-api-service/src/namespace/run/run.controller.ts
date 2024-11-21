@@ -407,7 +407,7 @@ export class RunController {
     @Body() body: FilenameResultDto,
     @UploadedFiles() file: FileResultContentDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<void> {
+  ): Promise<RunDto> {
     validateId(namespaceId)
     validateId(configId)
     validateBody(body, filePostSchema)
@@ -448,7 +448,16 @@ export class RunController {
         file.content[filenameToContentMap.get(EVIDENCEFILE)].buffer
     }
 
-    response.status(HttpStatus.NOT_IMPLEMENTED)
+    const run = await this.service.createSynthetic(
+      namespaceId,
+      configId,
+      data,
+      user,
+    )
+
+    response.status(HttpStatus.ACCEPTED)
+
+    return toOutputDto(run, requestUrl.url('/configs', 1))
   }
 
   @Get(':runId')

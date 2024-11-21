@@ -24,9 +24,9 @@ export abstract class BlobStore {
 
   abstract downloadLogs(workflowName: string): Promise<string>
 
-  abstract uploadConfig(
+  abstract uploadPayload(
     storagePath: string,
-    configData: { [name: string]: string },
+    payload: { [name: string]: string | Buffer }
   ): Promise<void>
 
   abstract removePath(subpath: string): Promise<void>
@@ -95,18 +95,18 @@ export class MinIOStoreImpl extends BlobStore {
     return Boolean(metadata)
   }
 
-  async uploadConfig(
+  async uploadPayload(
     storagePath: string,
-    configData: { [filename: string]: string },
+    payload: { [filename: string]: string | Buffer }
   ): Promise<void> {
     if (!storagePath?.trim()) {
       throw new Error('Upload needs a subfolder')
     }
-    const promises = Object.keys(configData).map((key) => {
+    const promises = Object.keys(payload).map((key) => {
       return this.minioClient.putObject(
         this.bucket,
         path.join(storagePath, key),
-        configData[key],
+        payload[key]
       )
     })
     await Promise.all(promises)
