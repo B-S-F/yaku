@@ -4,7 +4,6 @@
 
 import { HttpStatus } from '@nestjs/common'
 import { readFile } from 'fs/promises'
-import { DefaultBodyType, MockedRequest } from 'msw'
 import { SetupServer, setupServer } from 'msw/node'
 import * as path from 'path'
 import { GetFindingDTO } from '../src/namespace/findings/dto/get-finding.dto'
@@ -24,7 +23,7 @@ import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
 
 describe('Findings Controller', () => {
   let nestTestingApp: NestTestingApp
-  let allRequests: MockedRequest<DefaultBodyType>[] = []
+  let allRequests: Request[] = []
   let server: SetupServer
 
   let apiToken
@@ -41,10 +40,11 @@ describe('Findings Controller', () => {
     server = setupServer(...handlers)
     server.listen()
     allRequests = []
-    server.events.on('request:start', (req) => {
+    server.events.on('request:start', ({ request }) => {
       console.log('MSW attached:')
-      if (!req.url.host.match(/localhost|127\.0\.0\.1/)) {
-        allRequests.push(req)
+      const url = new URL(request.url)
+      if (!url.host.match(/localhost|127\.0\.0\.1/)) {
+        allRequests.push(request)
       }
     })
 

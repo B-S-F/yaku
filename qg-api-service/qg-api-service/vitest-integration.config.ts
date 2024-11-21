@@ -21,8 +21,13 @@ export default defineConfig({
      * Reduce the timeout to one second to reduce the impact.
      */
     teardownTimeout: 1000,
-    maxThreads: 1,
-    minThreads: 1,
+    pool: 'threads',
+    poolOptions: {
+      threads: {
+        maxThreads: 1,
+        minThreads: 1,
+      },
+    },
     deps: {
       interopDefault: true,
     },

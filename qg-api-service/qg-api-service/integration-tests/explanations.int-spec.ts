@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 
 import { HttpStatus } from '@nestjs/common'
-import { DefaultBodyType, MockedRequest } from 'msw'
 import { SetupServer, setupServer } from 'msw/node'
 import { Readable } from 'stream'
 import supertest from 'supertest'
@@ -27,7 +26,7 @@ import { getRepositoryToken } from '@nestjs/typeorm'
 
 describe('Explanations', () => {
   let nestTestingApp: NestTestingApp
-  let allRequests: MockedRequest<DefaultBodyType>[] = []
+  let allRequests: Request[] = []
   let server: SetupServer
 
   let apiToken
@@ -96,10 +95,11 @@ describe('Explanations', () => {
     server = setupServer(...handlers)
     server.listen()
     allRequests = []
-    server.events.on('request:start', (req) => {
+    server.events.on('request:start', ({ request }) => {
       console.log('MSW attached:')
-      if (!req.url.host.match(/localhost|127\.0\.0\.1/)) {
-        allRequests.push(req)
+      const url = new URL(request.url)
+      if (!url.host.match(/localhost|127\.0\.0\.1/)) {
+        allRequests.push(request)
       }
     })
 
