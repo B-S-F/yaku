@@ -67,6 +67,9 @@ export class Run {
   @Column({ update: false })
   storagePath: string
 
+  @Column({ type: 'boolean', default: false })
+  synthetic: boolean
+
   @Column({ type: 'timestamptz', nullable: true })
   completionTime?: Date
 
@@ -86,6 +89,7 @@ export class Run {
     copy.log = this.log
     copy.creationTime = this.creationTime
     copy.storagePath = this.storagePath
+    copy.synthetic = this.synthetic
     copy.completionTime = this.completionTime
     copy.config = this.config
     return copy

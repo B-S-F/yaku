@@ -110,7 +110,7 @@ export class WorkflowManager {
         .create()
 
       const uploadStartTime = Date.now()
-      await this.blobStore.uploadConfig(run.storagePath, configs)
+      await this.blobStore.uploadPayload(run.storagePath, configs)
       this.logger.debug({
         msg: `POST /runs: Upload configs took: ${
           Date.now() - uploadStartTime

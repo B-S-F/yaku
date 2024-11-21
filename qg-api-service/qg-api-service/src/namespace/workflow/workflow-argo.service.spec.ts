@@ -49,7 +49,7 @@ describe('WorkflowManager', () => {
         {
           provide: BlobStore,
           useValue: {
-            uploadConfig: jest.fn(),
+            uploadPayload: jest.fn(),
             downloadResult: jest.fn(),
             removePath: jest.fn(),
           },
@@ -342,7 +342,7 @@ describe('WorkflowManager', () => {
       configs = undefined
     })
 
-    function checkUploadConfig(
+    function checkUploadPayload(
       path: string,
       configs: { [filename: string]: string },
       expected: { [filename: string]: any },
@@ -368,16 +368,16 @@ describe('WorkflowManager', () => {
 
     it('should create the workflow as expected with new config', async () => {
       jest
-        .spyOn(blobStore, 'uploadConfig')
+        .spyOn(blobStore, 'uploadPayload')
         .mockImplementation((p, c): Promise<void> => {
           path = p
-          configs = c
+          configs = c as Omit<ConfigList, 'string'>
           return Promise.resolve()
         })
 
       await workflowManager.run(currentRun, { environment })
 
-      checkUploadConfig(path, configs, {
+      checkUploadPayload(path, configs, {
         ...configFiles,
         ...expectedFiles,
       })
@@ -403,10 +403,10 @@ describe('WorkflowManager', () => {
 
     it('should call the WorkflowGenerationService.generateWorkflow with empty environment variables and secrets', async () => {
       jest
-        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadConfig')
+        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadPayload')
         .mockImplementation((p, c): Promise<void> => {
           path = p
-          configs = c
+          configs = c as Omit<ConfigList, 'string'>
           return Promise.resolve()
         })
 
@@ -416,7 +416,7 @@ describe('WorkflowManager', () => {
 
       await workflowManager.run(currentRun, { environment: {} })
 
-      checkUploadConfig(path, configs, {
+      checkUploadPayload(path, configs, {
         ...configFiles,
         ...expectedFiles,
         '.secrets': {},
@@ -444,16 +444,16 @@ describe('WorkflowManager', () => {
 
     it('should create the workflow as expected and handle multiple environment variables', async () => {
       jest
-        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadConfig')
+        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadPayload')
         .mockImplementation((p, c): Promise<void> => {
           path = p
-          configs = c
+          configs = c as Omit<ConfigList, 'string'>
           return Promise.resolve()
         })
 
       await workflowManager.run(currentRun, { environment: environment2 })
 
-      checkUploadConfig(path, configs, {
+      checkUploadPayload(path, configs, {
         ...configFiles,
         ...expectedFiles,
         '.vars': environment2,
@@ -480,10 +480,10 @@ describe('WorkflowManager', () => {
 
     it('should handle the usage of the single check option', async () => {
       jest
-        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadConfig')
+        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadPayload')
         .mockImplementation((p, c): Promise<void> => {
           path = p
-          configs = c
+          configs = c as Omit<ConfigList, 'string'>
           return Promise.resolve()
         })
 
@@ -496,7 +496,7 @@ describe('WorkflowManager', () => {
         singleCheck: { chapter: '1', requirement: '1', check: '1' },
       })
 
-      checkUploadConfig(path, configs, {
+      checkUploadPayload(path, configs, {
         ...configFiles,
         ...expectedFiles,
         '.secrets': {},
@@ -525,7 +525,7 @@ describe('WorkflowManager', () => {
     })
 
     it('should handle thrown errors graciously', async () => {
-      jest.spyOn(blobStore, 'uploadConfig').mockRejectedValue(new Error())
+      jest.spyOn(blobStore, 'uploadPayload').mockRejectedValue(new Error())
 
       await workflowManager.run(currentRun, { environment })
 
