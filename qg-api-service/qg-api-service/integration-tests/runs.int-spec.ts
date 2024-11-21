@@ -82,7 +82,7 @@ describe('POST run', () => {
 
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'uploadConfig',
+      'uploadPayload',
     ).mockImplementation(() => Promise.resolve())
   })
 

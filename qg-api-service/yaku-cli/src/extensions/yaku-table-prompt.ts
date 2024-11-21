@@ -889,7 +889,7 @@ function handleKeypress(
   // must be set explicitly
   setError('')
   // this fixes the performance issue (lag)
-  rl.setMaxListeners(0)
+  ;(rl as any).setMaxListeners(0)
 }
 
 function sortTableData(config: TableConfig, state: TableState) {
@@ -933,7 +933,6 @@ function filterTableData(config: TableConfig, state: TableState) {
           String(row[idx + 1]).indexOf(state.filterInput.filterValue) > -1
         ) {
           result = true
-          continue
         }
       }
       return result

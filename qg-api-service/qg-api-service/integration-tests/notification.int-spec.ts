@@ -72,7 +72,7 @@ describe('Notifications', () => {
     ).mockImplementation(() => Promise.resolve({}))
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'uploadConfig',
+      'uploadPayload',
     ).mockImplementation(() => {
       return Promise.resolve()
     })

@@ -40,7 +40,7 @@
           "level": "error"
         },
         "noUselessConstructor": {
-          "level": "off"
+          "level": "error"
         },
         "noUselessTernary": {
           "level": "error"
@@ -54,13 +54,13 @@
       },
       "correctness": {
         "noUnnecessaryContinue": {
-          "level": "off"
+          "level": "error"
         },
         "noConstantCondition": {
-          "level": "off"
+          "level": "error"
         },
         "noUnreachable": {
-          "level": "off"
+          "level": "error"
         }
       },
       "performance": {
@@ -76,7 +76,7 @@
           "level": "off"
         },
         "noCommaOperator": {
-          "level": "off"
+          "level": "error"
         },
         "noNonNullAssertion": {
           "fix": "none",

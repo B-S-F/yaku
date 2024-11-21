@@ -466,7 +466,7 @@ describe('MinioService', () => {
     it('should upload files to blob store', async () => {
       const storagePath = randomUUID()
       minioClient.putObject = jest.fn().mockResolvedValue({})
-      await service.uploadConfig(storagePath, configData)
+      await service.uploadPayload(storagePath, configData)
 
       expect(minioClient.putObject).toBeCalledTimes(2)
       expect(minioClient.putObject).toBeCalledWith(
@@ -484,8 +484,8 @@ describe('MinioService', () => {
     it.each([undefined, null, '', ' \t\n'])(
       'should not upload anything, if storage path is undefined',
       async (path: string) => {
-        await expect(service.uploadConfig(path, configData)).rejects.toThrow(
-          Error,
+        await expect(service.uploadPayload(path, configData)).rejects.toThrow(
+          Error
         )
         expect(minioClient.putObject).not.toBeCalled()
       },
@@ -493,7 +493,7 @@ describe('MinioService', () => {
 
     it('should not do anything, if an empty list of data is provided', async () => {
       const storagePath = randomUUID()
-      await service.uploadConfig(storagePath, {})
+      await service.uploadPayload(storagePath, {})
       expect(minioClient.putObject).not.toBeCalled()
     })
   })

@@ -51,24 +51,25 @@ describe('Proxy', () => {
 
     // We expect that nothing comes through
     expect(mockServer.getNumberOfRequests()).toEqual(0)
-  }),
-    it('should connect directly', async () => {
-      const env = {
-        NODE_EXTRA_CA_CERTS: MOCK_SERVER_CERT_PATH,
-        JIRA_URL: `https://localhost:${MOCK_SERVER_PORT}`,
-        JIRA_CONFIG_FILE_PATH: `${__dirname}/configs/jira-bug-tickets.yaml`,
-        JIRA_PAT: 'abcde',
-      }
+  })
 
-      mockServer = new MockServer(options)
+  it('should connect directly', async () => {
+    const env = {
+      NODE_EXTRA_CA_CERTS: MOCK_SERVER_CERT_PATH,
+      JIRA_URL: `https://localhost:${MOCK_SERVER_PORT}`,
+      JIRA_CONFIG_FILE_PATH: `${__dirname}/configs/jira-bug-tickets.yaml`,
+      JIRA_PAT: 'abcde',
+    }
 
-      await run(jiraFetcherExecutable, undefined, {
-        env: env,
-      })
+    mockServer = new MockServer(options)
 
-      expect(
-        mockServer.getRequests('/rest/api/2/search', 'post').length,
-      ).toEqual(1)
-      expect(mockServer.getNumberOfRequests()).toEqual(1)
+    await run(jiraFetcherExecutable, undefined, {
+      env: env,
     })
+
+    expect(mockServer.getRequests('/rest/api/2/search', 'post').length).toEqual(
+      1,
+    )
+    expect(mockServer.getNumberOfRequests()).toEqual(1)
+  })
 })

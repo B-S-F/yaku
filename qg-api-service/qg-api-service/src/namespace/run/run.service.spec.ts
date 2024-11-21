@@ -25,12 +25,14 @@ import { RequestUser } from '../module.utils'
 import { NamespaceLocalIdService } from '../namespace/namespace-local-id.service'
 import { Namespace } from '../namespace/namespace.entity'
 import { WorkflowManager } from '../workflow/workflow-argo.service'
+import { BlobStore } from '../workflow/minio.service'
 import { Run, RunAuditService, RunResult, RunStatus } from './run.entity'
-import { RunService } from './run.service'
+import { EVIDENCEFILE, RESULTFILE, RunService } from './run.service'
 
 describe('RunService', () => {
   let service: RunService
   let workflowManager: WorkflowManager
+  let blobstore: BlobStore
   let repository: Repository<Run>
   let queryRunner: QueryRunner
 
@@ -48,34 +50,34 @@ describe('RunService', () => {
     return config
   }
 
-  const run: Run = {
-    globalId: 1,
-    namespace,
-    id: 1,
-    status: RunStatus.Completed,
-    overallResult: RunResult.Green,
-    argoNamespace: 'arrrrrrgl',
-    argoName: 'arrrrrrgl-42',
-    argoId: randomUUID(),
-    log: ['Worked great', 'Result: Green'],
-    creationTime: new Date('02 Dec 2022 13:35:00 GMT'),
-    completionTime: new Date('02 Dec 2022 13:35:45 GMT'),
-    storagePath: randomUUID(),
-    config: config(),
-  } as Run
+  const run = new Run()
+  run.globalId = 1
+  run.namespace = namespace
+  run.id = 1
+  run.status = RunStatus.Completed
+  run.overallResult = RunResult.Green
+  run.argoNamespace = 'arrrrrrgl'
+  run.argoName = 'arrrrrrgl-42'
+  run.argoId = randomUUID()
+  run.log = ['Worked great', 'Result: Green']
+  run.creationTime = new Date('02 Dec 2022 13:35:00 GMT')
+  run.completionTime = new Date('02 Dec 2022 13:35:45 GMT')
+  run.storagePath = randomUUID()
+  run.synthetic = false
+  run.config = config()
 
-  const run2: Run = {
-    globalId: 2,
-    namespace,
-    id: 2,
-    status: RunStatus.Running,
-    argoNamespace: 'arrrrrrgl',
-    argoName: 'arrrrrrgl-4711',
-    argoId: randomUUID(),
-    creationTime: new Date('02 Dec 2022 13:35:00 GMT'),
-    storagePath: randomUUID(),
-    config: config(),
-  } as Run
+  const run2 = new Run()
+  run2.globalId = 2
+  run2.namespace = namespace
+  run2.id = 2
+  run2.status = RunStatus.Running
+  run2.argoNamespace = 'arrrrrrgl'
+  run2.argoName = 'arrrrrrgl-4711'
+  run2.argoId = randomUUID()
+  run2.creationTime = new Date('02 Dec 2022 13:35:00 GMT')
+  run2.storagePath = randomUUID()
+  run.synthetic = false
+  run2.config = config()
 
   const actor = new RequestUser(
     '7341a294-7a51-4fdc-90c6-af58e6bea690',
@@ -112,6 +114,14 @@ describe('RunService', () => {
           },
         },
         {
+          provide: BlobStore,
+          useValue: {
+            uploadPayload: jest.fn(),
+            downloadResult: jest.fn(),
+            removePath: jest.fn(),
+          },
+        },
+        {
           provide: getRepositoryToken(Run),
           useValue: {
             findOne: jest.fn(),
@@ -138,7 +148,9 @@ describe('RunService', () => {
 
     service = module.get<RunService>(RunService)
     workflowManager = module.get<WorkflowManager>(WorkflowManager)
+    blobstore = module.get<BlobStore>(BlobStore)
     repository = module.get(getRepositoryToken(Run))
+
     queryRunner = {
       connect: jest.fn(),
       startTransaction: jest.fn(),
@@ -169,9 +181,7 @@ describe('RunService', () => {
     } as any
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
+  afterEach(() => jest.restoreAllMocks())
 
   it('should be defined', () => {
     expect(service).toBeDefined()
@@ -245,6 +255,7 @@ describe('RunService', () => {
           id,
           status,
           storagePath: randomUUID(),
+          synthetic: false,
           creationTime: new Date(Date.now()),
           argoNamespace: 'Arrrrgl22',
           config: currentConf,
@@ -273,11 +284,11 @@ describe('RunService', () => {
 
       expect(result.itemCount).toBe(100)
       expect(result.entities).toEqual(entities)
-      expect(querySpy).toBeCalledWith('runs')
+      expect(querySpy).toHaveBeenCalledWith('runs')
       expect(queryBuilderMock.andWhereValue).toBeNull()
-      expect(queryBuilderMock.getCount).toBeCalledTimes(1)
-      expect(queryBuilderMock.getRawAndEntities).toBeCalledTimes(1)
-      expect(listQueryHandler.addToQueryBuilder).toBeCalledWith(
+      expect(queryBuilderMock.getCount).toHaveBeenCalledTimes(1)
+      expect(queryBuilderMock.getRawAndEntities).toHaveBeenCalledTimes(1)
+      expect(listQueryHandler.addToQueryBuilder).toHaveBeenCalledWith(
         queryBuilderMock,
         'runs',
       )
@@ -298,14 +309,14 @@ describe('RunService', () => {
 
       expect(result.itemCount).toBe(100)
       expect(result.entities.length).toEqual(15)
-      expect(querySpy).toBeCalledWith('runs')
+      expect(querySpy).toHaveBeenCalledWith('runs')
       expect(queryBuilderMock.andWhereValue).toEqual({
         condition: 'ConfigEntity.id IN (:...cids)',
         criteria: { cids: ['1'] },
       })
-      expect(queryBuilderMock.getCount).toBeCalledTimes(1)
-      expect(queryBuilderMock.getRawAndEntities).toBeCalledTimes(1)
-      expect(listQueryHandler.addToQueryBuilder).toBeCalledWith(
+      expect(queryBuilderMock.getCount).toHaveBeenCalledTimes(1)
+      expect(queryBuilderMock.getRawAndEntities).toHaveBeenCalledTimes(1)
+      expect(listQueryHandler.addToQueryBuilder).toHaveBeenCalledWith(
         queryBuilderMock,
         'runs',
       )
@@ -326,14 +337,14 @@ describe('RunService', () => {
 
       expect(result.itemCount).toBe(100)
       expect(result.entities.length).toEqual(15)
-      expect(querySpy).toBeCalledWith('runs')
+      expect(querySpy).toHaveBeenCalledWith('runs')
       expect(queryBuilderMock.andWhereValue).toEqual({
         condition: `runs.globalId IN (Foo Bar)`,
         criteria: undefined,
       })
-      expect(queryBuilderMock.getCount).toBeCalledTimes(1)
-      expect(queryBuilderMock.getRawAndEntities).toBeCalledTimes(1)
-      expect(listQueryHandler.addToQueryBuilder).toBeCalledWith(
+      expect(queryBuilderMock.getCount).toHaveBeenCalledTimes(1)
+      expect(queryBuilderMock.getRawAndEntities).toHaveBeenCalledTimes(1)
+      expect(listQueryHandler.addToQueryBuilder).toHaveBeenCalledWith(
         queryBuilderMock,
         'runs',
       )
@@ -354,8 +365,8 @@ describe('RunService', () => {
           service.getList(testingNamespaceId, listQueryHandler),
         ).rejects.toThrow(BadRequestException)
         expect(queryBuilderMock.andWhereValue).toBeNull()
-        expect(queryBuilderMock.getCount).not.toBeCalled()
-        expect(queryBuilderMock.getRawAndEntities).not.toBeCalled()
+        expect(queryBuilderMock.getCount).not.toHaveBeenCalled()
+        expect(queryBuilderMock.getRawAndEntities).not.toHaveBeenCalled()
       }
     })
   })
@@ -367,11 +378,11 @@ describe('RunService', () => {
       const retrieved = await service.get(testingNamespaceId, run.id)
 
       expect(retrieved).toEqual(run)
-      expect(repoSpy).toBeCalledWith({
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: run.id },
         relations: ['config', 'namespace'],
       })
-      expect(workflowManager.updateRunIfFinished).not.toBeCalled()
+      expect(workflowManager.updateRunIfFinished).not.toHaveBeenCalled()
     })
 
     it('should throw NotFound if run is not available', async () => {
@@ -381,11 +392,11 @@ describe('RunService', () => {
         NotFoundException,
       )
 
-      expect(repoSpy).toBeCalledWith({
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: 666 },
         relations: ['config', 'namespace'],
       })
-      expect(workflowManager.updateRunIfFinished).not.toBeCalled()
+      expect(workflowManager.updateRunIfFinished).not.toHaveBeenCalled()
     })
 
     it('should check for run if the run is still running', async () => {
@@ -397,11 +408,11 @@ describe('RunService', () => {
       const retrieved = await service.get(testingNamespaceId, run2.id)
 
       expect(retrieved).toEqual(run2)
-      expect(repoSpy).toBeCalledWith({
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: run2.id },
         relations: ['config', 'namespace'],
       })
-      expect(mgrSpy).toBeCalledWith(run2)
+      expect(mgrSpy).toHaveBeenCalledWith(run2)
     })
 
     it('should handle an error in checking a running run by returning the retrieved database object', async () => {
@@ -413,11 +424,11 @@ describe('RunService', () => {
       const retrieved = await service.get(testingNamespaceId, run2.id)
 
       expect(retrieved).toEqual(run2)
-      expect(repoSpy).toBeCalledWith({
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: run2.id },
         relations: ['config', 'namespace'],
       })
-      expect(mgrSpy).toBeCalledWith(run2)
+      expect(mgrSpy).toHaveBeenCalledWith(run2)
     })
 
     it('should return after 2 seconds when updateRunIfFinished takes to long without update', async () => {
@@ -439,12 +450,12 @@ describe('RunService', () => {
       const retrieved = await service.get(testingNamespaceId, run2.id)
 
       expect(retrieved).toEqual(run2)
-      expect(repoSpy).toBeCalledWith({
+      expect(repoSpy).toHaveBeenCalledWith({
         where: { namespace: { id: testingNamespaceId }, id: run2.id },
         relations: ['config', 'namespace'],
       })
-      expect(mgrSpy).toBeCalledWith(run2)
-      expect(logSpy).toBeCalledWith(
+      expect(mgrSpy).toHaveBeenCalledWith(run2)
+      expect(logSpy).toHaveBeenCalledWith(
         'Could not check workflow state for run 2 (1:2), error was Error: Timeout',
       )
     })
@@ -476,6 +487,7 @@ describe('RunService', () => {
       expect(retrieved.namespace).toEqual(namespace)
       expect(retrieved.storagePath).toBeDefined()
       expect(retrieved.status).toBe(RunStatus.Pending)
+      expect(retrieved.synthetic).toBe(false)
       expect(retrieved.creationTime).toEqual(new Date())
       expect(retrieved.id).toBe(66)
       expect(retrieved.globalId).toBe(4711)
@@ -486,11 +498,14 @@ describe('RunService', () => {
       expect(retrieved.log).toBeUndefined()
       expect(retrieved.completionTime).toBeUndefined()
 
-      expect(cfgMock).toBeCalledWith(testingNamespaceId, 1)
-      expect(idMock).toBeCalled()
-      expect(queryRunner.manager.create).toBeCalled()
-      expect(queryRunner.manager.save).toBeCalledWith(Run, retrieved)
-      expect(workflowManager.run).toBeCalledWith(retrieved, { environment: {} })
+      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
+      expect(idMock).toHaveBeenCalled()
+      expect(queryRunner.manager.create).toHaveBeenCalled()
+      expect(queryRunner.manager.save).toHaveBeenCalledWith(Run, retrieved)
+      expect(workflowManager.run).toHaveBeenCalledWith(retrieved, {
+        environment: {},
+      })
+      verifySuccessfullTransaction(queryRunner)
     })
 
     it(`should call the WorkflowManger with environment variables`, async () => {
@@ -508,16 +523,17 @@ describe('RunService', () => {
         environment: envs,
       })
 
-      expect(cfgMock).toBeCalledWith(testingNamespaceId, 1)
-      expect(idMock).toBeCalled()
-      expect(queryRunner.manager.create).toBeCalled()
-      expect(queryRunner.manager.save).toBeCalledWith(Run, retrieved)
-      expect(workflowManager.run).toBeCalledWith(retrieved, {
+      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
+      expect(idMock).toHaveBeenCalled()
+      expect(queryRunner.manager.create).toHaveBeenCalled()
+      expect(queryRunner.manager.save).toHaveBeenCalledWith(Run, retrieved)
+      expect(workflowManager.run).toHaveBeenCalledWith(retrieved, {
         environment: {
           TEST_KEY1: 'TEST_VALUE1',
           TEST_KEY2: 'TEST_VALUE2',
         },
       })
+      verifySuccessfullTransaction(queryRunner)
     })
 
     it('should call the workflow manager with a single check option', async () => {
@@ -541,6 +557,7 @@ describe('RunService', () => {
       expect(retrieved.namespace).toEqual(namespace)
       expect(retrieved.storagePath).toBeDefined()
       expect(retrieved.status).toBe(RunStatus.Pending)
+      expect(retrieved.synthetic).toBe(false)
       expect(retrieved.creationTime).toEqual(new Date())
       expect(retrieved.id).toBe(66)
       expect(retrieved.globalId).toBe(4711)
@@ -551,11 +568,12 @@ describe('RunService', () => {
       expect(retrieved.log).toBeUndefined()
       expect(retrieved.completionTime).toBeUndefined()
 
-      expect(cfgMock).toBeCalledWith(testingNamespaceId, 1)
-      expect(idMock).toBeCalled()
-      expect(queryRunner.manager.create).toBeCalled()
-      expect(queryRunner.manager.save).toBeCalledWith(Run, retrieved)
-      expect(workflowManager.run).toBeCalledWith(retrieved, options)
+      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
+      expect(idMock).toHaveBeenCalled()
+      expect(queryRunner.manager.create).toHaveBeenCalled()
+      expect(queryRunner.manager.save).toHaveBeenCalledWith(Run, retrieved)
+      expect(workflowManager.run).toHaveBeenCalledWith(retrieved, options)
+      verifySuccessfullTransaction(queryRunner)
     })
 
     it('should throw NotFound on a non-existing config', async () => {
@@ -567,11 +585,91 @@ describe('RunService', () => {
         service.create(testingNamespaceId, 1, actor),
       ).rejects.toThrow(NotFoundException)
 
-      expect(cfgMock).toBeCalledWith(testingNamespaceId, 1)
-      expect(idService.nextId).not.toBeCalled()
-      expect(queryRunner.manager.create).not.toBeCalled()
-      expect(queryRunner.manager.save).not.toBeCalled()
-      expect(workflowManager.run).not.toBeCalled()
+      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
+      expect(idService.nextId).not.toHaveBeenCalled()
+      expect(queryRunner.manager.create).not.toHaveBeenCalled()
+      expect(queryRunner.manager.save).not.toHaveBeenCalled()
+      expect(workflowManager.run).not.toHaveBeenCalled()
+      verifyFailedTransaction(queryRunner)
+    })
+  })
+
+  describe('Create synthetic Run', () => {
+    let configsService: ConfigsService
+    let idService: NamespaceLocalIdService
+
+    const data = {}
+    data[RESULTFILE] = `overallStatus: RED
+    `
+    data[EVIDENCEFILE] = Buffer.from('some data that represents evidences')
+
+    beforeEach(() => {
+      jest.useFakeTimers()
+      configsService = module.get<ConfigsService>(ConfigsService)
+      idService = module.get<NamespaceLocalIdService>(NamespaceLocalIdService)
+    })
+
+    afterEach(() => {
+      jest.useRealTimers()
+    })
+
+    it('should create a synthetic Run', async () => {
+      const cfgMock = jest
+        .spyOn(configsService, 'getConfig')
+        .mockResolvedValue(config())
+      const idMock = jest.spyOn(idService, 'nextId').mockResolvedValue(66)
+      const blobstoreSpy = jest.spyOn(blobstore, 'uploadPayload')
+
+      const retrieved = await service.createSynthetic(
+        namespace.id,
+        config().id,
+        data,
+        actor,
+      )
+
+      expect(retrieved.config).toEqual(config())
+      expect(retrieved.namespace).toEqual(namespace)
+      expect(retrieved.storagePath).toBeDefined()
+      expect(retrieved.status).toBe(RunStatus.Completed)
+      expect(retrieved.synthetic).toBe(true)
+      expect(retrieved.creationTime).toEqual(new Date())
+      expect(retrieved.id).toBe(66)
+      expect(retrieved.globalId).toBe(4711)
+      expect(retrieved.overallResult).toEqual(RunResult.Red)
+      expect(retrieved.argoNamespace).toBeUndefined()
+      expect(retrieved.argoName).toBeUndefined()
+      expect(retrieved.argoId).toBeUndefined()
+      expect(retrieved.log).toBeUndefined()
+      expect(retrieved.completionTime).toEqual(new Date())
+
+      expect(blobstoreSpy).toHaveBeenNthCalledWith(1, expect.anything(), {
+        'qg-result.yaml': data[RESULTFILE],
+      })
+      expect(blobstoreSpy).toHaveBeenNthCalledWith(2, expect.anything(), {
+        'evidences.zip': data[EVIDENCEFILE],
+      })
+      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
+      expect(idMock).toHaveBeenCalled()
+      expect(queryRunner.manager.create).toHaveBeenCalled()
+      expect(queryRunner.manager.save).toHaveBeenCalledWith(Run, retrieved)
+      verifySuccessfullTransaction(queryRunner)
+    })
+
+    it('should throw NotFound on a non-existing config', async () => {
+      const cfgMock = jest
+        .spyOn(configsService, 'getConfig')
+        .mockRejectedValue(new NotFoundException())
+
+      await expect(
+        service.create(testingNamespaceId, 1, actor),
+      ).rejects.toThrow(NotFoundException)
+
+      expect(cfgMock).toHaveBeenCalledWith(testingNamespaceId, 1)
+      expect(idService.nextId).not.toHaveBeenCalled()
+      expect(queryRunner.manager.create).not.toHaveBeenCalled()
+      expect(queryRunner.manager.save).not.toHaveBeenCalled()
+      expect(workflowManager.run).not.toHaveBeenCalled()
+      verifyFailedTransaction(queryRunner)
     })
   })
 
@@ -587,8 +685,8 @@ describe('RunService', () => {
       const result = await service.getResult(testingNamespaceId, run.id)
 
       expect(await streamToString(result)).toBe(content)
-      expect(service.get).toBeCalledWith(testingNamespaceId, run.id)
-      expect(workflowManager.downloadResult).toBeCalledWith(
+      expect(service.get).toHaveBeenCalledWith(testingNamespaceId, run.id)
+      expect(workflowManager.downloadResult).toHaveBeenCalledWith(
         run.storagePath,
         'qg-result.yaml',
       )
@@ -603,8 +701,8 @@ describe('RunService', () => {
       const result = await service.getEvidence(testingNamespaceId, run.id)
 
       expect(await streamToString(result)).toBe(content)
-      expect(service.get).toBeCalledWith(testingNamespaceId, run.id)
-      expect(workflowManager.downloadResult).toBeCalledWith(
+      expect(service.get).toHaveBeenCalledWith(testingNamespaceId, run.id)
+      expect(workflowManager.downloadResult).toHaveBeenCalledWith(
         run.storagePath,
         'evidences.zip',
       )
@@ -617,8 +715,8 @@ describe('RunService', () => {
         service.getResult(testingNamespaceId, run2.id),
       ).rejects.toThrow(BadRequestException)
 
-      expect(service.get).toBeCalledWith(testingNamespaceId, run2.id)
-      expect(workflowManager.downloadResult).not.toBeCalled()
+      expect(service.get).toHaveBeenCalledWith(testingNamespaceId, run2.id)
+      expect(workflowManager.downloadResult).not.toHaveBeenCalled()
     })
   })
 
@@ -628,8 +726,8 @@ describe('RunService', () => {
 
       await service.delete(testingNamespaceId, run.id, actor)
 
-      expect(workflowManager.deleteWorkflowArtifacts).toBeCalledWith(run)
-      expect(queryRunner.manager.remove).toBeCalledWith(run)
+      expect(workflowManager.deleteWorkflowArtifacts).toHaveBeenCalledWith(run)
+      expect(queryRunner.manager.remove).toHaveBeenCalledWith(run)
     })
 
     it('should not do anything on unknown run', async () => {
@@ -637,8 +735,8 @@ describe('RunService', () => {
 
       await service.delete(testingNamespaceId, run.id, actor)
 
-      expect(workflowManager.deleteWorkflowArtifacts).not.toBeCalled()
-      expect(queryRunner.manager.remove).not.toBeCalled()
+      expect(workflowManager.deleteWorkflowArtifacts).not.toHaveBeenCalled()
+      expect(queryRunner.manager.remove).not.toHaveBeenCalled()
     })
 
     it('should throw BadRequest, if run is in state Running', async () => {
@@ -648,8 +746,8 @@ describe('RunService', () => {
         service.delete(testingNamespaceId, run.id, actor),
       ).rejects.toThrow(BadRequestException)
 
-      expect(workflowManager.deleteWorkflowArtifacts).not.toBeCalled()
-      expect(queryRunner.manager.remove).not.toBeCalled()
+      expect(workflowManager.deleteWorkflowArtifacts).not.toHaveBeenCalled()
+      expect(queryRunner.manager.remove).not.toHaveBeenCalled()
     })
 
     it('should pass unexpected errors', async () => {
@@ -659,8 +757,8 @@ describe('RunService', () => {
         service.delete(testingNamespaceId, run.id, actor),
       ).rejects.toThrow()
 
-      expect(workflowManager.deleteWorkflowArtifacts).not.toBeCalled()
-      expect(queryRunner.manager.remove).not.toBeCalled()
+      expect(workflowManager.deleteWorkflowArtifacts).not.toHaveBeenCalled()
+      expect(queryRunner.manager.remove).not.toHaveBeenCalled()
     })
   })
 
@@ -676,8 +774,22 @@ describe('RunService', () => {
       )
       const callback = service.getNamespaceCreatedCallback()
       callback(1)
-      expect(idService.initializeIdCreation).toBeCalledTimes(1)
-      expect(idService.initializeIdCreation).toBeCalledWith('Run', 1)
+      expect(idService.initializeIdCreation).toHaveBeenCalledTimes(1)
+      expect(idService.initializeIdCreation).toHaveBeenCalledWith('Run', 1)
     })
   })
 })
+
+function verifySuccessfullTransaction(queryRunner: QueryRunner) {
+  expect(queryRunner.startTransaction).toHaveBeenCalled()
+  expect(queryRunner.commitTransaction).toHaveBeenCalled()
+  expect(queryRunner.release).toHaveBeenCalled()
+  expect(queryRunner.rollbackTransaction).not.toHaveBeenCalled()
+}
+
+function verifyFailedTransaction(queryRunner: QueryRunner) {
+  expect(queryRunner.startTransaction).toHaveBeenCalled()
+  expect(queryRunner.commitTransaction).not.toHaveBeenCalled()
+  expect(queryRunner.release).toHaveBeenCalled()
+  expect(queryRunner.rollbackTransaction).toHaveBeenCalled()
+}
