@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 
 import { HttpStatus } from '@nestjs/common'
-import { DefaultBodyType, MockedRequest } from 'msw'
 import { SetupServer, setupServer } from 'msw/node'
 import * as supertest from 'supertest'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -52,7 +51,7 @@ describe('POST run', () => {
   let testNamespace: NamespaceTestEnvironment
 
   let server: SetupServer
-  let allRequests: MockedRequest<DefaultBodyType>[] = []
+  let allRequests: Request[] = []
   let nestTestingApp: NestTestingApp
 
   let apiToken
@@ -69,9 +68,10 @@ describe('POST run', () => {
     server = setupServer(...handlers)
     server.listen()
     allRequests = []
-    server.events.on('request:start', (req) => {
-      if (!req.url.host.match(/localhost|127\.0\.0\.1/)) {
-        allRequests.push(req)
+    server.events.on('request:start', ({ request }) => {
+      const url = new URL(request.url)
+      if (!url.host.match(/localhost|127\.0\.0\.1/)) {
+        allRequests.push(request)
       }
     })
 
@@ -82,7 +82,7 @@ describe('POST run', () => {
 
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'uploadPayload'
+      'uploadPayload',
     ).mockImplementation(() => Promise.resolve())
   })
 
@@ -268,7 +268,7 @@ describe('POST run', () => {
   }
 
   async function checkArgoRequest(
-    request: MockedRequest<DefaultBodyType>,
+    request: Request,
     expectedEnvs: { [s: string]: any },
   ): Promise<void> {
     const requestBody: any = await request.json()

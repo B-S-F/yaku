@@ -4,7 +4,6 @@
 
 import { HttpStatus } from '@nestjs/common'
 import { readFile } from 'fs/promises'
-import { DefaultBodyType, MockedRequest } from 'msw'
 import { SetupServer, setupServer } from 'msw/node'
 import * as path from 'path'
 import { Readable } from 'stream'
@@ -21,7 +20,7 @@ import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
 
 describe('Metrics Controller', () => {
   let nestTestingApp: NestTestingApp
-  let allRequests: MockedRequest<DefaultBodyType>[] = []
+  let allRequests: Request[] = []
   let server: SetupServer
 
   let apiToken
@@ -38,9 +37,10 @@ describe('Metrics Controller', () => {
     server = setupServer(...handlers)
     server.listen()
     allRequests = []
-    server.events.on('request:start', (req) => {
-      if (!req.url.host.match(/localhost|127\.0\.0\.1/)) {
-        allRequests.push(req)
+    server.events.on('request:start', ({ request }) => {
+      const url = new URL(request.url)
+      if (!url.host.match(/localhost|127\.0\.0\.1/)) {
+        allRequests.push(request)
       }
     })
 
@@ -50,7 +50,7 @@ describe('Metrics Controller', () => {
     ).mockImplementation(() => Promise.resolve({}))
     vi.spyOn(
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
-      'uploadPayload'
+      'uploadPayload',
     ).mockImplementation(() => {
       return Promise.resolve()
     })
