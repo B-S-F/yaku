@@ -6,7 +6,7 @@
 import baseConfig from '@B-S-F/eslint-config/eslint-preset.js';
 
 export default {
-  ...baseConfig[0], 
+  ...baseConfig[0],
   rules: {
     ...baseConfig[0].rules,
     "no-control-regex": 0,
