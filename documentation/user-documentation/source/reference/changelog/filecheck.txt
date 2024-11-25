@@ -1,0 +1,4 @@
+## Version 0.2.2 (2024-01-25)
+
+### Improvements
+- Catch empty file argument for `filecheck exists`

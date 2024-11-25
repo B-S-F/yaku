@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
+- file: 'example-document.txt'
+  rules:
+    - property: 'Modified'
+      is-not-older-than: "2023-01-01" # This fixed date is only for the tutorial, better use a range like "1 year"

@@ -1,0 +1,3 @@
+## Version 0.8.0 (2024-09-17)
+
+- Improve error message if SharePoint evaluator doesn't find a file

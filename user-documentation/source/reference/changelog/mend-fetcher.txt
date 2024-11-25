@@ -1,3 +1,0 @@
-## Version 0.7.0 (2023-12-05)
-
-- feat: added support for fetching reports of multiple projects (#353)

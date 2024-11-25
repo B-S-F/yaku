@@ -10,7 +10,7 @@ on:
       - synchronize
       - reopened
     paths:
-      - user-documentation/**
+      - documentation/user-documentation/**
 
 permissions:
   contents: read
@@ -32,15 +32,15 @@ jobs:
         id: cache-venv
         name: Cache virtual environment
         with:
-          path: user-documentation/.venv/
-          key: user-documentation-venv-${{ hashFiles('user-documentation/requirements.lock', 'user-documentation/Makefile') }}
+          path: documentation/user-documentation/.venv/
+          key: user-documentation-venv-${{ hashFiles('documentation/user-documentation/requirements.lock', 'documentation/user-documentation/Makefile') }}
       - name: Setup virtual environment
         if: ${{ steps.cache-venv.outputs.cache-hit != 'true' }}
         run: |
           make -C user-documentation prepare
       - name: Sphinx Build
         run: |
-          make -C user-documentation openapi
-          make -C user-documentation html
+          make -C documentation/user-documentation openapi
+          make -C documentation/user-documentation html
         env:
           SPHINXOPTS: '-W'
