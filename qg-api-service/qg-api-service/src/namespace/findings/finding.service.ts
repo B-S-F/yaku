@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   HttpException,
   HttpStatus,
@@ -55,12 +59,12 @@ export class FindingService {
     @Inject(MetricService)
     private readonly metricService: MetricService,
     @Inject(UsersService)
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
   ) {}
 
   async getAllFindings(
     namespaceIds: number | number[],
-    paginateQueryOptions: ListQueryHandler
+    paginateQueryOptions: ListQueryHandler,
   ): Promise<EntityList<GetFindingDTO>> {
     let findingsQB = this.findingRepository.createQueryBuilder('findings')
     if (Array.isArray(namespaceIds)) {
@@ -68,7 +72,7 @@ export class FindingService {
         'findings.namespaceId IN (:...namespaceIds)',
         {
           namespaceIds,
-        }
+        },
       )
     } else {
       findingsQB = findingsQB.where('findings.namespaceId = (:namespaceIds)', {
@@ -85,7 +89,7 @@ export class FindingService {
         .map((unknown) => unknown.property)
       if (unknownFilters.length > 0) {
         throw new BadRequestException(
-          `Filtering for properties [${unknownFilters}] not supported`
+          `Filtering for properties [${unknownFilters}] not supported`,
         )
       }
       for (const option of filters) {
@@ -123,7 +127,7 @@ export class FindingService {
             break
           default:
             throw new BadRequestException(
-              `Filtering for properties [${unknownFilters}] not supported`
+              `Filtering for properties [${unknownFilters}] not supported`,
             )
         }
       }
@@ -146,7 +150,7 @@ export class FindingService {
 
   async getFindingById(
     namespaceId: number,
-    findingId: string
+    findingId: string,
   ): Promise<GetFindingDTO> {
     const finding = await this.findingRepository
       .createQueryBuilder('findings')
@@ -158,14 +162,14 @@ export class FindingService {
       return findingDto
     }
     throw new NotFoundException(
-      `Finding with id: ${findingId} not found in namespace ${namespaceId}`
+      `Finding with id: ${findingId} not found in namespace ${namespaceId}`,
     )
   }
 
   async handleFindingOccurrence(
     namespaceId: number,
     incomingFinding: CreateFindingDTO,
-    existingFinding: Finding
+    existingFinding: Finding,
   ): Promise<GetFindingDTO> {
     let updateFindingDto: UpdateFindingDTO = {
       occurrenceCount: existingFinding.occurrenceCount + 1,
@@ -192,24 +196,24 @@ export class FindingService {
         namespaceId,
         existingFinding.id,
         updateFindingDto,
-        false
+        false,
       )
       this.logger.debug(
-        `Finding found: ${existingFinding.id}. Increasing number of occurrences.`
+        `Finding found: ${existingFinding.id}. Increasing number of occurrences.`,
       )
       return result
     } catch (error: any) {
       this.logger.debug(
-        `Failed to update finding with id: ${existingFinding.id}. Number of occurrences failed to increment`
+        `Failed to update finding with id: ${existingFinding.id}. Number of occurrences failed to increment`,
       )
       throw new NotFoundException(
-        `Finding with id: ${existingFinding.id} not found`
+        `Finding with id: ${existingFinding.id} not found`,
       )
     }
   }
 
   async toFindingDtoWithProperResolver(
-    finding: Finding
+    finding: Finding,
   ): Promise<GetFindingDTO> {
     const findingDto = new GetFindingDTO(finding)
 
@@ -244,7 +248,7 @@ export class FindingService {
         await this.checkFindingsForOccurrences(run, resultData)
       } catch (error) {
         this.logger.log(
-          `Processing of Findings failed at run with id: ${run.id} due to ${error.message}`
+          `Processing of Findings failed at run with id: ${run.id} due to ${error.message}`,
         )
       }
 
@@ -252,12 +256,12 @@ export class FindingService {
         await this.createRunMetrics(run)
       } catch (error) {
         this.logger.log(
-          `Propagating Metrics failed at run with id: ${run.id} to tue ${error.me}`
+          `Propagating Metrics failed at run with id: ${run.id} to tue ${error.me}`,
         )
       }
     } else
       this.logger.log(
-        `Findings and Metrics of the run: ${run.id} will not be processed due to run incomplete status`
+        `Findings and Metrics of the run: ${run.id} will not be processed due to run incomplete status`,
       )
   }
 
@@ -288,7 +292,7 @@ export class FindingService {
       {},
       ...findingsBeforeConsumption.map((element) => ({
         [element.uniqueIdHash]: element,
-      }))
+      })),
     )
     const hashSet = new Set<string>()
 
@@ -303,7 +307,7 @@ export class FindingService {
       }
       const findingDto: CreateFindingDTO = createFindingDto(
         runData,
-        findingQgResult
+        findingQgResult,
       )
 
       // Generate the SHA256 hash
@@ -349,7 +353,7 @@ export class FindingService {
       {},
       ...findingsAfterConsumption.map((element) => ({
         [element.uniqueIdHash]: element,
-      }))
+      })),
     )
     await this.resolveFindings(dictionaryBefore, dictionaryAfter, runData)
   }
@@ -357,7 +361,7 @@ export class FindingService {
   async resolveFindings(
     findingsBeforeConsumption: any,
     findingsAfterConsumption: any,
-    lastRun: Run
+    lastRun: Run,
   ): Promise<void> {
     for (const key in findingsBeforeConsumption) {
       if (
@@ -376,20 +380,20 @@ export class FindingService {
         }
         try {
           this.logger.debug(
-            `Attempting to automatically resolve finding: ${findingsBeforeConsumption[key].id}.`
+            `Attempting to automatically resolve finding: ${findingsBeforeConsumption[key].id}.`,
           )
           await this.updateFinding(
             findingsBeforeConsumption[key].namespaceId,
             findingsBeforeConsumption[key].id,
             updateFindingDto,
-            false
+            false,
           )
         } catch (error) {
           this.logger.error(
-            `Error while automatically resolving finding: ${error.message}`
+            `Error while automatically resolving finding: ${error.message}`,
           )
           throw new Error(
-            `Error while automatically resolving findings: ${error.message}`
+            `Error while automatically resolving findings: ${error.message}`,
           )
         }
       }
@@ -399,11 +403,11 @@ export class FindingService {
   async createFinding(
     namespaceId: number,
     createFindingDto: CreateFindingDTO,
-    hash: string
+    hash: string,
   ): Promise<GetFindingDTO> {
     if (createFindingDto.resolver !== undefined) {
       throw new Error(
-        'Invariant violated: Newly created finding has a resolver but should not.'
+        'Invariant violated: Newly created finding has a resolver but should not.',
       )
     }
 
@@ -418,11 +422,11 @@ export class FindingService {
         return await this.handleFindingOccurrence(
           namespaceId,
           createFindingDto,
-          existingFinding
+          existingFinding,
         )
       } catch (error: any) {
         throw new Error(
-          `Failed to handle the existing findings due to: ${error.message}`
+          `Failed to handle the existing findings due to: ${error.message}`,
         )
       }
     } else {
@@ -445,12 +449,12 @@ export class FindingService {
     namespaceId: number,
     findingId: string,
     updateFindingDto: UpdateFindingDTO,
-    propagateMetrics = true
+    propagateMetrics = true,
   ): Promise<GetFindingDTO> {
     if (updateFindingDto.status === 'resolved') {
       if (!updateFindingDto.resolver) {
         throw new BadRequestException(
-          'Resolver cannot be null if the status will be changed to resolved'
+          'Resolver cannot be null if the status will be changed to resolved',
         )
       }
       updateFindingDto.resolvedDate = new Date().toISOString()
@@ -466,7 +470,7 @@ export class FindingService {
         const user = await this.usersService.getUser(updateFindingDto.resolver)
         if (user.id === DELETED_USER.id) {
           throw new BadRequestException(
-            `Resolver does not exist, resolver ${updateFindingDto.resolver}`
+            `Resolver does not exist, resolver ${updateFindingDto.resolver}`,
           )
         }
         updateFindingDto.resolver = user.id
@@ -477,12 +481,12 @@ export class FindingService {
         id: findingId,
         namespaceId: namespaceId,
       },
-      updateFindingDto
+      updateFindingDto,
     )
 
     if (!updatedFinding.affected) {
       throw new NotFoundException(
-        `Finding with id: ${findingId} not found in namespace ${namespaceId}`
+        `Finding with id: ${findingId} not found in namespace ${namespaceId}`,
       )
     }
     const finding = await this.findingRepository.findOneBy({ id: findingId })
@@ -499,7 +503,7 @@ export class FindingService {
         await this.metricService.updateFindingMetric(
           namespaceId,
           findingId,
-          updateMetricDTO
+          updateMetricDTO,
         )
       }
 
@@ -515,7 +519,7 @@ export class FindingService {
     if (!deletedFinding.affected) {
       throw new HttpException(
         `Finding with id: ${findingId} was not found in namespace ${namespaceId}`,
-        HttpStatus.NOT_FOUND
+        HttpStatus.NOT_FOUND,
       )
     }
     return { deleted: true }
@@ -548,13 +552,13 @@ export class FindingService {
         const { id } = finding
         try {
           this.logger.log(
-            `Attempting to delete finding with id: ${id} from namespace with namespaceId: ${namespaceId}`
+            `Attempting to delete finding with id: ${id} from namespace with namespaceId: ${namespaceId}`,
           )
           await this.deleteFinding(namespaceId, id)
           this.logger.log(`Successful delete`)
         } catch (error) {
           throw new Error(
-            `Failed to delete finding with id: ${id} from namespace with namespaceId: ${namespaceId} due to ${error.message}`
+            `Failed to delete finding with id: ${id} from namespace with namespaceId: ${namespaceId} due to ${error.message}`,
           )
         }
       }

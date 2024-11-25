@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 workItems:
   query: "SELECT [System.Id], [System.State] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.WorkItemType] == 'Task'"
   neededFields:
@@ -10,17 +14,17 @@ workItems:
       state:
         fieldName: "State"
         conditions:
-          resolvedValues: 
+          resolvedValues:
             - "Closed"
       assignees:
         fieldName: "AssignedTo"
         conditions:
-          expectedValues: 
+          expectedValues:
             - "Name"
       bugType:
         fieldName: "BugType"
         conditions:
           illegalValues:
-            - "Critical" 
-          resolvedValues: 
+            - "Critical"
+          resolvedValues:
             - "Resolved"

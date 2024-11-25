@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Injectable } from '@nestjs/common'
 import {
   Column,
@@ -114,24 +118,24 @@ export class OverrideAuditService extends AuditService<OverrideAuditEntity> {
     timestamp: Date,
     amount: number,
     direction: 'before' | 'after',
-    entityManager: EntityManager
+    entityManager: EntityManager,
   ): Promise<OverrideAuditEntity[]> {
     const queryBuilder = entityManager.createQueryBuilder(
       OverrideAuditEntity,
-      'override_audit'
+      'override_audit',
     )
     queryBuilder.where('"namespaceId" = :namespaceId', { namespaceId })
     queryBuilder.andWhere(
       `(original->'release'->'id' = :releaseId OR modified->'release'->'id' = :releaseId)`,
-      { releaseId }
+      { releaseId },
     )
     queryBuilder.andWhere(
       `"modificationTime" ${direction === 'before' ? '<' : '>'} :timestamp`,
-      { timestamp }
+      { timestamp },
     )
     queryBuilder.orderBy(
       '"modificationTime"',
-      direction === 'before' ? 'DESC' : 'ASC'
+      direction === 'before' ? 'DESC' : 'ASC',
     )
     queryBuilder.limit(amount)
     return await queryBuilder.getMany()

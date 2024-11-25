@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
 import {
   CanActivate,
@@ -24,7 +28,7 @@ export class RolesGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.getAllAndOverride<string[]>(
       ROLES_KEY,
-      [context.getHandler(), context.getClass()]
+      [context.getHandler(), context.getClass()],
     )
     if (!requiredRoles || requiredRoles.length === 0) {
       return true
@@ -33,7 +37,7 @@ export class RolesGuard implements CanActivate {
     if (!request.user) return false
 
     const hasRole = requiredRoles.some((role) =>
-      rolesOf(request.user).includes(role)
+      rolesOf(request.user).includes(role),
     )
     if (hasRole) {
       request.requiresRoles = requiredRoles

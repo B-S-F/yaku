@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { jest } from '@jest/globals'
 import { AssertionError } from 'assert'
 import {
@@ -91,7 +95,7 @@ describe('Common functions of client lib', () => {
         await expect(testfct(data)).rejects.toThrow()
 
         expect(console.log).not.toBeCalled()
-      }
+      },
     )
   })
 
@@ -111,7 +115,7 @@ describe('Common functions of client lib', () => {
         `Error:\n` +
           `  Statuscode:    400\n` +
           `  Message:       ${message}\n` +
-          `  Url:           ${restError.url}`
+          `  Url:           ${restError.url}`,
       )
       expect(mockExit).toBeCalledWith(1)
     })
@@ -127,7 +131,7 @@ describe('Common functions of client lib', () => {
       jest.spyOn(console, 'log')
       expect(() => handleRestApiError(error)).toThrow(error)
       expect(console.log).toBeCalledWith(
-        `Error:\n` + `  Message:       ${message}`
+        `Error:\n` + `  Message:       ${message}`,
       )
       expect(mockExit).toBeCalledWith(1)
     })
@@ -143,7 +147,7 @@ describe('Common functions of client lib', () => {
         const client: any = { baseUrl: 'Dummy', token: 'Dummy' }
         const namespace = 1
         expect(handleStandardParams(client, namespace, id, name)).toBe(result)
-      }
+      },
     )
 
     it('should return 0 for not given id and name', () => {
@@ -163,12 +167,12 @@ describe('Common functions of client lib', () => {
         name: string,
         client: any,
         namespace: number | undefined,
-        id: string
+        id: string,
       ) => {
         expect(() => handleStandardParams(client, namespace, id, name)).toThrow(
-          AssertionError
+          AssertionError,
         )
-      }
+      },
     )
   })
 
@@ -188,13 +192,13 @@ describe('Common functions of client lib', () => {
       (
         filterString: string,
         expectedProperty: string | undefined,
-        expectedValues: string[] | undefined
+        expectedValues: string[] | undefined,
       ) => {
         expect(parseFilterOption(filterString)).toEqual({
           filterProperty: expectedProperty,
           filterValues: expectedValues,
         })
-      }
+      },
     )
   })
 

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { MockServerOptions } from '../../../../../integration-tests/src/util'
 
 export const githubStartCommitEndpoint =

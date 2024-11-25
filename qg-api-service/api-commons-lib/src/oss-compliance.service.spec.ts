@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as path from 'path'
@@ -12,7 +16,7 @@ describe('OSSComplianceService', () => {
   const testfile = path.join(
     __dirname,
     'testdata',
-    'oss-compliance.service.testfile.json'
+    'oss-compliance.service.testfile.json',
   )
   const componentMap = {
     comp1: path.join(__dirname, 'testdata', 'fileForComp1.txt'),
@@ -47,19 +51,19 @@ describe('OSSComplianceService', () => {
 
   it('should return proper values', async () => {
     expect((await service.getSBOM()).toString('utf-8')).toBe(
-      '{\n  "text": "Some String"\n}\n'
+      '{\n  "text": "Some String"\n}\n',
     )
   })
 
   it('should extract the filename of the sbom file properly from the given path', () => {
     expect(service.getSBOMFilename()).toBe(
-      'oss-compliance.service.testfile.json'
+      'oss-compliance.service.testfile.json',
     )
   })
 
   it('should return all component names from the component map', () => {
     expect(service.getComponentsWithSources()).toEqual(
-      Object.keys(componentMap)
+      Object.keys(componentMap),
     )
   })
 
@@ -74,7 +78,7 @@ describe('OSSComplianceService', () => {
 
   it('should throw a NotFound, in case of an unknown configuration', async () => {
     await expect(service.getSourceForComponent('comp3')).rejects.toThrow(
-      NotFoundException
+      NotFoundException,
     )
   })
 

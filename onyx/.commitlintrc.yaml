@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 --- # The rules below have been manually copied from @commitlint/config-conventional
 # and match the v1.0.0 specification:
 # https://www.conventionalcommits.org/en/v1.0.0/#specification

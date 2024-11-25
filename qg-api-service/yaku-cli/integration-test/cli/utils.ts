@@ -1,9 +1,13 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { RunProcessResult, run } from './process'
 
 export class CommandFacade {
   constructor(
     protected executablePath: string,
-    protected runtimeConfig = '.yakurc'
+    protected runtimeConfig = '.yakurc',
   ) {}
 
   public async runCommand(command: string): Promise<RunProcessResult> {

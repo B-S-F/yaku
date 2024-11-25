@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   CanActivate,
   ExecutionContext,
@@ -24,17 +28,17 @@ export class CoreAuthGuard implements CanActivate {
         },
       },
     }),
-    {}
+    {},
   )
 
   constructor(
     @Inject(KeyCloakAuthGuard) private readonly keyCloakAuthGuard,
     @Inject(LongRunningTokenAuthGuard)
-    private readonly longRunningTokenAuthGuard
+    private readonly longRunningTokenAuthGuard,
   ) {}
 
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     return this.checkAccess(context)
   }

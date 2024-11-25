@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException } from '@nestjs/common'
 import { SelectQueryBuilder } from 'typeorm'
 
@@ -31,7 +35,7 @@ export function parseFilter(filter: string[] | string): FilterOption[] {
     const splittedFilterExpression = filterExpression.split('=')
     if (splittedFilterExpression.length !== 2) {
       throw new BadRequestException(
-        `Could not parse the given filter parameter, it does not follow the pattern 'property = value': ${filterExpression}`
+        `Could not parse the given filter parameter, it does not follow the pattern 'property = value': ${filterExpression}`,
       )
     }
     const property = splittedFilterExpression[0].trim()
@@ -42,7 +46,7 @@ export function parseFilter(filter: string[] | string): FilterOption[] {
       .filter((value) => Boolean(value))
     if (values.length === 0) {
       throw new BadRequestException(
-        `Could not parse the given filter parameter, it does not contain values to filter for: ${filterExpression}`
+        `Could not parse the given filter parameter, it does not contain values to filter for: ${filterExpression}`,
       )
     }
     filterData.push({ property, values })
@@ -57,12 +61,12 @@ export class ListQueryHandler {
     readonly page: number,
     readonly items: number,
     readonly sortOrder: SortOrder,
-    readonly sortBy: string
+    readonly sortBy: string,
   ) {}
 
   addToQueryBuilder<T>(
     queryBuilder: SelectQueryBuilder<T>,
-    itemName: string
+    itemName: string,
   ): void {
     queryBuilder
       .orderBy(`${itemName}.${this.sortBy}`, this.sortOrder)

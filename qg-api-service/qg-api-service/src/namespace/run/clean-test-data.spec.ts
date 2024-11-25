@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { EntityList, ListQueryHandler } from '@B-S-F/api-commons-lib'
 import { Test, TestingModule } from '@nestjs/testing'
 import { ConfigEntity } from '../configs/config.entity'
@@ -145,7 +149,7 @@ describe('RunController', () => {
               return returnValue
             }
             throw new Error('Wrong parameters')
-          }
+          },
         )
     })
 

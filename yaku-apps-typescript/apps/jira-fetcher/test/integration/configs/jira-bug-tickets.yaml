@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 query: 'project = MYPRJ AND issuetype = Bug AND resolution = Unresolved'
 neededFields:
   - 'customfield_10'

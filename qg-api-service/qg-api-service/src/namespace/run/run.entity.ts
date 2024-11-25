@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Injectable } from '@nestjs/common'
 import {
   Column,
@@ -63,6 +67,9 @@ export class Run {
   @Column({ update: false })
   storagePath: string
 
+  @Column({ type: 'boolean', default: false })
+  synthetic: boolean
+
   @Column({ type: 'timestamptz', nullable: true })
   completionTime?: Date
 
@@ -82,6 +89,7 @@ export class Run {
     copy.log = this.log
     copy.creationTime = this.creationTime
     copy.storagePath = this.storagePath
+    copy.synthetic = this.synthetic
     copy.completionTime = this.completionTime
     copy.config = this.config
     return copy
@@ -103,24 +111,24 @@ export class RunAuditService extends AuditService<RunAuditEntity> {
     timestamp: Date | undefined,
     amount: number,
     direction: 'before' | 'after',
-    entityManager: EntityManager
+    entityManager: EntityManager,
   ): Promise<RunAuditEntity[]> {
     const query = entityManager
       .createQueryBuilder(RunAuditEntity, 'run_audit')
       .where('run_audit.namespaceId = :namespaceId', { namespaceId })
       .andWhere(
         `((run_audit.original->'config'->'id')::numeric = :id OR (run_audit.modified->'config'->'id')::numeric = :id)`,
-        { id: configId }
+        { id: configId },
       )
       .andWhere(
         'run_audit.modificationTime ' +
           (direction === 'before' ? '<' : '>') +
           ' :timestamp',
-        { timestamp }
+        { timestamp },
       )
       .orderBy(
         'run_audit.modificationTime',
-        direction === 'before' ? 'DESC' : 'ASC'
+        direction === 'before' ? 'DESC' : 'ASC',
       )
       .limit(amount)
     return await query.getMany()

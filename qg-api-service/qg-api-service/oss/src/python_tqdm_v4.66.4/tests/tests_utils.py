@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 from ast import literal_eval
 from collections import defaultdict
 from typing import Union  # py<3.10

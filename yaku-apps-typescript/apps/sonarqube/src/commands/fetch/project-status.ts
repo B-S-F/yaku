@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { AppOutput, GetLogger } from '@B-S-F/autopilot-utils'
 import { writeFile } from 'fs/promises'
 import { fetch, EnvHttpProxyAgent } from 'undici'
@@ -81,7 +85,11 @@ export async function getProjectStatus(
   protocol: 'http' | 'https',
   projectKey: string,
   accessToken: string,
+<<<<<<< HEAD
   proxyTunnel?: EnvHttpProxyAgent,
+=======
+  proxyTunnel?: HttpAgent | HttpsAgent,
+>>>>>>> main
 ): Promise<ProjectStatus> {
   const logger = GetLogger()
   const apiUrl = createApiUrl(

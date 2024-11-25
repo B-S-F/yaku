@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class Database1725353720260 implements MigrationInterface {
@@ -5,10 +9,10 @@ export class Database1725353720260 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "task" ADD "chapter" character varying`
+      `ALTER TABLE "task" ADD "chapter" character varying`,
     )
     await queryRunner.query(
-      `ALTER TABLE "task" ADD "requirement" character varying`
+      `ALTER TABLE "task" ADD "requirement" character varying`,
     )
     await queryRunner.query(`ALTER TABLE "task" ADD "check" character varying`)
   }

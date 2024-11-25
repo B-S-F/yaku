@@ -1,10 +1,14 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiProperty } from '@nestjs/swagger'
 import { SubscriptionEntity } from './entity/subscription.entity'
 
 export class SubscriptionDto {
   constructor(subscription: SubscriptionEntity) {
-    ;(this.userId = subscription.userId),
-      (this.releaseId = subscription.releaseId)
+    this.userId = subscription.userId
+    this.releaseId = subscription.releaseId
     this.creationTime = subscription.creationTime
   }
   @ApiProperty({

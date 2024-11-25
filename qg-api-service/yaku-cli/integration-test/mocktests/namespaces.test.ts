@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Environment, EnvironmentFacade } from '../cli/environment-utils'
 import { MockServer, ServerHost } from '../cli/mockserver'
 import { CommandFacade } from '../cli/utils'
@@ -20,11 +24,11 @@ const testYakurc = '.yakurc-test'
 const yakuCliExecutable: string = `${__dirname}/../../dist/index.js`
 const cmdManager: CommandFacade = new CommandFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 const envManager: EnvironmentFacade = new EnvironmentFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 
 describe('Integration tests for namespaces', async () => {
@@ -33,7 +37,7 @@ describe('Integration tests for namespaces', async () => {
     'http',
     'localhost',
     String(port),
-    '/api/v1'
+    '/api/v1',
   )
 
   const environment: Environment = {
@@ -197,7 +201,7 @@ describe('Integration tests for namespaces', async () => {
 
     it('should create a new namespace', async () => {
       const result: RunProcessResult = await cmdManager.runCommand(
-        `namespaces create namespace3`
+        `namespaces create namespace3`,
       )
 
       const expectedData = [

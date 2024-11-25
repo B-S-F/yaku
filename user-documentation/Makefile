@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # Minimal makefile for Sphinx documentation
 #
 SHELL=bash
@@ -53,7 +57,14 @@ requirements.lock: requirements.txt
 .PHONY: make-virtualenv
 make-virtualenv:
 	rm -rf .venv
-	if compgen uv; then uv venv --python 3.12; else python3.12 -m venv .venv; fi
+	python3.12 -m venv --copies .venv
+	# uv does not work for CI, see https://github.com/astral-sh/uv/issues/6782
+	# as it creates symlinks to system Python which are not cached properly
+	#if compgen uv; then \
+	#	uv venv --link-mode hardlink --python 3.12; \
+	#else \
+	#	python3.12 -m venv --copies .venv; \
+	#fi
 
 .PHONY: checklinks
 checklinks:

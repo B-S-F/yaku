@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   PaginatedData,
   PaginationQueryOptions,
@@ -102,7 +106,7 @@ export function createPaginationData(
   queryOptions: TaskQueryOptions,
   requestUrl: UrlHandler,
   totalItemCount: number,
-  data: TaskDto[]
+  data: TaskDto[],
 ): TaskListDto {
   const dataItems = data ?? []
   const totalItems = totalItemCount > 0 ? totalItemCount : data.length
@@ -122,7 +126,7 @@ export function createPaginationData(
       queryOptions.sortOrder,
       queryOptions.sortBy,
       queryOptions.state,
-      queryOptions.assignees
+      queryOptions.assignees,
     ),
   }
 }
@@ -135,7 +139,7 @@ function createLinksSection(
   sortOrder: SortOrder,
   sortBy: SortBy,
   state: TaskState,
-  assignees: string[]
+  assignees: string[],
 ) {
   const maxPages = Math.max(Math.ceil(totalItemCount / itemCountPerPage), 1)
   let afterPage = `&items=${itemCountPerPage}`

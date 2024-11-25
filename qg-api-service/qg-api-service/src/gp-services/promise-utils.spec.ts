@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { promiseOnTime } from './promise-utils'
 
 describe('fetch with timeout', () => {
@@ -8,7 +12,7 @@ describe('fetch with timeout', () => {
   it('should work like standard fetch in good case', async () => {
     const result = await promiseOnTime(
       new Promise((resolve, _) => resolve(true)),
-      2000
+      2000,
     )
 
     expect(result).toBe(true)

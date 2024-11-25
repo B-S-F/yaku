@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { RequestUser } from '../module.utils'
 import { Action, AuditActor, AuditEntity } from './audit.entity'
 import { AuditService } from './audit.service'
@@ -8,7 +12,7 @@ describe('Audit Service', () => {
     '7341a294-7a51-4fdc-90c6-af58e6bea690',
     'actor',
     'actor',
-    'actor'
+    'actor',
   )
 
   it('should be defined', () => {
@@ -33,7 +37,7 @@ describe('Audit Service', () => {
         modified,
         AuditActor.convertFrom(actor),
         action,
-        entityManager
+        entityManager,
       )
 
       expect(entityManager.insert).toBeCalledWith(
@@ -46,11 +50,11 @@ describe('Audit Service', () => {
           actor,
           modificationTime: expect.any(Date),
           action,
-        })
+        }),
       )
 
       expect(entityManager.insert).toBeCalledTimes(1)
-    }
+    },
   )
 
   it('should throw error if insert fails', async () => {
@@ -70,8 +74,8 @@ describe('Audit Service', () => {
         modified,
         AuditActor.convertFrom(actor),
         Action.CREATE,
-        entityManager
-      )
+        entityManager,
+      ),
     ).rejects.toThrow('Failed to insert')
   })
 })

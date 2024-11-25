@@ -1,6 +1,10 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export async function promiseOnTime(
   promise: Promise<any>,
-  timeout: number
+  timeout: number,
 ): Promise<any> {
   let timeoutId: any
   const result = await Promise.race([

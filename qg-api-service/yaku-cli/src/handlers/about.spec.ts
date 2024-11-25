@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { jest } from '@jest/globals'
 import fs from 'fs'
 import { about } from './about'
@@ -20,7 +24,7 @@ describe('about()', () => {
 
     expect(readFileSyncSpy).toHaveBeenCalled()
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      JSON.stringify(JSON.parse(sbomContents), null, 2)
+      JSON.stringify(JSON.parse(sbomContents), null, 2),
     )
   })
   it('should present the static lines', () => {
@@ -29,10 +33,10 @@ describe('about()', () => {
     expect(readFileSyncSpy).not.toHaveBeenCalled()
     expect(consoleLogSpy).toHaveBeenCalledWith('Yaku Client CLI\n')
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      'Copyright Bosch Software Flow\n'
+      'Copyright Bosch Software Flow\n',
     )
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      `Use option '--sbom' to get further details on used open source components`
+      `Use option '--sbom' to get further details on used open source components`,
     )
   })
 })

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 // Derivative work from:
 //	- https://golang.org/src/cmd/gofmt/gofmt.go
 //	- https://github.com/fatih/hclfmt

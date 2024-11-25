@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test, TestingModule } from '@nestjs/testing'
 import { randomUUID } from 'crypto'
 import { ArgoConfig, ArgoService } from './argo.service'
@@ -69,7 +73,7 @@ describe('ArgoService', () => {
       })
 
       await expect(service.startWorkflow(data)).rejects.toThrow(
-        `Calling ${workflowUri}${namespace} resulted in 400 with message Test Error`
+        `Calling ${workflowUri}${namespace} resulted in 400 with message Test Error`,
       )
       expect(fetchResult.json).not.toBeCalled()
     })
@@ -84,7 +88,7 @@ describe('ArgoService', () => {
       global.fetch = jest.fn().mockResolvedValue(null)
 
       await expect(service.startWorkflow(data)).rejects.toThrow(
-        `Calling ${workflowUri}${namespace} did not return a result`
+        `Calling ${workflowUri}${namespace} did not return a result`,
       )
     })
   })
@@ -105,7 +109,7 @@ describe('ArgoService', () => {
 
       const result = await service.getWorkflowStatus(
         workflowName,
-        workflowNamespace
+        workflowNamespace,
       )
 
       expect(result).toEqual({
@@ -162,9 +166,9 @@ describe('ArgoService', () => {
       })
 
       await expect(
-        service.getWorkflowStatus(workflowName, workflowNamespace)
+        service.getWorkflowStatus(workflowName, workflowNamespace),
       ).rejects.toThrow(
-        `Calling ${workflowUri}${workflowNamespace}/${workflowName} resulted in 400 with message Test Error`
+        `Calling ${workflowUri}${workflowNamespace}/${workflowName} resulted in 400 with message Test Error`,
       )
       expect(fetchResult.json).not.toBeCalled()
     })
@@ -173,7 +177,7 @@ describe('ArgoService', () => {
       global.fetch = jest.fn().mockRejectedValue(new TypeError('fetch failed'))
 
       await expect(
-        service.getArchivedWorkflowStatus(workflowId)
+        service.getArchivedWorkflowStatus(workflowId),
       ).rejects.toThrow('fetch failed')
     })
 
@@ -181,9 +185,9 @@ describe('ArgoService', () => {
       global.fetch = jest.fn().mockResolvedValue(null)
 
       await expect(
-        service.getWorkflowStatus(workflowName, workflowNamespace)
+        service.getWorkflowStatus(workflowName, workflowNamespace),
       ).rejects.toThrow(
-        `Calling ${workflowUri}${workflowNamespace}/${workflowName} did not return a result`
+        `Calling ${workflowUri}${workflowNamespace}/${workflowName} did not return a result`,
       )
     })
   })
@@ -207,7 +211,7 @@ describe('ArgoService', () => {
         const result = await service.getWorkflowLogs(
           workflowName,
           workflowNamespace,
-          container
+          container,
         )
 
         expect(result).toBe(logString)
@@ -215,10 +219,10 @@ describe('ArgoService', () => {
           `${workflowUri}${workflowNamespace}/${workflowName}/log?logOptions.container=${container}&logOptions.follow=true`,
           {
             method: 'GET',
-          }
+          },
         )
         expect(fetchResult.json).not.toBeCalled()
-      }
+      },
     )
 
     it('should return a null value in case no logs are found (404 return value)', async () => {
@@ -233,7 +237,7 @@ describe('ArgoService', () => {
       const result = await service.getWorkflowLogs(
         workflowName,
         workflowNamespace,
-        'main'
+        'main',
       )
 
       expect(result).toBeNull()
@@ -251,9 +255,9 @@ describe('ArgoService', () => {
       })
 
       await expect(
-        service.getWorkflowLogs(workflowName, workflowNamespace)
+        service.getWorkflowLogs(workflowName, workflowNamespace),
       ).rejects.toThrow(
-        `Calling ${workflowUri}${workflowNamespace}/${workflowName}/log?logOptions.container=main&logOptions.follow=true resulted in 400 with message Test Error`
+        `Calling ${workflowUri}${workflowNamespace}/${workflowName}/log?logOptions.container=main&logOptions.follow=true resulted in 400 with message Test Error`,
       )
       expect(fetchResult.json).not.toBeCalled()
     })
@@ -262,7 +266,7 @@ describe('ArgoService', () => {
       global.fetch = jest.fn().mockRejectedValue(new TypeError('fetch failed'))
 
       await expect(
-        service.getWorkflowLogs(workflowName, workflowNamespace)
+        service.getWorkflowLogs(workflowName, workflowNamespace),
       ).rejects.toThrow('fetch failed')
     })
 
@@ -270,9 +274,9 @@ describe('ArgoService', () => {
       global.fetch = jest.fn().mockResolvedValue(null)
 
       await expect(
-        service.getWorkflowLogs(workflowName, workflowNamespace)
+        service.getWorkflowLogs(workflowName, workflowNamespace),
       ).rejects.toThrow(
-        `Calling ${workflowUri}${workflowNamespace}/${workflowName}/log?logOptions.container=main&logOptions.follow=true did not return a result`
+        `Calling ${workflowUri}${workflowNamespace}/${workflowName}/log?logOptions.container=main&logOptions.follow=true did not return a result`,
       )
     })
 
@@ -281,8 +285,8 @@ describe('ArgoService', () => {
         service.getWorkflowLogs(
           workflowName,
           workflowNamespace,
-          'unknown' as any
-        )
+          'unknown' as any,
+        ),
       ).rejects.toThrow('Unknown container name')
     })
   })

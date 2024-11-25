@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ExecutionContext, HttpException } from '@nestjs/common'
 import { InteractiveLoginGuard } from './interactive.login.guard'
 
@@ -79,7 +83,7 @@ describe('Interactive login guard', () => {
     })
 
     expect(() => guard.canActivate(context as ExecutionContext)).toThrow(
-      HttpException
+      HttpException,
     )
   })
 

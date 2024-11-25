@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AssertionError } from 'assert'
@@ -25,7 +29,7 @@ export class PrivateCloudConfig {
     readonly inPrivateCloud: boolean,
     readonly proxy: string,
     readonly noProxyOn: string,
-    readonly pullSecretName: string
+    readonly pullSecretName: string,
   ) {}
 }
 
@@ -34,7 +38,7 @@ export class WorkflowImageConfig {
   constructor(
     readonly image: string,
     readonly versions: { [_key in SupportedVersion]: string },
-    readonly pullPolicy: string
+    readonly pullPolicy: string,
   ) {}
 }
 
@@ -69,7 +73,7 @@ export class WorkflowManager {
     private readonly privateCloudConfig: PrivateCloudConfig,
     @InjectRepository(Run) private readonly runRepository: Repository<Run>,
     @Inject(RunAuditService)
-    private readonly auditService: RunAuditService
+    private readonly auditService: RunAuditService,
   ) {}
 
   async run(run: Run, options: WorkflowOptions): Promise<void> {
@@ -83,7 +87,7 @@ export class WorkflowManager {
       const configFiles = await this.configService.getContentOfMultipleFiles(
         run.namespace.id,
         run.config.id,
-        run.config.files.map((file) => file.filename)
+        run.config.files.map((file) => file.filename),
       )
       const { inPrivateCloud, proxy, noProxyOn, pullSecretName } =
         this.privateCloudConfig
@@ -106,7 +110,7 @@ export class WorkflowManager {
         .create()
 
       const uploadStartTime = Date.now()
-      await this.blobStore.uploadConfig(run.storagePath, configs)
+      await this.blobStore.uploadPayload(run.storagePath, configs)
       this.logger.debug({
         msg: `POST /runs: Upload configs took: ${
           Date.now() - uploadStartTime
@@ -157,7 +161,7 @@ export class WorkflowManager {
       await queryRunner.manager.update(
         Run,
         { globalId: updated.globalId },
-        updated
+        updated,
       )
       await queryRunner.manager.save(Run, updated)
       await this.auditService.append(
@@ -167,7 +171,7 @@ export class WorkflowManager {
         updated,
         AuditActor.convertFrom(SYSTEM_REQUEST_USER),
         Action.UPDATE,
-        queryRunner.manager
+        queryRunner.manager,
       )
       await queryRunner.commitTransaction()
     } catch (err) {
@@ -187,12 +191,12 @@ export class WorkflowManager {
         await this.workflowFinishedService.checkWorkflowHasFinished(
           run.argoId,
           run.argoName,
-          run.argoNamespace
+          run.argoNamespace,
         )
       if (workflowInfo.hasFinished) {
         const newRun = await this.workflowFinishedService.updateWorkflowData(
           workflowInfo,
-          run
+          run,
         )
         return newRun
       }
@@ -206,7 +210,7 @@ export class WorkflowManager {
 
   async downloadResult(
     storagePath: string,
-    filename: string
+    filename: string,
   ): Promise<Readable> {
     return this.blobStore.downloadResult(storagePath, filename)
   }

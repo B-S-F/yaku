@@ -1,8 +1,8 @@
 {
   "name": "qg-api-service",
   "engines": {
-    "npm": ">=8.0.0",
-    "node": ">=18.0.0"
+    "npm": ">=10.8.3",
+    "node": ">=22.9.0"
   },
   "workspaces": [
     "qg-api-service",
@@ -22,7 +22,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "cpy-cli": "^5.0.0",
-    "turbo": "^2.1.3"
+    "turbo": "^2.3.1"
   },
   "packageManager": "npm@10.9.0"
 }

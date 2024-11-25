@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import { Data } from 'ejs'
 import { Notification, NotificationType } from './mailing.utils'
@@ -56,7 +60,7 @@ export class TemplatingService {
   constructor(
     @Inject(TemplatingConfiguration)
     private readonly configuration: TemplatingConfiguration,
-    @Inject(TemplatingCache) private readonly cache: TemplatingCache
+    @Inject(TemplatingCache) private readonly cache: TemplatingCache,
   ) {}
 
   public Template(notification: Notification): string {

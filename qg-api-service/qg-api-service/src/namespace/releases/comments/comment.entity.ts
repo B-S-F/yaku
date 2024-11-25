@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Injectable } from '@nestjs/common'
 import {
   Column,
@@ -59,7 +63,7 @@ export class CommentEntity {
     (comment) => comment.children,
     {
       nullable: true,
-    }
+    },
   )
   parent: CommentEntity
   @OneToMany(
@@ -67,7 +71,7 @@ export class CommentEntity {
     (comment) => comment.parent,
     {
       nullable: true,
-    }
+    },
   )
   children: CommentEntity[]
 

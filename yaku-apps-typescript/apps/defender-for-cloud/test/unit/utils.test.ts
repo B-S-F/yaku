@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { afterEach, vi, describe, it, expect } from 'vitest'
 import * as fs from 'fs/promises'
 import * as fs_sync from 'fs'

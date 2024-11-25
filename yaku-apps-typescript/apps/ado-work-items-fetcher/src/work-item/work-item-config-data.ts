@@ -1,6 +1,8 @@
-/**
- * Copyright (c) 2022, 2023 by grow platform GmbH
- */
+// SPDX-FileCopyrightText: 2022 2023 by grow platform GmbH
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { generateErrorMessage } from 'zod-error'
 import { SafeParseReturnType } from 'zod/lib/types'
 import {
@@ -27,7 +29,7 @@ export class WorkItemConfigData {
       throw new Error(generateErrorMessage(result.error.issues))
     }
 
-    this.hierarchyDepth = this.data.workItems?.hierarchyDepth ?? NaN
+    this.hierarchyDepth = this.data.workItems?.hierarchyDepth ?? Number.NaN
   }
   getRequestedFields(): string[] {
     const uncheckedNeededFields: unknown[] =

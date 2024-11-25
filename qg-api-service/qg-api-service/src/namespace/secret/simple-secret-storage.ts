@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException, Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DeepPartial, Repository } from 'typeorm'
@@ -10,7 +14,7 @@ export class SimpleSecretStorage extends SecretStorage {
   constructor(
     @InjectRepository(EncryptedSecret)
     readonly repository: Repository<EncryptedSecret>,
-    @Inject(EncryptionService) readonly encryption: EncryptionService
+    @Inject(EncryptionService) readonly encryption: EncryptionService,
   ) {
     super()
   }
@@ -28,7 +32,7 @@ export class SimpleSecretStorage extends SecretStorage {
   async storeSecret(
     namespaceId: number,
     name: string,
-    secretValue: string
+    secretValue: string,
   ): Promise<void> {
     if (!name || !name.trim()) {
       throw new BadRequestException('Parameter name must contain valid data')

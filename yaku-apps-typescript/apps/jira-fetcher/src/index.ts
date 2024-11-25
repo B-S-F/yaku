@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { fetchData, prepareDataToBeExported } from './fetch.js'
 import { exit } from 'process'
 import { readFile, writeFile } from 'fs/promises'

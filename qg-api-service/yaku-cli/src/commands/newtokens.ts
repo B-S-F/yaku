@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Command } from 'commander'
 import { connect } from '../connect.js'
 
@@ -32,7 +36,7 @@ export function createNewTokensSubcommands(program: Command): void {
     .description('Create a token')
     .argument(
       '<description>',
-      'Description of the token (for example its purpose)'
+      'Description of the token (for example its purpose)',
     )
     .action(async (description: string) => {
       try {

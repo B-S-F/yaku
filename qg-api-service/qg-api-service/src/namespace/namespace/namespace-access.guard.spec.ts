@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { testingNamespaceId } from '@B-S-F/api-commons-lib'
@@ -15,7 +19,7 @@ describe('NamespaceAccessGuard', () => {
   function getRequest(
     namespaceId: number,
     user: any,
-    requiresAdmin = false
+    requiresAdmin = false,
   ): any {
     const request: any = {
       params: { namespaceId },
@@ -146,7 +150,7 @@ describe('NamespaceAccessGuard', () => {
     const request = getRequest(3.5, undefined)
 
     await expect(testee.canActivate(request)).rejects.toThrow(
-      BadRequestException
+      BadRequestException,
     )
   })
 })

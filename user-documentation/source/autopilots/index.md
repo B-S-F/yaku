@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Autopilots
 
 Autopilots are the workhorses of {{ PRODUCTNAME }}. Every automated check is performed

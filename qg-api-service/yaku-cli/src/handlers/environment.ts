@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import fs from 'fs'
 import path from 'path'
 import { z } from 'zod'
@@ -31,7 +35,7 @@ export type Environments = z.infer<typeof EnvironmentsSchema>
 
 export async function deleteEnvironment(
   envName: string,
-  disableLogging?: boolean | false
+  disableLogging?: boolean | false,
 ) {
   // get env
   const envs = loadEnvironments()
@@ -59,7 +63,7 @@ export async function deleteEnvironment(
       })
       if (!disableLogging)
         console.log(
-          `The current environment was changed from '${envName}' to 'default'.`
+          `The current environment was changed from '${envName}' to 'default'.`,
         )
     }
     envs.splice(envIndex, 1)
@@ -80,7 +84,7 @@ export function createEnvironment(env: Environment) {
   }
   // replace existing environment if it exists
   const existingEnvIndex = envs.findIndex(
-    (e: Environment) => e.name === env.name
+    (e: Environment) => e.name === env.name,
   )
   if (existingEnvIndex > -1) {
     envs[existingEnvIndex] = env
@@ -106,11 +110,11 @@ export function updateEnvironment(envName: string, env: Environment) {
 export async function updateEnvironmentByKey(
   envName: string,
   key: string,
-  value: string | undefined
+  value: string | undefined,
 ) {
   if (!['name', 'url', 'token', 'namespace'].includes(key)) {
     consoleErrorRed(
-      `Invalid key '${key}'. Key must be either 'name', 'url', 'token', or 'namespace'.`
+      `Invalid key '${key}'. Key must be either 'name', 'url', 'token', or 'namespace'.`,
     )
     return
   }
@@ -123,7 +127,7 @@ export async function updateEnvironmentByKey(
 
       if (oldUrl !== newUrl) {
         const updateUrl = await yp.confirm(
-          `The specified ${key} is not a valid API url. Do you want to replace it with ${newUrl}?`
+          `The specified ${key} is not a valid API url. Do you want to replace it with ${newUrl}?`,
         )
         if (updateUrl) {
           value = newUrl
@@ -154,12 +158,12 @@ export function loadCurrentEnvironment(): Environment {
   const currentEnv = getCurrentEnvironment(envs)
   if (!currentEnv) {
     throw new Error(
-      'No current environment found. Please login with "yaku login" or switch to an existing environment with "yaku environments switch <envName>"'
+      'No current environment found. Please login with "yaku login" or switch to an existing environment with "yaku environments switch <envName>"',
     )
   }
   if (!currentEnv.url || !currentEnv.accessToken) {
     throw new Error(
-      `Environment '${currentEnv.name}' is incomplete. Please login again with "yaku login ${currentEnv.name} or create a new environment with "yaku environments create"`
+      `Environment '${currentEnv.name}' is incomplete. Please login again with "yaku login ${currentEnv.name} or create a new environment with "yaku environments create"`,
     )
   }
   return currentEnv
@@ -174,19 +178,19 @@ export function loadEnvironments(): Environments {
       return envs
     } else if (LegacyEnvironmentsConfigSchema.safeParse(envs).success) {
       consoleWarnYellow(
-        `Environment configuration file '${file}' found is in a legacy format. It will be converted to the new format.`
+        `Environment configuration file '${file}' found is in a legacy format. It will be converted to the new format.`,
       )
       return convertLegacyEnvironments(envs)
     } else {
       failWithError(
         `Environment configuration file '${file}' has an unknown format. ${fromZodError(
-          result.error
-        )}`
+          result.error,
+        )}`,
       )
     }
   } catch (err) {
     failWithError(
-      `Failed to process environment configuration from file '${file}'. Error was: ${err}`
+      `Failed to process environment configuration from file '${file}'. Error was: ${err}`,
     )
   }
 }
@@ -197,14 +201,14 @@ export function saveEnvironments(envs: Environments): void {
     JSON.stringify(envs, undefined, 2),
     {
       mode: 0o600,
-    }
+    },
   )
 }
 
 export function getEnvironmentsFilePath(): string {
   if (!process.env.HOME) {
     throw new Error(
-      '$HOME is not set, cannot find the environment definitions, please ensure the variable to point to your users home folder'
+      '$HOME is not set, cannot find the environment definitions, please ensure the variable to point to your users home folder',
     )
   }
   return path.join(process.env.HOME, process.env.RUNTIME_CONFIG ?? '.yakurc')
@@ -214,7 +218,7 @@ function getEnvironmentsFromFile(file: string) {
   let jsonContents = undefined
   if (!fs.existsSync(file)) {
     consoleWarnYellow(
-      `Creating the initial environment configuration file '${file}'..`
+      `Creating the initial environment configuration file '${file}'..`,
     )
     try {
       saveEnvironments([])
@@ -263,13 +267,13 @@ export async function selectEnvironment(envs: Environments): Promise<string> {
   const envName: string = await yp.search(
     'Select Environment (type to filter)',
     choices,
-    10
+    10,
   )
   return envName!
 }
 
 export function getSelectedEnvironmentIdx(
-  rows: (string | number | boolean)[][]
+  rows: (string | number | boolean)[][],
 ): number | undefined {
   let selectedEnvironmentIdx = undefined
   for (let idx = 0; idx < rows.length; idx++) {
@@ -283,7 +287,7 @@ export function getSelectedEnvironmentIdx(
 
 export async function showEnvironmentsTable(
   envs: Environments,
-  pageSize?: number
+  pageSize?: number,
 ) {
   const columns: TableColumn[] = [
     { name: '●', value: 'current', editable: 'radio' },
@@ -322,7 +326,7 @@ export async function showEnvironmentsTable(
   ]
 
   const rows = envs.map((env) => [
-    env.current ? true : false,
+    !!env.current,
     env.name,
     env.url,
     env.namespace ?? '',
@@ -362,7 +366,7 @@ export async function showEnvironmentsTable(
       envs[index].current = row[0]
       envs[index].name = row[1]
       envs[index].url = row[2]
-      envs[index].namespace = parseInt(row[3]) || undefined
+      envs[index].namespace = Number.parseInt(row[3]) || undefined
     })
     saveEnvironments(envs)
     consoleWarnYellow('Environments updated successfully')
@@ -373,11 +377,11 @@ export async function editEnvironments() {
   const envFilePath = getEnvironmentsFilePath()
   if (process.env.EDITOR) {
     console.log(
-      `Opening '${envFilePath}' in ${process.env.EDITOR} external editor..`
+      `Opening '${envFilePath}' in ${process.env.EDITOR} external editor..`,
     )
   } else {
     console.log(
-      `$EDITOR environment variable is not set, opening '${envFilePath}' in default external editor..`
+      `$EDITOR environment variable is not set, opening '${envFilePath}' in default external editor..`,
     )
   }
   await yp.openFileInEditor(envFilePath, process.env.EDITOR)
@@ -401,7 +405,7 @@ const LegacyEnvironmentsConfigSchema = z.object({
 type LegacyEnvironmentsConfig = z.infer<typeof LegacyEnvironmentsConfigSchema>
 
 function convertLegacyEnvironments(
-  legacyConfig: LegacyEnvironmentsConfig
+  legacyConfig: LegacyEnvironmentsConfig,
 ): Environments {
   const environments: Environments = []
   for (const [name, env] of Object.entries(legacyConfig.environments)) {

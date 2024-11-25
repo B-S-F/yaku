@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Scopes of Environment Variables
 
 As you might have already found out, there are multiple places where environment variables can be defined. In this section, we will explore the behavior of environment variables in different contexts.

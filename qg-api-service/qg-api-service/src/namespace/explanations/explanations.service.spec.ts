@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test, TestingModule } from '@nestjs/testing'
 import { ExplanationsService } from './explanations.service'
 import { generatePrompt } from './prompt.service'
@@ -98,7 +102,7 @@ describe('ExplanationsService', () => {
         runId,
         chapter,
         requirement,
-        check
+        check,
       )
 
       expect(explanation).toEqual('Mock OpenAI Response')
@@ -115,7 +119,7 @@ describe('ExplanationsService', () => {
       })
 
       await expect(
-        service.getExplanation(namespaceId, runId, chapter, requirement, check)
+        service.getExplanation(namespaceId, runId, chapter, requirement, check),
       ).rejects.toThrowError(NotFoundException)
     })
 
@@ -130,7 +134,7 @@ describe('ExplanationsService', () => {
       })
 
       await expect(
-        service.getExplanation(namespaceId, runId, chapter, requirement, check)
+        service.getExplanation(namespaceId, runId, chapter, requirement, check),
       ).rejects.toThrowError(UnprocessableEntityException)
     })
 
@@ -145,7 +149,7 @@ describe('ExplanationsService', () => {
       })
 
       await expect(
-        service.getExplanation(namespaceId, runId, chapter, requirement, check)
+        service.getExplanation(namespaceId, runId, chapter, requirement, check),
       ).rejects.toThrowError(UnprocessableEntityException)
     })
   })

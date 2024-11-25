@@ -1,5 +1,13 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Yaku
+
 [![Build](https://github.com/B-S-F/yaku/actions/workflows/build.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build.yml)
+[![User Documentation](https://github.com/B-S-F/yaku/actions/workflows/publish-user-docs-to-gh-pages.yml/badge.svg)](https://b-s-f.github.io/yaku/)
 
 !! THIS PROJECT IS UNDER CONSTRUCTION !!
 
@@ -9,4 +17,9 @@ Foto from Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahm
 </figcaption>
 
 ## Development
+
 Developer docu for the project see [DEVELOPMENT.md](./DEVELOPMENT.md).
+
+## Licenses
+
+See [LICENSES](./LICENSES) folder for the project's licenses.

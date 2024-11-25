@@ -1,7 +1,14 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 @Injectable()
 export class ArgoConfig {
-  constructor(readonly namespace: string, readonly server: string) {}
+  constructor(
+    readonly namespace: string,
+    readonly server: string,
+  ) {}
 }
 
 @Injectable()
@@ -24,7 +31,7 @@ export class ArgoService {
 
   async getWorkflowStatus(
     workflowName: string,
-    workflowNamespace: string
+    workflowNamespace: string,
   ): Promise<any> {
     const url = `${this.argoConfig.server}/api/v1/workflows/${workflowNamespace}/${workflowName}`
     return this.getStatus(url)
@@ -52,7 +59,7 @@ export class ArgoService {
   async getWorkflowLogs(
     workflowName: string,
     workflowNamespace: string,
-    container: 'main' | 'init' | 'wait' = 'main'
+    container: 'main' | 'init' | 'wait' = 'main',
   ): Promise<string> {
     if (!['main', 'init', 'wait'].includes(container)) {
       throw new Error('Unknown container name')
@@ -77,7 +84,7 @@ export class ArgoService {
       const errorText = await result.text()
       const errorMessage = errorText ? ` with message ${errorText}` : ''
       throw new Error(
-        `Calling ${url} resulted in ${result.status}${errorMessage}`
+        `Calling ${url} resulted in ${result.status}${errorMessage}`,
       )
     }
   }

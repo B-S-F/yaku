@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { CheckResults } from '@B-S-F/json-evaluator-lib'
 import { AppError, GetLogger, Result } from '@B-S-F/autopilot-utils'
 import { ReasonPackage } from '@B-S-F/json-evaluator-lib/src/types'

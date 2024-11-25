@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Reporting Security Issues
 
 To report a security issue, please disclose it at [security advisory](https://github.com/certifi/python-certifi/security/advisories/new).

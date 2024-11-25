@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiProperty } from '@nestjs/swagger'
 
 export class GetFindingsDTO {
@@ -6,7 +10,7 @@ export class GetFindingsDTO {
     runId: number,
     count: number,
     diff: number,
-    datetime: Date
+    datetime: Date,
   ) {
     this.configId = configId
     this.runId = runId

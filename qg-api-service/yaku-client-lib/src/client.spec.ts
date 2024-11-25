@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { randomUUID } from 'crypto'
 import { readFile, unlink, writeFile } from 'fs/promises'
 import * as api from './api-calls.js'
@@ -39,7 +43,7 @@ describe('Client lib api', () => {
   function paginatedData(
     page: number,
     url: string,
-    data: Run[] | Config[] | SecretMetadata[]
+    data: Run[] | Config[] | SecretMetadata[],
   ): any {
     const base: PaginatedData = {
       pagination: {
@@ -100,13 +104,13 @@ describe('Client lib api', () => {
 
       const result = await client.listConfigs(
         1,
-        new QueryOptions(1, 20, [''], [[]], '', false)
+        new QueryOptions(1, 20, [''], [[]], '', false),
       )
 
       expect(result).toBe(data)
       expect(mockedCall).toBeCalledWith(
         `${configsUrl}?page=1&items=20&sortOrder=DESC`,
-        config.token
+        config.token,
       )
     })
 
@@ -119,13 +123,13 @@ describe('Client lib api', () => {
 
       const result = await client.listConfigs(
         1,
-        new QueryOptions(1, 20, [''], [[]], 'lastModificationTime', false)
+        new QueryOptions(1, 20, [''], [[]], 'lastModificationTime', false),
       )
 
       expect(result).toBe(data)
       expect(mockedCall).toBeCalledWith(
         `${configsUrl}?page=1&items=20&sortOrder=DESC&sortBy=lastModificationTime`,
-        config.token
+        config.token,
       )
     })
 
@@ -143,7 +147,7 @@ describe('Client lib api', () => {
 
       const result = await client.listAllConfigs(
         1,
-        new QueryOptions(1, 1, [''], [[]], '', false)
+        new QueryOptions(1, 1, [''], [[]], '', false),
       )
 
       expect(result).toEqual([config1, config2])
@@ -199,7 +203,7 @@ describe('Client lib api', () => {
 
         expect(result).toBe(e)
         expect(mockedCall).toBeCalledWith(configsUrl, b, config.token)
-      }
+      },
     )
 
     it.each([undefined, null, '', ' \t\n'])(
@@ -207,7 +211,7 @@ describe('Client lib api', () => {
       async (n: any) => {
         await expect(client.createConfig(1, n, 'dummy')).rejects.toThrow()
         expect(api.createResource).not.toBeCalled()
-      }
+      },
     )
 
     it.each([
@@ -290,9 +294,9 @@ describe('Client lib api', () => {
         expect(mockedCall).toBeCalledWith(
           urlWithId(configsUrl, 1),
           b,
-          config.token
+          config.token,
         )
-      }
+      },
     )
 
     it.each([undefined, null, '', ' \t\n'])(
@@ -300,7 +304,7 @@ describe('Client lib api', () => {
       async (n: any) => {
         await expect(client.updateConfig(1, 1, n, undefined)).rejects.toThrow()
         expect(api.updateResource).not.toBeCalled()
-      }
+      },
     )
 
     it('should delete the config with the given id', async () => {
@@ -308,7 +312,7 @@ describe('Client lib api', () => {
       await client.deleteConfig(1, config1.id, false)
       expect(mockedCall).toBeCalledWith(
         urlWithId(configsUrl, config1.id),
-        config.token
+        config.token,
       )
     })
 
@@ -337,11 +341,11 @@ describe('Client lib api', () => {
 
       expect(mockedCall).toBeCalledWith(
         urlWithId(configsUrl, config1.id),
-        config.token
+        config.token,
       )
       expect(mockListRuns).toBeCalledWith(
         1,
-        new QueryOptions(1, 100, ['config'], [[`${config1.id}`]], '', false)
+        new QueryOptions(1, 100, ['config'], [[`${config1.id}`]], '', false),
       )
       expect(mockDeleteRun).toBeCalledTimes(2)
       expect(mockDeleteRun).toBeCalledWith(1, 1)
@@ -359,11 +363,11 @@ describe('Client lib api', () => {
 
       expect(mockedCall).toBeCalledWith(
         urlWithId(configsUrl, config1.id),
-        config.token
+        config.token,
       )
       expect(mockListRuns).toBeCalledWith(
         1,
-        new QueryOptions(1, 100, ['config'], [[`${config1.id}`]], '', false)
+        new QueryOptions(1, 100, ['config'], [[`${config1.id}`]], '', false),
       )
       expect(mockDeleteRun).not.toBeCalled()
     })
@@ -396,10 +400,10 @@ describe('Client lib api', () => {
         expect(mockedCall).not.toBeCalled()
         expect(mockListRuns).toBeCalledWith(
           1,
-          new QueryOptions(1, 100, ['config'], [[`${config1.id}`]], '', false)
+          new QueryOptions(1, 100, ['config'], [[`${config1.id}`]], '', false),
         )
         expect(mockDeleteRun).not.toBeCalled()
-      }
+      },
     )
   })
 
@@ -419,7 +423,7 @@ describe('Client lib api', () => {
       const filesUrl = `${config.baseUrl}/namespaces/1/configs/4711/files`
       expect(mockedCall).toBeCalledWith(
         urlWithId(filesUrl, data.filename),
-        config.token
+        config.token,
       )
       expect(fileData).toEqual(data)
     })
@@ -444,7 +448,7 @@ describe('Client lib api', () => {
         expect(filename).toBe(data.filename)
         expect(mockedCall).toBeCalledWith(
           urlWithId(filesUrl, data.filename),
-          config.token
+          config.token,
         )
         expect(await readFile(filename)).toEqual(data.data)
       } finally {
@@ -474,7 +478,7 @@ describe('Client lib api', () => {
         } finally {
           await unlink(file)
         }
-      }
+      },
     )
 
     it('should replace a file in a config', async () => {
@@ -492,7 +496,7 @@ describe('Client lib api', () => {
           urlWithId(filesUrl, 'qg-config.yaml'),
           form,
           config.token,
-          true
+          true,
         )
       } finally {
         await unlink(filepath)
@@ -503,7 +507,7 @@ describe('Client lib api', () => {
       await client.deleteFileFromConfig(1, 4711, 'dummy.txt')
       expect(api.deleteResource).toBeCalledWith(
         urlWithId(filesUrl, 'dummy.txt'),
-        config.token
+        config.token,
       )
     })
 
@@ -580,7 +584,7 @@ describe('Client lib api', () => {
           1,
           4711,
           xslxPath,
-          xlsxConfigPath
+          xlsxConfigPath,
         )
 
         const form = new FormData()
@@ -590,7 +594,7 @@ describe('Client lib api', () => {
         expect(mockedCall).toBeCalledWith(
           `${config.baseUrl}/namespaces/1/configs/4711/config-from-excel`,
           form,
-          config.token
+          config.token,
         )
         expect(await readFile(configPath)).toEqual(data.data)
       } finally {
@@ -619,7 +623,7 @@ describe('Client lib api', () => {
         configPath = await client.createConfigFromQuestionnaire(
           1,
           4711,
-          questionnairePath
+          questionnairePath,
         )
 
         const form = new FormData()
@@ -628,7 +632,7 @@ describe('Client lib api', () => {
         expect(mockedCall).toBeCalledWith(
           `${config.baseUrl}/namespaces/1/configs/4711/initial-config`,
           form,
-          config.token
+          config.token,
         )
         expect(await readFile(configPath)).toEqual(data.data)
       } finally {
@@ -678,7 +682,7 @@ describe('Client lib api', () => {
         1,
         initialConfig.name,
         '',
-        fileData
+        fileData,
       )
 
       expect(result).toBe(readyConfig)
@@ -688,13 +692,13 @@ describe('Client lib api', () => {
         1,
         initialConfig.id,
         fileData[0].filepath,
-        undefined
+        undefined,
       )
       expect(mockUpload).toBeCalledWith(
         1,
         initialConfig.id,
         fileData[1].filepath,
-        fileData[1].filename
+        fileData[1].filename,
       )
       expect(mockGet).toBeCalledWith(1, initialConfig.id)
     })
@@ -738,13 +742,13 @@ describe('Client lib api', () => {
 
       const result = await client.listRuns(
         1,
-        new QueryOptions(1, 20, [''], [[]], '', false)
+        new QueryOptions(1, 20, [''], [[]], '', false),
       )
 
       expect(result).toEqual(expect.objectContaining(data))
       expect(mockedCall).toBeCalledWith(
         `${runsUrl}?page=1&items=20&sortOrder=DESC`,
-        config.token
+        config.token,
       )
     })
 
@@ -759,13 +763,20 @@ describe('Client lib api', () => {
 
       const result = await client.listRuns(
         1,
-        new QueryOptions(1, 20, ['config'], [['1', '2']], 'creationTime', false)
+        new QueryOptions(
+          1,
+          20,
+          ['config'],
+          [['1', '2']],
+          'creationTime',
+          false,
+        ),
       )
 
       expect(result).toEqual(expect.objectContaining(data))
       expect(mockedCall).toBeCalledWith(
         `${runsUrl}?page=1&items=20&sortOrder=DESC&filter=config%3D1%2C2&sortBy=creationTime`,
-        config.token
+        config.token,
       )
     })
 
@@ -787,7 +798,7 @@ describe('Client lib api', () => {
 
       const result = await client.listAllRuns(
         1,
-        new QueryOptions(1, 1, ['config'], [['1']], '', false)
+        new QueryOptions(1, 1, ['config'], [['1']], '', false),
       )
 
       expect(result).toEqual([run1, run2])
@@ -819,7 +830,7 @@ describe('Client lib api', () => {
       expect(result).toEqual(expect.objectContaining(run1))
       expect(mockedCall).toBeCalledWith(
         urlWithId(runsUrl, run1.id),
-        config.token
+        config.token,
       )
     })
 
@@ -837,7 +848,7 @@ describe('Client lib api', () => {
       expect(result.log).not.toBeDefined()
       expect(mockedCall).toBeCalledWith(
         urlWithId(runsUrl, run1.id),
-        config.token
+        config.token,
       )
     })
 
@@ -864,7 +875,7 @@ describe('Client lib api', () => {
       expect(mockedCall).toBeCalledWith(
         runsUrl,
         { configId: 1, environment },
-        config.token
+        config.token,
       )
     })
 
@@ -933,7 +944,7 @@ describe('Client lib api', () => {
         expect(filename).toBe(data.filename)
         expect(mockedCall).toBeCalledWith(
           `${urlWithId(runsUrl, run1.id)}/results`,
-          config.token
+          config.token,
         )
         expect(await readFile(filename)).toEqual(data.data)
       } finally {
@@ -959,7 +970,7 @@ describe('Client lib api', () => {
         expect(filename).toBe(data.filename)
         expect(mockedCall).toBeCalledWith(
           `${urlWithId(runsUrl, run1.id)}/evidences`,
-          config.token
+          config.token,
         )
         expect(await readFile(filename)).toEqual(data.data)
       } finally {
@@ -974,7 +985,7 @@ describe('Client lib api', () => {
       await client.deleteRun(1, run1.id)
       expect(mockedCall).toBeCalledWith(
         urlWithId(runsUrl, run1.id),
-        config.token
+        config.token,
       )
     })
   })
@@ -1007,13 +1018,13 @@ describe('Client lib api', () => {
 
       const result = await client.listSecrets(
         1,
-        new QueryOptions(1, 20, [''], [[]], '', false)
+        new QueryOptions(1, 20, [''], [[]], '', false),
       )
 
       expect(result.data).toEqual([secret1, secret2])
       expect(mockedCall).toBeCalledWith(
         `${secretsUrl}?page=1&items=20&sortOrder=DESC`,
-        config.token
+        config.token,
       )
     })
 
@@ -1031,7 +1042,7 @@ describe('Client lib api', () => {
 
       const result = await client.listAllSecrets(
         1,
-        new QueryOptions(1, 1, [''], [[]], '', false)
+        new QueryOptions(1, 1, [''], [[]], '', false),
       )
 
       expect(result).toEqual([secret1, secret2])
@@ -1082,21 +1093,21 @@ describe('Client lib api', () => {
 
         expect(result).toBe(e)
         expect(mockedCall).toBeCalledWith(secretsUrl, b, config.token)
-      }
+      },
     )
 
     it.each([undefined, null, '', ' \t\n'])(
       'should throw an error on falsy parameters "%s"',
       async (value: any) => {
         await expect(
-          client.createSecret(1, value, 'dummy', undefined)
+          client.createSecret(1, value, 'dummy', undefined),
         ).rejects.toThrow()
         await expect(
-          client.createSecret(1, 'dummy', value, undefined)
+          client.createSecret(1, 'dummy', value, undefined),
         ).rejects.toThrow()
 
         expect(api.createResource).not.toBeCalled()
-      }
+      },
     )
 
     it.each([
@@ -1170,23 +1181,23 @@ describe('Client lib api', () => {
         expect(mockedCall).toBeCalledWith(
           urlWithId(secretsUrl, n),
           b,
-          config.token
+          config.token,
         )
-      }
+      },
     )
 
     it.each([undefined, null, '', ' \t\n'])(
       'should throw an error on falsy parameters "%s"',
       async (value: any) => {
         await expect(
-          client.updateSecret(1, value, 'dummy', 'dummy')
+          client.updateSecret(1, value, 'dummy', 'dummy'),
         ).rejects.toThrow()
         await expect(
-          client.updateSecret(1, 'dummy', value, undefined)
+          client.updateSecret(1, 'dummy', value, undefined),
         ).rejects.toThrow()
 
         expect(api.updateResource).not.toBeCalled()
-      }
+      },
     )
 
     it('should delete the secret with the given name', async () => {
@@ -1194,7 +1205,7 @@ describe('Client lib api', () => {
       await client.deleteSecret(1, secret1.name)
       expect(mockedCall).toBeCalledWith(
         urlWithId(secretsUrl, secret1.name),
-        config.token
+        config.token,
       )
     })
   })
@@ -1230,7 +1241,7 @@ describe('Client lib api', () => {
       expect(result).toBe(namespace1)
       expect(mockedCall).toBeCalledWith(
         urlWithId(namespaceUrl, 1),
-        config.token
+        config.token,
       )
     })
 
@@ -1248,7 +1259,7 @@ describe('Client lib api', () => {
           name: namespace1.name,
           users: [],
         },
-        config.token
+        config.token,
       )
     })
 
@@ -1257,7 +1268,7 @@ describe('Client lib api', () => {
       async (name: any) => {
         await expect(client.createNamespace(name)).rejects.toThrow()
         expect(api.createResource).not.toBeCalled()
-      }
+      },
     )
 
     it('should create a namespace with a config file setup', async () => {
@@ -1278,7 +1289,7 @@ describe('Client lib api', () => {
         files: {
           qgConfig: `${urlWithId(
             namespaceUrl,
-            1
+            1,
           )}/configs/1/files/qg-config.yaml`,
         },
       }
@@ -1297,7 +1308,7 @@ describe('Client lib api', () => {
         namespace.id,
         createdConfig.name,
         createdConfig.description,
-        [{ filename: 'qg-config.yaml', filepath: configFile }]
+        [{ filename: 'qg-config.yaml', filepath: configFile }],
       )
     })
 
@@ -1317,7 +1328,7 @@ describe('Client lib api', () => {
       expect(mockedCall).toBeCalledWith(
         urlWithId(namespaceUrl, 2),
         { name: namespace1.name, users: [] },
-        config.token
+        config.token,
       )
     })
   })
@@ -1336,7 +1347,7 @@ describe('Client lib api', () => {
       expect(result).toEqual(info)
       expect(mockedCall).toBeCalledWith(
         `${config.baseUrl}/service/info`,
-        config.token
+        config.token,
       )
     })
   })
@@ -1349,7 +1360,7 @@ describe('Client lib api', () => {
         () =>
           client.listConfigs(
             666,
-            new QueryOptions(1, 20, [''], [[]], '', false)
+            new QueryOptions(1, 20, [''], [[]], '', false),
           ),
       ],
       ['getConfig', 'getResource', () => client.getConfig(666, 4711)],
@@ -1403,7 +1414,7 @@ describe('Client lib api', () => {
         () =>
           client.listSecrets(
             666,
-            new QueryOptions(1, 20, undefined, undefined, undefined, false)
+            new QueryOptions(1, 20, undefined, undefined, undefined, false),
           ),
       ],
       [
@@ -1442,11 +1453,11 @@ describe('Client lib api', () => {
             status: 400,
             message: 'error message',
             additionalProperties: { url: config.baseUrl },
-          })
+          }),
         )
 
         await expect(testFct()).rejects.toThrow(RestApiRequestError)
-      }
+      },
     )
   })
 
@@ -1475,7 +1486,7 @@ describe('Client lib api', () => {
             status: 400,
             message: 'error message',
             additionalProperties: { url: filesUrl },
-          })
+          }),
         )
 
         await expect(clientcall(file)).rejects.toThrow(RestApiRequestError)
@@ -1490,7 +1501,7 @@ describe('Client lib api', () => {
       } finally {
         await unlink(file)
       }
-    }
+    },
   )
 
   it('should forward an RestApiError if remote call fails for createConfigFromExcel', async () => {
@@ -1506,11 +1517,11 @@ describe('Client lib api', () => {
           status: 400,
           message: 'error message',
           additionalProperties: { url: config.baseUrl },
-        })
+        }),
       )
 
       await expect(
-        client.createConfigFromExcel(1, 4711, xslxPath, configPath)
+        client.createConfigFromExcel(1, 4711, xslxPath, configPath),
       ).rejects.toThrow(RestApiRequestError)
 
       const form = new FormData()
@@ -1519,7 +1530,7 @@ describe('Client lib api', () => {
       expect(mockedCall).toBeCalledWith(
         `${config.baseUrl}/namespaces/1/configs/4711/config-from-excel`,
         form,
-        config.token
+        config.token,
       )
     } finally {
       await unlink(xslxPath)
@@ -1537,11 +1548,11 @@ describe('Client lib api', () => {
           status: 400,
           message: 'error message',
           additionalProperties: { url: config.baseUrl },
-        })
+        }),
       )
 
       await expect(
-        client.createConfigFromQuestionnaire(1, 4711, questionnairePath)
+        client.createConfigFromQuestionnaire(1, 4711, questionnairePath),
       ).rejects.toThrow(RestApiRequestError)
 
       const form = new FormData()
@@ -1549,7 +1560,7 @@ describe('Client lib api', () => {
       expect(mockedCall).toBeCalledWith(
         `${config.baseUrl}/namespaces/1/configs/4711/initial-config`,
         form,
-        config.token
+        config.token,
       )
     } finally {
       await unlink(questionnairePath)
@@ -1602,14 +1613,14 @@ describe('Client lib api', () => {
         .mockResolvedValue(findings)
       const result = await client.listFindings(
         1,
-        new QueryOptions(1, 20, ['configId'], [['1']], '', false)
+        new QueryOptions(1, 20, ['configId'], [['1']], '', false),
       )
 
       expect(result).toBe(findings)
       expect(mockedCall).toBeCalledTimes(1)
       expect(mockedCall).toBeCalledWith(
         `${findingsUrl}?page=1&items=20&sortOrder=DESC&filter=configId%3D1`,
-        config.token
+        config.token,
       )
     })
 
@@ -1626,14 +1637,14 @@ describe('Client lib api', () => {
           ['configId'],
           [['1']],
           'lastModificationTime',
-          true
-        )
+          true,
+        ),
       )
 
       expect(result).toBe(findings)
       expect(mockedCall).toBeCalledWith(
         `${findingsUrl}?page=1&items=20&sortOrder=ASC&filter=configId%3D1&sortBy=lastModificationTime`,
-        config.token
+        config.token,
       )
     })
 
@@ -1661,7 +1672,7 @@ describe('Client lib api', () => {
       })
 
       expect(
-        client.resolveFinding(1, 'some-id', { comment: 'some-comment' })
+        client.resolveFinding(1, 'some-id', { comment: 'some-comment' }),
       ).rejects.toThrowError('Failed to parse user token')
     })
 
@@ -1672,7 +1683,7 @@ describe('Client lib api', () => {
       jest.spyOn(JSON, 'parse').mockImplementationOnce(() => 'invalid')
 
       expect(
-        client.resolveFinding(1, 'some-id', { comment: 'some-comment' })
+        client.resolveFinding(1, 'some-id', { comment: 'some-comment' }),
       ).rejects.toThrowError('Failed to parse user token')
     })
 

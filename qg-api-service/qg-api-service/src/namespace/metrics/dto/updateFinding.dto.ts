@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { SeverityType } from '../utils/enums/severityType.enum'
 import { StatusType } from '../../findings/utils/enums/statusType.enum'
 

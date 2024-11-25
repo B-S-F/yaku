@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class Database1716380919913 implements MigrationInterface {
@@ -5,29 +9,29 @@ export class Database1716380919913 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TYPE "public"."comment_referencetype_enum" RENAME TO "comment_referencetype_enum_old"`
+      `ALTER TYPE "public"."comment_referencetype_enum" RENAME TO "comment_referencetype_enum_old"`,
     )
     await queryRunner.query(
-      `CREATE TYPE "public"."comment_referencetype_enum" AS ENUM('check', 'comment', 'release', 'approval')`
+      `CREATE TYPE "public"."comment_referencetype_enum" AS ENUM('check', 'comment', 'release', 'approval')`,
     )
     await queryRunner.query(
-      `ALTER TABLE "comment" ALTER COLUMN "referenceType" TYPE "public"."comment_referencetype_enum" USING "referenceType"::"text"::"public"."comment_referencetype_enum"`
+      `ALTER TABLE "comment" ALTER COLUMN "referenceType" TYPE "public"."comment_referencetype_enum" USING "referenceType"::"text"::"public"."comment_referencetype_enum"`,
     )
     await queryRunner.query(
-      `DROP TYPE "public"."comment_referencetype_enum_old"`
+      `DROP TYPE "public"."comment_referencetype_enum_old"`,
     )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TYPE "public"."comment_referencetype_enum_old" AS ENUM('check', 'comment', 'release')`
+      `CREATE TYPE "public"."comment_referencetype_enum_old" AS ENUM('check', 'comment', 'release')`,
     )
     await queryRunner.query(
-      `ALTER TABLE "comment" ALTER COLUMN "referenceType" TYPE "public"."comment_referencetype_enum_old" USING "referenceType"::"text"::"public"."comment_referencetype_enum_old"`
+      `ALTER TABLE "comment" ALTER COLUMN "referenceType" TYPE "public"."comment_referencetype_enum_old" USING "referenceType"::"text"::"public"."comment_referencetype_enum_old"`,
     )
     await queryRunner.query(`DROP TYPE "public"."comment_referencetype_enum"`)
     await queryRunner.query(
-      `ALTER TYPE "public"."comment_referencetype_enum_old" RENAME TO "comment_referencetype_enum"`
+      `ALTER TYPE "public"."comment_referencetype_enum_old" RENAME TO "comment_referencetype_enum"`,
     )
   }
 }

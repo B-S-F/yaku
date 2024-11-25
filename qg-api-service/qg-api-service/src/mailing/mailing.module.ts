@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { DynamicModule, Module } from '@nestjs/common'
 import {
   ENABLE_MAIL_NOTIFICATIONS_FEATURE,
@@ -51,7 +55,7 @@ export class MailingModule {
               MAILJET_API_URL,
               MAILJET_API_KEY,
               MAILJET_API_SECRET,
-              MAILJET_USE_PROXY === 'true'
+              MAILJET_USE_PROXY === 'true',
             ),
           },
           {
@@ -70,7 +74,7 @@ export class MailingModule {
               SMTP_USERNAME,
               SMTP_PASSWORD,
               SMTP_SECURE === 'true',
-              true
+              true,
             ),
           },
           {

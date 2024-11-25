@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { jest } from '@jest/globals'
 import { loginOAuth, OAuthClient, refreshOAuth, _t } from './oauth'
 import { Environment } from './handlers/environment'
@@ -60,7 +64,7 @@ describe('refreshOAuth()', () => {
         name: envName,
         url: url,
         refreshToken: testLoginResponse.refreshToken,
-      } as Environment)
+      } as Environment),
     ).resolves.toEqual({
       name: envName,
       url: url,
@@ -81,7 +85,7 @@ describe('refreshOAuth()', () => {
         name: envName,
         url: url,
         refreshToken: testLoginResponse.refreshToken,
-      } as Environment)
+      } as Environment),
     ).resolves.toEqual({
       name: envName,
       url: url,

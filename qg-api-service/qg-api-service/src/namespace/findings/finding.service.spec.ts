@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test, TestingModule } from '@nestjs/testing'
 import { FindingService } from './finding.service'
 import { Repository } from 'typeorm'
@@ -108,7 +112,7 @@ describe('FindingService', () => {
       } as any)
 
       await expect(
-        findingService.getFindingById(namespaceId, findingId)
+        findingService.getFindingById(namespaceId, findingId),
       ).rejects.toThrow(NotFoundException)
     })
   })
@@ -176,7 +180,7 @@ describe('FindingService', () => {
       const result = await findingService.createFinding(
         namespaceId,
         createFindingDto,
-        hash
+        hash,
       )
 
       expect(result).toEqual({ ...createFindingDto, id: 'new_id' })
@@ -253,7 +257,7 @@ describe('FindingService', () => {
       const result = await findingService.createFinding(
         namespaceId,
         createFindingDto,
-        hash
+        hash,
       )
 
       expect(result).toEqual({
@@ -310,7 +314,7 @@ describe('FindingService', () => {
         })
 
       await expect(
-        findingService.createFinding(namespaceId, createFindingDto, hash)
+        findingService.createFinding(namespaceId, createFindingDto, hash),
       ).rejects.toThrow(Error)
     })
   })
@@ -418,11 +422,11 @@ describe('FindingService', () => {
         const result = await findingService.updateFinding(
           namespaceId,
           findingId,
-          updateFindingDto
+          updateFindingDto,
         )
 
         expect(result).toEqual(returnedDto)
-      }
+      },
     )
 
     it.each([
@@ -528,11 +532,11 @@ describe('FindingService', () => {
         const result = await findingService.updateFinding(
           namespaceId,
           findingId,
-          updateFindingDto
+          updateFindingDto,
         )
 
         expect(result).toEqual(returnedDto)
-      }
+      },
     )
 
     it('should throw a NotFoundException if finding is not found', async () => {
@@ -559,7 +563,7 @@ describe('FindingService', () => {
         })
 
       await expect(
-        findingService.updateFinding(namespaceId, findingId, updateFindingDto)
+        findingService.updateFinding(namespaceId, findingId, updateFindingDto),
       ).rejects.toThrow(NotFoundException)
     })
 
@@ -575,7 +579,7 @@ describe('FindingService', () => {
         .mockResolvedValue({ affected: 0 } as any)
 
       await expect(
-        findingService.updateFinding(namespaceId, findingId, updateFindingDto)
+        findingService.updateFinding(namespaceId, findingId, updateFindingDto),
       ).rejects.toThrow(BadRequestException)
     })
   })
@@ -601,12 +605,12 @@ describe('FindingService', () => {
       jest.spyOn(findingRepository, 'delete').mockResolvedValue(deletedFinding)
 
       await expect(
-        findingService.deleteFinding(namespaceId, findingId)
+        findingService.deleteFinding(namespaceId, findingId),
       ).rejects.toThrow(
         new HttpException(
           `Finding with id: ${findingId} was not found in namespace ${namespaceId}`,
-          HttpStatus.NOT_FOUND
-        )
+          HttpStatus.NOT_FOUND,
+        ),
       )
     })
   })
@@ -668,7 +672,7 @@ describe('FindingService', () => {
       const result = await findingService.handleFindingOccurrence(
         1,
         incomingFinding,
-        existingFinding
+        existingFinding,
       )
 
       const user = new UserInNamespaceDto()
@@ -690,7 +694,7 @@ describe('FindingService', () => {
         {
           ...incomingFinding,
           occurrenceCount: 4,
-        }
+        },
       )
     })
 
@@ -745,7 +749,7 @@ describe('FindingService', () => {
       const result = await findingService.handleFindingOccurrence(
         1,
         incomingFinding,
-        existingFinding
+        existingFinding,
       )
 
       const expectedFinding: GetFindingDTO = {
@@ -765,7 +769,7 @@ describe('FindingService', () => {
           resolvedComment: null,
           resolvedDate: null,
           resolver: null,
-        }
+        },
       )
       expect(result).toEqual(expectedFinding)
     })
@@ -821,8 +825,8 @@ describe('FindingService', () => {
         findingService.handleFindingOccurrence(
           1,
           incomingFinding,
-          existingFinding
-        )
+          existingFinding,
+        ),
       ).rejects.toThrow(NotFoundException)
     })
   })
@@ -954,7 +958,7 @@ describe('FindingService', () => {
       await findingService.resolveFindings(
         findingsDictionaryBefore,
         findingsDictionaryAfter,
-        lastRunData
+        lastRunData,
       )
       expect(findingRepository.update).toHaveBeenCalledWith(
         { id: 'existing_id1', namespaceId: 1 },
@@ -967,7 +971,7 @@ describe('FindingService', () => {
           runCompletionTime: '2023-06-12T12:44:44.000Z',
           runOverallResult: 'RED' as RunOverallStatusType,
           runStatus: 'completed' as RunStatus,
-        }
+        },
       )
     })
 
@@ -1097,7 +1101,7 @@ describe('FindingService', () => {
       await findingService.resolveFindings(
         findingsDictionaryBefore,
         findingsDictionaryAfter,
-        lastRunData
+        lastRunData,
       )
       expect(findingRepository.update).toHaveBeenCalledWith(
         { id: 'existing_id1', namespaceId: 1 },
@@ -1110,7 +1114,7 @@ describe('FindingService', () => {
           runCompletionTime: '2023-06-12T12:44:44.000Z',
           runOverallResult: 'ERROR' as RunOverallStatusType,
           runStatus: 'completed' as RunStatus,
-        }
+        },
       )
     })
 
@@ -1199,8 +1203,8 @@ describe('FindingService', () => {
         findingService.resolveFindings(
           findingsDictionaryBefore,
           findingsDictionaryAfter,
-          runData
-        )
+          runData,
+        ),
       ).rejects.toThrow(Error)
     })
   })
@@ -1524,7 +1528,7 @@ describe('FindingService', () => {
       } as EntityList<GetFindingDTO>)
 
       expect(findingService.deleteAssociatedFindings(1, 1)).rejects.toThrow(
-        Error
+        Error,
       )
     })
   })

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import * as fs from 'fs'
 import { EOL } from 'os'
 import {
@@ -20,11 +24,11 @@ const testYakurc = '.yakurc-test'
 const yakuCliExecutable: string = `${__dirname}/../../dist/index.js`
 const cmdManager: CommandFacade = new CommandFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 const envManager: EnvironmentFacade = new EnvironmentFacade(
   yakuCliExecutable,
-  testYakurc
+  testYakurc,
 )
 
 describe('Integration tests for create runs', async () => {
@@ -33,7 +37,7 @@ describe('Integration tests for create runs', async () => {
     'http',
     'localhost',
     String(port),
-    '/api/v1'
+    '/api/v1',
   )
   const namespaceId = 1
   const environment: Environment = {
@@ -48,9 +52,9 @@ describe('Integration tests for create runs', async () => {
   let command: string
 
   const mockServerOptions = createRunMockServerResponse(
-    parseInt(serverHost.getPort()),
+    Number.parseInt(serverHost.getPort()),
     namespaceId,
-    runId
+    runId,
   )
 
   const mockServerEnvironmentOptions = loginMockServerResponse(port)
@@ -139,9 +143,9 @@ describe('Integration tests for create runs', async () => {
       command = `${command} ${envOptions}`
 
       const mockServerOptions = createRunMockServerResponse(
-        parseInt(serverHost.getPort()),
+        Number.parseInt(serverHost.getPort()),
         namespaceId,
-        runId
+        runId,
       )
       mockServer = new MockServer(mockServerOptions)
 
@@ -161,9 +165,9 @@ describe('Integration tests for create runs', async () => {
       command = `${command} ${envOptions} ${pollOptions}`
 
       const mockServerOptions = createRunMockServerResponse(
-        parseInt(serverHost.getPort()),
+        Number.parseInt(serverHost.getPort()),
         namespaceId,
-        runId
+        runId,
       )
 
       mockServer = new MockServer(mockServerOptions)
@@ -181,9 +185,9 @@ describe('Integration tests for create runs', async () => {
 
       command = `${command} ${pollOptions}`
       const mockServerOptions = createRunMockServerResponse(
-        parseInt(serverHost.getPort()),
+        Number.parseInt(serverHost.getPort()),
         namespaceId,
-        runId
+        runId,
       )
 
       mockServer = new MockServer(mockServerOptions)
@@ -202,7 +206,7 @@ describe('Integration tests for create runs', async () => {
    */
   function verifyErrorOutput(
     result: RunProcessResult,
-    expectedErrorMessage: string[]
+    expectedErrorMessage: string[],
   ) {
     const stdout = result.stderr.split(EOL).filter((line) => line.length > 0)
 
@@ -229,11 +233,11 @@ describe('Integration tests for create runs', async () => {
 
     const createResourceRequest: ReceivedRequest[] = mockServer!.getRequests(
       `/api/v1/namespaces/${namespaceId}/runs`,
-      'post'
+      'post',
     )
     const getRunStatus: ReceivedRequest[] = mockServer!.getRequests(
       `/api/v1/namespaces/${namespaceId}/runs/${runId}`,
-      'get'
+      'get',
     )
 
     const actualCreateResourceRequestBody = createResourceRequest[0].body
@@ -241,7 +245,7 @@ describe('Integration tests for create runs', async () => {
     expect(createResourceRequest).to.have.length(1)
     expect(getRunStatus).to.have.length(envOptions.includes('--wait') ? 1 : 0)
     expect(actualCreateResourceRequestBody).toEqual(
-      expectedCreateResourceRequest
+      expectedCreateResourceRequest,
     )
   }
 })

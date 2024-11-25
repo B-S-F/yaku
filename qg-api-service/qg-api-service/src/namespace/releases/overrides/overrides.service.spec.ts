@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { UserInNamespaceDto } from 'src/namespace/users/users.utils'
@@ -139,7 +143,7 @@ describe('OverridesService', () => {
                         title: check`,
       })
       expect(
-        service['getCheckTitle'](1, 1, overideEntity, queryRunner)
+        service['getCheckTitle'](1, 1, overideEntity, queryRunner),
       ).resolves.toEqual('check')
     })
 
@@ -173,7 +177,7 @@ describe('OverridesService', () => {
                             title: check`,
       })
       expect(
-        service['getCheckTitle'](1, 1, overideEntity, queryRunner)
+        service['getCheckTitle'](1, 1, overideEntity, queryRunner),
       ).resolves.toEqual(undefined)
     })
   })
@@ -223,7 +227,7 @@ describe('OverridesService', () => {
         1,
         overideEntity,
         CheckColor.GREEN,
-        user1
+        user1,
       )
 
       expect(notificationService.pushNotification).toBeCalledWith(
@@ -243,7 +247,7 @@ describe('OverridesService', () => {
             requirement_id: 'requirement',
             user_name: 'User',
           },
-        }
+        },
       )
     })
   })

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { KEYCLOAK_STRATEGY_NAME } from '@B-S-F/api-keycloak-auth-lib'
 import {
   ExecutionContext,
@@ -19,7 +23,7 @@ export class KeyCloakAuthGuard extends AuthGuard(KEYCLOAK_STRATEGY_NAME) {
   }
 
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const isPublic: boolean = this.reflector.getAllAndOverride(IsPublicAPI, [
       context.getHandler(),
@@ -33,7 +37,7 @@ export class KeyCloakAuthGuard extends AuthGuard(KEYCLOAK_STRATEGY_NAME) {
   }
 
   private checkTokenStrategies(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     return super.canActivate(context)
   }

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 /* eslint @typescript-eslint/no-var-requires: "off" */
 
 import { Test, TestingModule } from '@nestjs/testing'
@@ -27,7 +31,7 @@ describe('VersionService', () => {
             new WorkflowImageConfig(
               'image',
               { v1: '1.0.0', v2: '1.2.0' },
-              'always'
+              'always',
             ),
         },
       ],

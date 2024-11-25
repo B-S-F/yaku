@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { UserInNamespaceDto } from 'src/namespace/users/users.utils'
@@ -30,7 +34,7 @@ export class OverridesService {
     @Inject(SubscriptionService)
     private readonly subscriptionService: SubscriptionService,
     @Inject(NotificationService)
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
   ) {}
 
   async getAll(namespaceId: number, releaseId: number): Promise<OverrideDto[]> {
@@ -41,7 +45,7 @@ export class OverridesService {
       const entities = await this.getAllWithTransaction(
         queryRunner,
         namespaceId,
-        releaseId
+        releaseId,
       )
       const dtos = entities.map((e) => this.toOverrideDto(e))
       await queryRunner.commitTransaction()
@@ -57,7 +61,7 @@ export class OverridesService {
   async getAllWithTransaction(
     queryRunner: QueryRunner,
     namespaceId: number,
-    releaseId: number
+    releaseId: number,
   ): Promise<OverrideEntity[]> {
     const entities = await queryRunner.manager.find(OverrideEntity, {
       where: {
@@ -79,7 +83,7 @@ export class OverridesService {
     originalColor: CheckColor,
     manualColor: CheckColor,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<OverrideDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -95,7 +99,7 @@ export class OverridesService {
         originalColor,
         manualColor,
         comment,
-        actor
+        actor,
       )
       const dto = await this.toOverrideDto(entity)
       await queryRunner.commitTransaction()
@@ -118,7 +122,7 @@ export class OverridesService {
     originalColor: CheckColor,
     manualColor: CheckColor,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<OverrideEntity> {
     const namespace = await queryRunner.manager.findOneOrFail(Namespace, {
       where: { id: namespaceId },
@@ -151,7 +155,7 @@ export class OverridesService {
       override.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.CREATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     await this.notifySubscribers(
@@ -160,7 +164,7 @@ export class OverridesService {
       releaseId,
       newOverride,
       newOverride.manualColor,
-      actor
+      actor,
     )
 
     return override
@@ -173,7 +177,7 @@ export class OverridesService {
     originalColor: CheckColor,
     manualColor: CheckColor,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<OverrideDto> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     try {
@@ -187,7 +191,7 @@ export class OverridesService {
         originalColor,
         manualColor,
         comment,
-        actor
+        actor,
       )
       const dto = await this.toOverrideDto(entity)
       await queryRunner.commitTransaction()
@@ -208,7 +212,7 @@ export class OverridesService {
     originalColor: CheckColor,
     manualColor: CheckColor,
     comment: string,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<OverrideEntity> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -219,7 +223,7 @@ export class OverridesService {
       queryRunner,
       namespaceId,
       releaseId,
-      overrideId
+      overrideId,
     )
 
     const newOverride = originalOverride.DeepCopy()
@@ -246,7 +250,7 @@ export class OverridesService {
       override.DeepCopyWithoutRelations(),
       AuditActor.convertFrom(actor),
       Action.UPDATE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     if (manualColorChanged) {
@@ -256,7 +260,7 @@ export class OverridesService {
         releaseId,
         newOverride,
         newOverride.manualColor,
-        actor
+        actor,
       )
     }
 
@@ -270,7 +274,7 @@ export class OverridesService {
     dto.reference = new CheckReference(
       entity.chapter,
       entity.requirement,
-      entity.check
+      entity.check,
     )
 
     dto.originalColor = entity.originalColor
@@ -288,7 +292,7 @@ export class OverridesService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    overrideId: number
+    overrideId: number,
   ): Promise<OverrideEntity> {
     const override = await queryRunner.manager.findOneOrFail(OverrideEntity, {
       where: {
@@ -306,7 +310,7 @@ export class OverridesService {
     namespaceId: number,
     releaseId: number,
     overrideId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const queryRunner = this.repository.manager.connection.createQueryRunner()
     await queryRunner.connect()
@@ -317,14 +321,14 @@ export class OverridesService {
         namespaceId,
         releaseId,
         overrideId,
-        actor
+        actor,
       )
       await queryRunner.commitTransaction()
     } catch (e) {
       await queryRunner.rollbackTransaction()
       if (e.name === EntityNotFoundError.name) {
         throw new NotFoundException(
-          `Override not found in release, release ${releaseId}, override ${overrideId}`
+          `Override not found in release, release ${releaseId}, override ${overrideId}`,
         )
       }
       throw e
@@ -338,7 +342,7 @@ export class OverridesService {
     namespaceId: number,
     releaseId: number,
     overrideId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const release = await getRelease(queryRunner, namespaceId, releaseId)
     checkForClosed(release)
@@ -347,7 +351,7 @@ export class OverridesService {
       queryRunner,
       namespaceId,
       releaseId,
-      overrideId
+      overrideId,
     )
 
     if (!original) {
@@ -367,7 +371,7 @@ export class OverridesService {
       {},
       AuditActor.convertFrom(actor),
       Action.DELETE,
-      queryRunner.manager
+      queryRunner.manager,
     )
 
     await this.notifySubscribers(
@@ -376,7 +380,7 @@ export class OverridesService {
       releaseId,
       original,
       original.originalColor,
-      actor
+      actor,
     )
   }
 
@@ -384,7 +388,7 @@ export class OverridesService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     const overrides = await queryRunner.manager.find(OverrideEntity, {
       where: {
@@ -406,7 +410,7 @@ export class OverridesService {
         {},
         AuditActor.convertFrom(actor),
         Action.DELETE,
-        queryRunner.manager
+        queryRunner.manager,
       )
 
       await queryRunner.manager.remove(override)
@@ -419,7 +423,7 @@ export class OverridesService {
     releaseId: number,
     override: OverrideEntity,
     newColor: CheckColor,
-    actor: RequestUser
+    actor: RequestUser,
   ): Promise<void> {
     // converting the actor to be ignored in the notification
     const actorUser = {
@@ -427,20 +431,20 @@ export class OverridesService {
     } as UserInNamespaceDto
     const subscribers = await this.subscriptionService.getSubscribers(
       releaseId,
-      [actorUser]
+      [actorUser],
     )
     const checkTitle = await this.getCheckTitle(
       namespaceId,
       releaseId,
       override,
-      queryRunner
+      queryRunner,
     )
     for (const subscriber of subscribers) {
       await this.pushOverrideNotification(
         subscriber,
         override,
         newColor,
-        checkTitle
+        checkTitle,
       )
     }
   }
@@ -449,12 +453,12 @@ export class OverridesService {
     namespaceId: number,
     releaseId: number,
     override: OverrideEntity,
-    queryRunner: QueryRunner
+    queryRunner: QueryRunner,
   ): Promise<string | undefined> {
     const qgConfigData = await getQgConfigFileContent(
       queryRunner,
       namespaceId,
-      releaseId
+      releaseId,
     )
 
     const reference = {
@@ -479,7 +483,7 @@ export class OverridesService {
     subscriber: UserInNamespaceDto,
     override: OverrideEntity,
     check_status: string,
-    check_title?: string
+    check_title?: string,
   ): Promise<void> {
     const modifier = await this.usersService.getUser(override.lastModifiedBy)
     const data: CheckOverrideData = {
@@ -504,7 +508,7 @@ export class OverridesService {
       {
         type: NotificationType.CheckOverride,
         data,
-      }
+      },
     )
   }
 }

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { fail } from 'assert'
 import { beforeEach, describe, expect, it, SpyInstance, vi } from 'vitest'
 import { GitFetcherBitbucketTagsAndBranches } from '../../src/fetchers/git-fetcher-bitbucket-tags-and-branches'
@@ -95,7 +99,7 @@ describe('Git Fetcher BitBucket Branches', () => {
       if (url.endsWith('start=0')) {
         responseBodyToReturn = bitBucketBranchMultiPageResponse[0]
         queriedFirstPage = true
-      } else if (url.endsWith('start=1')) {
+      } else if (url.endsWith('start=2')) {
         responseBodyToReturn = bitBucketBranchMultiPageResponse[1]
         queriedSecondPage = true
       } else {
@@ -105,21 +109,20 @@ describe('Git Fetcher BitBucket Branches', () => {
         status: 200,
         json: async () => responseBodyToReturn,
       }
-
-      const result: BitbucketBranch[] =
-        (await gitFetcherBitBucketBranches.fetchResource()) as BitbucketBranch[]
-      expect(fetchMock).toBeCalledTimes(2)
-      expect(consoleSpy).toBeCalledWith('Fetched 2 branches')
-      expect(queriedFirstPage).toBe(true)
-      expect(queriedSecondPage).toBe(true)
-      expect(result).toHaveLength(2)
-      expect(result).toEqual([
-        ...bitBucketBranchMultiPageResponse[0].values,
-        ...bitBucketBranchMultiPageResponse[1].values,
-      ])
-
-      expect(responseStatusHandlerSpy).toBeCalledTimes(0)
     })
+    const result: BitbucketBranch[] =
+      (await gitFetcherBitBucketBranches.fetchResource()) as BitbucketBranch[]
+    expect(fetchMock).toBeCalledTimes(2)
+    expect(consoleSpy).toBeCalledWith('Fetched 4 branches')
+    expect(queriedFirstPage).toBe(true)
+    expect(queriedSecondPage).toBe(true)
+    expect(result).toHaveLength(4)
+    expect(result).toEqual([
+      ...bitBucketBranchMultiPageResponse[0].values,
+      ...bitBucketBranchMultiPageResponse[1].values,
+    ])
+
+    expect(responseStatusHandlerSpy).toBeCalledTimes(0)
   })
 
   it.each([400, 401, 403, 500])(

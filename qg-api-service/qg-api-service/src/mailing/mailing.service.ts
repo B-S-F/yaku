@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 import {
@@ -146,7 +150,7 @@ export abstract class MailingService {
   abstract pushNotification(
     to: string,
     subject: string,
-    notification: Notification
+    notification: Notification,
   ): void
 }
 
@@ -169,7 +173,7 @@ export class MailingServiceImpl extends MailingService {
     @Inject(TemplatingService)
     private readonly templatingService: TemplatingService,
     @Inject(MailingWorker)
-    private readonly mailingWorker: MailingWorker
+    private readonly mailingWorker: MailingWorker,
   ) {
     super()
     this.from = configuration.sender
@@ -187,7 +191,7 @@ export class MailingServiceImpl extends MailingService {
       | ApprovalNotification
       | TaskAssignedNotification
       | TaskRecurringNotification
-      | CheckOverrideNotification
+      | CheckOverrideNotification,
   ) {
     this.mailingWorker.push({
       from: this.from,

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { PinoLogger, Logger, InjectPinoLogger } from 'nestjs-pino'
 import { QG_LOG_LEVEL } from '../config'
 import { QueryRunner, Logger as TypeOrmLogger } from 'typeorm'
@@ -14,7 +18,7 @@ export class TypeOrmToNestLogger implements TypeOrmLogger {
         },
       },
     }),
-    {}
+    {},
   )
 
   private logQueries = false
@@ -31,12 +35,12 @@ export class TypeOrmToNestLogger implements TypeOrmLogger {
     error: string | Error,
     query: string,
     parameters?: any[],
-    queryRunner?: QueryRunner
+    queryRunner?: QueryRunner,
   ) {
     this.logger.warn({
       msg: `Query failed executing DB operation for ${this.createQueryString(
         query,
-        parameters
+        parameters,
       )} with error information ${error}`,
     })
   }
@@ -45,12 +49,12 @@ export class TypeOrmToNestLogger implements TypeOrmLogger {
     time: number,
     query: string,
     parameters?: any[],
-    queryRunner?: QueryRunner
+    queryRunner?: QueryRunner,
   ) {
     this.logger.log({
       msg: `Long running query: Took ${time}ms for ${this.createQueryString(
         query,
-        parameters
+        parameters,
       )}`,
     })
   }

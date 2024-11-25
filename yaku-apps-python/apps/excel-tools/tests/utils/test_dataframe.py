@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import pytest
 from pandas import DataFrame
 from yaku.excel_tools.utils.dataframe import add_column

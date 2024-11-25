@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # splunk-fetcher
 
 The splunk-fetcher will fetch the outputs from splunk via search queries. It is a small CLI that can be used to define everything you need to fetch data from splunk via a search query. To see some help just run the CLI via:

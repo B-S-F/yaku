@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { checkProperty, Conditions, Issue } from '@B-S-F/issue-validators'
 import { AppError, AppOutput, Result } from '@B-S-F/autopilot-utils'
 import { Dictionary, InvalidIssues } from './types'

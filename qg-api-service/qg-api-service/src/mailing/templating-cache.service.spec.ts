@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import fs from 'fs/promises'
 import { NotificationType } from './mailing.utils'
 import { TemplatingCache } from './templating-cache.service'
@@ -108,6 +112,6 @@ describe('TemplatingCache', () => {
       const templatingCache = new TemplatingCache('path/to/templates')
       expect(templatingCache).toBeDefined()
       await expect(templatingCache.onApplicationBootstrap()).rejects.toThrow()
-    }
+    },
   )
 })

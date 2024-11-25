@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export * from './url-handler.js'
 export * from './input-validator.js'
 export * from './query-param-handling-controller.js'

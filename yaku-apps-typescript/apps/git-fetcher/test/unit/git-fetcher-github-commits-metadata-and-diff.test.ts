@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { beforeEach, describe, expect, it, SpyInstance, vi } from 'vitest'
 import { CommitsMetadataAndDiff } from '../../src/model/commits-metadata-and-diff.js'
 import { ConfigFileData } from '../../src/model/config-file-data.js'

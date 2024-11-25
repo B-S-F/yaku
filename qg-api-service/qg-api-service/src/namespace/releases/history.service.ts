@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { SortOrder, UrlHandler } from '@B-S-F/api-commons-lib'
 import { Inject } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -74,14 +78,14 @@ export class HistoryService {
     @InjectRepository(ReleaseEntity)
     private readonly releaseRepository: Repository<ReleaseEntity>,
     @Inject(UsersService)
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
   ) {}
 
   async getReleaseHistory(
     namespaceId: number,
     releaseId: number,
     queryOptions: HistoryQueryOptions,
-    requestUrl: UrlHandler
+    requestUrl: UrlHandler,
   ): Promise<HistoryDto> {
     const querryRunner =
       this.releaseRepository.manager.connection.createQueryRunner()
@@ -94,7 +98,7 @@ export class HistoryService {
         namespaceId,
         release,
         queryOptions,
-        requestUrl
+        requestUrl,
       )
       await querryRunner.commitTransaction()
       return releaseHistory
@@ -111,13 +115,13 @@ export class HistoryService {
     namespaceId: number,
     release: ReleaseEntity,
     queryOptions: HistoryQueryOptions,
-    requestUrl: UrlHandler
+    requestUrl: UrlHandler,
   ): Promise<HistoryDto> {
     const { data, lastTimestamp } = await this.retrieveSortedHistoryItems(
       queryRunner,
       namespaceId,
       release,
-      queryOptions
+      queryOptions,
     )
 
     return this.toPaginatedHistoryDto(
@@ -126,7 +130,7 @@ export class HistoryService {
       queryOptions.sortOrder,
       queryOptions.items,
       requestUrl,
-      queryOptions.filter
+      queryOptions.filter,
     )
   }
 
@@ -136,7 +140,7 @@ export class HistoryService {
     sortOrder: SortOrder,
     items: number,
     requestUrl: UrlHandler,
-    filter?: HistoryFilter
+    filter?: HistoryFilter,
   ): HistoryDto {
     let appendix = `?items=${items}&sortOrder=${sortOrder}`
     if (filter) {
@@ -155,14 +159,14 @@ export class HistoryService {
     queryRunner: QueryRunner,
     namespaceId: number,
     release: ReleaseEntity,
-    queryOptions: HistoryQueryOptions
+    queryOptions: HistoryQueryOptions,
   ): Promise<{
     data: HistoryItemDto[]
     lastTimestamp: Date
   }> {
     const { lastTimestamp, amount, direction } = this.extractMarkers(
       queryOptions,
-      release.creationTime
+      release.creationTime,
     )
 
     const approvalHistory = await this.getApprovalHistory(
@@ -171,7 +175,7 @@ export class HistoryService {
       release.id,
       lastTimestamp,
       amount,
-      direction
+      direction,
     )
 
     const commentHistory = await this.getCommentHistory(
@@ -181,7 +185,7 @@ export class HistoryService {
       lastTimestamp,
       amount,
       direction,
-      queryOptions.filter
+      queryOptions.filter,
     )
 
     const releaseHistory = await this.getReleaseAuditHistory(
@@ -190,7 +194,7 @@ export class HistoryService {
       release.id,
       lastTimestamp,
       amount,
-      direction
+      direction,
     )
 
     const runHistory = await this.getRunAuditHistory(
@@ -199,7 +203,7 @@ export class HistoryService {
       release,
       lastTimestamp,
       amount,
-      direction
+      direction,
     )
 
     const overrideHistory = await this.getOverrideHistory(
@@ -208,7 +212,7 @@ export class HistoryService {
       release.id,
       lastTimestamp,
       amount,
-      direction
+      direction,
     )
 
     const checkResultOverrideHistory = await this.getCheckResultOverrideHistory(
@@ -217,7 +221,7 @@ export class HistoryService {
       release.id,
       lastTimestamp,
       amount,
-      direction
+      direction,
     )
 
     let historyItems: HistoryItem[] = []
@@ -235,11 +239,11 @@ export class HistoryService {
     const newLastTimestamp = this.calculateNewLastTimestamp(
       historyItems,
       lastTimestamp,
-      direction
+      direction,
     )
 
     const historyItemDtos = historyItems.map((historyItem) =>
-      this.toHistoryItemDto(historyItem)
+      this.toHistoryItemDto(historyItem),
     )
 
     return {
@@ -252,12 +256,12 @@ export class HistoryService {
     const lastTimestamp = queryOptions.lastTimestamp
       ? new Date(queryOptions.lastTimestamp)
       : queryOptions.sortOrder === 'ASC'
-      ? releaseCreationTime
-      : new Date()
+        ? releaseCreationTime
+        : new Date()
     const amount = queryOptions.items
-    const direction = (
-      queryOptions.sortOrder === 'ASC' ? 'after' : 'before'
-    ) as 'before' | 'after'
+    const direction = (queryOptions.sortOrder === 'ASC' ? 'after' : 'before') as
+      | 'before'
+      | 'after'
     return {
       lastTimestamp,
       amount,
@@ -267,11 +271,11 @@ export class HistoryService {
 
   filterHistoryItems(
     historyItems: HistoryItem[],
-    filter: HistoryFilter
+    filter: HistoryFilter,
   ): HistoryItem[] {
     if (filter === HistoryFilter.EVENT) {
       return historyItems.filter(
-        (historyItem) => String(historyItem.type) === String(filter)
+        (historyItem) => String(historyItem.type) === String(filter),
       )
     }
     if (
@@ -279,7 +283,7 @@ export class HistoryService {
       filter === HistoryFilter.UNRESOLVED
     ) {
       return historyItems.filter(
-        (historyItem) => historyItem.type === HistoryType.COMMENT
+        (historyItem) => historyItem.type === HistoryType.COMMENT,
       )
     }
     return historyItems
@@ -295,7 +299,7 @@ export class HistoryService {
 
   limitHistoryItems(
     historyItems: HistoryItem[],
-    amount: number
+    amount: number,
   ): HistoryItem[] {
     return historyItems.slice(0, amount)
   }
@@ -303,7 +307,7 @@ export class HistoryService {
   calculateNewLastTimestamp(
     historyItems: HistoryItem[],
     lastTimestamp: Date,
-    direction: 'before' | 'after'
+    direction: 'before' | 'after',
   ): Date {
     const newLastTimestamp = historyItems.length
       ? historyItems[historyItems.length - 1].timestamp
@@ -341,7 +345,7 @@ export class HistoryService {
     releaseId: number,
     timestamp: Date,
     amount: number,
-    direction: 'before' | 'after'
+    direction: 'before' | 'after',
   ): Promise<HistoryItem[]> {
     const approvalAudits = await this.approvalAuditService.list(
       namespaceId,
@@ -349,7 +353,7 @@ export class HistoryService {
       timestamp,
       amount + LOOKAHEAD_AMOUNT,
       direction,
-      queryRunner.manager
+      queryRunner.manager,
     )
     const historyItems: HistoryItem[] = []
     await Promise.all(
@@ -358,13 +362,13 @@ export class HistoryService {
         if (historyItem) {
           historyItems.push(historyItem)
         }
-      })
+      }),
     )
     return historyItems
   }
 
   async approvalAuditToHistoryItem(
-    audit: ApprovalAuditEntity
+    audit: ApprovalAuditEntity,
   ): Promise<HistoryItem | undefined> {
     const historyItem = new HistoryItem()
     const data = new ApprovalHistoryEventData()
@@ -396,7 +400,7 @@ export class HistoryService {
         }
         if (modified.comment) {
           data.comment = await this.commentService.toCommentWithRepliesDto(
-            modified.comment
+            modified.comment,
           )
         }
         break
@@ -419,7 +423,7 @@ export class HistoryService {
     releaseId: number,
     timestamp: Date,
     amount: number,
-    direction: 'before' | 'after'
+    direction: 'before' | 'after',
   ): Promise<HistoryItem[]> {
     const overrideAudits = await this.overrideAuditService.list(
       namespaceId,
@@ -427,7 +431,7 @@ export class HistoryService {
       timestamp,
       amount + LOOKAHEAD_AMOUNT,
       direction,
-      queryRunner.manager
+      queryRunner.manager,
     )
     const historyItems: HistoryItem[] = []
     await Promise.all(
@@ -436,12 +440,12 @@ export class HistoryService {
           queryRunner,
           namespaceId,
           releaseId,
-          audit
+          audit,
         )
         if (historyItem) {
           historyItems.push(historyItem)
         }
-      })
+      }),
     )
     return historyItems
   }
@@ -452,7 +456,7 @@ export class HistoryService {
     releaseId: number,
     timestamp: Date,
     amount: number,
-    direction: 'before' | 'after'
+    direction: 'before' | 'after',
   ): Promise<HistoryItem[]> {
     const overrideAudits = await this.checkResultOverrideAuditService.list(
       namespaceId,
@@ -460,7 +464,7 @@ export class HistoryService {
       timestamp,
       amount + LOOKAHEAD_AMOUNT,
       direction,
-      queryRunner.manager
+      queryRunner.manager,
     )
     const historyItems: HistoryItem[] = []
     await Promise.all(
@@ -469,12 +473,12 @@ export class HistoryService {
           queryRunner,
           namespaceId,
           releaseId,
-          audit
+          audit,
         )
         if (historyItem) {
           historyItems.push(historyItem)
         }
-      })
+      }),
     )
     return historyItems
   }
@@ -483,7 +487,7 @@ export class HistoryService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    audit: OverrideAuditEntity
+    audit: OverrideAuditEntity,
   ): Promise<HistoryItem | undefined> {
     const actor = await this.retrieveAuditActor(audit)
 
@@ -504,7 +508,7 @@ export class HistoryService {
         data.reference = new CheckReference(
           modified.chapter,
           modified.requirement,
-          modified.check
+          modified.check,
         )
 
         data.previousAutoColor = modified.originalColor
@@ -521,7 +525,7 @@ export class HistoryService {
               queryRunner,
               namespaceId,
               releaseId,
-              (modified.comment as any).id
+              (modified.comment as any).id,
             )
             data.comment = entity.content
           } catch (e) {
@@ -542,7 +546,7 @@ export class HistoryService {
         data.reference = new CheckReference(
           original.chapter,
           original.requirement,
-          original.check
+          original.check,
         )
 
         data.previousManualColor = original.manualColor
@@ -559,7 +563,7 @@ export class HistoryService {
               queryRunner,
               namespaceId,
               releaseId,
-              (modified.comment as any).id
+              (modified.comment as any).id,
             )
             data.comment = entity.content
           } catch (e) {
@@ -579,7 +583,7 @@ export class HistoryService {
         data.reference = new CheckReference(
           original.chapter,
           original.requirement,
-          original.check
+          original.check,
         )
 
         data.previousManualColor = original.manualColor
@@ -599,7 +603,7 @@ export class HistoryService {
     queryRunner: QueryRunner,
     namespaceId: number,
     releaseId: number,
-    audit: OverrideAuditEntity
+    audit: OverrideAuditEntity,
   ): Promise<HistoryItem | undefined> {
     const actor = await this.retrieveAuditActor(audit)
 
@@ -621,7 +625,7 @@ export class HistoryService {
           modified.chapter,
           modified.requirement,
           modified.check,
-          modified.hash
+          modified.hash,
         )
 
         data.previousAutoFulfilled = modified.originalFulfilled
@@ -643,7 +647,7 @@ export class HistoryService {
           original.chapter,
           original.requirement,
           original.check,
-          original.hash
+          original.hash,
         )
 
         data.previousManualFulfilled = original.manualFulfilled
@@ -664,7 +668,7 @@ export class HistoryService {
           original.chapter,
           original.requirement,
           original.check,
-          original.hash
+          original.hash,
         )
 
         data.previousManualFulfilled = original.manualFulfilled
@@ -687,7 +691,7 @@ export class HistoryService {
     timestamp: Date,
     amount: number,
     direction: 'before' | 'after',
-    filter: HistoryFilter
+    filter: HistoryFilter,
   ): Promise<HistoryItem[]> {
     let comments = []
     switch (filter) {
@@ -699,7 +703,7 @@ export class HistoryService {
           CommentStatus.RESOLVED,
           timestamp,
           amount,
-          direction
+          direction,
         )
         break
       case HistoryFilter.UNRESOLVED:
@@ -710,7 +714,7 @@ export class HistoryService {
           CommentStatus.CREATED,
           timestamp,
           amount,
-          direction
+          direction,
         )
         break
       default:
@@ -720,7 +724,7 @@ export class HistoryService {
           releaseId,
           timestamp,
           amount,
-          direction
+          direction,
         )
         break
     }
@@ -735,7 +739,7 @@ export class HistoryService {
         if (historyItem) {
           historyItems.push(historyItem)
         }
-      })
+      }),
     )
     return historyItems
   }
@@ -755,7 +759,7 @@ export class HistoryService {
     releaseId: number,
     timestamp: Date,
     amount: number,
-    direction: 'before' | 'after'
+    direction: 'before' | 'after',
   ): Promise<HistoryItem[]> {
     const releaseAudits = await this.releaseAuditService.list(
       namespaceId,
@@ -763,7 +767,7 @@ export class HistoryService {
       timestamp,
       amount + LOOKAHEAD_AMOUNT,
       direction,
-      queryRunner.manager
+      queryRunner.manager,
     )
     const historyItems: HistoryItem[] = []
     await Promise.all(
@@ -772,13 +776,13 @@ export class HistoryService {
         if (historyItem) {
           historyItems.push(historyItem)
         }
-      })
+      }),
     )
     return historyItems
   }
 
   async releaseAuditToHistoryItem(
-    audit: ReleaseAuditEntity
+    audit: ReleaseAuditEntity,
   ): Promise<HistoryItem | undefined> {
     const historyItem = new HistoryItem()
     const data = new HistoryEventData()
@@ -819,11 +823,11 @@ export class HistoryService {
     release: ReleaseEntity,
     timestamp: Date,
     amount: number,
-    direction: 'before' | 'after'
+    direction: 'before' | 'after',
   ): Promise<HistoryItemDto[]> {
     if (!release.config.id) {
       throw new Error(
-        `Implementation Error: Release with id ${release.id} has no config id`
+        `Implementation Error: Release with id ${release.id} has no config id`,
       )
     }
     const runHistory = await this.runAuditService.list(
@@ -832,7 +836,7 @@ export class HistoryService {
       timestamp,
       amount,
       direction,
-      queryRunner.manager
+      queryRunner.manager,
     )
     const historyItems: HistoryItem[] = []
     await Promise.all(
@@ -841,13 +845,13 @@ export class HistoryService {
           ? await this.runAuditToHistoryItem(
               audit,
               release.creationTime,
-              release.lastModificationTime
+              release.lastModificationTime,
             )
           : await this.runAuditToHistoryItem(audit, release.creationTime)
         if (historyItem) {
           historyItems.push(historyItem)
         }
-      })
+      }),
     )
     return historyItems
   }
@@ -855,7 +859,7 @@ export class HistoryService {
   async runAuditToHistoryItem(
     audit: RunAuditEntity,
     createdTimestamp?: Date,
-    closedTimestamp?: Date
+    closedTimestamp?: Date,
   ): Promise<HistoryItem | undefined> {
     if (audit.action !== Action.UPDATE) {
       return undefined
@@ -902,7 +906,7 @@ export class HistoryService {
   }
 
   private async retrieveAuditActor(
-    audit: AuditEntity
+    audit: AuditEntity,
   ): Promise<UserInNamespaceDto> {
     // To ensure backwards compatibility with old audits we also need to allow the actor to contain the username only in the database
     if (!audit.actor) {
@@ -918,7 +922,7 @@ export class HistoryService {
   }
 
   private async retrieveApprover(
-    approverId: string
+    approverId: string,
   ): Promise<UserInNamespaceDto> {
     return this.usersService.getUser(approverId)
   }

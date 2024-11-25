@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # sharepoint-fetcher
 
 A fetcher to download the evidence files from the given URL of a SharePoint instance. The fetcher works both with the on-premise and cloud instances.

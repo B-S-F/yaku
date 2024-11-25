@@ -1,15 +1,19 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { MockServerOptions, ServerHost } from '../cli/mockserver'
 
 export function createReleasesMockServerResponse(
   namespaceId: number,
   port: number,
-  releaseId: number
+  releaseId: number,
 ): MockServerOptions {
   const serverHost: ServerHost = new ServerHost(
     'http',
     'localhost',
     String(port),
-    '/api/v1'
+    '/api/v1',
   )
 
   return {

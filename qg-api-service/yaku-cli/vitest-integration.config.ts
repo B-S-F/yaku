@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -8,7 +12,12 @@ export default defineConfig({
     reporters: ['junit', 'default'],
     outputFile: 'results/integration-test-results.xml',
     maxConcurrency: 1,
-    maxThreads: 1,
-    minThreads: 1,
+    pool: 'threads',
+    poolOptions: {
+      threads: {
+        maxThreads: 1,
+        minThreads: 1,
+      },
+    },
   },
 })

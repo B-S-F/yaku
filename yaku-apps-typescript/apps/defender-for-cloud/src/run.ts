@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { AppOutput } from '@B-S-F/autopilot-utils'
 
 import { getDefenderForCloudAlerts } from './alertsRetriever.js'
@@ -10,14 +14,14 @@ import { generateAzureAccessToken } from './auth.js'
 import { exportJson } from './utils.js'
 
 export enum Filter {
-  AlertType,
-  KeyWords,
-  ResourceName,
-  Severity,
-  Categories,
-  Threats,
-  UserImpact,
-  ImplementationEffort,
+  AlertType = 0,
+  KeyWords = 1,
+  ResourceName = 2,
+  Severity = 3,
+  Categories = 4,
+  Threats = 5,
+  UserImpact = 6,
+  ImplementationEffort = 7,
 }
 
 export async function getSecurityAlertsOnASubscription() {
@@ -99,7 +103,7 @@ export const parseFilterValues = (inputFilter: string | null | undefined) => {
   if (inputFilter == null || inputFilter.length <= 0) {
     return null
   }
-  return inputFilter.split(', ').map((entry) => {
+  return inputFilter.split(',').map((entry) => {
     return entry.trim()
   })
 }

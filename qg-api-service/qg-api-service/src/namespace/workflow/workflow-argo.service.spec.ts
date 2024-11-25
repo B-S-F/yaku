@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { streamToString } from '@B-S-F/api-commons-lib'
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
@@ -45,7 +49,7 @@ describe('WorkflowManager', () => {
         {
           provide: BlobStore,
           useValue: {
-            uploadConfig: jest.fn(),
+            uploadPayload: jest.fn(),
             downloadResult: jest.fn(),
             removePath: jest.fn(),
           },
@@ -68,7 +72,7 @@ describe('WorkflowManager', () => {
             true,
             'http://localhost:3128',
             'bosch.com',
-            ''
+            '',
           ),
         },
         {
@@ -76,7 +80,7 @@ describe('WorkflowManager', () => {
           useValue: new WorkflowImageConfig(
             'workflow-image',
             { v1: 'latest', v2: 'latest' },
-            'Never'
+            'Never',
           ),
         },
         {
@@ -301,7 +305,7 @@ describe('WorkflowManager', () => {
       jest
         .spyOn(
           moduleRef.get<ConfigsService>(ConfigsService),
-          'getContentOfMultipleFiles'
+          'getContentOfMultipleFiles',
         )
         .mockResolvedValue({ ...configFiles })
 
@@ -338,10 +342,10 @@ describe('WorkflowManager', () => {
       configs = undefined
     })
 
-    function checkUploadConfig(
+    function checkUploadPayload(
       path: string,
       configs: { [filename: string]: string },
-      expected: { [filename: string]: any }
+      expected: { [filename: string]: any },
     ): void {
       expect(path).toBe(storagePath)
       const files = Object.keys(configs)
@@ -353,10 +357,10 @@ describe('WorkflowManager', () => {
       expect(files).toContain('.vars')
       expect(configs['qg-config.yaml']).toEqual(expected['qg-config.yaml'])
       expect(configs['additional-config.yaml']).toEqual(
-        expected['additional-config.yaml']
+        expected['additional-config.yaml'],
       )
       expect(JSON.parse(configs['environment-variables.json'])).toEqual(
-        expected['environment-variables.json']
+        expected['environment-variables.json'],
       )
       expect(JSON.parse(configs['.secrets'])).toEqual(expected['.secrets'])
       expect(JSON.parse(configs['.vars'])).toEqual(expected['.vars'])
@@ -364,22 +368,22 @@ describe('WorkflowManager', () => {
 
     it('should create the workflow as expected with new config', async () => {
       jest
-        .spyOn(blobStore, 'uploadConfig')
+        .spyOn(blobStore, 'uploadPayload')
         .mockImplementation((p, c): Promise<void> => {
           path = p
-          configs = c
+          configs = c as Omit<ConfigList, 'string'>
           return Promise.resolve()
         })
 
       await workflowManager.run(currentRun, { environment })
 
-      checkUploadConfig(path, configs, {
+      checkUploadPayload(path, configs, {
         ...configFiles,
         ...expectedFiles,
       })
 
       expect(argoService.startWorkflow).toBeCalledWith(
-        JSON.stringify(expectedWorkflow)
+        JSON.stringify(expectedWorkflow),
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -399,10 +403,10 @@ describe('WorkflowManager', () => {
 
     it('should call the WorkflowGenerationService.generateWorkflow with empty environment variables and secrets', async () => {
       jest
-        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadConfig')
+        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadPayload')
         .mockImplementation((p, c): Promise<void> => {
           path = p
-          configs = c
+          configs = c as Omit<ConfigList, 'string'>
           return Promise.resolve()
         })
 
@@ -412,7 +416,7 @@ describe('WorkflowManager', () => {
 
       await workflowManager.run(currentRun, { environment: {} })
 
-      checkUploadConfig(path, configs, {
+      checkUploadPayload(path, configs, {
         ...configFiles,
         ...expectedFiles,
         '.secrets': {},
@@ -420,7 +424,7 @@ describe('WorkflowManager', () => {
       })
 
       expect(argoService.startWorkflow).toBeCalledWith(
-        JSON.stringify(expectedWorkflow)
+        JSON.stringify(expectedWorkflow),
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -440,23 +444,23 @@ describe('WorkflowManager', () => {
 
     it('should create the workflow as expected and handle multiple environment variables', async () => {
       jest
-        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadConfig')
+        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadPayload')
         .mockImplementation((p, c): Promise<void> => {
           path = p
-          configs = c
+          configs = c as Omit<ConfigList, 'string'>
           return Promise.resolve()
         })
 
       await workflowManager.run(currentRun, { environment: environment2 })
 
-      checkUploadConfig(path, configs, {
+      checkUploadPayload(path, configs, {
         ...configFiles,
         ...expectedFiles,
         '.vars': environment2,
       })
 
       expect(argoService.startWorkflow).toBeCalledWith(
-        JSON.stringify(expectedWorkflow)
+        JSON.stringify(expectedWorkflow),
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -476,10 +480,10 @@ describe('WorkflowManager', () => {
 
     it('should handle the usage of the single check option', async () => {
       jest
-        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadConfig')
+        .spyOn(moduleRef.get<BlobStore>(BlobStore), 'uploadPayload')
         .mockImplementation((p, c): Promise<void> => {
           path = p
-          configs = c
+          configs = c as Omit<ConfigList, 'string'>
           return Promise.resolve()
         })
 
@@ -492,7 +496,7 @@ describe('WorkflowManager', () => {
         singleCheck: { chapter: '1', requirement: '1', check: '1' },
       })
 
-      checkUploadConfig(path, configs, {
+      checkUploadPayload(path, configs, {
         ...configFiles,
         ...expectedFiles,
         '.secrets': {},
@@ -502,7 +506,7 @@ describe('WorkflowManager', () => {
       const changedExpected = { ...expectedWorkflow }
       changedExpected.Workflow.spec.templates[0].script.source += ' -c 1_1_1'
       expect(argoService.startWorkflow).toBeCalledWith(
-        JSON.stringify(changedExpected)
+        JSON.stringify(changedExpected),
       )
 
       expect(queryRunner.manager.update).toBeCalled()
@@ -521,7 +525,7 @@ describe('WorkflowManager', () => {
     })
 
     it('should handle thrown errors graciously', async () => {
-      jest.spyOn(blobStore, 'uploadConfig').mockRejectedValue(new Error())
+      jest.spyOn(blobStore, 'uploadPayload').mockRejectedValue(new Error())
 
       await workflowManager.run(currentRun, { environment })
 
@@ -544,7 +548,7 @@ describe('WorkflowManager', () => {
       jest
         .spyOn(
           moduleRef.get<ConfigsService>(ConfigsService),
-          'getContentOfMultipleFiles'
+          'getContentOfMultipleFiles',
         )
         .mockResolvedValue({})
 
@@ -598,7 +602,7 @@ describe('WorkflowManager', () => {
 
       const returnValue = await workflowManager.downloadResult(
         storagePath,
-        filename
+        filename,
       )
 
       expect(blobStore.downloadResult).toBeCalledWith(storagePath, filename)
@@ -619,7 +623,7 @@ describe('WorkflowManager', () => {
 
     beforeEach(() => {
       finishedService = moduleRef.get<WorkflowFinishedService>(
-        WorkflowFinishedService
+        WorkflowFinishedService,
       )
 
       currentRun = new Run()
@@ -654,7 +658,7 @@ describe('WorkflowManager', () => {
       expect(finishedService.checkWorkflowHasFinished).toBeCalledWith(
         argoId,
         argoName,
-        argoNamespace
+        argoNamespace,
       )
       expect(finishedService.updateWorkflowData).toBeCalled()
       expect(returnValue.status).toBe(RunStatus.Completed)
@@ -670,7 +674,7 @@ describe('WorkflowManager', () => {
       expect(finishedService.checkWorkflowHasFinished).toBeCalledWith(
         argoId,
         argoName,
-        argoNamespace
+        argoNamespace,
       )
       expect(finishedService.updateWorkflowData).not.toBeCalled()
       expect(returnValue.status).toBe(RunStatus.Running)

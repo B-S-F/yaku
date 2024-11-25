@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import re
 import unittest
 
@@ -9,7 +13,10 @@ from yaku.sharepoint_fetcher.cloud.connect import Connect
 
 
 @pytest.fixture
-def connect():
+@patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
+def connect(mock_connect):
+    mock_connect.return_value = {"Authorization": "Bearer your_token"}
+
     connect = Connect(
         "https://some.sharepoint.server/sites/123456/",
         "tenant-id",
@@ -19,15 +26,23 @@ def connect():
     return connect
 
 
-def test_initial_value():
+@patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
+def test_initial_value(mock_connect):
+    mock_connect.return_value = {"Authorization": "Bearer your_token"}
+
     url = "https://sharepoint.com"
     connect = Connect(url, "tenant-id", "client-id", "client-secret")
+
     assert connect._sharepoint_site == url
 
 
-def test_missing_trailing_slash_in_url():
+@patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
+def test_missing_trailing_slash_in_url(mock_connect):
+    mock_connect.return_value = {"Authorization": "Bearer your_token"}
+
     url = "https://sharepoint.com/"
     connect = Connect(url, "tenant-id", "client-id", "client-secret")
+
     assert connect._sharepoint_site == url[:-1]
 
 

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Fetcher Background Information
 
 The fetcher gets the content along with the metadata of a Docupedia page via Confluence REST API, downloads and stores it in the evidence folder. The fetcher will store in the evidence folder three types of content:

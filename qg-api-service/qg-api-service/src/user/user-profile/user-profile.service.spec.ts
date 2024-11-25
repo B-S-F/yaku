@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { EntityManager, EntityTarget, QueryRunner, SaveOptions } from 'typeorm'
 import { UserProfile } from './user-profile.entity'
 import { UserProfileService } from './user-profile.service'
@@ -25,8 +29,8 @@ describe('UserProfileService', () => {
       (
         _entityClass: EntityTarget<UserProfile>,
         userProfile: UserProfile,
-        _options: SaveOptions
-      ) => userProfile
+        _options: SaveOptions,
+      ) => userProfile,
     )
 
   beforeEach(async () => {
@@ -79,7 +83,7 @@ describe('UserProfileService', () => {
 
       const result = await userProfileService.create(
         '0c8a2662-3a96-4196-b533-763db114ad73',
-        createUserProfileDto
+        createUserProfileDto,
       )
 
       expect(queryRunner.connect).toBeCalledTimes(1)
@@ -100,7 +104,7 @@ describe('UserProfileService', () => {
       await expect(async () => {
         await userProfileService.create(
           '0c8a2662-3a96-4196-b533-763db114ad73',
-          createUserProfileDto
+          createUserProfileDto,
         )
       }).rejects.toThrow()
 
@@ -120,7 +124,7 @@ describe('UserProfileService', () => {
       const createSpy = jest.spyOn(userProfileService, 'create')
       findOneMock.mockReturnValueOnce(expected)
       const result = await userProfileService.get(
-        '0c8a2662-3a96-4196-b533-763db114ad73'
+        '0c8a2662-3a96-4196-b533-763db114ad73',
       )
 
       expect(queryRunner.connect).toBeCalledTimes(1)
@@ -142,7 +146,7 @@ describe('UserProfileService', () => {
         .mockResolvedValueOnce(expected)
       findOneMock.mockReturnValueOnce(null)
       const result = await userProfileService.get(
-        '0c8a2662-3a96-4196-b533-763db114ad73'
+        '0c8a2662-3a96-4196-b533-763db114ad73',
       )
 
       expect(queryRunner.connect).toBeCalledTimes(1)
@@ -186,7 +190,7 @@ describe('UserProfileService', () => {
       findOneMock.mockReturnValueOnce(expected)
       const result = await userProfileService.update(
         '0c8a2662-3a96-4196-b533-763db114ad73',
-        updateUserProfileDto
+        updateUserProfileDto,
       )
 
       expect(queryRunner.connect).toBeCalledTimes(1)
@@ -216,7 +220,7 @@ describe('UserProfileService', () => {
       findOneMock.mockReturnValueOnce(null)
       const result = await userProfileService.update(
         '0c8a2662-3a96-4196-b533-763db114ad73',
-        updateUserProfileDto
+        updateUserProfileDto,
       )
 
       expect(queryRunner.connect).toBeCalledTimes(1)
@@ -241,7 +245,7 @@ describe('UserProfileService', () => {
       await expect(async () => {
         await userProfileService.update(
           '0c8a2662-3a96-4196-b533-763db114ad73',
-          updateUserProfileDto
+          updateUserProfileDto,
         )
       }).rejects.toThrow()
 
@@ -259,7 +263,7 @@ describe('UserProfileService', () => {
 
       const convertedUser: UserProfile = userProfileService.toUserProfile(
         '0c8a2662-3a96-4196-b533-763db114ad73',
-        getUserProfileDto
+        getUserProfileDto,
       )
 
       expect(convertedUser).toEqual(expected)
@@ -271,7 +275,7 @@ describe('UserProfileService', () => {
 
       const convertedUser: UserProfile = userProfileService.toUserProfile(
         '0c8a2662-3a96-4196-b533-763db114ad73',
-        createUserProfileDto
+        createUserProfileDto,
       )
 
       expect(convertedUser).toEqual(expected)
@@ -283,7 +287,7 @@ describe('UserProfileService', () => {
 
       const convertedUser: UserProfile = userProfileService.toUserProfile(
         '0c8a2662-3a96-4196-b533-763db114ad73',
-        updateUserProfileDto
+        updateUserProfileDto,
       )
 
       expect(convertedUser).toEqual(expected)
@@ -295,7 +299,7 @@ describe('UserProfileService', () => {
       } as UserProfile
 
       const convertedUser: UserProfile = userProfileService.toUserProfile(
-        '0c8a2662-3a96-4196-b533-763db114ad73'
+        '0c8a2662-3a96-4196-b533-763db114ad73',
       )
 
       expect(convertedUser).toEqual(expected)

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   KeypressEvent,
   Status,
@@ -89,16 +93,12 @@ const EDITABLE_PATTERNS = {
 }
 
 const VALIDATION_FUNCTIONS = {
-  number: function (value: string): boolean {
-    return value === '' || String(Number(value)) === value
-  },
-  text: function (value: string): boolean {
-    return true
-  },
-  decimal: function (value: string): boolean {
-    return value === '' || String(Number(value)) === value
-  },
-  url: function (value: string): boolean {
+  number: (value: string): boolean =>
+    value === '' || String(Number(value)) === value,
+  text: (value: string): boolean => true,
+  decimal: (value: string): boolean =>
+    value === '' || String(Number(value)) === value,
+  url: (value: string): boolean => {
     try {
       return String(new URL(value)) === value
     } catch (err) {
@@ -142,7 +142,7 @@ function isSelectionCheckbox(config: TableConfig, state: TableState) {
 function renderTable(
   columns: TableColumn[],
   state: TableState,
-  style?: TableStyle
+  style?: TableStyle,
 ) {
   if (!style) {
     style = {
@@ -215,14 +215,14 @@ function renderTable(
           // background for the pointer
           const valueBeforeCursor = state.cellInput.newValue.substring(
             0,
-            state.cellInput.cursorPosition
+            state.cellInput.cursorPosition,
           )
           const valueOnCursor = state.cellInput.newValue.substring(
             state.cellInput.cursorPosition,
-            state.cellInput.cursorPosition + 1
+            state.cellInput.cursorPosition + 1,
           )
           const valueAfterCursor = state.cellInput.newValue.substring(
-            state.cellInput.cursorPosition + 1
+            state.cellInput.cursorPosition + 1,
           )
           let styledNewValue
           if (state.cellInput.isValid) {
@@ -349,7 +349,7 @@ function enterEditMode(
   state: TableState,
   setInfo: (infoMsg: string) => void,
   setState: (internalState: TableState) => void,
-  clearExistingValue: boolean
+  clearExistingValue: boolean,
 ) {
   if (isSelectionRadio(config, state) || isSelectionCheckbox(config, state)) {
     // avoid confusion with radio selection
@@ -374,7 +374,7 @@ function resetStates(
   setError: (errorMsg: string | undefined) => void,
   setInfo: (infoMsg: string | undefined) => void,
   setConfirmWithSave: (confirmWithSaveMsg: string | undefined) => void,
-  setConfirmWithoutSave: (confirmWithoutSaveMsg: string | undefined) => void
+  setConfirmWithoutSave: (confirmWithoutSaveMsg: string | undefined) => void,
 ) {
   setError(undefined)
   setInfo(undefined)
@@ -402,7 +402,7 @@ function handleFilterKeypress(
   rl: InquirerReadline,
   setState: (internalState: TableState) => void,
   state: TableState,
-  config: TableConfig
+  config: TableConfig,
 ) {
   // handle keypress during edit in the fiter prompt
   switch (event.name) {
@@ -431,7 +431,7 @@ function handleFilterKeypress(
       } else {
         state.filterInput.filterValue = state.filterInput.filterValue.substring(
           0,
-          state.filterInput.filterValue.length - 1
+          state.filterInput.filterValue.length - 1,
         )
       }
       filterTableData(config, state)
@@ -461,7 +461,7 @@ function handleEditKeypress(
   setWarning: (warningMsg: string) => void,
   setInfo: (infoMsg: string) => void,
   state: TableState,
-  config: TableConfig
+  config: TableConfig,
 ) {
   // handle keypress during edit in one of the cells
   switch (event.name) {
@@ -514,10 +514,10 @@ function handleEditKeypress(
       } else {
         const valueBeforeCursor = state.cellInput.newValue.substring(
           0,
-          state.cellInput.cursorPosition - 1
+          state.cellInput.cursorPosition - 1,
         )
         const valueAfterCursor = state.cellInput.newValue.substring(
-          state.cellInput.cursorPosition
+          state.cellInput.cursorPosition,
         )
         state.cellInput.newValue = valueBeforeCursor + valueAfterCursor
       }
@@ -564,10 +564,10 @@ function handleEditKeypress(
         if (EDITABLE_PATTERNS[editableType]?.test(sequence)) {
           const valueBeforeCursor = state.cellInput.newValue.substring(
             0,
-            state.cellInput.cursorPosition
+            state.cellInput.cursorPosition,
           )
           const valueAfterCursor = state.cellInput.newValue.substring(
-            state.cellInput.cursorPosition
+            state.cellInput.cursorPosition,
           )
           state.cellInput.newValue =
             valueBeforeCursor + sequence + valueAfterCursor
@@ -593,7 +593,7 @@ function handleNavigationKeypress(
   state: TableState,
   hasConfirmWithSaveMsg: boolean,
   hasConfirmWithoutSaveMsg: boolean,
-  config: TableConfig
+  config: TableConfig,
 ) {
   switch (event.name) {
     case KEY.SPACE: {
@@ -784,7 +784,7 @@ function handleNavigationKeypress(
     }
     case KEY.PAGEUP: {
       const currentPage = Math.floor(
-        state.selection.selectedRow / state.selection.pageSize
+        state.selection.selectedRow / state.selection.pageSize,
       )
       const nextSelection = (currentPage - 1) * state.selection.pageSize
       state.selection.selectedRow =
@@ -798,7 +798,7 @@ function handleNavigationKeypress(
     }
     case KEY.PAGEDOWN: {
       const currentPage = Math.floor(
-        state.selection.selectedRow / state.selection.pageSize
+        state.selection.selectedRow / state.selection.pageSize,
       )
       const nextSelection = (Number(currentPage) + 1) * state.selection.pageSize
       state.selection.selectedRow =
@@ -857,7 +857,7 @@ function handleKeypress(
   state: TableState,
   hasConfirmWithSaveMsg: boolean,
   hasConfirmWithoutSaveMsg: boolean,
-  config: TableConfig
+  config: TableConfig,
 ) {
   // reset states from previous keypress
   resetStates(setError, setInfo, setConfirmWithSave, setConfirmWithoutSave)
@@ -882,14 +882,14 @@ function handleKeypress(
       state,
       hasConfirmWithSaveMsg,
       hasConfirmWithoutSaveMsg,
-      config
+      config,
     )
   }
   rl.clearLine(0)
   // must be set explicitly
   setError('')
   // this fixes the performance issue (lag)
-  rl.setMaxListeners(0)
+  ;(rl as any).setMaxListeners(0)
 }
 
 function sortTableData(config: TableConfig, state: TableState) {
@@ -914,7 +914,7 @@ function sortTableData(config: TableConfig, state: TableState) {
             ? Buffer.compare(aBuff, bBuff)
             : Buffer.compare(bBuff, aBuff)
         }
-      }
+      },
     )
   }
 }
@@ -933,7 +933,6 @@ function filterTableData(config: TableConfig, state: TableState) {
           String(row[idx + 1]).indexOf(state.filterInput.filterValue) > -1
         ) {
           result = true
-          continue
         }
       }
       return result
@@ -957,7 +956,7 @@ function filterTableData(config: TableConfig, state: TableState) {
 function resetSortAndFilter(
   state: TableState,
   config: TableConfig,
-  realRowIndex: number
+  realRowIndex: number,
 ) {
   // deal with filtering and pagination effects
   if (state.filterInput.filterValue || state.sortInput.sortedColumn !== -1) {
@@ -978,43 +977,43 @@ function resetSortAndFilter(
 function generateHelpTip(state: TableState): string {
   if (state.mode.inFilter) {
     return `${chalk.yellow('Filter')} (Press ${chalk.cyan.bold(
-      '<Enter>'
+      '<Enter>',
     )} to apply, ${chalk.cyan.bold('<Esc>')} to discard): ${chalk.yellow(
-      state.filterInput.filterValue
+      state.filterInput.filterValue,
     )}`
   }
   if (state.mode.inEdit) {
     return `(Press ${chalk.cyan.bold(
-      '<Enter>'
+      '<Enter>',
     )} to update the value, ${chalk.cyan.bold('<Esc>')} to cancel editing)`
   }
   let helpTip = `(Press ${chalk.cyan.bold(
-    '<H>'
+    '<H>',
   )} to toggle navigation help, ${chalk.cyan.bold(
-    '<Enter>'
+    '<Enter>',
   )} to save the changes and ${chalk.cyan.bold('<Esc>')} to discard)`
 
   if (state.mode.showNavigationHelp) {
     helpTip += `\n\nIn order to make changes, press ${chalk.cyan.bold(
-      '<Space>'
+      '<Space>',
     )} to set as current, ${chalk.cyan.bold('<Insert>')}/${chalk.cyan.bold(
-      '<Delete>'
+      '<Delete>',
     )} to edit.\nUse ${chalk.cyan.bold('<Arrows>')} or ${chalk.cyan.bold(
-      '<Tab>'
+      '<Tab>',
     )}/${chalk.cyan.bold(
-      '<Shift + Tab>'
+      '<Shift + Tab>',
     )} to move between items.\nFor navigation between pages:\n - ${chalk.cyan.bold(
-      '<PgUp>'
+      '<PgUp>',
     )} goes to previous page, ${chalk.cyan.bold(
-      '<PgDown>'
+      '<PgDown>',
     )} to the next.\n - ${chalk.cyan.bold(
-      '<Home>'
+      '<Home>',
     )} takes you to the first page, ${chalk.cyan.bold(
-      '<End>'
+      '<End>',
     )} to the last.\nSort the elements using ${chalk.cyan.bold(
-      '<Shift + Up>'
+      '<Shift + Up>',
     )}/${chalk.cyan.bold(
-      '<Shift + Down>'
+      '<Shift + Down>',
     )} or filter them using ${chalk.cyan.bold('<Shift + F>')}`
   }
   return helpTip
@@ -1025,7 +1024,7 @@ function generateUserMsg(
   confirmWithoutSaveMsg: string | unknown,
   confirmWithSaveMsg: string | unknown,
   infoMsg: string | unknown,
-  warningMsg: string | unknown
+  warningMsg: string | unknown,
 ): string {
   if (errorMsg) {
     return chalk.red(errorMsg)
@@ -1106,7 +1105,7 @@ export default createPrompt((config: TableConfig, done) => {
       state,
       confirmWithSaveMsg !== undefined,
       confirmWithoutSaveMsg !== undefined,
-      config
+      config,
     )
   })
   let message = theme.style.message(config.message, status as Status)
@@ -1126,7 +1125,7 @@ export default createPrompt((config: TableConfig, done) => {
     confirmWithoutSaveMsg,
     confirmWithSaveMsg,
     infoMsg,
-    warningMsg
+    warningMsg,
   )
 
   return [

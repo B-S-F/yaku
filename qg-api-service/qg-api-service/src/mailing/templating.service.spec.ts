@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { REQUEST } from '@nestjs/core'
 import { Test } from '@nestjs/testing'
 import { TemplateFunction } from 'ejs'
@@ -62,7 +66,7 @@ describe('TemplatingService', () => {
     jest
       .spyOn(templatingCache, 'get')
       .mockReturnValue(
-        (() => (data: any) => 'test') as unknown as TemplateFunction
+        (() => (data: any) => 'test') as unknown as TemplateFunction,
       )
     const notification = {
       type: NotificationType.Comment,

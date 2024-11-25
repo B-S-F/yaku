@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Custom Python Apps
 
 In contrast to {doc}`../papsr/index`, you can also develop your own Python apps, which

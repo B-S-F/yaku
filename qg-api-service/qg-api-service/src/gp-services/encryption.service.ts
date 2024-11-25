@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto'
 
@@ -13,7 +17,7 @@ export class EncryptionService {
   // The encryption uses AES256, so the key has to be a 32 byte long string
   constructor(
     @Inject(EncryptionServiceConfig)
-    private readonly serviceConfig: EncryptionServiceConfig
+    private readonly serviceConfig: EncryptionServiceConfig,
   ) {
     const iv = randomBytes(this.ivLength).toString('hex')
     createCipheriv('aes-256-cbc', this.serviceConfig.encryptionKey, iv) // let crypto check the validity of the key
@@ -28,7 +32,7 @@ export class EncryptionService {
     const cipher = createCipheriv(
       'aes-256-cbc',
       this.serviceConfig.encryptionKey,
-      iv
+      iv,
     )
     let encrypted = cipher.update(secret, 'utf8', 'base64')
     encrypted += cipher.final('base64')
@@ -46,7 +50,7 @@ export class EncryptionService {
     const decipher = createDecipheriv(
       'aes-256-cbc',
       this.serviceConfig.encryptionKey,
-      iv
+      iv,
     )
     const decrypted = decipher.update(encrypted, 'base64', 'utf8')
     return decrypted + decipher.final('utf8')

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import { ApiProperty } from '@nestjs/swagger'
 
@@ -20,7 +24,7 @@ export class AuthInfoServiceConfig {
 export class AuthInfoService {
   constructor(
     @Inject(AuthInfoServiceConfig)
-    private readonly config: AuthInfoServiceConfig
+    private readonly config: AuthInfoServiceConfig,
   ) {}
 
   getAuthInfo(): AuthInfoDto {

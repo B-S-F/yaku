@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import { Interval } from '@nestjs/schedule'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -23,14 +27,14 @@ export class FinishedWorkflowDetectionTask {
         },
       },
     }),
-    {}
+    {},
   )
   private isRunning = false
 
   constructor(
     @Inject(WorkflowFinishedService)
     private readonly workflowService: WorkflowFinishedService,
-    @InjectRepository(Run) private readonly repository: Repository<Run>
+    @InjectRepository(Run) private readonly repository: Repository<Run>,
   ) {}
 
   @Interval('finish_workflow', (60 / CHECKS_PER_MINUTE) * 1000)
@@ -45,7 +49,10 @@ export class FinishedWorkflowDetectionTask {
     let stillRunningRuns: Run[]
     try {
       stillRunningRuns = await this.repository.find({
-        where: [{ status: RunStatus.Running }, { status: RunStatus.Pending }],
+        where: [
+          { status: RunStatus.Running },
+          { status: RunStatus.Pending, synthetic: false },
+        ],
         relations: ['config', 'namespace'],
       })
     } catch (err) {
@@ -80,7 +87,7 @@ export class FinishedWorkflowDetectionTask {
           await this.workflowService.checkWorkflowHasFinished(
             run.argoId,
             run.argoName,
-            run.argoNamespace
+            run.argoNamespace,
           )
         if (workflowInfo?.hasFinished) {
           await this.workflowService.updateWorkflowData(workflowInfo, run)

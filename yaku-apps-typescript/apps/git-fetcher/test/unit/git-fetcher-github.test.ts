@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { beforeEach, describe, expect, it, SpyInstance, vi } from 'vitest'
 import { GitFetcherGithubPrs } from '../../src/fetchers/git-fetcher-github-prs'
 import * as responseHandler from '../../src/utils/handle-response-status'

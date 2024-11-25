@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 ![Code Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/git3wid/6bf2099ffe34b1daa3e2c00571cc28f7/raw/qg-apps-typescript-coverage-badge.json)
 
 # QG Apps in TypeScript

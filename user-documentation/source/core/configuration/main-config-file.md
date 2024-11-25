@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # The QG config file
 
 The {file}`qg-config.yaml` file is the main configuration file of {{ PRODUCTNAME }}.

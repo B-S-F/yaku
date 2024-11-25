@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
@@ -6,7 +10,7 @@ export class ServiceConfig {
     readonly servicePort: number,
     readonly pathPrefix: string,
     readonly serviceVersion: string,
-    readonly imageVersion: string
+    readonly imageVersion: string,
   ) {}
 }
 

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { QueryRunner } from 'typeorm'
 import { parse } from 'yaml'
@@ -11,7 +15,7 @@ import { ReleaseEntity } from './release.entity'
 export async function getRelease(
   queryRunner: QueryRunner,
   namespaceId: number,
-  releaseId: number
+  releaseId: number,
 ): Promise<ReleaseEntity> {
   const release = await queryRunner.manager.findOne(ReleaseEntity, {
     where: {
@@ -23,7 +27,7 @@ export async function getRelease(
 
   if (!release) {
     throw new NotFoundException(
-      `Release not found, namespace: ${namespaceId}, release: ${releaseId}`
+      `Release not found, namespace: ${namespaceId}, release: ${releaseId}`,
     )
   }
 
@@ -33,7 +37,7 @@ export async function getRelease(
 export async function getQgConfigFileContent(
   queryRunner: QueryRunner,
   namespaceId: number,
-  releaseId: number
+  releaseId: number,
 ): Promise<object> {
   const release = await getRelease(queryRunner, namespaceId, releaseId)
 
@@ -44,7 +48,7 @@ export async function getQgConfigFileContent(
 
   if (!config) {
     throw new NotFoundException(
-      `Config not found, namespace: ${namespaceId}, config: ${release.config.id}`
+      `Config not found, namespace: ${namespaceId}, config: ${release.config.id}`,
     )
   }
 
@@ -57,7 +61,7 @@ export async function getQgConfigFileContent(
 
   if (!qgConfigFile) {
     throw new NotFoundException(
-      `qg-config.yaml not found in config, config: ${release.config.id}`
+      `qg-config.yaml not found in config, config: ${release.config.id}`,
     )
   }
 
@@ -65,12 +69,12 @@ export async function getQgConfigFileContent(
     FileContentEntity,
     {
       where: { file: { id: qgConfigFile.id } },
-    }
+    },
   )
 
   if (!qgConfigFileContent) {
     throw new NotFoundException(
-      `qg-config.yaml not found in config, config: ${release.config.id}`
+      `qg-config.yaml not found in config, config: ${release.config.id}`,
     )
   }
 
@@ -80,7 +84,7 @@ export async function getQgConfigFileContent(
 export function checkForClosed(release: ReleaseEntity): void {
   if (release.closed) {
     throw new BadRequestException(
-      `Release has been closed, namespace: ${release.namespace.id}, release: ${release.id}`
+      `Release has been closed, namespace: ${release.namespace.id}, release: ${release.id}`,
     )
   }
 }

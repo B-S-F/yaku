@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { HttpStatus } from '@nestjs/common'
 import { readFile } from 'fs/promises'
 import * as supertest from 'supertest'
@@ -312,20 +316,20 @@ rules:
 
   async function checkDatabaseEntries(
     configs: number,
-    files: number
+    files: number,
   ): Promise<void> {
     console.log('========== Check database entries')
     expect(
       (await configRepo.find()).length,
-      `Config repo does not contain ${configs} elements`
+      `Config repo does not contain ${configs} elements`,
     ).toBe(configs)
     expect(
       (await fileRepo.find()).length,
-      `File repo does not contain ${files} elements`
+      `File repo does not contain ${files} elements`,
     ).toBe(files)
     expect(
       (await contentRepo.find()).length,
-      `Config repo does not contain ${files} elements`
+      `Config repo does not contain ${files} elements`,
     ).toBe(files)
   }
 
@@ -337,19 +341,19 @@ rules:
     expect(dbconf.id, `Config in database does not have an id`).toBeDefined()
     expect(
       dbconf.name,
-      `Config in database has name "${dbconf.name}" instead of "${configBody.name}"`
+      `Config in database has name "${dbconf.name}" instead of "${configBody.name}"`,
     ).toBe(configBody.name)
     expect(
       dbconf.description,
-      `Config in database has description "${dbconf.description}" instead of "${configBody.description}"`
+      `Config in database has description "${dbconf.description}" instead of "${configBody.description}"`,
     ).toBe(configBody.description)
     expect(
       dbconf.creationTime,
-      `Config in database does not have a creation time`
+      `Config in database does not have a creation time`,
     ).toBeDefined()
     expect(
       dbconf.lastModificationTime,
-      `Config in database does not have a last modification time`
+      `Config in database does not have a last modification time`,
     ).toBeDefined()
   }
 
@@ -363,12 +367,12 @@ rules:
       fileEntities.length,
       `Number of files stored in database is ${
         fileEntities.length
-      }, but should be ${Object.keys(files).length}`
+      }, but should be ${Object.keys(files).length}`,
     ).toBe(Object.keys(files).length)
     for (const name of Object.keys(files)) {
       expect(
         filenames,
-        `There is no file in the database with the name "${name}", filenames are: "${filenames}"`
+        `There is no file in the database with the name "${name}", filenames are: "${filenames}"`,
       ).toContain(name)
     }
 
@@ -381,12 +385,12 @@ rules:
       contentEntities.length,
       `Number of file contents stored in database is ${
         contentEntities.length
-      }, but should be ${Object.keys(files).length}`
+      }, but should be ${Object.keys(files).length}`,
     ).toBe(Object.keys(files).length)
     for (const entity of contentEntities) {
       expect(
         entity.content,
-        `Content of file "${entity.file.filename}" is not as expected`
+        `Content of file "${entity.file.filename}" is not as expected`,
       ).toEqual(files[entity.file.filename])
     }
   }
@@ -394,49 +398,49 @@ rules:
   async function checkConfigByGet(
     configBody: any,
     qgConfig: boolean,
-    additionalFiles: string[]
+    additionalFiles: string[],
   ): Promise<void> {
     console.log('========== Check config by GET')
     const response = await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .get(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}`,
       )
       .set('Authorization', `Bearer ${apiToken}`)
       .expect(HttpStatus.OK)
 
     expect(
       response.body.id,
-      `The id of the returned config is not defined`
+      `The id of the returned config is not defined`,
     ).toBeDefined()
     expect(
       response.body.name,
-      `The name of the retrieved config is "${response.body.name}", it should be "${configBody.name}"`
+      `The name of the retrieved config is "${response.body.name}", it should be "${configBody.name}"`,
     ).toBe(configBody.name)
     expect(
       response.body.description,
-      `The description of the retrieved config is not as expected`
+      `The description of the retrieved config is not as expected`,
     ).toBe(configBody.description ?? undefined)
     expect(
       response.body.creationTime,
-      `The creation time of the returned config is not defined`
+      `The creation time of the returned config is not defined`,
     ).toBeDefined()
     expect(
       response.body.lastModificationTime,
-      `The last modification time of the returned config is not defined`
+      `The last modification time of the returned config is not defined`,
     ).toBeDefined()
     if (qgConfig) {
       expect(
         response.body.files.qgConfig,
-        `The information of the qgConfig property in the returned config is "${response.body.files.qgConfig}"`
+        `The information of the qgConfig property in the returned config is "${response.body.files.qgConfig}"`,
       ).toContain('qg-config.yaml')
     }
     for (const file of additionalFiles) {
       expect(
         response.body.files.additionalConfigs.filter((url: string) =>
-          url.includes(file)
+          url.includes(file),
         ).length,
-        `The additional files section does not contain a reference to file "${file}"`
+        `The additional files section does not contain a reference to file "${file}"`,
       ).toBe(1)
     }
   }
@@ -449,21 +453,21 @@ rules:
       const response = await supertest
         .agent(nestTestingApp.app.getHttpServer())
         .get(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files/${file}`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files/${file}`,
         )
         .set('Authorization', `Bearer ${apiToken}`)
         .expect(HttpStatus.OK)
 
       expect(
         response.body.toString('utf-8'),
-        `The content for file "${file}" is not as expected`
+        `The content for file "${file}" is not as expected`,
       ).toEqual(files[file])
     }
   }
 
   async function checkConfigsAsList(
     names: string[],
-    amount?: number
+    amount?: number,
   ): Promise<void> {
     amount = amount || 1
     const response = await supertest
@@ -474,30 +478,30 @@ rules:
 
     expect(
       response.body.pagination.pageNumber,
-      `Page number should be 1, is ${response.body.pagination.pageNumber}`
+      `Page number should be 1, is ${response.body.pagination.pageNumber}`,
     ).toBe(1)
     expect(
       response.body.pagination.pageSize,
-      `Page size should be ${amount}, is ${response.body.pagination.pageSize}`
+      `Page size should be ${amount}, is ${response.body.pagination.pageSize}`,
     ).toBe(amount)
     expect(
       response.body.pagination.totalCount,
-      `Total count should be ${amount}, is ${response.body.pagination.totalCount}`
+      `Total count should be ${amount}, is ${response.body.pagination.totalCount}`,
     ).toBe(amount)
     expect(
       response.body.links,
-      'Links section of response body should be defined'
+      'Links section of response body should be defined',
     ).toBeDefined()
     expect(
       response.body.data.length,
-      `Expected ${amount} data element in response body, got ${response.body.data.length}`
+      `Expected ${amount} data element in response body, got ${response.body.data.length}`,
     ).toBe(amount)
     for (const name of names) {
       expect(
         response.body.data.filter((config) => config.name === name).length,
         `Expected a config with name "${name}" in response body, got ${response.body.data
           .map((config) => config.name)
-          .join(', ')}`
+          .join(', ')}`,
       ).toBe(1)
     }
   }
@@ -513,23 +517,23 @@ rules:
 
     expect(
       response.body.id,
-      `The returned config in response body does not have an id`
+      `The returned config in response body does not have an id`,
     ).toBeDefined()
     expect(
       response.body.name,
-      `The returned config in response body does not have the right name ${response.body.name} instead of ${configBody.name}`
+      `The returned config in response body does not have the right name ${response.body.name} instead of ${configBody.name}`,
     ).toBe(configBody.name)
     expect(
       response.body.description,
-      `The returned config in response body does not have the right description`
+      `The returned config in response body does not have the right description`,
     ).toBe(configBody.description)
     expect(
       response.body.creationTime,
-      `The returned config in response body does not have an creation time`
+      `The returned config in response body does not have an creation time`,
     ).toBeDefined()
     expect(
       response.body.lastModificationTime,
-      `The returned config in response body does not have an last modification time`
+      `The returned config in response body does not have an last modification time`,
     ).toBeDefined()
 
     configId = response.body.id
@@ -537,12 +541,12 @@ rules:
 
   async function copyConfig(
     configId: number,
-    body: { name: string; description: string }
+    body: { name: string; description: string },
   ): Promise<number> {
     const response = await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/copy`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/copy`,
       )
       .send(body)
       .set('Authorization', `Bearer ${apiToken}`)
@@ -550,23 +554,23 @@ rules:
       .expect(HttpStatus.CREATED)
     expect(
       response.body.id,
-      `The returned config in response body does not have an id`
+      `The returned config in response body does not have an id`,
     ).toBeDefined()
     expect(
       response.body.name,
-      `The returned config in response body does not have the right name ${response.body.name} instead of ${body.name}`
+      `The returned config in response body does not have the right name ${response.body.name} instead of ${body.name}`,
     ).toBe(body.name)
     expect(
       response.body.description,
-      `The returned config in response body does not have the right description`
+      `The returned config in response body does not have the right description`,
     ).toBe(body.description)
     expect(
       response.body.creationTime,
-      `The returned config in response body does not have an creation time`
+      `The returned config in response body does not have an creation time`,
     ).toBeDefined()
     expect(
       response.body.lastModificationTime,
-      `The returned config in response body does not have an last modification time`
+      `The returned config in response body does not have an last modification time`,
     ).toBeDefined()
 
     return response.body.id
@@ -576,7 +580,7 @@ rules:
     const response = await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .patch(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}`,
       )
       .send(configBody)
       .set('Authorization', `Bearer ${apiToken}`)
@@ -584,23 +588,23 @@ rules:
 
     expect(
       response.body.id,
-      `The returned config in response body does not have an id`
+      `The returned config in response body does not have an id`,
     ).toBeDefined()
     expect(
       response.body.name,
-      `The returned config in response body does not have the right name ${response.body.name} instead of ${configBody.name}`
+      `The returned config in response body does not have the right name ${response.body.name} instead of ${configBody.name}`,
     ).toBe(configBody.name)
     expect(
       response.body.description,
-      `The returned config in response body does not have the right description`
+      `The returned config in response body does not have the right description`,
     ).toBe(configBody.description ?? undefined)
     expect(
       response.body.creationTime,
-      `The returned config in response body does not have an creation time`
+      `The returned config in response body does not have an creation time`,
     ).toBeDefined()
     expect(
       response.body.lastModificationTime,
-      `The returned config in response body does not have an last modification time`
+      `The returned config in response body does not have an last modification time`,
     ).toBeDefined()
   }
 
@@ -608,7 +612,7 @@ rules:
     const response = await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .patch(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/initial-config`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/initial-config`,
       )
       .attach('content', configQuestionnaire, {
         filename: 'config-questionnaire.yaml',
@@ -620,24 +624,24 @@ rules:
     const configData = response.body.toString('utf-8')
     expect(
       configData,
-      `Created initial config file is not as expected`
+      `Created initial config file is not as expected`,
     ).toEqual(configFile)
   }
 
   async function createInitialConfigFileFromExcel(): Promise<void> {
     const excelFile = 'SampleProject.xlsx'
     const excelBuffer = await readFile(
-      `${__dirname}/../src/namespace/configs/testdata/${excelFile}`
+      `${__dirname}/../src/namespace/configs/testdata/${excelFile}`,
     )
     const configFile = 'SampleProject.xlsx_filtered.config'
     const configBuffer = await readFile(
-      `${__dirname}/../src/namespace/configs/testdata/${configFile}`
+      `${__dirname}/../src/namespace/configs/testdata/${configFile}`,
     )
 
     const response = await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .patch(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/config-from-excel`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/config-from-excel`,
       )
       .attach('xlsx', excelBuffer, {
         filename: excelFile,
@@ -653,7 +657,7 @@ rules:
     const configData = response.body.toString('utf-8')
     expect(
       configData,
-      `Created initial config file out of excel is not as expected`
+      `Created initial config file out of excel is not as expected`,
     ).toEqual(excelConfig)
   }
 
@@ -661,7 +665,7 @@ rules:
     await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
       )
       .field('filename', additionalConfigName)
       .attach('content', Buffer.from(additionalConfig), {
@@ -676,16 +680,16 @@ rules:
     await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
       )
       .field('filename', 'to-big-file.jpg')
       .attach(
         'content',
-        Buffer.alloc(parseInt(MAX_FILE_SIZE_MB) * 1024 * 1024 + 1),
+        Buffer.alloc(Number.parseInt(MAX_FILE_SIZE_MB) * 1024 * 1024 + 1),
         {
           filename: 'to-big-file.jpg',
           contentType: 'multipart/form-data',
-        }
+        },
       )
       .set('Authorization', `Bearer ${apiToken}`)
       .expect(HttpStatus.PAYLOAD_TOO_LARGE)
@@ -718,7 +722,7 @@ rules:
       await supertest
         .agent(nestTestingApp.app.getHttpServer())
         .post(
-          `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`
+          `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
         )
         .field('filename', file.filename)
         .attach('content', file.content, {
@@ -734,7 +738,7 @@ rules:
     await supertest
       .agent(nestTestingApp.app.getHttpServer())
       .patch(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files/${additionalConfigNameEncoded}`
+        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files/${additionalConfigNameEncoded}`,
       )
       .attach('content', Buffer.from(content), {
         filename: additionalConfigName,
@@ -750,7 +754,7 @@ rules:
       .delete(
         `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${
           otherConfigId || configId
-        }/files/${additionalConfigNameEncoded}`
+        }/files/${additionalConfigNameEncoded}`,
       )
       .set('Authorization', `Bearer ${apiToken}`)
       .expect(HttpStatus.OK)
@@ -762,7 +766,7 @@ rules:
       .delete(
         `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${
           otherConfigId || configId
-        }`
+        }`,
       )
       .set('Authorization', `Bearer ${apiToken}`)
       .expect(HttpStatus.OK)

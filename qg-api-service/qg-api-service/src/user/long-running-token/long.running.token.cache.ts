@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
 import { Inject, Injectable } from '@nestjs/common'
 
@@ -24,7 +28,7 @@ export class AuthCache {
 
   constructor(
     @Inject(AuthCacheConfig)
-    private readonly config: AuthCacheConfig
+    private readonly config: AuthCacheConfig,
   ) {
     this.map = new Map<string, MapValue>()
     this.entryValidForMilliSeconds = config.entryValidForMilliSeconds

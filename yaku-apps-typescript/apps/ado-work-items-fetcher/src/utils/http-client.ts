@@ -1,6 +1,7 @@
-/**
- * Copyright (c) 2022, 2023 by grow platform GmbH
- */
+// SPDX-FileCopyrightText: 2022 2023 by grow platform GmbH
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
 
 import axios, { AxiosInstance } from 'axios'
 import { Agent } from 'http'
@@ -58,7 +59,7 @@ function getProxyPort(): number {
   if (!proxyPortAsString.match(/^[0-9]{1,5}$/)) {
     throw new Error('environment variable PROXY_PORT must contain digits only')
   }
-  const proxyPort: number = parseInt(proxyPortAsString, 10)
+  const proxyPort: number = Number.parseInt(proxyPortAsString, 10)
   if (isNaN(proxyPort) || proxyPort <= 0 || proxyPort > 65535) {
     throw new Error(
       'environment variable PROXY_PORT does not represent an integer value in the range 0 < PROXY_PORT < 65535',

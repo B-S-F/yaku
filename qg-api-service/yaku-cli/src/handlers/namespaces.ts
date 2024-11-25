@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiClient, Namespace } from '@B-S-F/yaku-client-lib'
 import {
   consoleErrorRed,
@@ -15,7 +19,7 @@ import {
 import yp from '../yaku-prompts.js'
 
 export async function selectNamespace(
-  namespaces: Namespace[]
+  namespaces: Namespace[],
 ): Promise<string | undefined> {
   if (namespaces.length === 0) {
     consoleErrorRed('No namespaces available!')
@@ -32,7 +36,7 @@ export async function selectNamespace(
   const namespaceId: string = await yp.search(
     'Select Namespace (type to filter)',
     choices,
-    10
+    10,
   )
   return namespaceId || undefined
 }
@@ -54,7 +58,7 @@ export async function switchNamespace(client: ApiClient, namespaceId: any) {
     namespaceId = parseIntParameter(namespaceId, 'namespace')
     if (!namespaces.find((ns) => ns.id === namespaceId)) {
       consoleErrorRed(
-        `Namespace with id ${namespaceId} not found. Use 'namespaces list' to see available namespaces.`
+        `Namespace with id ${namespaceId} not found. Use 'namespaces list' to see available namespaces.`,
       )
       return
     }
@@ -75,7 +79,7 @@ export async function createNamespace(
   client: ApiClient,
   name: string,
   users: string[],
-  options: any
+  options: any,
 ) {
   handleStandardParams(client)
 
@@ -90,7 +94,7 @@ export async function createNamespace(
     await logResultAsJson(client.createNamespace(name))
   } else {
     await logResultAsJson(
-      client.createNamespaceWithConfig(name, options.initConfigFile)
+      client.createNamespaceWithConfig(name, options.initConfigFile),
     )
   }
 }
@@ -104,7 +108,7 @@ export async function showNamespaces(client: ApiClient, id: string) {
 export async function updateNamespace(
   client: ApiClient,
   id: string,
-  options: any
+  options: any,
 ) {
   handleStandardParams(client)
   const ns = parseIntParameter(id, 'id')

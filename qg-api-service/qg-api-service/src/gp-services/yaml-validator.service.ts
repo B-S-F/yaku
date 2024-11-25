@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException, Injectable } from '@nestjs/common'
 import * as YAML from 'yaml'
 
@@ -10,7 +14,7 @@ export class YamlValidatorService {
 
     if (!parsableFile || isJsonFile) {
       throw new BadRequestException(
-        `No valid yaml content for file ${filename}`
+        `No valid yaml content for file ${filename}`,
       )
     }
     return parsableFile

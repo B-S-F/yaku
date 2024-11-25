@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { SortOrder } from '@B-S-F/api-commons-lib'
 import { ApiExtraModels, ApiProperty, getSchemaPath } from '@nestjs/swagger'
 import { z } from 'zod'
@@ -86,7 +90,7 @@ export class DeleteCheckResultOverrideHistoryEventData extends HistoryEventData 
   ApprovalHistoryEventData,
   AddOverrideHistoryEventData,
   UpdateOverrideHistoryEventData,
-  DeleteOverrideHistoryEventData
+  DeleteOverrideHistoryEventData,
 )
 export class HistoryItemDto {
   @ApiProperty({

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Autopilot Output as JSON Lines
 
 An {term}`autopilot` must provide information about its execution by printing

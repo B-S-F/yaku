@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiProperty } from '@nestjs/swagger'
 import { z } from 'zod'
 
@@ -14,7 +18,7 @@ export class CheckResultReference {
     chapter: string,
     requirement: string,
     check: string,
-    hash: string
+    hash: string,
   ) {
     this.chapter = chapter
     this.requirement = requirement

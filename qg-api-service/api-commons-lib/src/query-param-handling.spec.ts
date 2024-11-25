@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException } from '@nestjs/common'
 import { randomInt } from 'crypto'
 import { SelectQueryBuilder } from 'typeorm'
@@ -33,7 +37,7 @@ describe('Query Param Handling', () => {
       sourceObj as PaginationQueryOptions,
       queryOptionsSchema,
       ['column'],
-      'id'
+      'id',
     )
   }
 
@@ -92,8 +96,8 @@ describe('Query Param Handling', () => {
         brokenQueryOption,
         queryOptionsSchema.strict(),
         [],
-        'id'
-      )
+        'id',
+      ),
     ).toThrow(BadRequestException)
   })
 
@@ -104,8 +108,8 @@ describe('Query Param Handling', () => {
         brokenQueryOption,
         queryOptionsSchema.strict(),
         [],
-        'id'
-      )
+        'id',
+      ),
     ).toThrow(BadRequestException)
   })
 
@@ -116,8 +120,8 @@ describe('Query Param Handling', () => {
         brokenQueryOption,
         queryOptionsSchema.strict(),
         [],
-        'id'
-      )
+        'id',
+      ),
     ).toThrow(BadRequestException)
   })
 
@@ -144,7 +148,7 @@ describe('Query Param Handling', () => {
 
   it('should parse multiple filter options correctly in second format', () => {
     const filterOptions = parseFilter(
-      'property1=value1,value2 &property2 = value3'
+      'property1=value1,value2 &property2 = value3',
     )
 
     expect(filterOptions.length).toBe(2)
@@ -156,7 +160,7 @@ describe('Query Param Handling', () => {
 
   it('should handle corner cases of filtering properly', () => {
     expect(() => parseFilter('property[value1,value2]')).toThrow(
-      BadRequestException
+      BadRequestException,
     )
     expect(() => parseFilter('property=,')).toThrow(BadRequestException)
 
@@ -183,7 +187,7 @@ describe('Query Param Handling', () => {
       queryOptions,
       requestUrl,
       95,
-      relevantData
+      relevantData,
     )
 
     expect(pagiData.pagination.pageNumber).toBe(3)
@@ -210,7 +214,7 @@ describe('Query Param Handling', () => {
       queryOptions,
       requestUrl,
       95,
-      relevantData
+      relevantData,
     )
 
     expect(pagiData.pagination.pageNumber).toBe(5)
@@ -218,13 +222,13 @@ describe('Query Param Handling', () => {
     expect(pagiData.pagination.totalCount).toBe(95)
     expect(pagiData.data).toBe(relevantData as any[])
     expect(pagiData.links.first).toBe(
-      `${namespaceUrl}?page=1&items=20&sortOrder=ASC`
+      `${namespaceUrl}?page=1&items=20&sortOrder=ASC`,
     )
     expect(pagiData.links.last).toBe(
-      `${namespaceUrl}?page=5&items=20&sortOrder=ASC`
+      `${namespaceUrl}?page=5&items=20&sortOrder=ASC`,
     )
     expect(pagiData.links.prev).toBe(
-      `${namespaceUrl}?page=4&items=20&sortOrder=ASC`
+      `${namespaceUrl}?page=4&items=20&sortOrder=ASC`,
     )
     expect(pagiData.links.next).toBeFalsy()
   })
@@ -240,7 +244,7 @@ describe('Query Param Handling', () => {
       queryOptions,
       requestUrl,
       95,
-      relevantData
+      relevantData,
     )
 
     expect(pagiData.pagination.pageNumber).toBe(1)
@@ -264,7 +268,7 @@ describe('Query Param Handling', () => {
       queryOptions,
       requestUrl,
       -95,
-      relevantData
+      relevantData,
     )
 
     expect(pagiData.pagination.pageNumber).toBe(1)
@@ -285,7 +289,7 @@ describe('Query Param Handling', () => {
       queryOptions,
       requestUrl,
       95,
-      []
+      [],
     )
 
     expect(pagiData.pagination.pageNumber).toBe(6)
@@ -306,7 +310,7 @@ describe('Query Param Handling', () => {
       queryOptions,
       requestUrl,
       95,
-      null
+      null,
     )
 
     expect(pagiData.pagination.pageNumber).toBe(6)
@@ -327,7 +331,7 @@ describe('Query Param Handling', () => {
       queryOptions,
       requestUrl,
       95,
-      undefined
+      undefined,
     )
 
     expect(pagiData.pagination.pageNumber).toBe(6)

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Conditions, Issue } from '@B-S-F/issue-validators'
 
 export interface InvalidIssues {

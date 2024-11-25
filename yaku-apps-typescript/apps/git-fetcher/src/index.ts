@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { AppError, AppOutput } from '@B-S-F/autopilot-utils'
 import { run } from './run.js'
 const output = new AppOutput()

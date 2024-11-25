@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 """`tqdm` version detector. Precedence: installed dist, git, 'UNKNOWN'."""
 try:
     from ._dist_ver import __version__

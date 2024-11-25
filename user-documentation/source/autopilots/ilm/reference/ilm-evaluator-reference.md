@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Evaluator Background Information
 
 An evaluator which returns the WorkOn status ('GREEN - Approved', 'RED - Rejected or Inexistent') for a SharePoint file. It also returns the workflow requestor and approvers.

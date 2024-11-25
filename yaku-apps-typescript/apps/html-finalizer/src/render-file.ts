@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import ejs, { Data } from 'ejs'
 import resolve from './resolve.js'
 import markdown from '@B-S-F/markdown-utils'
@@ -23,7 +27,7 @@ function escape(mdText: any) {
 }
 
 export default function FileRenderer(data: Data, resultPath: string) {
-  return async function ({ template, output, additionalConfig }: OutputFile) {
+  return async ({ template, output, additionalConfig }: OutputFile) => {
     const mergedData = additionalConfig
       ? { ...data, ...additionalConfig }
       : data

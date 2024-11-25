@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 
 import { Logger } from '../../src/logger'

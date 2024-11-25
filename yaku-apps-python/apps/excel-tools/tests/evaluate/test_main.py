@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import click
 import pytest
 from yaku.autopilot_utils.results import assert_result_status

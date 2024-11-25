@@ -1,6 +1,8 @@
-/**
- * Copyright (c) 2023 by grow platform GmbH
- */
+// SPDX-FileCopyrightText: 2023 by grow platform GmbH
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   AppError,
   AppOutput,
@@ -55,7 +57,7 @@ const configSchema = () => {
 }
 
 export const retry = async <T>(
-  fn: { (smbPath: string, smbClient: SMB2): Promise<T> },
+  fn: (smbPath: string, smbClient: SMB2) => Promise<T>,
   smbPath: string,
   smbClient: SMB2,
   retries = 5,

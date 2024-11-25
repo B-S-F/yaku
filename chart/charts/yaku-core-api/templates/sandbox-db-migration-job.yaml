@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 {{- if and .Values.sandbox .Values.sandbox.enabled (eq (toString .Values.sandbox.enabled) "true")  }}
 apiVersion: batch/v1
 kind: Job

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import swc from 'rollup-plugin-swc'
 import { VitePluginNode } from 'vite-plugin-node'
 import { defineConfig } from 'vitest/config'
@@ -17,8 +21,13 @@ export default defineConfig({
      * Reduce the timeout to one second to reduce the impact.
      */
     teardownTimeout: 1000,
-    maxThreads: 1,
-    minThreads: 1,
+    pool: 'threads',
+    poolOptions: {
+      threads: {
+        maxThreads: 1,
+        minThreads: 1,
+      },
+    },
     deps: {
       interopDefault: true,
     },

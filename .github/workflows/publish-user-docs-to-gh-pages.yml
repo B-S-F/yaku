@@ -1,4 +1,9 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -22,6 +27,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
       - name: Install uv
         uses: astral-sh/setup-uv@v3
       - uses: actions/cache@v3

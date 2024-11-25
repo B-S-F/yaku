@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Public } from '@B-S-F/api-commons-lib'
 import { Controller, Get, Inject } from '@nestjs/common'
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
@@ -7,7 +11,7 @@ import { AuthInfoDto, AuthInfoService } from './auth-info.service'
 @ApiTags('Info about authentication and authorization configuration')
 export class AuthInfoController {
   constructor(
-    @Inject(AuthInfoService) private readonly service: AuthInfoService
+    @Inject(AuthInfoService) private readonly service: AuthInfoService,
   ) {}
 
   @Get()

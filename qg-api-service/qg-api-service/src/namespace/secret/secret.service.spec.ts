@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
@@ -130,7 +134,7 @@ describe('SecretService', () => {
       expect(queryBuilderMock.getRawAndEntities).toBeCalledTimes(1)
       expect(listQueryHandler.addToQueryBuilder).toBeCalledWith(
         queryBuilderMock,
-        'secrets'
+        'secrets',
       )
     })
   })
@@ -160,7 +164,7 @@ describe('SecretService', () => {
         1,
         name13,
         description13,
-        secretValue
+        secretValue,
       )
 
       expect(secretData.id).toBe(4)
@@ -216,7 +220,7 @@ describe('SecretService', () => {
         1,
         name13,
         undefined,
-        secretValue
+        secretValue,
       )
 
       expect(secretData.id).toBe(4)
@@ -252,7 +256,7 @@ describe('SecretService', () => {
         .mockResolvedValue(secret2)
 
       await expect(
-        service.addSecret(1, name12, undefined, secretValue)
+        service.addSecret(1, name12, undefined, secretValue),
       ).rejects.toThrow(BadRequestException)
 
       expect(findSpy).toBeCalledTimes(1)
@@ -275,14 +279,14 @@ describe('SecretService', () => {
       'should not be possible to add a secret with the name "%s"',
       async (current: any) => {
         await expect(
-          service.addSecret(1, current, undefined, secretValue)
+          service.addSecret(1, current, undefined, secretValue),
         ).rejects.toThrow(BadRequestException)
 
         expect(repository.findOneBy).not.toBeCalled()
         expect(secretStorage.storeSecret).not.toBeCalled()
         expect(repository.create).not.toBeCalled()
         expect(repository.save).not.toBeCalled()
-      }
+      },
     )
 
     it.each([undefined, null, ''])(
@@ -311,7 +315,7 @@ describe('SecretService', () => {
           1,
           name13,
           current,
-          secretValue
+          secretValue,
         )
         expect(secretData.description).toBeFalsy()
 
@@ -322,7 +326,7 @@ describe('SecretService', () => {
         expect(secretStorage.storeSecret).toHaveBeenLastCalledWith(
           1,
           name13,
-          secretValue
+          secretValue,
         )
         expect(createSpy).toHaveBeenLastCalledWith({
           name: name13,
@@ -337,14 +341,14 @@ describe('SecretService', () => {
           creationTime: new Date(),
           lastModificationTime: new Date(),
         })
-      }
+      },
     )
 
     it('should not be possible to add a secret with a length > max size (set to 128 bytes for the test)', async () => {
       const secretValue = randomBytes(65).toString('hex')
 
       await expect(
-        service.addSecret(1, name13, description13, secretValue)
+        service.addSecret(1, name13, description13, secretValue),
       ).rejects.toThrow(BadRequestException)
       expect(repository.findOneBy).not.toBeCalled()
       expect(secretStorage.storeSecret).not.toBeCalled()
@@ -366,7 +370,7 @@ describe('SecretService', () => {
         1,
         name12,
         description12,
-        secretValue
+        secretValue,
       )
       expect(secretData.id).toBe(2)
       expect(secretData.name).toBe(name12)
@@ -388,7 +392,7 @@ describe('SecretService', () => {
           id: secret2.id,
           creationTime: secret2.creationTime,
           lastModificationTime: new Date(),
-        }
+        },
       )
       expect(saveSpy).toBeCalledTimes(1)
       expect(saveSpy).toBeCalledWith({
@@ -413,7 +417,7 @@ describe('SecretService', () => {
         1,
         name12,
         undefined,
-        secretValue
+        secretValue,
       )
 
       expect(secretData.id).toBe(2)
@@ -436,7 +440,7 @@ describe('SecretService', () => {
           id: secret2.id,
           creationTime: secret2.creationTime,
           lastModificationTime: new Date(),
-        }
+        },
       )
       expect(saveSpy).toBeCalledTimes(1)
       expect(saveSpy).toBeCalledWith({
@@ -461,7 +465,7 @@ describe('SecretService', () => {
         1,
         name11,
         undefined,
-        secretValue
+        secretValue,
       )
 
       expect(secretData.id).toBe(1)
@@ -484,7 +488,7 @@ describe('SecretService', () => {
           id: secret1.id,
           creationTime: secret1.creationTime,
           lastModificationTime: new Date(),
-        }
+        },
       )
       expect(saveSpy).toBeCalledTimes(1)
       expect(saveSpy).toBeCalledWith({
@@ -509,7 +513,7 @@ describe('SecretService', () => {
         1,
         name12,
         description12,
-        undefined
+        undefined,
       )
 
       expect(secretData.id).toBe(2)
@@ -531,7 +535,7 @@ describe('SecretService', () => {
           id: secret2.id,
           creationTime: secret2.creationTime,
           lastModificationTime: new Date(),
-        }
+        },
       )
       expect(saveSpy).toBeCalledTimes(1)
       expect(saveSpy).toBeCalledWith({
@@ -558,7 +562,7 @@ describe('SecretService', () => {
           1,
           name11,
           current,
-          undefined
+          undefined,
         )
 
         expect(secretData.id).toBe(1)
@@ -578,7 +582,7 @@ describe('SecretService', () => {
             id: secret1.id,
             creationTime: secret1.creationTime,
             lastModificationTime: new Date(),
-          }
+          },
         )
         expect(saveSpy).toBeCalledWith({
           name: name11,
@@ -588,7 +592,7 @@ describe('SecretService', () => {
           creationTime: secret1.creationTime,
           lastModificationTime: new Date(),
         })
-      }
+      },
     )
 
     it.each([undefined, null, ''])(
@@ -605,7 +609,7 @@ describe('SecretService', () => {
           1,
           name12,
           current,
-          undefined
+          undefined,
         )
         expect(secretData.description).toBeNull()
         expect(findSpy).toBeCalledWith({ namespace: { id: 1 }, name: name12 })
@@ -619,7 +623,7 @@ describe('SecretService', () => {
             id: secret2.id,
             creationTime: secret2.creationTime,
             lastModificationTime: new Date(),
-          }
+          },
         )
         expect(saveSpy).toBeCalledWith({
           name: name12,
@@ -629,7 +633,7 @@ describe('SecretService', () => {
           creationTime: secret2.creationTime,
           lastModificationTime: new Date(),
         })
-      }
+      },
     )
 
     it('should throw an error if a wrong namespace is given', async () => {
@@ -638,7 +642,7 @@ describe('SecretService', () => {
         .mockResolvedValue(null)
 
       await expect(
-        service.updateSecret(3, name11, '', undefined)
+        service.updateSecret(3, name11, '', undefined),
       ).rejects.toThrow(NotFoundException)
       expect(findSpy).toBeCalledWith({ namespace: { id: 3 }, name: name11 })
       expect(secretStorage.storeSecret).not.toBeCalled()
@@ -652,7 +656,7 @@ describe('SecretService', () => {
         .mockResolvedValue(null)
 
       await expect(
-        service.updateSecret(1, name21, '', undefined)
+        service.updateSecret(1, name21, '', undefined),
       ).rejects.toThrow(NotFoundException)
 
       expect(findSpy).toBeCalledWith({ namespace: { id: 1 }, name: name21 })
@@ -668,7 +672,7 @@ describe('SecretService', () => {
         .mockResolvedValue(secret2)
 
       await expect(
-        service.updateSecret(1, secret2.name, undefined, secretValue)
+        service.updateSecret(1, secret2.name, undefined, secretValue),
       ).rejects.toThrow(BadRequestException)
       expect(findSpy).toBeCalledWith({
         namespace: { id: 1 },

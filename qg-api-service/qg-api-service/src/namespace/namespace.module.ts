@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { UrlHandlerFactory, UrlProtocolConfig } from '@B-S-F/api-commons-lib'
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { APP_GUARD } from '@nestjs/core'
@@ -186,7 +190,7 @@ import { FinishedWorkflowDetectionTask } from './workflow/workflow-task'
         return new WorkflowImageConfig(
           QGCLI_IMAGE,
           { v1: QGCLI_VERSION, v2: QGCLI_VERSION },
-          QGCLI_PULL_POLICY
+          QGCLI_PULL_POLICY,
         )
       },
     },
@@ -194,8 +198,8 @@ import { FinishedWorkflowDetectionTask } from './workflow/workflow-task'
       provide: WorkflowFinishConfig,
       useFactory: () => {
         return new WorkflowFinishConfig(
-          parseInt(RESULT_DELAY),
-          SKIP_CHECK_ARGO_ARCHIVE === 'true'
+          Number.parseInt(RESULT_DELAY),
+          SKIP_CHECK_ARGO_ARCHIVE === 'true',
         )
       },
     },
@@ -211,7 +215,7 @@ import { FinishedWorkflowDetectionTask } from './workflow/workflow-task'
         const url = new URL(MINIO_SERVER)
         return new Minio.Client({
           endPoint: url.hostname,
-          port: parseInt(url.port),
+          port: Number.parseInt(url.port),
           accessKey: MINIO_USERNAME,
           secretKey: MINIO_PASSWORD,
           useSSL: MINIO_USE_SSL === 'true',
@@ -231,14 +235,14 @@ import { FinishedWorkflowDetectionTask } from './workflow/workflow-task'
           IN_PRIVATE_CLOUD === 'true',
           HTTP_PROXY,
           WORKFLOW_NO_PROXY,
-          PULL_SECRET_NAME
+          PULL_SECRET_NAME,
         )
       },
     },
     {
       provide: SecretConfig,
       useFactory: () => {
-        return new SecretConfig(parseInt(MAX_SECRET_LENGTH))
+        return new SecretConfig(Number.parseInt(MAX_SECRET_LENGTH))
       },
     },
     {
@@ -259,7 +263,7 @@ import { FinishedWorkflowDetectionTask } from './workflow/workflow-task'
         return new CleanTestDataConfig(
           TESTDATA_CLEANUP === 'true',
           TESTDATA_NAMESPACES,
-          TESTDATA_RETENTION_PERIOD_IN_DAYS
+          TESTDATA_RETENTION_PERIOD_IN_DAYS,
         )
       },
     },
@@ -270,7 +274,7 @@ import { FinishedWorkflowDetectionTask } from './workflow/workflow-task'
           OPENAI_BASE_URL,
           OPENAI_API_VERSION,
           OPENAI_API_KEY,
-          OPENAI_MODEL
+          OPENAI_MODEL,
         ),
     },
   ],

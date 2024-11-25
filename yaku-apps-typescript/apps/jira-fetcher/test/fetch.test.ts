@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { describe, expect, it, vi } from 'vitest'
 import * as jiraFetcher from '../src/fetch'
 import { fetch, Response } from 'undici'

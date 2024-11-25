@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Evaluator Background Information
 
 An evaluator that checks the integrity of PDF signatures and optionally matches the generated list of signers against a predefined expected list of signers. You can choose to either check if at least one signer from the predefined list has signed the document or if all listed signers have signed the document (the latter being the default option).

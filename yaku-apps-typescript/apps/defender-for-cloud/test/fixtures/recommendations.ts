@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 export const recommendationsProperties1 = {
   resourceDetails: {
     Source: 'Azure',

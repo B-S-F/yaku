@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Mend Fetcher Background Information
 
 The Mend autopilot will fetch reports from the Mend's Software Composition Analysis(SCA) scans to answer your requirements checks.

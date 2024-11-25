@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test, TestingModule } from '@nestjs/testing'
 import { UserProfileController } from './user-profile.controller'
 import { UserProfileService } from './user-profile.service'
@@ -69,8 +73,8 @@ describe('UserProfileController', () => {
         await controller.get(request as any)
       }).rejects.toThrow(
         new NotAcceptableException(
-          `User profiles are only available for keycloak users`
-        )
+          `User profiles are only available for keycloak users`,
+        ),
       )
 
       expect(serviceGetSpy).not.toBeCalled()
@@ -92,7 +96,7 @@ describe('UserProfileController', () => {
       }
       const result = await controller.update(
         updateUserProfileDto,
-        request as any
+        request as any,
       )
 
       expect(serviceUpdateSpy).toBeCalledTimes(1)
@@ -113,8 +117,8 @@ describe('UserProfileController', () => {
         await controller.update(updateUserProfileDto, request as any)
       }).rejects.toThrow(
         new NotAcceptableException(
-          `User profiles are only available for keycloak users`
-        )
+          `User profiles are only available for keycloak users`,
+        ),
       )
 
       expect(serviceUpdateSpy).not.toBeCalled()

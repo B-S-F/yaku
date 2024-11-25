@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { compare, hash } from 'bcrypt'
 import { randomBytes } from 'crypto'
 
@@ -69,7 +73,7 @@ export class LongRunningToken {
 
     if (parts.length !== 4) {
       throw new Error(
-        'Illegal token, expected token to contain four parts separated by underscores'
+        'Illegal token, expected token to contain four parts separated by underscores',
       )
     }
 
@@ -85,7 +89,7 @@ export class LongRunningToken {
 
     if (numberStr.length != LongRunningToken.SERIAL_LEN) {
       throw new Error(
-        `Illegal token, expected third part to be ${LongRunningToken.SERIAL_LEN} characters long`
+        `Illegal token, expected third part to be ${LongRunningToken.SERIAL_LEN} characters long`,
       )
     }
 
@@ -93,7 +97,7 @@ export class LongRunningToken {
 
     if (!numberRegEx.test(numberStr)) {
       throw new Error(
-        'Illegal token, expected third part to be a ten digit decimal integer (left padded with zeros)'
+        'Illegal token, expected third part to be a ten digit decimal integer (left padded with zeros)',
       )
     }
 
@@ -106,7 +110,7 @@ export class LongRunningToken {
 
     if (id < LongRunningToken.MIN_SERIAL || id > LongRunningToken.MAX_SERIAL) {
       throw new Error(
-        `Illegal token, expected third part to be number between ${LongRunningToken.MIN_SERIAL} and ${LongRunningToken.MAX_SERIAL}`
+        `Illegal token, expected third part to be number between ${LongRunningToken.MIN_SERIAL} and ${LongRunningToken.MAX_SERIAL}`,
       )
     }
 
@@ -114,7 +118,7 @@ export class LongRunningToken {
 
     if (hexStr.length !== LongRunningToken.HEX_LEN) {
       throw new Error(
-        `Illegal token, expected fourth part to be ${LongRunningToken.HEX_LEN} characters long`
+        `Illegal token, expected fourth part to be ${LongRunningToken.HEX_LEN} characters long`,
       )
     }
 
@@ -123,7 +127,7 @@ export class LongRunningToken {
 
     if (!hexRegEx.test(hexStr)) {
       throw new Error(
-        'Illegal token, expected fourth part to be a lower case hex string'
+        'Illegal token, expected fourth part to be a lower case hex string',
       )
     }
 
@@ -133,8 +137,8 @@ export class LongRunningToken {
   }
 
   static generatePreToken(): PreToken {
-    const random = randomBytes(this.RAND_LEN)
-    return new InnerPreToken(random, this.SALT_ROUNDS)
+    const random = randomBytes(LongRunningToken.RAND_LEN)
+    return new InnerPreToken(random, LongRunningToken.SALT_ROUNDS)
   }
 
   static from(id: number, preToken: PreToken): LongRunningToken {
@@ -146,9 +150,9 @@ export class LongRunningToken {
       throw new Error('Illegal id, expected to be an integer')
     }
 
-    if (id < this.MIN_SERIAL || id > this.MAX_SERIAL) {
+    if (id < LongRunningToken.MIN_SERIAL || id > LongRunningToken.MAX_SERIAL) {
       throw new Error(
-        `Illegal token, expected id to be number between ${this.MIN_SERIAL} and ${this.MAX_SERIAL}`
+        `Illegal token, expected id to be number between ${LongRunningToken.MIN_SERIAL} and ${LongRunningToken.MAX_SERIAL}`,
       )
     }
 

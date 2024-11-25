@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { LongRunningTokenEntity, STATUS } from './long.running.token.entity'
 import { PaginatedData } from '@B-S-F/api-commons-lib'
@@ -106,7 +110,7 @@ export class CreateTokenRequestDto {
 
 export function toCreateTokenResponseDto(
   entity: LongRunningTokenEntity,
-  token: string
+  token: string,
 ): CreateTokenResponseDto {
   const dto = new CreateTokenResponseDto()
 
@@ -124,7 +128,7 @@ export function toCreateTokenResponseDto(
 }
 
 export function toGetTokenResponseDto(
-  entity: LongRunningTokenEntity
+  entity: LongRunningTokenEntity,
 ): GetTokenResponseDto {
   const dto = new GetTokenResponseDto()
 

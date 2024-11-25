@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-http-bearer'
@@ -10,7 +14,7 @@ export const LONG_RUNNING_TOKEN_STRATEGY_NAME = 'LRT'
 @Injectable()
 export class LongRunningTokenStrategy extends PassportStrategy(
   Strategy,
-  LONG_RUNNING_TOKEN_STRATEGY_NAME
+  LONG_RUNNING_TOKEN_STRATEGY_NAME,
 ) {
   constructor(
     @Inject(AuthCache)
@@ -18,7 +22,7 @@ export class LongRunningTokenStrategy extends PassportStrategy(
     @Inject(LongRunningTokenService)
     private readonly tokenService: LongRunningTokenService,
     @Inject(KeyCloakService)
-    private readonly keycloakService: KeyCloakService
+    private readonly keycloakService: KeyCloakService,
   ) {
     super()
   }
@@ -35,13 +39,12 @@ export class LongRunningTokenStrategy extends PassportStrategy(
         return user
       }
 
-      const { id, try_admin } = await this.tokenService.retrieveKeyCloakUserId(
-        token
-      )
+      const { id, try_admin } =
+        await this.tokenService.retrieveKeyCloakUserId(token)
 
       user = await this.keycloakService.getKeyCloakUserFromCliClient(
         id,
-        try_admin ? ['global'] : []
+        try_admin ? ['global'] : [],
       )
 
       if (!user) {

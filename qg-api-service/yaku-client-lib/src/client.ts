@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import assert from 'assert'
 import { access, readFile, writeFile } from 'fs/promises'
 import * as path from 'path'
@@ -40,7 +44,7 @@ export class QueryOptions {
     readonly filterProperty: string[] | undefined,
     readonly filterValues: string[][] | undefined,
     readonly sortBy: string | undefined,
-    readonly ascending: boolean = false
+    readonly ascending: boolean = false,
   ) {}
 }
 
@@ -57,7 +61,7 @@ export class ApiClient {
   async createConfig(
     namespaceId: number,
     name: string,
-    description: string
+    description: string,
   ): Promise<Config> {
     const url = `${this.getServiceUrl(namespaceId)}/configs`
     if (!name?.trim()) {
@@ -71,7 +75,7 @@ export class ApiClient {
     namespaceId: number,
     name: string,
     description: string,
-    files: FileMetadata[]
+    files: FileMetadata[],
   ): Promise<Config> {
     const config = await this.createConfig(namespaceId, name, description)
     await Promise.all(
@@ -80,34 +84,34 @@ export class ApiClient {
           namespaceId,
           config.id,
           file.filepath,
-          file.filename
-        )
-      )
+          file.filename,
+        ),
+      ),
     )
     return this.getConfig(namespaceId, config.id)
   }
 
   async listConfigs(
     namespaceId: number,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): Promise<ConfigPaginated> {
     const url = this.addQueryOptionsToUrl(
       `${this.getServiceUrl(namespaceId)}/configs`,
-      queryOptions
+      queryOptions,
     )
     return getResource<ConfigPaginated>(url, this.config.token)
   }
 
   async listAllConfigs(
     namespaceId: number,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): Promise<Config[]> {
     let page = 1
     let result: Config[] = []
     for (;;) {
       const data: ConfigPaginated = await this.listConfigs(
         namespaceId,
-        this.copyQueryOptionsForPage(page, queryOptions)
+        this.copyQueryOptionsForPage(page, queryOptions),
       )
       result = result.concat(data.data)
       if (data.links.next) {
@@ -127,7 +131,7 @@ export class ApiClient {
     namespaceId: number,
     configId: number,
     name: string | undefined,
-    description: string | null | undefined
+    description: string | null | undefined,
   ): Promise<Config> {
     const url = `${this.getServiceUrl(namespaceId)}/configs/${configId}`
     const changedName = name?.trim()
@@ -148,16 +152,16 @@ export class ApiClient {
   async deleteConfig(
     namespaceId: number,
     configId: number,
-    forced = false
+    forced = false,
   ): Promise<void> {
     if (forced) {
       const data: Run[] = await this.listAllRuns(
         namespaceId,
-        new QueryOptions(1, 100, ['config'], [[`${configId}`]], '', false)
+        new QueryOptions(1, 100, ['config'], [[`${configId}`]], '', false),
       )
       const deletionPossible =
         data.filter(
-          (run) => run.status === 'running' || run.status === 'pending'
+          (run) => run.status === 'running' || run.status === 'pending',
         ).length === 0
       if (data.length > 0) {
         if (deletionPossible) {
@@ -166,7 +170,7 @@ export class ApiClient {
           }
         } else {
           throw new Error(
-            'Forced deletion of a config is only possible if all associated runs have been completed'
+            'Forced deletion of a config is only possible if all associated runs have been completed',
           )
         }
       }
@@ -179,10 +183,10 @@ export class ApiClient {
     namespaceId: number,
     configId: number,
     xlsxFilepath: string,
-    configFilepath: string
+    configFilepath: string,
   ): Promise<string> {
     const url = `${this.getServiceUrl(
-      namespaceId
+      namespaceId,
     )}/configs/${configId}/config-from-excel`
     const form = new FormData()
     const xlsxFile = await readFile(xlsxFilepath)
@@ -190,23 +194,23 @@ export class ApiClient {
     form.append('xlsx', new Blob([xlsxFile]))
     form.append('config', new Blob([configFile]))
     return transformData(url, form, this.config.token).then((content) =>
-      this.writeFile(content)
+      this.writeFile(content),
     )
   }
 
   async createConfigFromQuestionnaire(
     namespaceId: number,
     configId: number,
-    questionnaireFilepath: string
+    questionnaireFilepath: string,
   ): Promise<string> {
     const url = `${this.getServiceUrl(
-      namespaceId
+      namespaceId,
     )}/configs/${configId}/initial-config`
     const form = new FormData()
     const configFile = await readFile(questionnaireFilepath)
     form.append('content', new Blob([configFile]))
     return transformData(url, form, this.config.token).then((content) =>
-      this.writeFile(content)
+      this.writeFile(content),
     )
   }
 
@@ -214,7 +218,7 @@ export class ApiClient {
     namespaceId: number,
     configId: number,
     filepath: string,
-    alternativeFilename?: string
+    alternativeFilename?: string,
   ): Promise<void> {
     const url = `${this.getServiceUrl(namespaceId)}/configs/${configId}/files`
     const data = await readFile(filepath)
@@ -229,11 +233,11 @@ export class ApiClient {
     namespaceId: number,
     configId: number,
     filepath: string,
-    filename?: string
+    filename?: string,
   ): Promise<void> {
     filename = filename ?? path.parse(filepath).base
     const url = `${this.getServiceUrl(
-      namespaceId
+      namespaceId,
     )}/configs/${configId}/files/${filename}`
     const data = await readFile(filepath)
     const form = new FormData()
@@ -244,10 +248,10 @@ export class ApiClient {
   async getFileData(
     namespaceId: number,
     configId: number,
-    filename: string
+    filename: string,
   ): Promise<FileData> {
     const url = `${this.getServiceUrl(
-      namespaceId
+      namespaceId,
     )}/configs/${configId}/files/${filename}`
 
     return getResourceBinaryData(url, this.config.token)
@@ -256,23 +260,23 @@ export class ApiClient {
   async downloadFileData(
     namespaceId: number,
     configId: number,
-    filename: string
+    filename: string,
   ): Promise<string> {
     const url = `${this.getServiceUrl(
-      namespaceId
+      namespaceId,
     )}/configs/${configId}/files/${filename}`
     return getResourceBinaryData(url, this.config.token).then((content) =>
-      this.writeFile(content)
+      this.writeFile(content),
     )
   }
 
   async deleteFileFromConfig(
     namespaceId: number,
     configId: number,
-    filename: string
+    filename: string,
   ): Promise<void> {
     const url = `${this.getServiceUrl(
-      namespaceId
+      namespaceId,
     )}/configs/${configId}/files/${filename}`
     return deleteResource(url, this.config.token)
   }
@@ -280,7 +284,7 @@ export class ApiClient {
   async deleteAllFilesFromConfig(
     namespace: number,
     configId: number,
-    removeQgConfig: boolean
+    removeQgConfig: boolean,
   ) {
     const config = await this.getConfig(namespace!, configId)
     if (config.files.additionalConfigs) {
@@ -288,7 +292,7 @@ export class ApiClient {
         config.files.additionalConfigs.map(async (fileUrl: string) => {
           const filename = getFilenameFromUrl(fileUrl)
           await this.deleteFileFromConfig(namespace!, configId, filename)
-        })
+        }),
       )
     }
 
@@ -296,25 +300,25 @@ export class ApiClient {
       await this.deleteFileFromConfig(
         namespace!,
         configId,
-        getFilenameFromUrl(config.files.qgConfig)
+        getFilenameFromUrl(config.files.qgConfig),
       )
     }
   }
 
   async listRuns(
     namespaceId: number,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): Promise<RunPaginated> {
     const url = this.addQueryOptionsToUrl(
       `${this.getServiceUrl(namespaceId)}/runs`,
-      queryOptions
+      queryOptions,
     )
     return getResource<RunPaginated>(url, this.config.token)
   }
 
   async listAllRuns(
     namespaceId: number,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): Promise<Run[]> {
     let pageNumber = 1
     let page: RunPaginated | undefined = undefined
@@ -326,7 +330,7 @@ export class ApiClient {
       do {
         page = await this.listRuns(
           namespaceId,
-          this.copyQueryOptionsForPage(pageNumber, queryOptions)
+          this.copyQueryOptionsForPage(pageNumber, queryOptions),
         )
       } while (!page)
 
@@ -340,7 +344,7 @@ export class ApiClient {
   async startRun(
     namespaceId: number,
     configId: number,
-    environment?: { [key: string]: string }
+    environment?: { [key: string]: string },
   ): Promise<Run> {
     const url = `${this.getServiceUrl(namespaceId)}/runs`
 
@@ -356,7 +360,7 @@ export class ApiClient {
   async getRun(
     namespaceId: number,
     runId: number,
-    details = true
+    details = true,
   ): Promise<Run> {
     const url = `${this.getServiceUrl(namespaceId)}/runs/${runId}`
     const result = await getResource<Run>(url, this.config.token)
@@ -378,7 +382,7 @@ export class ApiClient {
     namespaceId: number,
     configId: number,
     environment?: { [key: string]: string },
-    pollInterval = 5000
+    pollInterval = 5000,
   ): Promise<Run> {
     const startedRun = await this.startRun(namespaceId, configId, environment)
 
@@ -395,14 +399,14 @@ export class ApiClient {
   async getRunResult(namespaceId: number, runId: number): Promise<string> {
     const url = `${this.getServiceUrl(namespaceId)}/runs/${runId}/results`
     return getResourceBinaryData(url, this.config.token).then((content) =>
-      this.writeFile(content)
+      this.writeFile(content),
     )
   }
 
   async getRunEvidences(namespaceId: number, runId: number): Promise<string> {
     const url = `${this.getServiceUrl(namespaceId)}/runs/${runId}/evidences`
     return getResourceBinaryData(url, this.config.token).then((content) =>
-      this.writeFile(content)
+      this.writeFile(content),
     )
   }
 
@@ -413,25 +417,25 @@ export class ApiClient {
 
   async listSecrets(
     namespaceId: number,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): Promise<SecretPaginated> {
     const url = this.addQueryOptionsToUrl(
       `${this.getServiceUrl(namespaceId)}/secrets`,
-      queryOptions
+      queryOptions,
     )
     return getResource<SecretPaginated>(url, this.config.token)
   }
 
   async listAllSecrets(
     namespaceId: number,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): Promise<SecretMetadata[]> {
     let page = 1
     let result: SecretMetadata[] = []
     for (;;) {
       const data: SecretPaginated = await this.listSecrets(
         namespaceId,
-        this.copyQueryOptionsForPage(page, queryOptions)
+        this.copyQueryOptionsForPage(page, queryOptions),
       )
       result = result.concat(data.data)
       if (data.links.next) {
@@ -449,11 +453,11 @@ export class ApiClient {
 
   async getReleases(
     namespaceId: number,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): Promise<ReleasePaginated> {
     const url = this.addQueryOptionsToUrl(
       `${this.getServiceUrl(namespaceId)}/releases`,
-      queryOptions
+      queryOptions,
     )
     return getResource<ReleasePaginated>(url, this.config.token)
   }
@@ -467,7 +471,7 @@ export class ApiClient {
     namespaceId: number,
     name: string,
     secret: string,
-    description: string | undefined
+    description: string | undefined,
   ): Promise<SecretMetadata> {
     const url = `${this.getServiceUrl(namespaceId)}/secrets`
     if (!name?.trim()) {
@@ -484,7 +488,7 @@ export class ApiClient {
     namespaceId: number,
     name: string,
     secret: string | undefined,
-    description: string | null | undefined
+    description: string | null | undefined,
   ): Promise<SecretMetadata> {
     const changedName = name?.trim()
     const changedSecret = secret?.trim()
@@ -498,7 +502,7 @@ export class ApiClient {
     }
     if (changedDescription === undefined && !changedSecret) {
       throw new Error(
-        'At least secret value or description needs to be changed'
+        'At least secret value or description needs to be changed',
       )
     }
     const url = `${this.getServiceUrl(namespaceId)}/secrets/${changedName}`
@@ -553,7 +557,7 @@ export class ApiClient {
 
   async createNamespaceWithConfig(
     name: string,
-    configFile: string
+    configFile: string,
   ): Promise<Namespace> {
     const namespace = await this.createNamespace(name)
     await this.createConfigWithFiles(
@@ -565,7 +569,7 @@ export class ApiClient {
           filename: 'qg-config.yaml',
           filepath: configFile,
         },
-      ]
+      ],
     )
     return namespace
   }
@@ -584,11 +588,11 @@ export class ApiClient {
 
   async listFindings(
     namespace: number,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): Promise<FindingsPaginated> {
     const url = this.addQueryOptionsToUrl(
       `${this.getServiceUrl(namespace)}/findings`,
-      queryOptions
+      queryOptions,
     )
     return getResource<FindingsPaginated>(url, this.config.token)
   }
@@ -596,7 +600,7 @@ export class ApiClient {
   async resolveFinding(
     namespace: number,
     id: string,
-    options: { comment?: string }
+    options: { comment?: string },
   ): Promise<void> {
     const url = `${this.getServiceUrl(namespace)}/findings/${id}`
 
@@ -649,7 +653,7 @@ export class ApiClient {
       const separatorIndex = content.filename.lastIndexOf('.')
       usableFilename = `${content.filename.substring(
         0,
-        separatorIndex
+        separatorIndex,
       )}${currentCount}${content.filename.substring(separatorIndex)}`
       currentCount++
     }
@@ -668,14 +672,14 @@ export class ApiClient {
 
   private addQueryOptionsToUrl(
     baseurl: string,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): string {
     const url = new URL(baseurl)
     url.searchParams.append('page', queryOptions.page!.toString(10))
     url.searchParams.append('items', queryOptions.itemCount!.toString(10))
     url.searchParams.append(
       'sortOrder',
-      queryOptions.ascending ? 'ASC' : 'DESC'
+      queryOptions.ascending ? 'ASC' : 'DESC',
     )
     if (queryOptions.filterProperty) {
       for (let i = 0; i < queryOptions.filterProperty.length; i++) {
@@ -683,7 +687,7 @@ export class ApiClient {
         if (valueString) {
           url.searchParams.append(
             'filter',
-            `${queryOptions.filterProperty[i]}=${valueString}`
+            `${queryOptions.filterProperty[i]}=${valueString}`,
           )
         }
       }
@@ -696,7 +700,7 @@ export class ApiClient {
 
   private copyQueryOptionsForPage(
     page: number,
-    queryOptions: QueryOptions
+    queryOptions: QueryOptions,
   ): QueryOptions {
     return new QueryOptions(
       page,
@@ -704,7 +708,7 @@ export class ApiClient {
       queryOptions.filterProperty,
       queryOptions.filterValues,
       queryOptions.sortBy,
-      queryOptions.ascending
+      queryOptions.ascending,
     )
   }
 }

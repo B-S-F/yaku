@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import { UserInNamespaceDto } from './users.utils'
 
@@ -24,7 +28,7 @@ export class UsersCache {
 
   constructor(
     @Inject(UsersCacheConfig)
-    private readonly config: UsersCacheConfig
+    private readonly config: UsersCacheConfig,
   ) {
     this.map = new Map<string, MapValue>()
     this.entryValidForMilliSeconds = config.entryValidForMilliSeconds

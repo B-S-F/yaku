@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Autopilot Execution Context
 
 Autopilots are executed as subprocesses. This page explains how these

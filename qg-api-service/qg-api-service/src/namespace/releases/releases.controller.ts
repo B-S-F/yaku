@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   createPaginationData,
   PaginationQueryOptions,
@@ -89,7 +93,7 @@ export class ReleasesController {
   constructor(
     @Inject(ReleasesService) private readonly service: ReleasesService,
     @Inject(HistoryService) private readonly historyService: HistoryService,
-    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) private readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   @Get()
@@ -103,14 +107,14 @@ export class ReleasesController {
   async getReleases(
     @Param('namespaceId') namespaceId: number,
     @Query() queryOptions: ReleasesQueryOptions,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<ReleaseListDto> {
     validateId(namespaceId)
     const listQueryOptions = toListQueryOptions(
       queryOptions,
       releasesQuerySchema,
       allowedSortProperties,
-      'id'
+      'id',
     )
     const filtering = parseFilter(queryOptions.filter)
     if (filtering) {
@@ -124,7 +128,7 @@ export class ReleasesController {
       listQueryOptions,
       requestUrl,
       releases.itemCount,
-      releases.entities
+      releases.entities,
     )
   }
 
@@ -137,7 +141,7 @@ export class ReleasesController {
   })
   async getRelease(
     @Param('namespaceId') namespaceId: number,
-    @Param('releaseId') releaseId: number
+    @Param('releaseId') releaseId: number,
   ): Promise<ReleaseDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -160,7 +164,7 @@ export class ReleasesController {
   async create(
     @Param('namespaceId') namespaceId: number,
     @Body() body: AddReleaseDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<ReleaseDto> {
     validateId(namespaceId)
     validateBody(body, addReleaseDtoSchema)
@@ -173,13 +177,13 @@ export class ReleasesController {
         body.approvalMode,
         body.qgConfigId,
         body.plannedDate,
-        user
+        user,
       )
     } catch (e) {
       if (e.name === QueryFailedError.name) {
         if (e.message.includes('violates foreign key constraint')) {
           throw new NotFoundException(
-            `Config not found, qgConfigId: ${body.qgConfigId}`
+            `Config not found, qgConfigId: ${body.qgConfigId}`,
           )
         }
       }
@@ -196,7 +200,7 @@ export class ReleasesController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Body() body: UpdateReleaseDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<ReleaseDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -211,7 +215,7 @@ export class ReleasesController {
         user,
         body.name,
         body.approvalMode,
-        body.plannedDate
+        body.plannedDate,
       )
     } catch (e) {
       if (e.name === EntityNotFoundError.name) {
@@ -229,7 +233,7 @@ export class ReleasesController {
   async removeRelease(
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -256,7 +260,7 @@ export class ReleasesController {
   })
   async getAggregateState(
     @Param('namespaceId') namespaceId: number,
-    @Param('releaseId') releaseId: number
+    @Param('releaseId') releaseId: number,
   ): Promise<AggregateApprovalDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -267,7 +271,7 @@ export class ReleasesController {
     } catch (e) {
       if (e.name === EntityNotFoundError.name) {
         throw new NotFoundException(
-          `Release not found, namespace: ${namespaceId}, release: ${releaseId}`
+          `Release not found, namespace: ${namespaceId}, release: ${releaseId}`,
         )
       }
       throw e
@@ -287,7 +291,7 @@ export class ReleasesController {
   async close(
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<void> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -299,7 +303,7 @@ export class ReleasesController {
     } catch (e) {
       if (e.name === EntityNotFoundError.name) {
         throw new NotFoundException(
-          `Release not found, namespace: ${namespaceId}, release: ${releaseId}`
+          `Release not found, namespace: ${namespaceId}, release: ${releaseId}`,
         )
       }
       throw e
@@ -315,7 +319,7 @@ export class ReleasesController {
     @Param('namespaceId') namespaceId: number,
     @Param('releaseId') releaseId: number,
     @Query() queryOptions: HistoryQueryOptions,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ): Promise<HistoryDto> {
     validateId(namespaceId)
     validateId(releaseId)
@@ -334,7 +338,7 @@ export class ReleasesController {
       namespaceId,
       releaseId,
       queryOptions,
-      requestUrl
+      requestUrl,
     )
   }
 }

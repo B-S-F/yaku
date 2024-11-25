@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Logger } from 'nestjs-pino'
 import { TypeOrmToNestLogger } from './typeorm-logger'
 

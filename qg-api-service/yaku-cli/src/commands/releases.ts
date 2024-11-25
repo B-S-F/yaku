@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiClient } from '@B-S-F/yaku-client-lib'
 import { Command } from 'commander'
 import { connect } from '../connect.js'
@@ -23,13 +27,13 @@ export function createReleasesSubcommands(program: Command): void {
     .argument('[page]', 'The page requested, defaults to page 1')
     .option(
       '-i, --itemCount <value>',
-      'Number of items requested per page, defaults to 20'
+      'Number of items requested per page, defaults to 20',
     )
     .option('-a, --ascending', 'Revert sort order for the items')
     .option('-s, --sortBy [property]', 'Sort results by the given property')
     .option(
       '-f, --filterBy [property=value1,value2]',
-      'Filter values according to the given property, show only elements which have one of the given value'
+      'Filter values according to the given property, show only elements which have one of the given value',
     )
     .action(async (page: string, options) => {
       try {
@@ -56,7 +60,7 @@ export function createReleasesSubcommands(program: Command): void {
     .argument('<releaseId>', 'The numeric id of the release to be deleted')
     .option(
       '-y --yes',
-      'Skip the confirmation prompt and delete the release immediately. Use with caution!'
+      'Skip the confirmation prompt and delete the release immediately. Use with caution!',
     )
     .action(async (releaseId: string, options) => {
       try {

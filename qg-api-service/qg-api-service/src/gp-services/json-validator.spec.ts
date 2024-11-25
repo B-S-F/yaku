@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import * as fs from 'fs'
@@ -39,13 +43,13 @@ describe('JsonValidatorService', () => {
       await expect(
         jsonValidator.validate(
           multerFile as Express.Multer.File,
-          `test.${fileType}`
-        )
+          `test.${fileType}`,
+        ),
       ).rejects.toEqual(
         new BadRequestException(
-          `Incorrect file type or format of file: test.${fileType}. Json was expected.`
-        )
+          `Incorrect file type or format of file: test.${fileType}. Json was expected.`,
+        ),
       )
-    }
+    },
   )
 })

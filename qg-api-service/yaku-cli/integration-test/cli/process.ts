@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   ChildProcessWithoutNullStreams,
   spawn,
@@ -14,7 +18,7 @@ export type RunProcessResult = {
 function createProcess(
   executable: string,
   args: string[] = [],
-  options: SpawnOptionsWithoutStdio = {}
+  options: SpawnOptionsWithoutStdio = {},
 ): ChildProcessWithoutNullStreams {
   const nodeArgs: string[] = ['--no-warnings', executable, ...args]
   options.env ??= {}
@@ -35,12 +39,12 @@ function createProcess(
 export async function run(
   executable: string,
   args: string[] = [],
-  options?: SpawnOptionsWithoutStdio
+  options?: SpawnOptionsWithoutStdio,
 ): Promise<RunProcessResult> {
   const childProcess: ChildProcessWithoutNullStreams = createProcess(
     executable,
     args,
-    options
+    options,
   )
   childProcess.stdin.setDefaultEncoding('utf-8')
 
@@ -60,7 +64,7 @@ export async function run(
         stdout,
         stderr,
         exitCode,
-      })
+      }),
     )
   })
 }

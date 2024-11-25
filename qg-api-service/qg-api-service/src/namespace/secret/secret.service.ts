@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { EntityList, ListQueryHandler } from '@B-S-F/api-commons-lib'
 import {
   BadRequestException,
@@ -17,17 +21,17 @@ export class SecretConfig {
 
 @Injectable()
 export class SecretService {
-  private readonly envVariableNameChecker = new RegExp('^[A-Z_][A-Z_0-9]*$')
+  private readonly envVariableNameChecker = /^[A-Z_][A-Z_0-9]*$/
 
   constructor(
     @InjectRepository(Secret) private readonly repository: Repository<Secret>,
     @Inject(SecretStorage) private readonly storage: SecretStorage,
-    @Inject(SecretConfig) private readonly config: SecretConfig
+    @Inject(SecretConfig) private readonly config: SecretConfig,
   ) {}
 
   async getSecrets(
     namespaceId: number,
-    listQueryHandler: ListQueryHandler
+    listQueryHandler: ListQueryHandler,
   ): Promise<EntityList<Secret>> {
     const queryBuilder = this.repository
       .createQueryBuilder('secrets')
@@ -46,16 +50,16 @@ export class SecretService {
     namespaceId: number,
     name: string,
     description: string | undefined,
-    secret: string
+    secret: string,
   ): Promise<Secret> {
     if (!this.envVariableNameChecker.test(name)) {
       throw new BadRequestException(
-        'The name of a secret can only contain upper case letters, numbers and underscore. It has to start with a letter or an underscore.'
+        'The name of a secret can only contain upper case letters, numbers and underscore. It has to start with a letter or an underscore.',
       )
     }
     if (this.config.maxLength > 0 && secret.length > this.config.maxLength) {
       throw new BadRequestException(
-        `A secret must not exceed ${this.config.maxLength} bytes`
+        `A secret must not exceed ${this.config.maxLength} bytes`,
       )
     }
     if (
@@ -65,7 +69,7 @@ export class SecretService {
       })
     ) {
       throw new BadRequestException(
-        'Secret with this name already exists, use PATCH to change'
+        'Secret with this name already exists, use PATCH to change',
       )
     }
     const nowDate = new Date()
@@ -88,7 +92,7 @@ export class SecretService {
     namespaceId: number,
     name: string,
     description: string | null | undefined,
-    secret: string | undefined
+    secret: string | undefined,
   ): Promise<Secret> {
     const secretData = await this.repository.findOneBy({
       namespace: { id: namespaceId },
@@ -103,7 +107,7 @@ export class SecretService {
       secret.length > this.config.maxLength
     ) {
       throw new BadRequestException(
-        `A secret must not exceed ${this.config.maxLength} bytes`
+        `A secret must not exceed ${this.config.maxLength} bytes`,
       )
     }
 

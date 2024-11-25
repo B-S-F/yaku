@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Controller, Get, Inject, Param, Query, Res } from '@nestjs/common'
 import { GetFindingsDTO } from './dto/getFindings.dto'
 import { MetricService } from './metric.service'
@@ -137,12 +141,12 @@ export class MetricController {
         },
       },
     }),
-    {}
+    {},
   )
 
   constructor(
     private readonly service: MetricService,
-    @Inject(UrlHandlerFactory) readonly urlHandler: UrlHandlerFactory
+    @Inject(UrlHandlerFactory) readonly urlHandler: UrlHandlerFactory,
   ) {}
 
   @Get('findings')
@@ -159,7 +163,7 @@ export class MetricController {
   async getFindings(
     @Param('namespaceId') namespaceId: number,
     @Query() queryOptions: FindingsQueryOptions,
-    @Res({ passthrough: true }) response: any
+    @Res({ passthrough: true }) response: any,
   ): Promise<GetListFindingsDTO> {
     validateId(namespaceId)
     try {
@@ -167,7 +171,7 @@ export class MetricController {
         queryOptions,
         queryOptionsSchema,
         allowedSortProperties,
-        'count'
+        'count',
       )
       const requestUrl = this.urlHandler.getHandler(response)
 
@@ -177,13 +181,13 @@ export class MetricController {
           namespaceId,
           StatusType.UNRESOLVED,
           queryOptions.configId,
-          paginateQueryOptions
+          paginateQueryOptions,
         )
       } else {
         rawData = await this.service.getNrOfFindings(
           namespaceId,
           StatusType.UNRESOLVED,
-          paginateQueryOptions
+          paginateQueryOptions,
         )
       }
 
@@ -191,7 +195,7 @@ export class MetricController {
         paginateQueryOptions,
         requestUrl,
         rawData.itemCount,
-        rawData.entities
+        rawData.entities,
       )
     } catch (error) {
       this.logger.error(`Error in findings: ${error.message}`)
@@ -213,7 +217,7 @@ export class MetricController {
   async getFindingsInRange(
     @Param('namespaceId') namespaceId: number,
     @Query() queryOptions: FindingsInRangeQueryOptions,
-    @Res({ passthrough: true }) response: any
+    @Res({ passthrough: true }) response: any,
   ): Promise<GetListFindingsDTO> {
     validateId(namespaceId)
     try {
@@ -224,7 +228,7 @@ export class MetricController {
         queryOptions,
         queryOptionsSchema,
         allowedSortProperties,
-        'count'
+        'count',
       )
       const requestUrl = this.urlHandler.getHandler(response)
 
@@ -236,7 +240,7 @@ export class MetricController {
           queryOptions.startRange,
           queryOptions.endRange,
           queryOptions.configId,
-          paginateQueryOptions
+          paginateQueryOptions,
         )
       } else {
         rawData = await this.service.getNrOfFindingsInRange(
@@ -244,7 +248,7 @@ export class MetricController {
           StatusType.UNRESOLVED,
           queryOptions.startRange,
           queryOptions.endRange,
-          paginateQueryOptions
+          paginateQueryOptions,
         )
       }
 
@@ -252,7 +256,7 @@ export class MetricController {
         paginateQueryOptions,
         requestUrl,
         rawData.itemCount,
-        rawData.entities
+        rawData.entities,
       )
     } catch (error) {
       this.logger.error(`Error in findingsInRange: ${error.message}`)
@@ -273,7 +277,7 @@ export class MetricController {
   async getLatestRunFindings(
     @Param('namespaceId') namespaceId: number,
     @Query() queryOptions: LatestRunFindingsQueryOptions,
-    @Res({ passthrough: true }) response: any
+    @Res({ passthrough: true }) response: any,
   ): Promise<GetListFindingsDTO> {
     validateId(namespaceId)
     try {
@@ -281,21 +285,21 @@ export class MetricController {
         queryOptions,
         queryOptionsSchema,
         allowedSortProperties,
-        'count'
+        'count',
       )
       const requestUrl = this.urlHandler.getHandler(response)
 
       const rawData = await this.service.getLatestRunNrOfFindings(
         namespaceId,
         StatusType.UNRESOLVED,
-        paginateQueryOptions
+        paginateQueryOptions,
       )
 
       return createPaginationData<GetFindingsDTO, GetListFindingsDTO>(
         paginateQueryOptions,
         requestUrl,
         rawData.itemCount,
-        rawData.entities
+        rawData.entities,
       )
     } catch (error) {
       this.logger.error(`Error in latestRunFindings: ${error.message}`)
@@ -317,7 +321,7 @@ export class MetricController {
   async getLatestRunFindingsInRange(
     @Param('namespaceId') namespaceId: number,
     @Query() queryOptions: LatestRunFindingsInRangeQueryOptions,
-    @Res({ passthrough: true }) response: any
+    @Res({ passthrough: true }) response: any,
   ): Promise<GetListFindingsDTO> {
     validateId(namespaceId)
     try {
@@ -328,7 +332,7 @@ export class MetricController {
         queryOptions,
         queryOptionsSchema,
         allowedSortProperties,
-        'count'
+        'count',
       )
       const requestUrl = this.urlHandler.getHandler(response)
 
@@ -337,14 +341,14 @@ export class MetricController {
         StatusType.UNRESOLVED,
         queryOptions.startRange,
         queryOptions.endRange,
-        paginateQueryOptions
+        paginateQueryOptions,
       )
 
       return createPaginationData<GetFindingsDTO, GetListFindingsDTO>(
         paginateQueryOptions,
         requestUrl,
         rawData.itemCount,
-        rawData.entities
+        rawData.entities,
       )
     } catch (error) {
       this.logger.error(`Error in latestRunFindingsInRange: ${error.message}`)

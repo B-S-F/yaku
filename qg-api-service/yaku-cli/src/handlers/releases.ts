@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiClient, QueryOptions, Release } from '@B-S-F/yaku-client-lib'
 import {
   getResourceDeletionConfirmation,
@@ -12,7 +16,7 @@ export async function listReleases(
   client: ApiClient,
   namespace: number | undefined,
   page: string,
-  options: any
+  options: any,
 ) {
   handleStandardParams(client, namespace)
   const pg = page ? parseIntParameter(page, 'page') : 1
@@ -34,7 +38,7 @@ export async function listReleases(
     filterProperty,
     filterValues,
     options.sortBy,
-    options.ascending
+    options.ascending,
   )
   await logResultAsJson(client.getReleases(namespace!, queryOptions))
 }
@@ -42,7 +46,7 @@ export async function listReleases(
 export async function showRelease(
   client: ApiClient,
   namespace: number | undefined,
-  releaseId: string
+  releaseId: string,
 ) {
   const rl = handleStandardParams(client, namespace, releaseId, 'releaseId')
   await logResultAsJson(client!.getRelease(namespace!, rl))
@@ -52,19 +56,19 @@ export async function deleteRelease(
   client: ApiClient,
   namespace: number | undefined,
   releaseId: string,
-  options: any
+  options: any,
 ) {
   const releaseIdNumber = handleStandardParams(
     client,
     namespace,
     releaseId,
-    'releaseId'
+    'releaseId',
   )
   let confirmation = true
   if (!options.yes) {
     const release: Release = await client!.getRelease(
       namespace!,
-      releaseIdNumber
+      releaseIdNumber,
     )
 
     confirmation = await getResourceDeletionConfirmation(release)
@@ -73,7 +77,7 @@ export async function deleteRelease(
   if (confirmation) {
     await logSuccess(
       client!.deleteRelease(namespace!, releaseIdNumber),
-      `Release with id ${releaseId} was successfully deleted`
+      `Release with id ${releaseId} was successfully deleted`,
     )
   }
 }

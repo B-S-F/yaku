@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { readFileSync } from 'fs'
@@ -23,7 +27,7 @@ chapters:
           Time schedule was coordinated with all parties involved.
           The target dates are up to date and can be realized.
           Interactions with schedules for the system or components are taken into account.
-          
+
           Customer milestones were considered.
         checks:
           '1':
@@ -88,7 +92,7 @@ chapters:
           Time schedule was coordinated with all parties involved. The target
           dates are up to date and can be realized. Interactions with schedules
           for the system or components are taken into account.
-          
+
           Customer milestones were considered.
         checks:
           '1':
@@ -155,10 +159,10 @@ describe('GeneratorService', () => {
 
     it('should catch empty input', () => {
       expect(() => service.generateInitialConfig(undefined)).toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(() => service.generateInitialConfig(undefined)).toThrow(
-        'No questionnaire data given'
+        'No questionnaire data given',
       )
     })
 
@@ -174,22 +178,22 @@ chapters:
         title: Requirement 1
 `)
       expect(() => service.generateInitialConfig(unparsable)).toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(() => service.generateInitialConfig(unparsable)).toThrow(
-        'Could not parse the questionnaire data, error was Nested mappings are not allowed'
+        'Could not parse the questionnaire data, error was Nested mappings are not allowed',
       )
     })
 
     it('should catch wrong file format, e.g., xlsx', () => {
       const unparsable = readFileSync(
-        `${__dirname}/testdata/SampleProject.xlsx.config`
+        `${__dirname}/testdata/SampleProject.xlsx.config`,
       )
       expect(() => service.generateInitialConfig(unparsable)).toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(() => service.generateInitialConfig(unparsable)).toThrow(
-        'Could not parse the questionnaire data, error was Validation error: Required at "chapters"'
+        'Could not parse the questionnaire data, error was Validation error: Required at "chapters"',
       )
     })
 
@@ -217,10 +221,10 @@ project: Test Project
 version: '1.0'
 `)
       expect(() => service.generateInitialConfig(noChapters)).toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(() => service.generateInitialConfig(noChapters)).toThrow(
-        'Could not parse the questionnaire data, error was Validation error: Required at "chapters"'
+        'Could not parse the questionnaire data, error was Validation error: Required at "chapters"',
       )
     })
 
@@ -231,10 +235,10 @@ version: '1.0'
 chapters:
 `)
       expect(() => service.generateInitialConfig(noChapters)).toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(() => service.generateInitialConfig(noChapters)).toThrow(
-        'Could not parse the questionnaire data, error was Validation error: Expected object, received null at "chapters"'
+        'Could not parse the questionnaire data, error was Validation error: Expected object, received null at "chapters"',
       )
     })
 
@@ -250,10 +254,10 @@ chapters:
 `)
 
       expect(() => service.generateInitialConfig(noChapterTitle)).toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(() => service.generateInitialConfig(noChapterTitle)).toThrow(
-        'Could not parse the questionnaire data, error was Validation error: Required at "chapters["1"].title"'
+        'Could not parse the questionnaire data, error was Validation error: Required at "chapters["1"].title"',
       )
     })
 
@@ -272,10 +276,10 @@ chapters:
 `)
 
       expect(() => service.generateInitialConfig(noRequirements)).toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(() => service.generateInitialConfig(noRequirements)).toThrow(
-        'Could not parse the questionnaire data, error was Validation error: Required at "chapters["1"].requirements"'
+        'Could not parse the questionnaire data, error was Validation error: Required at "chapters["1"].requirements"',
       )
     })
 
@@ -295,10 +299,10 @@ chapters:
 `)
 
       expect(() => service.generateInitialConfig(noRequirements)).toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(() => service.generateInitialConfig(noRequirements)).toThrow(
-        'Could not parse the questionnaire data, error was Validation error: Required at "chapters["1"].requirements"'
+        'Could not parse the questionnaire data, error was Validation error: Required at "chapters["1"].requirements"',
       )
     })
 
@@ -315,10 +319,10 @@ chapters:
 `)
 
       expect(() => service.generateInitialConfig(noRequirementTitle)).toThrow(
-        BadRequestException
+        BadRequestException,
       )
       expect(() => service.generateInitialConfig(noRequirementTitle)).toThrow(
-        'Could not parse the questionnaire data, error was Validation error: Required at "chapters["1"].requirements["1"].title"'
+        'Could not parse the questionnaire data, error was Validation error: Required at "chapters["1"].requirements["1"].title"',
       )
     })
   })

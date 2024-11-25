@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { getAutoPilotInfo, getAutoPilotsInfo } from './apps.prompts'
 
 const autopilots = {
@@ -44,8 +48,8 @@ autopilots:
       set -ex
       docupedia-fetcher
     env:
-      DOCUPEDIA_SCHEME_ID: 
-      DOCUPEDIA_USER: 
+      DOCUPEDIA_SCHEME_ID:
+      DOCUPEDIA_USER:
   sharepoint-pdf-signature-check:
     run: |
       set -ex

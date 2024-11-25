@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
@@ -70,7 +74,7 @@ describe('NamespaceLocalIdService', () => {
     expect(querySpy).toBeCalledTimes(1)
     expect(querySpy).toBeCalledWith(
       'update namespace_member_sequence set "lastId" = "lastId" + 1 where "namespaceId" = $1 and "entityName" = $2 returning "lastId"',
-      [testingNamespaceId, entityName]
+      [testingNamespaceId, entityName],
     )
   })
 
@@ -104,7 +108,7 @@ describe('NamespaceLocalIdService', () => {
         namespace: { id: testingNamespaceId, name: 'anything', users: [] },
         entityName,
         lastId: 10,
-      }
+      },
     )
   })
 

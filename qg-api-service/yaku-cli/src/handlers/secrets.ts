@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiClient, QueryOptions, SecretMetadata } from '@B-S-F/yaku-client-lib'
 import {
   getResourceDeletionConfirmation,
@@ -11,7 +15,7 @@ export async function exportSecrets(
   client: ApiClient,
   namespace: number | undefined,
   page: string,
-  options: any
+  options: any,
 ) {
   handleStandardParams(client, namespace)
   const pg = page ? parseIntParameter(page, 'page') : 1
@@ -24,7 +28,7 @@ export async function exportSecrets(
     undefined,
     undefined,
     options.sortBy,
-    options.ascending
+    options.ascending,
   )
   if (options.all) {
     await logResultAsJson(client!.listAllSecrets(namespace!, queryOptions))
@@ -38,11 +42,11 @@ export async function createSecret(
   namespace: number | undefined,
   name: string,
   description: string,
-  secret: string
+  secret: string,
 ) {
   handleStandardParams(client, namespace)
   await logResultAsJson(
-    client!.createSecret(namespace!, name, secret, description)
+    client!.createSecret(namespace!, name, secret, description),
   )
 }
 
@@ -51,11 +55,11 @@ export async function updateSecret(
   namespace: number | undefined,
   name: string,
   description: string,
-  secret: string
+  secret: string,
 ) {
   handleStandardParams(client, namespace)
   await logResultAsJson(
-    client!.updateSecret(namespace!, name, secret, description)
+    client!.updateSecret(namespace!, name, secret, description),
   )
 }
 
@@ -63,7 +67,7 @@ export async function deleteSecret(
   client: ApiClient,
   namespace: number | undefined,
   name: string,
-  options: any
+  options: any,
 ) {
   handleStandardParams(client, namespace)
   let confirmation = true
@@ -71,7 +75,7 @@ export async function deleteSecret(
   if (!options.yes) {
     const secretPromise: Promise<SecretMetadata[]> = client!.listAllSecrets(
       namespace!,
-      new QueryOptions(1, 20, undefined, undefined, 'name', false)
+      new QueryOptions(1, 20, undefined, undefined, 'name', false),
     )
     const secrets = await secretPromise
     const secret = secrets.find((s) => s.name === name)
@@ -86,7 +90,7 @@ export async function deleteSecret(
   if (confirmation) {
     await logSuccess(
       client!.deleteSecret(namespace!, name),
-      `Secret ${name} was successfully deleted`
+      `Secret ${name} was successfully deleted`,
     )
   }
 }

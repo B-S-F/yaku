@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
 import {
   BadRequestException,
@@ -23,7 +27,7 @@ export class NamespaceService {
     @InjectRepository(Namespace)
     private readonly repository: Repository<Namespace>,
     @Inject(NamespaceCallbacks)
-    private readonly creationListener: NamespaceCallbacks
+    private readonly creationListener: NamespaceCallbacks,
   ) {}
 
   async getList(user: KeyCloakUser): Promise<Namespace[]> {
@@ -53,7 +57,7 @@ export class NamespaceService {
   async create(name: string): Promise<Namespace> {
     if (!name) {
       throw new BadRequestException(
-        'An empty name is not allowed for a namespace'
+        'An empty name is not allowed for a namespace',
       )
     }
 

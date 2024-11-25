@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 query: '<jql-query>'  # A jql query
 neededFields: # List of issue fields to fetch.
   - field1

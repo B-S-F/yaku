@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { validateId } from '@B-S-F/api-commons-lib'
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { ADMIN_ROLE, NAMESPACE_ACCESS_ROLE } from '../../guards/roles.guard'
@@ -15,7 +19,7 @@ export class NamespaceAccessGuard implements CanActivate {
     return (
       user.namespaces.filter(
         (ns) =>
-          ns.id === namespaceId && ns.roles.includes(NAMESPACE_ACCESS_ROLE)
+          ns.id === namespaceId && ns.roles.includes(NAMESPACE_ACCESS_ROLE),
       ).length > 0
     )
   }

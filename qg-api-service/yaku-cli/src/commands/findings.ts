@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiClient } from '@B-S-F/yaku-client-lib'
 import { Command } from 'commander'
 import { handleRestApiError } from '../common.js'
@@ -24,14 +28,14 @@ export function createFindingsSubcommands(program: Command): void {
     .argument('[page]', 'The page requested, defaults to page 1')
     .option(
       '-i, --itemCount <value>',
-      'Number of items requested per page, defaults to 20'
+      'Number of items requested per page, defaults to 20',
     )
     .option('-a, --ascending', 'Revert sort order for the items')
     .option('--all', 'Retrieve all findings in one call')
     .option('-s, --sortBy [property]', 'Sort results by the given property')
     .option(
       '-f, --filterBy [property=value1,value2]',
-      'Filter values according to the given property, show only elements which have one of the given values'
+      'Filter values according to the given property, show only elements which have one of the given values',
     )
     .action(async (configIds: string, page: string, options) => {
       try {

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { parseRunFiles } from './file.service'
 import { File, ParsedQGConfig } from './types'
 
@@ -89,11 +93,11 @@ describe('importYAMLData', () => {
       files,
       selectedChapter,
       selectedRequirement,
-      selectedCheck
+      selectedCheck,
     )
 
     expect(JSON.stringify(parsedData[0].content)).toEqual(
-      JSON.stringify(parsedQg)
+      JSON.stringify(parsedQg),
     )
     expect(parsedData[1].content).toEqual(files[2].content)
     expect(parsedData).toHaveLength(2)
@@ -124,11 +128,11 @@ describe('importYAMLData', () => {
       filesWithExtra,
       selectedChapter,
       selectedRequirement,
-      selectedCheck
+      selectedCheck,
     )
 
     expect(JSON.stringify(parsedData[0].content)).toEqual(
-      JSON.stringify(parsedQg)
+      JSON.stringify(parsedQg),
     )
     expect(parsedData[1].content).toEqual(files[2].content)
     expect(parsedData).toHaveLength(2)

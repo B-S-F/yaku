@@ -1,4 +1,10 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 /.idea/
 bazel-*
 node_modules
 /.pants.d/
+
+yaku-apps-typescript/apps/defender-for-cloud/results.json

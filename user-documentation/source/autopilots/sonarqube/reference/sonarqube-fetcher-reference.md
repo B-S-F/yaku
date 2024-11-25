@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Fetcher Background Information
 
 The fetcher makes a request against the Sonarqube API, gets the the current status of the project quality gates and saves it as a json file to the evidence path.

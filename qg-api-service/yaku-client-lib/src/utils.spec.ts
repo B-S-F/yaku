@@ -1,16 +1,20 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { getFilenameFromUrl, wait } from './utils'
 
 describe('getFilenameFromURL()', () => {
   test('parses file URL properly', () => {
     expect(
       getFilenameFromUrl(
-        'https://some.url/with/some/path/to/some/file.txt#something'
-      )
+        'https://some.url/with/some/path/to/some/file.txt#something',
+      ),
     ).toEqual('file.txt')
   })
   test('parses file URL properly even with trailing slash', () => {
     expect(
-      getFilenameFromUrl('https://some.url/with/some/path/to/some/file.txt/')
+      getFilenameFromUrl('https://some.url/with/some/path/to/some/file.txt/'),
     ).toEqual('file.txt')
   })
 })

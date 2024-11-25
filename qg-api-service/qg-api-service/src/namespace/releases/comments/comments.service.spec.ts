@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { EntityList } from '@B-S-F/api-commons-lib'
 import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
@@ -299,16 +303,16 @@ describe('CommentsService', () => {
           release.id,
           basicComment.id,
           user1,
-          queryRunner
+          queryRunner,
         )
 
         expect(notificationServiceSpy).toHaveBeenCalledTimes(
-          expectedNotificationCalls.length
+          expectedNotificationCalls.length,
         )
         expect(notificationServiceSpy.mock.calls).toEqual(
-          expect.arrayContaining(expectedNotificationCalls)
+          expect.arrayContaining(expectedNotificationCalls),
         )
-      }
+      },
     )
 
     it.each([
@@ -347,7 +351,7 @@ describe('CommentsService', () => {
         notificationReference,
         parentReference,
         notificationTypeMention,
-        notificationTypeComment
+        notificationTypeComment,
       ) => {
         const childCommentContent = `@user2@domain.gTLD replies to ${referenceTypeStr} comment and mentions @user4@domain.gTLD. @nonExistingUser@domain.gTLD does not exists in this namespace`
         const expectedNotificationContent = `@${user2.displayName} replies to ${referenceTypeStr} comment and mentions @${user4.displayName}. @nonExistingUser@domain.gTLD does not exists in this namespace`
@@ -426,16 +430,16 @@ describe('CommentsService', () => {
           release.id,
           childComment.id,
           user2,
-          queryRunner
+          queryRunner,
         )
 
         expect(notificationServiceSpy).toHaveBeenCalledTimes(
-          expectedNotificationCalls.length
+          expectedNotificationCalls.length,
         )
         expect(notificationServiceSpy.mock.calls).toEqual(
-          expect.arrayContaining(expectedNotificationCalls)
+          expect.arrayContaining(expectedNotificationCalls),
         )
-      }
+      },
     )
   })
 
@@ -568,16 +572,16 @@ describe('CommentsService', () => {
           basicComment.id,
           initialContent,
           user1,
-          queryRunner
+          queryRunner,
         )
 
         expect(notificationServiceSpy).toHaveBeenCalledTimes(
-          expectedNotificationCalls.length
+          expectedNotificationCalls.length,
         )
         expect(notificationServiceSpy.mock.calls).toEqual(
-          expect.arrayContaining(expectedNotificationCalls)
+          expect.arrayContaining(expectedNotificationCalls),
         )
-      }
+      },
     )
   })
 
@@ -716,7 +720,7 @@ describe('CommentsService', () => {
       const result = await service.toCommentWithRepliesDto(basicComment)
       expect(result.replies).toHaveLength(1)
       expect(result.replies[0]).toEqual(
-        await service.toCommentDto(childComment)
+        await service.toCommentDto(childComment),
       )
     })
   })
@@ -730,7 +734,7 @@ describe('CommentsService', () => {
         await service.toCommentWithRepliesAndReferenceDto(basicComment)
       expect(result.replies).toHaveLength(1)
       expect(result.replies[0]).toEqual(
-        await service.toCommentDto(childComment)
+        await service.toCommentDto(childComment),
       )
       expect(result.reference).toEqual({ type: ReferenceType.RELEASE })
     })
@@ -772,11 +776,11 @@ describe('CommentsService', () => {
       basicComment.children = [childComment]
       const result = await service.toCommentsByReferenceDto(
         [basicComment],
-        reference
+        reference,
       )
       expect(result.comments).toHaveLength(1)
       expect(result.comments[0]).toEqual(
-        await service.toCommentWithRepliesDto(basicComment)
+        await service.toCommentWithRepliesDto(basicComment),
       )
     })
 
@@ -792,11 +796,11 @@ describe('CommentsService', () => {
       basicComment.reference.check = '1'
       const result = await service.toCommentsByReferenceDto(
         [basicComment],
-        reference
+        reference,
       )
       expect(result.comments).toHaveLength(1)
       expect(result.comments[0]).toEqual(
-        await service.toCommentWithRepliesDto(basicComment)
+        await service.toCommentWithRepliesDto(basicComment),
       )
     })
 
@@ -807,11 +811,11 @@ describe('CommentsService', () => {
       basicComment.parent = { id: 1 } as CommentEntity
       const result = await service.toCommentsByReferenceDto(
         [basicComment],
-        reference
+        reference,
       )
       expect(result.comments).toHaveLength(1)
       expect(result.comments[0]).toEqual(
-        await service.toCommentWithRepliesDto(basicComment)
+        await service.toCommentWithRepliesDto(basicComment),
       )
     })
   })

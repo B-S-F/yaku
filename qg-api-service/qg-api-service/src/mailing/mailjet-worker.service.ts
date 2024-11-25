@@ -1,8 +1,11 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common'
 import { Interval } from '@nestjs/schedule'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
-import fetch, { RequestInit } from 'node-fetch'
-import { ProxyAgent } from 'proxy-agent'
+import { RequestInit, EnvHttpProxyAgent, fetch } from 'undici'
 import {
   Mail,
   MailingConfiguration,
@@ -42,15 +45,15 @@ export class MailjetWorker implements OnModuleInit, MailingWorker {
   private isProcessing = false
   private readonly sendUrl: string
   private readonly basicAuth: string
-  private readonly proxyAgent = new ProxyAgent()
+  private readonly proxyAgent = new EnvHttpProxyAgent()
   constructor(
     @Inject(MailingConfiguration)
-    private readonly configuration: MailjetConfiguration
+    private readonly configuration: MailjetConfiguration,
   ) {
     this.queue = []
     this.sendUrl = `${configuration.apiUrl}/v3.1/send`
     this.basicAuth = Buffer.from(
-      `${configuration.apiKey}:${configuration.apiSecret}`
+      `${configuration.apiKey}:${configuration.apiSecret}`,
     ).toString('base64')
   }
 
@@ -117,18 +120,19 @@ export class MailjetWorker implements OnModuleInit, MailingWorker {
       },
       body: JSON.stringify({ Messages: items }),
     }
+    let agent: Partial<RequestInit>
 
     if (this.configuration.useProxy) {
-      request.agent = this.proxyAgent
+      agent = { dispatcher: this.proxyAgent }
     }
 
-    const response = await fetch(this.sendUrl, request)
+    const response = await fetch(this.sendUrl, { ...request, ...agent })
 
     if (!response.ok) {
       throw new Error(
         `Failed to send emails with status ${
           response.status
-        }: ${await response.text()}`
+        }: ${await response.text()}`,
       )
     }
 

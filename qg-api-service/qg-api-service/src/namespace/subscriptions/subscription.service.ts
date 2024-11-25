@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   BadRequestException,
   HttpException,
@@ -28,15 +32,15 @@ export class SubscriptionService {
     @InjectRepository(SubscriptionEntity)
     private readonly repository: Repository<SubscriptionEntity>,
     @Inject(UsersService)
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
   ) {}
   async createSubscription(
     userId: string,
-    releaseId: number
+    releaseId: number,
   ): Promise<boolean> {
     if (!userId || !releaseId) {
       throw new BadRequestException(
-        'Need both userId and approvalId for a subscription object'
+        'Need both userId and approvalId for a subscription object',
       )
     }
     const nowDate = new Date()
@@ -54,7 +58,7 @@ export class SubscriptionService {
     if (existingSubscription) {
       throw new HttpException(
         `Subscription of user with id: ${userId} to the release with id: ${releaseId} already exists.`,
-        HttpStatus.CONFLICT
+        HttpStatus.CONFLICT,
       )
     } else {
       const subscription = this.repository.create(newSubscription)
@@ -63,7 +67,7 @@ export class SubscriptionService {
       if (!createdSubscription)
         throw new HttpException(
           `Subscription of user with id: ${userId} to the release with id: ${releaseId} failed to create.`,
-          HttpStatus.EXPECTATION_FAILED
+          HttpStatus.EXPECTATION_FAILED,
         )
       return true
     }
@@ -71,7 +75,7 @@ export class SubscriptionService {
 
   async deleteSubscription(
     userId: string,
-    releaseId: number
+    releaseId: number,
   ): Promise<boolean> {
     const deletedSubscription = await this.repository.delete({
       userId: userId,
@@ -81,14 +85,14 @@ export class SubscriptionService {
     if (!deletedSubscription.affected)
       throw new HttpException(
         `Subscription of user with id: ${userId} to the release with id: ${releaseId} was not found.`,
-        HttpStatus.NOT_FOUND
+        HttpStatus.NOT_FOUND,
       )
     return true
   }
 
   async getSubscriptionStatus(
     userId: string,
-    releaseId: number
+    releaseId: number,
   ): Promise<SubscriptionDto> {
     try {
       const existingSubscription = await this.repository
@@ -101,7 +105,7 @@ export class SubscriptionService {
       return null
     } catch (err) {
       this.logger.error(
-        `Could not get subscripiton status of user with id: ${userId} to the release with id: ${releaseId} due to ${err}`
+        `Could not get subscripiton status of user with id: ${userId} to the release with id: ${releaseId} due to ${err}`,
       )
       throw err
     }
@@ -117,11 +121,11 @@ export class SubscriptionService {
       try {
         subcribers.set(
           subscription.userId,
-          await this.usersService.getUser(subscription.userId)
+          await this.usersService.getUser(subscription.userId),
         )
       } catch (err) {
         this.logger.error(
-          `Attempt to get user with id '${subscription.userId}' from namesapce failed due to ${err.message}`
+          `Attempt to get user with id '${subscription.userId}' from namesapce failed due to ${err.message}`,
         )
       }
     }

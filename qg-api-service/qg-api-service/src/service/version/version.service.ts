@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import { ApiProperty } from '@nestjs/swagger'
 import { WorkflowImageConfig } from '../../namespace/workflow/workflow-argo.service'
@@ -31,7 +35,7 @@ export class VersionService {
 
   constructor(
     @Inject(ServiceConfig) serviceConfig: ServiceConfig,
-    @Inject(WorkflowImageConfig) workflowImageConfig: WorkflowImageConfig
+    @Inject(WorkflowImageConfig) workflowImageConfig: WorkflowImageConfig,
   ) {
     const qgcliVersions: { [_key in Version]: string } = {
       v0: '',

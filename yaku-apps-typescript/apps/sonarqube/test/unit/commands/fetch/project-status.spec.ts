@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { writeFile } from 'fs/promises'
 import { fetch, Response } from 'undici'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -99,7 +103,7 @@ describe('getProjectStatus', async () => {
         undefined,
       ),
     ).rejects.toThrowError(
-      'Could not parse sonarqube response as JSON, Unexpected token s in JSON at position 0'
+      'Could not parse sonarqube response as JSON, Unexpected token s in JSON at position 0',
     )
   })
 })

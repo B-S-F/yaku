@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 {{- if and (eq (toString .Values.postgres.enabled) "true") .Values.postgres.enabled }}
 kind: PersistentVolumeClaim
 apiVersion: v1

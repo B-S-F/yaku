@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { createMockResponse, testingNamespaceId } from './test-services'
 import { UrlHandler, UrlHandlerFactory, UrlProtocolConfig } from './url-handler'
 
@@ -14,20 +18,20 @@ describe('Url Handler', () => {
 
   it('should retrieve the correct url from a response', () => {
     expect(urlHandler.url()).toBe(
-      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}`
+      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}`,
     )
   })
 
   it('should add an appendix to the delivered base', () => {
     const testappendix = '/yaattu'
     expect(urlHandler.url(testappendix)).toBe(
-      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}${testappendix}`
+      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}${testappendix}`,
     )
   })
 
   it('should remove parts without appending stuff', () => {
     expect(urlHandler.url('', 2)).toBe(
-      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}`
+      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}`,
     )
   })
 
@@ -37,20 +41,20 @@ describe('Url Handler', () => {
 
   it('should remove parts even if null is given as appendix', () => {
     expect(urlHandler.url(null, 3)).toBe(
-      `https://localhost:3000/api/v1/namespaces`
+      `https://localhost:3000/api/v1/namespaces`,
     )
   })
 
   it('should remove parts and add an appendix', () => {
     const testappendix = '/yaattu'
     expect(urlHandler.url(testappendix, 2)).toBe(
-      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${testappendix}`
+      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${testappendix}`,
     )
   })
 
   it('should accept 0 elements to remove like no parameter given', () => {
     expect(urlHandler.url(null, 0)).toBe(
-      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}`
+      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}`,
     )
   })
 
@@ -65,7 +69,7 @@ describe('Url Handler', () => {
     const response = createMockResponse(url)
     urlHandler = factory.getHandler(response)
     expect(urlHandler.url()).toBe(
-      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}`
+      `https://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}`,
     )
   })
 
@@ -76,7 +80,7 @@ describe('Url Handler', () => {
     const response = createMockResponse(url)
     urlHandler = factory.getHandler(response)
     expect(urlHandler.url()).toBe(
-      `http://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}`
+      `http://localhost:3000/api/v1/namespaces/${testingNamespaceId}${appendix}`,
     )
   })
 })

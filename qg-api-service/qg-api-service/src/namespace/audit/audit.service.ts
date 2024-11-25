@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Injectable } from '@nestjs/common'
 import { ClassConstructor } from 'class-transformer'
 import { EntityManager } from 'typeorm'
@@ -77,7 +81,7 @@ export class AuditService<T extends AuditEntity> {
     modified: object,
     actor: AuditActor,
     action: Action,
-    entityManager: EntityManager
+    entityManager: EntityManager,
   ) {
     const audit = new this.entityType()
     audit.namespace = { id: namespaceId } as any

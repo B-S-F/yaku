@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 include MANIFEST.in README.rst LICENSE certifi/cacert.pem certifi/py.typed
 
 exclude .github/

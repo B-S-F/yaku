@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { afterEach, describe, it, expect, vi } from 'vitest'
 
 import { readJson } from '../src/read-json.js'
@@ -38,7 +42,7 @@ describe('readJson', () => {
     vi.mocked(readFile).mockResolvedValueOnce('invalid json')
 
     await expect(readJson('./invalid.json')).rejects.toThrow(
-      'File ./invalid.json could not be parsed, failed with error: SyntaxError: Unexpected token i in JSON at position 0'
+      'File ./invalid.json could not be parsed, failed with error: SyntaxError: Unexpected token i in JSON at position 0',
     )
   })
 

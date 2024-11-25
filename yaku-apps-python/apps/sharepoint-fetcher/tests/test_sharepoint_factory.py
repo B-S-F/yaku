@@ -1,4 +1,9 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import pytest
+from mock import patch
 from yaku.sharepoint_fetcher.config import Settings
 from yaku.sharepoint_fetcher.sharepoint_factory import SharePointFetcherFactory
 
@@ -31,10 +36,14 @@ def test_create_on_premise_sharepoint(settings):
     assert on_premise_sharepoint is not None
 
 
-def test_create_cloud_sharepoint(settings):
+@patch("yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect")
+def test_create_cloud_sharepoint(mock_connect, settings):
+    mock_connect.return_value = {"Authorization": "Bearer your_token"}
+
     settings.is_cloud = True
     list_title_property_map = []
     cloud_sharepoint = SharePointFetcherFactory.selectSharepointInstance(
         settings, list_title_property_map, filter_config_file_data
     )
+
     assert cloud_sharepoint is not None

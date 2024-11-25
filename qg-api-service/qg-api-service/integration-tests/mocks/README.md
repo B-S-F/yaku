@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 ### Generate qg-result.yaml mocks
 
 Each `qg-result.yaml` result used in integration tests has an associated `qg-config.yaml` config file.

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test, TestingModule } from '@nestjs/testing'
 import { OSSSourceController } from './oss-compliance.controller'
 import { OSSComplianceService } from './oss-compliance.service'
@@ -54,7 +58,7 @@ describe('OSS Compliance controller stack', () => {
     expect(await streamToString(data.getStream())).toBe(sbomContent)
     expect(response.header).toBeCalledWith(
       'Content-Disposition',
-      `attachment; filename="${sbomFilename}"`
+      `attachment; filename="${sbomFilename}"`,
     )
   })
 
@@ -72,7 +76,7 @@ describe('OSS Compliance controller stack', () => {
     expect(await streamToString(data.getStream())).toBe(sourceFileContent)
     expect(response.header).toBeCalledWith(
       'Content-Disposition',
-      `attachment; filename="${componentMap[name]}"`
+      `attachment; filename="${componentMap[name]}"`,
     )
   })
 
@@ -84,7 +88,7 @@ describe('OSS Compliance controller stack', () => {
     const response = createMockResponse(url)
 
     await expect(
-      controller.getSourceOfOSSComponent(name, response)
+      controller.getSourceOfOSSComponent(name, response),
     ).rejects.toThrow(NotFoundException)
   })
 
@@ -94,9 +98,9 @@ describe('OSS Compliance controller stack', () => {
       const response = createMockResponse(url)
 
       await expect(
-        controller.getSourceOfOSSComponent(name, response)
+        controller.getSourceOfOSSComponent(name, response),
       ).rejects.toThrow(BadRequestException)
       expect(service.getSourceForComponent).not.toBeCalled()
-    }
+    },
   )
 })

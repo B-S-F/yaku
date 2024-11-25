@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { RunOverallStatusType } from '../utils/enums/runOverallStatusType.enum'
 import { StatusType } from '../utils/enums/statusType.enum'
 import {

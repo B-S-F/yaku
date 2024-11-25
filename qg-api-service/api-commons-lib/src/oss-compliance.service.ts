@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { readFile } from 'fs/promises'
 import * as path from 'path'
@@ -6,7 +10,7 @@ import * as path from 'path'
 export class OSSComplianceConfig {
   constructor(
     readonly sbomFilepath: string,
-    readonly sourceNameToFileMap: { [name: string]: string } = {}
+    readonly sourceNameToFileMap: { [name: string]: string } = {},
   ) {}
 }
 
@@ -28,11 +32,11 @@ export class OSSComplianceService {
   }
 
   async getSourceForComponent(
-    name: string
+    name: string,
   ): Promise<{ filename: string; content: Buffer }> {
     if (!Object.keys(this.config.sourceNameToFileMap).includes(name)) {
       throw new NotFoundException(
-        `For component ${name}, sources are not available`
+        `For component ${name}, sources are not available`,
       )
     }
     const filepath = this.config.sourceNameToFileMap[name]

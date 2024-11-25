@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # Jira
 
 If you need to check the status of all Jira tickets related to the new software version before being able to release,

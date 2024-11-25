@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Injectable } from '@nestjs/common'
 import {
   Column,
@@ -80,24 +84,24 @@ export class ReleaseAuditService extends AuditService<ReleaseAuditEntity> {
     timestamp: Date | undefined,
     amount: number,
     direction: 'before' | 'after',
-    entityManager: EntityManager
+    entityManager: EntityManager,
   ): Promise<ReleaseAuditEntity[]> {
     const query = entityManager
       .createQueryBuilder(ReleaseAuditEntity, 'release_audit')
       .where('release_audit.namespaceId = :namespaceId', { namespaceId })
       .andWhere(
         `((release_audit.original->'id')::numeric = :id OR (release_audit.modified->'id')::numeric = :id)`,
-        { id: releaseId }
+        { id: releaseId },
       )
       .andWhere(
         'release_audit.modificationTime ' +
           (direction === 'before' ? '<' : '>') +
           ' :timestamp',
-        { timestamp }
+        { timestamp },
       )
       .orderBy(
         'release_audit.modificationTime',
-        direction === 'before' ? 'DESC' : 'ASC'
+        direction === 'before' ? 'DESC' : 'ASC',
       )
       .limit(amount)
     return await query.getMany()

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Injectable } from '@nestjs/common'
 import { AuditService } from './audit/audit.service'
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'

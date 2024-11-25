@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Test, TestingModule } from '@nestjs/testing'
 import { KeyCloakConfig, KeyCloakService } from './keycloak.service'
 import { LoggerModule } from 'nestjs-pino'
@@ -23,7 +27,7 @@ describe('KeyCloakService', () => {
               'foo',
               'bar',
               'https://bswf.authz.bosch.com/auth/admin/realm/bswf',
-              'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
+              'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
             ),
         },
       ],
@@ -90,8 +94,8 @@ describe('KeyCloakService', () => {
         'https://bswf.authz.bosch.com/auth/admin/realm/bswf',
         'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
         false,
-        'TEST'
-      )
+        'TEST',
+      ),
     )
     const mockPayload = {
       sub: '1234567890',
@@ -225,7 +229,7 @@ describe('KeyCloakService', () => {
     } catch (error) {
       // Assert that the error message is as expected.
       expect(error.message).toBe(
-        'Error in getKeyCloakUser: No preferred_username in token: 0.e30=.0'
+        'Error in getKeyCloakUser: No preferred_username in token: 0.e30=.0',
       )
     }
   })
@@ -245,7 +249,7 @@ describe('KeyCloakService', () => {
     } as any)
 
     const res = await service.getOpenIdConnectEndpoints(
-      'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
+      'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
     )
 
     expect(fetchSpy).toHaveBeenCalledTimes(1)
@@ -253,7 +257,7 @@ describe('KeyCloakService', () => {
       'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
       {
         method: 'GET',
-      }
+      },
     )
     expect(res).toEqual(IODCEndpoints)
   })
@@ -281,7 +285,7 @@ describe('KeyCloakService', () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: 'client_id=foo&client_secret=bar&token=1234567890',
-      }
+      },
     )
     expect(res).toBeTruthy()
   })
@@ -316,7 +320,7 @@ describe('KeyCloakService', () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: 'client_id=foo&client_secret=bar&token=1234567890',
-      }
+      },
     )
   })
 
@@ -394,7 +398,7 @@ describe('KeyCloakService', () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: 'client_id=foo&client_secret=bar&token=1234567890',
-      }
+      },
     )
   })
   it('should use the configured proxy settings', async () => {
@@ -420,8 +424,8 @@ describe('KeyCloakService', () => {
         'bar',
         'https://bswf.authz.bosch.com/auth/admin/realms/bswf',
         'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
-        true
-      )
+        true,
+      ),
     )
 
     jest
@@ -447,7 +451,7 @@ describe('KeyCloakService', () => {
         },
         body: 'client_id=foo&client_secret=bar&token=1234567890',
         dispatcher: expect.any(EnvHttpProxyAgent),
-      }
+      },
     )
     process.env.HTTP_PROXY = undefined
   })
@@ -798,7 +802,7 @@ describe('KeyCloakService', () => {
       expect(getUsersOfClientRoleSpy).toHaveBeenCalledTimes(1)
       expect(getUsersOfClientRoleSpy).toHaveBeenCalledWith(
         'NAMESPACE_1',
-        'ACCESS'
+        'ACCESS',
       )
     })
   })
@@ -888,7 +892,7 @@ describe('KeyCloak disabled', () => {
               'foo',
               'bar',
               'https://bswf.authz.bosch.com/auth/admin/realms/bswf',
-              'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
+              'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
             ),
         },
       ],
@@ -928,7 +932,7 @@ describe('KeyCloakConfig', () => {
       'foo',
       'bar',
       'https://bswf.authz.bosch.com/auth/admin/realms/bswf',
-      'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
+      'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
     )
     expect(cfg).toBeDefined()
   })
@@ -943,8 +947,8 @@ describe('KeyCloakConfig', () => {
           'foo',
           'bar',
           'https://bswf.authz.bosch.com/auth/admin/realms/bswf',
-          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
-        )
+          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
+        ),
     ).toThrow()
   })
 
@@ -958,8 +962,8 @@ describe('KeyCloakConfig', () => {
           'foo',
           'bar',
           'https://bswf.authz.bosch.com/auth/admin/realms/bswf',
-          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
-        )
+          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
+        ),
     ).toThrow()
   })
 
@@ -973,8 +977,8 @@ describe('KeyCloakConfig', () => {
           'foo',
           'bar',
           'https://bswf.authz.bosch.com/auth/admin/realms/bswf',
-          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
-        )
+          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
+        ),
     ).toThrow()
   })
 
@@ -988,8 +992,8 @@ describe('KeyCloakConfig', () => {
           '',
           'bar',
           'https://bswf.authz.bosch.com/auth/admin/realms/bswf',
-          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
-        )
+          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
+        ),
     ).toThrow()
   })
 
@@ -1003,8 +1007,8 @@ describe('KeyCloakConfig', () => {
           'foo',
           '',
           'https://bswf.authz.bosch.com/auth/admin/realms/bswf',
-          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
-        )
+          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
+        ),
     ).toThrow()
   })
 
@@ -1018,8 +1022,8 @@ describe('KeyCloakConfig', () => {
           'foo',
           'bar',
           '',
-          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration'
-        )
+          'https://bswf.authz.bosch.com/auth/realms/bswf/.well-known/openid-configuration',
+        ),
     ).toThrow()
   })
 
@@ -1033,8 +1037,8 @@ describe('KeyCloakConfig', () => {
           'foo',
           'bar',
           'https://bswf.authz.bosch.com/auth/admin/realms/bswf',
-          ''
-        )
+          '',
+        ),
     ).toThrow()
   })
 })

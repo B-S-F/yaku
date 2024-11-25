@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
 import json
 import logging
 import os
@@ -11,6 +15,15 @@ from yaku.sharepoint_fetcher.cloud.sharepoint_fetcher_cloud import (
     SharepointFetcherCloud,
 )
 from yaku.sharepoint_fetcher.selectors import FilesSelectors, Selector
+
+
+@pytest.fixture(scope="function", autouse=True)
+def mock_connect(mocker):
+    mocked_headers = {"Authorization": "Bearer your_token"}
+    mocked_connect = mocker.patch(
+        "yaku.sharepoint_fetcher.cloud.connect.Connect._sharepoint_cloud_instance_connect"
+    )
+    mocked_connect.return_value = mocked_headers
 
 
 @pytest.fixture

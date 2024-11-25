@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 import { KeyCloakService } from '@B-S-F/api-keycloak-auth-lib'
@@ -24,13 +28,13 @@ export class NotificationService {
     @Inject(KeyCloakService) private readonly keycloakService: KeyCloakService,
     @Inject(MailingService) private readonly mailService: MailingService,
     @Inject(UserProfileService)
-    private readonly userProfileService: UserProfileService
+    private readonly userProfileService: UserProfileService,
   ) {}
 
   async pushNotification(
     userId: string,
     title: string,
-    notification: Notification
+    notification: Notification,
   ): Promise<void> {
     if (userId === DELETED_USER.id || userId === SYSTEM_USER.id) {
       this.logger.info(`Special user with id ${userId} detected, skipping`)

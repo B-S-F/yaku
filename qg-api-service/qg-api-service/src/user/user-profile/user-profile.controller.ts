@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   Body,
   Controller,
@@ -35,7 +39,7 @@ import { EditorType } from './utils/types'
 @Controller('user-profile')
 export class UserProfileController {
   constructor(
-    @Inject(UserProfileService) private readonly service: UserProfileService
+    @Inject(UserProfileService) private readonly service: UserProfileService,
   ) {}
 
   @Get()
@@ -54,7 +58,7 @@ export class UserProfileController {
       return await this.service.get(userKeyCloakSub)
     }
     throw new NotAcceptableException(
-      `User profiles are only available for keycloak users`
+      `User profiles are only available for keycloak users`,
     )
   }
 
@@ -68,7 +72,7 @@ export class UserProfileController {
   })
   async update(
     @Body() updateUserProfileDto: UpdateUserProfileDto,
-    @Req() request: Request
+    @Req() request: Request,
   ): Promise<GetUserProfileDto> {
     validateBody(updateUserProfileDto, userProfileSchema)
     const user: KeyCloakUser = request.user as KeyCloakUser
@@ -78,7 +82,7 @@ export class UserProfileController {
       return await this.service.update(userKeyCloakSub, updateUserProfileDto)
     }
     throw new NotAcceptableException(
-      `User profiles are only available for keycloak users`
+      `User profiles are only available for keycloak users`,
     )
   }
 }

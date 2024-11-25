@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 // RFC9110 Defined HTTP Response Status Codes
 export const HTTPResponseStatusCodes = [
   { code: 100, message: 'Continue' },

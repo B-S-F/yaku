@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { RequestUser } from '../module.utils'
 import { Namespace } from '../namespace/namespace.entity'
@@ -17,7 +21,7 @@ export class AuditActor {
     readonly id: string,
     readonly username: string,
     readonly email: string,
-    readonly displayName: string
+    readonly displayName: string,
   ) {}
 
   static convertFrom(user: RequestUser): AuditActor {

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class Database1716378714474 implements MigrationInterface {
@@ -6,19 +10,19 @@ export class Database1716378714474 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`ALTER TABLE "approval" ADD "commentId" integer`)
     await queryRunner.query(
-      `ALTER TABLE "approval" ADD CONSTRAINT "UQ_01f084747f86160edbe4ffd91cb" UNIQUE ("commentId")`
+      `ALTER TABLE "approval" ADD CONSTRAINT "UQ_01f084747f86160edbe4ffd91cb" UNIQUE ("commentId")`,
     )
     await queryRunner.query(
-      `ALTER TABLE "approval" ADD CONSTRAINT "FK_01f084747f86160edbe4ffd91cb" FOREIGN KEY ("commentId") REFERENCES "comment"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`
+      `ALTER TABLE "approval" ADD CONSTRAINT "FK_01f084747f86160edbe4ffd91cb" FOREIGN KEY ("commentId") REFERENCES "comment"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "approval" DROP CONSTRAINT "FK_01f084747f86160edbe4ffd91cb"`
+      `ALTER TABLE "approval" DROP CONSTRAINT "FK_01f084747f86160edbe4ffd91cb"`,
     )
     await queryRunner.query(
-      `ALTER TABLE "approval" DROP CONSTRAINT "UQ_01f084747f86160edbe4ffd91cb"`
+      `ALTER TABLE "approval" DROP CONSTRAINT "UQ_01f084747f86160edbe4ffd91cb"`,
     )
     await queryRunner.query(`ALTER TABLE "approval" DROP COLUMN "commentId"`)
   }

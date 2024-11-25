@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import yp from '../yaku-prompts.js'
 
 import { loginOAuth } from '../oauth.js'
@@ -28,7 +32,7 @@ export async function login(
     web: boolean
     token: string | boolean
     admin: boolean
-  }
+  },
 ) {
   // get env name
   try {
@@ -38,7 +42,7 @@ export async function login(
       consoleErrorRed(err.message)
     } else {
       consoleErrorRed(
-        'An unknown error occurred while getting the environment name.'
+        'An unknown error occurred while getting the environment name.',
       )
     }
     return
@@ -51,7 +55,7 @@ export async function login(
 
     if (url !== apiUrl) {
       const shouldUpdateUrl = await yp.confirm(
-        `The specified ${url} is not a valid API url. Do you want to replace it with ${apiUrl}?`
+        `The specified ${url} is not a valid API url. Do you want to replace it with ${apiUrl}?`,
       )
 
       if (shouldUpdateUrl) {
@@ -63,7 +67,7 @@ export async function login(
       consoleErrorRed(err.message)
     } else {
       consoleErrorRed(
-        'An unknown error occurred while getting the environment URL.'
+        'An unknown error occurred while getting the environment URL.',
       )
     }
     return
@@ -77,7 +81,7 @@ export async function login(
       consoleErrorRed(err.message)
     } else {
       consoleErrorRed(
-        'An unknown error occurred while getting the login method.'
+        'An unknown error occurred while getting the login method.',
       )
     }
     return
@@ -86,7 +90,7 @@ export async function login(
   try {
     await loginAndCreateEnv(loginMethod, envName, options.url, options.token)
     console.log(
-      `Login information have been saved to environment '${envName}'.`
+      `Login information have been saved to environment '${envName}'.`,
     )
     console.log(`Environment '${envName}' is now activated.`)
   } catch (err) {
@@ -105,7 +109,7 @@ export async function login(
       consoleErrorRed(err.message)
     } else {
       consoleErrorRed(
-        'An unknown error occurred while selecting the namespace.'
+        'An unknown error occurred while selecting the namespace.',
       )
     }
     return
@@ -118,14 +122,14 @@ export async function getEnvironment(envName: string): Promise<string> {
   }
   const envs = loadEnvironments()
   const shouldCreate = await yp.confirm(
-    'Do you want to create a new environment?'
+    'Do you want to create a new environment?',
   )
   if (!shouldCreate) {
     if (envs.length > 0) {
       return await selectEnvironment(envs)
     }
     throw new Error(
-      `No environments available for selection, please create one first!`
+      `No environments available for selection, please create one first!`,
     )
   }
 
@@ -140,7 +144,7 @@ export async function getUrl(url: string, envName: string): Promise<string> {
   if (!url) {
     url = await yp.input(
       'URL of the environment',
-      loadEnvironments().find((env) => env.name === envName)?.url
+      loadEnvironments().find((env) => env.name === envName)?.url,
     )
   }
   return url
@@ -172,7 +176,7 @@ export async function getLoginMethod(options: {
           name: 'token-prompt',
           value: 'Login with an authentication token',
         },
-      ]
+      ],
     )
   }
   return loginMethod
@@ -182,7 +186,7 @@ export async function loginAndCreateEnv(
   loginMethod: string,
   envName: string,
   url: string,
-  token: string | boolean
+  token: string | boolean,
 ) {
   let env: Environment
   if (loginMethod === 'oauth') {
@@ -226,7 +230,7 @@ export async function loginAndCreateEnv(
 
 export async function selectNamespaceAndUpdateEnv(
   envName: string,
-  options: { namespace: number }
+  options: { namespace: number },
 ) {
   let namespaces: Namespace[] = []
   const client = (await connect()).client

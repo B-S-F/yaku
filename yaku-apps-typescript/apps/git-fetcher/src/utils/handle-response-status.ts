@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ConfigurationError } from '../run.js'
 
 export function handleResponseStatus(statusCode: number) {

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { KeyCloakStrategy } from '@B-S-F/api-keycloak-auth-lib'
 import { Module } from '@nestjs/common'
 import { APP_GUARD, APP_INTERCEPTOR, RouterModule } from '@nestjs/core'
@@ -77,8 +81,8 @@ export class MultiStream {
         DB_NAME,
         DB_USE_SSL,
         DB_MIGRATIONS_RUN,
-        DATA_DIR
-      )
+        DATA_DIR,
+      ),
     ),
     LocalKeyCloakModule,
     LongRunningTokenModule,

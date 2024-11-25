@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 import { fetch, EnvHttpProxyAgent } from 'undici'
+=======
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
+import fetch from 'node-fetch'
+import { ProxyAgent } from 'proxy-agent'
+>>>>>>> main
 import { AppError } from '@B-S-F/autopilot-utils'
 
 export interface JiraResponse {

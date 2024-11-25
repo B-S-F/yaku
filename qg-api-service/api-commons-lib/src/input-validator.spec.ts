@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException } from '@nestjs/common'
 import {
   validateBody,
@@ -15,7 +19,7 @@ describe('validateId', () => {
     'should accept valid values %s',
     (value) => {
       expect(() => validateId(value)).not.toThrow()
-    }
+    },
   )
 
   it.each([
@@ -45,7 +49,7 @@ describe('validateName', () => {
     'should throw a BadRequestException on invalid data',
     (value) => {
       expect(() => validateName(value)).toThrow(BadRequestException)
-    }
+    },
   )
 })
 
@@ -96,7 +100,7 @@ describe('validateDatetime', () => {
     'should throw an error for invalid ISO datetime %s',
     (value) => {
       expect(() => validateDate(value)).toThrowError()
-    }
+    },
   )
 })
 
@@ -113,6 +117,6 @@ describe('validateFilter', () => {
     'should throw a BadRequestException on invalid data',
     (value) => {
       expect(() => validateFilter(value)).toThrow(BadRequestException)
-    }
+    },
   )
 })

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { BadRequestException, Injectable } from '@nestjs/common'
 
 @Injectable()
@@ -8,7 +12,7 @@ export class JsonValidatorService {
       JSON.parse(fileString)
     } catch {
       throw new BadRequestException(
-        `Incorrect file type or format of file: ${filename}. Json was expected.`
+        `Incorrect file type or format of file: ${filename}. Json was expected.`,
       )
     }
   }

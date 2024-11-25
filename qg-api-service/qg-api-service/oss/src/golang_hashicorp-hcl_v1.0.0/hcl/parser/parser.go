@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 // Package parser implements a parser for HCL (HashiCorp Configuration
 // Language)
 package parser

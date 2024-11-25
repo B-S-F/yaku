@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { ApiClient } from '@B-S-F/yaku-client-lib'
 import yp from './yaku-prompts.js'
 import assert from 'node:assert'
@@ -11,14 +15,14 @@ export function parseIntParameter(param: string, name: string): number {
 }
 
 export async function logResultAsJson(
-  dataPromise: Promise<any>
+  dataPromise: Promise<any>,
 ): Promise<void> {
   const data = await dataPromise
   console.log(JSON.stringify(data, null, 2))
 }
 
 export async function logDownloadedFile(
-  dataPromise: Promise<string>
+  dataPromise: Promise<string>,
 ): Promise<void> {
   const name = await dataPromise
   console.log(`Wrote file ${name}`)
@@ -26,7 +30,7 @@ export async function logDownloadedFile(
 
 export async function logSuccess(
   voidPromise: Promise<void>,
-  text: string
+  text: string,
 ): Promise<void> {
   await voidPromise
   console.log(text)
@@ -55,7 +59,7 @@ export function handleRestApiError(err: any, fatal = true) {
           .split('\n')
           .join('\n' + LINE_INDENT + ''.padEnd(MAX_TITLE_WIDTH))
       })
-      .join('\n' + LINE_INDENT)
+      .join('\n' + LINE_INDENT),
   )
   if (fatal) {
     process.exit(1)
@@ -66,7 +70,7 @@ export function handleStandardParams(
   client: ApiClient | undefined,
   namespace?: number | undefined,
   id?: string,
-  name?: string
+  name?: string,
 ): number {
   assert(client, 'Client not defined, please check your configuration')
   if (arguments.length > 1) {

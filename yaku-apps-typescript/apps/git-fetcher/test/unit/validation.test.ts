@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import {
   allowedFilterState,
   AllowedFilterStateType,
@@ -505,7 +509,7 @@ describe('ValidateFetcherConfig', async () => {
     })
   })
 
-  describe('Filter Invalid Combinations', function () {
+  describe('Filter Invalid Combinations', () => {
     it.each([
       // date + hash filter
       ['startDate', 'startHash', undefined],

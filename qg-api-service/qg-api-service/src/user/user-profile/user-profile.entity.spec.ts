@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import { UserProfile } from './user-profile.entity'
 import { EditorType } from './utils/types'
 

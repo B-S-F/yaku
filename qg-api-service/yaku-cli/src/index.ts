@@ -1,4 +1,9 @@
 #! /usr/bin/env node
+
+// SPDX-FileCopyrightText: 2024 grow platform GmbH
+//
+// SPDX-License-Identifier: MIT
+
 import colors from 'colors'
 import { Command } from 'commander'
 
@@ -47,7 +52,7 @@ program.option(
     console.error('Disabling TLS certificate validation!')
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
     return false
-  }
+  },
 )
 
 program.allowExcessArguments(false)

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 grow platform GmbH
+
+SPDX-License-Identifier: MIT
+-->
+
 # jira-finalizer
 
 The Jira finalizer is currently a POC.
@@ -40,7 +46,7 @@ In order to use the finalizer in your qg configuration add the following code to
 ```yaml
 finalize:
   run: |
-    export JIRA_USERNAME=<your username> 
+    export JIRA_USERNAME=<your username>
     export JIRA_PASSWORD=<your password>
     jira-finalizer update-issues
 ```
