@@ -85,11 +85,7 @@ export async function getProjectStatus(
   protocol: 'http' | 'https',
   projectKey: string,
   accessToken: string,
-<<<<<<< HEAD
   proxyTunnel?: EnvHttpProxyAgent,
-=======
-  proxyTunnel?: HttpAgent | HttpsAgent,
->>>>>>> main
 ): Promise<ProjectStatus> {
   const logger = GetLogger()
   const apiUrl = createApiUrl(
