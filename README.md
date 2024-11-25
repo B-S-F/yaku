@@ -16,14 +16,6 @@ SPDX-License-Identifier: MIT
 Photo by Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahme-fotografie-der-roten-und-weissen-strassenbeschilderung-117602/" target="_blank" style="color: #555;">Pexels</a>
 </figcaption>
 
-## Table of Contents
-
-- [User Documentation](#user-documentation)
-- [Components](#components)
-- [Deployment Guide](#deployment-guide)
-- [Development](#development)
-- [Licenses](#licenses)
-
 ## User Documentation
 
 If you have already deployed Yaku, start by reviewing the [user documentation](https://b-s-f.github.io/yaku/).
