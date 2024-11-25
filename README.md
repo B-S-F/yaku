@@ -9,12 +9,9 @@ SPDX-License-Identifier: MIT
 [![Build](https://github.com/B-S-F/yaku/actions/workflows/build.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build.yml)
 [![User Documentation](https://github.com/B-S-F/yaku/actions/workflows/publish-user-docs-to-gh-pages.yml/badge.svg)](https://b-s-f.github.io/yaku/)
 
-**!! THIS PROJECT IS UNDER CONSTRUCTION !!**
+**!!THIS PROJECT IS UNDER CONSTRUCTION !!**
 
-<img src="./documentation/under-construction.jpg" alt="Under Construction" width="300"/>
-<figcaption>
-Photo by Mabel Amber from <a href="https://www.pexels.com/de-de/foto/nahaufnahme-fotografie-der-roten-und-weissen-strassenbeschilderung-117602/" target="_blank" style="color: #555;">Pexels</a>
-</figcaption>
+![](documentation/user-documentation/source/_static/yaku-flow-pipeline.png)
 
 Yaku is a service to help you automate your software release process. It’s a tool, that automatically collects various files and attaches them as evidences to the related release questions and lets you know whether the questions’ requirements were met or not and why. Therefore, it allows you to speed up your software release preparation times by a substantial amount. This is achieved by configuring different autopilots that can:
 - fetch and evaluate files, stored on various platforms like SharePoint
