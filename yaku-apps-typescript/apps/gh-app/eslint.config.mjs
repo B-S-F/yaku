@@ -9,6 +9,6 @@ export default {
   ...baseConfig[0],
   rules: {
     ...baseConfig[0].rules,
-    "no-control-regex": 0, 
+    "no-control-regex": 0,
 }
 };

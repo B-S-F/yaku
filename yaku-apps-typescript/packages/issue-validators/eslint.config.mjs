@@ -4,4 +4,4 @@
 // SPDX-License-Identifier: MIT
 
 export { default } from "@B-S-F/eslint-config/eslint-preset.js";
- 
+
