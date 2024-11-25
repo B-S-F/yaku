@@ -37,7 +37,7 @@ jobs:
       - name: Setup virtual environment
         if: ${{ steps.cache-venv.outputs.cache-hit != 'true' }}
         run: |
-          make -C user-documentation prepare
+          make -C documentation/user-documentation prepare
       - name: Sphinx Build
         run: |
           make -C documentation/user-documentation openapi
