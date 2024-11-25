@@ -14,14 +14,14 @@ export type LogLevel =
 export function InitLogger(
   app: string,
   logLevel: LogLevel = 'info',
-  logFile?: string
+  logFile?: string,
 ) {
   logger = createLogger({
     level: logLevel,
     format: format.combine(
       format.label({ label: app }),
       format.prettyPrint(),
-      format.cli()
+      format.cli(),
     ),
     transports: [new transports.Console()],
   })
@@ -31,7 +31,7 @@ export function InitLogger(
       new transports.File({
         filename: logFile,
         format: format.combine(format.timestamp(), format.json()),
-      })
+      }),
     )
   }
   return logger

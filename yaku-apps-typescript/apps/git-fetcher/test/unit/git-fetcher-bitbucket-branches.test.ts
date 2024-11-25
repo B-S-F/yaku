@@ -45,7 +45,7 @@ describe('Git Fetcher BitBucket Branches', () => {
     gitFetcherBitBucketBranches = new GitFetcherBitbucketTagsAndBranches(
       gitServerConfigDefault,
       configDefault,
-      'branches'
+      'branches',
     )
   })
 
@@ -135,12 +135,13 @@ describe('Git Fetcher BitBucket Branches', () => {
       let errorWasThrown = false
       try {
         await gitFetcherBitBucketBranches.fetchResource()
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         errorWasThrown = true
       }
       expect(errorWasThrown).toBe(true)
       expect(responseStatusHandlerSpy).toHaveBeenCalledOnce()
       expect(responseStatusHandlerSpy).toHaveBeenCalledWith(responseCode)
-    }
+    },
   )
 })

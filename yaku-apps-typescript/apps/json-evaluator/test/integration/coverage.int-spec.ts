@@ -25,11 +25,11 @@ describe('coverage.json', async () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(jsonEvaluatorExecutable)).to.be.true
+    expect(fs.existsSync(jsonEvaluatorExecutable)).to.equal(true)
   })
 
   it('can be evaluated properly', async () => {
@@ -44,13 +44,13 @@ describe('coverage.json', async () => {
     })
     const results = result.stdout.reduce(
       (count, str) => count + (str.includes('result') ? 1 : 0),
-      0
+      0,
     )
 
     for (const issue of baseIssues) {
       expect(result.stdout).toContain(JSON.stringify(issue))
     }
     expect(results).toEqual(1)
-    expect(result.stderr).to.be.empty
+    expect(result.stderr).to.have.lengthOf(0)
   })
 })

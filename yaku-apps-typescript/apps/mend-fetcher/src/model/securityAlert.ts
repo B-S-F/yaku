@@ -28,6 +28,6 @@ export class SecurityAlert implements IAlert {
     },
     public vulnerability: Vulnerability,
     public topFix: VulnerabilityFix,
-    public effective: string
+    public effective: string,
   ) {}
 }

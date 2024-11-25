@@ -12,7 +12,7 @@ export class SecurityAlertMap {
       securityAlertDTO.project.name,
       securityAlertDTO.project.path,
       securityAlertDTO.project.path,
-      securityAlertDTO.project.productUuid
+      securityAlertDTO.project.productUuid,
     )
     const vulnerabilityReferences: VulnerabilityReference[] = []
     const vulnerability: Vulnerability = new Vulnerability(
@@ -30,7 +30,7 @@ export class SecurityAlertMap {
           type: scoring.type,
         }
       }),
-      vulnerabilityReferences
+      vulnerabilityReferences,
     )
     const vulnerabilityFix: VulnerabilityFix = new VulnerabilityFix(
       securityAlertDTO.topFix.id,
@@ -41,7 +41,7 @@ export class SecurityAlertMap {
       securityAlertDTO.topFix.fixResolution,
       securityAlertDTO.topFix.date,
       securityAlertDTO.topFix.message,
-      securityAlertDTO.topFix.extraData
+      securityAlertDTO.topFix.extraData,
     )
     return new SecurityAlert(
       securityAlertDTO.uuid,
@@ -56,7 +56,7 @@ export class SecurityAlertMap {
       },
       vulnerability,
       vulnerabilityFix,
-      securityAlertDTO.effective
+      securityAlertDTO.effective,
     )
   }
   public static toDTO(securityAlert: SecurityAlert) {
@@ -94,7 +94,7 @@ export class SecurityAlertMap {
         message: securityAlert.topFix.message,
         extraData: securityAlert.topFix.extraData,
       },
-      securityAlert.effective
+      securityAlert.effective,
     )
   }
 }

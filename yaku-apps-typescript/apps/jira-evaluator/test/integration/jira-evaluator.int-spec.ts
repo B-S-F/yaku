@@ -73,7 +73,7 @@ function retrieveReason(outputLines: string[]): string {
 
 function retrieveCriterionAmount(outputLines: string[]): number {
   const criterionLines = outputLines.filter((line) =>
-    line.includes('criterion')
+    line.includes('criterion'),
   )
   return criterionLines.length
 }
@@ -84,11 +84,11 @@ describe('Jira evaluator', () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(jiraEvaluatorExecutable)).to.be.true
+    expect(fs.existsSync(jiraEvaluatorExecutable)).to.equal(true)
   })
 
   it.each(testCases)('%s', async (testCase: TestCase) => {
@@ -96,25 +96,24 @@ describe('Jira evaluator', () => {
       JIRA_CONFIG_FILE_PATH: path.join(
         __dirname,
         'fixtures',
-        testCase.configName
+        testCase.configName,
       ),
       JIRA_ISSUES_JSON_NAME: path.join(
         __dirname,
         'fixtures',
-        testCase.dataName
+        testCase.dataName,
       ),
     }
     const result: RunProcessResult = await run(jiraEvaluatorExecutable, [], {
       env: jiraEnvironment,
     })
 
-    //console.log(result.stdout[0])
     expect(result.exitCode).toEqual(testCase.expectExitCode)
     expect(result.stdout.length).toBeGreaterThan(0)
     expect(retrieveStatus(result.stdout)).toEqual(testCase.expectedStatus)
     expect(retrieveReason(result.stdout)).toEqual(testCase.expectedReason)
     expect(retrieveCriterionAmount(result.stdout)).toEqual(
-      testCase.expectedCriterionAmount
+      testCase.expectedCriterionAmount,
     )
   })
 })

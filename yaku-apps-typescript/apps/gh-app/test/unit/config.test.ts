@@ -42,7 +42,7 @@ describe('checkEnvVariables', () => {
       expect(() => checkEnvVariables()).toThrow('process exit')
       expect(logSpy).toHaveBeenCalledWith(`${envVar} is not set`)
       expect(exitSpy).toHaveBeenCalledWith(1)
-    }
+    },
   )
 
   it('should call process.exit(1) if GH_APP_ORG is not set and GH_APP_REPO is set', () => {
@@ -53,7 +53,7 @@ describe('checkEnvVariables', () => {
     // Act & Assert
     expect(() => checkEnvVariables()).toThrow('process exit')
     expect(logSpy).toHaveBeenCalledWith(
-      'Either GH_APP_ORG or both GH_APP_ORG and GH_APP_REPO must be set'
+      'Either GH_APP_ORG or both GH_APP_ORG and GH_APP_REPO must be set',
     )
     expect(exitSpy).toHaveBeenCalledWith(1)
   })
@@ -66,7 +66,7 @@ describe('checkEnvVariables', () => {
     // Act & Assert
     expect(() => checkEnvVariables()).toThrow('process exit')
     expect(logSpy).toHaveBeenCalledWith(
-      'Either GH_APP_ORG or both GH_APP_ORG and GH_APP_REPO must be set'
+      'Either GH_APP_ORG or both GH_APP_ORG and GH_APP_REPO must be set',
     )
     expect(exitSpy).toHaveBeenCalledWith(1)
   })

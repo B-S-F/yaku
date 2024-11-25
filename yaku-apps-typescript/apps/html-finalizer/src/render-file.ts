@@ -32,7 +32,7 @@ export default function FileRenderer(data: Data, resultPath: string) {
       mergedData,
       {
         escape,
-      }
+      },
     )
     await outputFile(path.join(resultPath, output), html)
     if (!(additionalConfig && additionalConfig.silent))

@@ -39,7 +39,7 @@ const customZodErrorMap: z.ZodErrorMap = (error, ctx) => {
 
 const checkdelimiter = (
   value: string | undefined,
-  context: z.RefinementCtx
+  context: z.RefinementCtx,
 ) => {
   if (value != undefined) {
     if (value.endsWith(',')) {
@@ -95,7 +95,7 @@ const toProjectTokenArray = (value: string) => {
 
 const validateAndCreateProjectIDTokenMap = (
   prjIDs: (number | undefined)[],
-  prjTokens: string[]
+  prjTokens: string[],
 ) => {
   if (prjIDs.length !== prjTokens.length && prjIDs.length !== 0) {
     const customError: z.ZodIssue = {
@@ -166,7 +166,7 @@ const validateEnvironmentVariables = () => {
   })
   const projectsIDTokenMap = validateAndCreateProjectIDTokenMap(
     validatedProjects.MEND_PROJECT_ID,
-    validatedProjects.MEND_PROJECT_TOKEN
+    validatedProjects.MEND_PROJECT_TOKEN,
   )
 
   const parsedENV = {
@@ -215,14 +215,14 @@ export const run = async () => {
 
       const orgService = new OrganizationService(env)
       const organization: Organization = await limiter.schedule(() =>
-        orgService.getOrganizationById(env.orgToken)
+        orgService.getOrganizationById(env.orgToken),
       )
       const projectService = new ProjectService(env)
       const project: Project = await limiter.schedule(() =>
-        projectService.getProjectByToken(env.projectToken)
+        projectService.getProjectByToken(env.projectToken),
       )
       const projectVitals: ProjectVitals = await limiter.schedule(() =>
-        projectService.getProjectVitals(project.uuid)
+        projectService.getProjectVitals(project.uuid),
       )
 
       const resultLinkTemplate =
@@ -244,13 +244,13 @@ export const run = async () => {
             ` and project ${project.name}`
 
       logger.info(
-        `----- Project '${project.name}' with uuid '${project.uuid}' from '${project.productName}' -----`
+        `----- Project '${project.name}' with uuid '${project.uuid}' from '${project.productName}' -----`,
       )
 
       if (env.reportType === 'alerts') {
         const alertService: AlertService = new AlertService(env)
         const policyAlerts = await limiter.schedule(() =>
-          alertService.getPolicyAlertsById(project.uuid, env.alertsStatus)
+          alertService.getPolicyAlertsById(project.uuid, env.alertsStatus),
         )
         logger.info('----- Policy Alerts -----')
         policyAlerts.map((alert: PolicyAlert) => {
@@ -270,7 +270,7 @@ export const run = async () => {
         logger.info('---------------------------')
 
         const securityAlerts = await limiter.schedule(() =>
-          alertService.getSecurityAlertsById(project.uuid, env.alertsStatus)
+          alertService.getSecurityAlertsById(project.uuid, env.alertsStatus),
         )
         logger.info('----- Security Alerts -----')
         securityAlerts.map((alert: SecurityAlert) => {
@@ -282,7 +282,7 @@ export const run = async () => {
               `: ` +
               `${alert.component.name} ` +
               `${alert.topFix.message} ` +
-              `${alert.topFix.fixResolution}`
+              `${alert.topFix.fixResolution}`,
           )
           localOutput.addResult({
             criterion: 'Open Security Alert Mend',
@@ -302,7 +302,7 @@ export const run = async () => {
         logger.info('---------------------------')
 
         const newVersionsAlerts = await limiter.schedule(() =>
-          alertService.getNewVersionsAlertsById(project.uuid, env.alertsStatus)
+          alertService.getNewVersionsAlertsById(project.uuid, env.alertsStatus),
         )
         logger.info('----- New Versions Alerts -----')
         newVersionsAlerts.map((alert: NewVersionsAlert) => {
@@ -310,7 +310,7 @@ export const run = async () => {
             `${alert.name} ` +
               `${alert.alertInfo.status} ` +
               `: ` +
-              `${alert.component.name}`
+              `${alert.component.name}`,
           )
           localOutput.addResult({
             criterion: 'New Versions Alert Mend',
@@ -335,8 +335,8 @@ export const run = async () => {
         const multipleLicensesAlerts = await limiter.schedule(() =>
           alertService.getMultipleLicensesAlertsById(
             project.uuid,
-            env.alertsStatus
-          )
+            env.alertsStatus,
+          ),
         )
 
         logger.info('----- Multiple Licenses Alerts -----')
@@ -346,7 +346,7 @@ export const run = async () => {
               `${alert.licenses} ` +
               `${alert.alertInfo.status} ` +
               `: ` +
-              `${alert.component.name}`
+              `${alert.component.name}`,
           )
           localOutput.addResult({
             criterion: 'Multiple Licenses Alert Mend',
@@ -371,8 +371,8 @@ export const run = async () => {
         const rejectedInUseAlerts = await limiter.schedule(() =>
           alertService.getRejectedInUseAlertsById(
             project.uuid,
-            env.alertsStatus
-          )
+            env.alertsStatus,
+          ),
         )
         logger.info('----- Rejected in Use Alerts -----')
         rejectedInUseAlerts.map((alert: RejectedInUseAlert) => {
@@ -380,7 +380,7 @@ export const run = async () => {
             `${alert.name} ` +
               `${alert.alertInfo.status} ` +
               `: ` +
-              `${alert.component.name}`
+              `${alert.component.name}`,
           )
           localOutput.addResult({
             criterion: 'Rejected In Use Alert Mend',
@@ -411,34 +411,34 @@ export const run = async () => {
         await Promise.all(
           (
             await limiter.schedule(() =>
-              libraryService.getAllLibrariesById(project.uuid)
+              libraryService.getAllLibrariesById(project.uuid),
             )
           ).map(async (library: Library) => {
             const vulns = await limiter.schedule(() =>
               vulnerabilityService.getAllVulnerabilitiesById(
                 library.uuid,
-                project.uuid
-              )
+                project.uuid,
+              ),
             )
 
             let fix: VulnerabilityFixSummary
             for (const vuln of vulns) {
               fix = await limiter.schedule(() =>
                 vulnerabilityService.getAllVulnerabilitiesFixSummaryById(
-                  vuln.name
-                )
+                  vuln.name,
+                ),
               )
               vulnerabilityFixes.set(vuln, fix)
             }
 
             vulnerableLibraries.set(library, vulns)
-          })
+          }),
         )
 
         for (const lib of vulnerableLibraries.keys()) {
           vulnerableLibraries.get(lib)?.map((vuln: Vulnerability) => {
             logger.info(
-              `${vuln.name} ${vuln.severity} ${vuln.score} : ${lib.name}`
+              `${vuln.name} ${vuln.severity} ${vuln.score} : ${lib.name}`,
             )
 
             const topFix = vulnerabilityFixes.get(vuln)
@@ -489,18 +489,18 @@ export const run = async () => {
       }
 
       globalOutput.data.results = globalOutput.data.results.concat(
-        localOutput.data.results
+        localOutput.data.results,
       )
       globalOutput.setReason(
         globalOutput.data.reason
           ? globalOutput.data.reason.concat(' ' + reason)
-          : reason
+          : reason,
       )
     }
 
     const outputJsonPath = path.join(
       validatedEnvironment.MEND_RESULTS_PATH,
-      'results.json'
+      'results.json',
     )
     exportJson(globalOutput.data.results, outputJsonPath)
     globalOutput.write()
@@ -509,18 +509,18 @@ export const run = async () => {
     if (error instanceof ZodError) {
       globalOutput.setStatus('FAILED')
       const reason = `Environment validation failed:${error.issues.map(
-        (issue: any) => ` ${issue.path[0]} ${issue.message}`
+        (issue: any) => ` ${issue.path[0]} ${issue.message}`,
       )}`
       globalOutput.setReason(
         globalOutput.data.reason
           ? globalOutput.data.reason.concat(reason)
-          : reason
+          : reason,
       )
 
       logger.error(
         `Environment validation failed:${error.issues.map(
-          (issue: any) => ` ${issue.path[0]} ${issue.message}`
-        )}`
+          (issue: any) => ` ${issue.path[0]} ${issue.message}`,
+        )}`,
       )
 
       globalOutput.write()
@@ -530,7 +530,7 @@ export const run = async () => {
       globalOutput.setReason(
         globalOutput.data.reason
           ? globalOutput.data.reason.concat(error.Reason())
-          : error.Reason()
+          : error.Reason(),
       )
 
       logger.error(error.Reason())

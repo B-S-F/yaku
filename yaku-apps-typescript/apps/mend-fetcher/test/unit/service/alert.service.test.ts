@@ -52,7 +52,7 @@ describe('alert.service', () => {
       const alertService: AlertService = new AlertService(env)
       const result: PolicyAlert[] = await alertService.getPolicyAlertsById(
         env.projectToken,
-        'all'
+        'all',
       )
 
       expect(result).toStrictEqual(expected)
@@ -69,7 +69,7 @@ describe('alert.service', () => {
       const result: MultipleLicensesAlert[] =
         await alertService.getMultipleLicensesAlertsById(
           env.projectToken,
-          'all'
+          'all',
         )
 
       expect(result).toStrictEqual(expected)
@@ -113,7 +113,7 @@ describe('alert.service', () => {
       const alertService: AlertService = new AlertService(env)
       const result: SecurityAlert[] = await alertService.getSecurityAlertsById(
         env.projectToken,
-        'all'
+        'all',
       )
 
       expect(result).toStrictEqual(expected)

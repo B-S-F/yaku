@@ -31,10 +31,10 @@ export class AlertService {
     const policyAlertDTOs: PolicyAlertDTO[] = await getPolicyAlertDTOs(
       this.env.apiUrl,
       { projectToken: projectId, status: alertStatus, pageSize: 100 },
-      this.auth
+      this.auth,
     )
     const policyAlerts = policyAlertDTOs.map((alertDTO) =>
-      PolicyAlertMap.toModel(alertDTO)
+      PolicyAlertMap.toModel(alertDTO),
     )
 
     return policyAlerts
@@ -44,10 +44,10 @@ export class AlertService {
     const securityAlertDTOs: SecurityAlertDTO[] = await getSecurityAlertDTOs(
       this.env.apiUrl,
       { projectToken: projectId, status: alertStatus, pageSize: 100 },
-      this.auth
+      this.auth,
     )
     const securityAlerts = securityAlertDTOs.map((alertDTO) =>
-      SecurityAlertMap.toModel(alertDTO)
+      SecurityAlertMap.toModel(alertDTO),
     )
 
     return securityAlerts
@@ -58,10 +58,10 @@ export class AlertService {
       await getNewVersionsAlertDTOs(
         this.env.apiUrl,
         { projectToken: projectId, status: alertStatus, pageSize: 100 },
-        this.auth
+        this.auth,
       )
     const newVersionsAlerts = newVersionsAlertDTOs.map((alertDTO) =>
-      NewVersionsAlertMap.toModel(alertDTO)
+      NewVersionsAlertMap.toModel(alertDTO),
     )
 
     return newVersionsAlerts
@@ -72,10 +72,10 @@ export class AlertService {
       await getMultipleLicensesAlertDTOs(
         this.env.apiUrl,
         { projectToken: projectId, status: alertStatus, pageSize: 100 },
-        this.auth
+        this.auth,
       )
     const multipleLicensesAlerts = multipleLicensesAlertDTOs.map((alertDTO) =>
-      MultipleLicensesAlertMap.toModel(alertDTO)
+      MultipleLicensesAlertMap.toModel(alertDTO),
     )
 
     return multipleLicensesAlerts
@@ -86,10 +86,10 @@ export class AlertService {
       await getRejectedInUseAlertDTOs(
         this.env.apiUrl,
         { projectToken: projectId, status: alertStatus, pageSize: 100 },
-        this.auth
+        this.auth,
       )
     const rejectedInUseAlerts = rejectedInUseAlertDTOs.map((alertDTO) =>
-      RejectedInUseAlertMap.toModel(alertDTO)
+      RejectedInUseAlertMap.toModel(alertDTO),
     )
 
     return rejectedInUseAlerts

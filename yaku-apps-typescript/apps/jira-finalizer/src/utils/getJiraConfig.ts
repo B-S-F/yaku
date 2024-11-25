@@ -17,6 +17,7 @@ export default async function (filePath: string): Promise<Config> {
   const data = await readFile(configPath, { encoding: 'utf-8' })
   try {
     return parse(data) as Config
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     throw new Error(`Config file ${filePath} is not a valid yaml file`)
   }

@@ -9,6 +9,7 @@
     "build": "tsup",
     "dev": "nodemon --watch \"src/**\" --exec npm run start",
     "lint": "eslint '**/*.ts'",
+    "format": "prettier --write '**/*.{ts,md}'",
     "start": "npm run build && node ./dist/index.js",
     "test:coverage": "vitest --coverage",
     "test:dev": "vitest -w",

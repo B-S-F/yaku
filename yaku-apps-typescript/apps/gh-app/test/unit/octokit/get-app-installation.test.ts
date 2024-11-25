@@ -25,14 +25,13 @@ describe('getAppInstallation', () => {
     // Arrange
     const org = 'mockOrg'
     const repo = 'mockRepo'
-    vi.mocked
 
     // Act
     await getAppInstallation(octokitMock, org, repo)
 
     // Assert
     expect(octokitMock.request).toHaveBeenCalledWith(
-      `GET /repos/${org}/${repo}/installation`
+      `GET /repos/${org}/${repo}/installation`,
     )
     expect(logger.info)
   })
@@ -46,7 +45,7 @@ describe('getAppInstallation', () => {
 
     // Assert
     expect(octokitMock.request).toHaveBeenCalledWith(
-      `GET /orgs/${org}/installation`
+      `GET /orgs/${org}/installation`,
     )
   })
 
@@ -59,12 +58,12 @@ describe('getAppInstallation', () => {
 
     // Act
     await expect(() =>
-      getAppInstallation(octokitMock, org, repo)
+      getAppInstallation(octokitMock, org, repo),
     ).rejects.toThrow('process exit')
 
     // Assert
     expect(logger.error).toHaveBeenCalledWith(
-      `Error looking for app installation in ${org}/${repo}: ${error.message}`
+      `Error looking for app installation in ${org}/${repo}: ${error.message}`,
     )
     expect(process.exit).toHaveBeenCalledWith(1)
   })

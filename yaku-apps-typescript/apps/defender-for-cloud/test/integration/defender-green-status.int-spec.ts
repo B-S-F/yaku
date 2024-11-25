@@ -26,11 +26,11 @@ describe('Defender Autopilot GREEN status cases', () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(defenderAutopilotExecutable)).to.be.true
+    expect(fs.existsSync(defenderAutopilotExecutable)).to.equal(true)
   })
 
   afterEach(async () => {
@@ -51,7 +51,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           DATA_TYPE: 'alerts',
           ALERT_TYPE_FILTER: 'RandomAlertType',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -60,8 +60,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsAlertsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })
@@ -79,7 +79,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           DATA_TYPE: 'alerts',
           KEY_WORDS_FILTER: 'RandomKeyword1',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -88,8 +88,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsAlertsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })
@@ -107,7 +107,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           DATA_TYPE: 'alerts',
           RESOURCE_NAME_FILTER: 'RandomResourceName',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -116,8 +116,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsAlertsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })
@@ -137,7 +137,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           KEY_WORDS_FILTER: 'RandomKeyword',
           RESOURCE_NAME_FILTER: 'RandomName',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -146,8 +146,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsAlertsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })
@@ -165,7 +165,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           DATA_TYPE: 'recommendations',
           SEVERITY_FILTER: 'RandomSeverity',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -174,8 +174,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsRecommendationsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })
@@ -193,7 +193,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           DATA_TYPE: 'recommendations',
           KEY_WORDS_FILTER: 'RandomKeyword',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -202,8 +202,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsRecommendationsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })
@@ -221,7 +221,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           DATA_TYPE: 'recommendations',
           CATEGORIES_FILTER: 'RandomCategories',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -230,8 +230,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsRecommendationsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })
@@ -249,7 +249,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           DATA_TYPE: 'recommendations',
           THREATS_FILTER: 'RandomThreat',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -258,8 +258,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsRecommendationsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })
@@ -277,7 +277,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           DATA_TYPE: 'recommendations',
           USER_IMPACT_FILTER: 'RandomUserImpact',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -286,8 +286,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsRecommendationsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })
@@ -305,7 +305,7 @@ describe('Defender Autopilot GREEN status cases', () => {
           DATA_TYPE: 'recommendations',
           IMPLEMENTATION_EFFORT_FILTER: 'RandomImplementationEffort',
         },
-      }
+      },
     )
 
     expect(result.exitCode).to.be.equal(0)
@@ -314,8 +314,8 @@ describe('Defender Autopilot GREEN status cases', () => {
       JSON.stringify(
         integrationTestResultsRecommendationsFixtureGREEN.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
     expect(result.stderr).to.have.length(0)
   })

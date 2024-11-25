@@ -30,6 +30,6 @@ describe('renderHtmlFiles', () => {
         })
         expect(strippedHtml.join('\n')).toMatchSnapshot()
       }
-    }
+    },
   )
 })

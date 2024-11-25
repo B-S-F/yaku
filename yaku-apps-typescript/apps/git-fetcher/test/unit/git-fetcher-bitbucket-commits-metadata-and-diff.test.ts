@@ -53,7 +53,7 @@ describe('Git Fetcher Metadata And Diff', () => {
     fetchMock = vi.spyOn(global, 'fetch')
     gitFetcherBitbucketCommitsAndDiff = new GitFetcherBitbucketCommitsAndDiff(
       gitServerConfigDefault,
-      configDefault
+      configDefault,
     )
   })
 
@@ -178,12 +178,13 @@ describe('Git Fetcher Metadata And Diff', () => {
       let errorWasThrown = false
       try {
         await gitFetcherBitbucketCommitsAndDiff.fetchResource()
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         errorWasThrown = true
       }
       expect(errorWasThrown).toBe(true)
       expect(responseStatusHandlerSpy).toHaveBeenCalledOnce()
       expect(responseStatusHandlerSpy).toHaveBeenCalledWith(responseCode)
-    }
+    },
   )
 })

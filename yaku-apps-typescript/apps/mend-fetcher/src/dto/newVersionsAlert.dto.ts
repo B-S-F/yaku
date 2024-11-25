@@ -25,6 +25,6 @@ export class NewVersionsAlertDTO implements IAlertDTO {
       productUuid: string
     },
     public availableVersion: string,
-    public availableVersionType: string
+    public availableVersionType: string,
   ) {}
 }

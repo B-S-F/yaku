@@ -27,7 +27,7 @@ describe('Test "generateAzureAccessToken()" from "auth.ts"', async () => {
       'mockTenantId',
       'mockClientId',
       'mockGrantType',
-      'mockClientSecret'
+      'mockClientSecret',
     )
     expect(result).toEqual('mockAccesstoken')
   })
@@ -44,10 +44,10 @@ describe('Test "generateAzureAccessToken()" from "auth.ts"', async () => {
         'mockTenantId',
         'mockClientId',
         'mockGrantType',
-        'mockClientSecret'
-      )
+        'mockClientSecret',
+      ),
     ).rejects.toThrowError(
-      'Request for Azure access token does not have status code 200. Status code: 400'
+      'Request for Azure access token does not have status code 200. Status code: 400',
     )
   })
 
@@ -64,10 +64,10 @@ describe('Test "generateAzureAccessToken()" from "auth.ts"', async () => {
         'mockTenantId',
         'mockClientId',
         'mockGrantType',
-        'mockClientSecret'
-      )
+        'mockClientSecret',
+      ),
     ).rejects.toThrowError(
-      'Field "access_token" does not exist on response returned by Azure authenticator'
+      'Field "access_token" does not exist on response returned by Azure authenticator',
     )
   })
 })

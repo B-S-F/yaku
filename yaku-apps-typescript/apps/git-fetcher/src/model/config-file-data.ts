@@ -81,13 +81,13 @@ const FilterSchema = BaseFilterSchema.merge(DateFilterSchema)
 
     // transform each boolean to 0 or 1, so that it can be summed up
     const hasDateFilter: 0 | 1 = Number(
-      isDefined(arg.startDate) || isDefined(arg.endDate)
+      isDefined(arg.startDate) || isDefined(arg.endDate),
     ) as 0 | 1
     const hasHashFilter: 0 | 1 = Number(
-      isDefined(arg.startHash) || isDefined(arg.endHash)
+      isDefined(arg.startHash) || isDefined(arg.endHash),
     ) as 0 | 1
     const hasTagFilter: 0 | 1 = Number(
-      isDefined(arg.startTag) || isDefined(arg.endTag)
+      isDefined(arg.startTag) || isDefined(arg.endTag),
     ) as 0 | 1
 
     // the sum shows how many of the filters were defined in config file
@@ -97,19 +97,19 @@ const FilterSchema = BaseFilterSchema.merge(DateFilterSchema)
   }, 'Combining the date, hash and/or tag filter is not possible')
   .refine(
     (arg) => !(arg.endHash && !arg.startHash),
-    'Specify filter.startHash if filter.endHash is provided'
+    'Specify filter.startHash if filter.endHash is provided',
   )
   .refine(
     (arg) => !(arg.endTag && !arg.startTag),
-    'Specify filter.startTag if filter.endTag is provided'
+    'Specify filter.startTag if filter.endTag is provided',
   )
   .refine(
     (arg) => !(arg.endDate && !arg.startDate),
-    'Specify filter.startDate if filter.endDate is provided'
+    'Specify filter.startDate if filter.endDate is provided',
   )
   .refine(
     (arg) => !(arg.endDate && arg.startDate && arg.endDate < arg.startDate),
-    'filter.endDate must be after or equal filter.startDate'
+    'filter.endDate must be after or equal filter.startDate',
   )
 
 export const GitFetcherConfigSchema = z.object({

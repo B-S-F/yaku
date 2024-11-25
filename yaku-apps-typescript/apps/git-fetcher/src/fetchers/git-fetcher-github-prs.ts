@@ -18,7 +18,7 @@ export class GitFetcherGithubPrs implements GitFetcher<GithubPr> {
    */
   constructor(
     private gitServerConfig: GitServerConfig,
-    private config: ConfigFileData
+    private config: ConfigFileData,
   ) {}
 
   /**
@@ -32,7 +32,7 @@ export class GitFetcherGithubPrs implements GitFetcher<GithubPr> {
    */
   public async fetchResource(): Promise<GithubPr[]> {
     const requestOptions: RequestInit = await getRequestOptions(
-      this.gitServerConfig
+      this.gitServerConfig,
     )
 
     let pullRequests: GithubPr[] = []
@@ -43,7 +43,7 @@ export class GitFetcherGithubPrs implements GitFetcher<GithubPr> {
     while (currentPage != null) {
       const response: Response = await fetch(
         this.composeUrl(currentPage),
-        requestOptions
+        requestOptions,
       )
 
       if (response.status != 200) {
@@ -79,7 +79,7 @@ export class GitFetcherGithubPrs implements GitFetcher<GithubPr> {
     console.log(
       `Fetched ${pullRequests.length} pull request${
         pullRequests.length === 1 ? '' : 's'
-      }`
+      }`,
     )
     return pullRequests
   }
@@ -87,7 +87,7 @@ export class GitFetcherGithubPrs implements GitFetcher<GithubPr> {
   private composeUrl(startPage?: number): string {
     const strippedApiUrl: string = this.gitServerConfig.gitServerApiUrl.replace(
       /\/*$/,
-      ''
+      '',
     )
     const stateFilter = 'all' //will allow to set other state filters, introduced in future tickets
 

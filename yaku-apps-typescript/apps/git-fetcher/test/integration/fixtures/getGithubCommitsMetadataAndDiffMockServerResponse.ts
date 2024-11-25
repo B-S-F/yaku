@@ -13,7 +13,7 @@ export const githubCommitsMetadataEndpoint =
   '/repos/aquatest/github-fetcher-test-repo/commits'
 
 export function getGitCommitsMetadataAndDiffMockServerResponse(
-  port: number
+  port: number,
 ): MockServerOptions {
   return {
     port,
@@ -1223,7 +1223,7 @@ export function getGitCommitsMetadataAndDiffMockServerResponse(
 }
 
 export function getGitCommitsMetadataAndDiffErrorMockServerResponse(
-  port: number
+  port: number,
 ): MockServerOptions {
   return {
     port,

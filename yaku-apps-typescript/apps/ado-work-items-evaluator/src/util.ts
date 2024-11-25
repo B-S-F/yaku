@@ -3,12 +3,12 @@ import fs from 'fs'
 import path from 'path'
 export function getPathFromEnvVariable(
   envVariableName: string,
-  alt?: string
+  alt?: string,
 ): string {
   const filePath: string | undefined = process.env[envVariableName] ?? alt
   if (filePath === undefined || filePath.trim() === '') {
     throw new AppError(
-      `The environment variable "${envVariableName}" is not set!`
+      `The environment variable "${envVariableName}" is not set!`,
     )
   }
   const relativePath = path.relative(process.cwd(), filePath.trim())
@@ -19,11 +19,12 @@ export function getPathFromEnvVariable(
 function validateFilePath(filePath: string): void {
   if (!fs.existsSync(filePath)) {
     throw new AppError(
-      `File ${filePath} does not exist, no data can be evaluated`
+      `File ${filePath} does not exist, no data can be evaluated`,
     )
   }
   try {
     fs.accessSync(filePath, fs.constants.R_OK)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     throw new AppError(`${filePath} is not readable!`)
   }

@@ -20,6 +20,6 @@ export class Library {
     public locations: {
       localPath: string
       dependencyFile: string
-    }[]
+    }[],
   ) {}
 }

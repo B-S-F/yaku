@@ -11,7 +11,6 @@ import { evaluate } from '../../src/evaluate'
 import Formatter from '../../src/formatter'
 
 vi.mock('@B-S-F/json-evaluator-lib', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   evalCheck: vi.fn((condition: string, ref: string, data: any) => {
     switch (ref) {
       case '$.value1':
@@ -112,7 +111,7 @@ describe('evaluate', () => {
       data,
       {
         ...config.checks[1],
-      }
+      },
     )
     expect(formatMock).toHaveBeenCalledTimes(2)
     expect(formatMock).toHaveBeenCalledWith('check1', check, options)
@@ -120,7 +119,7 @@ describe('evaluate', () => {
     expect(formatMock).toHaveBeenCalledWith('check2', check, options)
     expect(evalConcatenationMock).toHaveBeenCalledWith(
       'check1 && check2',
-      concatenationInput
+      concatenationInput,
     )
   })
 
@@ -200,14 +199,14 @@ describe('evaluate', () => {
       data,
       {
         ...config.checks[1],
-      }
+      },
     )
     expect(formatMock).toHaveBeenCalledTimes(2)
     expect(formatMock).toHaveBeenCalledWith('check1', check, options)
     expect(formatMock).toHaveBeenCalledWith('check2', check, options)
     expect(evalConcatenationMock).toHaveBeenCalledWith(
       'check1 && check2',
-      concatenationInput
+      concatenationInput,
     )
   })
 })

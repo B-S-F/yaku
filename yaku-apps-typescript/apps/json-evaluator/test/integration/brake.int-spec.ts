@@ -66,11 +66,11 @@ describe('brake.json', async () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(jsonEvaluatorExecutable)).to.be.true
+    expect(fs.existsSync(jsonEvaluatorExecutable)).to.equal(true)
   })
 
   it('can be evaluated properly while checking for ONE breaking element', async () => {
@@ -85,14 +85,14 @@ describe('brake.json', async () => {
     })
     const results = result.stdout.reduce(
       (count, str) => count + (str.includes('result') ? 1 : 0),
-      0
+      0,
     )
 
     for (const issue of baseIssues) {
       expect(result.stdout).toContain(JSON.stringify(issue))
     }
     expect(results).toEqual(3)
-    expect(result.stderr).to.be.empty
+    expect(result.stderr).to.have.lengthOf(0)
   })
 
   it('can be evaluated properly while checking for ALL breaking elements', async () => {
@@ -107,7 +107,7 @@ describe('brake.json', async () => {
     })
     const results = result.stdout.reduce(
       (count, str) => count + (str.includes('result') ? 1 : 0),
-      0
+      0,
     )
 
     for (const issue of baseIssues) {
@@ -117,6 +117,6 @@ describe('brake.json', async () => {
       expect(result.stdout).toContain(JSON.stringify(issue))
     }
     expect(results).toEqual(317)
-    expect(result.stderr).to.be.empty
+    expect(result.stderr).to.have.lengthOf(0)
   })
 })

@@ -9,7 +9,7 @@ describe('Fail', async () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   const testFileLocationPrefix = `${__dirname}/../samples/`
@@ -56,14 +56,13 @@ describe('Fail', async () => {
         JSON_INPUT_FILE: 'bad_JSON_data.json',
         JSON_CONFIG_FILE: 'bitbucket.yaml',
       },
-      expectedOutput:
-        'Error: File test/samples/bad_JSON_data.json could not be parsed, failed with error: SyntaxError: Unexpected end of JSON input',
+      expectedOutput: `Error: File test/samples/bad_JSON_data.json could not be parsed, failed with error: SyntaxError: Expected ',' or '}' after property value in JSON`,
       exitCode: 1,
     },
   ]
 
   beforeAll(() => {
-    expect(fs.existsSync(jsonEvaluatorExecutable)).to.be.true
+    expect(fs.existsSync(jsonEvaluatorExecutable)).to.equal(true)
   })
 
   it.each(testCases)('%s', async (testCase) => {
@@ -78,7 +77,7 @@ describe('Fail', async () => {
 
     if (testCase.exitCode) {
       expect(result.stderr.length).toBeGreaterThan(0)
-      expect(result.stderr).toContain(testCase.expectedOutput)
+      expect(result.stderr[0]).toContain(testCase.expectedOutput)
     } else {
       expect(result.stdout.length).toBeGreaterThan(0)
       expect(result.stdout).toContain(testCase.expectedOutput)

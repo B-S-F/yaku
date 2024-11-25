@@ -9,6 +9,7 @@
     "build": "tsup && npm run copy-files && npm link",
     "copy-files": "npx copyfiles -u 1 ./src/*.ejs dist",
     "dev": "nodemon --watch \"src/**\" --exec npm run start",
+    "format": "prettier --write '**/*.{ts,md}'",
     "lint": "eslint '**/*.ts'",
     "test": "npx vitest run --config vitest-integration.config.ts --coverage",
     "test:integration:local": "npx rimraf dist && npm run build && npm run test:integration:ci",

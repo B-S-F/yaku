@@ -73,7 +73,7 @@ function retrieveReason(outputLines: string[]): string {
 
 function retrieveCriterionAmount(outputLines: string[]): number {
   const criterionLines = outputLines.filter((line) =>
-    line.includes('criterion')
+    line.includes('criterion'),
   )
   return criterionLines.length
 }
@@ -84,11 +84,11 @@ describe('Ado Fetcher', () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(adoEvaluatorExecutable)).to.be.true
+    expect(fs.existsSync(adoEvaluatorExecutable)).to.equal(true)
   })
 
   it.each(testCases)('%s', async (testCase: TestCase) => {
@@ -96,12 +96,12 @@ describe('Ado Fetcher', () => {
       ADO_CONFIG_FILE_PATH: path.join(
         __dirname,
         'fixtures',
-        testCase.configName
+        testCase.configName,
       ),
       ADO_WORK_ITEMS_JSON_NAME: path.join(
         __dirname,
         'fixtures',
-        testCase.dataName
+        testCase.dataName,
       ),
     }
     const result: RunProcessResult = await run(adoEvaluatorExecutable, [], {
@@ -114,7 +114,7 @@ describe('Ado Fetcher', () => {
     expect(retrieveStatus(result.stdout)).toEqual(testCase.expectedStatus)
     expect(retrieveReason(result.stdout)).toEqual(testCase.expectedReason)
     expect(retrieveCriterionAmount(result.stdout)).toEqual(
-      testCase.expectedCriterionAmount
+      testCase.expectedCriterionAmount,
     )
   })
 })

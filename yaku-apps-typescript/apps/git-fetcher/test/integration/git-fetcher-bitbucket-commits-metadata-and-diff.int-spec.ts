@@ -67,10 +67,10 @@ describe('Fetch Commits Metadata from Bitbucket', () => {
     expect(result.stdout[0]).toEqual('Fetched medata about 5 commits')
     expect(result.stdout[1]).toEqual('Fetched 1 diff')
     expect(result.stdout[2]).toEqual(
-      'Fetch from https://localhost:8080 was successful with config {"org":"aquatest","repo":"bitbucket-fetcher-test-repo","resource":"metadata-and-diff","filter":{"startHash":"35cc5eec543e69aed90503f21cf12666bcbfda4f"},"filePath":"Somefolder/something.py"}'
+      'Fetch from https://localhost:8080 was successful with config {"org":"aquatest","repo":"bitbucket-fetcher-test-repo","resource":"metadata-and-diff","filter":{"startHash":"35cc5eec543e69aed90503f21cf12666bcbfda4f"},"filePath":"Somefolder/something.py"}',
     )
     expect(result.stdout[3]).toEqual(
-      '{"output":{"git-fetcher-result":"git-fetcher-data.json"}}'
+      '{"output":{"git-fetcher-result":"git-fetcher-data.json"}}',
     )
 
     expect(result.stderr).toHaveLength(0)
@@ -80,7 +80,7 @@ describe('Fetch Commits Metadata from Bitbucket', () => {
 
     let requests: ReceivedRequest[] = mockServer.getRequests(
       getCommitsMetadataEndpoint,
-      'get'
+      'get',
     )
     expect(requests).toHaveLength(3)
 
@@ -141,7 +141,7 @@ describe('Fetch Commits Metadata from Bitbucket', () => {
     // gitfetcher should throw error
     expect(result.exitCode).toEqual(1)
     expect(result.stderr).toContain(
-      'Error: Repository not found. Status code: 404'
+      'Error: Repository not found. Status code: 404',
     )
 
     // gitfetcher should not write an output file

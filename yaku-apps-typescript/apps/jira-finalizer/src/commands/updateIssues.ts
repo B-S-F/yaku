@@ -19,7 +19,7 @@ export default async function (): Promise<void> {
   const qgResult = await getQgResult(path.join(result_path, 'qg-result.yaml'))
   const resultRequirements = getQgResultRequirements(qgResult)
   for (const [requirementId, configRequirement] of Object.entries(
-    config.requirements
+    config.requirements,
   )) {
     const requirement = resultRequirements[requirementId]
     if (!requirement) {

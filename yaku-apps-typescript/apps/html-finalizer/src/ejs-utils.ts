@@ -50,7 +50,7 @@ function sortedObjectEntries(
     | ArrayLike<unknown>
     | {
         [s: string]: unknown
-      }
+      },
 ) {
   return Object.entries(object).sort((a, b) => {
     return a[0].localeCompare(b[0], undefined, { numeric: true })
@@ -62,7 +62,7 @@ function sortedObjectValues(
     | ArrayLike<unknown>
     | {
         [s: string]: unknown
-      }
+      },
 ) {
   return sortedObjectEntries(object).map(([_, entries]) => entries)
 }

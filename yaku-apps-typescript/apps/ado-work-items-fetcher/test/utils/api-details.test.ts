@@ -22,10 +22,10 @@ describe('ApiDetails', () => {
     const result = getApiDetails()
     expect(result).toEqual(expectedResult)
 
-    delete process.env.AZURE_DEVOPS_URL,
-      process.env.ADO_API_ORG,
-      process.env.ADO_API_PROJECT,
-      process.env.ADO_API_PERSONAL_ACCESS_TOKEN
+    delete process.env.AZURE_DEVOPS_URL
+    delete process.env.ADO_API_ORG
+    delete process.env.ADO_API_PROJECT
+    delete process.env.ADO_API_PERSONAL_ACCESS_TOKEN
   })
 
   it('createApiUrl() should return corresponding URL', () => {
@@ -39,7 +39,7 @@ describe('ApiDetails', () => {
     }
     const result = createApiUrl(apiDetails)
     expect(result.href).toEqual(
-      'https://dev.azure.com/ORG/PROJECT/_apis/wit/wiql?api-version=6.0'
+      'https://dev.azure.com/ORG/PROJECT/_apis/wit/wiql?api-version=6.0',
     )
   })
 })

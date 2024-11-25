@@ -18,10 +18,10 @@ export class LibraryService {
     const libraryDTOs: LibraryDTO[] = await getLibraryDTOs(
       this.env.apiUrl,
       { projectToken: projectId, pageSize: 100 },
-      this.auth
+      this.auth,
     )
     const projectLibraries = libraryDTOs.map((libDto) =>
-      LibraryMap.toModel(libDto)
+      LibraryMap.toModel(libDto),
     )
 
     return projectLibraries

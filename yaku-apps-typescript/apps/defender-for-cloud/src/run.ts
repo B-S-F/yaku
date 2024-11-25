@@ -25,11 +25,11 @@ export async function getSecurityAlertsOnASubscription() {
     process.env.TENANT_ID!,
     process.env.CLIENT_ID!,
     'client_credentials',
-    process.env.CLIENT_SECRET!
+    process.env.CLIENT_SECRET!,
   )
   const alerts = await getDefenderForCloudAlerts(
     token,
-    process.env.SUBSCRIPTION_ID!
+    process.env.SUBSCRIPTION_ID!,
   )
   return alerts
 }
@@ -39,11 +39,11 @@ export async function getRecommendationsOnASubscription() {
     process.env.TENANT_ID!,
     process.env.CLIENT_ID!,
     'client_credentials',
-    process.env.CLIENT_SECRET!
+    process.env.CLIENT_SECRET!,
   )
   const recommendations = await getDefenderForCloudRecommendations(
     token,
-    process.env.SUBSCRIPTION_ID!
+    process.env.SUBSCRIPTION_ID!,
   )
   return recommendations
 }
@@ -53,7 +53,7 @@ export async function getRecommendationsMetadataOnASubscription() {
     process.env.TENANT_ID!,
     process.env.CLIENT_ID!,
     'client_credentials',
-    process.env.CLIENT_SECRET!
+    process.env.CLIENT_SECRET!,
   )
   const recommendationsMetadata =
     await getDefenderForCloudRecommendationsMetadata(token)
@@ -63,7 +63,7 @@ export async function getRecommendationsMetadataOnASubscription() {
 export const prefixMatchAlerts = (
   alert: any,
   filterValues: string[],
-  filterType: Filter
+  filterType: Filter,
 ) => {
   if (filterType === Filter.AlertType) {
     for (const filterValue of filterValues) {
@@ -107,7 +107,7 @@ export const parseFilterValues = (inputFilter: string | null | undefined) => {
 export const prefixMatchRecommendations = (
   recommendation: any,
   filterValues: string[],
-  filterType: Filter
+  filterType: Filter,
 ) => {
   if (filterType === Filter.Severity) {
     for (const filterValue of filterValues) {
@@ -170,17 +170,17 @@ export const validateRequiredEnvVariables = () => {
     defenderForCloudReportType !== 'recommendations'
   ) {
     throw new Error(
-      `Invalid value for DATA_TYPE environment variable! DATA_TYPE should be either 'alerts' or 'recommendations' and in this case is '${defenderForCloudReportType}'`
+      `Invalid value for DATA_TYPE environment variable! DATA_TYPE should be either 'alerts' or 'recommendations' and in this case is '${defenderForCloudReportType}'`,
     )
   }
   if (process.env.TENANT_ID == undefined || process.env.TENANT_ID == '') {
     throw new Error(
-      'Please provide TENANT_ID in the environmental variables before running the autopilot'
+      'Please provide TENANT_ID in the environmental variables before running the autopilot',
     )
   }
   if (process.env.CLIENT_ID == undefined || process.env.CLIENT_ID == '') {
     throw new Error(
-      'Please provide CLIENT_ID in the environmental variables before running the autopilot'
+      'Please provide CLIENT_ID in the environmental variables before running the autopilot',
     )
   }
   if (
@@ -188,7 +188,7 @@ export const validateRequiredEnvVariables = () => {
     process.env.CLIENT_SECRET == ''
   ) {
     throw new Error(
-      'Please provide CLIENT_SECRET in the environmental variables before running the autopilot'
+      'Please provide CLIENT_SECRET in the environmental variables before running the autopilot',
     )
   }
   if (
@@ -196,7 +196,7 @@ export const validateRequiredEnvVariables = () => {
     process.env.SUBSCRIPTION_ID == ''
   ) {
     throw new Error(
-      'Please provide SUBSCRIPTION_ID in the environmental variables before running the autopilot'
+      'Please provide SUBSCRIPTION_ID in the environmental variables before running the autopilot',
     )
   }
   return defenderForCloudReportType
@@ -214,7 +214,7 @@ export function getUnhealthyRecommendations(recommendations: any[]) {
 
 export function combineRecommendationAndMetadata(
   recommendations: any[],
-  metadata: any[]
+  metadata: any[],
 ) {
   const metadataMap = new Map<string, any[]>()
   for (const meta of metadata) {
@@ -252,7 +252,7 @@ export const run = async () => {
       const alertTypeFilter = parseFilterValues(process.env.ALERT_TYPE_FILTER)
       const keyWordsFilter = parseFilterValues(process.env.KEY_WORDS_FILTER)
       const resourceNameFilter = parseFilterValues(
-        process.env.RESOURCE_NAME_FILTER
+        process.env.RESOURCE_NAME_FILTER,
       )
       const alerts = await getSecurityAlertsOnASubscription()
 
@@ -302,7 +302,7 @@ export const run = async () => {
       if (matchedAlerts.length > 0) {
         output.setStatus('RED')
         output.setReason(
-          `Retrieved ${matchedAlerts.length} alerts based on given filters`
+          `Retrieved ${matchedAlerts.length} alerts based on given filters`,
         )
 
         for (const alert of matchedAlerts) {
@@ -340,7 +340,7 @@ export const run = async () => {
       const threatsFilter = parseFilterValues(process.env.THREATS_FILTER)
       const userImpactFilter = parseFilterValues(process.env.USER_IMPACT_FILTER)
       const implementatioEffortFilter = parseFilterValues(
-        process.env.IMPLEMENTATION_EFFORT_FILTER
+        process.env.IMPLEMENTATION_EFFORT_FILTER,
       )
 
       const recommendations = await getRecommendationsOnASubscription()
@@ -350,7 +350,7 @@ export const run = async () => {
         await getRecommendationsMetadataOnASubscription()
       const recommendationsAndMetadata = combineRecommendationAndMetadata(
         unhealthyRecommendations,
-        recommendationsMetadata
+        recommendationsMetadata,
       )
 
       let mandatoryNumberOfFilterMatches = 0
@@ -381,7 +381,7 @@ export const run = async () => {
           prefixMatchRecommendations(
             recommendation,
             severityFilter,
-            Filter.Severity
+            Filter.Severity,
           )
         ) {
           numberOfFilterMatchesForCurrentRecommendation =
@@ -392,7 +392,7 @@ export const run = async () => {
           prefixMatchRecommendations(
             recommendation,
             keyWordsFilter,
-            Filter.KeyWords
+            Filter.KeyWords,
           )
         ) {
           numberOfFilterMatchesForCurrentRecommendation =
@@ -403,7 +403,7 @@ export const run = async () => {
           prefixMatchRecommendations(
             recommendation,
             categoriesFilter,
-            Filter.Categories
+            Filter.Categories,
           )
         ) {
           numberOfFilterMatchesForCurrentRecommendation =
@@ -414,7 +414,7 @@ export const run = async () => {
           prefixMatchRecommendations(
             recommendation,
             threatsFilter,
-            Filter.Threats
+            Filter.Threats,
           )
         ) {
           numberOfFilterMatchesForCurrentRecommendation =
@@ -425,7 +425,7 @@ export const run = async () => {
           prefixMatchRecommendations(
             recommendation,
             userImpactFilter,
-            Filter.UserImpact
+            Filter.UserImpact,
           )
         ) {
           numberOfFilterMatchesForCurrentRecommendation =
@@ -436,7 +436,7 @@ export const run = async () => {
           prefixMatchRecommendations(
             recommendation,
             implementatioEffortFilter,
-            Filter.ImplementationEffort
+            Filter.ImplementationEffort,
           )
         ) {
           numberOfFilterMatchesForCurrentRecommendation =
@@ -453,7 +453,7 @@ export const run = async () => {
       if (matchedRecommendations.length > 0) {
         output.setStatus('RED')
         output.setReason(
-          `Retrieved ${matchedRecommendations.length} security recommendations based on given filters`
+          `Retrieved ${matchedRecommendations.length} security recommendations based on given filters`,
         )
 
         for (const recommendation of matchedRecommendations) {
@@ -482,7 +482,7 @@ export const run = async () => {
       } else {
         output.setStatus('GREEN')
         output.setReason(
-          `No security recommendations found based on given filters`
+          `No security recommendations found based on given filters`,
         )
         output.addResult({
           criterion: `There are no security recommendations found based on given filters for Defender for Cloud`,

@@ -34,11 +34,11 @@ describe('Defender Autopilot RED status cases', () => {
     '..',
     '..',
     'dist',
-    'index.js'
+    'index.js',
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(defenderAutopilotExecutable)).to.be.true
+    expect(fs.existsSync(defenderAutopilotExecutable)).to.equal(true)
   })
 
   afterEach(async () => {
@@ -58,15 +58,15 @@ describe('Defender Autopilot RED status cases', () => {
           DATA_TYPE: 'alerts',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsAlertsFixture1.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -83,15 +83,15 @@ describe('Defender Autopilot RED status cases', () => {
           DATA_TYPE: 'alerts',
           ALERT_TYPE_FILTER: 'K8S_, RandomPrefix',
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsAlertsFixture2.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -109,15 +109,15 @@ describe('Defender Autopilot RED status cases', () => {
           KEY_WORDS_FILTER:
             'RandomKeyword1, suspicious download, RandomKeyword2',
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsAlertsFixture3.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -134,15 +134,15 @@ describe('Defender Autopilot RED status cases', () => {
           DATA_TYPE: 'alerts',
           RESOURCE_NAME_FILTER: 'xyz, unn, zyx',
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsAlertsFixture2.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -161,15 +161,15 @@ describe('Defender Autopilot RED status cases', () => {
           KEY_WORDS_FILTER:
             'RandomKeyword1, suspicious download, RandomKeyword2',
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsAlertsFixture3.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -187,15 +187,15 @@ describe('Defender Autopilot RED status cases', () => {
           ALERT_TYPE_FILTER: 'RandomPrefix, K8S.NODE_',
           RESOURCE_NAME_FILTER: 'xyz, unn, yzx, 1aks',
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsAlertsFixture3.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -214,15 +214,15 @@ describe('Defender Autopilot RED status cases', () => {
             'container, RandomKeyword1, processes, RandomKeyword2',
           RESOURCE_NAME_FILTER: 'xyz, unn, yzx, 1aks',
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsAlertsFixture1.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -242,15 +242,15 @@ describe('Defender Autopilot RED status cases', () => {
             'RandomKeyword1, RandomKeyword2, container, processes',
           RESOURCE_NAME_FILTER: 'xyz, yzx, unn',
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsAlertsFixture2.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -266,15 +266,15 @@ describe('Defender Autopilot RED status cases', () => {
           DATA_TYPE: 'recommendations',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture1.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -291,15 +291,15 @@ describe('Defender Autopilot RED status cases', () => {
           SEVERITY_FILTER: 'High',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture2.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -316,15 +316,15 @@ describe('Defender Autopilot RED status cases', () => {
           KEY_WORDS_FILTER: 'GKE cluster',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture3.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -341,15 +341,15 @@ describe('Defender Autopilot RED status cases', () => {
           CATEGORIES_FILTER: 'Compute',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture3.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -366,15 +366,15 @@ describe('Defender Autopilot RED status cases', () => {
           THREATS_FILTER: 'MaliciousInsider, DataSpillage',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture2.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -391,15 +391,15 @@ describe('Defender Autopilot RED status cases', () => {
           USER_IMPACT_FILTER: 'High',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture2.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -416,15 +416,15 @@ describe('Defender Autopilot RED status cases', () => {
           IMPLEMENTATION_EFFORT_FILTER: 'Low',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture3.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -442,15 +442,15 @@ describe('Defender Autopilot RED status cases', () => {
           THREATS_FILTER: 'MaliciousInsider',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture3.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -468,15 +468,15 @@ describe('Defender Autopilot RED status cases', () => {
           THREATS_FILTER: 'MaliciousInsider',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture2.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -494,15 +494,15 @@ describe('Defender Autopilot RED status cases', () => {
           KEY_WORDS_FILTER: 'network',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture2.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 
@@ -520,15 +520,15 @@ describe('Defender Autopilot RED status cases', () => {
           KEY_WORDS_FILTER: 'network',
           ...communEnvVariables,
         },
-      }
+      },
     )
 
     expect(JSON.stringify(result.stdout)).toEqual(
       JSON.stringify(
         integrationTestResultsRecommendationsFixture1.map((element) => {
           return JSON.stringify(element)
-        })
-      )
+        }),
+      ),
     )
   })
 })

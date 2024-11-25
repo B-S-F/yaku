@@ -9,10 +9,10 @@ import {
 import { ConfigurationError } from '../run.js'
 
 export async function validateFetcherConfig(
-  filePath: string
+  filePath: string,
 ): Promise<GitFetcherConfig> {
   const uncheckedGitFetcherConfig: unknown = await YAML.parse(
-    fs.readFileSync(filePath, { encoding: 'utf8' })
+    fs.readFileSync(filePath, { encoding: 'utf8' }),
   )
 
   const result: SafeParseReturnType<unknown, GitFetcherConfig> =

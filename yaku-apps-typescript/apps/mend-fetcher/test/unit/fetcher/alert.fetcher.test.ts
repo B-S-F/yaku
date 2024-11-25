@@ -54,7 +54,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: policyAlertsData,
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -62,14 +62,14 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [],
           },
-        })
+        }),
       )
       const expected: PolicyAlertDTO[] = policyAlertsDTO
 
       const result: PolicyAlertDTO[] = await getPolicyAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'active' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -84,7 +84,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [policyAlertsData[0]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -92,7 +92,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [policyAlertsData[1]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -100,14 +100,14 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [],
           },
-        })
+        }),
       )
       const expected: PolicyAlertDTO[] = policyAlertsDTO
 
       const result: PolicyAlertDTO[] = await getPolicyAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'all' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -121,7 +121,7 @@ describe('alert.fetcher', () => {
       const result = getPolicyAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('No expected values returned')
@@ -135,13 +135,13 @@ describe('alert.fetcher', () => {
           isAxiosError: true,
           request: {},
           message: 'Request Error Message',
-        })
+        }),
       )
 
       const result = getPolicyAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('Request Error Message')
@@ -160,19 +160,19 @@ describe('alert.fetcher', () => {
               data: {},
               statusText: httpStatus.message,
             },
-          })
+          }),
         )
 
         const result = getPolicyAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it.each(HTTPResponseStatusCodes)(
@@ -191,19 +191,19 @@ describe('alert.fetcher', () => {
               statusText: '',
               status: httpStatus.code,
             },
-          })
+          }),
         )
 
         const result = getPolicyAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it('should throw an error when it fails for unexpected reasons', async () => {
@@ -214,7 +214,7 @@ describe('alert.fetcher', () => {
       const result = getPolicyAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError()
@@ -231,7 +231,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: newVersionsAlertsData,
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -239,14 +239,14 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [],
           },
-        })
+        }),
       )
       const expected: NewVersionsAlertDTO[] = newVersionsAlertsDTO
 
       const result: NewVersionsAlertDTO[] = await getNewVersionsAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'active' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -261,7 +261,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [newVersionsAlertsData[0]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -269,7 +269,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [newVersionsAlertsData[1]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -277,14 +277,14 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [],
           },
-        })
+        }),
       )
       const expected: NewVersionsAlertDTO[] = newVersionsAlertsDTO
 
       const result: NewVersionsAlertDTO[] = await getNewVersionsAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'all' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -298,7 +298,7 @@ describe('alert.fetcher', () => {
       const result = getNewVersionsAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('No expected values returned')
@@ -312,13 +312,13 @@ describe('alert.fetcher', () => {
           isAxiosError: true,
           request: {},
           message: 'Request error message',
-        })
+        }),
       )
 
       const result = getNewVersionsAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('Request error message')
@@ -337,19 +337,19 @@ describe('alert.fetcher', () => {
               data: {},
               statusText: httpStatus.message,
             },
-          })
+          }),
         )
 
         const result = getNewVersionsAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it.each(HTTPResponseStatusCodes)(
@@ -368,19 +368,19 @@ describe('alert.fetcher', () => {
               statusText: '',
               status: httpStatus.code,
             },
-          })
+          }),
         )
 
         const result = getNewVersionsAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it('should throw an error when it fails for unexpected reasons', async () => {
@@ -391,7 +391,7 @@ describe('alert.fetcher', () => {
       const result = getNewVersionsAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError()
@@ -408,7 +408,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: multipleLicensesAlertsData,
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -416,7 +416,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [],
           },
-        })
+        }),
       )
       const expected: MultipleLicensesAlertDTO[] = multipleLicensesAlertsDTO
 
@@ -424,7 +424,7 @@ describe('alert.fetcher', () => {
         await getMultipleLicensesAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'active' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
       expect(result).toStrictEqual(expected)
@@ -439,7 +439,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [multipleLicensesAlertsData[0]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -447,7 +447,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [multipleLicensesAlertsData[1]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -455,7 +455,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [],
           },
-        })
+        }),
       )
       const expected: MultipleLicensesAlertDTO[] = multipleLicensesAlertsDTO
 
@@ -463,7 +463,7 @@ describe('alert.fetcher', () => {
         await getMultipleLicensesAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'all' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
       expect(result).toStrictEqual(expected)
@@ -477,7 +477,7 @@ describe('alert.fetcher', () => {
       const result = getMultipleLicensesAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('No expected values returned')
@@ -491,13 +491,13 @@ describe('alert.fetcher', () => {
           isAxiosError: true,
           request: {},
           message: 'Request error message',
-        })
+        }),
       )
 
       const result = getMultipleLicensesAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('Request error message')
@@ -516,19 +516,19 @@ describe('alert.fetcher', () => {
               data: {},
               statusText: httpStatus.message,
             },
-          })
+          }),
         )
 
         const result = getMultipleLicensesAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it.each(HTTPResponseStatusCodes)(
@@ -547,19 +547,19 @@ describe('alert.fetcher', () => {
               statusText: '',
               status: httpStatus.code,
             },
-          })
+          }),
         )
 
         const result = getMultipleLicensesAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it('should throw an error when it fails for unexpected reasons', async () => {
@@ -570,7 +570,7 @@ describe('alert.fetcher', () => {
       const result = getMultipleLicensesAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError()
@@ -587,7 +587,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: rejectedInUseAlertsData,
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -595,14 +595,14 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [],
           },
-        })
+        }),
       )
       const expected: RejectedInUseAlertDTO[] = rejectedInUseAlertsDTO
 
       const result: RejectedInUseAlertDTO[] = await getRejectedInUseAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'active' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -617,7 +617,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [rejectedInUseAlertsData[0]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -625,7 +625,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [rejectedInUseAlertsData[1]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -633,14 +633,14 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [],
           },
-        })
+        }),
       )
       const expected: RejectedInUseAlertDTO[] = rejectedInUseAlertsDTO
 
       const result: RejectedInUseAlertDTO[] = await getRejectedInUseAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'all' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -654,7 +654,7 @@ describe('alert.fetcher', () => {
       const result = getRejectedInUseAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('No expected values returned')
@@ -668,13 +668,13 @@ describe('alert.fetcher', () => {
           isAxiosError: true,
           request: {},
           message: 'Request error message',
-        })
+        }),
       )
 
       const result = getRejectedInUseAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('Request error message')
@@ -693,19 +693,19 @@ describe('alert.fetcher', () => {
               data: {},
               statusText: httpStatus.message,
             },
-          })
+          }),
         )
 
         const result = getRejectedInUseAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it.each(HTTPResponseStatusCodes)(
@@ -724,19 +724,19 @@ describe('alert.fetcher', () => {
               statusText: '',
               status: httpStatus.code,
             },
-          })
+          }),
         )
 
         const result = getRejectedInUseAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it('should throw an error when it fails for unexpected reasons', async () => {
@@ -747,7 +747,7 @@ describe('alert.fetcher', () => {
       const result = getRejectedInUseAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError()
@@ -764,17 +764,17 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: securityAlertsData,
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
-        Promise.resolve({ data: { additionalData: {}, retVal: [] } })
+        Promise.resolve({ data: { additionalData: {}, retVal: [] } }),
       )
       const expected: SecurityAlertDTO[] = securityAlertsDTO
 
       const result: SecurityAlertDTO[] = await getSecurityAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'active' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -789,7 +789,7 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [securityAlertsData[0]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
         Promise.resolve({
@@ -797,17 +797,17 @@ describe('alert.fetcher', () => {
             additionalData: {},
             retVal: [securityAlertsData[1]],
           },
-        })
+        }),
       )
       spy.mockReturnValueOnce(
-        Promise.resolve({ data: { additionalData: {}, retVal: [] } })
+        Promise.resolve({ data: { additionalData: {}, retVal: [] } }),
       )
       const expected: SecurityAlertDTO[] = securityAlertsDTO
 
       const result: SecurityAlertDTO[] = await getSecurityAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'all' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       expect(result).toStrictEqual(expected)
@@ -821,7 +821,7 @@ describe('alert.fetcher', () => {
       const result = getSecurityAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('No expected values returned')
@@ -835,14 +835,14 @@ describe('alert.fetcher', () => {
           isAxiosError: true,
           request: {},
           message: 'Request error message',
-        })
+        }),
       )
 
       const result = getSecurityAlertDTOs(
         env.apiUrl,
 
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError('Request error message')
@@ -861,19 +861,19 @@ describe('alert.fetcher', () => {
               data: {},
               statusText: httpStatus.message,
             },
-          })
+          }),
         )
 
         const result = getSecurityAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it.each(HTTPResponseStatusCodes)(
@@ -892,19 +892,19 @@ describe('alert.fetcher', () => {
               statusText: '',
               status: httpStatus.code,
             },
-          })
+          }),
         )
 
         const result = getSecurityAlertDTOs(
           env.apiUrl,
           { projectToken: env.projectToken, status: 'status' },
-          fakeAuth as unknown as Authenticator
+          fakeAuth as unknown as Authenticator,
         )
 
         await expect(result).rejects.toThrowError(
-          `Response status code ${httpStatus.code}: ${httpStatus.message}`
+          `Response status code ${httpStatus.code}: ${httpStatus.message}`,
         )
-      }
+      },
     )
 
     it('should throw an error when it fails for unexpected reasons', async () => {
@@ -915,7 +915,7 @@ describe('alert.fetcher', () => {
       const result = getSecurityAlertDTOs(
         env.apiUrl,
         { projectToken: env.projectToken, status: 'status' },
-        fakeAuth as unknown as Authenticator
+        fakeAuth as unknown as Authenticator,
       )
 
       await expect(result).rejects.toThrowError()

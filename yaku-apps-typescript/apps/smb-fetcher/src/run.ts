@@ -28,7 +28,7 @@ class FetchError extends AppError {
 
 const validateFetcherConfig = async (filePath: string) => {
   const config = await YAML.parse(
-    await fs.readFile(filePath, { encoding: 'utf-8' })
+    await fs.readFile(filePath, { encoding: 'utf-8' }),
   )
 
   return configSchema().parse(config)
@@ -59,11 +59,12 @@ export const retry = async <T>(
   smbPath: string,
   smbClient: SMB2,
   retries = 5,
-  delay = 100
+  delay = 100,
 ): Promise<T> => {
   const logger = GetLogger()
   try {
     return await fn(smbPath, smbClient)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     if (retries > 1) {
       logger.warn(`retry SMB operation on ${smbPath}`)
@@ -83,7 +84,7 @@ const outputs: Output[] = []
 const fetchFile = async (
   destPath: string,
   smbPath: string,
-  smbClient: SMB2
+  smbClient: SMB2,
 ) => {
   const logger = GetLogger()
 
@@ -108,7 +109,7 @@ const fetchFile = async (
 const traversePath = async (
   destPath: string,
   smbPath: string,
-  smbClient: SMB2
+  smbClient: SMB2,
 ) => {
   const smbstats: IStats = await smbClient.stat(smbPath)
   if (smbstats.isDirectory()) {
@@ -125,13 +126,13 @@ const traversePath = async (
         const newsmbPath = `${smbPath}\\${item.name}`
 
         await traversePath(newDestPath, newsmbPath, smbClient)
-      })
+      }),
     )
   } else {
     await retry(
       async () => fetchFile(destPath, smbPath, smbClient),
       smbPath,
-      smbClient
+      smbClient,
     ).catch((error: any) => {
       throw error
     })

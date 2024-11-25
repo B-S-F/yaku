@@ -29,7 +29,7 @@ const main = async () => {
   try {
     if (process.env.NODE_TLS_REJECT_UNAUTHORIZED == '0') {
       throw new EnvironmentError(
-        'Environment variable NODE_TLS_REJECT_UNAUTHORIZED must not be set to 0 for security reasons'
+        'Environment variable NODE_TLS_REJECT_UNAUTHORIZED must not be set to 0 for security reasons',
       )
     }
     const evidencePath: string = getEvidencePath()
@@ -40,7 +40,7 @@ const main = async () => {
     logger.debug(`Output file path: ${outputFilePath}`)
     if (fs.existsSync(outputFilePath)) {
       throw new EnvironmentError(
-        `File ${outputFilePath} exists already, can't write evidence!`
+        `File ${outputFilePath} exists already, can't write evidence!`,
       )
     }
     const enableProxy = process.env.ADO_APPLY_PROXY_SETTINGS === 'true'
@@ -48,10 +48,10 @@ const main = async () => {
     logger.debug(`API Details: ${JSON.stringify(apiDetails)}`)
     // setup config
     const configFileData = await YAML.parse(
-      await readFile(evaluatorConfigFilePath, { encoding: 'utf8' })
+      await readFile(evaluatorConfigFilePath, { encoding: 'utf8' }),
     )
     const configData: WorkItemConfigData = new WorkItemConfigData(
-      configFileData
+      configFileData,
     )
     const httpClient: AxiosInstance = createHttpClient({
       azureDevOpsUrl: apiDetails.url,
@@ -85,12 +85,13 @@ function getEvidencePath() {
   const evidencePath: string = getPath(EVIDENCE_PATH_ENV_VAR)
   try {
     fs.accessSync(evidencePath, fs.constants.W_OK)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     throw new EnvironmentError(`${evidencePath} is not writable!`)
   }
   if (!fs.statSync(evidencePath).isDirectory()) {
     throw new EnvironmentError(
-      `${EVIDENCE_PATH_ENV_VAR} does not point to a directory!`
+      `${EVIDENCE_PATH_ENV_VAR} does not point to a directory!`,
     )
   }
   return evidencePath
@@ -100,12 +101,13 @@ function getConfigPath() {
   const configPath: string = getPath(CONFIG_FILE_ENV_VAR)
   try {
     fs.accessSync(configPath, fs.constants.R_OK)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     throw new EnvironmentError(`${configPath} is not readable!`)
   }
   if (!fs.statSync(configPath).isFile()) {
     throw new EnvironmentError(
-      `${CONFIG_FILE_ENV_VAR} does not point to a file!`
+      `${CONFIG_FILE_ENV_VAR} does not point to a file!`,
     )
   }
   return configPath

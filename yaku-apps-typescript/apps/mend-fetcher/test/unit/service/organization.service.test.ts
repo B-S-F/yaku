@@ -34,7 +34,7 @@ describe('organization.service', () => {
 
     const organizationService = new OrganizationService(env)
     const result: Organization = await organizationService.getOrganizationById(
-      env.orgToken
+      env.orgToken,
     )
 
     expect(result).toStrictEqual(expected)

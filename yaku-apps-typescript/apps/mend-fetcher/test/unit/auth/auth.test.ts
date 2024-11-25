@@ -47,9 +47,9 @@ describe('auth', () => {
           1800000,
           organizationData.name,
           organizationData.uuid,
-          fakeSystemDate.valueOf()
-        )
-      )
+          fakeSystemDate.valueOf(),
+        ),
+      ),
     )
 
     const auth: Authenticator = Authenticator.getInstance(env)
@@ -62,7 +62,7 @@ describe('auth', () => {
       1800000,
       organizationData.name,
       organizationData.uuid,
-      fakeSystemDate.valueOf()
+      fakeSystemDate.valueOf(),
     )
 
     const result: Login = await auth.authenticate()
@@ -85,9 +85,9 @@ describe('auth', () => {
           1800000,
           organizationData.name,
           organizationData.uuid,
-          new Date(2023, 1, 1, 0, 0, 0, 0).valueOf()
-        )
-      )
+          new Date(2023, 1, 1, 0, 0, 0, 0).valueOf(),
+        ),
+      ),
     )
 
     const auth: Authenticator = Authenticator.getInstance(env)
@@ -100,7 +100,7 @@ describe('auth', () => {
       1800000,
       organizationData.name,
       organizationData.uuid,
-      new Date(2023, 1, 1, 0, 0, 0, 0).valueOf()
+      new Date(2023, 1, 1, 0, 0, 0, 0).valueOf(),
     )
 
     const result: Login = await auth.authenticate()
@@ -123,9 +123,9 @@ describe('auth', () => {
           1800000,
           organizationData.name,
           organizationData.uuid,
-          fakeSystemDate.valueOf()
-        )
-      )
+          fakeSystemDate.valueOf(),
+        ),
+      ),
     )
 
     const auth: Authenticator = Authenticator.getInstance(env)
@@ -138,7 +138,7 @@ describe('auth', () => {
       1800000,
       organizationData.name,
       organizationData.uuid,
-      fakeSystemDate.valueOf()
+      fakeSystemDate.valueOf(),
     )
 
     const result: Login = await auth.authenticate()

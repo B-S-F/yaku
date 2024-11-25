@@ -32,7 +32,7 @@ describe('buildOptionalLink', function () {
   })
   it('returns a valid markdown link if url is provided', function () {
     expect(markdown.buildOptionalLink('test', 'https://test.com')).toEqual(
-      '[test](https://test.com)'
+      '[test](https://test.com)',
     )
   })
   it('returns the text as is if no url is provided', function () {
@@ -40,7 +40,7 @@ describe('buildOptionalLink', function () {
   })
   it('converts a number to a string and returns valid markdown link if url is provided', function () {
     expect(markdown.buildOptionalLink(3, 'https://test.com')).toEqual(
-      '[3](https://test.com)'
+      '[3](https://test.com)',
     )
   })
 })
@@ -87,12 +87,12 @@ describe('smartquotes', function () {
   })
   it('ignores quotes in source code', function () {
     expect(markdown.smartquotes('"Hello" `"world"`')).toEqual(
-      '“Hello” `"world"`'
+      '“Hello” `"world"`',
     )
   })
   it('ignores quotes in code blocks', function () {
     expect(markdown.smartquotes(textWithSourceBlock)).toEqual(
-      textWithSourceBlock__typography
+      textWithSourceBlock__typography,
     )
   })
   it('can handle null', function () {
@@ -147,7 +147,7 @@ baz: 'qux'
 describe('render', function () {
   it('renders markdown format', function () {
     expect(markdown.render('**test**')).toEqual(
-      '<p><strong>test</strong></p>\n'
+      '<p><strong>test</strong></p>\n',
     )
   })
   it('renders markdown block and uses typographic quotes outside of code', function () {
@@ -158,7 +158,7 @@ describe('render', function () {
 describe('renderInline', function () {
   it('renders markdown format and uses typographic quotes', function () {
     expect(markdown.renderInline('**"Test"**')).toEqual(
-      '<strong>“Test”</strong>'
+      '<strong>“Test”</strong>',
     )
   })
   it('converts a number to a string', function () {

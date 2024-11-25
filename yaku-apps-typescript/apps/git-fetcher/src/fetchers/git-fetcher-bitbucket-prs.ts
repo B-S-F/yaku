@@ -29,11 +29,11 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
    */
   constructor(
     private gitServerConfig: GitServerConfig,
-    private config: ConfigFileData
+    private config: ConfigFileData,
   ) {
     this.strippedApiUrl = this.gitServerConfig.gitServerApiUrl.replace(
       /\/*$/,
-      ''
+      '',
     )
   }
 
@@ -49,7 +49,7 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
    */
   public async fetchResource(): Promise<BitbucketPr[]> {
     const requestOptions: RequestInit = await getRequestOptions(
-      this.gitServerConfig
+      this.gitServerConfig,
     )
     let pullRequests: BitbucketPr[] = []
 
@@ -59,7 +59,7 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
     do {
       const response: Response = await fetch(
         this.composePrUrl(this.config.data.filter?.state, currentPage ?? 0),
-        requestOptions
+        requestOptions,
       )
 
       if (response.status != 200) {
@@ -67,7 +67,7 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
       }
 
       responseBody = (await tryParseResponse(
-        response
+        response,
       )) as BitbucketResponse<BitbucketPr>
 
       pullRequests.push(...responseBody.values)
@@ -77,31 +77,31 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
     if (this.config.data.filter?.startTag) {
       pullRequests = await this.filterPullRequestsByTag(
         pullRequests,
-        this.config.data.filter
+        this.config.data.filter,
       )
     } else if (this.config.data.filter?.startHash) {
       pullRequests = await this.filterPullRequestsByHash(
         pullRequests,
-        this.config.data.filter
+        this.config.data.filter,
       )
     } else if (this.config.data.filter?.startDate) {
       pullRequests = this.filterPullRequestsByDate(
         pullRequests,
-        this.config.data.filter
+        this.config.data.filter,
       )
     }
 
     console.log(
       `Fetched ${pullRequests.length} pull request${
         pullRequests.length === 1 ? '' : 's'
-      }`
+      }`,
     )
     return pullRequests
   }
 
   private composePrUrl(
     stateFilter: AllowedFilterStateType = 'ALL',
-    startPage?: number
+    startPage?: number,
   ): string {
     let baseUrl = `${this.strippedApiUrl}/projects/${this.config.data.org}/repos/${this.config.data.repo}/pull-requests?state=${stateFilter}`
 
@@ -122,7 +122,7 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
 
   private filterPullRequestsByDate(
     prs: BitbucketPr[],
-    dateFilter: DateFilter
+    dateFilter: DateFilter,
   ): BitbucketPr[] {
     const startDateInMs = dateFilter.startDate!.getTime()
     const endDateInMs = dateFilter.endDate
@@ -130,13 +130,13 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
       : Date.now()
 
     return prs.filter(
-      (pr) => pr.updatedDate >= startDateInMs && pr.updatedDate <= endDateInMs
+      (pr) => pr.updatedDate >= startDateInMs && pr.updatedDate <= endDateInMs,
     )
   }
 
   private async filterPullRequestsByTag(
     prs: BitbucketPr[],
-    tagFilter: TagFilter
+    tagFilter: TagFilter,
   ): Promise<BitbucketPr[]> {
     const dateFilter: DateFilter = await this.tagToDateFilter(tagFilter)
     return this.filterPullRequestsByDate(prs, dateFilter)
@@ -144,7 +144,7 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
 
   private async filterPullRequestsByHash(
     prs: BitbucketPr[],
-    hashFilter: HashFilter
+    hashFilter: HashFilter,
   ): Promise<BitbucketPr[]> {
     const dateFilter: DateFilter = await this.hashToDateFilter(hashFilter)
     return this.filterPullRequestsByDate(prs, dateFilter)
@@ -195,15 +195,15 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
 
   private async fetchCommit(hashValue: string): Promise<BitbucketCommit> {
     const requestOptions: RequestInit = await getRequestOptions(
-      this.gitServerConfig
+      this.gitServerConfig,
     )
     const response: Response = await fetch(
       this.composeCommitUrl(hashValue),
-      requestOptions
+      requestOptions,
     )
     if (response.status !== 200) {
       throw new ConfigurationError(
-        `Could not retrieve the commit hash ${hashValue} (status ${response.status})`
+        `Could not retrieve the commit hash ${hashValue} (status ${response.status})`,
       )
     }
     return (await tryParseResponse(response)) as BitbucketCommit
@@ -211,11 +211,11 @@ export class GitFetcherBitbucketPrs implements GitFetcher<BitbucketPr> {
 
   private async fetchTag(tagName: string): Promise<BitbucketTag> {
     const requestOptions: RequestInit = await getRequestOptions(
-      this.gitServerConfig
+      this.gitServerConfig,
     )
     const response: Response = await fetch(
       this.composeTagUrl(tagName),
-      requestOptions
+      requestOptions,
     )
     if (response.status !== 200) {
       throw new ConfigurationError(`Could not retrieve the tag ${tagName}`)
