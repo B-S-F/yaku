@@ -45,7 +45,7 @@ jobs:
           make -C user-documentation openapi
           make -C user-documentation html
         env:
-          SPHINXOPTS: '-W'
+          SPHINXOPTS: -W -D todo_include_todos=${{ github.ref == 'refs/heads/main' && '0' || '1' }}
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
