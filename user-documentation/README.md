@@ -14,7 +14,7 @@ have all the flexibility and features from Sphinx.
 
 The **latest main version** is always pushed directly to <https://b-s-f.github.io/yaku/>.
 
-[![.github/workflows/publish-user-docs-to-gh-pages.yml](https://github.com/B-S-F/yaku/actions/workflows/publish-user-docs-to-gh-pages.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/publish-user-docs-to-gh-pages.yml)
+[![.github/workflows/build-user-documentation.yml](https://github.com/B-S-F/yaku/actions/workflows/build-user-documentation.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build-user-documentation.yml)
 
 ## Quickstart
 
