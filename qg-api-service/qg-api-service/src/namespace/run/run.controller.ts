@@ -455,9 +455,10 @@ export class RunController {
       user,
     )
 
+    response.header('Location', requestUrl.url(`/${run.id}`, 1))
     response.status(HttpStatus.ACCEPTED)
 
-    return toOutputDto(run, requestUrl.url('/configs', 1))
+    return toOutputDto(run, requestUrl.url('/configs', 2))
   }
 
   @Get(':runId')
