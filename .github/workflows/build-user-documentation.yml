@@ -22,7 +22,6 @@ jobs:
   build:
     permissions:
       contents: read
-      id-token: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -56,6 +55,7 @@ jobs:
   deploy:
     permissions:
       pages: write
+      id-token: write
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/main'
