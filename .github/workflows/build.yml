@@ -20,8 +20,8 @@ on:
     paths-ignore:
       - '**/*.md'            # Ignore all markdown files
       - 'user-documentation/'
-      - 'documentation/'      
-      
+      - 'documentation/'
+
 permissions:
   contents: read
   packages: write
