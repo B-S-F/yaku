@@ -6,9 +6,6 @@ import os
 import sys
 
 sys.path.append(os.path.abspath("./_ext"))
-# sys.path.append(
-#    "/home/wolfgang/hub/grow/user-documentation/../qg-apps-python/packages/autopilot-utils/src/"
-# )
 
 # Configuration file for the Sphinx documentation builder.
 #
