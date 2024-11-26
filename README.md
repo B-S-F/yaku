@@ -11,7 +11,7 @@ SPDX-License-Identifier: MIT
 
 **!!THIS PROJECT IS UNDER CONSTRUCTION !!**
 
-![](documentation/user-documentation/source/_static/yaku-flow-pipeline.png)
+![](user-documentation/source/_static/yaku-flow-pipeline.png)
 
 Yaku is a service to help you automate your software release process. It’s a tool, that automatically collects various files and attaches them as evidences to the related release questions and lets you know whether the questions’ requirements were met or not and why. Therefore, it allows you to speed up your software release preparation times by a substantial amount. This is achieved by configuring different autopilots that can:
 - fetch and evaluate files, stored on various platforms like SharePoint
