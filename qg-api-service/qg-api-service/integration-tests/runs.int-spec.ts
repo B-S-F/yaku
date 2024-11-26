@@ -3,10 +3,14 @@
 // SPDX-License-Identifier: MIT
 
 import { HttpStatus } from '@nestjs/common'
+import { readFile } from 'fs/promises'
+import * as path from 'path'
+import { Readable } from 'stream'
 import { SetupServer, setupServer } from 'msw/node'
 import * as supertest from 'supertest'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Run, RunStatus } from '../src/namespace/run/run.entity'
+import { EVIDENCEFILE, RESULTFILE } from '../src/namespace/run/run.service'
 import { SecretStorage } from '../src/namespace/secret/secret-storage.service'
 import {
   BlobStore,
@@ -70,7 +74,7 @@ describe('POST run', () => {
     allRequests = []
     server.events.on('request:start', ({ request }) => {
       const url = new URL(request.url)
-      if (!url.host.match(/localhost|127\.0\.0\.1/)) {
+      if (!url.hostname.match(/localhost|127\.0\.0\.1/)) {
         allRequests.push(request)
       }
     })
@@ -179,6 +183,45 @@ describe('POST run', () => {
       allRequests.filter((req) => req.method === 'GET').length,
       `Argo get requests are not as expected`,
     ).toBeGreaterThanOrEqual(1)
+  })
+
+  it('should create a synthetic run', async () => {
+    await createConfiguration(config)
+    await checkDatabaseEntities(0)
+
+    const data = {}
+    data[RESULTFILE] = await readFile(
+      path.join(__dirname, 'mocks', 'qg-result-10-findings-red-status.yaml'),
+    )
+    data[EVIDENCEFILE] = Buffer.from('some evidences content')
+
+    const runId = await postSyntheticRun(data)
+
+    await checkDatabaseEntities(1)
+
+    const result = await supertest
+      .agent(nestTestingApp.app.getHttpServer())
+      .get(
+        `/api/v1/namespaces/${testNamespace.namespace.id}/runs/${runId}/results`,
+      )
+      .set('Authorization', `Bearer ${apiToken}`)
+      .expect(HttpStatus.OK)
+      .expect('Content-Type', 'application/yaml')
+      .expect('Content-Disposition', `attachment; filename="${RESULTFILE}"`)
+
+    expect(result.text).toEqual(data[RESULTFILE].toString('utf-8'))
+
+    const evidences = await supertest
+      .agent(nestTestingApp.app.getHttpServer())
+      .get(
+        `/api/v1/namespaces/${testNamespace.namespace.id}/runs/${runId}/evidences`,
+      )
+      .set('Authorization', `Bearer ${apiToken}`)
+      .expect(HttpStatus.OK)
+      .expect('Content-Type', 'application/zip')
+      .expect('Content-Disposition', `attachment; filename="${EVIDENCEFILE}"`)
+
+    expect(Buffer.from(evidences.text)).toEqual(data[EVIDENCEFILE])
   })
 
   it('fail run with unsupported v0 format', async () => {
@@ -336,6 +379,82 @@ describe('POST run', () => {
       response.body.config,
       `The config ref of created run is not as expected, it is ${response.body.config}`,
     ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
+    return response.body.id
+  }
+
+  async function postSyntheticRun(data: {
+    [filename: string]: string | Buffer
+  }): Promise<number> {
+    const response = await supertest
+      .agent(nestTestingApp.app.getHttpServer())
+      .post(
+        `/api/v1/namespaces/${testNamespace.namespace.id}/runs/synthetic?configId=${configId}`,
+      )
+      .field('filename', `${RESULTFILE},${EVIDENCEFILE}`)
+      .attach('content', Buffer.from(data[RESULTFILE]), {
+        filename: RESULTFILE,
+        contentType: 'multipart/form-data',
+      })
+      .attach('content', Buffer.from(data[EVIDENCEFILE]), {
+        filename: EVIDENCEFILE,
+        contentType: 'multipart/form-data',
+      })
+      .set('Authorization', `Bearer ${apiToken}`)
+      .expect(HttpStatus.ACCEPTED)
+
+    expect(
+      response.body.id,
+      `The id of created run does not exist`,
+    ).toBeDefined()
+    expect(
+      response.headers.location.endsWith(`${response.body.id}`),
+      `The location header of created run is not as expected`,
+    ).toBeTruthy()
+    expect(
+      response.body.status,
+      `The status of created run is not as expected, it is ${response.body.status}`,
+    ).toBe(RunStatus.Completed)
+    expect(
+      response.body.config,
+      `The config ref of created run is not as expected, it is ${response.body.config}`,
+    ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
+
+    const storagePath = (
+      await nestTestingApp.repositories.runRepository.findOneBy({
+        id: response.body.id,
+      })
+    ).storagePath
+
+    vi.spyOn(
+      nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
+      'downloadResult',
+    ).mockImplementation(
+      async (storage: string, filename: string): Promise<Readable> => {
+        console.log('storagePath:', storage)
+        console.log('filename:', filename)
+        let readableStream: Readable
+        if (filename === RESULTFILE) {
+          const buffer = Buffer.from(data[RESULTFILE])
+          readableStream = new Readable({
+            read() {
+              this.push(buffer, 'utf-8')
+              this.push(null)
+            },
+          })
+        } else if (filename === EVIDENCEFILE) {
+          const buffer = Buffer.from(data[EVIDENCEFILE])
+          readableStream = new Readable({
+            read() {
+              this.push(buffer)
+              this.push(null)
+            },
+          })
+        }
+
+        return Promise.resolve(readableStream)
+      },
+    )
+
     return response.body.id
   }
 
