@@ -21,7 +21,7 @@
     "test:unit": "npx jest --config jest-unit.config.js",
     "test:unit:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --config jest-unit.config.js --runInBand",
     "test:unit:watch": "npx jest --config jest-unit.config.js --watchAll",
-    "test:integration": "ENABLE_TASKS_CONTROLLER=true LC_ALL=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 NODE_OPTIONS=--experimental-vm-modules npx vitest run --config vitest-integration.config.ts || (npx rimraf ./data && exit 1)",
+    "test:integration": "ENABLE_TASKS_CONTROLLER=true ENABLE_SYNTHETIC_RUN_ENDPOINT=true LC_ALL=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 NODE_OPTIONS=--experimental-vm-modules npx vitest run --config vitest-integration.config.ts || (npx rimraf ./data && exit 1)",
     "test:integration:local": "ENABLE_TASKS_CONTROLLER=true npm run build && npm run test:integration",
     "test:integration:debug": "vitest run --config vitest-integration.config.ts || (npx rimraf ./data && exit 1)",
     "test:cov": "npx jest --config jest-unit.config.js --coverage",
