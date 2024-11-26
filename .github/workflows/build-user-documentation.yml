@@ -47,7 +47,7 @@ jobs:
         env:
           SPHINXOPTS: '-W'
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: documentation
           path: user-documentation/build/html
