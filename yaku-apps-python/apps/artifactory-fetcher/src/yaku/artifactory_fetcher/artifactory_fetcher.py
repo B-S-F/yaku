@@ -51,9 +51,10 @@ def download_file(
 
     if destination_path.exists():
         try:
-            with path.open() as fd, Path.joinpath(
-                destination_path, artifactory_repository_path
-            ).open("wb") as out:
+            with (
+                path.open() as fd,
+                Path.joinpath(destination_path, artifactory_repository_path).open("wb") as out,
+            ):
                 out.write(fd.read())
                 stat = path.stat()
             return str(stat.sha256)
