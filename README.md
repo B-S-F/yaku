@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT
 # Yaku
 
 [![Build](https://github.com/B-S-F/yaku/actions/workflows/build.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build.yml)
-[![User Documentation](https://github.com/B-S-F/yaku/actions/workflows/publish-user-docs-to-gh-pages.yml/badge.svg)](https://b-s-f.github.io/yaku/)
+[![Build user documentation](https://github.com/B-S-F/yaku/actions/workflows/build-user-documentation.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build-user-documentation.yml)
 
 **!!THIS PROJECT IS UNDER CONSTRUCTION !!**
 
