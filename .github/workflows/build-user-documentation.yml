@@ -51,6 +51,10 @@ jobs:
         with:
           name: documentation
           path: user-documentation/build/html
+      - name: Upload Github Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: user-documentation/build/html
 
   deploy:
     permissions:
@@ -63,14 +67,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: documentation
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: documentation
