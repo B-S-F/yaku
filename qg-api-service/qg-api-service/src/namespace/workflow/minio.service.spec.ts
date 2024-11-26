@@ -485,7 +485,7 @@ describe('MinioService', () => {
       'should not upload anything, if storage path is undefined',
       async (path: string) => {
         await expect(service.uploadPayload(path, configData)).rejects.toThrow(
-          Error
+          Error,
         )
         expect(minioClient.putObject).not.toBeCalled()
       },
