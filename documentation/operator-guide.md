@@ -7,7 +7,8 @@ SPDX-License-Identifier: MIT
 # Yaku Operator Guide
 
 The [Yaku Helm chart](../chart) can be installed on any Kubernetes cluster.
-The chart contains deployments for components (API and UI) and all required dependencies (Argo workflows, MinIO, PostgreSQL, etc.).
+The chart contains deployments for components (API and UI) and all required dependencies (Argo workflows, MinIO,
+PostgreSQL, etc.).
 We defined the dependencies as subcharts so you can run Yaku out-of-the-box quickly. The dependencies are there to get
 you started with using Yaku, but once you want to use it in production, we recommend deploying the dependencies
 separately to be production-ready or use hosted solutions that your enterprise provides.
@@ -30,13 +31,72 @@ Before you start, you need:
 
 ## Build the docker images
 
-You will need to ensure that the Docker images for Yaku components are accessible by your Kubernetes cluster. If you have built the images locally, you might need to push them to a container registry that your cluster can access.
+You will need to ensure that the Docker images for Yaku components are accessible by your Kubernetes cluster. If you
+have built the images locally, you might need to push them to a container registry that your cluster can access.
 
-TODO: write guide
+To push Docker images to a registry after building them locally, you need to follow a few additional steps. This
+involves tagging the images appropriately and using the `docker push` command to upload them to your desired registry.
+Here's how you can do it:
+
+#### Backend Docker Image
+
+Build the Backend Docker Image
+
+   ```bash
+   docker build -t y-registry.com/my-namespace/core-api:canary\
+     --platform linux/amd64 \
+     -f qg-api-service/qg-api-service/Dockerfile \
+     ./qg-api-service/qg-api-service
+   ```
+
+Log in to Your Docker Registry
+Ensure you are logged into your Docker registry. This step is necessary if your registry requires authentication.
+
+   ```bash
+   docker login my-registry.com
+   ```
+
+Push the Backend Docker Image
+
+   ```bash
+   docker push my-registry.com/my-namespace/core-api:canary
+   ```
+
+#### Core Docker Image
+
+Build the Core Docker Image
+
+   ```bash
+   docker build -t my-registry.com/my-namespace/core:canary\
+     --platform linux/amd64 \
+     -f core-image/Dockerfile \
+     ./core-image
+   ```
+
+Push the Core Docker Image
+
+   ```bash
+   docker push my-registry.com/my-namespace/core:canary
+   ```
+
+#### UI Docker Image
+
+> TODO
+
+### Summary
+
+- **Build and Tag**: First, build your Docker images using the `docker build` command. Tag them appropriately for your
+  registry.
+- **Login**: Use `docker login` to authenticate with your registry if required.
+- **Push**: Use `docker push` to upload your images to the registry.
+
+These steps ensure that your Docker images are built and pushed to your specified registry, making them available for
+deployment or sharing. Always ensure your registry credentials are secure and not hard-coded in scripts.
 
 ## Installing the Helm Chart
 
-After ensuring all prerequisites are met and the Docker images are built and accessible, you can proceed to install the Helm chart directly from the source code.
+After ensuring all prerequisites are met and the Docker images are built and accessible, you can proceed to install the
+Helm chart directly from the source code.
 
 ### Steps to Install
 
@@ -48,7 +108,8 @@ After ensuring all prerequisites are met and the Docker images are built and acc
 
 2. **Run Helm Install**:
 
-   Use the `helm install` command to deploy the chart. You will need to override the image repositories and tags to point to your built images.
+   Use the `helm install` command to deploy the chart. You will need to override the image repositories and tags to
+   point to your built images.
 
    ```bash
    helm install yaku . \
@@ -61,7 +122,8 @@ After ensuring all prerequisites are met and the Docker images are built and acc
      --set global.ui.image.tag=<your-ui-image-tag>
    ```
 
-   Replace `<your-image-registry>`, `<your-core-image>`, `<your-core-image-tag>`, `<your-core-api-image>`, `<your-core-api-image-tag>`, `<your-ui-image>`, and `<your-ui-image-tag>` with the appropriate values for your environment.
+   Replace `<your-image-registry>`, `<your-core-image>`, `<your-core-image-tag>`, `<your-core-api-image>`, `<your-core-api-image-tag>`, `<your-ui-image>`,
+   and `<your-ui-image-tag>` with the appropriate values for your environment.
 
    **Example**:
 
@@ -89,4 +151,5 @@ After ensuring all prerequisites are met and the Docker images are built and acc
 
 ## Yaku-CLI
 
-The `yaku-cli` is a command-line tool that can be used to interact with the Yaku Core API. More information about the `yaku-cli` can be found in our user docs [here](https://b-s-f.github.io/yaku/cli/index.html#).
+The `yaku-cli` is a command-line tool that can be used to interact with the Yaku Core API. More information about
+the `yaku-cli` can be found in our user docs [here](https://b-s-f.github.io/yaku/cli/index.html#).
