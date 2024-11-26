@@ -3,9 +3,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-import typescriptParser from '@typescript-eslint/parser';
-import typescriptPlugin from '@typescript-eslint/eslint-plugin';
-import prettierPlugin from 'eslint-plugin-prettier';
+import typescriptParser from '@typescript-eslint/parser'
+import typescriptPlugin from '@typescript-eslint/eslint-plugin'
+import prettierPlugin from 'eslint-plugin-prettier'
 
 export default [
   {
@@ -45,9 +45,6 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/',
-      '*/node_modules',
-      '**/tsconfig.json',
-      '**/dist',],
+    ignores: ['node_modules/', '*/node_modules', '**/tsconfig.json', '**/dist'],
   },
-];
+]
