@@ -14,7 +14,7 @@ have all the flexibility and features from Sphinx.
 
 The **latest main version** is always pushed directly to <https://b-s-f.github.io/yaku/>.
 
-[![.github/workflows/publish-user-docs-to-gh-pages.yml](https://github.com/B-S-F/yaku/actions/workflows/publish-user-docs-to-gh-pages.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/publish-user-docs-to-gh-pages.yml)
+[![.github/workflows/build-user-documentation.yml](https://github.com/B-S-F/yaku/actions/workflows/build-user-documentation.yml/badge.svg)](https://github.com/B-S-F/yaku/actions/workflows/build-user-documentation.yml)
 
 ## Quickstart
 
@@ -67,18 +67,6 @@ In this case, press `Ctrl-C` and `make clean` and try again.
 To test the docker image, run `make docker-image`. This command will build the
 docker image and then start the container. If executed successfully, your
 browser will open at <http://localhost:8888>.
-
-## Building a preview of a PR
-
-There is a GH Action workflow to publish a branch to a GitHub Pages instance.
-Go to <https://github.com/bosch-grow-pat/user-documentation/actions/workflows/publish-gh-pages.yml>
-and `Run workflow` for the branch of your PR.
-
-This will build the HTML documentation and publish it under
-<https://cuddly-adventure-1991k8p.pages.github.io/>.
-
-It will stay there until another branch is built, so only one branch can
-be deployed at a time.
 
 ## Guidelines & Tips
 

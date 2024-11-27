@@ -1,28 +1,30 @@
 # SPDX-FileCopyrightText: 2024 grow platform GmbH
 #
 # SPDX-License-Identifier: MIT
+name: Build user documentation
 
 on:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
-      - reopened
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - user-documentation/**
+  pull_request:
     paths:
       - user-documentation/**
 
-permissions:
-  contents: read
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: 3.12
@@ -43,4 +45,30 @@ jobs:
           make -C user-documentation openapi
           make -C user-documentation html
         env:
-          SPHINXOPTS: '-W'
+          SPHINXOPTS: -W -D todo_include_todos=${{ github.ref == 'refs/heads/main' && '0' || '1' }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: user-documentation/build/html
+      - name: Upload Github Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: user-documentation/build/html
+
+  deploy:
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

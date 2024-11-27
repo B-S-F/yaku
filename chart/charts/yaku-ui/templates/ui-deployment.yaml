@@ -69,7 +69,7 @@ spec:
           {{- if and (not (eq (toString .Values.enabled) "false")) .Values.enabled (not (eq (toString .Values.config.enabled) "false")) .Values.config.enabled }}
           volumeMounts:
             - name: backend-environments-config
-              mountPath: /usr/share/nginx/static/ui-config.json
+              mountPath: /usr/share/nginx/html/ui-config.json
               subPath: ui-config.json
           {{- end }}
       {{- if and (not (eq (toString .Values.enabled) "false")) .Values.enabled (not (eq (toString .Values.config.enabled) "false")) .Values.config.enabled }}
