@@ -4,7 +4,7 @@
 
 import { describe, expect, it, vi } from 'vitest'
 import * as jiraFetcher from '../src/fetch'
-import fetch, { Response } from 'node-fetch'
+import { fetch, Response } from 'undici'
 import { AppError } from '@B-S-F/autopilot-utils'
 
 const { getFilters, getHeaders } = jiraFetcher.__t
@@ -50,7 +50,7 @@ describe('getHeaders()', () => {
 })
 
 describe('fetchData()', () => {
-  vi.mock('node-fetch')
+  vi.mock('undici')
   const mockedFetch = vi.mocked(fetch)
   const jiraUrl = 'https://jira.atlassian.com',
     pat = 'test',
@@ -61,7 +61,7 @@ describe('fetchData()', () => {
       status: 500,
       text: vi.fn(),
     }
-    mockedFetch.mockResolvedValueOnce(mockedResponse as Response)
+    mockedFetch.mockResolvedValueOnce(mockedResponse as unknown as Response)
     await expect(
       async () =>
         await jiraFetcher.fetchData(

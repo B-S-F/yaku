@@ -33,7 +33,7 @@ describe('test_single_data.json', async () => {
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(jsonEvaluatorExecutable)).to.be.true
+    expect(fs.existsSync(jsonEvaluatorExecutable)).to.equal(true)
   })
 
   it('can be evaluated properly', async () => {
@@ -55,6 +55,6 @@ describe('test_single_data.json', async () => {
       expect(result.stdout).toContain(JSON.stringify(issue))
     }
     expect(results).toEqual(1)
-    expect(result.stderr).to.be.empty
+    expect(result.stderr).to.have.lengthOf(0)
   })
 })

@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import fetch from 'node-fetch'
-import { ProxyAgent } from 'proxy-agent'
+import { fetch, EnvHttpProxyAgent } from 'undici'
 import { AppError } from '@B-S-F/autopilot-utils'
 
 export interface JiraResponse {
@@ -19,7 +18,7 @@ export interface Dictionary {
 
 const SEARCH_PATH = 'rest/api/2/search'
 
-const fetchProxyAgent = new ProxyAgent()
+const fetchProxyAgent = new EnvHttpProxyAgent()
 
 const getFilters = (configData: any) => {
   return {
@@ -79,7 +78,7 @@ export const fetchData = async (
       mode: 'cors',
       headers: headers,
       body: JSON.stringify(body),
-      agent: fetchProxyAgent,
+      dispatcher: fetchProxyAgent,
     } as any)
     if (response.status !== 200) {
       const msg = await response.text()
@@ -90,6 +89,7 @@ export const fetchData = async (
     const responseText = await response.text()
     try {
       responseObj = JSON.parse(responseText)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       if (
         responseText.includes('Please activate JavaScript in your browser.')

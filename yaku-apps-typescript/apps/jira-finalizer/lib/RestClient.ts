@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import FormData from 'form-data'
-import fetch from 'node-fetch'
+import { fetch } from 'undici'
 
 export interface RestClient {
   post(path: string, body: any, additionalHeaders?: any): Promise<any>

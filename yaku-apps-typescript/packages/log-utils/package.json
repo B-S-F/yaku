@@ -33,6 +33,6 @@
   "keywords": ["yaml"],
   "files": ["dist"],
   "dependencies": {
-    "log-update": "^5.0.1"
+    "log-update": "^6.1.0"
   }
 }

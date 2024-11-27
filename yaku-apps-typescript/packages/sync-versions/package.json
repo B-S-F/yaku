@@ -15,6 +15,6 @@
     "sync-versions": "src/index.js"
   },
   "dependencies": {
-    "replace-in-file": "^6.3.5"
+    "replace-in-file": "^8.2.0"
   }
 }

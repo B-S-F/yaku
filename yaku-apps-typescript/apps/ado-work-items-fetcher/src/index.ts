@@ -87,6 +87,7 @@ function getEvidencePath() {
   const evidencePath: string = getPath(EVIDENCE_PATH_ENV_VAR)
   try {
     fs.accessSync(evidencePath, fs.constants.W_OK)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     throw new EnvironmentError(`${evidencePath} is not writable!`)
   }
@@ -102,6 +103,7 @@ function getConfigPath() {
   const configPath: string = getPath(CONFIG_FILE_ENV_VAR)
   try {
     fs.accessSync(configPath, fs.constants.R_OK)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     throw new EnvironmentError(`${configPath} is not readable!`)
   }

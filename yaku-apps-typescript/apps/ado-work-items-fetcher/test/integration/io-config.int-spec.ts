@@ -24,7 +24,7 @@ describe('I/O Configuration', () => {
   let mockServer: MockServer
 
   beforeAll(() => {
-    expect(fs.existsSync(adoFetcherExecutable)).to.be.true
+    expect(fs.existsSync(adoFetcherExecutable)).to.equal(true)
   })
 
   beforeEach(() => {

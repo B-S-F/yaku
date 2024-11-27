@@ -92,7 +92,7 @@ describe('Ado Fetcher', () => {
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(adoEvaluatorExecutable)).to.be.true
+    expect(fs.existsSync(adoEvaluatorExecutable)).to.equal(true)
   })
 
   it.each(testCases)('%s', async (testCase: TestCase) => {

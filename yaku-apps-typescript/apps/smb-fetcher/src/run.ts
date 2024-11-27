@@ -66,6 +66,7 @@ export const retry = async <T>(
   const logger = GetLogger()
   try {
     return await fn(smbPath, smbClient)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     if (retries > 1) {
       logger.warn(`retry SMB operation on ${smbPath}`)

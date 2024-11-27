@@ -28,6 +28,7 @@ function validateFilePath(filePath: string): void {
   }
   try {
     fs.accessSync(filePath, fs.constants.R_OK)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     throw new AppError(`${filePath} is not readable!`)
   }

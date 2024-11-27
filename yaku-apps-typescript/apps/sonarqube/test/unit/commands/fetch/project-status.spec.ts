@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import { writeFile } from 'fs/promises'
-import fetch, { Response } from 'node-fetch'
+import { fetch, Response } from 'undici'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   createApiUrl,
@@ -19,7 +19,7 @@ import { configureProxyTunnel } from '../../../../src/utils/configure-proxy-tunn
 describe('getProjectStatus', async () => {
   beforeEach(() => {
     vi.resetAllMocks()
-    vi.mock('node-fetch')
+    vi.mock('undici')
     vi.mock('../../../../src/commands/fetch/create-url')
   })
   const options = {
@@ -111,7 +111,7 @@ describe('getProjectStatus', async () => {
 describe('projectStatus', async () => {
   beforeEach(() => {
     vi.resetAllMocks()
-    vi.mock('node-fetch')
+    vi.mock('undici')
     vi.mock('../../../../src/commands/fetch/create-url')
     vi.mock('../../../../src/utils/configure-proxy-tunnel')
     vi.mock('fs/promises')

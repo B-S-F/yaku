@@ -138,6 +138,7 @@ describe('Git Fetcher BitBucket Branches', () => {
       let errorWasThrown = false
       try {
         await gitFetcherBitBucketBranches.fetchResource()
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         errorWasThrown = true
       }

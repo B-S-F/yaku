@@ -42,7 +42,7 @@ describe('Defender Autopilot RED status cases', () => {
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(defenderAutopilotExecutable)).to.be.true
+    expect(fs.existsSync(defenderAutopilotExecutable)).to.equal(true)
   })
 
   afterEach(async () => {
