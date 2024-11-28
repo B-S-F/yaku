@@ -176,6 +176,12 @@ def read_version_from_package(
     return wrapped_function
 
 
+class DebugOption(click.Option):
+    def handle_parse_result(self, ctx, opts, args):
+        ctx.debug = opts.get("debug", False)  # type: ignore
+        return super().handle_parse_result(ctx, opts, args)
+
+
 def make_autopilot_app(
     provider: ClickCommandProvider,
     *,
@@ -192,16 +198,7 @@ def make_autopilot_app(
             "'click_command' or 'click_subcommands'"
         )
 
-    def print_version(ctx: click.Context, param: click.Parameter, value: Any):
-        if not value or ctx.resilient_parsing:
-            return
-        version = version_callback()
-        click.echo(version.strip())
-        ctx.exit()
-
-    def main_cli_entrypoint_wrapper(ctx, colors: bool, debug: bool, *args, **kwargs):
-        ctx.color = colors  # necessary for click
-        # set up logging
+    def set_up_logging(debug: bool, colors: bool = False):
         log_level = os.getenv("LOG_LEVEL", "INFO").upper()
         if debug:
             log_level = "DEBUG"
@@ -224,6 +221,18 @@ def make_autopilot_app(
                 backtrace=False,
                 diagnose=False,
             )
+
+    def print_version(ctx: click.Context, param: click.Parameter, value: Any):
+        if not value or ctx.resilient_parsing:
+            return
+        set_up_logging(ctx.debug)  # type: ignore
+        version = version_callback()
+        click.echo(version.strip())
+        ctx.exit()
+
+    def main_cli_entrypoint_wrapper(ctx, colors: bool, debug: bool, *args, **kwargs):
+        ctx.color = colors  # necessary for click
+        set_up_logging(ctx.debug, colors)
         if click_command:
             click_command(*args, **kwargs)
 
@@ -256,6 +265,7 @@ def make_autopilot_app(
                     "--version",
                     is_flag=True,
                     callback=print_version,
+                    cls=DebugOption,
                     expose_value=False,
                     is_eager=True,
                     help="Output version information and exit.",
