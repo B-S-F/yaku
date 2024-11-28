@@ -92,7 +92,7 @@ describe('Jira evaluator', () => {
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(jiraEvaluatorExecutable)).to.be.true
+    expect(fs.existsSync(jiraEvaluatorExecutable)).to.equal(true)
   })
 
   it.each(testCases)('%s', async (testCase: TestCase) => {
@@ -112,7 +112,6 @@ describe('Jira evaluator', () => {
       env: jiraEnvironment,
     })
 
-    //console.log(result.stdout[0])
     expect(result.exitCode).toEqual(testCase.expectExitCode)
     expect(result.stdout.length).toBeGreaterThan(0)
     expect(retrieveStatus(result.stdout)).toEqual(testCase.expectedStatus)

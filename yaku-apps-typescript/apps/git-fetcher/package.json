@@ -27,7 +27,6 @@
     "@B-S-F/autopilot-utils": "^0.11.0",
     "date-fns": "^2.30.0",
     "fs-extra": "^10.1.0",
-    "node-fetch": "^3.2.10",
     "process": "^0.11.10",
     "yaml": "^2.2.1",
     "zod": "^3.22.3",

@@ -182,6 +182,7 @@ describe('Git Fetcher Metadata And Diff', () => {
       let errorWasThrown = false
       try {
         await gitFetcherBitbucketCommitsAndDiff.fetchResource()
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         errorWasThrown = true
       }

@@ -15,7 +15,6 @@ import { evaluate } from '../../src/evaluate'
 import Formatter from '../../src/formatter'
 
 vi.mock('@B-S-F/json-evaluator-lib', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   evalCheck: vi.fn((condition: string, ref: string, data: any) => {
     switch (ref) {
       case '$.value1':

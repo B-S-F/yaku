@@ -139,6 +139,7 @@ describe('Git Fetcher BitBucket Tags', () => {
       let errorWasThrown = false
       try {
         await gitFetcherBitBucketTags.fetchResource()
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         errorWasThrown = true
       }

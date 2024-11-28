@@ -34,7 +34,7 @@ describe('Defender Autopilot GREEN status cases', () => {
   )
 
   beforeAll(() => {
-    expect(fs.existsSync(defenderAutopilotExecutable)).to.be.true
+    expect(fs.existsSync(defenderAutopilotExecutable)).to.equal(true)
   })
 
   afterEach(async () => {

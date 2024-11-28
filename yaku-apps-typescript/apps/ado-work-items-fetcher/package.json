@@ -20,7 +20,7 @@
     "@B-S-F/eslint-config": "*",
     "@B-S-F/typescript-config": "*",
     "@types/node": "*",
-    "@types/tunnel": "^0.0.2",
+    "@types/tunnel": "^0.0.7",
     "@vitest/ui": "*",
     "c8": "*",
     "eslint": "*",

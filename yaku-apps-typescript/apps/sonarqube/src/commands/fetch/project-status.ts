@@ -4,10 +4,7 @@
 
 import { AppOutput, GetLogger } from '@B-S-F/autopilot-utils'
 import { writeFile } from 'fs/promises'
-import { Agent as HttpAgent } from 'http'
-import { Agent as HttpsAgent } from 'https'
-import fetch from 'node-fetch'
-import { configureProxyTunnel } from '../../utils/configure-proxy-tunnel.js'
+import { fetch, EnvHttpProxyAgent } from 'undici'
 import {
   createApiUrl,
   createAuthHeader,
@@ -42,7 +39,7 @@ export async function projectStatus(
     const httpsProxy = process.env.HTTP_PROXY
     logger.debug(`httpProxy: ${httpProxy}`)
     logger.debug(`httpsProxy: ${httpsProxy}`)
-    proxyTunnel = configureProxyTunnel(options.protocol, httpsProxy, httpProxy)
+    proxyTunnel = new EnvHttpProxyAgent()
   }
 
   const projectStatus = await getProjectStatus(
@@ -88,7 +85,7 @@ export async function getProjectStatus(
   protocol: 'http' | 'https',
   projectKey: string,
   accessToken: string,
-  proxyTunnel?: HttpAgent | HttpsAgent,
+  proxyTunnel?: EnvHttpProxyAgent,
 ): Promise<ProjectStatus> {
   const logger = GetLogger()
   const apiUrl = createApiUrl(
@@ -105,7 +102,7 @@ export async function getProjectStatus(
       'Content-Type': 'application/json',
       Authorization: createAuthHeader(accessToken),
     },
-    agent: proxyTunnel,
+    dispatcher: proxyTunnel,
   })
 
   const text = await response.text()

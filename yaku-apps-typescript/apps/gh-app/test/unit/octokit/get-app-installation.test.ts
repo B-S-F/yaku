@@ -29,7 +29,6 @@ describe('getAppInstallation', () => {
     // Arrange
     const org = 'mockOrg'
     const repo = 'mockRepo'
-    vi.mocked
 
     // Act
     await getAppInstallation(octokitMock, org, repo)

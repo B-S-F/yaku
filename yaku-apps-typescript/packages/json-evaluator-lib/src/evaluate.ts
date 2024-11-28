@@ -165,6 +165,7 @@ export const evalConcatenation = (
       }
       try {
         return checks[str].status
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         throw new Error(
           'Error in concatenation condition. Please check the concatenation condition.',

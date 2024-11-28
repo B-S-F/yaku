@@ -3,4 +3,4 @@
 //
 // SPDX-License-Identifier: MIT
 
-module.exports = require('@B-S-F/eslint-config/eslint-preset')
+export { default } from '@B-S-F/eslint-config/eslint-preset.js'
