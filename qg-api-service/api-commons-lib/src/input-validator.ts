@@ -10,6 +10,7 @@ const maxIdPostgresSerial4 = 2147483647
 
 const numberSchema = z.number().int().positive().max(maxIdPostgresSerial4)
 const stringSchema = z.string().trim().min(1)
+const uuidSchema = z.string().trim().uuid()
 
 const dateSchema = z.coerce.date()
 
@@ -24,6 +25,14 @@ export function validateId(receivedId: any): void {
     throw new BadRequestException(fromZodError(err).message, {
       cause: err,
     })
+  }
+}
+
+export function validateUUID(receivedUUID: any): void {
+  try {
+    uuidSchema.parse(receivedUUID)
+  } catch (err) {
+    throw new BadRequestException(fromZodError(err).message, { cause: err })
   }
 }
 
