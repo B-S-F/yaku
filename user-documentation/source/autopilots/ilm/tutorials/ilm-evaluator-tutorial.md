@@ -13,7 +13,6 @@ SPDX-License-Identifier: MIT
 ILM Evaluator Autopilot is a tool that allows you to retrieve the WorkOn status for a specific SharePoint file, together with the workflow requestor and approvers. This tutorial provides an introduction to ILM Evaluator and demonstrates how to configure it. To understand this guide, it is essential to have completed the following steps:
 
 * Obtain access to a Bosch SharePoint server
-* Complete {doc}`../../../onboarding`
 
 ### Use-cases
 

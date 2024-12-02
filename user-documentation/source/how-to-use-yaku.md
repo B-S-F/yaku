@@ -31,7 +31,8 @@ The {file}`qg-config.yaml` is the heart of the service. Here, you can define the
 
 The autopilot apps (see {doc}`autopilots/index` for more information), like SharePoint fetcher or JSON evaluator, require their distinct configuration files. They all have different configuration options and variables that you can set to adapt them to your needs.
 
-In the {doc}`onboarding`, you will learn more about all of those files. For now, we recommend you to continue with the quickstart tutorial if you want to see a quick demo of the service and perform a use case in the web UI.
+We recommend to continue with the quickstart tutorial if you want to see a
+quick demo of the service and perform a use case in the web UI.
 
 Continue now to the next page about the {doc}`quickstart`.
 

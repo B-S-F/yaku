@@ -5,9 +5,10 @@
 """
 Handle evaluator results.
 
-# Usage
+Usage
+-----
 
-Just import the `RESULTS` singleton and append results to it:
+Just import the `RESULTS` singleton and append results to it::
 
     from yaku.autopilot_utils.results import RESULTS, Result
 
@@ -15,7 +16,7 @@ Just import the `RESULTS` singleton and append results to it:
 
 When using the click app template in [cli_base.py](./cli_base.py), make
 sure to define a `click_evaluator_callback` which receives the collected
-results and must return a status and a reason:
+results and must return a status and a reason::
 
     def click_evaluator_callback(results: ResultsCollector) -> Tuple[str, str]:
         for result in results:
@@ -23,11 +24,12 @@ results and must return a status and a reason:
             # ... and define reason, status
         return status, reason
 
-# Testing
+Testing
+-------
 
 During tests, when modifying the `RESULTS` singleton, it must be
 reset after the test. This can be done with the `protect_results`
-decorator which you simply put around your test function:
+decorator which you simply put around your test function::
 
     from yaku.autopilot_utils.results import RESULTS, protect_results
 
@@ -49,6 +51,12 @@ from typing import Any, Callable, Tuple
 
 @dataclass
 class Output:
+    """
+    Simple data class to store `key` and `value` of an output.
+
+    Has an extra method `to_json` to convert the output data back to a JSON line.
+    """
+
     key: str
     value: Any
 
@@ -58,6 +66,12 @@ class Output:
 
 @dataclass
 class Result:
+    """
+    Simple data class to store a `result` of an autopilot app.
+
+    Has fields `criterion`, `fulfilled`, and `justification`.
+    """
+
     criterion: str
     fulfilled: bool
     justification: str
@@ -76,6 +90,15 @@ class Result:
 
 
 class ResultsCollector(list[Result]):
+    """
+    List of :py:class:`Result` objects.
+
+    Is used for the :py:data:`RESULTS` singleton to collect all results
+    of an autopilot run before the final evaluation.
+
+    Has an `append(result: Result)` method and a `to_json()` method.
+    """
+
     def append(self, result: Result) -> None:
         if not isinstance(result, Result):
             raise TypeError("Given result is not a Result object!")
@@ -92,6 +115,12 @@ class ResultsCollector(list[Result]):
 
 
 RESULTS = ResultsCollector()
+"""Singleton for storing and accessing results.
+
+You can use it in your autopilot to store results for later evaluation::
+
+    RESULTS.append(Result(criterion="...", fulfilled=False, justification="..."))
+"""
 
 ResultHandler = Callable[[ResultsCollector], Tuple[str, str]]
 
@@ -178,7 +207,7 @@ def DEFAULT_EVALUATOR(results: ResultsCollector):
     Evaluate results and return RED status if any criterion is not fulfilled.
 
     This is the default implementation of the evaluator and can be used
-    in papsr or autopilot apps. Simply use it as:
+    in papsr or autopilot apps. Simply use it as::
 
         class CLI:
             click_evaluator_callback = DEFAULT_EVALUATOR

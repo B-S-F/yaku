@@ -69,7 +69,8 @@ class SharepointClient:
 
     def _post(self, url, headers=None, data=None) -> Response:
         custom_headers = {}
-        custom_headers.update(headers)
+        if headers is not None:
+            custom_headers.update(headers)
         if self._force_ip:
             url, host = self._exchange_hostname_by_forced_ip_address(url)
             custom_headers["Host"] = host
