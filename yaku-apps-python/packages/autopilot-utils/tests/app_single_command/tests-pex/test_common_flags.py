@@ -14,6 +14,7 @@ def test_pex_version_flag():
             "--version",
         ],
         encoding="utf-8",
+        stderr=subprocess.STDOUT,
     )
 
     assert output.strip() == file_version.strip()
@@ -26,6 +27,7 @@ def test_pex_help_flag():
             "--help",
         ],
         encoding="utf-8",
+        stderr=subprocess.STDOUT,
     )
 
     assert output.strip().startswith("Usage: ")
