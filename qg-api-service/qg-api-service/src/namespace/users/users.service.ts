@@ -21,9 +21,9 @@ import { SYSTEM_REQUEST_USER } from '../module.utils'
 
 const CACHE_TIMEOUT = 1000 * 60 * 5 // 5 minutes
 export const SYSTEM_USER = new UserInNamespaceDto()
-SYSTEM_USER.id = 'SYSTEM_ACTOR'
+SYSTEM_USER.id = '00000000-0000-0000-0000-000000000000'
 SYSTEM_USER.username = 'SYSTEM_ACTOR'
-SYSTEM_USER.displayName = 'SYSTEM_ACTOR'
+SYSTEM_USER.displayName = 'Sytem actor (machine user)'
 
 export const DELETED_USER = new UserInNamespaceDto()
 DELETED_USER.id = 'DELETED_USER'

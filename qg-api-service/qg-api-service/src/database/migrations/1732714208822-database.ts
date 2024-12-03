@@ -27,6 +27,9 @@ export class Database1732714208822 implements MigrationInterface {
       `ALTER TABLE "user_profile" ALTER COLUMN "id" SET DATA TYPE uuid USING "id"::uuid`,
     )
     await queryRunner.query(
+      `ALTER TABLE "findings" ALTER COLUMN "resolver" SET DATA TYPE uuid USING "resolver"::uuid`,
+    )
+    await queryRunner.query(
       `ALTER TABLE "comment" ALTER COLUMN "createdBy" SET DATA TYPE uuid USING "createdBy"::uuid`,
     )
     await queryRunner.query(
@@ -94,6 +97,9 @@ export class Database1732714208822 implements MigrationInterface {
     )
     await queryRunner.query(
       `ALTER TABLE "comment" ALTER COLUMN "createdBy" SET DATA TYPE varchar`,
+    )
+    await queryRunner.query(
+      `ALTER TABLE "findings" ALTER COLUMN "resolver" SET DATA TYPE varchar(100)`,
     )
     await queryRunner.query(
       `ALTER TABLE "user_profile" ALTER COLUMN "id" SET DATA TYPE varchar`,
