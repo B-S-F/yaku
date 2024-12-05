@@ -12,7 +12,7 @@ This tutorial does not configure any fetcher. It only uses the JSON evaluator to
 
 ## Introduction
 
-With the JSON evaluator, you can evaluate JSON files based on their content. To understand this guide, it is important that you have already completed the steps in {doc}`../../../onboarding`.
+With the JSON evaluator, you can evaluate JSON files based on their content.
 
 ### Use-case
 

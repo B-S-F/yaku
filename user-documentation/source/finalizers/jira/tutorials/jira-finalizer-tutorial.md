@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 
 ## Introduction
 
-The Jira finalizer allows you to add comments or attach files to Jira issues based on the results of a qg run. To understand this guide, it is important that you have already completed the steps in {doc}`../../../onboarding`.
+The Jira finalizer allows you to add comments or attach files to Jira issues based on the results of a qg run.
 
 ### Use-Case
 

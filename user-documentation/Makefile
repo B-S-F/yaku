@@ -95,7 +95,7 @@ checklinks:
 
 .PHONY: watch
 watch: $(CORE_OPENAPI_SPEC)
-	.venv/bin/sphinx-autobuild --ignore '*.swp' "$(SOURCEDIR)" "$(BUILDDIR)/autobuild" $(SPHINXOPTS) $(O)
+	.venv/bin/sphinx-autobuild --ignore '*.swp' --ignore '__pycache__' --watch '../yaku-apps-python/packages/autopilot-utils/' "$(SOURCEDIR)" "$(BUILDDIR)/autobuild" $(SPHINXOPTS) $(O)
 
 .PHONY: openapi
 openapi:

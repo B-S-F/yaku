@@ -6,6 +6,10 @@ import os
 import sys
 
 sys.path.append(os.path.abspath("./_ext"))
+sys.path.append("../../yaku-apps-python/packages/autopilot-utils/src/")
+import yaku.autopilot_utils
+
+yaku.autopilot_utils
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -26,15 +30,17 @@ extensions = [
     "myst_parser",
     "sphinx_design",
     "sphinxcontrib.mermaid",
-    #    "sphinx.ext.autodoc",
-    #    "sphinx.ext.autosummary",
-    #    "sphinx.ext.napoleon",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.napoleon",
     "sphinx.ext.todo",
-    #    "sphinx_autodoc_typehints",  # must come after sphinx.ext.napoleon!
+    "sphinx_autodoc_typehints",  # must come after sphinx.ext.napoleon!
     "sphinx_copybutton",
     "sphinxcontrib.openapi",
     "ytvideo",
 ]
+
+default_role = "code"
 
 myst_substitutions = {
     "PRODUCTNAME": f"{project}",
@@ -72,15 +78,15 @@ myst_enable_extensions = [
 mermaid_version = "10.8.0"
 
 # autodoc settings
-# autoclass_content = "both"
-# autodoc_default_flags = []
-# autodoc_mock_imports = ["dateutil", "loguru", "pytz", "pydantic"]
-# autosummary_generate = True
+autoclass_content = "both"
+autodoc_default_flags = []
+autodoc_mock_imports = ["dateutil", "loguru", "pytz", "pydantic"]
+autosummary_generate = True
 
 # Napoleon settings
-# napoleon_google_docstring = False
-# napoleon_numpy_docstring = True
-# napoleon_use_rtype = False
+napoleon_google_docstring = False
+napoleon_numpy_docstring = True
+napoleon_use_rtype = False
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
