@@ -17,7 +17,11 @@ export async function streamToString(stream: Readable): Promise<string> {
 
 export function decodeBufferToUTF8EncodedString(data: Buffer): string {
   try {
-    return new TextDecoder('utf8', { fatal: true }).decode(data)
+    let decodedString = new TextDecoder('utf8', { fatal: true }).decode(data)
+    if (/\r\n/.test(decodedString)) {
+      decodedString = decodedString.replace(/\r\n/g, '\n')
+    }
+    return decodedString
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     return undefined
