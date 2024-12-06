@@ -52,9 +52,9 @@ export class TaskEntity {
   title: string
   @Column({ nullable: true })
   description: string
-  @Column({ nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   createdBy: string
-  @Column({ nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   lastModifiedBy: string
   @Column({ type: 'timestamptz', nullable: false })
   creationTime: Date
@@ -62,7 +62,7 @@ export class TaskEntity {
   lastModificationTime: Date
   @Column({ nullable: false, default: false })
   closed: boolean
-  @Column('text', { nullable: true, array: true })
+  @Column('uuid', { nullable: true, array: true })
   assignees: string[]
 
   DeepCopy(): TaskEntity {

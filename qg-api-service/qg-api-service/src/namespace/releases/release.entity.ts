@@ -35,9 +35,9 @@ export class ReleaseEntity {
   approvalMode: ApprovalMode
   @ManyToOne(() => ConfigEntity, { nullable: false })
   config: ConfigEntity
-  @Column({ nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   createdBy: string
-  @Column({ nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   lastModifiedBy: string
   @Column({ type: 'timestamptz', nullable: false })
   plannedDate: Date
