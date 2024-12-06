@@ -7,7 +7,7 @@ import { SubscriptionService } from './subscription.service'
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { SubscriptionEntity } from './entity/subscription.entity'
-import { BadRequestException, HttpException } from '@nestjs/common'
+import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { Logger, LoggerModule, PinoLogger } from 'nestjs-pino'
 import { SubscriptionDto } from './subscription.dto'
 import { UsersModule } from '../users/users.module'
@@ -78,7 +78,7 @@ describe('SubscriptionService', () => {
         subscriptionService.createSubscription(userId, releaseId),
       ).rejects.toThrow(BadRequestException)
     })
-    it('should throw an HttpException with CONFLICT status if there is an existing subscription ', async () => {
+    it('should throw an BadRequestException if there is an existing subscription ', async () => {
       const userId = 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d'
       const releaseId = 1
       const subscriptionEntity: SubscriptionEntity = {
@@ -96,10 +96,10 @@ describe('SubscriptionService', () => {
 
       await expect(
         subscriptionService.createSubscription(userId, releaseId),
-      ).rejects.toThrow(HttpException)
+      ).rejects.toThrow(BadRequestException)
     })
 
-    it('should throw an HttpException with EXPECTATION_FAILED status if creation failed', async () => {
+    it('should throw an BadRequestException if creation failed', async () => {
       const userId = 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d'
       const releaseId = 1
 
@@ -114,7 +114,7 @@ describe('SubscriptionService', () => {
 
       await expect(
         subscriptionService.createSubscription(userId, releaseId),
-      ).rejects.toThrow(HttpException)
+      ).rejects.toThrow(BadRequestException)
     })
   })
 
@@ -135,7 +135,7 @@ describe('SubscriptionService', () => {
       expect(result).toEqual(true)
     })
 
-    it('should throw a HttpException with NOT_FOUND status if subscription is not found', async () => {
+    it('should throw a NotFoundException if subscription is not found', async () => {
       const userId = 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d'
       const releaseId = 1
       const subscriptionEntity: any = { affected: 0 }
@@ -146,7 +146,7 @@ describe('SubscriptionService', () => {
 
       await expect(
         subscriptionService.deleteSubscription(userId, releaseId),
-      ).rejects.toThrow(HttpException)
+      ).rejects.toThrow(NotFoundException)
     })
   })
 

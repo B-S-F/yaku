@@ -4,10 +4,9 @@
 
 import {
   BadRequestException,
-  HttpException,
-  HttpStatus,
   Inject,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { SubscriptionEntity } from './entity/subscription.entity'
@@ -56,18 +55,16 @@ export class SubscriptionService {
       .getOne()
 
     if (existingSubscription) {
-      throw new HttpException(
+      throw new BadRequestException(
         `Subscription of user with id: ${userId} to the release with id: ${releaseId} already exists.`,
-        HttpStatus.CONFLICT,
       )
     } else {
       const subscription = this.repository.create(newSubscription)
       const createdSubscription = await this.repository.save(subscription)
 
       if (!createdSubscription)
-        throw new HttpException(
+        throw new BadRequestException(
           `Subscription of user with id: ${userId} to the release with id: ${releaseId} failed to create.`,
-          HttpStatus.EXPECTATION_FAILED,
         )
       return true
     }
@@ -83,9 +80,8 @@ export class SubscriptionService {
     })
 
     if (!deletedSubscription.affected)
-      throw new HttpException(
+      throw new NotFoundException(
         `Subscription of user with id: ${userId} to the release with id: ${releaseId} was not found.`,
-        HttpStatus.NOT_FOUND,
       )
     return true
   }
