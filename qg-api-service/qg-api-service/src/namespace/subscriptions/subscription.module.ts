@@ -8,9 +8,13 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { SubscriptionController } from './subscription.controller'
 import { SubscriptionService } from './subscription.service'
 import { UsersModule } from '../users/users.module'
+import { ReleaseEntity } from '../releases/release.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SubscriptionEntity]), UsersModule],
+  imports: [
+    TypeOrmModule.forFeature([SubscriptionEntity, ReleaseEntity]),
+    UsersModule,
+  ],
   controllers: [SubscriptionController],
   providers: [SubscriptionService],
   exports: [SubscriptionService],
