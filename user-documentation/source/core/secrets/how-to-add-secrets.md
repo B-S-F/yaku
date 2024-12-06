@@ -47,10 +47,6 @@ See the section on secrets in our API description: {http:get}`/api/v1/namespaces
 
 ## Via the Swagger UI
 
-```{todo}
-Write a tutorial/howto for authentication in Swagger and link below.
-```
-
 1. Authenticate yourself in the Swagger UI of your Yaku UI instance.
 2. Head to the {http:post}`/api/v1/namespaces/{namespaceId}/secrets` endpoint.
 3. Click on the row to expand it.

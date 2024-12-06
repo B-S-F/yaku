@@ -11,7 +11,6 @@ SPDX-License-Identifier: MIT
 Git Fetcher Autopilot is a tool that allows you to fetch pull requests from a specified project and resource of your organization on GitHub or Bitbucket platforms. This tutorial provides an introduction to Git Fetcher and demonstrates how to configure it. To understand this guide, it is essential to have completed the following steps:
 
 * Familiarize yourself with [GitHub](https://docs.github.com) or [Bitbucket](https://www.atlassian.com/software/bitbucket/guides/basics/bitbucket-interface#your-work) platforms
-* Complete {doc}`../../../onboarding`
 
 ### Use-case
 

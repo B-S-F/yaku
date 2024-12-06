@@ -12,7 +12,7 @@ This tutorial offers an example of how you can configure the Splunk Fetcher usin
 
 ## Introduction
 
-With the Splunk fetcher, you can fetch and store data from Splunk via search queries. To understand this guide, it is important that you have already completed the steps in {doc}`../../../onboarding`.
+With the Splunk fetcher, you can fetch and store data from Splunk via search queries.
 
 ### Use-case
 

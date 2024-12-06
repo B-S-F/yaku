@@ -81,6 +81,7 @@ ui/index
 reference/changelog/index
 reference/rest-api/index
 reference/interfaces/index
+reference/python/index
 glossary
 genindex
 ```

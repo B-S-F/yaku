@@ -2,6 +2,23 @@
 #
 # SPDX-License-Identifier: MIT
 
+"""
+Collection of various exception classes for reporting different types of autopilot errors.
+
+There are two main types of exception classes:
+
+* :py:exc:`AutopilotException` (used for wrapping internal failures into more helpful error messages)
+
+  * :py:exc:`AutopilotError`
+
+* :py:exc:`AutopilotFailure` (for all errors which the user might be able to resolve, e.g. configuration mistakes)
+
+  * :py:exc:`AutopilotConfigurationError`
+  * :py:exc:`EnvironmentVariableError`
+  * :py:exc:`AutopilotFileNotFoundError`
+  * :py:exc:`FileNotFoundError`
+"""
+
 __all__ = [
     "AutopilotConfigurationError",
     "AutopilotError",
@@ -11,19 +28,6 @@ __all__ = [
     "EnvironmentVariableError",
     "FileNotFoundError",
 ]
-
-"""
-There are two main types of exception classes:
-
-AutopilotException (used for wrapping internal failures into more helpful error messages)
-- AutopilotError
-
-AutopilotFailure (for all errors which the user might be able to resolve, e.g. configuration mistakes)
-- AutopilotConfigurationError
-- EnvironmentVariableError
-- AutopilotFileNotFoundError
-- FileNotFoundError
-"""
 
 
 class AutopilotFailure(Exception):
@@ -78,7 +82,7 @@ class AutopilotError(AutopilotException):
     Exception for (more or less) unexpected autopilot errors.
 
     For example can be used to annotate builtin exceptions
-    with extra message, e.g.:
+    with extra message, e.g.::
 
         try:
             ...

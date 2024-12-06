@@ -12,7 +12,6 @@ The [GitHub CLI](https://cli.github.com/) is a command-line tool provided by Git
 
 - Familiarize yourself with [GitHub](https://docs.github.com)
 - Familiarize yourself with [GitHub CLI](https://cli.github.com/)
-- Complete {doc}`../../../onboarding`
 
 ### Use-case
 
