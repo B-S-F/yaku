@@ -7,6 +7,7 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiForbiddenResponse,
+  ApiNotFoundResponse,
   ApiOAuth2,
   ApiOkResponse,
   ApiOperation,
@@ -80,6 +81,7 @@ export class SubscriptionController {
   })
   @HttpCode(200)
   @ApiBadRequestResponse({ description: 'Constraint violation on input data' })
+  @ApiNotFoundResponse({ description: 'Release not found' })
   @ApiOkResponse({ description: 'Subscribe/unsubscribe successful.' })
   @ApiBody({ type: SubscriptionPostDto })
   async manageSubscription(
