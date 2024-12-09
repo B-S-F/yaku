@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2024 grow platform GmbH
-#
-# SPDX-License-Identifier: MIT
-
 - file: 'Folder/Document.docx'
         # ↑ Glob pattern for the file to be checked with the following rules
   rules:

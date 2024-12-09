@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2024 grow platform GmbH
-#
-# SPDX-License-Identifier: MIT
-
 query: "project = PROJECT1 and issuetype in ('Task')"
 neededFields:
   - "summary"

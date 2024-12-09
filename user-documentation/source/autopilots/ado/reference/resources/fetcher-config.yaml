@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2024 grow platform GmbH
-#
-# SPDX-License-Identifier: MIT
-
 workItems:
   query: 'wiql query' # A WiQL query
   neededFields: # List of work item fields to fetch. Default fields are: State and Title

@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2024 grow platform GmbH
-#
-# SPDX-License-Identifier: MIT
-
 - files: 'OneDriving_Q-Activity-List.xlsx(1)/*' # ← first comes a `files` section with a wildcard
   title: 'File link title' # ← needed if you want a message with the link of the selected file
   select: # ← list of property checks, similar to Sharepoint evaluator

@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2024 grow platform GmbH
-#
-# SPDX-License-Identifier: MIT
-
 destination_path: <SomePath>
 is_cloud: True / False
 project_path: <SomeProjectPath>
