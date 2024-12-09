@@ -26,7 +26,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common'
-import { validateBody } from '@B-S-F/api-commons-lib'
+import { validateBody, validateId, validateUUID } from '@B-S-F/api-commons-lib'
 import { SubscriptionService } from './subscription.service'
 import { z } from 'zod'
 import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
@@ -132,6 +132,8 @@ export class SubscriptionController {
     @Param('userId') userId: string,
     @Param('releaseId') releaseId: number,
   ): Promise<SubscriptionDto> {
+    validateId(releaseId)
+    validateUUID(userId)
     try {
       return this.subscriptionService.getSubscriptionStatus(userId, releaseId)
     } catch (err) {
