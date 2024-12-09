@@ -47,7 +47,7 @@ export class SubscriptionService {
     }
 
     try {
-      const release = await this.releaseRepository
+      await this.releaseRepository
         .createQueryBuilder('release')
         .where('release.id = :releaseId', { releaseId })
         .getOneOrFail()
