@@ -81,15 +81,6 @@ sonarqube/index
 splunk/index
 ```
 
-```{todo}
-The following autopilots are still not added to this list because they are BCI specific:
-- Whitesource fetcher + evaluator
-- Docupedia evaluator
-- Fossid evaluator
-
-Add them once they are updated to be generic or required by customers as they are
-```
-
 | Autopilot Apps                                 | Fetcher | Evaluator |
 | ---------------------------------------------- | ------- | --------- |
 | [Azure DevOps WorkItems](ado/index)            | x       | x         |

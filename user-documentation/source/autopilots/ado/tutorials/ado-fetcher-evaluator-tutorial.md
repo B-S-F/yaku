@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 
 ## Introduction
 
-With the ado fetcher and evaluator, you can fetch tickets/work items from an ado project of your organization and subsequently check, whether their properties meet certain conditions. This Tutorial gives an introduction to the Ado fetcher and evaluator and demonstrates how you can configure them. To understand this guide, it is important that you have already completed the {doc}`../../../onboarding`.
+With the ado fetcher and evaluator, you can fetch tickets/work items from an ado project of your organization and subsequently check, whether their properties meet certain conditions. This Tutorial gives an introduction to the Ado fetcher and evaluator and demonstrates how you can configure them.
 
 For this tutorial, we're using the following example use case:
 

@@ -229,7 +229,7 @@ html[data-theme="light"] {
   --pst-color-blockquote-notch: #677384;
   --pst-color-inline-code: var(--yaku-color-blue-40);
   --pst-color-inline-code-links: #085d6c;
-  --pst-color-target: var(--yaku-color-violet);
+  --pst-color-target: var(--pst-color-accent-bg);
   --pst-color-table: #14181e;
   --pst-color-table-row-hover-bg: var(--yaku-color-petrol-90);
   --pst-color-table-inner-border: #e5e7ea;

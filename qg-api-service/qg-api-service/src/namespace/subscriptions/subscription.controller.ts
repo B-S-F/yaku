@@ -23,6 +23,8 @@ import {
   Req,
   HttpCode,
   Get,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common'
 import { validateBody, validateId, validateUUID } from '@B-S-F/api-commons-lib'
 import { SubscriptionService } from './subscription.service'
@@ -105,11 +107,21 @@ export class SubscriptionController {
 
       throw new Error('Operation unknown')
     } catch (err) {
-      const keyword = body.operation == 'subscribe' ? 'to' : 'from'
-      this.logger.error(
-        `Could not ${body.operation} the user with id: ${userKeyCloakSub} ${keyword} the release with id: ${body.releaseId} due to ${err}`,
-      )
-      throw err
+      if (err.message.includes('already exists')) {
+        throw new HttpException(err.message, HttpStatus.CONFLICT)
+      }
+      if (err.message.includes('failed to create')) {
+        throw new HttpException(err.message, HttpStatus.EXPECTATION_FAILED)
+      }
+      if (err.message.includes('not found')) {
+        throw new HttpException(err.message, HttpStatus.NOT_FOUND)
+      } else {
+        const keyword = body.operation == 'subscribe' ? 'to' : 'from'
+        this.logger.error(
+          `Could not ${body.operation} the user with id: ${userKeyCloakSub} ${keyword} the release with id: ${body.releaseId} due to ${err}`,
+        )
+        throw err
+      }
     }
   }
 

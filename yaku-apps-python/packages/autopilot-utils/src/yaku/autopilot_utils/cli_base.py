@@ -12,12 +12,12 @@ This module provides some utility functions for easily creating
 Python apps without having to write a lot of boilerplate code
 for command line argument parsing, logging setup, result handling, etc.
 
-There are example applications available in the `tests/app_*` folders.
+There are example applications available in the `tests/app_* <https://github.com/B-S-F/yaku/tree/main/yaku-apps-python/packages/autopilot-utils/tests>`_ folders.
 
 Simple App
 ----------
 
-A very simple (fetcher) app looks like this:
+A very simple (fetcher) app looks like this::
 
     # Module yaku.app_single_command.cli
     import click
@@ -49,22 +49,24 @@ A very simple (fetcher) app looks like this:
     if __name__ == "__main__":
         cli()
 
-The `BUILD` file looks like this:
+The :file:`BUILD` file looks like this::
 
     pex_binary(
         name="app_single_command",
         entry_point="yaku.app_single_command.cli",  # the name of the module above
     )
 
-All the setup of the app happens in the `make_autopilot_app` function.
+All the setup of the app happens in the :py:func:`make_autopilot_app` function.
 It requires two arguments:
+
 * a `provider` which can be a class or a module.
-* a `package_with_version_file`, which must be a package name inside which a `_version.txt` file
-  is located which contains the app version number.
+* a `package_with_version_file`, which must be a package name inside which a
+  :file:`_version.txt` file is located which contains the app version number.
 
 The `provider` class (could also be a module) usually has three attributes:
+
 * A `click_name` string which contains the app name (should be the same as the
-  name of the pex binary in the `BUILD` file).
+  name of the pex binary in the :file:`BUILD` file).
 * A `click_setup` (which can be omitted or an empty list) which contains a list
   of `click.option` or `click.argument` decorators (but omit the `@`). Use those
   decorators to add arguments or options to your app.
@@ -73,12 +75,13 @@ The `provider` class (could also be a module) usually has three attributes:
   contains the app logic.
 
 For more complex use-cases, other attributes are also possible:
+
 * `click_evaluator_callback` needs to be defined if results are collected
   during the execution of the `click_command` function.
 * `click_subcommands` can be used to define subcommands for a main command,
   e.g. when having an Excel evaluator which can be called like
-  `excel-evaluate cell --location=A1 --equals="yes"` or like
-  `excel-evaluate column --column-index=F --values="yes|no"`.
+  :command:`excel-evaluate cell --location=A1 --equals="yes"` or like
+  :command:`excel-evaluate column --column-index=F --values="yes|no"`.
 
 
 Click argument validation
@@ -87,9 +90,10 @@ Click argument validation
 When using the validation `callback=...` argument for `click.option`, you need
 to adhere to the way how click is handling exceptions.
 
-Instead of raising `AutopilotConfigurationError` or similar exceptions from
-:py:mod:`yaku.autopilot_utils.errors`, use `click.BadParameter` or `click.UsageError`
-instead.
+Instead of raising
+:py:exc:`~yaku.autopilot_utils.errors.AutopilotConfigurationError` or similar
+exceptions from :py:mod:`yaku.autopilot_utils.errors`, use `click.BadParameter`
+or `click.UsageError` instead.
 
 For details, see :py:class:`ClickUsageErrorHandlerDecorator` below.
 
@@ -98,19 +102,27 @@ Complex apps/evaluators
 -----------------------
 
 There are multiple app configurations possible:
-* Simple app with a single command, not evaluation (see `../../../tests/app_single_command/`)
-* Simple evaluator, called from a single command (see `../../../tests/app_single_evaluator/`)
-* Complex app with multiple subcommands, but no evaluation (see `../../../tests/app_multi_command/`)
+
+* Simple app with a single command, not evaluation (see
+  `app_single_command/ <https://github.com/B-S-F/yaku/tree/main/yaku-apps-python/packages/autopilot-utils/tests/app_single_command/>`_).
+* Simple evaluator, called from a single command (see
+  `app_single_evaluator/ <https://github.com/B-S-F/yaku/tree/main/yaku-apps-python/packages/autopilot-utils/tests/app_single_evaluator/>`_).
+* Complex app with multiple subcommands, but no evaluation (see
+  `app_multi_command/ <https://github.com/B-S-F/yaku/tree/main/yaku-apps-python/packages/autopilot-utils/tests/app_multi_command/>`_).
 * Complex evaluator with multiple independent evaluators which can not be
-  chained. This means that you can only call one of the subcommands at a time.
+  chained (see
+  `app_multi_evaluator/ <https://github.com/B-S-F/yaku/tree/main/yaku-apps-python/packages/autopilot-utils/tests/app_multi_evaluator/>`_).
+  This means that you can only call one of the subcommands at a time.
   This also means that each evaluator needs to compute its own evaluation result
   (that's why the subcommand providers in this example have all a custom
   `click_evaluator_callback` function)
-* Complex evaluator with chainable subcommand evaluators. This means that you
-  can call all the subcommands on the command line in a row. But this also means
-  that the results generated by these subcommands need to be evaluated by the
-  main command provider, and not by each of the subcommand providers. So only
-  the main provider needs a `click_evaluator_callback` function.
+* Complex evaluator with chainable subcommand evaluators. (see
+  `app_chained_multi_evaluator/ <https://github.com/B-S-F/yaku/tree/main/yaku-apps-python/packages/autopilot-utils/tests/app_chained_multi_evaluator/>`_).
+  This means that you can call all the subcommands on the command line in a
+  row. But this also means that the results generated by these subcommands need
+  to be evaluated by the main command provider, and not by each of the
+  subcommand providers. So only the main provider needs a
+  `click_evaluator_callback` function.
 
 """
 
@@ -119,8 +131,7 @@ import importlib.resources
 import json
 import os
 import sys
-from dataclasses import dataclass
-from typing import Any, Callable, Dict, List, Optional, Protocol
+from typing import Any, Callable, Dict, List, Optional
 
 import click
 import pydantic
@@ -129,40 +140,28 @@ from loguru import logger
 from .errors import AutopilotFailure
 from .results import RESULTS, ResultHandler, ResultsCollector
 from .subprocess import AutopilotSubprocessFailure
-
-
-class ClickSubCommandProvider(Protocol):
-    click_name: str
-    click_setup: Optional[list[Callable]]
-    click_command: Optional[Callable]
-
-
-class ClickCommandProvider(Protocol):
-    click_name: str
-    click_help_text: str = ""
-    # click_setup: Optional[list[Callable]]
-    # click_command: Optional[Callable]
-    # click_evaluator_callback: Optional[ResultHandler]
-    # click_subcommands: Optional[List[ClickSubCommandProvider]]
-
-
-class VersionedClickCommandProvider(ClickCommandProvider):
-    version: str
-
-
-class CliModule(Protocol):
-    CLI: VersionedClickCommandProvider
-
-
-@dataclass
-class CommandLineFlags:
-    colors: bool
-    debug: bool
+from .types import (
+    ClickCommandProvider,
+    ClickSubCommandProvider,
+)
 
 
 def read_version_from_package(
     package_with_version_file: str, version_file: str = "_version.txt"
 ):
+    """
+    Return a function which reads a version number from a file in a Python package.
+
+    To be used as `version_callback` in the :py:func:`make_autopilot_app` function.
+
+    Example::
+
+        cli = make_autopilot_app(
+            provider=MyCliClass,
+            version_callback=read_version_from_package("mycompany.mypackage", "version.txt"),
+        )
+    """
+
     def wrapped_function():
         logger.debug(
             "Reading version from file '{file}' in package '{package}'",
@@ -188,6 +187,21 @@ def make_autopilot_app(
     version_callback: Callable[[], str],
     allow_chaining: bool = True,
 ):
+    """
+    Create a click application from a special type of class/module.
+
+    Parameters
+    ----------
+    provider: a class or module which provides necessary attributes, e.g.,
+      `click_setup`, `click_command`, `click_help_text`, ...
+    version_callback: a function which returns the version number of
+      the app. See also: :py:func:`read_version_from_package`.
+    allow_chaining: Flag to enable or disable the possibility to run
+      multiple evaluators as chained subcommands, so that the main CLI
+      provider does an overall evaluation of the aggregated results of
+      all subcommands. If this is disabled, only one subcommand at a time
+      can be used.
+    """
     click_subcommands = getattr(provider, "click_subcommands", [])
     click_setup = getattr(provider, "click_setup", [])
     click_command = getattr(provider, "click_command", None)
@@ -237,7 +251,7 @@ def make_autopilot_app(
             click_command(*args, **kwargs)
 
     def decorator_builder(f):
-        decorators: List[Any] = [handle_click_command_errors]
+        decorators: List[Any] = [_handle_click_command_errors]
 
         has_click_subcommands = click_subcommands is not None and len(click_subcommands) > 0
         if has_click_subcommands:
@@ -327,7 +341,7 @@ def _handle_results(
         logger.debug("RESULTS of {provider} are empty.", provider=provider)
 
 
-def handle_click_command_errors(f: Callable):
+def _handle_click_command_errors(f: Callable):
     """Return decorator for applying the click UsageErrorHandler to a click.command."""
     return ClickUsageErrorHandlerDecorator(f)
 
@@ -335,6 +349,8 @@ def handle_click_command_errors(f: Callable):
 class ClickUsageErrorHandlerDecorator:
     """
     Special decorator which wraps around the outermost `click.command` decorator.
+
+    This wrapping is done automatically by the :py:func:`make_autopilot_app` function.
 
     This is a necessary workaround, because input parameter validation
     happens inside `click.command`. Usually, `click` handles parameter validation
@@ -345,8 +361,8 @@ class ClickUsageErrorHandlerDecorator:
 
     However we want to deal with usage errors differently in our autopilot interface:
 
-    1. we want to exit with code 0 in case of _expected_ errors
-    2. we want to print out a JSON line with status=FAILED and a proper reason.
+    1. we want to exit with code 0 in case of *expected* errors
+    2. we want to print out a JSON line with `status=FAILED` and a proper reason.
 
     This is why this decorator exists: it wraps the outermost `click.command`
     (or `click.group`) decorator and simply forwards all unknown accesses to our

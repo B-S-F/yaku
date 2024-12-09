@@ -9,11 +9,10 @@ from pathlib import Path
 
 from loguru import logger
 from yaku.autopilot_utils.cli_base import (
-    CliModule,
-    VersionedClickCommandProvider,
     make_autopilot_app,
     read_version_from_package,
 )
+from yaku.autopilot_utils.types import CliModule, VersionedClickCommandProvider
 
 HELP_TEXT = r"""
 Usage: papsr PYTHONFILE [ARGS]

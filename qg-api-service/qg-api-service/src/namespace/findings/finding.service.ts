@@ -3,8 +3,6 @@
 // SPDX-License-Identifier: MIT
 
 import {
-  HttpException,
-  HttpStatus,
   Injectable,
   NotFoundException,
   Logger,
@@ -517,9 +515,8 @@ export class FindingService {
       namespaceId: namespaceId,
     })
     if (!deletedFinding.affected) {
-      throw new HttpException(
+      throw new NotFoundException(
         `Finding with id: ${findingId} was not found in namespace ${namespaceId}`,
-        HttpStatus.NOT_FOUND,
       )
     }
     return { deleted: true }

@@ -89,6 +89,11 @@ dt.sig span.sig-name span.pre {
   white-space: unset;
 }
 
+/* Sphinx API docs tweaks */
+dt:target span.highlighed {
+  color: var(--pst-color-accent-bg) !important;
+}
+
 .welcome-graphic {
   box-shadow: 5px 5px 3px -3px var(--yaku-secondary-button);
 }
