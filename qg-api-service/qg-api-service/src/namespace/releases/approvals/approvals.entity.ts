@@ -41,13 +41,13 @@ export class ApprovalEntity {
   namespace: Namespace
   @ManyToOne(() => ReleaseEntity)
   release: ReleaseEntity
-  @Column({ type: 'uuid', nullable: false })
+  @Column({ nullable: false })
   approver: string
   @Column({ type: 'enum', enum: approvalStates, nullable: false })
   approvalState: ApprovalState
-  @Column({ type: 'uuid', nullable: false })
+  @Column({ nullable: false })
   createdBy: string
-  @Column({ type: 'uuid', nullable: false })
+  @Column({ nullable: false })
   lastModifiedBy: string
   @CreateDateColumn({ type: 'timestamptz', nullable: false })
   creationTime: Date
