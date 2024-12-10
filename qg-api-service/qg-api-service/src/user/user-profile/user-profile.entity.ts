@@ -7,7 +7,7 @@ import { EditorType } from './utils/types'
 
 @Entity()
 export class UserProfile {
-  @PrimaryColumn({ type: 'uuid' })
+  @PrimaryColumn()
   id: string // Actual kc_id of the user
 
   @Column({ default: true })

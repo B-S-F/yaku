@@ -378,9 +378,8 @@ export const updateTaskDtoSchema = z
 
 export class AddRemoveAssigneesDto {
   @ApiProperty({
-    description: 'User id of the user to assign',
-    example:
-      '["ed8a6d88-42e2-4e51-88b8-95ff9f59736a", "b5c3e4ea-7e39-4121-860d-f214939d79dd"]',
+    description: 'Username of the user to assign',
+    example: '["user1", "user2"]',
     type: [String],
   })
   assignees: string[]
@@ -388,7 +387,7 @@ export class AddRemoveAssigneesDto {
 
 export const addRemoveAssigneesDtoSchema = z
   .object({
-    assignees: z.array(z.string().trim().uuid()),
+    assignees: z.array(z.string().trim().min(1)),
   })
   .strict()
 

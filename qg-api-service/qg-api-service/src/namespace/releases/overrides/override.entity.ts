@@ -56,10 +56,10 @@ export class OverrideEntity {
   @Column()
   check: string
 
-  @Column({ type: 'uuid' })
+  @Column()
   createdBy: string
 
-  @Column({ type: 'uuid' })
+  @Column()
   lastModifiedBy: string
 
   @Column({ type: 'timestamptz' })

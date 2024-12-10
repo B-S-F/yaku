@@ -22,7 +22,7 @@ export class LongRunningTokenEntity {
   @Column()
   description: string
 
-  @Column({ type: 'uuid' })
+  @Column()
   kcuid: string
 
   @Column()
@@ -34,10 +34,10 @@ export class LongRunningTokenEntity {
   @Column({ type: 'enum', enum: statuses })
   status: STATUS
 
-  @Column({ type: 'uuid' })
+  @Column()
   createdBy: string
 
-  @Column({ type: 'uuid' })
+  @Column()
   lastModifiedBy: string
 
   @Column({ type: 'timestamptz' })
