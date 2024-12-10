@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2024 grow platform GmbH
-#
-# SPDX-License-Identifier: MIT
-
 - file: 'Instruction_Publishing_Service_Spec Sheets_20120926_en.doc'
   rules:
     - property: 'lastModifiedDateTime'
