@@ -74,8 +74,8 @@ export async function completeRun(nestTestingApp: NestTestingApp, testNamespace:
 }
 
 export async function createEmptyConfig(
-  nestTestingApp: NestTestingApp, 
-  testNamespace: NamespaceTestEnvironment, 
+  nestTestingApp: NestTestingApp,
+  testNamespace: NamespaceTestEnvironment,
   configDto: any,
   apiToken: string
 ): Promise<supertest.Test> {
@@ -89,8 +89,8 @@ export async function createEmptyConfig(
 }
 
 export async function addFilesToConfig(
-  nestTestingApp: NestTestingApp, 
-  testNamespace: NamespaceTestEnvironment, 
+  nestTestingApp: NestTestingApp,
+  testNamespace: NamespaceTestEnvironment,
   configId: number,
   apiToken: string,
   file: {
@@ -115,10 +115,10 @@ export async function addFilesToConfig(
 }
 
 export async function createConfigWithFiles(
-  nestTestingApp: NestTestingApp, 
-  testNamespace: NamespaceTestEnvironment, 
+  nestTestingApp: NestTestingApp,
+  testNamespace: NamespaceTestEnvironment,
   testName: string,
-  apiToken: string, 
+  apiToken: string,
   files: {
     filepath: string
     filename: string
@@ -126,8 +126,8 @@ export async function createConfigWithFiles(
   }[],
 ): Promise<number> {
   const response = await createEmptyConfig(
-    nestTestingApp, 
-    testNamespace, 
+    nestTestingApp,
+    testNamespace,
     { name: testName },
     apiToken
   )
@@ -135,8 +135,8 @@ export async function createConfigWithFiles(
 
   for (const file of files) {
     await addFilesToConfig(
-      nestTestingApp, 
-      testNamespace, 
+      nestTestingApp,
+      testNamespace,
       configId,
       apiToken,
       file
