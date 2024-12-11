@@ -10,13 +10,13 @@ import { z } from 'zod'
 export class AddApproverDto {
   @ApiProperty({
     description: 'User id of the user to be added as an approver',
-    example: '221609bd-f023-406d-a9b8-7b15709758b9',
+    example: 'ugh2fe4@bosch.com',
   })
   user: string
 }
 export const addApproverDtoSchema = z
   .object({
-    user: z.string().trim().uuid(),
+    user: z.string().trim().min(1),
   })
   .strict()
 
@@ -42,7 +42,8 @@ export class ApprovalDto {
   id: number
 
   @ApiProperty({
-    description: 'Approver details from namespace',
+    description: 'User id of the approver',
+    example: 'ugh2fe4@bosch.com',
   })
   user: UserInNamespaceDto
 

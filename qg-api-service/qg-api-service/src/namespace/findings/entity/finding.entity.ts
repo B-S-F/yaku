@@ -73,7 +73,7 @@ export class Finding {
   @Column({ type: 'timestamptz', nullable: true })
   resolvedDate?: string
 
-  @Column({ type: 'uuid', nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   resolver: string
 
   @CreateDateColumn({ type: 'timestamptz' })
