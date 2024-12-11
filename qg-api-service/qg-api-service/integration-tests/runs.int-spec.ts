@@ -9,7 +9,7 @@ import { Readable } from 'stream'
 import { SetupServer, setupServer } from 'msw/node'
 import * as supertest from 'supertest'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Run, RunStatus } from '../src/namespace/run/run.entity'
+import { RunStatus } from '../src/namespace/run/run.entity'
 import { EVIDENCEFILE, RESULTFILE } from '../src/namespace/run/run.service'
 import { SecretStorage } from '../src/namespace/secret/secret-storage.service'
 import {
@@ -18,38 +18,19 @@ import {
 } from '../src/namespace/workflow/minio.service'
 import { handlers } from './mocks'
 import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
+import { awaitPendingRun, checkRepositoryEntriesCount, checkRun, createConfigWithFiles, getRun, postRun } from './util/commons'
 
 const timeoutInMillis = 5000
-
-const config = `header:
-  name: PerformanceTest_Fibonacci
-  version: '1.1'
-metadata:
-  version: 'v1'
-
-autopilots:
-  validateSomething:
-    run: |
-      echo '{ "status": "GREEN" }'
-      echo '{ "reason": "Everything is awesome" }'
-      echo '{ "result": { "criterion": "Awesomeness check", "fulfilled": true, "justification": "Everything is awesome" } }'
-chapters:
-  '1':
-    title: Test config should work
-    requirements:
-      '1':
-        title: Awesomeness Requirement
-        checks:
-          '1':
-            title: Awesomeness compute
-            automation:
-                autopilot: validateSomething
-`
-
-const v0Config = `header:
-  name: Test
-  version: "1.1"
-`
+const configFile = path.join(
+  __dirname,
+  'mocks',
+  'qg-config-awesome.yaml',
+)
+const v0ConfigFile = path.join(
+  __dirname,
+  'mocks',
+  'qg-config-empty.yaml',
+)
 
 describe('POST run', () => {
   let testNamespace: NamespaceTestEnvironment
@@ -57,6 +38,9 @@ describe('POST run', () => {
   let server: SetupServer
   let allRequests: Request[] = []
   let nestTestingApp: NestTestingApp
+  const testName = 'Runs (Integration Test)'
+  const testFilename = 'qg-config.yaml'
+  const testContentType = 'application/yaml'
 
   let apiToken
   let configId: number
@@ -96,19 +80,23 @@ describe('POST run', () => {
   })
 
   it('should do a roundtrip with runs', async () => {
-    await createConfiguration(config)
-    await checkDatabaseEntities(0)
+    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+      filepath: configFile,
+      filename: testFilename,
+      contentType: testContentType,
+    }])
+    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
 
     const body = {
       configId,
     }
-    const runId = await postRun(body)
+    const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
 
     await checkRunByGET(runId)
-    await awaitPending(runId)
+    await awaitPendingRun(nestTestingApp, testNamespace, runId, apiToken)
 
-    await checkDatabase(runId)
-    await checkDatabaseEntities(1)
+    await checkRun(nestTestingApp, runId)
+    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
 
     await waitForRequests(3)
     expect(
@@ -123,8 +111,12 @@ describe('POST run', () => {
   })
 
   it('start run with envs', async () => {
-    await createConfiguration(config)
-    await checkDatabaseEntities(0)
+    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+      filepath: configFile,
+      filename: testFilename,
+      contentType: testContentType,
+    }])
+    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
 
     const body = {
       configId: configId,
@@ -134,13 +126,13 @@ describe('POST run', () => {
         NUMERIC_VALUE: '123456',
       },
     }
-    const runId = await postRun(body)
+    const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
 
     await checkRunByGET(runId)
-    await awaitPending(runId)
+    await awaitPendingRun(nestTestingApp, testNamespace, runId, apiToken)
 
-    await checkDatabase(runId)
-    await checkDatabaseEntities(1)
+    await checkRun(nestTestingApp, runId)
+    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
 
     await waitForRequests(3)
     expect(
@@ -155,8 +147,12 @@ describe('POST run', () => {
   })
 
   it('start run with a single check', async () => {
-    await createConfiguration(config)
-    await checkDatabaseEntities(0)
+    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+      filepath: configFile,
+      filename: testFilename,
+      contentType: testContentType,
+    }])
+    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
 
     const body = {
       configId: configId,
@@ -166,13 +162,13 @@ describe('POST run', () => {
         check: '1',
       },
     }
-    const runId = await postRun(body)
+    const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
 
     await checkRunByGET(runId)
-    await awaitPending(runId)
+    await awaitPendingRun(nestTestingApp, testNamespace, runId, apiToken)
 
-    await checkDatabase(runId)
-    await checkDatabaseEntities(1)
+    await checkRun(nestTestingApp, runId)
+    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
 
     await waitForRequests(3)
     const requests = allRequests.filter((req) => req.method === 'POST')
@@ -186,8 +182,12 @@ describe('POST run', () => {
   })
 
   it('should create a synthetic run', async () => {
-    await createConfiguration(config)
-    await checkDatabaseEntities(0)
+    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+      filepath: configFile,
+      filename: testFilename,
+      contentType: testContentType,
+    }])
+    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
 
     const data = {}
     data[RESULTFILE] = await readFile(
@@ -197,7 +197,7 @@ describe('POST run', () => {
 
     const runId = await postSyntheticRun(data)
 
-    await checkDatabaseEntities(1)
+    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
 
     const result = await supertest
       .agent(nestTestingApp.app.getHttpServer())
@@ -225,13 +225,17 @@ describe('POST run', () => {
   })
 
   it('fail run with unsupported v0 format', async () => {
-    await createConfiguration(v0Config)
-    await checkDatabaseEntities(0)
+    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+      filepath: v0ConfigFile,
+      filename: testFilename,
+      contentType: testContentType,
+    }])
+    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
 
     const body = {
       configId: configId,
     }
-    const runId = await postRun(body)
+    const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
 
     // We expect the run to fail immediately due to the unsupported config
     await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -255,39 +259,8 @@ describe('POST run', () => {
     expect(oneLineErrorMessage).toContain('Error')
   })
 
-  async function checkDatabase(runId: number): Promise<void> {
-    const runEntity: Run =
-      await nestTestingApp.repositories.runRepository.findOneBy({
-        id: runId,
-      })
-    expect(runEntity.id, `Run in database has not the right id`).toEqual(runId)
-    expect(runEntity.status, `Run in database has not the right status`).oneOf([
-      RunStatus.Running,
-      RunStatus.Pending,
-    ])
-    expect(
-      runEntity.storagePath.length,
-      `Run in database does not have a storage path`,
-    ).toBeDefined()
-  }
-
-  async function checkDatabaseEntities(expectedNumber: number): Promise<void> {
-    expect(
-      await nestTestingApp.repositories.runRepository.count(),
-      `Expected ${expectedNumber} elements in database`,
-    ).toBe(expectedNumber)
-  }
-
-  async function awaitPending(runId: number): Promise<void> {
-    let run = await getRun(runId)
-    while (run.status === RunStatus.Pending) {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      run = await getRun(runId)
-    }
-  }
-
   async function checkRunByGET(runId: number): Promise<void> {
-    const response = await getRun(runId)
+    const response = await getRun(nestTestingApp, testNamespace, runId, apiToken)
     expect(
       response.body.id,
       `Run in GET response has not the right id`,
@@ -300,14 +273,6 @@ describe('POST run', () => {
       response.body.config,
       `Config reference in run of GET reference is not as expected`,
     ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
-  }
-
-  async function getRun(runId: number): Promise<any> {
-    return await supertest
-      .agent(nestTestingApp.app.getHttpServer())
-      .get(`/api/v1/namespaces/${testNamespace.namespace.id}/runs/${runId}`)
-      .set('Authorization', `Bearer ${apiToken}`)
-      .expect(HttpStatus.OK)
   }
 
   async function checkArgoRequest(
@@ -353,33 +318,6 @@ describe('POST run', () => {
       }
       resolve()
     })
-  }
-
-  async function postRun(body: any): Promise<number> {
-    const response = await supertest
-      .agent(nestTestingApp.app.getHttpServer())
-      .post(`/api/v1/namespaces/${testNamespace.namespace.id}/runs`)
-      .send(body)
-      .set('Authorization', `Bearer ${apiToken}`)
-      .expect(HttpStatus.ACCEPTED)
-
-    expect(
-      response.body.id,
-      `The id of created run does not exist`,
-    ).toBeDefined()
-    expect(
-      response.headers.location.endsWith(`${response.body.id}`),
-      `The location header of created run is not as expected`,
-    ).toBeTruthy()
-    expect(
-      response.body.status,
-      `The status of created run is not as expected, it is ${response.body.status}`,
-    ).oneOf([RunStatus.Running, RunStatus.Pending])
-    expect(
-      response.body.config,
-      `The config ref of created run is not as expected, it is ${response.body.config}`,
-    ).match(/^.*\/namespaces\/\d+\/configs\/\d+$/)
-    return response.body.id
   }
 
   async function postSyntheticRun(data: {
@@ -456,30 +394,5 @@ describe('POST run', () => {
     )
 
     return response.body.id
-  }
-
-  async function createConfiguration(config: string): Promise<void> {
-    const response = await supertest
-      .agent(nestTestingApp.app.getHttpServer())
-      .post(`/api/v1/namespaces/${testNamespace.namespace.id}/configs`)
-      .send({ name: 'Test Config' })
-      .set('Authorization', `Bearer ${apiToken}`)
-      .set('Content-Type', 'application/json')
-      .expect(HttpStatus.CREATED)
-
-    configId = response.body.id
-
-    await supertest
-      .agent(nestTestingApp.app.getHttpServer())
-      .post(
-        `/api/v1/namespaces/${testNamespace.namespace.id}/configs/${configId}/files`,
-      )
-      .field('filename', 'qg-config.yaml')
-      .attach('content', Buffer.from(config), {
-        filename: 'qg-config.yaml',
-        contentType: 'application/yaml',
-      })
-      .set('Authorization', `Bearer ${apiToken}`)
-      .expect(HttpStatus.CREATED)
   }
 })
