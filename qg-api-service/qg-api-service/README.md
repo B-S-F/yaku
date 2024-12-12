@@ -15,21 +15,7 @@ SPDX-License-Identifier: MIT
 - Run `npm start -w qg-api-service` to start the service
 - Access the api description at <http://localhost:3000/docs>
 
-### Prepare Database
-
-#### SQLite
-
-First install a sqlite cli e.g. `brew install sqlite3` and then use this [repo](https://github.com/B-S-F/qg-dbinit) to generate two SQL insert statements. With those statements you can create an admin user in the database (you need to provide the JWT secret key as an environment variable to the tool, this can be found in the [config.ts](./src/config.ts) file) The tool will then print the SQL statements
-that create an admin user token. You can then use the sqlite cli to insert the user and the token into the database, similar to this:
-
-```bash
-sqlite3 <path-to-your-sqlite-file> 'insert into user (username, roles) values ("admin", "admin")'
-sqlite3 <path-to-your-sqlite-file>'insert into api_token_metadata ("tokenId", "userId") values ("$2a$05$zzoHodGFmGguogUC1Us1peDh6BMz2QXxyEYIBoEiCIjbiLPam8fPu", 1)'
-```
-
-The admin token will also be printed to the console by the [dbinit tool](https://github.com/B-S-F/qg-dbinit) and can be used to add users, tokens and namespaces.
-
-### Postgres
+### Prepare Postgres Database
 
 To use postgres locally, the following prerequisites need to be fulfilled:
 
@@ -51,9 +37,6 @@ To use postgres locally, the following prerequisites need to be fulfilled:
   - DB_USERNAME if you differ from 'yakuuser'
   - DB_PASSWORD to the password you defined for the user in Postgres
   - DB_NAME if you differ from 'yaku'
-
-After these configurations have been done, start the service. Run the tooling from https://github.com/B-S-F/qg-dbinit as mentioned in [Postgres](#postgres) and insert the generated SQL statements into your database.
-The token created by the mentioned tooling can be used to add users, tokens and namespaces to get started.
 
 ### Create users, tokens and namespaces
 
