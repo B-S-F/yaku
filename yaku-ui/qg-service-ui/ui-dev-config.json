@@ -1,0 +1,14 @@
+{
+  "environments": [
+    {
+      "label": "Localhost",
+      "slug": "localhost",
+      "url": "http://localhost:3000",
+      "keycloakConfig": {
+        "url": "https:/localhost:15333/auth",
+        "realm": "azure-dev",
+        "clientId": "yaku-portal"
+      }
+    }
+  ]
+}

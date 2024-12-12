@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QG Config",
+  "description": "Configuration of a QG",
+  "$id": "qg-config",
+  "allOf": [
+    {
+      "$ref": "@grow/qg-schemas/dist/qg-config-common.schema.json"
+    },
+    {
+      "properties": {
+        "allocations": {
+          "type": "object",
+          "description": "A list of allocations (or categories) which consist of individual requirements (or questions).",
+          "markdownDescription": "A list of allocations.\n\nAn allocation (or category) is used to group requirements/questions.\n\nThe allocation/category can have an arbitrary ID which will later be\nused to group requirements/questions.\n\nExample:\n\n```yaml\nallocations:\n  'Category 1':\n    title: Project management\n    requirements:\n      '1.1':\n        title: Title for question 1.1\n        text: >\n          Explanatory text for question 1.1\n          which can span multiple lines if you\n          use the '>' character above.\n        ...\n```",
+          "additionalProperties": {
+            "$ref": "@grow/qg-schemas/dist/qg-config-common.schema.json#/definitions/Allocation"
+          }
+        }
+      },
+      "type": "object"
+    }
+  ]
+}

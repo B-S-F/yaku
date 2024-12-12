@@ -1,0 +1,26 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@mixin bottom-success-banner {
+  background-color: var(--minor-signal-neutral__enabled__fill__default);
+  width: 100vw;
+  z-index: 5;
+  left: 0;
+
+  :deep(.banner-content p) {
+    margin: 0;
+  }
+
+  :deep(.banner-content a) {
+    margin: 0;
+    color: var(--minor-accent__enabled__front__default);
+  }
+
+  :deep(.a-icon) {
+    background-color: unset;
+    padding: unset;
+  }
+}

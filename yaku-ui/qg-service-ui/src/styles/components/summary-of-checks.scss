@@ -1,0 +1,24 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+// using a dedicated scss file because these style elements are needed in multiple components
+.transparent-link {
+  color: currentColor;
+  text-decoration: none;
+
+  :deep(.a-icon) {
+    margin-right: 0;
+  }
+}
+
+:deep(.md-comment) {
+  @import './run-report-md-format';
+
+  // headings or other tags does not have margin-top if they are the first element of the comments
+  &>*:first-child {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,11 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.monaco-editor :deep(.aqua-snippet-inserted-block) {
+  background-color: black;
+  opacity: 0.4;
+  border-left: 5px solid rgb(var(--v-theme-blue));
+}

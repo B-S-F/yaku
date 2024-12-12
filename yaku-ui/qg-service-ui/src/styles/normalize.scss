@@ -1,0 +1,27 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/** disable input number arrows (chromium) */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/** hide an input placeholder if it overflowing */
+input:placeholder-shown {
+  text-overflow: ellipsis;
+}
+
+/* /** disable input number arrows (firefox) */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/** disable text decoration on button label in links with WebKit **/
+a:-webkit-any-link:has(button .a-button__label) {
+  text-decoration: none;
+}

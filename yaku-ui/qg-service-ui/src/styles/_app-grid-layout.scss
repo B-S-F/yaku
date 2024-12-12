@@ -1,0 +1,56 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'tokens.scss' as *;
+
+%grid {
+  display: grid;
+  grid-template-columns: $appColumns;
+  column-gap: 2rem;
+  align-items: start;
+  grid-auto-rows: minmax(0, max-content);
+
+  @media screen and (max-width: 1023px) {
+    gap: 1rem;
+  }
+
+  >* {
+    height: calc(100vh - #{$headerHeight});
+    grid-column: col-start / span 12;
+  }
+
+  > :last-child {
+    padding-bottom: 24px;
+  }
+
+  .span-12 {
+    // remove the padding from the parent component
+    width: calc(100% + 2 * #{$viewPadding});
+    margin-left: -#{$viewPadding};
+  }
+
+  @media screen and (min-width: $mdScreenWidth) {
+    .span-4-center {
+      grid-column: col-start 5 / span 4;
+    }
+
+    .span-6-center {
+      grid-column: col-start 4 / span 6;
+    }
+
+    .span-8-center {
+      grid-column: col-start 3 / span 8;
+    }
+
+    .span-10-center {
+      grid-column: col-start 2 / span 10;
+    }
+
+    .span-12 {
+      grid-column: col-start 1 / span 12;
+    }
+  }
+}
