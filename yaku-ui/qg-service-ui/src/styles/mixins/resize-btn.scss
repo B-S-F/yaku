@@ -1,0 +1,47 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@mixin resize-btn($width: 0.75rem, $height: 5.4rem) {
+  & {
+    position: absolute;
+    top: calc(50% - #{$height * 0.5});
+    width: $width;
+    height: $height;
+    cursor: ew-resize;
+    background: var(--neutral__enabled__fill__default);
+    border: none;
+
+    --handle-color: var(--neutral__enabled__front__default);
+
+    &:hover {
+      --handle-color: var(--neutral__enabled__front__hovered)
+    }
+
+    &:active {
+      --handle-color: var(--neutral__enabled__front__pressed)
+    }
+
+    &::before,
+    &::after {
+      $handleHeight: 0.5rem;
+      display: block;
+      position: absolute;
+      content: '';
+      width: 1px;
+      height: $handleHeight;
+      background-color: var(--handle-color);
+      transform: translate(calc($width * 0.5 + var(--from-x-center)), #{($height - $handleHeight) * 0.5})
+    }
+
+    &::before {
+      --from-x-center: -2px;
+    }
+
+    &::after {
+      --from-x-center: 0px;
+    }
+  }
+}

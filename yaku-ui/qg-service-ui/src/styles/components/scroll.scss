@@ -1,0 +1,13 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.yaku-scroll-highlight {
+  transition: background-color 0.3s ease-in;
+}
+
+.yaku-scroll-highlight.yaku-highlighting {
+  background-color: #d1e4ff !important;
+}

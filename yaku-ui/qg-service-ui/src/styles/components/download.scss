@@ -1,0 +1,31 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.downloading {
+
+  &.a-button,
+  &.a-menu-item {
+    .a-icon {
+      animation: rotating 2s linear infinite;
+    }
+  }
+
+  &.a-button .a-button__icon {
+    // switch the padding and margin to allow a centered rotation
+    padding: 0;
+    margin: .75rem .5rem .75rem .875rem;
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

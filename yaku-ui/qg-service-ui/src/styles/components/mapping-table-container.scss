@@ -1,0 +1,14 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../tokens.scss';
+
+.table-container {
+  width: 100%;
+  min-height: calc(8 * #{$rowHeight});
+  max-height: 100%;
+  overflow: auto;
+}

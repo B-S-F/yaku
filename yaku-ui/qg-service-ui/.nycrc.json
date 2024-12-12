@@ -1,0 +1,23 @@
+{
+  "all": true,
+  "extends": "vite-plugin-istanbul",
+  "reporter": [
+    "cobertura"
+  ],
+  "report-dir": "./reports/cypress/coverage",
+  "extension": [
+    "**/*.ts",
+    "**/*.vue"
+  ],
+  "include": [
+    "src/**"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.d.ts",
+    "**/mocks/**",
+    "**/styles/**",
+    "src/config/**",
+    "src/assets/**"
+  ]
+}

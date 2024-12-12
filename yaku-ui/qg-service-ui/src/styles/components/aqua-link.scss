@@ -1,0 +1,52 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../abstract.scss';
+
+/**
+* meant to be used on a RouterLink and an inner <span> label.
+*/
+.aqua-link {
+  $underlineWidth: 2px;
+  text-overflow: ellipsis;
+
+  display: flex;
+  text-decoration: none;
+
+  span,
+  h3 {
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+
+    /** avoid a column shift when it becomes bold on hover */
+    &::before {
+      display: block;
+      content: attr(data-placeholder);
+      font-weight: 700;
+      height: 0;
+      visibility: hidden;
+    }
+
+    // css text underline
+    &::after {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      display: block;
+      content: "";
+      overflow-x: hidden;
+      border-bottom: $underlineWidth solid transparent;
+      transform: translateY(-#{2 * $underlineWidth});
+    }
+  }
+
+  &:hover {
+    >*::after {
+      border-color: currentColor;
+    }
+  }
+}

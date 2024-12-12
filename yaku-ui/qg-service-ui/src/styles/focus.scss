@@ -1,0 +1,11 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'tokens.scss' as *;
+
+*:focus-visible {
+  outline: $focus;
+}

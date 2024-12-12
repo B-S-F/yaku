@@ -1,0 +1,21 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.readonly-chip {
+  // the default background of a chip
+  --readonly-color: var(--neutral__enabled__fill__default);
+  cursor: auto;
+  pointer-events: all;
+
+  &:active,
+  &:hover {
+    background-color: var(--readonly-color);
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}

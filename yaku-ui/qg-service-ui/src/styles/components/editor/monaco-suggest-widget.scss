@@ -1,0 +1,74 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.monaco-editor :deep(.editor-widget.suggest-widget) {
+  display: block;
+  visibility: visible;
+  border-color: transparent;
+  background-color: var(--background);
+}
+
+.monaco-editor :deep(.editor-widget.suggest-widget .tree) {
+  height: 100% !important;
+  height: fit-content;
+  min-height: 2rem !important;
+  width: calc(100% + 80px);
+}
+
+// // list container
+// .monaco-editor :deep(.editor-widget.suggest-widget .tree .monaco-list),
+// .monaco-editor :deep(.editor-widget.suggest-widget .tree .monaco-list .monaco-list-rows),
+// .monaco-editor :deep(.editor-widget.suggest-widget .tree .monaco-list .monaco-scrollable-element) {
+//   top: 0 !important;
+//   height: 100% !important;
+//   overflow: auto !important;
+//   min-height: 2rem !important;
+// }
+
+// // item box outer wrapper
+.monaco-editor :deep(.editor-widget.suggest-widget .tree .monaco-list .monaco-list-rows .monaco-list-row) {
+  //   min-height: 1.875rem !important;
+  //   height: 1.875rem !important;
+  font-size: 0.9rem !important;
+  //   line-height: 1.5 !important;
+  //   padding-top: 0.1825rem;
+  //   padding-bottom: 0.1825rem;
+  //   top: 0 !important;
+  //   position: initial !important;
+  //   align-items: center;
+
+  color: black;
+  background-color: var(--background);
+
+  &:hover,
+  &:active,
+  &.selected,
+  &.focused {
+    background-color: black;
+  }
+
+  //   &>.contents {
+  //     min-height: 1.875rem !important;
+  //     height: 1.875rem !important;
+  //     font-size: 1rem !important;
+  //     line-height: 1.5 !important;
+  //     overflow: visible;
+
+  //     &>.main {
+  //       min-height: 1.875rem !important;
+  //       height: 1.875rem !important;
+  //       font-size: 1rem !important;
+  //       line-height: 1.5 !important;
+  //       overflow: visible;
+  //       align-items: center;
+  //     }
+  //   }
+}
+
+// Highlighted part
+.monaco-editor :deep(.editor-widget.suggest-widget .tree .monaco-list .monaco-list-rows .monaco-list-row>.contents .highlight) {
+  color: rgb(var(--v-theme-blue));
+}
