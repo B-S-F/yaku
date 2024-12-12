@@ -2,7 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.node.json",
   "include": [
     "vite.config.*",
-    "vitest.config.*",
+    "vitest.config.*"
   ],
   "compilerOptions": {
     "composite": true,
@@ -11,11 +11,11 @@
     "declaration": true,
     "outDir": "types",
     "types": [
-      "node",
+      "node"
     ],
     "lib": [
       "ESNext",
       "DOM"
-    ],
+    ]
   }
 }
