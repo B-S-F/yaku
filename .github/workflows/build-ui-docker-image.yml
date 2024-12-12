@@ -33,6 +33,6 @@ jobs:
           pull: true
           push: true
           tags: ${{ env.IMAGE_TAG }}
-          context: ./yaku-ui
+          context: ./yaku-ui/qg-service-ui
           file: yaku-ui/qg-service-ui/Dockerfile
           platforms: linux/amd64
