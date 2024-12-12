@@ -60,4 +60,3 @@ As a quick start, a PostgreSQL container can be started as part of Yaku deployme
 | Create Namespace | POST    | `/api/v1/namespaces`               | `{"name": "my-namespace", "users": [{"username": "xxx"},{"username": "yyy"}]}` |
 | Get Users        | GET     | `/api/v1/users`                    |                                                                      |
 | Create User      | POST    | `/api/v1/users`                    | `{"username": "xxx"}`                                                |
-
