@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "npm run dev --workspace qg-service-ui",
     "build": "npx turbo run build --continue --cache-dir=.turbo",
+    "test:unit": "npm run test:unit --workspace qg-service-ui",
     "format": "npx @biomejs/biome format --write ./src",
     "lint": "npx @biomejs/biome lint --write ./src",
     "lint-staged": "npx lint-staged",
