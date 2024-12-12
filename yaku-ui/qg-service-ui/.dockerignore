@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
+node_modules
+dist
+cypress
+reports
+.github/**
+.vscode/**

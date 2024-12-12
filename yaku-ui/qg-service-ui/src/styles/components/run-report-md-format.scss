@@ -1,0 +1,64 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+p,
+ul {
+  margin: 0;
+}
+
+ul > li {
+  list-style: unset;
+}
+
+ol > li {
+  list-style: unset;
+}
+
+ul,
+ol {
+  padding-left: 1em;
+
+  li {
+    margin-bottom: 0.325rem;
+  }
+}
+
+p+p,
+ul+p,
+p+ul {
+  margin-top: 1em;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0.5em 0;
+}
+
+h2 {
+  font-size: 1.325rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+pre {
+  white-space: break-spaces;
+}
+
+a,
+span {
+  -ms-word-break: break-all;
+  word-break: break-all;
+
+  /* Non standard for WebKit */
+  word-break: break-word;
+
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}

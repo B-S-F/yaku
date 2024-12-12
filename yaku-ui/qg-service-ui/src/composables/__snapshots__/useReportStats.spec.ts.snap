@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useReportStats > returns the expected values with 100% unanswered 1`] = `
+{
+  "answered": {
+    "automatic": 100,
+    "manual": 0,
+  },
+  "results": {
+    "GREEN": 0,
+    "NA": 0,
+    "RED": 0,
+    "UNANSWERED": 100,
+    "YELLOW": 0,
+  },
+}
+`;
+
+exports[`useReportStats > returns the expected values with a failed run 1`] = `
+{
+  "answered": {
+    "automatic": 89,
+    "manual": 11,
+  },
+  "results": {
+    "GREEN": 46,
+    "NA": 4,
+    "RED": 28,
+    "UNANSWERED": 18,
+    "YELLOW": 4,
+  },
+}
+`;
+
+exports[`useReportStats > returns the expected values with a successful run 1`] = `
+{
+  "answered": {
+    "automatic": 86,
+    "manual": 14,
+  },
+  "results": {
+    "GREEN": 89,
+    "NA": 11,
+    "RED": 0,
+    "UNANSWERED": 0,
+    "YELLOW": 0,
+  },
+}
+`;

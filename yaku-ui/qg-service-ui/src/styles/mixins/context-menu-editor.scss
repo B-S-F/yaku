@@ -1,0 +1,28 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+$bp-max-960: 960px;
+
+@mixin context-menu-editor($maxWidth: $bp-max-960) {
+  @media screen and (max-width: $maxWidth) {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+
+    :deep(.popover-container.out.menu-button) {
+      display: flex;
+    }
+
+    :deep(ul.context-menu) {
+      min-width: 250px;
+    }
+
+    .hide-editor-toggle {
+      display: none;
+    }
+  }
+}

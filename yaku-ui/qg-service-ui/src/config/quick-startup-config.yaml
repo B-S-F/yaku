@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
+metadata:
+  version: v1
+header:
+    name: "%CONFIG_NAME%"
+    version: 0.1.1
+autopilots:
+  security-scanner:
+    run: |
+      security-scanner
+    env:
+      GIT_TOKEN: ${{secrets.%GIT_TOKEN%}}
+      GIT_REPO_URL: "%GIT_REPO_URL%"
+chapters:
+  '1':
+    title: Scan a git repository for security vulnerabilities.
+    requirements:
+      '1':
+        title: Scan a git repository for security vulnerabilities.
+        text: Make sure the new release code doesn't contain any security vulnerabilities.
+        checks:
+          '1':
+            title: "Run security scanner"
+            automation:
+              autopilot: security-scanner

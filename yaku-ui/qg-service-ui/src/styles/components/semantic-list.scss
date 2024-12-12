@@ -1,0 +1,19 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.semantic-list {
+  padding: 0;
+  margin: 0;
+
+  > li {
+    margin: 0;
+    padding: 0;
+
+    &::before {
+      display: none;
+    }
+  }
+}

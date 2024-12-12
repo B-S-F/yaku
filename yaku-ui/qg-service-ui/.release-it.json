@@ -1,0 +1,36 @@
+{
+  "hooks": {
+    "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
+  },
+  "git": {
+    "commit": true,
+    "commitMessage": "release: ${version}",
+    "tag": true,
+    "requireUpstream": true,
+    "requireCleanWorkingDir": false,
+    "push": true,
+    "tagName": "${version}"
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release ${version}",
+    "autoGenerate": true,
+    "preRelease": false,
+    "draft": false,
+    "tokenRef": "GITHUB_TOKEN",
+    "host": null,
+    "timeout": 0,
+    "proxy": null,
+    "skipChecks": false,
+    "web": false,
+    "comments": {
+      "submit": true,
+      "issue": ":rocket: _This issue has been published in v${version}. See [${releaseName}](${releaseUrl}) for release notes._",
+      "pr": ":rocket: _This pull request is included in v${version}. See [${releaseName}](${releaseUrl}) for release notes._"
+    }
+  },
+  "npm": {
+    "publish": false,
+    "skipChecks": true
+  }
+}

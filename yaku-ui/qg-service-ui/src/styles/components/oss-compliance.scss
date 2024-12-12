@@ -1,0 +1,35 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../tokens.scss' as *;
+// using a dedicated scss file because these style elements are needed in multiple components related to OSS Compliance
+
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: $spacing-64;
+  row-gap: $spacing-32;
+
+  * {
+    font-size: 0.875rem;
+  }
+}
+
+.item {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: $space-component-s;
+
+  &>span:first-child {
+    font-weight: 700;
+  }
+
+  .multiple-rows {
+    display: flex;
+    flex-direction: column;
+  }
+}

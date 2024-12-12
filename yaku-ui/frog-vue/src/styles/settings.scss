@@ -1,0 +1,14 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@use "vuetify/settings" with (
+  $expansion-panel-title-font-size: 1.5rem,
+  $badge-height: 1rem,
+  $badge-min-width: 1rem,
+  $badge-line-height: 1rem,
+  $badge-wrapper-margin: 0,
+  $badge-padding: 0 0.25rem
+);

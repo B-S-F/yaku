@@ -1,0 +1,271 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`convertRunResultToReport > v0 conversion > parse simple results correctly 1`] = `
+{
+  "report": {
+    "chapters": [
+      {
+        "id": "1",
+        "requirements": [
+          {
+            "checks": [
+              {
+                "evaluation": {
+                  "status": "RED",
+                },
+                "id": "1",
+                "name": "PDF Signature check",
+                "status": "RED",
+                "title": "webApp 1.16.5",
+                "type": "Automation",
+              },
+            ],
+            "id": "1.15",
+            "status": "RED",
+            "text": "At SW-QG0 the systematic assessment of all Open Source components as well as the SW-scan have to be scheduled if no scan exception applies.
+The SW-Scan must have been performed at SW-QG4, unless there is a scan exception.
+
+It is demonstrably known whether and which Open Source Software is included in the product including delivered software.
+The license conditions of all Open Source- and proprietary software components are complied with.",
+            "title": "It is known, whether and which Open Source Software is included in the product.
+The license conditions are complied with.",
+          },
+        ],
+        "status": "RED",
+        "title": "Project management",
+      },
+    ],
+    "header": {
+      "date": "2023-07-12 8:28:31 UTC",
+      "name": "<name>",
+      "version": "<x.y.z>",
+    },
+    "metadata": {
+      "version": "v1",
+    },
+    "overallStatus": "RED",
+  },
+  "version": "v0",
+}
+`;
+
+exports[`convertRunResultToReport > v1 (Onyx) conversion > parse one manualEvaluation of a chapter and an autopilot without status 1`] = `
+{
+  "report": {
+    "chapters": [
+      {
+        "id": "1",
+        "requirements": [
+          {
+            "checks": [
+              {
+                "evaluation": {
+                  "autopilot": "autopilot1",
+                  "execution": {
+                    "evidencePath": "1/1/1/0",
+                    "exitCode": 0,
+                    "logs": [
+                      "global_var_1",
+                      "autopilot_ref_var_2",
+                      "global_var_1",
+                      "/home/qguser",
+                      "global_var_1",
+                      "la\\nla",
+                      "Hello Autopilot 1!",
+                      "BANANAS",
+                    ],
+                  },
+                  "outputs": {
+                    "output1": "output1_value",
+                    "output2": "output2_value",
+                  },
+                  "reason": "This is a reason",
+                  "results": [
+                    {
+                      "criterion": "This is a comment",
+                      "fulfilled": false,
+                      "justification": "Justification",
+                    },
+                  ],
+                  "status": "GREEN",
+                },
+                "id": "1",
+                "status": "FAILED",
+                "title": "check 1",
+                "type": "Automation",
+              },
+              {
+                "evaluation": {
+                  "autopilot": "autopilot2",
+                  "execution": {
+                    "evidencePath": "1/1/1/1",
+                    "exitCode": 1,
+                    "logs": [
+                      "Hello Autopilot 2!",
+                      "la\\nla",
+                    ],
+                  },
+                  "status": "",
+                },
+                "id": "2",
+                "status": "FAILED",
+                "title": "check 2",
+                "type": "Automation",
+              },
+              {
+                "evaluation": {
+                  "reason": "This is a reason",
+                  "results": [
+                    {
+                      "criterion": "This is a comment",
+                      "fulfilled": false,
+                      "justification": "Justification",
+                    },
+                  ],
+                  "status": "GREEN",
+                },
+                "id": "3",
+                "status": "GREEN",
+                "title": "check 3",
+                "type": "Manual",
+              },
+            ],
+            "id": "1",
+            "status": "FAILED",
+            "text": "requirement text 1",
+            "title": "requirement 1",
+          },
+        ],
+        "status": "FAILED",
+        "title": "My test chapter 1",
+      },
+    ],
+    "header": {
+      "date": "2023-07-13 14:31",
+      "name": "Project name  ",
+      "version": "",
+    },
+    "metadata": {
+      "version": "v1",
+    },
+    "overallStatus": "FAILED",
+  },
+  "version": "v1",
+}
+`;
+
+exports[`convertRunResultToReport > v1 (Onyx) conversion > parse simple results correctly 1`] = `
+{
+  "report": {
+    "chapters": [
+      {
+        "id": "1",
+        "requirements": [
+          {
+            "checks": [
+              {
+                "evaluation": {
+                  "autopilot": "validateCompute",
+                  "execution": {
+                    "evidencePath": "1/1.1/1/0",
+                    "exitCode": 0,
+                    "logs": [
+                      "Evidence Path: /tmp/onyx-evidence-2023-07-13T12-13-07-1656/1/1.1/1/0",
+                    ],
+                  },
+                  "status": "GREEN",
+                },
+                "id": "1",
+                "status": "GREEN",
+                "title": "Test compute",
+                "type": "Automation",
+              },
+            ],
+            "id": "1.1",
+            "status": "GREEN",
+            "text": "Compute something and check result",
+            "title": "Compute based evaluation should succeed",
+          },
+        ],
+        "status": "GREEN",
+        "title": "Test config should work",
+      },
+    ],
+    "header": {
+      "date": "2023-07-13 12:13",
+      "name": "Fibonacci",
+      "version": "1.0",
+    },
+    "metadata": {
+      "version": "v1",
+    },
+    "overallStatus": "GREEN",
+  },
+  "version": "v1",
+}
+`;
+
+exports[`convertRunResultToReport > v1 (Onyx) conversion > parse two GREEN requirement results 1`] = `
+{
+  "report": {
+    "chapters": [
+      {
+        "id": "1",
+        "requirements": [
+          {
+            "checks": [
+              {
+                "evaluation": {
+                  "autopilot": "validateCompute",
+                  "execution": {
+                    "evidencePath": "1/1/1/0",
+                    "exitCode": 0,
+                  },
+                  "status": "GREEN",
+                },
+                "id": "1",
+                "status": "GREEN",
+                "title": "Test compute",
+                "type": "Automation",
+              },
+            ],
+            "id": "1",
+            "status": "GREEN",
+            "text": "Compute something and check result",
+            "title": "Compute based evaluation should succeed",
+          },
+          {
+            "checks": [
+              {
+                "evaluation": {
+                  "status": "GREEN",
+                },
+                "id": "1",
+                "status": "GREEN",
+                "title": "Test manual",
+                "type": "Manual",
+              },
+            ],
+            "id": "2",
+            "status": "GREEN",
+            "text": undefined,
+            "title": "Manual evaluator should succeed",
+          },
+        ],
+        "status": "GREEN",
+        "title": "Test config should work",
+      },
+    ],
+    "header": {
+      "date": "2023-07-13 06:13",
+      "name": "PerformanceTest_Factorial",
+      "version": "1.1",
+    },
+    "metadata": {
+      "version": "v1",
+    },
+    "overallStatus": "GREEN",
+  },
+  "version": "v1",
+}
+`;
