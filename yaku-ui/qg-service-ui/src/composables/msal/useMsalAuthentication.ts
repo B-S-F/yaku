@@ -17,7 +17,10 @@ import { REDIRECT_URL_KEY } from '~/config/msal'
 import { useMsal } from './useMsal'
 
 export type MsalAuthenticationResult = {
-  acquireToken: Function
+  acquireToken: (
+    callbackInteractionType?: InteractionType | undefined,
+    callbackRequest?: SilentRequest | undefined,
+  ) => Promise<AuthenticationResult | null>
   result: Ref<AuthenticationResult | null>
   error: Ref<AuthError | null>
   inProgress: Ref<boolean>

@@ -9,5 +9,5 @@
   "include": [
     "vite.config.ts",
     "ui-dev-config.json"
-  ],
+  ]
 }
