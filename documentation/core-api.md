@@ -122,7 +122,7 @@ Typeorm has the possibility to automatically run migrations that have been previ
 
     Migrations should be considered as immutable once they are pushed to the repository. The only way of changing an already pushed migration should be by pushing a new migration or by reverting a new migration. This condition works similarly to how you wouldn't cut a commit laying at the middle of the commit history.
 
-- Follow the main branch: 
+- Follow the main branch:
 
     Migrations should be generated based on the newest main branch. Starting migrations from any other branch would create discrepancies between migrations, leading to history rewriting, inter-dimensional time-loops and black holes.
 
