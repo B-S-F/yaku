@@ -14,6 +14,7 @@
     "format": "npx @biomejs/biome format --write ./src",
     "lint": "npx @biomejs/biome lint --write ./src",
     "lint-staged": "npx lint-staged",
+    "test:unit": "TZ=UTC LC_ALL=de_DE.UTF-8 vitest",
     "test:cov": "npx turbo run test:cov --cache-dir=.turbo"
   },
   "devDependencies": {
