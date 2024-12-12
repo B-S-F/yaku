@@ -46,6 +46,10 @@ jobs:
     uses: ./.github/workflows/build-python-apps.yml
     secrets: inherit
 
+  build-ui:
+    uses: ./.github/workflows/build-ui.yml
+    secrets: inherit
+
   build-backend:
     uses: ./.github/workflows/build-backend.yml
     secrets: inherit
