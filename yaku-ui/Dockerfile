@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2024 grow platform GmbH
-#
-# SPDX-License-Identifier: MIT
-
 #############
 # PRODUCTION
 #############
@@ -30,12 +26,10 @@ ENV PATH=$PATH:$APP_USER_HOME/node_modules/.bin
 USER ${APP_USER_NAME}
 WORKDIR ${APP_USER_HOME}/app
 
-COPY --chown=${APP_USER_NAME}:${APP_USER_NAME} package.json package-lock.json .
-
-RUN --mount=type=secret,id=npmrc,target=${APP_USER_HOME}/.npmrc,uid=${APP_USER_ID} npm ci --ignore-scripts
 COPY --chown=${APP_USER_NAME}:${APP_USER_NAME} . .
+RUN npm ci --ignore-scripts
 
-RUN --mount=type=secret,id=npmrc,target=${APP_USER_HOME}/.npmrc,uid=${APP_USER_ID} npm rebuild node-sass && NODE_OPTIONS=--max-old-space-size=8192 npm run build
+RUN npm rebuild node-sass && NODE_OPTIONS=--max-old-space-size=8192 npm run build
 
 
 FROM ${BASE_IMAGE_NGINX_NAME} as production
@@ -64,7 +58,7 @@ WORKDIR ${APP_USER_HOME}/app
 
 COPY --from=app-builder ${APP_USER_HOME}/app/dist /usr/share/nginx/html/
 COPY --from=app-builder ${APP_USER_HOME}/app/package.json package.json
-COPY --chown=nginx:nginx ./.docker/default.conf.template /etc/nginx/conf.d/default.conf
+COPY --chown=nginx:nginx ./qg-service-ui/.docker/default.conf.template /etc/nginx/conf.d/default.conf
 
 USER root
 
