@@ -37,7 +37,7 @@ jobs:
       - name: Run Unit Tests
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: yaku-ui
-        run: npm run test:unit
+        run: npm run test:unit:ci --workspaces --if-present
 
       - name: Save Cache
         if: steps.cache.outputs.cache-hit != 'true'
