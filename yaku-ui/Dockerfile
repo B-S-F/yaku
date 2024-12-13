@@ -56,8 +56,10 @@ ENV NGINX_PORT=8080
 
 WORKDIR ${APP_USER_HOME}/app
 
-COPY --from=app-builder ${APP_USER_HOME}/app/dist /usr/share/nginx/html/
-COPY --from=app-builder ${APP_USER_HOME}/app/package.json package.json
+COPY --from=app-builder ${APP_USER_HOME}/app/qg-service-ui/dist /usr/share/nginx/html/
+#COPY --from=app-builder ${APP_USER_HOME}/app/qg-service-ui/package.json package.json
+COPY --from=app-builder ${APP_USER_HOME}/app/frog-vue/dist /usr/share/nginx/html/
+#COPY --from=app-builder ${APP_USER_HOME}/app/frog-vue/dist ./frog-vue/package.json
 COPY --chown=nginx:nginx ./qg-service-ui/.docker/default.conf.template /etc/nginx/conf.d/default.conf
 
 USER root
