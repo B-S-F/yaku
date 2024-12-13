@@ -2,7 +2,7 @@
 # PRODUCTION
 #############
 
-ARG BASE_IMAGE_NODEJS_NAME="node:18-alpine"
+ARG BASE_IMAGE_NODEJS_NAME="node:20-alpine"
 ARG BASE_IMAGE_NGINX_NAME="nginx:1.27.2-alpine-slim"
 FROM ${BASE_IMAGE_NODEJS_NAME} as app-builder
 

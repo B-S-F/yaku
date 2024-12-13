@@ -8,10 +8,4 @@ node_modules
 /.pants.d/
 
 yaku-apps-typescript/apps/defender-for-cloud/results.json
-/yaku-ui/.turbo/cookies/1.cookie
-/yaku-ui/.turbo/cookies/2.cookie
-/yaku-ui/.turbo/cookies/3.cookie
-/yaku-ui/.turbo/cookies/4.cookie
-/yaku-ui/.turbo/daemon/4a8022b32cada971-turbo.log.2024-12-12
-/yaku-ui/.turbo/bdec51dbfbcd0d12.tar.zst
-/yaku-ui/.turbo/bdec51dbfbcd0d12-meta.json
+/yaku-ui/.turbo/**
