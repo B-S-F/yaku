@@ -167,7 +167,6 @@ import {
   useUrlContext,
   useYakuBrowseHistory,
 } from '~/composables'
-import { useIsOnboardingActive } from '~/composables/onboarding/useIsOnboardingActive'
 import useRunResultsReport from '~/composables/runResults/useRunResultsReport'
 import useAutoPilotExplainable from '~/composables/useAutoPilotExplainable'
 import { useBreakpoints } from '~/composables/useBreakPoints'
@@ -197,8 +196,6 @@ const breakpoints = useBreakpoints()
 
 const runStore = useRunStore(storeContext)
 const configStore = useConfigStore(storeContext)
-
-const { isActive: isOnboardingActive } = useIsOnboardingActive()
 
 const { findings, findingsAmount, getFindingsCount, fetchAllFindings } =
   useConfigFindings()

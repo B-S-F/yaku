@@ -12,6 +12,8 @@
     "dev": "npm run dev --workspace qg-service-ui",
     "build": "npx turbo run build --continue --cache-dir=.turbo",
     "test:unit": "npm run test:unit --workspace qg-service-ui",
+    "test:unit:ci": "npm run test:unit:ci --workspace qg-service-ui",
+    "test:unit:run": "npm run test:unit:run --workspace qg-service-ui",
     "format": "npx @biomejs/biome format --write ./src",
     "lint": "npx @biomejs/biome lint --write ./src",
     "lint-staged": "npx lint-staged",

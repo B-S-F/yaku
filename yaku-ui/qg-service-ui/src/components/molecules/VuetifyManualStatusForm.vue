@@ -14,8 +14,8 @@ SPDX-License-Identifier: MIT
 </template>
 
 <script setup lang="ts">
-import type { SelectItem } from '~/types'
-import type { ManualStatus } from '~/types/RunResult'
+import type { SelectItem } from '~/types';
+import type { ManualStatus } from '~/types/RunResult';
 
 const props = defineProps<{
   status?: ManualStatus | string
