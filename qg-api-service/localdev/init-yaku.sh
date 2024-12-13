@@ -4,12 +4,15 @@
 #
 # SPDX-License-Identifier: MIT
 
+# generate an admin login session
+npm run start -w ../yaku-cli -- login --url http://127.0.0.1:3000/api/v1 --namespace 1 --admin local-myadmin
+
 # create namespace
-NAMESPACE_ID=$(yaku namespaces create mynamespace | jq -r '.id')
+NAMESPACE_ID=$(npm run start -w ../yaku-cli -- namespaces create mynamespace 2>/dev/null | tail -n +5 | jq -r '.id')
 
 # create local yaku cli env
-yaku envs create local-myuser --url http://127.0.0.1:3000/api/v1 --web --namespace $NAMESPACE_ID
-yaku envs sw local-myuser
+npm run start -w ../yaku-cli -- envs create local-myuser --url http://127.0.0.1:3000/api/v1 --web --namespace $NAMESPACE_ID
+npm run start -w ../yaku-cli -- envs sw local-myuser
 
 # show created resources
 BLUE='\033[0;34m'
