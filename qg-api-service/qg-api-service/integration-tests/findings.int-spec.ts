@@ -83,8 +83,8 @@ describe('Findings Controller', () => {
       Promise.resolve('Cool logs\nOverall result: GREEN'),
     )
     testContext = {
-      nestTestingApp: nestTestingApp, 
-      testNamespace: testNamespace, 
+      nestTestingApp: nestTestingApp,
+      testNamespace: testNamespace,
       apiToken: apiToken
     }
   })

@@ -80,8 +80,8 @@ describe('Metrics Controller', () => {
     )
 
     testContext = {
-      nestTestingApp: nestTestingApp, 
-      testNamespace: testNamespace, 
+      nestTestingApp: nestTestingApp,
+      testNamespace: testNamespace,
       apiToken: apiToken
     }
   })

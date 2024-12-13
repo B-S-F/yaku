@@ -12,10 +12,10 @@ import { Repository } from 'typeorm'
 
 export async function postRun(
   testContext: {
-    nestTestingApp: NestTestingApp, 
-    testNamespace: NamespaceTestEnvironment, 
+    nestTestingApp: NestTestingApp,
+    testNamespace: NamespaceTestEnvironment,
     apiToken: string
-  }, 
+  },
   body: any
 ): Promise<number> {
   const httpServer = await testContext.nestTestingApp.app.getHttpServer()
@@ -49,8 +49,8 @@ export async function postRun(
 
 export async function getRun(
   testContext: {
-    nestTestingApp: NestTestingApp, 
-    testNamespace: NamespaceTestEnvironment, 
+    nestTestingApp: NestTestingApp,
+    testNamespace: NamespaceTestEnvironment,
     apiToken: string
   },
   runId: number
@@ -64,8 +64,8 @@ export async function getRun(
 
 export async function awaitPendingRun(
   testContext: {
-    nestTestingApp: NestTestingApp, 
-    testNamespace: NamespaceTestEnvironment, 
+    nestTestingApp: NestTestingApp,
+    testNamespace: NamespaceTestEnvironment,
     apiToken: string
   },
   runId: number
@@ -79,11 +79,11 @@ export async function awaitPendingRun(
 
 export async function completeRun(
   testContext: {
-    nestTestingApp: NestTestingApp, 
-    testNamespace: NamespaceTestEnvironment, 
+    nestTestingApp: NestTestingApp,
+    testNamespace: NamespaceTestEnvironment,
     apiToken: string
   },
-  runId: number, 
+  runId: number,
   overallResult: RunResult
 ) {
   await awaitPendingRun(testContext, runId)
@@ -104,8 +104,8 @@ export async function completeRun(
 
 async function createEmptyConfig(
   testContext: {
-    nestTestingApp: NestTestingApp, 
-    testNamespace: NamespaceTestEnvironment, 
+    nestTestingApp: NestTestingApp,
+    testNamespace: NamespaceTestEnvironment,
     apiToken: string
   },
   configDto: any,
@@ -123,8 +123,8 @@ async function createEmptyConfig(
 
 async function addFilesToConfig(
   testContext: {
-    nestTestingApp: NestTestingApp, 
-    testNamespace: NamespaceTestEnvironment, 
+    nestTestingApp: NestTestingApp,
+    testNamespace: NamespaceTestEnvironment,
     apiToken: string
   },
   configId: number,
@@ -151,8 +151,8 @@ async function addFilesToConfig(
 
 export async function createConfig(
   testContext: {
-    nestTestingApp: NestTestingApp, 
-    testNamespace: NamespaceTestEnvironment, 
+    nestTestingApp: NestTestingApp,
+    testNamespace: NamespaceTestEnvironment,
     apiToken: string
   },
   testName: string,
@@ -176,7 +176,7 @@ export async function createConfig(
       )
     }
   }
-  
+
   return configId
 }
 

@@ -101,8 +101,8 @@ describe('Check release endpoints', () => {
     taskAuditRepo = nestTestingApp.repositories.taskAuditRepository
 
     testContext = {
-      nestTestingApp: nestTestingApp, 
-      testNamespace: testNamespace, 
+      nestTestingApp: nestTestingApp,
+      testNamespace: testNamespace,
       apiToken: apiToken
     }
   })

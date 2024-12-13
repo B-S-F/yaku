@@ -95,8 +95,8 @@ describe('Notifications', () => {
     ).mockImplementation(() => Promise.resolve(true))
 
     testContext = {
-      nestTestingApp: nestTestingApp, 
-      testNamespace: testNamespace, 
+      nestTestingApp: nestTestingApp,
+      testNamespace: testNamespace,
       apiToken: apiToken
     }
   })

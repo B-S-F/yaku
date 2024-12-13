@@ -84,8 +84,8 @@ describe('POST run', () => {
     ).mockImplementation(() => Promise.resolve())
 
     testContext = {
-      nestTestingApp: nestTestingApp, 
-      testNamespace: testNamespace, 
+      nestTestingApp: nestTestingApp,
+      testNamespace: testNamespace,
       apiToken: apiToken
     }
   })
