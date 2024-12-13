@@ -87,3 +87,6 @@ app/.vscode
 
 # ignore local cypress snaphots
 cypress/e2e/__image_snapshots__
+
+# vue stuff
+components.d.ts
