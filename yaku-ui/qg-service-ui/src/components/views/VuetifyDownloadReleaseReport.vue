@@ -40,7 +40,7 @@ SPDX-License-Identifier: MIT
         <p class="row">
           Result of answered: <span class="status-bg-dot status-bg--green" /> <span>{{
             `${green ?? '-%'}`
-            }}</span> <span class="status-bg-dot status-bg--yellow" /> <span>{{
+          }}</span> <span class="status-bg-dot status-bg--yellow" /> <span>{{
               `${yellow ?? '-%'}`
             }}</span> <span class="status-bg-dot status-bg--red" /> <span>{{
               `${red ?? '-%'}`
@@ -64,7 +64,7 @@ SPDX-License-Identifier: MIT
         <p class="row">
           Answered: <span class="status-bg-dot status-bg--automatic" /> <span>{{
             `${automatic ?? '-%'} Automatically`
-          }}</span> <span class="status-bg-dot status-bg--manual" /> <span>{{
+            }}</span> <span class="status-bg-dot status-bg--manual" /> <span>{{
               `${manual ?? '-%'} Manually`
             }}</span> <span class="status-bg-dot status-bg--unanswered" /> <span>{{
               `${unanswered ?? '-%'} Unanswered`
@@ -383,7 +383,7 @@ section {
   padding: Tokens.$spacing-8 Tokens.$spacing-8 Tokens.$spacing-8 Tokens.$spacing-16;
 
   :deep(p) {
-    font-size: rem(14px);
+    font-size: rem(14px, 16px);
     margin: 0;
   }
 }
