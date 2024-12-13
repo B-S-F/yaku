@@ -25,7 +25,7 @@ import {
   completeRun,
   createConfig,
   expectStatus,
-  postRun
+  postRun,
 } from './util'
 
 describe('Metrics Controller', () => {
@@ -82,7 +82,7 @@ describe('Metrics Controller', () => {
     testContext = {
       nestTestingApp: nestTestingApp,
       testNamespace: testNamespace,
-      apiToken: apiToken
+      apiToken: apiToken,
     }
   })
 
@@ -141,20 +141,28 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedMetricsEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedMetricsEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -201,13 +209,18 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -215,7 +228,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // second run
       resultFile = path.join(
@@ -241,7 +257,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -289,13 +308,18 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -303,7 +327,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries - expectedDiff)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries - expectedDiff,
+      )
 
       // second run
       resultFile = path.join(
@@ -329,7 +356,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries - expectedDiff)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries - expectedDiff,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -379,13 +409,18 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -393,7 +428,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // manually resolve 2 findings
       const manuallyResolvedRunId = runId
@@ -482,7 +520,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -544,13 +585,18 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -558,14 +604,20 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // second run
       runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 2 * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        2 * expectedEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -613,13 +665,18 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run - register new findings
@@ -627,7 +684,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // second run - first GREEN scenario
       resultFile = path.join(
@@ -653,7 +713,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Green)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // third run - second GREEN scenario
       resultFile = path.join(
@@ -679,7 +742,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Green)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -725,13 +791,18 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run - no Findings
@@ -740,14 +811,20 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Green)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // second run - no Findings
       runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Green)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -811,13 +888,18 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -825,7 +907,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // second run
       const startDate = new Date().toISOString()
@@ -835,7 +920,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -901,13 +989,18 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -915,7 +1008,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // second run
       resultFile = path.join(
@@ -941,7 +1037,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -1007,13 +1106,18 @@ describe('Metrics Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -1024,7 +1128,10 @@ describe('Metrics Controller', () => {
       await completeRun(testContext, runId, RunResult.Red)
 
       await new Promise((resolve) => setTimeout(resolve, 150))
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // second run
       const startDate = new Date().toISOString()
@@ -1055,7 +1162,10 @@ describe('Metrics Controller', () => {
       await completeRun(testContext, runId, RunResult.Red)
 
       await new Promise((resolve) => setTimeout(resolve, 150))
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       // third run
       const endDate = new Date().toISOString()
@@ -1083,7 +1193,10 @@ describe('Metrics Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.metricRepository,
+        runId * expectedEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)

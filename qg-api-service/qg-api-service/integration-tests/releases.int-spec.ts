@@ -45,7 +45,7 @@ import {
   NestUtil,
   checkRepositoryEntriesCount,
   createConfig,
-  expectStatus
+  expectStatus,
 } from './util'
 import path from 'path'
 
@@ -75,11 +75,7 @@ let subscriptionRepo: Repository<SubscriptionEntity>
 let taskRepo: Repository<TaskEntity>
 let taskAuditRepo: Repository<TaskAuditEntity>
 
-const configFile = path.join(
-  __dirname,
-  'mocks',
-  'qg-config-awesome.yaml',
-)
+const configFile = path.join(__dirname, 'mocks', 'qg-config-awesome.yaml')
 
 describe('Check release endpoints', () => {
   beforeEach(async () => {
@@ -103,7 +99,7 @@ describe('Check release endpoints', () => {
     testContext = {
       nestTestingApp: nestTestingApp,
       testNamespace: testNamespace,
-      apiToken: apiToken
+      apiToken: apiToken,
     }
   })
 
@@ -155,11 +151,13 @@ describe('Check release endpoints', () => {
   it('should integrate with the ui happy path', async () => {
     console.log('=== Create config')
 
-    const configId = await createConfig(testContext, testName, [{
-      filepath: configFile,
-      filename: testFilename,
-      contentType: testContentType,
-    }])
+    const configId = await createConfig(testContext, testName, [
+      {
+        filepath: configFile,
+        filename: testFilename,
+        contentType: testContentType,
+      },
+    ])
 
     console.log('=== Create release')
     const createReleaseDto = {

@@ -26,20 +26,12 @@ import {
   checkRun,
   createConfig,
   getRun,
-  postRun
+  postRun,
 } from './util'
 
 const timeoutInMillis = 5000
-const configFile = path.join(
-  __dirname,
-  'mocks',
-  'qg-config-awesome.yaml',
-)
-const v0ConfigFile = path.join(
-  __dirname,
-  'mocks',
-  'qg-config-v0-spec.yaml',
-)
+const configFile = path.join(__dirname, 'mocks', 'qg-config-awesome.yaml')
+const v0ConfigFile = path.join(__dirname, 'mocks', 'qg-config-v0-spec.yaml')
 
 describe('POST run', () => {
   let testNamespace: NamespaceTestEnvironment
@@ -86,7 +78,7 @@ describe('POST run', () => {
     testContext = {
       nestTestingApp: nestTestingApp,
       testNamespace: testNamespace,
-      apiToken: apiToken
+      apiToken: apiToken,
     }
   })
 
@@ -96,12 +88,17 @@ describe('POST run', () => {
   })
 
   it('should do a roundtrip with runs', async () => {
-    configId = await createConfig(testContext, testName, [{
-      filepath: configFile,
-      filename: testFilename,
-      contentType: testContentType,
-    }])
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
+    configId = await createConfig(testContext, testName, [
+      {
+        filepath: configFile,
+        filename: testFilename,
+        contentType: testContentType,
+      },
+    ])
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.runRepository,
+      0,
+    )
 
     const body = {
       configId,
@@ -112,7 +109,10 @@ describe('POST run', () => {
     await awaitPendingRun(testContext, runId)
 
     await checkRun(nestTestingApp, runId)
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.runRepository,
+      1,
+    )
 
     await waitForRequests(3)
     expect(
@@ -127,12 +127,17 @@ describe('POST run', () => {
   })
 
   it('start run with envs', async () => {
-    configId = await createConfig(testContext, testName, [{
-      filepath: configFile,
-      filename: testFilename,
-      contentType: testContentType,
-    }])
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
+    configId = await createConfig(testContext, testName, [
+      {
+        filepath: configFile,
+        filename: testFilename,
+        contentType: testContentType,
+      },
+    ])
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.runRepository,
+      0,
+    )
 
     const body = {
       configId: configId,
@@ -148,7 +153,10 @@ describe('POST run', () => {
     await awaitPendingRun(testContext, runId)
 
     await checkRun(nestTestingApp, runId)
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.runRepository,
+      1,
+    )
 
     await waitForRequests(3)
     expect(
@@ -163,12 +171,17 @@ describe('POST run', () => {
   })
 
   it('start run with a single check', async () => {
-    configId = await createConfig(testContext, testName, [{
-      filepath: configFile,
-      filename: testFilename,
-      contentType: testContentType,
-    }])
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
+    configId = await createConfig(testContext, testName, [
+      {
+        filepath: configFile,
+        filename: testFilename,
+        contentType: testContentType,
+      },
+    ])
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.runRepository,
+      0,
+    )
 
     const body = {
       configId: configId,
@@ -184,7 +197,10 @@ describe('POST run', () => {
     await awaitPendingRun(testContext, runId)
 
     await checkRun(nestTestingApp, runId)
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.runRepository,
+      1,
+    )
 
     await waitForRequests(3)
     const requests = allRequests.filter((req) => req.method === 'POST')
@@ -198,12 +214,17 @@ describe('POST run', () => {
   })
 
   it('should create a synthetic run', async () => {
-    configId = await createConfig(testContext, testName, [{
-      filepath: configFile,
-      filename: testFilename,
-      contentType: testContentType,
-    }])
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
+    configId = await createConfig(testContext, testName, [
+      {
+        filepath: configFile,
+        filename: testFilename,
+        contentType: testContentType,
+      },
+    ])
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.runRepository,
+      0,
+    )
 
     const data = {}
     data[RESULTFILE] = await readFile(
@@ -213,7 +234,10 @@ describe('POST run', () => {
 
     const runId = await postSyntheticRun(data)
 
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.runRepository,
+      1,
+    )
 
     const result = await supertest
       .agent(nestTestingApp.app.getHttpServer())
@@ -241,12 +265,17 @@ describe('POST run', () => {
   })
 
   it('fail run with unsupported v0 format', async () => {
-    configId = await createConfig(testContext, testName, [{
-      filepath: v0ConfigFile,
-      filename: testFilename,
-      contentType: testContentType,
-    }])
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 0)
+    configId = await createConfig(testContext, testName, [
+      {
+        filepath: v0ConfigFile,
+        filename: testFilename,
+        contentType: testContentType,
+      },
+    ])
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.runRepository,
+      0,
+    )
 
     const body = {
       configId: configId,

@@ -9,7 +9,7 @@ import {
   NamespaceTestEnvironment,
   NestTestingApp,
   NestUtil,
-  checkRepositoryEntriesCount
+  checkRepositoryEntriesCount,
 } from './util'
 import { Repository } from 'typeorm'
 import { Secret } from '../src/namespace/secret/secret.entity'

@@ -46,7 +46,7 @@ import {
   completeRun,
   createConfig,
   expectStatus,
-  postRun
+  postRun,
 } from './util'
 
 describe('Notifications', () => {
@@ -97,7 +97,7 @@ describe('Notifications', () => {
     testContext = {
       nestTestingApp: nestTestingApp,
       testNamespace: testNamespace,
-      apiToken: apiToken
+      apiToken: apiToken,
     }
   })
 
@@ -139,11 +139,13 @@ describe('Notifications', () => {
 
       // create config + run
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // create release
@@ -299,11 +301,13 @@ describe('Notifications', () => {
 
         // create config + run
         const body = {
-          configId: await createConfig(testContext, testName, [{
-            filepath: configFile,
-            filename: testFilename,
-            contentType: testContentType,
-          }]),
+          configId: await createConfig(testContext, testName, [
+            {
+              filepath: configFile,
+              filename: testFilename,
+              contentType: testContentType,
+            },
+          ]),
         }
 
         const runId = await postRun(testContext, body)
@@ -468,11 +472,13 @@ describe('Notifications', () => {
 
         // create config + run
         const body = {
-          configId: await createConfig(testContext, testName, [{
-            filepath: configFile,
-            filename: testFilename,
-            contentType: testContentType,
-          }]),
+          configId: await createConfig(testContext, testName, [
+            {
+              filepath: configFile,
+              filename: testFilename,
+              contentType: testContentType,
+            },
+          ]),
         }
 
         const runId = await postRun(testContext, body)
@@ -758,11 +764,13 @@ describe('Notifications', () => {
 
         // create config + run
         const body = {
-          configId: await createConfig(testContext, testName, [{
-            filepath: configFile,
-            filename: testFilename,
-            contentType: testContentType,
-          }]),
+          configId: await createConfig(testContext, testName, [
+            {
+              filepath: configFile,
+              filename: testFilename,
+              contentType: testContentType,
+            },
+          ]),
         }
 
         const runId = await postRun(testContext, body)
@@ -887,11 +895,13 @@ describe('Notifications', () => {
         )
         // create config + run
         const body = {
-          configId: await createConfig(testContext, testName, [{
-            filepath: configFile,
-            filename: testFilename,
-            contentType: testContentType,
-          }]),
+          configId: await createConfig(testContext, testName, [
+            {
+              filepath: configFile,
+              filename: testFilename,
+              contentType: testContentType,
+            },
+          ]),
         }
 
         const runId = await postRun(testContext, body)
@@ -1047,11 +1057,13 @@ describe('Notifications', () => {
 
       // create config + run
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       const runId = await postRun(testContext, body)
@@ -1190,11 +1202,13 @@ describe('Notifications', () => {
 
       // create config + run
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       const runId = await postRun(testContext, body)

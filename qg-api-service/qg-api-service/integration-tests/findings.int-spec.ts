@@ -28,7 +28,7 @@ import {
   completeRun,
   createConfig,
   expectStatus,
-  postRun
+  postRun,
 } from './util'
 
 describe('Findings Controller', () => {
@@ -85,7 +85,7 @@ describe('Findings Controller', () => {
     testContext = {
       nestTestingApp: nestTestingApp,
       testNamespace: testNamespace,
-      apiToken: apiToken
+      apiToken: apiToken,
     }
   })
 
@@ -144,20 +144,28 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        runId * expectedEntries,
+      )
 
       const result = await supertest
         .agent(httpServer)
@@ -215,13 +223,18 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -229,7 +242,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       // second run
@@ -256,7 +272,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       const result = await supertest
@@ -314,13 +333,18 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -328,7 +352,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       let result = await supertest
@@ -364,7 +391,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       result = await supertest
@@ -429,13 +459,18 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -443,7 +478,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       // second run
@@ -451,7 +489,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       const result = await supertest
@@ -510,13 +551,18 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -524,7 +570,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       let result = await supertest
@@ -560,7 +609,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       result = await supertest
@@ -622,20 +674,28 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, 'ERROR' as any)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       const result = await supertest
@@ -689,13 +749,18 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       // first run
@@ -703,7 +768,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Green)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       // second run
@@ -711,7 +779,10 @@ describe('Findings Controller', () => {
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Green)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        expectedEntries,
+      )
       await checkFindingsRunId(runId)
 
       const result = await supertest
@@ -764,20 +835,28 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        runId * expectedEntries,
+      )
 
       const findings = (
         await supertest
@@ -832,20 +911,28 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        runId * expectedEntries,
+      )
 
       const findings = (
         await supertest
@@ -907,20 +994,28 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        runId * expectedEntries,
+      )
 
       const findings = (
         await supertest
@@ -999,20 +1094,28 @@ describe('Findings Controller', () => {
       return Promise.resolve(readableStream)
     })
 
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.findingRepository,
+      0,
+    )
     const body = {
-      configId: await createConfig(testContext, testName, [{
-        filepath: configFile,
-        filename: testFilename,
-        contentType: testContentType,
-      }]),
+      configId: await createConfig(testContext, testName, [
+        {
+          filepath: configFile,
+          filename: testFilename,
+          contentType: testContentType,
+        },
+      ]),
     }
 
     const runId = await postRun(testContext, body)
     await checkRun(nestTestingApp, runId)
 
     await completeRun(testContext, runId, RunResult.Red)
-    await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
+    await checkRepositoryEntriesCount(
+      nestTestingApp.repositories.findingRepository,
+      runId * expectedEntries,
+    )
 
     const findings = (
       await supertest
@@ -1079,20 +1182,28 @@ describe('Findings Controller', () => {
         return Promise.resolve(readableStream)
       })
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        0,
+      )
       const body = {
-        configId: await createConfig(testContext, testName, [{
-          filepath: configFile,
-          filename: testFilename,
-          contentType: testContentType,
-        }]),
+        configId: await createConfig(testContext, testName, [
+          {
+            filepath: configFile,
+            filename: testFilename,
+            contentType: testContentType,
+          },
+        ]),
       }
 
       const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await completeRun(testContext, runId, RunResult.Red)
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedInitialEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        runId * expectedInitialEntries,
+      )
 
       const findings = (
         await supertest
@@ -1123,7 +1234,10 @@ describe('Findings Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedResultingEntries)
+      await checkRepositoryEntriesCount(
+        nestTestingApp.repositories.findingRepository,
+        runId * expectedResultingEntries,
+      )
       expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(
         runId * expectedResultingEntries,

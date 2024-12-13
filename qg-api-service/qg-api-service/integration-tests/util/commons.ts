@@ -6,17 +6,17 @@ import { expect } from 'vitest'
 import { HttpStatus } from '@nestjs/common'
 import * as supertest from 'supertest'
 import { readFile } from 'fs/promises'
-import { NamespaceTestEnvironment, NestTestingApp } from "./nest-util"
+import { NamespaceTestEnvironment, NestTestingApp } from './nest-util'
 import { Run, RunResult, RunStatus } from '../../src/namespace/run/run.entity'
 import { Repository } from 'typeorm'
 
 export async function postRun(
   testContext: {
-    nestTestingApp: NestTestingApp,
-    testNamespace: NamespaceTestEnvironment,
+    nestTestingApp: NestTestingApp
+    testNamespace: NamespaceTestEnvironment
     apiToken: string
   },
-  body: any
+  body: any,
 ): Promise<number> {
   const httpServer = await testContext.nestTestingApp.app.getHttpServer()
 
@@ -27,10 +27,7 @@ export async function postRun(
     .set('Authorization', `Bearer ${testContext.apiToken}`)
     .expect(HttpStatus.ACCEPTED)
 
-  expect(
-    response.body.id,
-    `The id of created run does not exist`,
-  ).toBeDefined()
+  expect(response.body.id, `The id of created run does not exist`).toBeDefined()
   expect(
     response.headers.location.endsWith(`${response.body.id}`),
     `The location header of created run is not as expected`,
@@ -49,26 +46,28 @@ export async function postRun(
 
 export async function getRun(
   testContext: {
-    nestTestingApp: NestTestingApp,
-    testNamespace: NamespaceTestEnvironment,
+    nestTestingApp: NestTestingApp
+    testNamespace: NamespaceTestEnvironment
     apiToken: string
   },
-  runId: number
+  runId: number,
 ): Promise<any> {
   return await supertest
     .agent(testContext.nestTestingApp.app.getHttpServer())
-    .get(`/api/v1/namespaces/${testContext.testNamespace.namespace.id}/runs/${runId}`)
+    .get(
+      `/api/v1/namespaces/${testContext.testNamespace.namespace.id}/runs/${runId}`,
+    )
     .set('Authorization', `Bearer ${testContext.apiToken}`)
     .expect(HttpStatus.OK)
 }
 
 export async function awaitPendingRun(
   testContext: {
-    nestTestingApp: NestTestingApp,
-    testNamespace: NamespaceTestEnvironment,
+    nestTestingApp: NestTestingApp
+    testNamespace: NamespaceTestEnvironment
     apiToken: string
   },
-  runId: number
+  runId: number,
 ): Promise<void> {
   let run = await getRun(testContext, runId)
   while (run.status === RunStatus.Pending) {
@@ -79,12 +78,12 @@ export async function awaitPendingRun(
 
 export async function completeRun(
   testContext: {
-    nestTestingApp: NestTestingApp,
-    testNamespace: NamespaceTestEnvironment,
+    nestTestingApp: NestTestingApp
+    testNamespace: NamespaceTestEnvironment
     apiToken: string
   },
   runId: number,
-  overallResult: RunResult
+  overallResult: RunResult,
 ) {
   await awaitPendingRun(testContext, runId)
   await getRun(testContext, runId)
@@ -104,27 +103,32 @@ export async function completeRun(
 
 async function createEmptyConfig(
   testContext: {
-    nestTestingApp: NestTestingApp,
-    testNamespace: NamespaceTestEnvironment,
+    nestTestingApp: NestTestingApp
+    testNamespace: NamespaceTestEnvironment
     apiToken: string
   },
   configDto: any,
 ): Promise<number> {
   const createConfigResponse = await supertest
     .agent(testContext.nestTestingApp.app.getHttpServer())
-    .post(`/api/v1/namespaces/${testContext.testNamespace.namespace.id}/configs`)
+    .post(
+      `/api/v1/namespaces/${testContext.testNamespace.namespace.id}/configs`,
+    )
     .send(configDto)
     .set('Authorization', `Bearer ${testContext.apiToken}`)
     .set('Content-Type', 'application/json')
     .expect(HttpStatus.CREATED)
-  expect(createConfigResponse.body, `The id property of the created config does not exist`).toHaveProperty('id')
+  expect(
+    createConfigResponse.body,
+    `The id property of the created config does not exist`,
+  ).toHaveProperty('id')
   return createConfigResponse.body.id
 }
 
 async function addFilesToConfig(
   testContext: {
-    nestTestingApp: NestTestingApp,
-    testNamespace: NamespaceTestEnvironment,
+    nestTestingApp: NestTestingApp
+    testNamespace: NamespaceTestEnvironment
     apiToken: string
   },
   configId: number,
@@ -132,7 +136,7 @@ async function addFilesToConfig(
     filepath: string
     filename: string
     contentType: string
-  }
+  },
 ): Promise<supertest.Test> {
   const fileContent = await readFile(file.filepath)
   return await supertest
@@ -151,8 +155,8 @@ async function addFilesToConfig(
 
 export async function createConfig(
   testContext: {
-    nestTestingApp: NestTestingApp,
-    testNamespace: NamespaceTestEnvironment,
+    nestTestingApp: NestTestingApp
+    testNamespace: NamespaceTestEnvironment
     apiToken: string
   },
   testName: string,
@@ -162,25 +166,23 @@ export async function createConfig(
     contentType: string
   }[],
 ): Promise<number> {
-  const configId: number = await createEmptyConfig(
-    testContext,
-    { name: testName }
-  )
+  const configId: number = await createEmptyConfig(testContext, {
+    name: testName,
+  })
 
   if (files !== undefined) {
     for (const file of files) {
-      await addFilesToConfig(
-        testContext,
-        configId,
-        file
-      )
+      await addFilesToConfig(testContext, configId, file)
     }
   }
 
   return configId
 }
 
-export async function checkRun(nestTestingApp: NestTestingApp, runId: number): Promise<void> {
+export async function checkRun(
+  nestTestingApp: NestTestingApp,
+  runId: number,
+): Promise<void> {
   const runEntity: Run =
     await nestTestingApp.repositories.runRepository.findOneBy({
       id: runId,
@@ -196,7 +198,10 @@ export async function checkRun(nestTestingApp: NestTestingApp, runId: number): P
   ).toBeDefined()
 }
 
-export async function checkRepositoryEntriesCount(repository: Repository<any>, expectedNumber: number): Promise<void> {
+export async function checkRepositoryEntriesCount(
+  repository: Repository<any>,
+  expectedNumber: number,
+): Promise<void> {
   expect(
     await repository.count(),
     `Expected ${expectedNumber} elements in database`,

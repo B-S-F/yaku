@@ -17,7 +17,7 @@ import {
   completeRun,
   createConfig,
   expectStatus,
-  postRun
+  postRun,
 } from './util'
 import path from 'path'
 import { readFile } from 'fs/promises'
@@ -201,7 +201,7 @@ describe('Explanations', () => {
     testContext = {
       nestTestingApp: nestTestingApp,
       testNamespace: testNamespace,
-      apiToken: apiToken
+      apiToken: apiToken,
     }
   })
 
@@ -262,7 +262,7 @@ describe('Explanations', () => {
             {
               filepath: path.join(__dirname, 'mocks', '1k.yaml'),
               filename: '1k.yaml',
-              contentType: 'multipart/form-data'
+              contentType: 'multipart/form-data',
             },
           ]),
         }
