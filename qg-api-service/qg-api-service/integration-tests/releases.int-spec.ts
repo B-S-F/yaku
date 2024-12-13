@@ -39,8 +39,14 @@ import {
   AddTaskDto,
   UpdateTaskDto,
 } from '../src/namespace/releases/tasks/tasks.utils'
-import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
-import { addFilesToConfig, checkRepositoryEntriesCount, createEmptyConfig } from './util/commons'
+import {
+  NamespaceTestEnvironment,
+  NestTestingApp,
+  NestUtil,
+  checkRepositoryEntriesCount,
+  createConfig,
+  expectStatus
+} from './util'
 import path from 'path'
 
 let testNamespace: NamespaceTestEnvironment
@@ -49,6 +55,11 @@ let nestTestingApp: NestTestingApp
 let nestUtil: NestUtil
 
 let apiToken
+
+const testName = 'Releases (Integration Test)'
+const testFilename = 'qg-config.yaml'
+const testContentType = 'application/yaml'
+let testContext
 
 let releaseRepo: Repository<ReleaseEntity>
 let releaseAuditRepo: Repository<ReleaseAuditEntity>
@@ -88,6 +99,12 @@ describe('Check release endpoints', () => {
     subscriptionRepo = nestTestingApp.repositories.subscriptionRepository
     taskRepo = nestTestingApp.repositories.taskRepository
     taskAuditRepo = nestTestingApp.repositories.taskAuditRepository
+
+    testContext = {
+      nestTestingApp: nestTestingApp, 
+      testNamespace: testNamespace, 
+      apiToken: apiToken
+    }
   })
 
   afterEach(async () => {
@@ -100,14 +117,7 @@ describe('Check release endpoints', () => {
 
     console.log('=== Create config')
 
-    const createConfigDto = {
-      name: 'Test Config',
-      description: 'Config for releases integration test',
-    }
-
-    const createConfigResponse = await createEmptyConfig(nestTestingApp, testNamespace, createConfigDto, apiToken)
-    expect(createConfigResponse.body).toHaveProperty('id')
-    const configId = createConfigResponse.body.id
+    const configId = await createConfig(testContext, testName)
 
     const createReleaseDto = {
       name: 'Test release',
@@ -144,27 +154,18 @@ describe('Check release endpoints', () => {
 
   it('should integrate with the ui happy path', async () => {
     console.log('=== Create config')
-    const createConfigDto = {
-      name: 'Test Config',
-      description: 'Config for releases integration test',
-    }
 
-    const createConfigResponse = await createEmptyConfig(nestTestingApp, testNamespace, createConfigDto, apiToken)
-    expect(createConfigResponse.body).toHaveProperty('id')
-
-    await addFilesToConfig(nestTestingApp, testNamespace, createConfigResponse.body.id, apiToken, {
+    const configId = await createConfig(testContext, testName, [{
       filepath: configFile,
-      filename: 'qg-config.yaml',
-      contentType: 'application/yaml',
-    })
+      filename: testFilename,
+      contentType: testContentType,
+    }])
 
-    await getQgConfig(createConfigResponse.body.id)
-    expectStatus(createConfigResponse, HttpStatus.CREATED, 'addQgConfig')
     console.log('=== Create release')
     const createReleaseDto = {
       name: 'Test release',
       plannedDate: new Date('2024-03-25T13:32:07.749Z'),
-      qgConfigId: createConfigResponse.body.id,
+      qgConfigId: configId,
       approvalMode: 'one' as ApprovalMode,
     }
     const createReleaseResponse = await createRelease(createReleaseDto)
@@ -471,17 +472,12 @@ describe('Check release endpoints', () => {
 
   it('should support rejection of a release', async () => {
     console.log('=== Create config')
-    const createConfigDto = {
-      name: 'Test Config',
-      description: 'Config for releases integration test',
-    }
-    const createConfigResponse = await createEmptyConfig(nestTestingApp, testNamespace, createConfigDto, apiToken)
-    expect(createConfigResponse.body).toHaveProperty('id')
+    const configId = await createConfig(testContext, testName)
 
     const createReleaseDto = {
       name: 'Test release',
       plannedDate: new Date('2024-03-25T13:32:07.749Z'),
-      qgConfigId: createConfigResponse.body.id,
+      qgConfigId: configId,
       approvalMode: 'one' as ApprovalMode,
     }
     const createReleaseResponse = await createRelease(createReleaseDto)
@@ -519,17 +515,12 @@ describe('Check release endpoints', () => {
 
   it('should not allow modification of a closed release', async () => {
     console.log('=== Create config')
-    const createConfigDto = {
-      name: 'Test Config',
-      description: 'Config for releases integration test',
-    }
-    const createConfigResponse = await createEmptyConfig(nestTestingApp, testNamespace, createConfigDto, apiToken)
-    expect(createConfigResponse.body).toHaveProperty('id')
+    const configId = await createConfig(testContext, testName)
 
     const createReleaseDto = {
       name: 'Test release',
       plannedDate: new Date('2024-03-25T13:32:07.749Z'),
-      qgConfigId: createConfigResponse.body.id,
+      qgConfigId: configId,
       approvalMode: 'one' as ApprovalMode,
     }
     const createReleaseResponse = await createRelease(createReleaseDto)
@@ -656,17 +647,12 @@ describe('Check release endpoints', () => {
 
   it('should update a release successfully', async () => {
     console.log('=== Create config')
-    const createConfigDto = {
-      name: 'Test Config',
-      description: 'Config for releases integration test',
-    }
-    const createConfigResponse = await createEmptyConfig(nestTestingApp, testNamespace, createConfigDto, apiToken)
-    expect(createConfigResponse.body).toHaveProperty('id')
+    const configId = await createConfig(testContext, testName)
 
     const createReleaseDto = {
       name: 'Test release',
       plannedDate: new Date('2024-03-25T13:32:07.749Z'),
-      qgConfigId: createConfigResponse.body.id,
+      qgConfigId: configId,
       approvalMode: 'one' as ApprovalMode,
     }
     const createReleaseResponse = await createRelease(createReleaseDto)
@@ -915,20 +901,6 @@ async function getSubscriptionStatus(
     .agent(nestTestingApp.app.getHttpServer())
     .get(`/api/v1/subscriptions/status/${userId}/${releaseId}`)
     .set('Authorization', `Bearer ${apiToken}`)
-}
-
-function expectStatus(
-  response: supertest.Response,
-  status: number,
-  context: string,
-): void {
-  if (response.status !== status) {
-    throw new Error(
-      `Expected status ${status} but received ${
-        response.status
-      } for ${context}: ${JSON.stringify(response.body)}`,
-    )
-  }
 }
 
 async function listTasks(releaseId: number): Promise<supertest.Test> {

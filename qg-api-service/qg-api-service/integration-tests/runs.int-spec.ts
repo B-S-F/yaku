@@ -17,8 +17,17 @@ import {
   MinIOStoreImpl,
 } from '../src/namespace/workflow/minio.service'
 import { handlers } from './mocks'
-import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
-import { awaitPendingRun, checkRepositoryEntriesCount, checkRun, createConfigWithFiles, getRun, postRun } from './util/commons'
+import {
+  NamespaceTestEnvironment,
+  NestTestingApp,
+  NestUtil,
+  awaitPendingRun,
+  checkRepositoryEntriesCount,
+  checkRun,
+  createConfig,
+  getRun,
+  postRun
+} from './util'
 
 const timeoutInMillis = 5000
 const configFile = path.join(
@@ -29,7 +38,7 @@ const configFile = path.join(
 const v0ConfigFile = path.join(
   __dirname,
   'mocks',
-  'qg-config-empty.yaml',
+  'qg-config-v0-spec.yaml',
 )
 
 describe('POST run', () => {
@@ -41,6 +50,7 @@ describe('POST run', () => {
   const testName = 'Runs (Integration Test)'
   const testFilename = 'qg-config.yaml'
   const testContentType = 'application/yaml'
+  let testContext
 
   let apiToken
   let configId: number
@@ -72,6 +82,12 @@ describe('POST run', () => {
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
       'uploadPayload',
     ).mockImplementation(() => Promise.resolve())
+
+    testContext = {
+      nestTestingApp: nestTestingApp, 
+      testNamespace: testNamespace, 
+      apiToken: apiToken
+    }
   })
 
   afterEach(async () => {
@@ -80,7 +96,7 @@ describe('POST run', () => {
   })
 
   it('should do a roundtrip with runs', async () => {
-    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+    configId = await createConfig(testContext, testName, [{
       filepath: configFile,
       filename: testFilename,
       contentType: testContentType,
@@ -90,10 +106,10 @@ describe('POST run', () => {
     const body = {
       configId,
     }
-    const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+    const runId = await postRun(testContext, body)
 
     await checkRunByGET(runId)
-    await awaitPendingRun(nestTestingApp, testNamespace, runId, apiToken)
+    await awaitPendingRun(testContext, runId)
 
     await checkRun(nestTestingApp, runId)
     await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
@@ -111,7 +127,7 @@ describe('POST run', () => {
   })
 
   it('start run with envs', async () => {
-    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+    configId = await createConfig(testContext, testName, [{
       filepath: configFile,
       filename: testFilename,
       contentType: testContentType,
@@ -126,10 +142,10 @@ describe('POST run', () => {
         NUMERIC_VALUE: '123456',
       },
     }
-    const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+    const runId = await postRun(testContext, body)
 
     await checkRunByGET(runId)
-    await awaitPendingRun(nestTestingApp, testNamespace, runId, apiToken)
+    await awaitPendingRun(testContext, runId)
 
     await checkRun(nestTestingApp, runId)
     await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
@@ -147,7 +163,7 @@ describe('POST run', () => {
   })
 
   it('start run with a single check', async () => {
-    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+    configId = await createConfig(testContext, testName, [{
       filepath: configFile,
       filename: testFilename,
       contentType: testContentType,
@@ -162,10 +178,10 @@ describe('POST run', () => {
         check: '1',
       },
     }
-    const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+    const runId = await postRun(testContext, body)
 
     await checkRunByGET(runId)
-    await awaitPendingRun(nestTestingApp, testNamespace, runId, apiToken)
+    await awaitPendingRun(testContext, runId)
 
     await checkRun(nestTestingApp, runId)
     await checkRepositoryEntriesCount(nestTestingApp.repositories.runRepository, 1)
@@ -182,7 +198,7 @@ describe('POST run', () => {
   })
 
   it('should create a synthetic run', async () => {
-    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+    configId = await createConfig(testContext, testName, [{
       filepath: configFile,
       filename: testFilename,
       contentType: testContentType,
@@ -225,7 +241,7 @@ describe('POST run', () => {
   })
 
   it('fail run with unsupported v0 format', async () => {
-    configId = await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+    configId = await createConfig(testContext, testName, [{
       filepath: v0ConfigFile,
       filename: testFilename,
       contentType: testContentType,
@@ -235,7 +251,7 @@ describe('POST run', () => {
     const body = {
       configId: configId,
     }
-    const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+    const runId = await postRun(testContext, body)
 
     // We expect the run to fail immediately due to the unsupported config
     await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -260,7 +276,7 @@ describe('POST run', () => {
   })
 
   async function checkRunByGET(runId: number): Promise<void> {
-    const response = await getRun(nestTestingApp, testNamespace, runId, apiToken)
+    const response = await getRun(testContext, runId)
     expect(
       response.body.id,
       `Run in GET response has not the right id`,

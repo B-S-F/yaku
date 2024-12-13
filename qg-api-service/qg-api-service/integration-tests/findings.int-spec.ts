@@ -19,8 +19,17 @@ import {
   MinIOStoreImpl,
 } from '../src/namespace/workflow/minio.service'
 import { handlers } from './mocks'
-import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
-import { checkRepositoryEntriesCount, checkRun, completeRun, createConfigWithFiles, postRun } from './util/commons'
+import {
+  NamespaceTestEnvironment,
+  NestTestingApp,
+  NestUtil,
+  checkRepositoryEntriesCount,
+  checkRun,
+  completeRun,
+  createConfig,
+  expectStatus,
+  postRun
+} from './util'
 
 describe('Findings Controller', () => {
   let nestTestingApp: NestTestingApp
@@ -32,6 +41,7 @@ describe('Findings Controller', () => {
   const testName = 'Findings (Integration Test)'
   const testFilename = 'qg-config.yaml'
   const testContentType = 'application/yaml'
+  let testContext
 
   beforeEach(async () => {
     const nestUtil = new NestUtil()
@@ -72,6 +82,11 @@ describe('Findings Controller', () => {
     ).mockImplementation(() =>
       Promise.resolve('Cool logs\nOverall result: GREEN'),
     )
+    testContext = {
+      nestTestingApp: nestTestingApp, 
+      testNamespace: testNamespace, 
+      apiToken: apiToken
+    }
   })
 
   afterEach(async () => {
@@ -92,7 +107,7 @@ describe('Findings Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination).toBeDefined()
       expect(result.body.data).toBeDefined()
     })
@@ -131,17 +146,17 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
         }]),
       }
 
-      const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
 
       const result = await supertest
@@ -152,7 +167,7 @@ describe('Findings Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
         countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
@@ -202,7 +217,7 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -210,10 +225,10 @@ describe('Findings Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
@@ -237,10 +252,10 @@ describe('Findings Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
@@ -252,7 +267,7 @@ describe('Findings Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
         countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
@@ -301,7 +316,7 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -309,10 +324,10 @@ describe('Findings Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
@@ -345,10 +360,10 @@ describe('Findings Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
@@ -360,7 +375,7 @@ describe('Findings Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
         countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
@@ -416,7 +431,7 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -424,18 +439,18 @@ describe('Findings Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
       // second run
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
@@ -447,7 +462,7 @@ describe('Findings Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
         countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
@@ -497,7 +512,7 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -505,10 +520,10 @@ describe('Findings Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
@@ -541,10 +556,10 @@ describe('Findings Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
@@ -556,7 +571,7 @@ describe('Findings Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
         countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
@@ -609,17 +624,17 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
         }]),
       }
 
-      const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, 'ERROR' as any)
+      await completeRun(testContext, runId, 'ERROR' as any)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
@@ -631,7 +646,7 @@ describe('Findings Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
         countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
@@ -676,7 +691,7 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -684,18 +699,18 @@ describe('Findings Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+      await completeRun(testContext, runId, RunResult.Green)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
       // second run
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+      await completeRun(testContext, runId, RunResult.Green)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, expectedEntries)
       await checkFindingsRunId(runId)
 
@@ -707,7 +722,7 @@ describe('Findings Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(expectedEntries)
       expect(
         countFindingsWithStatus(result.body.data, StatusType.UNRESOLVED),
@@ -751,17 +766,17 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
         }]),
       }
 
-      const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
 
       const findings = (
@@ -819,17 +834,17 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
         }]),
       }
 
-      const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
 
       const findings = (
@@ -894,17 +909,17 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
         }]),
       }
 
-      const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
 
       const findings = (
@@ -986,17 +1001,17 @@ describe('Findings Controller', () => {
 
     await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
     const body = {
-      configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+      configId: await createConfig(testContext, testName, [{
         filepath: configFile,
         filename: testFilename,
         contentType: testContentType,
       }]),
     }
 
-    const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+    const runId = await postRun(testContext, body)
     await checkRun(nestTestingApp, runId)
 
-    await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+    await completeRun(testContext, runId, RunResult.Red)
     await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedEntries)
 
     const findings = (
@@ -1066,17 +1081,17 @@ describe('Findings Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
         }]),
       }
 
-      const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedInitialEntries)
 
       const findings = (
@@ -1109,7 +1124,7 @@ describe('Findings Controller', () => {
         .set('Authorization', `Bearer ${apiToken}`)
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.findingRepository, runId * expectedResultingEntries)
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination.totalCount).toBe(
         runId * expectedResultingEntries,
       )

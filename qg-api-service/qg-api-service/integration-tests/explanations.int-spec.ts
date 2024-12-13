@@ -10,7 +10,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { RunService } from '../src/namespace/run/run.service'
 import { OpenAIService } from '../src/gp-services/openai.service'
 import { handlers } from './mocks'
-import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
+import {
+  NamespaceTestEnvironment,
+  NestTestingApp,
+  NestUtil,
+  completeRun,
+  createConfig,
+  expectStatus,
+  postRun
+} from './util'
 import path from 'path'
 import { readFile } from 'fs/promises'
 import { RunResult } from '../src/namespace/run/run.entity'
@@ -23,7 +31,6 @@ import {
 } from '../src/namespace/workflow/minio.service'
 import { FileContentEntity } from '../src/namespace/configs/config.entity'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { completeRun, createConfigWithFiles, postRun } from './util/commons'
 
 describe('Explanations', () => {
   let nestTestingApp: NestTestingApp
@@ -33,6 +40,7 @@ describe('Explanations', () => {
   let apiToken
   let testNamespace: NamespaceTestEnvironment
   const testName = 'Explanations (Integration Test)'
+  let testContext
 
   const openai_testYAML = {
     filepath: path.join(__dirname, 'mocks', 'openai-test.yaml'),
@@ -189,6 +197,12 @@ describe('Explanations', () => {
     ).mockImplementation(() =>
       Promise.resolve('Cool logs\nOverall result: GREEN'),
     )
+
+    testContext = {
+      nestTestingApp: nestTestingApp, 
+      testNamespace: testNamespace, 
+      apiToken: apiToken
+    }
   })
 
   afterEach(async () => {
@@ -204,10 +218,10 @@ describe('Explanations', () => {
 
       it('should be defined', async () => {
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, files),
+          configId: await createConfig(testContext, testName, files),
         }
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+        const runId = await postRun(testContext, body)
+        await completeRun(testContext, runId, RunResult.Green)
 
         const httpServer = nestTestingApp.app.getHttpServer()
         const result = await supertest
@@ -218,7 +232,7 @@ describe('Explanations', () => {
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
 
-        expect(result.status).toBe(HttpStatus.OK)
+        expectStatus(result, HttpStatus.OK)
         expect(result.body.explanation).toBeDefined()
       })
 
@@ -239,12 +253,12 @@ describe('Explanations', () => {
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
 
-        expect(result.status).toBe(HttpStatus.NOT_FOUND)
+        expectStatus(result, HttpStatus.NOT_FOUND)
       })
 
       it('should throw UnprocessableEntityException when YAML data import fails', async () => {
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [
+          configId: await createConfig(testContext, testName, [
             {
               filepath: path.join(__dirname, 'mocks', '1k.yaml'),
               filename: '1k.yaml',
@@ -252,8 +266,8 @@ describe('Explanations', () => {
             },
           ]),
         }
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+        const runId = await postRun(testContext, body)
+        await completeRun(testContext, runId, RunResult.Green)
 
         vi.spyOn(
           nestTestingApp.testingModule.get<RunService>(RunService),
@@ -271,15 +285,15 @@ describe('Explanations', () => {
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
 
-        expect(result.status).toBe(HttpStatus.UNPROCESSABLE_ENTITY)
+        expectStatus(result, HttpStatus.UNPROCESSABLE_ENTITY)
       })
 
       it('should throw UnprocessableEntityException when a non-existing chapter is selected from the QG result', async () => {
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, files),
+          configId: await createConfig(testContext, testName, files),
         }
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+        const runId = await postRun(testContext, body)
+        await completeRun(testContext, runId, RunResult.Green)
 
         const chapter = 'non-exisiting-chapter'
 
@@ -292,15 +306,15 @@ describe('Explanations', () => {
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
 
-        expect(result.status).toBe(HttpStatus.UNPROCESSABLE_ENTITY)
+        expectStatus(result, HttpStatus.UNPROCESSABLE_ENTITY)
       })
 
       it('should throw UnprocessableEntityException when a non-existing requirement is selected from the QG result', async () => {
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, files),
+          configId: await createConfig(testContext, testName, files),
         }
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+        const runId = await postRun(testContext, body)
+        await completeRun(testContext, runId, RunResult.Green)
 
         const requirement = 'non-exisiting-requirement'
 
@@ -313,15 +327,15 @@ describe('Explanations', () => {
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
 
-        expect(result.status).toBe(HttpStatus.UNPROCESSABLE_ENTITY)
+        expectStatus(result, HttpStatus.UNPROCESSABLE_ENTITY)
       })
 
       it('should throw UnprocessableEntityException when a non-existing check is selected from the QG result', async () => {
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, files),
+          configId: await createConfig(testContext, testName, files),
         }
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+        const runId = await postRun(testContext, body)
+        await completeRun(testContext, runId, RunResult.Green)
 
         const check = 'non-exisiting-check'
 
@@ -334,7 +348,7 @@ describe('Explanations', () => {
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
 
-        expect(result.status).toBe(HttpStatus.UNPROCESSABLE_ENTITY)
+        expectStatus(result, HttpStatus.UNPROCESSABLE_ENTITY)
       })
 
       it('should not exceed the token limit', async () => {
@@ -348,10 +362,10 @@ describe('Explanations', () => {
           fourkTokens_2,
         ]
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, files),
+          configId: await createConfig(testContext, testName, files),
         }
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+        const runId = await postRun(testContext, body)
+        await completeRun(testContext, runId, RunResult.Green)
 
         const httpServer = nestTestingApp.app.getHttpServer()
         const result = await supertest
@@ -362,7 +376,7 @@ describe('Explanations', () => {
           .set('Authorization', `Bearer ${apiToken}`)
           .set('Accept', 'application/json')
 
-        expect(result.status).toBe(HttpStatus.OK)
+        expectStatus(result, HttpStatus.OK)
         expect(result.body.explanation).toBeDefined()
       })
     },

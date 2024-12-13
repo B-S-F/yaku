@@ -5,11 +5,15 @@
 import { HttpStatus } from '@nestjs/common'
 import * as supertest from 'supertest'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
+import {
+  NamespaceTestEnvironment,
+  NestTestingApp,
+  NestUtil,
+  checkRepositoryEntriesCount
+} from './util'
 import { Repository } from 'typeorm'
 import { Secret } from '../src/namespace/secret/secret.entity'
 import { EncryptedSecret } from '../src/namespace/secret/simple-secret-storage.entity'
-import { checkRepositoryEntriesCount } from './util/commons'
 
 describe('Check secrets endpoints', () => {
   let testNamespace: NamespaceTestEnvironment

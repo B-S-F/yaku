@@ -16,8 +16,17 @@ import {
   MinIOStoreImpl,
 } from '../src/namespace/workflow/minio.service'
 import { handlers } from './mocks'
-import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
-import { checkRepositoryEntriesCount, checkRun, completeRun, createConfigWithFiles, postRun } from './util/commons'
+import {
+  NamespaceTestEnvironment,
+  NestTestingApp,
+  NestUtil,
+  checkRepositoryEntriesCount,
+  checkRun,
+  completeRun,
+  createConfig,
+  expectStatus,
+  postRun
+} from './util'
 
 describe('Metrics Controller', () => {
   let nestTestingApp: NestTestingApp
@@ -29,6 +38,7 @@ describe('Metrics Controller', () => {
   const testName = 'Metrics (Integration Test)'
   const testFilename = 'qg-config.yaml'
   const testContentType = 'application/yaml'
+  let testContext
 
   beforeEach(async () => {
     const nestUtil = new NestUtil()
@@ -68,6 +78,12 @@ describe('Metrics Controller', () => {
     ).mockImplementation(() =>
       Promise.resolve('Cool logs\nOverall result: GREEN'),
     )
+
+    testContext = {
+      nestTestingApp: nestTestingApp, 
+      testNamespace: testNamespace, 
+      apiToken: apiToken
+    }
   })
 
   afterEach(async () => {
@@ -88,7 +104,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination).toBeDefined()
       expect(result.body.data).toBeDefined()
     })
@@ -127,17 +143,17 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
         }]),
       }
 
-      const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedMetricsEntries)
 
       const result = await supertest
@@ -148,7 +164,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(expectedRuns)
       expect(+result.body.data[runId - 1].count).toBe(expectedCount)
       expect(+result.body.data[runId - 1].diff).toBe(expectedDiff)
@@ -187,7 +203,7 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -195,10 +211,10 @@ describe('Metrics Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       // second run
@@ -221,10 +237,10 @@ describe('Metrics Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       const result = await supertest
@@ -235,7 +251,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(runId)
       expect(+result.body.data[0].runId).toBe(runId)
       expect(+result.body.data[0].count).toBe(expectedCount)
@@ -275,7 +291,7 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -283,10 +299,10 @@ describe('Metrics Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries - expectedDiff)
 
       // second run
@@ -309,10 +325,10 @@ describe('Metrics Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries - expectedDiff)
 
       const result = await supertest
@@ -323,7 +339,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(runId)
       expect(+result.body.data[0].runId).toBe(runId)
       expect(+result.body.data[0].count).toBe(expectedCount)
@@ -365,7 +381,7 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -373,10 +389,10 @@ describe('Metrics Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       // manually resolve 2 findings
@@ -462,10 +478,10 @@ describe('Metrics Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       const result = await supertest
@@ -476,7 +492,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(manuallyResolvedResult.statusCode).toBe(HttpStatus.OK)
+      expectStatus(manuallyResolvedResult, HttpStatus.OK)
       expect(+manuallyResolvedResult.body.pagination.totalCount).toBe(
         manuallyResolvedRunId,
       )
@@ -490,7 +506,7 @@ describe('Metrics Controller', () => {
         expectedManuallyResolvedDiff,
       )
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(runId)
       expect(+result.body.data[0].runId).toBe(runId)
       expect(+result.body.data[0].count).toBe(expectedCount)
@@ -530,7 +546,7 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -538,17 +554,17 @@ describe('Metrics Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       // second run
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 2 * expectedEntries)
 
       const result = await supertest
@@ -559,7 +575,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(runId)
       expect(+result.body.data[0].runId).toBe(runId)
       expect(+result.body.data[0].count).toBe(expectedCount)
@@ -599,7 +615,7 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -607,10 +623,10 @@ describe('Metrics Controller', () => {
       }
 
       // first run - register new findings
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       // second run - first GREEN scenario
@@ -633,10 +649,10 @@ describe('Metrics Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+      await completeRun(testContext, runId, RunResult.Green)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       // third run - second GREEN scenario
@@ -659,10 +675,10 @@ describe('Metrics Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+      await completeRun(testContext, runId, RunResult.Green)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       const result = await supertest
@@ -673,7 +689,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(runId)
       expect(+result.body.data[0].runId).toBe(runId)
       expect(+result.body.data[0].count).toBe(expectedCount)
@@ -711,7 +727,7 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -719,18 +735,18 @@ describe('Metrics Controller', () => {
       }
 
       // first run - no Findings
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+      await completeRun(testContext, runId, RunResult.Green)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       // second run - no Findings
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Green)
+      await completeRun(testContext, runId, RunResult.Green)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       const result = await supertest
@@ -741,7 +757,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(0)
       expect(+result.body.data.length).toBe(0)
     })
@@ -759,7 +775,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination).toBeDefined()
       expect(result.body.data).toBeDefined()
     })
@@ -797,7 +813,7 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -805,20 +821,20 @@ describe('Metrics Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       // second run
       const startDate = new Date().toISOString()
       const endDate = new Date('2038-01-19 03:14:07').toISOString()
 
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       const result = await supertest
@@ -829,7 +845,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(1)
       expect(+result.body.data[0].runId).toBe(runId)
       expect(+result.body.data[0].count).toBe(expectedCount)
@@ -849,7 +865,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination).toBeDefined()
       expect(result.body.data).toBeDefined()
     })
@@ -887,7 +903,7 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -895,10 +911,10 @@ describe('Metrics Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       // second run
@@ -921,10 +937,10 @@ describe('Metrics Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       const result = await supertest
@@ -935,7 +951,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(1)
       expect(+result.body.data[0].runId).toBe(runId)
       expect(+result.body.data[0].count).toBe(expectedCount)
@@ -955,7 +971,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(result.body.pagination).toBeDefined()
       expect(result.body.data).toBeDefined()
     })
@@ -993,7 +1009,7 @@ describe('Metrics Controller', () => {
 
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, 0)
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -1001,11 +1017,11 @@ describe('Metrics Controller', () => {
       }
 
       // first run
-      let runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      let runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await new Promise((resolve) => setTimeout(resolve, 150))
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
 
       await new Promise((resolve) => setTimeout(resolve, 150))
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
@@ -1032,11 +1048,11 @@ describe('Metrics Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
       await new Promise((resolve) => setTimeout(resolve, 150))
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
 
       await new Promise((resolve) => setTimeout(resolve, 150))
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
@@ -1063,10 +1079,10 @@ describe('Metrics Controller', () => {
 
         return Promise.resolve(readableStream)
       })
-      runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
       await checkRepositoryEntriesCount(nestTestingApp.repositories.metricRepository, runId * expectedEntries)
 
       const result = await supertest
@@ -1077,7 +1093,7 @@ describe('Metrics Controller', () => {
         .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${apiToken}`)
 
-      expect(result.statusCode).toBe(HttpStatus.OK)
+      expectStatus(result, HttpStatus.OK)
       expect(+result.body.pagination.totalCount).toBe(1)
       expect(+result.body.data[0].runId).toBe(2) // runId of second run
       expect(+result.body.data[0].count).toBe(expectedCount)

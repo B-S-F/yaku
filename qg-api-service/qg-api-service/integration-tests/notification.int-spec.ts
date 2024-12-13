@@ -38,8 +38,16 @@ import {
 import { UpdateUserProfileDto } from '../src/user/user-profile/dto/update-user-profile.dto'
 import { handlers } from './mocks/handlers'
 import { MailingServiceMock } from './mocks/mailing'
-import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
-import { checkRun, completeRun, createConfigWithFiles, postRun } from './util/commons'
+import {
+  NamespaceTestEnvironment,
+  NestTestingApp,
+  NestUtil,
+  checkRun,
+  completeRun,
+  createConfig,
+  expectStatus,
+  postRun
+} from './util'
 
 describe('Notifications', () => {
   let nestTestingApp: NestTestingApp
@@ -51,6 +59,7 @@ describe('Notifications', () => {
   const testName = 'Notification (Integration Test)'
   const testFilename = 'qg-config.yaml'
   const testContentType = 'application/yaml'
+  let testContext
 
   beforeEach(async () => {
     const nestUtil = new NestUtil()
@@ -84,6 +93,12 @@ describe('Notifications', () => {
       nestTestingApp.testingModule.get<MinIOStoreImpl>(BlobStore),
       'fileExists',
     ).mockImplementation(() => Promise.resolve(true))
+
+    testContext = {
+      nestTestingApp: nestTestingApp, 
+      testNamespace: testNamespace, 
+      apiToken: apiToken
+    }
   })
 
   afterEach(async () => {
@@ -124,7 +139,7 @@ describe('Notifications', () => {
 
       // create config + run
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
@@ -151,7 +166,7 @@ describe('Notifications', () => {
         },
       }
       const addCommentResponse = await addComment(releaseId, createCommentDto)
-      expect(addCommentResponse.status).toBe(HttpStatus.CREATED)
+      expectStatus(addCommentResponse, HttpStatus.CREATED, 'addComment')
       expect(addCommentResponse.body.content).toBe(
         '@user1@bosch.com @user2@bosch.com @DELETED_USER @does@not.exist',
       )
@@ -284,17 +299,17 @@ describe('Notifications', () => {
 
         // create config + run
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+          configId: await createConfig(testContext, testName, [{
             filepath: configFile,
             filename: testFilename,
             contentType: testContentType,
           }]),
         }
 
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+        const runId = await postRun(testContext, body)
         await checkRun(nestTestingApp, runId)
 
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+        await completeRun(testContext, runId, RunResult.Red)
 
         // create release
         const createReleaseDto = {
@@ -330,7 +345,7 @@ describe('Notifications', () => {
 
         // create comment
         const addCommentResponse = await addComment(releaseId, input.comment)
-        expect(addCommentResponse.status).toBe(HttpStatus.CREATED)
+        expectStatus(addCommentResponse, HttpStatus.CREATED, 'addComment')
 
         // assert notifications
         expect(mailSpy).toHaveBeenCalledTimes(input.expectedCalls.length)
@@ -453,17 +468,17 @@ describe('Notifications', () => {
 
         // create config + run
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+          configId: await createConfig(testContext, testName, [{
             filepath: configFile,
             filename: testFilename,
             contentType: testContentType,
           }]),
         }
 
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+        const runId = await postRun(testContext, body)
         await checkRun(nestTestingApp, runId)
 
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+        await completeRun(testContext, runId, RunResult.Red)
 
         // create release
         const createReleaseDto = {
@@ -496,7 +511,7 @@ describe('Notifications', () => {
           releaseId,
           input.createComment,
         )
-        expect(addCommentResponse.status).toBe(HttpStatus.CREATED)
+        expectStatus(addCommentResponse, HttpStatus.CREATED, 'addComment')
 
         // set spy
         const mailSpy = vi.spyOn(
@@ -510,7 +525,7 @@ describe('Notifications', () => {
           addCommentResponse.body.id,
           input.updateComment,
         )
-        expect(updateCommentResponse.status).toBe(HttpStatus.OK)
+        expectStatus(updateCommentResponse, HttpStatus.OK, 'addComment')
 
         // assert notifications
         expect(mailSpy).toHaveBeenCalledTimes(input.expectedCalls.length)
@@ -743,17 +758,17 @@ describe('Notifications', () => {
 
         // create config + run
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+          configId: await createConfig(testContext, testName, [{
             filepath: configFile,
             filename: testFilename,
             contentType: testContentType,
           }]),
         }
 
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+        const runId = await postRun(testContext, body)
         await checkRun(nestTestingApp, runId)
 
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+        await completeRun(testContext, runId, RunResult.Red)
 
         // create release
         const createReleaseDto = {
@@ -786,7 +801,7 @@ describe('Notifications', () => {
           releaseId,
           input.createComment,
         )
-        expect(addCommentResponse.status).toBe(HttpStatus.CREATED)
+        expectStatus(addCommentResponse, HttpStatus.CREATED, 'addComment')
 
         // set spy
         const mailSpy = vi.spyOn(
@@ -807,7 +822,7 @@ describe('Notifications', () => {
             id: addCommentResponse.body.id,
           },
         })
-        expect(replyCommentResponse.status).toBe(HttpStatus.CREATED)
+        expectStatus(replyCommentResponse, HttpStatus.CREATED, 'addComment')
 
         // set acting user for second reply comment
         apiToken = await nestTestingApp.utils.getUserToken(
@@ -822,7 +837,7 @@ describe('Notifications', () => {
             id: addCommentResponse.body.id,
           },
         })
-        expect(replyCommentResponse.status).toBe(HttpStatus.CREATED)
+        expectStatus(replyCommentResponse, HttpStatus.CREATED, 'addComment')
 
         // assert notifications
         expect(mailSpy).toHaveBeenCalledTimes(input.expectedCalls.length)
@@ -872,17 +887,17 @@ describe('Notifications', () => {
         )
         // create config + run
         const body = {
-          configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+          configId: await createConfig(testContext, testName, [{
             filepath: configFile,
             filename: testFilename,
             contentType: testContentType,
           }]),
         }
 
-        const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+        const runId = await postRun(testContext, body)
         await checkRun(nestTestingApp, runId)
 
-        await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+        await completeRun(testContext, runId, RunResult.Red)
 
         // create release
         const createReleaseDto = {
@@ -908,7 +923,7 @@ describe('Notifications', () => {
           reminder: ReminderMode.ALWAYS,
         }
         const createTaskResponse = await createTask(releaseId, createTaskDto)
-        expect(createTaskResponse.status).toBe(HttpStatus.CREATED)
+        expectStatus(createTaskResponse, HttpStatus.CREATED, 'createTask')
 
         // assign task to user
         const assignee = testNamespace.users[1]
@@ -919,7 +934,7 @@ describe('Notifications', () => {
             assignees: [assignee.id],
           },
         )
-        expect(assignToTaskResponse.status).toBe(HttpStatus.OK)
+        expectStatus(assignToTaskResponse, HttpStatus.OK, 'addAssignees')
 
         // assert notifications
         expect(mailSpy).toHaveBeenCalledTimes(1)
@@ -1032,17 +1047,17 @@ describe('Notifications', () => {
 
       // create config + run
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
         }]),
       }
 
-      const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
 
       // create release
       const createReleaseDto = {
@@ -1175,17 +1190,17 @@ describe('Notifications', () => {
 
       // create config + run
       const body = {
-        configId: await createConfigWithFiles(nestTestingApp, testNamespace, testName, apiToken, [{
+        configId: await createConfig(testContext, testName, [{
           filepath: configFile,
           filename: testFilename,
           contentType: testContentType,
         }]),
       }
 
-      const runId = await postRun(nestTestingApp, testNamespace, body, apiToken)
+      const runId = await postRun(testContext, body)
       await checkRun(nestTestingApp, runId)
 
-      await completeRun(nestTestingApp, testNamespace, runId, apiToken, RunResult.Red)
+      await completeRun(testContext, runId, RunResult.Red)
 
       // create release
       const createReleaseDto = {
