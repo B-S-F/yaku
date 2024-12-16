@@ -6,7 +6,7 @@ on:
   workflow_call:
 
 jobs:
-  build-typescript-apps:
+  build-ui:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,7 +16,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: yaku-ui
-          key: typescript-apps-${{ github.ref }}-${{ hashFiles('yaku-ui/**') }}
+          key: yaku-ui-${{ github.ref }}-${{ hashFiles('yaku-ui/**') }}
           lookup-only: true
 
       - name: Setup Node.js
