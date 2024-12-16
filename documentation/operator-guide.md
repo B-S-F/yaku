@@ -43,7 +43,7 @@ Here's how you can do it:
 Build the Backend Docker Image
 
    ```bash
-   docker build -t y-registry.com/my-namespace/core-api:canary\
+   docker build -t y-registry.com/my-namespace/api:canary\
      --platform linux/amd64 \
      -f qg-api-service/qg-api-service/Dockerfile \
      ./qg-api-service/qg-api-service
@@ -59,7 +59,7 @@ Ensure you are logged into your Docker registry. This step is necessary if your 
 Push the Backend Docker Image
 
    ```bash
-   docker push my-registry.com/my-namespace/core-api:canary
+   docker push my-registry.com/my-namespace/api:canary
    ```
 
 #### Core Docker Image
@@ -81,7 +81,20 @@ Push the Core Docker Image
 
 #### UI Docker Image
 
-> TODO
+Build the UI Docker Image
+
+   ```bash
+   docker build -t my-registry.com/my-namespace/ui:canary\
+     --platform linux/amd64 \
+     -f yaku-ui/Dockerfile \
+     ./yaku-ui
+   ```
+
+Push the UI Docker Image
+
+   ```bash
+   docker push my-registry.com/my-namespace/ui:canary
+   ```
 
 ### Summary
 
