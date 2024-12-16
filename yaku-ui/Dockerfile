@@ -6,15 +6,15 @@
 # PRODUCTION
 #############
 
-ARG BASE_IMAGE_NODEJS_NAME="node:18-alpine"
+ARG BASE_IMAGE_NODEJS_NAME="node:20-alpine"
 ARG BASE_IMAGE_NGINX_NAME="nginx:1.27.2-alpine-slim"
 FROM ${BASE_IMAGE_NODEJS_NAME} as app-builder
 
-ARG VITE_TEST_RUN_FEATURE
-ARG VITE_TEST_RELEASE_PLANNING_FEATURE
-ARG VITE_TEST_RELEASE_EMAILS
-ARG VITE_TEST_TASK_MANAGEMENT
-ARG VITE_TEST_VUETIFY_UI
+ARG VITE_TEST_RUN_FEATURE="true"
+ARG VITE_TEST_RELEASE_PLANNING_FEATURE="true"
+ARG VITE_TEST_RELEASE_EMAILS="true"
+ARG VITE_TEST_TASK_MANAGEMENT="true"
+ARG VITE_TEST_VUETIFY_UI="true"
 
 ENV NODE_ENV=development
 
@@ -30,12 +30,10 @@ ENV PATH=$PATH:$APP_USER_HOME/node_modules/.bin
 USER ${APP_USER_NAME}
 WORKDIR ${APP_USER_HOME}/app
 
-COPY --chown=${APP_USER_NAME}:${APP_USER_NAME} package.json package-lock.json .
-
-RUN --mount=type=secret,id=npmrc,target=${APP_USER_HOME}/.npmrc,uid=${APP_USER_ID} npm ci --ignore-scripts
 COPY --chown=${APP_USER_NAME}:${APP_USER_NAME} . .
+RUN npm ci --ignore-scripts
 
-RUN --mount=type=secret,id=npmrc,target=${APP_USER_HOME}/.npmrc,uid=${APP_USER_ID} npm rebuild node-sass && NODE_OPTIONS=--max-old-space-size=8192 npm run build
+RUN npm rebuild node-sass && NODE_OPTIONS=--max-old-space-size=8192 npm run build
 
 
 FROM ${BASE_IMAGE_NGINX_NAME} as production
@@ -43,11 +41,11 @@ FROM ${BASE_IMAGE_NGINX_NAME} as production
 LABEL maintainer="Neutrinos GROW/PAT"
 LABEL description="YAKU ui docker image based on nginx:1.27.2-alpine-slim"
 
-ARG VITE_TEST_RUN_FEATURE
-ARG VITE_TEST_RELEASE_PLANNING_FEATURE
-ARG VITE_TEST_RELEASE_EMAILS
-ARG VITE_TEST_TASK_MANAGEMENT
-ARG VITE_TEST_VUETIFY_UI
+ARG VITE_TEST_RUN_FEATURE="true"
+ARG VITE_TEST_RELEASE_PLANNING_FEATURE="true"
+ARG VITE_TEST_RELEASE_EMAILS="true"
+ARG VITE_TEST_TASK_MANAGEMENT="true"
+ARG VITE_TEST_VUETIFY_UI="true"
 
 USER root
 
@@ -62,9 +60,8 @@ ENV NGINX_PORT=8080
 
 WORKDIR ${APP_USER_HOME}/app
 
-COPY --from=app-builder ${APP_USER_HOME}/app/dist /usr/share/nginx/html/
-COPY --from=app-builder ${APP_USER_HOME}/app/package.json package.json
-COPY --chown=nginx:nginx ./.docker/default.conf.template /etc/nginx/conf.d/default.conf
+COPY --chown=${APP_USER_NAME}:${APP_USER_NAME} --from=app-builder ${APP_USER_HOME}/app/qg-service-ui/dist /usr/share/nginx/html/
+COPY --chown=nginx:nginx ./qg-service-ui/.docker/default.conf.template /etc/nginx/conf.d/default.conf
 
 USER root
 

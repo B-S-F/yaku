@@ -8,3 +8,4 @@ cypress
 reports
 .github/**
 .vscode/**
+.turbo/**
