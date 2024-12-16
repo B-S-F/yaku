@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
+header:
+  name: PerformanceTest_Fibonacci
+  version: '1.1'
+metadata:
+  version: 'v1'
+
+autopilots:
+  validateSomething:
+    run: |
+      echo '{ "status": "GREEN" }'
+      echo '{ "reason": "Everything is awesome" }'
+      echo '{ "result": { "criterion": "Awesomeness check", "fulfilled": true, "justification": "Everything is awesome" } }'
+chapters:
+  '1':
+    title: Test config should work
+    requirements:
+      '1':
+        title: Awesomeness Requirement
+        checks:
+          '1':
+            title: Awesomeness compute
+            automation:
+                autopilot: validateSomething
