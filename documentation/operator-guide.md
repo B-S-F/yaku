@@ -94,6 +94,7 @@ Push the UI Docker Image
 
    ```bash
    docker push my-registry.com/my-namespace/ui:canary
+   ```
 
 ### Summary
 
