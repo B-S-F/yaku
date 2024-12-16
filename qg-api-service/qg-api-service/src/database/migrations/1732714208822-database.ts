@@ -27,7 +27,11 @@ export class Database1732714208822 implements MigrationInterface {
       `ALTER TABLE "user_profile" ALTER COLUMN "id" SET DATA TYPE uuid USING "id"::uuid`,
     )
     await queryRunner.query(
-      `ALTER TABLE "findings" ALTER COLUMN "resolver" SET DATA TYPE uuid USING "resolver"::uuid`,
+      `ALTER TABLE "findings" ALTER COLUMN "resolver" SET DATA TYPE uuid
+          USING CASE
+                  WHEN "resolver" IN ('SYSTEM_ACTOR', 'Yaku', 'Aqua') THEN '00000000-0000-0000-0000-000000000000'::uuid
+                  ELSE "resolver"::uuid
+                END`,
     )
     await queryRunner.query(
       `ALTER TABLE "comment" ALTER COLUMN "createdBy" SET DATA TYPE uuid USING "createdBy"::uuid`,
