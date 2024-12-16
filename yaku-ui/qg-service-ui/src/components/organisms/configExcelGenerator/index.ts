@@ -2,14 +2,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import VuetifyMapping from "./VuetifyMapping.vue";
-import VuetifyResultError from "./VuetifyResultError.vue";
-import VuetifyRowSelection from "./VuetifyRowSelection.vue";
-import VuetifySelectFile from "./VuetifySelectFile.vue";
+import VuetifyMapping from './VuetifyMapping.vue'
+import VuetifyResultError from './VuetifyResultError.vue'
+import VuetifyRowSelection from './VuetifyRowSelection.vue'
+import VuetifySelectFile from './VuetifySelectFile.vue'
 
 export {
   VuetifyMapping,
   VuetifyResultError,
   VuetifyRowSelection,
   VuetifySelectFile,
-};
+}
