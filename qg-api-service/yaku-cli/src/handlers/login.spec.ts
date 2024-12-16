@@ -78,7 +78,7 @@ describe('login()', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       chalk.red(
-        `Failed to parse '${testEnvHome}/.yakurc' as JSON: SyntaxError: Unexpected token ! in JSON at position 0`,
+        `Failed to parse '${testEnvHome}/.yakurc' as JSON: SyntaxError: Unexpected token '!' is not valid JSON`,
       ),
     )
     expect(consoleErrorSpy).toHaveBeenCalledWith(chalk.red('process.exit: 1'))
