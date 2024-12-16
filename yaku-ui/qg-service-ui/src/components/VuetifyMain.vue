@@ -13,8 +13,8 @@ SPDX-License-Identifier: MIT
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import { ROUTE_NAMES } from '~/router';
+import { useRoute } from 'vue-router'
+import { ROUTE_NAMES } from '~/router'
 
 /**
  * At this component level, the server and namespace (also the environment)

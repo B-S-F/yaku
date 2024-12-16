@@ -257,8 +257,8 @@ const namespaceOptions = computed(() =>
   !currentEnv.value || !currentEnv.value.namespaces
     ? []
     : currentEnv.value.namespaces.map((n) => {
-      return { id: n.id, name: n.name ?? n.id }
-    }),
+        return { id: n.id, name: n.name ?? n.id }
+      }),
 )
 const userHasNoPermission = computed(
   () => route.meta.isErrorView && route.query.type?.includes('no-permission'),
