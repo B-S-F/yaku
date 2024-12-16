@@ -124,6 +124,7 @@ CBFB253F2D32E0D2378DAE41F97A65A9
     const result = decodeBufferToUTF8EncodedString(Buffer.from(normalText))
 
     expect(result).toEqual(normalText)
+    expect(result).not.toMatch(/\r\n/)
   })
 
   it('should return undefined for an utf-16 string', () => {

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "~/*": [
+        "./*"
+      ],
+      "~composables": [
+        "./composables"
+      ],
+      "~api": [
+        "./composables/api"
+      ],
+      "~utils": [
+        "./utils"
+      ],
+      "~helpers": [
+        "./helpers"
+      ]
+    }
+  }
+}

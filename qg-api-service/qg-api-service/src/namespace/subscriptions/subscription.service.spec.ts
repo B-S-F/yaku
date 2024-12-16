@@ -7,14 +7,16 @@ import { SubscriptionService } from './subscription.service'
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { SubscriptionEntity } from './entity/subscription.entity'
-import { BadRequestException, HttpException } from '@nestjs/common'
+import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { Logger, LoggerModule, PinoLogger } from 'nestjs-pino'
 import { SubscriptionDto } from './subscription.dto'
 import { UsersModule } from '../users/users.module'
+import { ReleaseEntity } from '../releases/release.entity'
 
 describe('SubscriptionService', () => {
   let subscriptionService: SubscriptionService
   let subscriptionRepository: Repository<any>
+  let releaseRepository: Repository<any>
 
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
@@ -23,6 +25,10 @@ describe('SubscriptionService', () => {
         SubscriptionService,
         {
           provide: getRepositoryToken(SubscriptionEntity),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(ReleaseEntity),
           useClass: Repository,
         },
         {
@@ -38,18 +44,36 @@ describe('SubscriptionService', () => {
     subscriptionRepository = moduleRef.get(
       getRepositoryToken(SubscriptionEntity),
     )
+    releaseRepository = moduleRef.get(getRepositoryToken(ReleaseEntity))
   })
 
   describe('createSubscription', () => {
     it('should create a new subscription and return true', async () => {
       const userId = 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d'
       const releaseId = 1
+      const releaseEntity = {
+        id: 1,
+        name: 'QG4.2 Battery Management BatMax',
+        approvalMode: 'one',
+        createdBy: '13620f6f-f8b3-4c0e-9293-81fb290718bf',
+        lastModifiedBy: '13620f6f-f8b3-4c0e-9293-81fb290718bf',
+        plannedDate: new Date(),
+        creationTime: new Date(),
+        lastModificationTime: new Date(),
+        closed: false,
+      }
       const subscriptionEntity: SubscriptionEntity = {
         userId: 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d',
         releaseId: 1,
         creationTime: new Date(),
         release: null,
       }
+
+      jest.spyOn(releaseRepository, 'createQueryBuilder').mockReturnValue({
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        getOneOrFail: jest.fn().mockResolvedValue(releaseEntity),
+      } as any)
 
       jest.spyOn(subscriptionRepository, 'createQueryBuilder').mockReturnValue({
         where: jest.fn().mockReturnThis(),
@@ -78,7 +102,44 @@ describe('SubscriptionService', () => {
         subscriptionService.createSubscription(userId, releaseId),
       ).rejects.toThrow(BadRequestException)
     })
-    it('should throw an HttpException with CONFLICT status if there is an existing subscription ', async () => {
+    it('should throw an BadRequestException if there is an existing subscription ', async () => {
+      const userId = 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d'
+      const releaseId = 1
+      const releaseEntity = {
+        id: 1,
+        name: 'QG4.2 Battery Management BatMax',
+        approvalMode: 'one',
+        createdBy: '13620f6f-f8b3-4c0e-9293-81fb290718bf',
+        lastModifiedBy: '13620f6f-f8b3-4c0e-9293-81fb290718bf',
+        plannedDate: new Date(),
+        creationTime: new Date(),
+        lastModificationTime: new Date(),
+        closed: false,
+      }
+      const subscriptionEntity: SubscriptionEntity = {
+        userId: 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d',
+        releaseId: 1,
+        creationTime: new Date(),
+        release: null,
+      }
+
+      jest.spyOn(releaseRepository, 'createQueryBuilder').mockReturnValue({
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        getOneOrFail: jest.fn().mockResolvedValue(releaseEntity),
+      } as any)
+
+      jest.spyOn(subscriptionRepository, 'createQueryBuilder').mockReturnValue({
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(subscriptionEntity),
+      } as any)
+
+      await expect(
+        subscriptionService.createSubscription(userId, releaseId),
+      ).rejects.toThrow(BadRequestException)
+    })
+    it('should throw an NotFoundException if the release is not found ', async () => {
       const userId = 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d'
       const releaseId = 1
       const subscriptionEntity: SubscriptionEntity = {
@@ -96,12 +157,39 @@ describe('SubscriptionService', () => {
 
       await expect(
         subscriptionService.createSubscription(userId, releaseId),
-      ).rejects.toThrow(HttpException)
+      ).rejects.toThrow(NotFoundException)
     })
-
-    it('should throw an HttpException with EXPECTATION_FAILED status if creation failed', async () => {
+    it('should throw an BadRequestException if creation failed', async () => {
       const userId = 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d'
       const releaseId = 1
+      const releaseEntity = {
+        id: 1,
+        name: 'QG4.2 Battery Management BatMax',
+        approvalMode: 'one',
+        createdBy: '13620f6f-f8b3-4c0e-9293-81fb290718bf',
+        lastModifiedBy: '13620f6f-f8b3-4c0e-9293-81fb290718bf',
+        plannedDate: new Date(),
+        creationTime: new Date(),
+        lastModificationTime: new Date(),
+        closed: false,
+      }
+
+      jest.spyOn(releaseRepository, 'createQueryBuilder').mockReturnValue({
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        getOneOrFail: jest.fn().mockResolvedValue({
+          id: 1,
+          name: 'QG4.2 Battery Management BatMax',
+          approvalMode: 'one',
+          createdBy: '13620f6f-f8b3-4c0e-9293-81fb290718bf',
+          lastModifiedBy: '13620f6f-f8b3-4c0e-9293-81fb290718bf',
+          plannedDate: new Date(),
+          creationTime: new Date(),
+          lastModificationTime: new Date(),
+          closed: false,
+          approvalState: 'pending',
+        }),
+      } as any)
 
       jest.spyOn(subscriptionRepository, 'createQueryBuilder').mockReturnValue({
         where: jest.fn().mockReturnThis(),
@@ -114,7 +202,7 @@ describe('SubscriptionService', () => {
 
       await expect(
         subscriptionService.createSubscription(userId, releaseId),
-      ).rejects.toThrow(HttpException)
+      ).rejects.toThrow(BadRequestException)
     })
   })
 
@@ -135,7 +223,7 @@ describe('SubscriptionService', () => {
       expect(result).toEqual(true)
     })
 
-    it('should throw a HttpException with NOT_FOUND status if subscription is not found', async () => {
+    it('should throw a NotFoundException if subscription is not found', async () => {
       const userId = 'a4f523a2-6c1e-4bc3-9a08-2347c529a78d'
       const releaseId = 1
       const subscriptionEntity: any = { affected: 0 }
@@ -146,7 +234,7 @@ describe('SubscriptionService', () => {
 
       await expect(
         subscriptionService.deleteSubscription(userId, releaseId),
-      ).rejects.toThrow(HttpException)
+      ).rejects.toThrow(NotFoundException)
     })
   })
 

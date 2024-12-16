@@ -1,0 +1,13 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+svg {
+  width: 1em;
+}
+
+.run {
+  fill: currentColor;
+}

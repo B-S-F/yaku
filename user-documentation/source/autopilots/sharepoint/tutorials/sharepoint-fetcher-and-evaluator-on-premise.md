@@ -22,7 +22,7 @@ If you want a tutorial with example data for a cloud instance of SharePoint plea
 
 ## Introduction
 
-With the Sharepoint fetcher and evaluator, you can fetch files from a SharePoint site that you have access to and subsequently evaluate them based on their SharePoint-related properties (last modified date, revision status, archiving period etc.). To understand this guide, it is important that you have already completed the steps in {doc}`../../../onboarding`.
+With the Sharepoint fetcher and evaluator, you can fetch files from a SharePoint site that you have access to and subsequently evaluate them based on their SharePoint-related properties (last modified date, revision status, archiving period etc.).
 
 ### Use-case
 

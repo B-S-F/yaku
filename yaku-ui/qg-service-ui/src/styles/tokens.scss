@@ -1,0 +1,147 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+// ----------------
+//  Spacing tokens
+// ----------------
+// from https://www.figma.com/file/qbFpLwvsApo7EUPIE0dEbO/BDDS-Token---%E2%98%BC-Light-Mode---v1.1.0?type=design&node-id=78-5&mode=dev
+$spacing-0: 0px;
+$spacing-4: 4px;
+$spacing-4r: 0.25rem;
+$spacing-8: 8px;
+$spacing-8r: 0.5rem;
+$spacing-12: 12px;
+$spacing-12r: 0.75rem;
+$spacing-16: 16px;
+$spacing-16r: 1rem;
+$spacing-20: 20px;
+$spacing-20r: 1.25rem;
+$spacing-24: 24px;
+$spacing-24r: 1.5rem;
+$spacing-28: 28px;
+$spacing-28r: 1.75rem;
+$spacing-32: 32px;
+$spacing-32r: 2rem;
+$spacing-36: 36px;
+$spacing-36r: 2.25rem;
+$spacing-48: 48px;
+$spacing-48r: 3rem;
+$spacing-64: 64px;
+$spacing-64r: 4rem;
+
+// ---------------------
+//  System space tokens
+// ---------------------
+// from https://www.figma.com/file/qbFpLwvsApo7EUPIE0dEbO/BDDS-Token---%E2%98%BC-Light-Mode---v1.1.0?type=design&node-id=78-115&mode=dev
+
+$space-elements: $spacing-24;
+$space-section: $spacing-32;
+
+$space-component-xs: $spacing-4;
+$space-component-s: $spacing-8;
+$space-component-m: $spacing-12;
+$space-component-l: $spacing-16;
+$space-component-xl: $spacing-48;
+
+$space-component-buttonGroup: $spacing-16;
+
+$space-chip: 6px;
+$space-subheading: $spacing-8;
+$space-heading: $spacing-16;
+
+$space-label-s: $spacing-4;
+$space-label-m: $spacing-8;
+
+$size-icon-s: $spacing-16r;
+$size-icon-m: $spacing-24r;
+$size-icon-l: $spacing-36r;
+
+$padding-component-xxs: $spacing-4;
+$padding-component-xs: $spacing-8;
+$padding-component-s: $spacing-12;
+$padding-component-m: $spacing-16;
+$padding-component-l: $spacing-32;
+$padding-siteContent: $spacing-32;
+
+// --------------
+//  State tokens
+// --------------
+$focus-width: 1px;
+$focus-style: dotted;
+$focus-color: currentColor;
+$focus: $focus-width $focus-style $focus-color;
+
+// -------------------
+//  Transition tokens
+// -------------------
+// All tokens for the display of elements on hover or focus
+$reveal-transition-duration: 0.15s;
+$reveal-transition-timing: ease;
+/** apply to transition */
+$reveal-effect: #{$reveal-transition-duration} #{$reveal-transition-timing} opacity;
+/** apply to opacity */
+$reveal-start: 0;
+/** apply to opacity on focus and hover */
+$reveal-end: 1;
+
+// -------------
+//  Breakpoints
+// -------------
+$mdScreenWidth: 1440px;
+$bp-max-1570: 1570px;
+$bp-max-1500: 1500px;
+$bp-max-1440: 1440px;
+$bp-max-1260: 1260px;
+$bp-max-1210: 1210px;
+$bp-max-1020: 1020px;
+$bp-max-820: 820px;
+$bp-max-768: 768px;
+// NavigationBar
+$navbarFrom1200: 1200px;
+$navbarFrom1060: 1060px;
+$navbarFrom1000: 1000px;
+$navbarFrom768: 768px;
+
+// Frok vue specific breakpoints
+$frokSmScreenWidth: 767px;
+$frokMdScreenWidth: 1194px;
+
+// ---------------------------------
+// ---------------------------------
+//  ⬇️ tokens from previous design ⬇️
+// ---------------------------------
+$appColumns: repeat(12, [col-start] 1fr);
+$viewPadding: $padding-siteContent;
+
+// Sidebar dimensions
+$sideNavigationCollapsedWidth: 48px;
+$sideNavigationExpandedWidth: 19rem;
+$headerHeight: 54px;
+
+// Tables
+$cellBorderWidth: 1px;
+$cellLineHeight: 1.5;
+$cellFontHeight: 1rem * $cellLineHeight;
+
+$rowPaddingTop: 0.75rem;
+$rowPaddingBottom: 0.6875rem;
+
+$rowHeight: calc(#{$cellFontHeight + $rowPaddingTop + $rowPaddingBottom} + #{$cellBorderWidth});
+$rowHeaderHeight: calc($rowHeight - 4px);
+
+/** Handles of a table */
+$rectangleWidth: 1.5rem;
+$triangleWidth: 0.75rem;
+$handleHeight: 1rem;
+$handleHeightMiddle: 0.25rem;
+$handleWidth: #{$rectangleWidth + $triangleWidth};
+$tableHandleLabelLength: 100px;
+
+$scrollBtnSize: 1.5rem;
+
+$cellMaxWidth: 296px;
+
+$dialogMaxHeight: calc(100vh - 52px - 64px); // entire screen height - header height - site content padding(top + bottom)

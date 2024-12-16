@@ -14,27 +14,25 @@ SPDX-License-Identifier: MIT
    ```bash
    kind create cluster --config=kind-cluster-config.yaml
    ```
-4. Activate your AnyConnect VPN.
-5. Download the `yaku-core-dev` docker image from the Azure Container Registry (ACR). In case of Podman, check the [troubleshooting section](#troubleshooting) below:
+4. Download the `ghcr.io/b-s-f/yaku/core` docker image from the GitHub Container Registry. In case of Podman, check the [troubleshooting section](#troubleshooting) below:
    ```bash
-   az login
-   az account set --name OT-GROW-PAT-SW-Dev
-   az acr login -n growpatcrdev.azurecr.io
-   docker pull growpatcrdev.azurecr.io/yaku-core-dev:latest
+   docker login ghcr.io
+   docker pull ghcr.io/b-s-f/yaku/core:latest
    # or podman
-   podman pull growpatcrdev.azurecr.io/yaku-core-dev:latest
+   podman login ghcr.io
+   podman pull ghcr.io/b-s-f/yaku/core:latest
    ```
-6. Add the `yaku-core-dev` image to the cluster. Choose either of the following methods:
+5. Add the `yaku-core` image to the cluster. Choose either of the following methods:
 
    - Podman:
      ```bash
-     podman save growpatcrdev.azurecr.io/yaku-core-dev -o image.tgz
+     podman save ghcr.io/b-s-f/yaku/core -o image.tgz
      kind load image-archive image.tgz --name yaku
      ```
    - Docker:
 
      ```bash
-     kind load docker-image growpatcrdev.azurecr.io/yaku-core-dev:latest --name yaku
+     kind load docker-image ghcr.io/b-s-f/yaku/core:latest --name yaku
      ```
 
      Verify the image is present:
@@ -44,7 +42,7 @@ SPDX-License-Identifier: MIT
 
      ```
 
-7. Run the following commands to apply the Kubernetes configuration:
+6. Run the following commands to apply the Kubernetes configuration:
    ```bash
     kubectl kustomize . > applyme.yaml
     kubectl apply -f applyme.yaml
@@ -60,15 +58,8 @@ SPDX-License-Identifier: MIT
 3. Install and build the Core API service.
 4. Run any migrations with `npm run migration:run` to create the initial database tables which are needed for the next step.
 5. Start the Core API service.
-6. Install the yaku-cli, e.g. with:
-
-   ```bash
-   npm install -g @B-S-F/yaku-cli
-   ```
-
-7. Ensure that you have a user in the `bswf` Keycloak realm with `ADMIN` access.
-8. Generate a login session for that user using the command `yaku login --admin`
-9. Run the [init yaku script](./init-yaku.sh).
+6. Ensure that you have a user in the `bswf` Keycloak realm with `ADMIN` access.
+7. Run the [init yaku script](./init-yaku.sh).
 
    Be aware that this script is not very robust in case of re-runs or errors. It is recommended to run it only once and in case of errors carefully check what commands from the script were already executed and which need to be executed again.
 
@@ -155,31 +146,13 @@ After logged in successfully in swagger ui, you can go to your username in keycl
 
 - To test the Argo Workflow setup, follow the instructions [here](https://argo-workflows.readthedocs.io/en/latest/kubectl/). Make sure to adapt the namespace accordingly.
 - If encountering issues with image loading or pulling, ensure that the necessary credentials are correctly configured and accessible.
-- As an alternative to pushing the images into the cluster, you can also pull the image from inside the cluster:
-  - Activate your AnyConnect VPN and obtain an access token for the Azure Container Registry (ACR):
-    ```bash
-    az acr login -n growpatcrdev.azurecr.io --expose-token --output tsv --query accessToken
-    # or with podman
-    podman login growpatcrdev.azurecr.io -u 00000000-0000-0000-0000-000000000000 -p "$(az acr login --name growpatcrdev --expose-token -o tsv --query accessToken)"
-    ```
+- If the database does not start properly and in the log you see an error message like `FATAL:  database "postgres" does not exist`, you can try to delete the database files in the persistent volume and restart the database:
   - Open a Bash shell on the cluster node:
     ```bash
     docker container exec -it yaku-control-plane bash
     # or
     podman container exec -it yaku-control-plane bash
     ```
-  - Pull the image inside the node:
-    ```bash
-    crictl pull --username 00000000-0000-0000-0000-000000000000 growpatcrdev.azurecr.io/yaku-core-dev
-    ```
-    When prompted for the password, use the token obtained in the first step.
-  - If the database does not start properly and in the log you see an error message like `FATAL:  database "postgres" does not exist`, you can try to delete the database files in the persistent volume and restart the database:
-    - Open a Bash shell on the cluster node:
-      ```bash
-      docker container exec -it yaku-control-plane bash
-      # or
-      podman container exec -it yaku-control-plane bash
-      ```
     - Delete the database files:
       ```bash
       rm -rf /data/pv0001/db-files # or pv0002, pv0003, ...

@@ -5,7 +5,12 @@
 import { HttpStatus } from '@nestjs/common'
 import * as supertest from 'supertest'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { NamespaceTestEnvironment, NestTestingApp, NestUtil } from './util'
+import {
+  NamespaceTestEnvironment,
+  NestTestingApp,
+  NestUtil,
+  checkRepositoryEntriesCount,
+} from './util'
 import { Repository } from 'typeorm'
 import { Secret } from '../src/namespace/secret/secret.entity'
 import { EncryptedSecret } from '../src/namespace/secret/simple-secret-storage.entity'
@@ -40,7 +45,8 @@ describe('Check secrets endpoints', () => {
   })
 
   it('should go through a secrets cycle in creating, patching and retrieving the secret', async () => {
-    await checkDatabaseEntries(0)
+    await checkRepositoryEntriesCount(secretRepo, 0)
+    await checkRepositoryEntriesCount(cryptoRepo, 0)
 
     console.log('===== Step 1: Create secret')
 
@@ -54,7 +60,8 @@ describe('Check secrets endpoints', () => {
       return true
     }, body.name)
     await checkSecretByGet(body.name)
-    await checkDatabaseEntries(1)
+    await checkRepositoryEntriesCount(secretRepo, 1)
+    await checkRepositoryEntriesCount(cryptoRepo, 1)
 
     console.log('===== Step 2: Patch secret description')
 
@@ -68,7 +75,8 @@ describe('Check secrets endpoints', () => {
       patchDescBody.description,
     )
     await checkSecretByGet(body.name, patchDescBody.description)
-    await checkDatabaseEntries(1)
+    await checkRepositoryEntriesCount(secretRepo, 1)
+    await checkRepositoryEntriesCount(cryptoRepo, 1)
 
     console.log(
       '===== Step 3: Patch the secret value and unset description again',
@@ -84,26 +92,15 @@ describe('Check secrets endpoints', () => {
       body.name,
     )
     await checkSecretByGet(body.name)
-    await checkDatabaseEntries(1)
+    await checkRepositoryEntriesCount(secretRepo, 1)
+    await checkRepositoryEntriesCount(cryptoRepo, 1)
 
     console.log('===== Step 4: Delete secret')
 
     await deleteSecret(body.name)
-    await checkDatabaseEntries(0)
+    await checkRepositoryEntriesCount(secretRepo, 0)
+    await checkRepositoryEntriesCount(cryptoRepo, 0)
   })
-
-  async function checkDatabaseEntries(count: number): Promise<void> {
-    console.log('========== Check database entries')
-
-    expect(
-      (await secretRepo.find()).length,
-      `Secret repo does not contain the expected ${count} elements`,
-    ).toBe(count)
-    expect(
-      (await cryptoRepo.find()).length,
-      `Encrypted secret repo does not contain the expected ${count} elements`,
-    ).toBe(count)
-  }
 
   async function checkSecretInDatabase(
     checkSecretValue: (value: string) => boolean,

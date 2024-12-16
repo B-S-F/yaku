@@ -1,0 +1,47 @@
+# SPDX-FileCopyrightText: 2024 grow platform GmbH
+#
+# SPDX-License-Identifier: MIT
+
+on:
+  workflow_call:
+
+jobs:
+  build-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for cache hit
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: yaku-ui
+          key: yaku-ui-${{ github.ref }}-${{ hashFiles('yaku-ui/**') }}
+          lookup-only: true
+
+      - name: Setup Node.js
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.9.x"
+          check-latest: true
+          cache: 'npm'
+          cache-dependency-path: yaku-ui/package-lock.json
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: yaku-ui
+        run: |
+          npm ci --ignore-scripts
+
+      - name: Run Unit Tests
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: yaku-ui
+        run: npm run test:unit:ci --workspaces --if-present
+
+      - name: Save Cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: yaku-ui
+          key: ${{ steps.cache.outputs.cache-primary-key }}

@@ -1,0 +1,284 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QG Config",
+  "description": "Configuration of a QG",
+  "$id": "@grow/qg-schemas/dist/qg-config-common.schema.json",
+  "type": "object",
+  "required": ["header"],
+  "additionalProperties": false,
+  "properties": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "description": "Name and version of the QG review.\n\nCan contain more optional fields which will be printed in the report.",
+      "markdownDescription": "Name and version of the QG.\n\nExample:\n\n```yaml\n\nheader:\n  name: My product\n  version: 1.0\n```\n",
+      "additionalProperties": false,
+      "required": ["name", "version"]
+    },
+    "globals": {
+      "type": "object"
+    },
+    "components": {
+      "additionalProperties": {
+        "$ref": "#/definitions/VersionedComponent"
+      },
+      "description": "Map of component IDs to component configurations",
+      "markdownDescription": "Map of component IDs to component configurations.\n\nUsually, a QG is done for one product. But it might be\nthat this product consists of several components.\nAnd those components might have different versions or attributes.\n\nThis is why you always need to define at least one component.\nIf no version is given for the components, the version from\nthe `header` is used.\n\nLater, in the reports or autopilots, you can use the\ncomponent information given in the next example by \nreferencing the values with `${component.version}`,\n`${component.name}` or `${component.git-ref}`.\n\nExample:\n\n```yaml\ncomponents:\n  \"My product A\":\n    version: 1.0\n    name: \"A\"\n    git-ref: a4ec7f\n  ProductB:\n    version: 1.3.2\n    name: \"B\"\n    git-ref: cc81f3\n```\n\nIt is also possible to override certain reports by either \nproviding manual results or by a special report configuration.\n\nExample:\n\n```yaml\ncomponents:\n  productA:\n    reportOverrides:\n      ...\n```\n(see the help text for `reportOverrides` for more details)\n",
+      "type": "object"
+    },
+    "autopilots": {
+      "description": "Map of autopilot IDs to autopilot configurations",
+      "markdownDescription": "Map of autopilot IDs to autopilot configurations.\n\nHere, you need to define the automated steps of the reports.\nAn autopilot definition consists of some (shell) commands and\nan (optional) list of environment variables used for executing\nthe shell commands.\n\nThe autopilot ID (`my-cool-autopilot` below) is an\narbitrary ID, but the `run` property is required.\nUsually, the `run` property is given as shell script,\nso it is advised to use the `|` character like shown below\nwhich makes writing multi-line scripts a lot easier.\n\nExample:\n\n```yaml\nautopilots:\n  my-cool-autopilot:\n    run: |\n      echo \"call-some-shell-command-here\"\n      echo \"or-call-an-autopilot-here\"\n    env:\n      AUTOPILOT_VARIABLE_XYZ: \"Some autopilot configuration value\"\n  ...\n```\n",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Autopilot"
+      }
+    },
+    "dependencies": {
+      "description": "List of remote apps that should be usable in the autopilots of this QG",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "reports": {
+      "description": "Configure default autopilots for each report type",
+      "markdownDescription": "Configure default autopilots for each report type.\n\nExample:\n\n```yaml\nreports:\n  oss-report: whitesource-autopilot\n  open-tickets-report: jira-autopilot\n```\n",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/DefaultAutopilot"
+      }
+    },
+    "finalize": {
+      "description": "Configure the finalizer for this QG",
+      "$ref": "#/definitions/Autopilot"
+    },
+    "allocations": true
+  },
+  "definitions": {
+    "DefaultAutopilot": {
+      "type": "string",
+      "description": "ID of the default autopilot for this scan"
+    },
+    "Env": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean", "null"]
+      },
+      "properties": {
+        "evidence_path": false
+      }
+    },
+    "Component": {
+      "type": "object",
+      "properties": {
+        "reportOverrides": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ReportOverride"
+          },
+          "description": "Map of report type to autopilot config or manual status. Use it to override the default report for this component by providing either an autopilot config or a manual status.",
+          "markdownDescription": "Map of report type to autopilot config or manual status.\nUse it to override the default report for this component\nby providing either an autopilot config or a manual status.\n\nExample for a manual status instead of the\nconfigured automated report:\n\n```yaml\ncomponents:\n  my-product-component:\n    reportOverrides:\n      oss-report:\n        manualStatus: NA\n        reason: OSS Report not applicable for my-product-component\n```\n\nExample for a customized autopilot:\n\n```yaml\ncomponents:\n  my-product-component:\n    reportOverrides:\n      oss-report:\n        autopilot: whitesource-autopilot\n        env:\n          CUSTOM_ENV_VAR: \"some custom value for my-product-component\"\n```\n"
+        }
+      }
+    },
+    "VersionedComponent": {
+      "description": "You may configure additional custom properties that can be used in env templates using the JavaScript template syntax ${component.version}, or ${component.myProperty}",
+      "oneOf": [
+        {
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "version": {
+                  "type": "string",
+                  "description": "Optional version override. If not provided, version from header is used"
+                }
+              }
+            },
+            {
+              "$ref": "#/definitions/Component"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Autopilot": {
+      "type": "object",
+      "description": "One autopilot performs all necessary checks to complete one report, e.g., one FossID report.",
+      "properties": {
+        "run": {
+          "type": "string"
+        },
+        "env": {
+          "$ref": "#/definitions/Env"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["run"]
+    },
+    "ManualStatus": {
+      "type": "object",
+      "properties": {
+        "manualStatus": {
+          "$ref": "#/definitions/Status"
+        },
+        "reason": {
+          "$ref": "#/definitions/MarkDown"
+        }
+      },
+      "additionalProperties": false,
+      "description": "If a manual status is given, no autopilot will be executed for this report type",
+      "required": ["manualStatus"]
+    },
+    "Status": {
+      "enum": ["GREEN", "RED", "YELLOW", "NA"]
+    },
+    "MarkDown": {
+      "type": "string",
+      "description": "A valid MarkDown string"
+    },
+    "Allocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "requirements": {
+          "type": "object",
+          "description": "A requirement or question in the QG.",
+          "markdownDescription": "A requirement or question in the QG.\n\nInside each allocation/category, you can have one or multiple\nrequirements/questions. Each requirement has a `title` and `text`\nand for the QG evaluation, each requirement needs a fulfillment.\n\nThis fulfillment can be computed automatically (using `checks`\nand autopilots) or sometimes, a manual justification is required.\n\nExample:\n\n```yaml\nrequirements:\n  '1.1':\n    title: Question 1.1\n    text: Some explanation of question 1.1\n    checks:\n      'Q1.1A':\n        title: Automated check A of 1.1\n        reports:\n          - my-automated-report-for-1.1\n      'Q1.1B':\n        title: Automated check B of 1.1\n        reports:\n          - my-automated-report-for-1.1\n  '1.2':\n    title: Question 1.2\n    text: Some explanation of question 1.2\n    manualStatus: GREEN\n    reason: this question 1.2 is not applicable to the product!\n```\n",
+          "additionalProperties": {
+            "$ref": "#/definitions/Requirement"
+          }
+        }
+      }
+    },
+    "Requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "$ref": "#/definitions/MarkDown"
+        },
+        "checks": {
+          "$ref": "#/definitions/Checks"
+        },
+        "manualStatus": {
+          "$ref": "#/definitions/Status"
+        },
+        "reason": {
+          "$ref": "#/definitions/MarkDown"
+        }
+      },
+      "dependencies": {
+        "reason": ["manualStatus"],
+        "manualStatus": ["reason"]
+      }
+    },
+    "Checks": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Check"
+      }
+    },
+    "Check": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "$ref": "#/definitions/MarkDown"
+        },
+        "comment": {
+          "$ref": "#/definitions/MarkDown"
+        },
+        "reports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Report"
+          },
+          "description": "List of reports to be executed for this check.\n\nCan be omitted if recommendedReports are configured in qg-questions.\n\nYou can also define a custom report here by using a new unique report name and provide an autopilot and env attribute.",
+          "markdownDescription": "List of reports to be executed for this check.\n\nCan be omitted if recommendedReports are configured in qg-questions.\n\nExample:\n\n```yaml\nreports:\n  my-report: my-autopilot\n... \nallocations:\n  ...\n  checks:\n    ...\n    reports:\n      - my-report\n```\n\nYou can also define a custom report here by using a new\nunique report name and provide an autopilot and env property.\n\nExample:\n\n```yaml\nreports:\n  - my-custom-report:\n      autopilot: my-autopilot\n      env:\n        SOME_OPTION: \"some value\"\n```\n"
+        },
+        "components": {
+          "type": "array",
+          "description": "Omitting components will run reports for all components",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Provide a component to use its defaults"
+              },
+              {
+                "type": "object",
+                "maxProperties": 1,
+                "minProperties": 1,
+                "additionalProperties": {
+                  "$ref": "#/definitions/Component"
+                },
+                "description": "Provide a component with additional overrides"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "Report": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Provide a report type to use its configured default autopilot"
+        },
+        {
+          "type": "object",
+          "maxProperties": 1,
+          "minProperties": 1,
+          "additionalProperties": {
+            "$ref": "#/definitions/ReportDefinition"
+          },
+          "description": "Map report type to individual autopilot config"
+        }
+      ]
+    },
+    "ReportDefinition": {
+      "properties": {
+        "autopilot": {
+          "type": "string"
+        },
+        "env": {
+          "$ref": "#/definitions/Env"
+        }
+      },
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "ReportOverride": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ReportDefinition"
+        },
+        {
+          "$ref": "#/definitions/ManualStatus"
+        }
+      ]
+    }
+  }
+}

@@ -3,19 +3,19 @@
 # SPDX-License-Identifier: MIT
 
 """
-Support for running other autopilot apps as subprocess to a papsr app.
+Support for running other autopilot apps as subprocesses.
 
-When developing a Python autopilot script app, it might be necessary to call
+When developing :doc:`/autopilots/papsr/index`, it might be necessary to call
 other autopilot apps. As they are standalone applications, they can only be
 called through normal system subprocesses.
 
-To support this use-case better, this module provides a special `run` function
+To support this use-case better, this module provides a special :py:func:`run` function
 which mimics the builtin `subprocess.run` function, but extends the result
 of this function by some extra fields, e.g. for getting the list of outputs
 from an autopilot call. See :py:func:`run` for details.
 
 As an example, we want to run two autopilot apps in a row and provide a special
-result message if both succeed:
+result message if both succeed::
 
     # first we call the other app
     step1 = run(["sharepoint-fetcher"])
@@ -68,7 +68,7 @@ from loguru import logger
 from yaku.autopilot_utils.results import Result, ResultsCollector
 
 
-class DataclassJSONEncoder(json.JSONEncoder):
+class _DataclassJSONEncoder(json.JSONEncoder):
     def default(self, o):
         if dataclasses.is_dataclass(o):
             return dataclasses.asdict(o)
@@ -76,6 +76,12 @@ class DataclassJSONEncoder(json.JSONEncoder):
 
 
 class OutputMap(dict):
+    """
+    Dictionary of a subprocess' outputs, used by the :py:func:`run` function.
+
+    Has an extra `to_json()` method to convert the output data back into a JSON string.
+    """
+
     def __init__(self, mapping: Mapping[str, str] | None = None):
         if mapping:
             super().__init__(mapping)
@@ -84,12 +90,36 @@ class OutputMap(dict):
 
     def to_json(self):
         return "\n".join(
-            [json.dumps({"output": {k: v}}, cls=DataclassJSONEncoder) for k, v in self.items()]
+            [
+                json.dumps({"output": {k: v}}, cls=_DataclassJSONEncoder)
+                for k, v in self.items()
+            ]
         )
 
 
 class ProcessResult(Protocol):
-    """Type helper for the merged type of subprocess.ProcessResult and custom attributes."""
+    """
+    Result of a subprocess run command.
+
+    Contains all attributes and methods from the built-in `subprocess.run` function.
+
+    Has extra attributes:
+
+    * `status`: The result status of the autopilot app, e.g. `GREEN` or `RED`.
+    * `reason`: The reason text for the status.
+    * `clean_stdout`: A cleaned version of the `stdout` output, where all JSON lines
+      have been removed.
+    * `results`: A list of :py:class:`Result` objects with the collected results of
+      the autopilot app.
+    * `outputs`: An :py:class:`OutputMap` containing all autopilot outputs.
+
+    There are also two useful extra methods:
+
+    * `exit_for_returncode()`: for returncodes unequal to zero, causes a program
+      termination when called.
+    * `raise_for_status()`: will raise an exception if there is no valid status.
+
+    """
 
     # attributes from builtin subprocess.CompletedProcess
     args: List[str] | str
@@ -194,7 +224,7 @@ def run(
 
     Motivation for this wrapper was that there should be an easy way to
     call an autopilot app as a subfunction and access its status and
-    results:
+    results::
 
         result = run(["sharepoint-fetcher"])
         if result.status == 'GREEN': ...
@@ -206,11 +236,12 @@ def run(
     attaches it to the returned object.
 
     Additionally, it provides two functions in the returned object:
-    * `exit_for_returncode()` can be called if you want to do a system
+
+    * :py:meth:`ProcessResult.exit_for_returncode()` can be called if you want to do a system
       exit in case of a non-zero return code.
-    * `raise_for_status()` which raises a `AutopilotSubprocessFailure`
-      if the subprocess app status is not `GREEN`, `YELLOW`, or `RED`
-      (`None` is ignored as well).
+    * :py:meth:`ProcessResult.raise_for_status()` which raises a
+      :py:exc:`AutopilotSubprocessFailure` if the subprocess app status is not
+      `GREEN`, `YELLOW`, or `RED` (`None` is ignored as well).
     """
     env = None
     if extra_env is not None:

@@ -636,6 +636,7 @@ export class TaskService {
         namespace: { id: namespaceId },
         release: { id: releaseId },
       },
+      relations: ['namespace', 'release'],
     })
 
     /*

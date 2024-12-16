@@ -314,6 +314,47 @@ rules:
     await checkConfigFilesByGet({ 'qg-config.yaml': excelConfig })
   })
 
+  it('should ensure that CRLF is replaced by LF', async () => {
+    additionalConfig.replace(/\n/g, '\r\n')
+
+    await checkDatabaseEntries(0, 0)
+
+    console.log('===== Step 1: Create config')
+    const config = {
+      name: 'Test Config',
+      description: 'Roundtrip test config',
+    }
+    await createConfig(config)
+    await checkConfigInDatabase(config)
+    await checkConfigByGet(config, false, [])
+    await checkDatabaseEntries(1, 0)
+
+    console.log('===== Step 2: Create initial config file from questionnaire')
+    await createInitialConfigFile()
+    await checkConfigInDatabase(config)
+    await checkFilesInDatabase({ 'qg-config.yaml': configFile })
+    await checkConfigByGet(config, true, [])
+    await checkConfigFilesByGet({ 'qg-config.yaml': configFile })
+    await checkDatabaseEntries(1, 1)
+
+    console.log('===== Step 3: Add an additional file to the config')
+    await tryAddTooBigFileToConfig()
+    await tryAddInvalidEncodedFiles()
+    await addFileToConfig()
+    await checkConfigInDatabase(config)
+
+    await checkFilesInDatabase({
+      'qg-config.yaml': configFile,
+      [additionalConfigName]: additionalConfig,
+    })
+    await checkConfigByGet(config, true, [additionalConfigNameEncoded])
+    await checkConfigFilesByGet({
+      'qg-config.yaml': configFile,
+      [additionalConfigNameEncoded]: additionalConfig,
+    })
+    await checkDatabaseEntries(1, 2)
+  })
+
   async function checkDatabaseEntries(
     configs: number,
     files: number,
@@ -462,6 +503,10 @@ rules:
         response.body.toString('utf-8'),
         `The content for file "${file}" is not as expected`,
       ).toEqual(files[file])
+      expect(
+        response.body.toString('utf-8'),
+        `The content for file "${file}" is CRLF encoded`,
+      ).to.not.match(/\r\n/)
     }
   }
 

@@ -1,0 +1,74 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../tokens.scss' as *;
+
+.yaku-info {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: $spacing-8;
+  font-size: 0.875rem;
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :deep(i),
+  :deep(svg) {
+    font-size: $size-icon-s;
+  }
+
+  &.empty-link {
+    cursor: text;
+    color: currentColor;
+  }
+
+  i,
+  svg,
+  .run-status i,
+  .run-status svg {
+    font-size: $size-icon-s;
+    margin: 0;
+  }
+}
+
+a.yaku-info:not(.empty-link):hover span {
+  text-decoration: underline;
+  color: var(--minor-highlight-blue__enabled__front__default);
+}
+
+%overview-with-pill {
+  :deep(.overview-item-layout) {
+
+    i,
+    svg {
+      margin: 0;
+    }
+  }
+}
+
+.transparent-link {
+  color: var(--plain__enabled__front__default);
+  text-decoration: none;
+}
+
+.a-button-link {
+  background-color: var(--major-accent__enabled__fill__default);
+  color: var(--major-accent__enabled__front__default);
+  padding: $spacing-12r $spacing-16r;
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--major-accent__enabled__fill__hovered);
+  }
+
+  &:active {
+    background-color: var(--major-accent__enabled__fill__pressed);
+  }
+}

@@ -1,0 +1,80 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@use './styles/abstract' as *;
+@forward './styles/abstract';
+
+// global styles
+@use './styles/tokens' as *;
+@forward './styles/tokens';
+@use './styles/normalize' as *;
+@forward './styles/normalize';
+@use './styles/focus.scss' as *;
+@forward './styles/focus.scss';
+@use './styles/app-grid-layout' as *;
+@forward './styles/app-grid-layout';
+
+// components
+@use './styles/components/aqua-link' as *;
+@forward './styles/components/aqua-link.scss';
+@use './styles/components/chip' as *;
+@forward './styles/components/chip.scss';
+@use './styles/components/dialog' as *;
+@forward './styles/components/dialog.scss';
+@use './styles/components/download' as *;
+@forward './styles/components/download';
+@use './styles/components/overview-item.scss' as *;
+@forward './styles/components/overview-item.scss';
+@use './styles/components/scroll.scss' as *;
+@forward './styles/components/scroll.scss';
+@use './styles/components/semantic-list' as *;
+@forward './styles/components/semantic-list.scss';
+@use './styles/components/onboarding' as *;
+@forward './styles/components/onboarding.scss';
+
+// mixins
+@use './styles/mixins/resize-btn.scss' as *;
+@forward './styles/mixins/resize-btn.scss';
+
+* {
+  scrollbar-width: thin;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+}
+
+// apply layout
+#app #view-layout {
+  @extend %grid;
+
+  // header related layout
+  margin: 0 auto; // shift the view on the left
+  padding: 0 $viewPadding;
+  overflow: auto;
+  // position the view under the header
+  position: fixed;
+  top: $headerHeight;
+}
+
+#app #vuetify-view-layout {
+  @extend %grid;
+
+  // header related layout
+  margin: 0 auto; // shift the view on the left
+  padding: 0 $viewPadding;
+  overflow: auto;
+  // position the view under the header
+  top: $headerHeight;
+}
+
+/** content is only readable for screen readers (sr) **/
+.sr-only {
+  position: absolute;
+  left: -9999rem;
+}

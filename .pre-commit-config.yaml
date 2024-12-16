@@ -15,7 +15,7 @@ repos:
     hooks:
       - id: reuse-lint-file
         files: '\.(adb|adoc|ads|aes|ahk|ahkl|aidl|applescript|arb|asax|asc|asciidoc|ashx|asm|asmx|aspx|aux|awk|axd|bash|bat|bats|bb|bbappend|bbclass|bib|bzl|c|cabal|cc|cjs|cl|clj|cljc|cljs|cls|cmake|code-workspace|coffee|cpp|cs|csl|cson|css|csproj|csv|cu|cuh|cxx|d|dart|di|doc|docx|dotx|dts|dtsi|el|erl|ex|exs|f|fsproj|f03|f08|f90|f95|fish|fnl|fodp|fods|fodt|for|ftn|fpp|fs|fsx|ftl|gemspec|go|gradle|graphql|graphqls|gqls|groovy|h|ha|hbs|hcl|hh|hjson|hpp|hrl|hs|html|hx|hxsl|ini|ino|ipynb|iuml|j2|java|jinja|jinja2|jl|jpg|jpeg|js|json|json5|jsonc|jsp|jsx|jy|ksh|kt|kts|l|latex|ld|less|license|lisp|lsp|lua|m|m4|man|markdown|md|mjs|mk|ml|mli|nim.cfg|nim|nimble|nimrod|nix|odb|odf|odg|odm|odp|ods|odt|org|otp|ots|ott|pdf|pem|php|php3|php4|php5|pl|plantuml|png|po|pod|pot|ppt|pptx|pri|pro|props|properties|proto|ps1|psm1|pu|puml|pxd|py|pyi|pyw|pyx|qbs|qml|qrc|qss|R|rake|rb|rbw|rbx|rkt|Rmd|rs|rss|rst|s|sass|sbt|sc|scad|scala|scm|scpt|scptd|scss|scsyndef|sh|sld|sln|sls|sml|soy|sps|sql|sty|svg|svelte|swift|t|tcl|tex|textile|tf|tfvars|thy|toc|toml|ts|tsx|ttl|typ|ui|v|vala|vbproj|vhdl|vim|vm|vsh|vtl|vue|webp|xls|xlsx|xml|xq|xql|xqm|xqy|xquery|xsd|xsh|xsl|yaml|yml|zig|zsh)$|Dockerfile|Makefile|CMakeLists\.txt|Gemfile|Jenkinsfile|Rakefile|requirements\.txt'
-        exclude: 'documentation/under-construction\.jpg|user-documentation/source/resources/features/image-source-information\.md|user-documentation/source/onboarding\.md'
+        exclude: 'documentation/under-construction\.jpg|user-documentation/source/resources/features/image-source-information\.md|user-documentation/source/onboarding\.md|user-documentation/source/.*.yaml'
 
   ####
   ## User documentation
@@ -62,7 +62,7 @@ repos:
   ## TS / JS related
   ####
   - repo: https://github.com/biomejs/pre-commit
-    rev: 'v0.5.0'
+    rev: 'v0.6.0'
     hooks:
       - id: biome-check
         additional_dependencies: ['@biomejs/biome@1.9.4']
@@ -76,7 +76,7 @@ repos:
   ## Python related
   ####
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.0
+    rev: v0.8.2
     hooks:
       - id: ruff
         args: [--fix]

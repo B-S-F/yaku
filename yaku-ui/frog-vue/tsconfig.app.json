@@ -1,0 +1,25 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "histoire-setup.ts"
+  ],
+  "exclude": [
+    "src/**/__tests__/*"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "types": [
+      "node",
+      "jsdom",
+      "vuetify"
+    ],
+    "lib": [
+      "es2022",
+      "DOM"
+    ]
+  }
+}

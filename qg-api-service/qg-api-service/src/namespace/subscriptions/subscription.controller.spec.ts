@@ -12,6 +12,7 @@ import { KeyCloakUser } from '@B-S-F/api-keycloak-auth-lib'
 import { SubscriptionOperation, SubscriptionPostDto } from './subscription.dto'
 import { Logger, LoggerModule, PinoLogger } from 'nestjs-pino'
 import { UsersModule } from '../users/users.module'
+import { ReleaseEntity } from '../releases/release.entity'
 
 describe('SubscriptionController', () => {
   let subscriptionController: SubscriptionController
@@ -24,6 +25,10 @@ describe('SubscriptionController', () => {
         SubscriptionService,
         {
           provide: getRepositoryToken(SubscriptionEntity),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(ReleaseEntity),
           useClass: Repository,
         },
         { provide: PinoLogger, useValue: { pinoHttp: jest.fn() } },

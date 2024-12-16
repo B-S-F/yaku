@@ -1,0 +1,19 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+.dialog-reset[open] {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: block; // override frontendkit layout
+  background-color: rgb(var(--v-theme-background));
+  color: rgb(var(--v-theme-on-background));
+
+  &::backdrop {
+    display: none;
+    backdrop-filter: none;
+  }
+}

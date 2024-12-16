@@ -19,7 +19,6 @@ It has the ability to filter recommendations based on certain aspects, such as t
 To understand this guide, it is essential to have completed the following steps:
 
 * Obtain "Cloud application administrator" permissions to an Azure subscription
-* Complete {doc}`../../../onboarding`
 
 ### Use-cases
 

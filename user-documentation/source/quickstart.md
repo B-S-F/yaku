@@ -77,4 +77,4 @@ Screenshot of the {file}`qg-result.html`, opened in the browser
 
 Here you can find the question 4.6 which is defined in the {file}`qg-config.yaml` and the result from the check we ran. Since the uploaded file was modified within the last year, you can find the green checkmark-icon next to the question. If the check had failed, you would find a red instead of a green result here. Also, you would find further information on why it failed and when the file was modified for the last time.
 
-**Congratulations!** You've made your first step in automating you release process. If you're interested in learning more about how {{ PRODUCTNAME }} works and how you can configure your own checks, continue with our document on {doc}`onboarding`.
+**Congratulations!** You've made your first step in automating you release process.

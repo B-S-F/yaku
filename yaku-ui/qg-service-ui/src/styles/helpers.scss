@@ -1,0 +1,23 @@
+/*
+ * SPDX-FileCopyrightText: 2024 grow platform GmbH
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+@use "sass:math";
+/// This file contains basic css styling / functions / mixin / variables
+
+/// Function to calculate correct rem size
+@function rem($px, $base: 16px) {
+  @return math.div($px, $base) * 1rem;
+}
+
+@mixin hide-label-and-center-icon {
+  .a-button__icon {
+    margin: auto;
+    padding: rem(12px);
+  }
+  .a-button__label {
+    display: none;
+  }
+}
