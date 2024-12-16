@@ -28,6 +28,8 @@ Before you start, you need:
   Yaku in a playground setup, you can skip this requirement. This will generate a predefined encryption key which you
   can use. We recommend that you create your own value and deploy it as kuberenets secret, then add the kubernetes
   secret info in values file under `encryption_secret_name` and `encryption_secret_key`
+- TODO keycloak running or see our docu
+- TODO Postgres DB , see document
 
 ## Build the docker images
 
