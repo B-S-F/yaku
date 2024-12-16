@@ -295,7 +295,7 @@ describe('Integration tests for secrets', async () => {
 
     it('should update a secret', async () => {
       const command =
-        'secrets update TEMP_SEC --secret some-val "some-updated-description"'
+        'secrets update TEMP_SEC --secret some-val --description "some-updated-description"'
 
       const result: RunProcessResult = await cmdManager.runCommand(command)
 
@@ -317,17 +317,17 @@ describe('Integration tests for secrets', async () => {
         await cmdManager.runCommand('secrets update -h')
 
       const expectedMessage: string[] = [
-        'Usage: yaku secrets update|upd [options] <name> [description]',
+        'Usage: yaku secrets update|upd [options] <name>',
         'Update a secret',
         'Arguments:',
-        '  name                   The name of the secret to be changed',
-        '  description            An optional change of the description',
+        '  name                             The name of the secret to be changed',
         'Options:',
-        '  -s, --secret <secret>  An optional change of the secret value, use empty',
-        '                         string to not change the secret (Deprecated: For',
-        '                         security reasons, please use STDIN to input the secret',
-        '                         value)',
-        '  -h, --help             display help for command',
+        '  -d, --description <description>  An optional change of the description',
+        '  -s, --secret <secret>            An optional change of the secret value, use',
+        '                                   empty string to not change the secret',
+        '                                   (Deprecated: For security reasons, please',
+        '                                   use STDIN to input the secret value)',
+        '  -h, --help                       display help for command',
       ]
 
       const stdoutArray: string[] = result.stdout
