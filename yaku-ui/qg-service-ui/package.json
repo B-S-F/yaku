@@ -11,7 +11,7 @@
     "dev:test": "vite --mode dev:mock --port 4999",
     "check": "vue-tsc --noEmit",
     "build": "vite build",
-    "docker:build": "docker-buildx build . -t qg-aas-ui:latest --secret id=npmrc,src=.npmrc --secret id=env,src=.env.local",
+    "docker:build": "docker-buildx build . -t qg-aas-ui:latest",
     "docker:start": "docker run -it --mount=type=bind,src=./ui-dev-config.json,dst=/home/node/app/dist/ui-config.json,readonly=true -p 3000:3000 qg-aas-ui:latest",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
