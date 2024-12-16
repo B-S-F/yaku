@@ -61,7 +61,9 @@ jobs:
     uses: ./.github/workflows/build-backend-docker-image.yml
 
   build-ui-docker-image:
-#    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    needs:
+      - build-ui
     uses: ./.github/workflows/build-ui-docker-image.yml
 
   build-core-docker-image:

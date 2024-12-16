@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REGISTRY: ghcr.io
-      IMAGE_NAME: b-s-f/yaku/yaku-ui
+      IMAGE_NAME: b-s-f/yaku/ui
     steps:
       - uses: actions/checkout@v4
 
