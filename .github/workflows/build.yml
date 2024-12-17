@@ -10,7 +10,6 @@ on:
     branches:
       - "main"
       - "build-core-image"
-      - "story/4108"
     paths-ignore:
       - '**/*.md'            # Ignore all markdown files
       - 'user-documentation/'
@@ -56,19 +55,19 @@ jobs:
     secrets: inherit
 
   build-backend-docker-image:
-    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/story/4108') }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
       - build-backend
     uses: ./.github/workflows/build-backend-docker-image.yml
 
   build-ui-docker-image:
-    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/story/4108') }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
       - build-ui
     uses: ./.github/workflows/build-ui-docker-image.yml
 
   build-core-docker-image:
-    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/story/4108') }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs:
       - build-onyx
       - build-typescript-apps
