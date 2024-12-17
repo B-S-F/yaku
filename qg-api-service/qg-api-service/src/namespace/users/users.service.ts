@@ -20,10 +20,6 @@ import { AllowedSortProperties, UserInNamespaceDto } from './users.utils'
 import { SYSTEM_REQUEST_USER } from '../module.utils'
 
 const CACHE_TIMEOUT = 1000 * 60 * 5 // 5 minutes
-export const SYSTEM_USER = new UserInNamespaceDto()
-SYSTEM_USER.id = 'SYSTEM_ACTOR'
-SYSTEM_USER.username = 'SYSTEM_ACTOR'
-SYSTEM_USER.displayName = 'SYSTEM_ACTOR'
 
 export const DELETED_USER = new UserInNamespaceDto()
 DELETED_USER.id = 'DELETED_USER'
@@ -102,12 +98,8 @@ export class UsersService {
       throw new InternalServerErrorException('User id is not defined')
     }
 
-    if (id === SYSTEM_USER.id) {
-      return SYSTEM_USER
-    }
-
     if (id === SYSTEM_REQUEST_USER.id) {
-      return SYSTEM_USER
+      return SYSTEM_REQUEST_USER as UserInNamespaceDto
     }
 
     const cachedUser = this.usersCache.get(id)
