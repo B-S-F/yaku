@@ -14,7 +14,7 @@ export const OSS_COMPLIANCE_LINK = '/oss-compliance-information'
 export const MONACO_CONTEXT_MENU_GROUP_YAKU = '9_yaku'
 
 /** The resolver's name associated when a finding is automatically resolved */
-export const AUTOMATIC_RESOLVER_NAME = 'Yaku'
+export const AUTOMATIC_RESOLVER_ID = '00000000-0000-0000-0000-000000000000'
 
 /** separator for values inside the url */
 export const DOUBLE_HYPHEN = '--'

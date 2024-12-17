@@ -3,13 +3,13 @@
 // SPDX-License-Identifier: MIT
 
 import { NamespaceUser } from '~/api'
-import { AUTOMATIC_RESOLVER_NAME } from '~/config/app'
+import { AUTOMATIC_RESOLVER_ID } from '~/config/app'
 
-export const isAutoResolved = (resolver: string | NamespaceUser | null) => {
-  if ((typeof resolver as string) === 'string') {
+export const isAutoResolved = (resolver: NamespaceUser | null) => {
+  if (resolver) {
     return (
-      resolver?.toString().toLowerCase() ===
-      AUTOMATIC_RESOLVER_NAME.toLowerCase()
+      resolver.id?.toString().toLowerCase() ===
+      AUTOMATIC_RESOLVER_ID.toLowerCase()
     )
   }
   return false

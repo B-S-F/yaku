@@ -35,8 +35,9 @@ import { CreateMetricDTO } from '../metrics/dto/createMetric.dto'
 import { UpdateFindingDTO as UpdateFindingMetricDTO } from '../metrics/dto/updateFinding.dto'
 import { ServiceType } from '../metrics/utils/enums/serviceType.enum'
 import { MetricService } from '../metrics/metric.service'
-import { DELETED_USER, SYSTEM_USER, UsersService } from '../users/users.service'
+import { DELETED_USER, UsersService } from '../users/users.service'
 import { UserInNamespaceDto } from '../users/users.utils'
+import { SYSTEM_REQUEST_USER, SYSTEM_REQUEST_USER_ID } from '../module.utils'
 
 const allowedFilteringParameters = [
   'configId',
@@ -177,11 +178,7 @@ export class FindingService {
       runStatus: incomingFinding.runStatus,
       metadata: incomingFinding.metadata,
     }
-    if (
-      existingFinding.resolver === 'Yaku' ||
-      existingFinding.resolver === 'Aqua' ||
-      existingFinding.resolver === SYSTEM_USER.id
-    )
+    if (existingFinding.resolver === SYSTEM_REQUEST_USER_ID)
       updateFindingDto = {
         ...updateFindingDto,
         status: 'unresolved' as StatusType,
@@ -220,13 +217,9 @@ export class FindingService {
       return findingDto
     }
 
-    if (
-      resolver === 'Yaku' ||
-      resolver === 'Aqua' ||
-      resolver === SYSTEM_USER.id
-    ) {
+    if (resolver === SYSTEM_REQUEST_USER_ID) {
       findingDto.resolvedManually = false
-      findingDto.resolver = SYSTEM_USER
+      findingDto.resolver = SYSTEM_REQUEST_USER as UserInNamespaceDto
     } else {
       findingDto.resolvedManually = true
       const resolverToGet =
@@ -370,7 +363,7 @@ export class FindingService {
         const updateFindingDto: UpdateFindingDTO = {
           status: 'resolved' as StatusType,
           resolvedComment: `This finding was automatically resolved by run ${lastRun.id}`,
-          resolver: SYSTEM_USER.id,
+          resolver: SYSTEM_REQUEST_USER_ID,
           runId: lastRun.id,
           runCompletionTime: lastRun.completionTime,
           runOverallResult: lastRun.overallResult as RunOverallStatusType,
@@ -458,13 +451,7 @@ export class FindingService {
       updateFindingDto.resolvedDate = new Date().toISOString()
     }
     if (updateFindingDto.resolver) {
-      if (
-        updateFindingDto.resolver === 'Yaku' ||
-        updateFindingDto.resolver === 'Aqua' ||
-        updateFindingDto.resolver === SYSTEM_USER.id
-      ) {
-        updateFindingDto.resolver = SYSTEM_USER.id
-      } else {
+      if (updateFindingDto.resolver !== SYSTEM_REQUEST_USER_ID) {
         const user = await this.usersService.getUser(updateFindingDto.resolver)
         if (user.id === DELETED_USER.id) {
           throw new BadRequestException(
