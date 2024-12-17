@@ -9,7 +9,7 @@ export default defineConfig({
   entry: ['src/**/*.ts'],
   splitting: false,
   clean: true,
-  target: 'node18',
+  target: 'node22',
   format: ['esm'],
   bundle: false,
   sourcemap: true,
