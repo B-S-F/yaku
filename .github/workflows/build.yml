@@ -55,19 +55,19 @@ jobs:
     secrets: inherit
 
   build-backend-docker-image:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/story/4108') }}
     needs:
       - build-backend
     uses: ./.github/workflows/build-backend-docker-image.yml
 
   build-ui-docker-image:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/story/4108') }}
     needs:
       - build-ui
     uses: ./.github/workflows/build-ui-docker-image.yml
 
   build-core-docker-image:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/story/4108') }}
     needs:
       - build-onyx
       - build-typescript-apps
