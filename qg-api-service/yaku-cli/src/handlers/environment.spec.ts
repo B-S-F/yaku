@@ -131,7 +131,7 @@ describe('loadEnvironments()', () => {
     // the error message must be specific to permissions
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       chalk.red(
-        `Failed to parse '${testEnvFilePath}' as JSON: SyntaxError: Unexpected token ! in JSON at position 0`,
+        `Failed to parse '${testEnvFilePath}' as JSON: SyntaxError: Unexpected token '!', \"![]\" is not valid JSON`,
       ),
     )
     expect(existsSyncSpy).toHaveBeenCalledWith(testEnvFilePath)
