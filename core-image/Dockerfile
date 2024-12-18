@@ -13,7 +13,7 @@ LABEL maintainer="Neutrinos GROW/PAT"
 LABEL description="YAKU core docker image based on Ubuntu 22.04 image"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG NODE_VERSION=18
+ARG NODE_VERSION=22
 ARG USERNAME="qguser"
 ARG USER_UID=1001
 ARG USER_GID=1000
