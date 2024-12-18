@@ -8,8 +8,8 @@ SPDX-License-Identifier: MIT
 
 ## Prerequisites
 
-* [NodeJS](https://nodejs.org/en/) >= 18.0.0
-* npm >= 8.0.0 (comes with NodeJS)
+* [NodeJS](https://nodejs.org/en/) >= 22.0.0
+* npm >= 10.0.0 (comes with NodeJS)
 * Access to our Github packages npm registry: <https://npm.pkg.github.com>
 
 ## Login to github package registry
