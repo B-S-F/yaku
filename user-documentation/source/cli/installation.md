@@ -48,4 +48,4 @@ To check whether the CLI was installed correctly, run
 yaku --version
 ```
 
-This should print out the current version of the CLI, e.g. `0.18.0`.
+This should print out the current version of the CLI, e.g. `0.22.0`.
