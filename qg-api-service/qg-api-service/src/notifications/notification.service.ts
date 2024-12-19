@@ -9,7 +9,8 @@ import { QG_LOG_LEVEL } from '../config'
 import { Notification } from '../mailing/mailing.utils'
 import { MailingService } from '../mailing/mailing.service'
 import { UserProfileService } from '../user/user-profile/user-profile.service'
-import { DELETED_USER, SYSTEM_USER } from '../namespace/users/users.service'
+import { DELETED_USER } from '../namespace/users/users.service'
+import { SYSTEM_REQUEST_USER_ID } from '../namespace/module.utils'
 
 @Injectable()
 export class NotificationService {
@@ -36,7 +37,7 @@ export class NotificationService {
     title: string,
     notification: Notification,
   ): Promise<void> {
-    if (userId === DELETED_USER.id || userId === SYSTEM_USER.id) {
+    if (userId === DELETED_USER.id || userId === SYSTEM_REQUEST_USER_ID) {
       this.logger.info(`Special user with id ${userId} detected, skipping`)
       return
     }

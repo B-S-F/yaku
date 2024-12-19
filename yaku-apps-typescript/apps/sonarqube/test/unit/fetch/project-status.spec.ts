@@ -103,7 +103,7 @@ describe('getProjectStatus', async () => {
         undefined,
       ),
     ).rejects.toThrowError(
-      'Could not parse sonarqube response as JSON, Unexpected token s in JSON at position 0',
+      `Could not parse sonarqube response as JSON, Unexpected token 's', "some invalid json" is not valid JSON`,
     )
   })
 })

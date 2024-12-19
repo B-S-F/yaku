@@ -10,8 +10,8 @@
     "dev:mock": "vite --host --mode dev:mock --port 5173",
     "dev:test": "vite --mode dev:mock --port 4999",
     "check": "vue-tsc --noEmit",
-    "build": "vue-tsc --noEmit && vite build",
-    "docker:build": "docker-buildx build . -t qg-aas-ui:latest --secret id=npmrc,src=.npmrc --secret id=env,src=.env.local",
+    "build": "vite build",
+    "docker:build": "docker-buildx build . -t qg-aas-ui:latest",
     "docker:start": "docker run -it --mount=type=bind,src=./ui-dev-config.json,dst=/home/node/app/dist/ui-config.json,readonly=true -p 3000:3000 qg-aas-ui:latest",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
@@ -52,7 +52,7 @@
     "eslint": "^8.49.0",
     "jsdom": "^22.1.0",
     "mocha-junit-reporter": "^2.2.1",
-    "msw": "1.2.1",
+    "msw": "^2.7.0",
     "release-it": "^17.0.3",
     "sass": "^1.66.1",
     "start-server-and-test": "^2.0.5",
@@ -65,9 +65,8 @@
     "vue-tsc": "^1.6.5"
   },
   "dependencies": {
-    "@B-S-F/frog-vue": "^2.10.2",
-    "vuetify": "^3.7.2",
     "@azure/msal-browser": "3.5",
+    "@B-S-F/frog-vue": "^2.10.2",
     "@vueuse/components": "^10.7.2",
     "@vueuse/core": "^10.7.2",
     "chart.js": "^4.4.0",
@@ -87,6 +86,7 @@
     "vue-chartjs": "^5.2.0",
     "vue-markdown-render": "^2.2.1",
     "vue-router": "^4.2.4",
+    "vuetify": "^3.7.2",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
   },
   "msw": {

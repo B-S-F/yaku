@@ -6,7 +6,7 @@
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 
-ARG BASE_IMAGE_NAME="node:18-alpine"
+ARG BASE_IMAGE_NAME="node:22-alpine"
 
 FROM ${BASE_IMAGE_NAME} As development
 
@@ -21,7 +21,7 @@ RUN npm install -ws --include-workspace-root
 # BUILD FOR PRODUCTION
 ###################
 
-ARG BASE_IMAGE_NAME="node:18-alpine"
+ARG BASE_IMAGE_NAME="node:22-alpine"
 
 FROM ${BASE_IMAGE_NAME}  As build
 
@@ -46,7 +46,7 @@ USER node
 # PRODUCTION
 ###################
 
-ARG BASE_IMAGE_NAME="node:18-alpine"
+ARG BASE_IMAGE_NAME="node:22-alpine"
 
 FROM ${BASE_IMAGE_NAME}  As production
 

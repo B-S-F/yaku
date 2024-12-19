@@ -30,7 +30,6 @@ import {
 } from '../../../namespace/module.utils'
 import {
   DELETED_USER,
-  SYSTEM_USER,
   UsersService,
 } from '../../../namespace/users/users.service'
 import { UserInNamespaceDto } from '../../../namespace/users/users.utils'
@@ -1131,7 +1130,7 @@ export class CommentsService {
       )
     }
 
-    participants.delete(SYSTEM_USER.id)
+    participants.delete(SYSTEM_REQUEST_USER_ID)
     for (const id of ignore) {
       participants.delete(id)
     }

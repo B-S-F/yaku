@@ -92,7 +92,12 @@ export function createSecretsSubcommands(program: Command): void {
     .alias('upd')
     .description('Update a secret')
     .argument('<name>', 'The name of the secret to be changed')
-    .argument('[description]', 'An optional change of the description')
+    .addOption(
+      new Option(
+        '-d, --description <description>',
+        'An optional change of the description',
+      ),
+    )
     .addOption(
       new Option(
         '-s, --secret <secret>',
@@ -102,10 +107,10 @@ export function createSecretsSubcommands(program: Command): void {
     .action(
       async (
         name: string,
-        description: string,
-        options: { secret?: string },
+        options: { secret?: string; description?: string },
       ) => {
         const secret = options.secret
+        const description = options.description
         if (secret) {
           try {
             await updateSecret(client, namespace, name, description, secret)

@@ -2,6 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-.nvmrc
 node_modules
-.turbo/**/*
+dist
+cypress
+reports
+.github/**
+.vscode/**
+.turbo/**

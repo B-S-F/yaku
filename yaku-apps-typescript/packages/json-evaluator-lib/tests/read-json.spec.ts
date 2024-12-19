@@ -42,7 +42,7 @@ describe('readJson', () => {
     vi.mocked(readFile).mockResolvedValueOnce('invalid json')
 
     await expect(readJson('./invalid.json')).rejects.toThrow(
-      'File ./invalid.json could not be parsed, failed with error: SyntaxError: Unexpected token i in JSON at position 0',
+      `File ./invalid.json could not be parsed, failed with error: SyntaxError: Unexpected token 'i', "invalid json" is not valid JSON`,
     )
   })
 

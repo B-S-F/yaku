@@ -2,9 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-node_modules
-dist
-cypress
-reports
-.github/**
-.vscode/**
+header:
+  name: Test
+  version: "1.1"

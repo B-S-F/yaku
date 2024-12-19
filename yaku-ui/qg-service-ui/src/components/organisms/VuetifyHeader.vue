@@ -122,12 +122,6 @@ import { useColorScheme, useMainHeading, useUrlContext } from '~composables'
 
 import { useLocalStorage } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { useIsOnboardingActive } from '~/composables/onboarding/useIsOnboardingActive'
-import {
-  onboardingTour,
-  useOnboarding,
-} from '~/composables/onboarding/useOnboarding'
-import { useOnboardingRoutes } from '~/composables/onboarding/useOnboardingRoutes'
 import { SWITCH_SERVER_FROM } from '~/constants/keycloak'
 import isMenuItemSelected from '~/helpers/isMenuItemSelected'
 import { ACTIVE_ENV_KEY } from '~/main'
@@ -147,8 +141,6 @@ const route = useRoute()
 const { heading } = useMainHeading()
 const keycloakStore = useKeycloakStore()
 const { user } = storeToRefs(keycloakStore)
-const onboardingRoutes = useOnboardingRoutes()
-const { isActive: isOnboardingActive } = useIsOnboardingActive()
 const navigationDrawerOpen = ref(false)
 
 const secretLink = computed(
@@ -211,22 +203,6 @@ const environmentMenuRef = ref<HTMLDialogElement | null>(null)
 //  ------------------
 const showHelpMenu = ref(false)
 const helpMenuToggleRef = ref<HTMLDivElement | null>(null)
-const findOnboardingRoute = computed(() =>
-  onboardingRoutes.find(
-    (onboardingRoute) => onboardingRoute.name === route.name,
-  ),
-)
-const canStartGuidedTour = computed(() => !!findOnboardingRoute.value)
-const { start } = useOnboarding({
-  onboardingTour: findOnboardingRoute.value?.config ?? [],
-})
-
-watch(isOnboardingActive, (newVal) => {
-  if (newVal) {
-    onboardingTour.value = findOnboardingRoute.value?.config
-  }
-})
-
 const { urlContext, envPathPrefix } = useUrlContext()
 const hasUrlContext = computed(
   () => urlContext.value.namespaceSlug && urlContext.value.namespaceSlug,

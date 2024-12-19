@@ -46,6 +46,10 @@ jobs:
     uses: ./.github/workflows/build-python-apps.yml
     secrets: inherit
 
+  build-ui:
+    uses: ./.github/workflows/build-ui.yml
+    secrets: inherit
+
   build-backend:
     uses: ./.github/workflows/build-backend.yml
     secrets: inherit
@@ -55,6 +59,12 @@ jobs:
     needs:
       - build-backend
     uses: ./.github/workflows/build-backend-docker-image.yml
+
+  build-ui-docker-image:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    needs:
+      - build-ui
+    uses: ./.github/workflows/build-ui-docker-image.yml
 
   build-core-docker-image:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}

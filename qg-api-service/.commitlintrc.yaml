@@ -21,7 +21,7 @@ rules:
   scope-enum:
     - 2
     - always
-    - [api, cli, client-lib]
+    - [api, cli, client-lib, ui]
   subject-case:
     - 2
     - always

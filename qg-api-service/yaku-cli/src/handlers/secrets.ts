@@ -54,7 +54,7 @@ export async function updateSecret(
   client: ApiClient,
   namespace: number | undefined,
   name: string,
-  description: string,
+  description: string | null | undefined,
   secret: string,
 ) {
   handleStandardParams(client, namespace)

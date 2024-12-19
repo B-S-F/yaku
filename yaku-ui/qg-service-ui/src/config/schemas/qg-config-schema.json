@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/B-S-F/yaku/onyx/pkg/configuration/versions/v1/config",
   "$ref": "#/$defs/Config",
   "$defs": {
     "AppRepository": {
