@@ -20,6 +20,9 @@ def test_result_is_correct_if_file_exists():
     assert result.justification == "File `mocked` exists."
 
 
+
+
+
 @protect_results
 def test_result_is_correct_if_file_does_not_exist():
     path = mock.Mock()
