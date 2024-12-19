@@ -8,11 +8,12 @@ import {
   KeyCloakService,
   KeyCloakUserOfRole,
 } from '@B-S-F/api-keycloak-auth-lib'
-import { DELETED_USER, SYSTEM_USER } from '../namespace/users/users.service'
+import { DELETED_USER } from '../namespace/users/users.service'
 import { LocalKeyCloakModule } from '../keycloak/local.keycloak.module'
 import { MailingService, NullMailingService } from '../mailing/mailing.service'
 import { UserProfileService } from '../user/user-profile/user-profile.service'
 import { GetUserProfileDto } from '../user/user-profile/dto/get-user-profile.dto'
+import { SYSTEM_REQUEST_USER } from '../namespace/module.utils'
 
 import { NotificationService } from './notification.service'
 
@@ -110,7 +111,7 @@ describe('NotificationService', () => {
     expect(mailServiceSpy).not.toHaveBeenCalled()
   })
 
-  it.each([SYSTEM_USER, DELETED_USER])(
+  it.each([SYSTEM_REQUEST_USER, DELETED_USER])(
     'should skip when special user is detected',
     async (specialUser) => {
       const mailServiceSpy = jest.spyOn(mailingService, 'pushNotification')

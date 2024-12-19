@@ -21,7 +21,7 @@ The repository has the following structure:
 
 ## Installation
 
-Prerequisite: Since all apps in this repository are typescript based, you need node.js and npm installed on your machine. The apps are tested against the latest minor version of node 18 with the corresponding npm in version 9.
+Prerequisite: Since all apps in this repository are typescript based, you need node.js and npm installed on your machine. The apps are tested against the latest minor version of node 22 with the corresponding npm in version 10.
 
 After cloning the repository, you have to set up the repository. Since this is a monorepo, it is enough to run the following command in the repository root folder:
 

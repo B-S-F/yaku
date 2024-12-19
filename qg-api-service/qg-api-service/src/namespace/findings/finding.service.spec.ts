@@ -27,8 +27,9 @@ import { Metric } from '../metrics/entity/metric.entity'
 import { MetricService } from '../metrics/metric.service'
 import { EntityList } from '@B-S-F/api-commons-lib'
 import { RunStatus } from '../run/run.entity'
-import { SYSTEM_USER, UsersService } from '../users/users.service'
+import { UsersService } from '../users/users.service'
 import { UserInNamespaceDto } from '../users/users.utils'
+import { SYSTEM_REQUEST_USER, SYSTEM_REQUEST_USER_ID } from '../module.utils'
 
 describe('FindingService', () => {
   let findingService: FindingService
@@ -322,17 +323,17 @@ describe('FindingService', () => {
   describe('updateFinding', () => {
     it.each([
       [
-        SYSTEM_USER.displayName,
-        SYSTEM_USER.username,
-        SYSTEM_USER.id,
-        SYSTEM_USER.email,
+        SYSTEM_REQUEST_USER.displayName,
+        SYSTEM_REQUEST_USER.username,
+        SYSTEM_REQUEST_USER.id,
+        SYSTEM_REQUEST_USER.email,
         false,
       ],
       [
-        SYSTEM_USER.displayName,
-        SYSTEM_USER.username,
-        SYSTEM_USER.id,
-        SYSTEM_USER.email,
+        SYSTEM_REQUEST_USER.displayName,
+        SYSTEM_REQUEST_USER.username,
+        SYSTEM_REQUEST_USER.id,
+        SYSTEM_REQUEST_USER.email,
         false,
       ],
       [
@@ -431,17 +432,17 @@ describe('FindingService', () => {
 
     it.each([
       [
-        SYSTEM_USER.displayName,
-        SYSTEM_USER.username,
-        SYSTEM_USER.id,
-        SYSTEM_USER.email,
+        SYSTEM_REQUEST_USER.displayName,
+        SYSTEM_REQUEST_USER.username,
+        SYSTEM_REQUEST_USER.id,
+        SYSTEM_REQUEST_USER.email,
         false,
       ],
       [
-        SYSTEM_USER.displayName,
-        SYSTEM_USER.username,
-        SYSTEM_USER.id,
-        SYSTEM_USER.email,
+        SYSTEM_REQUEST_USER.displayName,
+        SYSTEM_REQUEST_USER.username,
+        SYSTEM_REQUEST_USER.id,
+        SYSTEM_REQUEST_USER.email,
         false,
       ],
       [
@@ -718,7 +719,7 @@ describe('FindingService', () => {
         occurrenceCount: 3,
         status: 'resolved' as StatusType,
         resolvedComment: 'Performance issue addressed and optimized.',
-        resolver: SYSTEM_USER.id,
+        resolver: SYSTEM_REQUEST_USER_ID,
         createdAt: new Date('2023-08-22T00:00:00Z'),
         updatedAt: new Date('2023-08-22T00:00:00Z'),
       }
@@ -966,7 +967,7 @@ describe('FindingService', () => {
           status: 'resolved' as StatusType,
           resolvedComment: `This finding was automatically resolved by run ${lastRunData.id}`,
           resolvedDate: new Date('2020-01-01').toISOString(),
-          resolver: SYSTEM_USER.id,
+          resolver: SYSTEM_REQUEST_USER_ID,
           runId: lastRunData.id,
           runCompletionTime: '2023-06-12T12:44:44.000Z',
           runOverallResult: 'RED' as RunOverallStatusType,
@@ -1109,7 +1110,7 @@ describe('FindingService', () => {
           status: 'resolved' as StatusType,
           resolvedComment: `This finding was automatically resolved by run ${lastRunData.id}`,
           resolvedDate: new Date('2020-01-01').toISOString(),
-          resolver: SYSTEM_USER.id,
+          resolver: SYSTEM_REQUEST_USER_ID,
           runId: lastRunData.id,
           runCompletionTime: '2023-06-12T12:44:44.000Z',
           runOverallResult: 'ERROR' as RunOverallStatusType,
