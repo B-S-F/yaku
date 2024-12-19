@@ -16,7 +16,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: yaku-apps-typescript
-          key: typescript-apps-${{ github.ref }}-${{ hashFiles('yaku-apps-typescript/**') }}
+          key: typescript-apps-${{ hashFiles('yaku-apps-typescript/**') }}
           lookup-only: true
 
       - name: Setup Node.js
