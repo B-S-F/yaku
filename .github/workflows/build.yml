@@ -10,17 +10,9 @@ on:
     branches:
       - "main"
       - "build-core-image"
-    paths-ignore:
-      - '**/*.md'            # Ignore all markdown files
-      - 'user-documentation/'
-      - 'documentation/'
   pull_request:
     branches:
       - "main"
-    paths-ignore:
-      - '**/*.md'            # Ignore all markdown files
-      - 'user-documentation/'
-      - 'documentation/'
 
 permissions:
   contents: read
