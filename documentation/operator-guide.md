@@ -28,8 +28,8 @@ Before you start, you need:
   Yaku in a playground setup, you can skip this requirement. This will generate a predefined encryption key which you
   can use. We recommend that you create your own value and deploy it as kuberenets secret, then add the kubernetes
   secret info in values file under `encryption_secret_name` and `encryption_secret_key`
-- TODO keycloak running or see our docu
-- TODO Postgres DB , see document
+- Make sure you have a keycloak instance running. Follow our documentation [here](./deploy-keycloak.md) to set up keycloak.
+- For production, a suitable PostgreSQL database is recommended. More details in the [Yaku core API database](./core-api.md#database).
 
 ## Build the docker images
 
