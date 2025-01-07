@@ -82,22 +82,22 @@ jobs:
         with:
           path: code-coverage-results.md
 
-      - name: Upload Coverage Badge data
-        if: steps.cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.actor != 'depbot'
-        run: |
-          percentage=${{ steps.coverage-summary.outputs.total-coverage }}
-          if [ $percentage -ge "${{ env.MAX_COVERAGE }}"  ]; then
-            color="green"
-          elif [ $percentage -ge "${{ env.MIN_COVERAGE }}" ]; then
-            color="yellow"
-          else
-            color="red"
-          fi
-          jq -n --arg color "$color" --arg percentage "$percentage%" '{"schemaVersion": 1, "label": "Coverage", "message": $percentage, "color": $color}' > yaku-apps-python-coverage-badge.json
-          gh gist edit ${{ env.COVERAGE_BADGE_GIST_ID }} -a yaku-apps-python-coverage-badge.json
-        env:
-          COVERAGE_BADGE_GIST_ID: 819f17e6f8166534e73c8acf9ee58726
-          GITHUB_TOKEN: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
+   #   - name: Upload Coverage Badge data
+   #    if: steps.cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.actor != 'depbot'
+   #     run: |
+   #       percentage=${{ steps.coverage-summary.outputs.total-coverage }}
+   #       if [ $percentage -ge "${{ env.MAX_COVERAGE }}"  ]; then
+   #         color="green"
+   #       elif [ $percentage -ge "${{ env.MIN_COVERAGE }}" ]; then
+   #         color="yellow"
+   #       else
+   #         color="red"
+   #       fi
+   #       jq -n --arg color "$color" --arg percentage "$percentage%" '{"schemaVersion": 1, "label": "Coverage", "message": $percentage, "color": $color}' > yaku-apps-python-coverage-badge.json
+   #       gh gist edit ${{ env.COVERAGE_BADGE_GIST_ID }} -a yaku-apps-python-coverage-badge.json
+   #     env:
+   #       COVERAGE_BADGE_GIST_ID: 819f17e6f8166534e73c8acf9ee58726
+   #       GITHUB_TOKEN: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
 
       - name: Build binaries
         if: steps.cache.outputs.cache-hit != 'true'
