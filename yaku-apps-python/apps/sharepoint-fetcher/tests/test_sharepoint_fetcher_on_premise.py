@@ -926,9 +926,9 @@ def test_download_folders_with_folder_filter_expression(
     default_fetcher.download_folder()
 
     mocked_fetch_files.assert_has_calls(expected_fetch_calls)
-    assert mocked_fetch_files.call_count == len(
-        expected_fetch_calls
-    ), f"There are extra calls in {mocked_fetch_files.call_args_list}"
+    assert mocked_fetch_files.call_count == len(expected_fetch_calls), (
+        f"There are extra calls in {mocked_fetch_files.call_args_list}"
+    )
 
     mocked_download_file.assert_has_calls(expected_download_calls)
     assert mocked_download_file.call_count == len(expected_download_calls)
@@ -1063,9 +1063,9 @@ def test_download_folders_with_folder_filter_expression_with_no_wildcard_match(
     assert "didn't match any file! Those filters were:" in caplog.text
 
     mocked_fetch_files.assert_has_calls(expected_fetch_calls)
-    assert mocked_fetch_files.call_count == len(
-        expected_fetch_calls
-    ), f"There are extra calls in {mocked_fetch_files.call_args_list}"
+    assert mocked_fetch_files.call_count == len(expected_fetch_calls), (
+        f"There are extra calls in {mocked_fetch_files.call_args_list}"
+    )
 
     mocked_download_file.assert_has_calls(expected_download_calls)
     assert mocked_download_file.call_count == len(expected_download_calls)
@@ -1246,9 +1246,9 @@ def test_download_folders_with_folder_filter_expression_and_selectors(
     default_fetcher.download_folder()
 
     mocked_fetch_files.assert_has_calls(expected_fetch_calls)
-    assert mocked_fetch_files.call_count == len(
-        expected_fetch_calls
-    ), f"There are extra calls in {mocked_fetch_files.call_args_list}"
+    assert mocked_fetch_files.call_count == len(expected_fetch_calls), (
+        f"There are extra calls in {mocked_fetch_files.call_args_list}"
+    )
 
     mocked_download_file.assert_has_calls(expected_download_calls)
     assert mocked_download_file.call_count == len(expected_download_calls)

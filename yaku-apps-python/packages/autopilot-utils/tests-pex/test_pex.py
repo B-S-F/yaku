@@ -69,15 +69,14 @@ def test_subprocess_run_returns_results(tmp_path):
     # the following assertion is just to verify that the filecheck app still has
     # the same output format, otherwise the tests below will fail.
     log_output = result.stdout.strip().replace(str(some_file), "foo.txt")
-    assert (
-        log_output.split(os.linesep)
-        == [
-            """{"output": {"file_found": "foo.txt"}}""",
-            """{"status": "RED", "reason": "File `foo.txt` should be at least 1 bytes large.\\nBut: File `foo.txt` has a size of 0 bytes."}""",
-            """{"result": {"criterion": "File `foo.txt` must exist.", "fulfilled": true, "justification": "File `foo.txt` exists.", "metadata": {"check": "exist"}}}""",
-            """{"result": {"criterion": "File `foo.txt` should be at least 1 bytes large.", "fulfilled": false, "justification": "File `foo.txt` has a size of 0 bytes.", "metadata": {"check": "size"}}}""",
-        ]
-    ), "It looks like the filecheck app has a different output format now, please adapt the test!"
+    assert log_output.split(os.linesep) == [
+        """{"output": {"file_found": "foo.txt"}}""",
+        """{"status": "RED", "reason": "File `foo.txt` should be at least 1 bytes large.\\nBut: File `foo.txt` has a size of 0 bytes."}""",
+        """{"result": {"criterion": "File `foo.txt` must exist.", "fulfilled": true, "justification": "File `foo.txt` exists.", "metadata": {"check": "exist"}}}""",
+        """{"result": {"criterion": "File `foo.txt` should be at least 1 bytes large.", "fulfilled": false, "justification": "File `foo.txt` has a size of 0 bytes.", "metadata": {"check": "size"}}}""",
+    ], (
+        "It looks like the filecheck app has a different output format now, please adapt the test!"
+    )
 
     # now come the actual checks, here we simply check that the log output
     # above was parsed correctly into Result objects

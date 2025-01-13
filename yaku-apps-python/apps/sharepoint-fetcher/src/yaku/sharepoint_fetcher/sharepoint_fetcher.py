@@ -25,9 +25,9 @@ class SharepointFetcher(ABC):
         filter_config: Optional[List[FilesSelectors]] = None,
     ):
         if sharepoint_dir is not None and sharepoint_site is not None:
-            assert sharepoint_dir.endswith(
-                "/"
-            ), f"{sharepoint_dir} should end with a /, but doesn't!"
+            assert sharepoint_dir.endswith("/"), (
+                f"{sharepoint_dir} should end with a /, but doesn't!"
+            )
             self._destination_path = destination_path
 
             if "/sites/" not in sharepoint_site:

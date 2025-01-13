@@ -185,9 +185,9 @@ def gen_raise_for_status(process_result: ProcessResult):
     """
 
     def raise_for_status(ignore_no_status=True):
-        assert (
-            process_result.returncode == 0
-        ), "raise_for_status() should only be called after exit_for_returncode() because it doesn't check the returncode!"
+        assert process_result.returncode == 0, (
+            "raise_for_status() should only be called after exit_for_returncode() because it doesn't check the returncode!"
+        )
         if process_result.status is None and ignore_no_status:
             return
         if process_result.status in ("GREEN", "YELLOW", "RED"):
