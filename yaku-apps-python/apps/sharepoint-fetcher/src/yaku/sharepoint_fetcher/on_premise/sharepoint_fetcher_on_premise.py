@@ -132,7 +132,9 @@ class SharepointFetcherOnPremise(SharepointFetcher):
         for subfolder in subfolders:
             assert subfolder.startswith(
                 self._relative_url_prefix + "/" + self._sharepoint_dir
-            ), f"{subfolder} should start with {self._relative_url_prefix + '/' + self._sharepoint_dir}, but doesn't!"
+            ), (
+                f"{subfolder} should start with {self._relative_url_prefix + '/' + self._sharepoint_dir}, but doesn't!"
+            )
             self.download_folder(subfolder + "/")
 
         # skip checking files in folders which are not in the include list by our filters
@@ -299,9 +301,9 @@ class SharepointFetcherOnPremise(SharepointFetcher):
         if remote_path.endswith("/"):
             remote_path = remote_path[:-1]
 
-        assert remote_path.startswith(
-            self._relative_url_prefix
-        ), f"{remote_path} should start with {self._relative_url_prefix}, but doesn't!"
+        assert remote_path.startswith(self._relative_url_prefix), (
+            f"{remote_path} should start with {self._relative_url_prefix}, but doesn't!"
+        )
 
         # download file properties
         file_properties = self._connect.get_file_properties(remote_path, file_name)
@@ -382,9 +384,9 @@ class SharepointFetcherOnPremise(SharepointFetcher):
         might return a list with entries like
         `/sites/123456/Documents/Some/Path/WithSubFolder`.
         """
-        assert remote_path.startswith(
-            self._relative_url_prefix
-        ), f"{remote_path} should start with {self._relative_url_prefix}, but doesn't!"
+        assert remote_path.startswith(self._relative_url_prefix), (
+            f"{remote_path} should start with {self._relative_url_prefix}, but doesn't!"
+        )
         result = self._connect.get_folders(remote_path)
         return self.frame_list_from_dict(result, "folders")
 
@@ -395,9 +397,9 @@ class SharepointFetcherOnPremise(SharepointFetcher):
         Fetches list of names of all files present inside the folder passed
         through parameter.
         """
-        assert remote_path.startswith(
-            self._relative_url_prefix
-        ), f"{remote_path} should start with {self._relative_url_prefix}, but doesn't!"
+        assert remote_path.startswith(self._relative_url_prefix), (
+            f"{remote_path} should start with {self._relative_url_prefix}, but doesn't!"
+        )
         result = self._connect.get_files(remote_path)
         return self.frame_list_from_dict(result, "files")
 

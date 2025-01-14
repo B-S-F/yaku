@@ -63,8 +63,7 @@ def print_evaluation_results(
             )
         )
         reason = (
-            f"All rows of columns '{columns}' "
-            f"have only the allowed values '{allowed_values}'"
+            f"All rows of columns '{columns}' have only the allowed values '{allowed_values}'"
         )
         if all_hyperlinks is not None and not all_hyperlinks:
             reason += (

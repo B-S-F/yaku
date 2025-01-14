@@ -72,9 +72,9 @@ echo '{"output": {"output_key_from_step_'${NR}'": "output_value_'${NR}'"}}'
                 for result in step.results:
                     RESULTS.append(result)
                 print(step.outputs.to_json())
-                assert (
-                    step_status == step.status
-                ), f"Step status {step.status} is not as expected ({step_status})"
+                assert step_status == step.status, (
+                    f"Step status {step.status} is not as expected ({step_status})"
+                )
                 print("")
 
     @staticmethod

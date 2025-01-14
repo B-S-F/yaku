@@ -222,8 +222,7 @@ class Settings(BaseSettings):
             return Path(v)
         except TypeError:
             raise AutopilotConfigurationError(
-                f"Invalid destination path: {v}. "
-                "It must be a string pointing to a directory."
+                f"Invalid destination path: {v}. It must be a string pointing to a directory."
             )
 
     @validator("force_ip", always=True)
