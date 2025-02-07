@@ -103,6 +103,6 @@
     "tsconfig-paths": "4.1.2",
     "typescript": "^5.6.3",
     "vite-plugin-node": "^4.0.0",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.9"
   }
 }
