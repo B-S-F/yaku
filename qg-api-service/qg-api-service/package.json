@@ -65,7 +65,7 @@
     "sqlite3": "^5.1.4",
     "tiktoken": "^1.0.15",
     "typeorm": "0.3.17",
-    "undici": "^6.20.1",
+    "undici": "^6.21.1",
     "winston": "^3.10.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
     "yaml": "^2.2.2",
