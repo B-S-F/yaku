@@ -62,7 +62,7 @@ repos:
   ## TS / JS related
   ####
   - repo: https://github.com/biomejs/pre-commit
-    rev: 'v1.9.4'
+    rev: 'v2.0.0-beta.3'
     hooks:
       - id: biome-check
         additional_dependencies: ['@biomejs/biome@1.9.4']
@@ -76,7 +76,7 @@ repos:
   ## Python related
   ####
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.10
+    rev: v0.11.9
     hooks:
       - id: ruff
         args: [--fix]
