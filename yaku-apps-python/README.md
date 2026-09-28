@@ -211,6 +211,7 @@ that you must _not_ use the standard `logging` module, but _always_ use:
 
 ```python
 from loguru import logger
+
 ...
 logger.info("Some log info about: {}", my_variable)  # no %-formatting allowed here!
 ```
